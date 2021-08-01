@@ -134,28 +134,39 @@ namespace Content.Shared.Damage.Components
         }
 
 
-        // TODO QUESTION These four functions here are just wrapping standard function calls on public dictionaries. I'm
-        // not sure whether or not they should just be replaced by those dictionary calls. The current function names
-        // probably make for nicer to read code.
+        // TODO QUESTION These 7 functions here are just wrapping standard function of PUBLIC dictionaries. I'm not sure
+        // whether or not they should just be replaced by those dictionary calls, or whether we should make those
+        // dictionaries private?
         public int GetDamage(DamageTypePrototype type)
         {
             return DamagePerType.GetValueOrDefault(type);
         }
-
         public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
             return DamagePerType.TryGetValue(type, out damage);
         }
-
         public int GetDamage(DamageGroupPrototype group)
         {
             return DamagePerGroup.GetValueOrDefault(group);
         }
-
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
             return DamagePerGroup.TryGetValue(group, out damage);
         }
+        public bool IsApplicableDamageGroup(DamageGroupPrototype group)
+        {
+            return ApplicableDamageGroups.Contains(group);
+        }
+        public bool IsSupportedDamageGroup(DamageGroupPrototype group)
+        {
+            return SupportedDamageGroups.Contains(group);
+        }
+        public bool IsSupportedDamageType(DamageTypePrototype type)
+        {
+            return SupportedDamageTypes.Contains(type);
+        }
+        
+
 
         public void SetGroupDamage(int newValue, DamageGroupPrototype group)
         {
@@ -320,7 +331,7 @@ namespace Content.Shared.Damage.Components
         // with networking)? In the case where all of the damage is of one type, adding logic to reducing it to 1 is trivial.
         //
         // Additionally currently ChangeDamage will ignore a damageType if it is not supported by the container. As a
-        // result, the actual amount by which the total grouip damage changes MAY be less than expected. I think this is
+        // result, the actual amount by which the total group damage changes MAY be less than expected. I think this is
         // a good thing for dealing damage: if a damageContainer is 'immune' to some of the damage in the group, it
         // should take less damage (even though this may overlap with how resistances are donw, I havent checked).
         //
@@ -330,7 +341,7 @@ namespace Content.Shared.Damage.Components
         // patient with brute, and try a brute drug, only to have it work at 1/3 effectivness because slash and piercing
         // are already at full health. Currently, this is also how ChangeDamage behaves.
         //
-        // I realise these are sort of contradictary opintions but I still think thats how it should work. Though if we
+        // I realise these are sort of contradictary opinions but I still think that's how it should work. Though if we
         // add code to restrict DamageContainerPrototypes to only allow for one damage group per damage type, and force
         // it to support all damage types in any groups, then this is a non-issue. (except for the networking/repeated
         // OnHealthChange() calls).
@@ -403,13 +414,16 @@ namespace Content.Shared.Damage.Components
                 int damage;
                 foreach (var type in types)
                 {
+                    // Distribute the remaining damage over the remaining damage types.
                     damage = availableDamage / numberDamageTypes;
+
+                    // Try apply the damage type. If damage type is not supported, this has no effect.
+                    ChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
+
+                    // regardless of whether we dealt damage, reduce the ammount to distribute.
                     availableDamage -= damage;
                     numberDamageTypes -= 1;
 
-                    // Damage is applied. If damage type is not supported, this has no effect.
-                    // This may results in less total damage change than naively expected, but is intentional.
-                    ChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
                 }
             }
         }
@@ -512,11 +526,11 @@ namespace Content.Shared.Damage.Components
 
         // TODO QUESTION I created this function, and the one below it, to covert between Dictionary<IPrototype,int> and
         // Dictionary<string,int> using the IPrototype ID field. Maybe such a function already exists somewhere, but I
-        // couldnt where. This sort of function is apparently needed when sending damage dictionary data over the
-        // network, as is apparently doesn't support sending prototypes. However, given how generalizable this function
-        // is, and that it may be usefull when sending other prototype data, this function should probably be moved
-        // somewhere else. Would this belong in PrototypeManager? Alternatively, as it is currently ONLY used for the
-        // health scanner display (i.e., only used in one place), you could remove the function and just add the
+        // couldn't find where it was. This sort of function is apparently needed when sending damage dictionary data
+        // over the network, as is apparently doesn't support sending prototypes. However, given how generalizable this
+        // function is, and that it may be usefull when sending other prototype data, this function should probably be
+        // moved somewhere else. Would this belong in PrototypeManager? Alternatively, as it is currently ONLY used for
+        // the health scanner display (i.e., only used in one place), you could remove the function and just add the
         // required code in that one place, without all the generality.
 
         /// <summary>

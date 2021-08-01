@@ -23,8 +23,6 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        [DataField("baseDecayRate")]
-        private float _baseDecayRate = 0.1f;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -34,20 +32,7 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("damageRecoveredPerSecond")]
         private float _damageRecoveredPerSecond = 0.1f;
-
         private float _acumulatedDamageRecovery;
-        private float _actualDecayRate;
-        private float _currentHunger;
-        private HungerThreshold _currentHungerThreshold;
-        private HungerThreshold _lastHungerThreshold;
-        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
-        {
-            {HungerThreshold.Overfed, 600.0f},
-            {HungerThreshold.Okay, 450.0f},
-            {HungerThreshold.Peckish, 300.0f},
-            {HungerThreshold.Starving, 150.0f},
-            {HungerThreshold.Dead, 0.0f},
-        };
 
         // TODO QUESTION Just based on DrSmugleaf's other comments on similar situations: are all of _baseDecayRate,
         // _actualDecayRate, _currentHunger all redundant here? i.e., shouldn't it just be:
@@ -63,6 +48,8 @@ namespace Content.Server.Nutrition.Components
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
+        [DataField("baseDecayRate")]
+        private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float ActualDecayRate
@@ -70,10 +57,14 @@ namespace Content.Server.Nutrition.Components
             get => _actualDecayRate;
             set => _actualDecayRate = value;
         }
+        private float _actualDecayRate;
 
         // Hunger
         [ViewVariables(VVAccess.ReadOnly)]
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;
+        private HungerThreshold _currentHungerThreshold;
+
+        private HungerThreshold _lastHungerThreshold;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float CurrentHunger
@@ -81,10 +72,18 @@ namespace Content.Server.Nutrition.Components
             get => _currentHunger;
             set => _currentHunger = value;
         }
-
+        private float _currentHunger;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
+        private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
+        {
+            { HungerThreshold.Overfed, 600.0f },
+            { HungerThreshold.Okay, 450.0f },
+            { HungerThreshold.Peckish, 300.0f },
+            { HungerThreshold.Starving, 150.0f },
+            { HungerThreshold.Dead, 0.0f },
+        };
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
         {

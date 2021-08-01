@@ -46,15 +46,16 @@ namespace Content.Server.Atmos.Components
             switch (pressure)
             {
                 // Low pressure.
+                // TODO QUESTION So this bit of code behaves such that 'lowPressureMultiplier' only ever  makes the
+                // low pressure damage threshold lower. It cannot raise it. Is this intended behaviour? In other
+                // words, should the if statement here be removed, and the case inequality above replaced with:
+                // p <= Atmospherics.WarningLowPressure/lowPressureMultiplier
                 case var p when p <= Atmospherics.WarningLowPressure:
                     pressure *= lowPressureMultiplier;
-
-                    // TODO QUESTION So this bit of code behaves such that 'lowPressureMultiplier' only ever  makes the
-                    // low pressure damage threshold lower. It cannot raise it. Is this intended behaviour? In other
-                    // words, should the if statement here be removed, and the case inequality above replaced with:
-                    // p <= Atmospherics.WarningLowPressure/lowPressureMultiplier
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
+
+
 
                     damageable.ChangeDamage(_damageType, Atmospherics.LowPressureDamage, false, Owner);
 

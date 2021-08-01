@@ -100,9 +100,9 @@ namespace Content.Server.Damage.Commands
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamagePerGroup.ContainsKey(damageGroup))
+                    if (!damageable.ApplicableDamageGroups.Contains(damageGroup))
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageGroup}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage group {damageGroup}");
 
                         return;
                     }
@@ -124,7 +124,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamagePerType.ContainsKey(damageType))
+                    if (!damageable.SupportedDamageTypes.Contains(damageType))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage type {damageType}");
 

@@ -58,20 +58,20 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 var damageToDeal = 7;
 
-                foreach (var damageType in sPrototypeManager.EnumeratePrototypes<DamageTypePrototype>())
+                foreach (var type in sPrototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportedDamageTypes.Contains(damageType));
+                    Assert.That(sDamageableComponent.SupportedDamageTypes.Contains(type));
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(damageType, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(type, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.TryGetDamage(damageType, out var damage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(type, out var damage), Is.True);
                     Assert.That(damage, Is.EqualTo(damageToDeal));
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(damageType, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(type, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                    Assert.That(sDamageableComponent.TryGetDamage(damageType, out damage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(type, out damage), Is.True);
                     Assert.That(damage, Is.Zero);
                 }
             });
@@ -110,12 +110,12 @@ namespace Content.IntegrationTests.Tests.Damageable
             {
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
-                foreach (var damageGroup in sPrototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+                foreach (var group in sPrototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportedDamageGroups.Contains(damageGroup));
-                    Assert.That(sDamageableComponent.ApplicableDamageGroups.Contains(damageGroup));
+                    Assert.That(sDamageableComponent.SupportedDamageGroups.Contains(group));
+                    Assert.That(sDamageableComponent.ApplicableDamageGroups.Contains(group));
 
-                    var types = damageGroup.DamageTypes;
+                    var types = group.DamageTypes;
 
                     foreach (var type in types)
                     {
@@ -125,9 +125,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                     var damageToDeal = types.Count() * 5;
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(group, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out var classDamage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(group, out var classDamage), Is.True);
                     Assert.That(classDamage, Is.EqualTo(damageToDeal));
 
                     foreach (var type in types)
@@ -137,9 +137,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                     }
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.ChangeDamage(group, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out classDamage), Is.True);
+                    Assert.That(sDamageableComponent.TryGetDamage(group, out classDamage), Is.True);
                     Assert.That(classDamage, Is.Zero);
 
                     foreach (var type in types)

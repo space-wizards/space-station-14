@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         public float AmountToChange { get; set; } = 1.0f;
 
         /// <summary>
-        /// Group damage changed, Brute, Burn, Toxin, Airloss.
+        /// Damage group to change.
         /// </summary>
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also requires replacing DamageGroup() calls with something like _damageGroup

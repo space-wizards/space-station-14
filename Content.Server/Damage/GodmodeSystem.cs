@@ -43,6 +43,7 @@ namespace Content.Server.Damage
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 damageable.SupportedDamageTypes.Clear();
+                damageable.SupportedDamageGroups.Clear();
                 damageable.ApplicableDamageGroups.Clear();
             }
 
@@ -68,14 +69,19 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                if (old.SupportedTypes != null)
+                if (old.SupportedDamageTypes != null)
                 {
-                    damageable.SupportedDamageTypes.UnionWith(old.SupportedTypes);
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
                 }
 
-                if (old.SupportedClasses != null)
+                if (old.SupportedDamageGroups != null)
                 {
-                    damageable.ApplicableDamageGroups.UnionWith(old.SupportedClasses);
+                    damageable.SupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
+                }
+
+                if (old.ApplicableDamageGroups != null)
+                {
+                    damageable.ApplicableDamageGroups.UnionWith(old.ApplicableDamageGroups);
                 }
             }
 
@@ -110,8 +116,9 @@ namespace Content.Server.Damage
 
                 if (entity.TryGetComponent(out IDamageableComponent? damageable))
                 {
-                    SupportedTypes = damageable.SupportedDamageTypes.ToHashSet();
-                    SupportedClasses = damageable.ApplicableDamageGroups.ToHashSet();
+                    SupportedDamageTypes = damageable.SupportedDamageTypes.ToHashSet();
+                    SupportedDamageGroups = damageable.SupportedDamageGroups.ToHashSet();
+                    ApplicableDamageGroups = damageable.ApplicableDamageGroups.ToHashSet();
                 }
             }
 
@@ -119,9 +126,11 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public HashSet<DamageTypePrototype>? SupportedTypes { get; }
+            public HashSet<DamageTypePrototype>? SupportedDamageTypes { get; }
 
-            public HashSet<DamageGroupPrototype>? SupportedClasses { get; }
+            public HashSet<DamageGroupPrototype>? SupportedDamageGroups { get; }
+
+            public HashSet<DamageGroupPrototype>? ApplicableDamageGroups { get; }
         }
     }
 }

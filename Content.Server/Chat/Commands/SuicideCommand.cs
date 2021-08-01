@@ -50,6 +50,10 @@ namespace Content.Server.Chat.Commands
                         SuicideKind.Asphyxiation => _prototypeManager.Index<DamageTypePrototype>("Asphyxiation"),
                         SuicideKind.Bloodloss => _prototypeManager.Index<DamageTypePrototype>("Bloodloss"),
                         _ => _prototypeManager.Index<DamageTypePrototype>("Blunt")
+                        // TODO QUESTION/SUGGESTION we should probably just remove SuicideKind altogether? Just make
+                        // each function that implements SuicideAct directly return a damage type (or null for
+                        // "Special"?) Adding yaml datafields is uneccesary, as currently it requires hardcoding a
+                        // suicide function, with suicide messages anyway.
                     },
                 200, source);
             }

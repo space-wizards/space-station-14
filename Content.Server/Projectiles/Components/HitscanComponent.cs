@@ -23,6 +23,7 @@ namespace Content.Server.Projectiles.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "Hitscan";
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
@@ -33,6 +34,7 @@ namespace Content.Server.Projectiles.Components
         public float Damage { get; set; } = 10f;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also, should probably a be a dictionary along with the 'damage' field.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;
@@ -48,7 +50,6 @@ namespace Content.Server.Projectiles.Components
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
 
         public float MaxLength => 20.0f;
-        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         public float ColorModifier { get; set; } = 1.0f;
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)

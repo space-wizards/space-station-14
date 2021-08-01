@@ -58,23 +58,23 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bruteDamageType = sPrototypeManager.Index <DamageGroupPrototype>("Brute");
-                var burnDamageType = sPrototypeManager.Index <DamageGroupPrototype>("Burn");
+                var bruteDamageGroup = sPrototypeManager.Index <DamageGroupPrototype>("Brute");
+                var burnDamageGroup = sPrototypeManager.Index <DamageGroupPrototype>("Burn");
 
                 // Raise brute damage to 5
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 5, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 5, true));
 
                 // No thresholds reached yet, the earliest one is at 10 damage
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise brute damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 5, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 5, true));
 
                 // No threshold reached, burn needs to be 10 as well
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise burn damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(burnDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(burnDamageGroup, 10, true));
 
                 // One threshold reached, brute 10 + burn 10
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -97,25 +97,25 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Raise brute damage to 20
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise burn damage to 20
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Lower brute damage to 0
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, -20, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, -20, true));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise brute damage back up to 10
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 10, true));
 
                 // 10 brute + 10 burn threshold reached, brute was healed and brought back to its threshold amount and slash stayed the same
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -123,20 +123,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sThresholdListenerComponent.ThresholdsReached.Clear();
 
                 // Heal both classes of damage to 0
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, -10, true));
-                Assert.True(sDamageableComponent.ChangeDamage(burnDamageType, -20, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(burnDamageGroup, -20, true));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise brute damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise burn damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(burnDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(burnDamageGroup, 10, true));
 
                 // Both classes of damage were healed and then raised again, the threshold should have been reached as triggers once is default false
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -162,20 +162,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal brute and burn back to 0
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, -10, true));
-                Assert.True(sDamageableComponent.ChangeDamage(burnDamageType, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, -10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(burnDamageGroup, -10, true));
 
                 // No new thresholds reached from healing
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise brute damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise burn damage to 10
-                Assert.True(sDamageableComponent.ChangeDamage(burnDamageType, 10, true));
+                Assert.True(sDamageableComponent.ChangeDamage(burnDamageGroup, 10, true));
 
                 // No new thresholds reached as triggers once is set to true and it already triggered before
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
