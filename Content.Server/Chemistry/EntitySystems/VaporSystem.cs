@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -37,7 +38,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((args.OtherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
             {
-               EntityManager.QueueDeleteEntity(uid);
+                EntityManager.QueueDeleteEntity(uid);
             }
         }
 
@@ -66,7 +67,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            var result = contents.TryAddSolution(solution);
+            var result = Get<ChemistrySystem>().TryAddSolution(contents, solution);
 
             if (!result)
             {
@@ -78,7 +79,8 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var (vaporComp, solution) in ComponentManager.EntityQuery<VaporComponent, SolutionContainerComponent>(true))
+            foreach (var (vaporComp, solution) in ComponentManager
+                .EntityQuery<VaporComponent, SolutionContainerComponent>(true))
             {
                 Update(frameTime, vaporComp, solution);
             }
@@ -104,12 +106,15 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    contents.TryRemoveReagent(reagentQuantity.ReagentId, reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
+                    Get<ChemistrySystem>().TryRemoveReagent(contents, reagentQuantity.ReagentId,
+                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }
 
             // Check if we've reached our target.
-            if(!vapor.Reached && vapor.Target.TryDistance(EntityManager, entity.Transform.Coordinates, out var distance) && distance <= 0.5f)
+            if (!vapor.Reached &&
+                vapor.Target.TryDistance(EntityManager, entity.Transform.Coordinates, out var distance) &&
+                distance <= 0.5f)
             {
                 vapor.Reached = true;
             }

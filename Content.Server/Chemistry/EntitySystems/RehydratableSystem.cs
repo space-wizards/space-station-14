@@ -16,10 +16,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<RehydratableComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<RehydratableComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
         {
             var solution = args.Owner.GetComponent<SolutionContainerComponent>();
             if (solution.Solution.GetReagentQuantity(component._catalystPrototype) > ReagentUnit.Zero)

@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -98,7 +99,7 @@ namespace Content.Server.Body.Metabolism
                     effect.Metabolize(ent, reagent);
                 }
 
-                solution.TryRemoveReagent(reagent.ReagentId, metabolism.MetabolismRate);
+                Get<ChemistrySystem>().TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
             }
         }
     }

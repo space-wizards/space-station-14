@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -184,7 +185,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = solution.SplitSolution(realTransferAmount);
+            var removedSolution = EntitySystem.Get<ChemistrySystem>().SplitSolution(solution, realTransferAmount);
 
             if (!solution.CanAddSolution(removedSolution))
             {
@@ -195,7 +196,7 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(solution.Owner, ReactionMethod.Injection);
 
-            solution.TryAddSolution(removedSolution);
+            EntitySystem.Get<ChemistrySystem>().TryAddSolution(solution, removedSolution);
 
             removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
@@ -224,11 +225,11 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = solution.SplitSolution(realTransferAmount);
+            var removedSolution = EntitySystem.Get<ChemistrySystem>().SplitSolution(solution, realTransferAmount);
 
             removedSolution.DoEntityReaction(targetSolution.Owner, ReactionMethod.Injection);
 
-            targetSolution.Inject(removedSolution);
+            EntitySystem.Get<ChemistrySystem>().Inject(targetSolution, removedSolution);
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-transfer-success-message",
@@ -264,9 +265,9 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = targetSolution.Draw(realTransferAmount);
+            var removedSolution = EntitySystem.Get<ChemistrySystem>().Draw(targetSolution, realTransferAmount);
 
-            if (!solution.TryAddSolution(removedSolution))
+            if (!EntitySystem.Get<ChemistrySystem>().TryAddSolution(solution, removedSolution))
             {
                 return;
             }

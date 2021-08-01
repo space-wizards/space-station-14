@@ -8,6 +8,7 @@ using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -290,8 +291,8 @@ namespace Content.Server.Kitchen.EntitySystems
                             RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent, false);
                             if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
                             solution.Solution.ScaleSolution(juiceEvent.Scalar);
-                            component.HeldBeaker.TryAddSolution(solution.Solution);
-                            solution.RemoveAllSolution();
+                            Get<ChemistrySystem>().TryAddSolution(component.HeldBeaker, solution.Solution);
+                            Get<ChemistrySystem>().RemoveAllSolution(solution);
                             item.Delete();
                         }
                         component.Busy = false;
@@ -314,7 +315,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             }
                             if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
                             juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            component.HeldBeaker.TryAddSolution(juiceMe.JuiceResultSolution);
+                            Get<ChemistrySystem>().TryAddSolution(component.HeldBeaker, juiceMe.JuiceResultSolution);
                             item.Delete();
                         }
                         bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage());

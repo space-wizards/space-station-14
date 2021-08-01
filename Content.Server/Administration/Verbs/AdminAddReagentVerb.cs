@@ -1,7 +1,9 @@
 using Content.Server.Administration.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.EUI;
+using Content.Server.Stack;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -126,11 +128,11 @@ namespace Content.Server.Administration.Verbs
                             if (container.CanInject)
                             {
                                 var solution = new Solution(id, amount);
-                                container.Inject(solution);
+                                EntitySystem.Get<ChemistrySystem>().Inject(container, solution);
                             }
                             else
                             {
-                                container.TryAddReagent(id, amount, out _);
+                                EntitySystem.Get<ChemistrySystem>().TryAddReagent(container, id, amount, out _);
                             }
 
                         }

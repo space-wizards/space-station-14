@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -21,7 +22,7 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         {
             if (!entity.TryGetComponent(out SolutionContainerComponent? solutionContainer) || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
-            if(solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted))
+            if (EntitySystem.Get<ChemistrySystem>().TryAddReagent(solutionContainer, reagent.ID, volume, out var accepted))
                 source?.RemoveReagent(reagent.ID, accepted);
         }
     }

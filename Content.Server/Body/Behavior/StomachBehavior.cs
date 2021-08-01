@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -74,7 +75,7 @@ namespace Content.Server.Body.Behavior
                             quantity = delta.Quantity;
                         }
 
-                        solution.TryRemoveReagent(delta.ReagentId, quantity);
+                        EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(solution, delta.ReagentId, quantity);
                         transferSolution.AddReagent(delta.ReagentId, quantity);
                     }
 
@@ -157,7 +158,7 @@ namespace Content.Server.Body.Behavior
             }
 
             // Add solution to _stomachContents
-            solutionComponent.TryAddSolution(solution);
+            EntitySystem.Get<ChemistrySystem>().TryAddSolution(solutionComponent, solution);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

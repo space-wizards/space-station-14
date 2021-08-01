@@ -12,10 +12,10 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DrinkComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<DrinkComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
         {
             component.UpdateAppearance();
         }

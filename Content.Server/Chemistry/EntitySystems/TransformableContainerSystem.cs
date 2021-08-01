@@ -20,11 +20,11 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<TransformableContainerComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<TransformableContainerComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
         private void OnSolutionChange(EntityUid uid, TransformableContainerComponent component,
-            SolutionChangeEvent args)
+            SolutionChangedEvent args)
         {
             var solution = args.Owner.GetComponent<SolutionContainerComponent>();
             //Transform container into initial state when emptied

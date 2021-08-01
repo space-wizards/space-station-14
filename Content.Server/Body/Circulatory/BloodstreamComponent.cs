@@ -4,10 +4,12 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -64,7 +66,7 @@ namespace Content.Server.Body.Circulatory
                 return false;
             }
 
-            _internalSolution.TryAddSolution(solution);
+            EntitySystem.Get<ChemistrySystem>().TryAddSolution(_internalSolution, solution);
             return true;
         }
 

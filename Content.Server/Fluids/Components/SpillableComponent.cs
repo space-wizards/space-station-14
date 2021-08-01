@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.DragDrop;
@@ -7,6 +8,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Fluids.Components
@@ -54,7 +56,9 @@ namespace Content.Server.Fluids.Components
                     }
 
                     // Need this as when we split the component's owner may be deleted
-                    solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
+                    EntitySystem.Get<ChemistrySystem>()
+                        .Drain(solutionComponent, (solutionComponent.DrainAvailable))
+                        .SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
                 }
             }
         }
@@ -63,7 +67,9 @@ namespace Content.Server.Fluids.Components
         {
             if (!eventArgs.Intentional && Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
             {
-                solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
+                EntitySystem.Get<ChemistrySystem>()
+                    .Drain(solutionComponent, solutionComponent.DrainAvailable)
+                    .SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }
         }
     }

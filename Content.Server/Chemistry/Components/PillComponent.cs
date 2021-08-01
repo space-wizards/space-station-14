@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -79,13 +80,13 @@ namespace Content.Server.Chemistry.Components
             }
 
             var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
-            var split = _contents.SplitSolution(transferAmount);
+            var split = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, transferAmount);
 
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
-                _contents.TryAddSolution(split);
+                EntitySystem.Get<ChemistrySystem>().TryAddSolution(_contents, split);
                 trueTarget.PopupMessage(user, Loc.GetString("pill-component-cannot-eat-more-message"));
                 return false;
             }

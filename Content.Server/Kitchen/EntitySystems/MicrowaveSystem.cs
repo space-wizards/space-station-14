@@ -12,10 +12,10 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MicrowaveComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<MicrowaveComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, MicrowaveComponent component, SolutionChangedEvent args)
         {
             component.DirtyUi();
         }

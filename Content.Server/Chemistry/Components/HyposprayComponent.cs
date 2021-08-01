@@ -1,6 +1,7 @@
 using Content.Server.Interaction.Components;
 using Content.Server.MobState.States;
 using Content.Server.Weapon.Melee;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
@@ -85,7 +86,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = _solution.SplitSolution(realTransferAmount);
+            var removedSolution = EntitySystem.Get<ChemistrySystem>().SplitSolution(_solution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
@@ -94,7 +95,7 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
 
-            targetSolution.TryAddSolution(removedSolution);
+            EntitySystem.Get<ChemistrySystem>().TryAddSolution(targetSolution, removedSolution);
 
             static bool EligibleEntity(IEntity entity)
             {

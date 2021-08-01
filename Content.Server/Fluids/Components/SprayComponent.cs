@@ -4,6 +4,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Cooldown;
@@ -145,7 +146,7 @@ namespace Content.Server.Fluids.Components
                 if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
                     target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
 
-                var solution = contents.SplitSolution(_transferAmount);
+                var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, _transferAmount);
 
                 if (solution.TotalVolume <= ReagentUnit.Zero)
                     break;

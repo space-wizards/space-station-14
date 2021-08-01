@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Coordinates.Helpers;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -23,7 +24,8 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype, bool sound = true)
+        public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
+            bool sound = true)
         {
             return solution.SpillAt(entity.Transform.Coordinates, prototype, sound);
         }
@@ -39,7 +41,8 @@ namespace Content.Server.Fluids.Components
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype, [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
+        public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype,
+            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
         {
             puddle = solution.SpillAt(entity, prototype, sound);
             return puddle != null;
@@ -53,14 +56,16 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Whether or not to play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, EntityCoordinates coordinates, string prototype, bool overflow = true, bool sound = true)
+        public static PuddleComponent? SpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
+            bool overflow = true, bool sound = true)
         {
             if (solution.TotalVolume == 0) return null;
 
             var mapManager = IoCManager.Resolve<IMapManager>();
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var mapGrid)) return null; // Let's not spill to space.
+            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var mapGrid))
+                return null; // Let's not spill to space.
 
             return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound);
         }
@@ -74,13 +79,15 @@ namespace Content.Server.Fluids.Components
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, EntityCoordinates coordinates, string prototype, [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
+        public static bool TrySpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
+            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
         {
             puddle = solution.SpillAt(coordinates, prototype, sound);
             return puddle != null;
         }
 
-        public static bool TryGetPuddle(this TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem, [NotNullWhen(true)] out PuddleComponent? puddle)
+        public static bool TryGetPuddle(this TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem,
+            [NotNullWhen(true)] out PuddleComponent? puddle)
         {
             foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
             {
@@ -95,7 +102,8 @@ namespace Content.Server.Fluids.Components
             return false;
         }
 
-        public static PuddleComponent? SpillAt(this TileRef tileRef, Solution solution, string prototype, bool overflow = true, bool sound = true)
+        public static PuddleComponent? SpillAt(this TileRef tileRef, Solution solution, string prototype,
+            bool overflow = true, bool sound = true)
         {
             if (solution.TotalVolume <= 0) return null;
 
@@ -116,15 +124,18 @@ namespace Content.Server.Fluids.Components
             PuddleComponent? puddle = null;
             var spilt = false;
 
-            var spillEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
+            var spillEntities = IoCManager.Resolve<IEntityLookup>()
+                .GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
             foreach (var spillEntity in spillEntities)
             {
                 if (spillEntity.TryGetComponent(out SolutionContainerComponent? solutionContainerComponent) &&
                     solutionContainerComponent.CanRefill)
                 {
-                    solutionContainerComponent.Refill(
-                        solution.SplitSolution(ReagentUnit.Min(solutionContainerComponent.RefillSpaceAvailable, solutionContainerComponent.MaxSpillRefill))
-                        );
+                    EntitySystem.Get<ChemistrySystem>().Refill(solutionContainerComponent,
+                        solution.SplitSolution(ReagentUnit.Min(
+                            solutionContainerComponent.RefillSpaceAvailable,
+                            solutionContainerComponent.MaxSpillRefill))
+                    );
                 }
             }
 

@@ -2,6 +2,7 @@ using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
@@ -91,7 +92,7 @@ namespace Content.Server.Chemistry.ReactionEffects
             if (!solutionEntity.TryGetComponent(out SolutionContainerComponent? contents))
                 return;
 
-            var solution = contents.SplitSolution(contents.MaxVolume);
+            var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, contents.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);

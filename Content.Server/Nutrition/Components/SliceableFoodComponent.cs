@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
@@ -75,7 +76,9 @@ namespace Content.Server.Nutrition.Components
                 Owner.Delete();
                 return true;
             }
-            solution.TryRemoveReagent("Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
+
+            EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(solution, "Nutriment",
+                solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }
 

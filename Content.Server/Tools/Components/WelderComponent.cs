@@ -7,6 +7,7 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Server.Items;
 using Content.Server.Notification;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -31,7 +32,7 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
     [NetworkedComponent()]
-    public class WelderComponent : ToolComponent, IUse, ISuicideAct,  IHotItem, IAfterInteract
+    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -53,14 +54,12 @@ namespace Content.Server.Tools.Components
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
-        [DataField("weldSoundCollection")]
-        public string? WeldSoundCollection { get; set; }
+        [DataField("weldSoundCollection")] public string? WeldSoundCollection { get; set; }
 
         [ViewVariables]
         public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
 
-        [ViewVariables]
-        public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
+        [ViewVariables] public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
 
         /// <summary>
         /// Status of welder, whether it is ignited
@@ -99,7 +98,8 @@ namespace Content.Server.Tools.Components
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay,
+            ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -120,7 +120,8 @@ namespace Content.Server.Tools.Components
             return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
-        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, float fuelConsumed, Func<bool>? doAfterCheck = null)
+        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded,
+            float fuelConsumed, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -129,7 +130,8 @@ namespace Content.Server.Tools.Components
                 return extraCheck && CanWeld(fuelConsumed);
             }
 
-            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
+            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) &&
+                   TryWeld(fuelConsumed, user);
         }
 
         private bool TryWeld(float value, IEntity? user = null, bool silent = false)
@@ -153,12 +155,14 @@ namespace Content.Server.Tools.Components
             if (_solutionComponent == null)
                 return false;
 
-            var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
+            var succeeded = EntitySystem.Get<ChemistrySystem>()
+                .TryRemoveReagent(_solutionComponent, "WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
                 PlaySoundCollection(WeldSoundCollection);
             }
+
             return succeeded;
         }
 
@@ -229,13 +233,13 @@ namespace Content.Server.Tools.Components
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(_solutionComponent, "WeldingFuel",
+                ReagentUnit.New(FuelLossRate * frameTime));
 
             EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();
-
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
@@ -249,7 +253,7 @@ namespace Content.Server.Tools.Components
 
                 othersMessage =
                     Loc.GetString("welder-component-suicide-lit-others-message",
-                                  ("victim",victim));
+                        ("victim", victim));
                 victim.PopupMessageOtherClients(othersMessage);
 
                 selfMessage = Loc.GetString("welder-component-suicide-lit-message");
@@ -290,11 +294,12 @@ namespace Content.Server.Tools.Components
                 var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
-                    var drained = targetSolution.Drain(trans);
-                    _solutionComponent.TryAddSolution(drained);
+                    var drained = EntitySystem.Get<ChemistrySystem>().Drain(targetSolution, trans);
+                    EntitySystem.Get<ChemistrySystem>().TryAddSolution(_solutionComponent, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("welder-component-after-interact-refueled-message"));
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("welder-component-after-interact-refueled-message"));
                 }
             }
 

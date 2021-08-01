@@ -11,6 +11,7 @@ using Content.Server.Plants;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
@@ -729,7 +730,7 @@ namespace Content.Server.Botany.Components
                     }
                 }
 
-                var split = solution.Drain(amount);
+                var split = EntitySystem.Get<ChemistrySystem>().Drain(solution, amount);
                 if (split.TotalVolume == 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",("owner", usingItem)));
@@ -740,7 +741,7 @@ namespace Content.Server.Botany.Components
                                                       ("owner",Owner),
                                                       ("amount",split.TotalVolume)));
 
-                _solutionContainer?.TryAddSolution(split);
+                EntitySystem.Get<ChemistrySystem>().TryAddSolution(_solutionContainer, split);
 
                 ForceUpdateByExternalCause();
 
@@ -800,7 +801,8 @@ namespace Content.Server.Botany.Components
                 if (usingItem.TryGetComponent(out SolutionContainerComponent? solution2))
                 {
                     // This deliberately discards overfill.
-                    _solutionContainer?.TryAddSolution(solution2.SplitSolution(solution2.Solution.TotalVolume));
+                    EntitySystem.Get<ChemistrySystem>().TryAddSolution(_solutionContainer,
+                        EntitySystem.Get<ChemistrySystem>().SplitSolution(solution2, solution2.Solution.TotalVolume));
 
                     ForceUpdateByExternalCause();
                 }

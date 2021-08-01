@@ -1,82 +1,13 @@
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
-using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry
 {
-    /// <summary>
-    /// This event alerts system that the solution was changed
-    /// </summary>
-    public class SolutionChangeEvent : EntityEventArgs
-    {
-        public IEntity Owner { get; }
-
-        public SolutionChangeEvent(IEntity owner)
-        {
-            Owner = owner;
-        }
-    }
-
-    /// <summary>
-    /// This event is used when sy
-    /// </summary>
-    public class SolutionInteractionEvent : EntityEventArgs
-    {
-
-    }
-
     [UsedImplicitly]
-    public class ChemistrySystem : EntitySystem
+    public partial class ChemistrySystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<SolutionContainerComponent, ExaminedEvent>(OnExamineSolution);
-        }
-
-        private void OnExamineSolution(EntityUid uid, SolutionContainerComponent component, ExaminedEvent args)
-        {
-            if (!component.CanExamineContents)
-                return;
-
-            if (component.ReagentList.Count == 0)
-            {
-                args.Message.AddText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
-                return;
-            }
-
-            var primaryReagent = component.Solution.GetPrimaryReagentId();
-            if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
-            {
-                Logger.Error(
-                    $"{nameof(SolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
-                return;
-            }
-
-            var colorHex =
-                component.Color
-                    .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
-            var messageString = "shared-solution-container-component-on-examine-main-text";
-
-            args.Message.AddMarkup(Loc.GetString(messageString,
-                ("color", colorHex),
-                ("wordedAmount", Loc.GetString(component.ReagentList.Count == 1
-                    ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
-                    : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-                ("desc", Loc.GetString(proto.PhysicalDescription))));
-        }
-
-
         public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume,
             Solution.Solution? source)
         {

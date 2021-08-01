@@ -6,6 +6,7 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
@@ -18,6 +19,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.ViewVariables;
@@ -237,7 +239,8 @@ namespace Content.Server.Chemistry.Components
                         BufferSolution.RemoveReagent(id, actualAmount);
                         if (_bufferModeTransfer)
                         {
-                            beakerSolution.TryAddReagent(id, actualAmount, out var _);
+                            EntitySystem.Get<ChemistrySystem>()
+                                .TryAddReagent(beakerSolution, id, actualAmount, out var _);
                             // beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
 
@@ -261,7 +264,7 @@ namespace Content.Server.Chemistry.Components
                             actualAmount = ReagentUnit.Min(reagent.Quantity, amount);
                         }
 
-                        beakerSolution.TryRemoveReagent(id, actualAmount);
+                        EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(beakerSolution, id, actualAmount);
                         BufferSolution.AddReagent(id, actualAmount);
                         break;
                     }
@@ -290,7 +293,7 @@ namespace Content.Server.Chemistry.Components
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
                     bottle.TryGetComponent<SolutionContainerComponent>(out var bottleSolution);
-                    bottleSolution?.TryAddSolution(bufferSolution);
+                    EntitySystem.Get<ChemistrySystem>().TryAddSolution(bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -323,7 +326,7 @@ namespace Content.Server.Chemistry.Components
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
                     pill.TryGetComponent<SolutionContainerComponent>(out var pillSolution);
-                    pillSolution?.TryAddSolution(bufferSolution);
+                    EntitySystem.Get<ChemistrySystem>().TryAddSolution(pillSolution, bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&

@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Robust.Server.GameObjects;
@@ -41,7 +42,7 @@ namespace Content.Server.Botany.Components
 
             var solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
 
-            solutionContainer.RemoveAllSolution();
+            EntitySystem.Get<ChemistrySystem>().RemoveAllSolution(solutionContainer);
 
             foreach (var (chem, quantity) in Seed.Chemicals)
             {

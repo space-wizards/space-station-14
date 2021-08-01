@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Weapon.Ranged.Barrels.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -28,6 +30,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
                 return;
 
             var projectiles = barrelFired.FiredProjectiles;
+            var chemSystem = EntitySystem.Get<ChemistrySystem>();
 
             var projectileSolutionContainers = new List<SolutionContainerComponent>();
             foreach (var projectile in projectiles)
@@ -45,11 +48,11 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             foreach (var projectileSolutionContainer in projectileSolutionContainers)
             {
-                var solutionToTransfer = ammoSolutionContainer.SplitSolution(solutionPerProjectile);
-                projectileSolutionContainer.TryAddSolution(solutionToTransfer);
+                var solutionToTransfer = chemSystem.SplitSolution(ammoSolutionContainer, solutionPerProjectile);
+                chemSystem.TryAddSolution(projectileSolutionContainer, solutionToTransfer);
             }
 
-            ammoSolutionContainer.RemoveAllSolution();
+            chemSystem.RemoveAllSolution(ammoSolutionContainer);
         }
     }
 }

@@ -13,10 +13,10 @@ namespace Content.Server.PowerCell
         {
             base.Initialize();
 
-            SubscribeLocalEvent<PowerCellComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<PowerCellComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
         {
             component.IsRigged = args.Owner.TryGetComponent(out SolutionContainerComponent? solution)
                                 && solution.Solution.ContainsReagent("Plasma", out var plasma)

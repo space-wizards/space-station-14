@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -51,8 +52,7 @@ namespace Content.Server.Fluids.Components
 
         private CancellationTokenSource? _evaporationToken;
 
-        [DataField("evaporate_threshold")]
-        private ReagentUnit
+        [DataField("evaporate_threshold")] private ReagentUnit
             _evaporateThreshold =
                 ReagentUnit.New(20); // How few <Solution Quantity> we can hold prior to self-destructing
 
@@ -171,7 +171,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var result = _contents.TryAddSolution(solution);
+            var result = EntitySystem.Get<ChemistrySystem>().TryAddSolution(_contents, solution);
             if (!result)
             {
                 return false;
@@ -201,7 +201,7 @@ namespace Content.Server.Fluids.Components
 
         internal Solution SplitSolution(ReagentUnit quantity)
         {
-            var split = _contents.SplitSolution(quantity);
+            var split = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, quantity);
             CheckEvaporate();
             UpdateAppearance();
             return split;
@@ -217,7 +217,9 @@ namespace Content.Server.Fluids.Components
 
         public void Evaporate()
         {
-            _contents.SplitSolution(ReagentUnit.Min(ReagentUnit.New(1), _contents.CurrentVolume));
+            EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents,
+                ReagentUnit.Min(ReagentUnit.New(1), _contents.CurrentVolume));
+
             if (CurrentVolume == 0)
             {
                 Owner.Delete();
@@ -327,7 +329,7 @@ namespace Content.Server.Fluids.Components
                     {
                         var adjacentPuddle = adjacent();
                         var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
-                        var spillAmount = _contents.SplitSolution(quantity);
+                        var spillAmount = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, quantity);
 
                         adjacentPuddle.TryAddSolution(spillAmount, false, false, false);
                         nextPuddles.Add(adjacentPuddle);

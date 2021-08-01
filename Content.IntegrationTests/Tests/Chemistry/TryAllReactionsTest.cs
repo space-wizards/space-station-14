@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Solution.Components;
 using NUnit.Framework;
@@ -42,7 +43,8 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     Assert.That(beaker.TryGetComponent(out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
-                        Assert.That(component.TryAddReagent(id, reactant.Amount, out var quantity));
+                        Assert.That(EntitySystem.Get<ChemistrySystem>()
+                            .TryAddReagent(component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
                 });

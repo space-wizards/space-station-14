@@ -20,7 +20,7 @@ namespace Content.Server.Tools
         {
             base.Initialize();
 
-            SubscribeLocalEvent<WelderComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnExamine);
         }
 
@@ -44,7 +44,7 @@ namespace Content.Server.Tools
             }
         }
 
-        private void OnSolutionChange(EntityUid uid, WelderComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, WelderComponent component, SolutionChangedEvent args)
         {
             component.Dirty();
         }

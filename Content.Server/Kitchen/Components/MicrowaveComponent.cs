@@ -13,6 +13,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -38,7 +39,6 @@ namespace Content.Server.Kitchen.Components
     public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly RecipeManager _recipeManager = default!;
-
         #region YAMLSERIALIZE
         [DataField("cookTime")]
         private uint _cookTimeDefault = 5;
@@ -262,8 +262,8 @@ namespace Content.Server.Kitchen.Components
                 }
 
                 //Move units from attackSolution to targetSolution
-                var removedSolution = attackSolution.Drain(realTransferAmount);
-                if (!solution.TryAddSolution(removedSolution))
+                var removedSolution = EntitySystem.Get<ChemistrySystem>().Drain(attackSolution, realTransferAmount);
+                if (!EntitySystem.Get<ChemistrySystem>().TryAddSolution(solution, removedSolution))
                 {
                     return false;
                 }
@@ -377,7 +377,7 @@ namespace Content.Server.Kitchen.Components
         {
             if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
-                solution.RemoveAllSolution();
+                EntitySystem.Get<ChemistrySystem>().RemoveAllSolution(solution);
             }
         }
 
@@ -385,7 +385,8 @@ namespace Content.Server.Kitchen.Components
         {
             if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
-                solution?.TryRemoveReagent(reagentQuantity.ReagentId, reagentQuantity.Quantity);
+                EntitySystem.Get<ChemistrySystem>()
+                    .TryRemoveReagent(solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
             }
         }
 
@@ -426,7 +427,8 @@ namespace Content.Server.Kitchen.Components
 
             foreach(var recipeReagent in recipe.IngredientsReagents)
             {
-                solution?.TryRemoveReagent(recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
+                EntitySystem.Get<ChemistrySystem>()
+                    .TryRemoveReagent(solution, recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)

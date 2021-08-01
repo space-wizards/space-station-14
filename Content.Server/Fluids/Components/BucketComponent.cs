@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -8,6 +9,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -106,8 +108,8 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var solution = contents.SplitSolution(transferAmount);
-            if (!mopContents.TryAddSolution(solution))
+            var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount);
+            if (!EntitySystem.Get<ChemistrySystem>().TryAddSolution(mopContents, solution))
             {
                 return false;
             }

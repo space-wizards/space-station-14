@@ -12,10 +12,10 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.Initialize();
             
-            SubscribeLocalEvent<ReagentDispenserComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<ReagentDispenserComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, ReagentDispenserComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, ReagentDispenserComponent component, SolutionChangedEvent args)
         {
             component.UpdateUserInterface();
         }

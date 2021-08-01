@@ -7,6 +7,7 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
@@ -269,7 +270,7 @@ namespace Content.Server.Chemistry.Components
             if (solution is null)
                 return;
 
-            solution.RemoveAllSolution();
+            EntitySystem.Get<ChemistrySystem>().RemoveAllSolution(solution);
 
             UpdateUserInterface();
         }
@@ -286,7 +287,8 @@ namespace Content.Server.Chemistry.Components
             if (solution is null)
                 return;
 
-            solution.TryAddReagent(Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+            EntitySystem.Get<ChemistrySystem>()
+                .TryAddReagent(solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }

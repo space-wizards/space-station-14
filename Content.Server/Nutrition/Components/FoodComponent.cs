@@ -6,6 +6,7 @@ using Content.Server.Body.Behavior;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -28,11 +29,17 @@ namespace Content.Server.Nutrition.Components
     {
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+        [ViewVariables]
+        [DataField("useSound")]
+        protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
 
-        [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
+        [ViewVariables]
+        [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        protected virtual string? TrashPrototype { get; set; }
 
-        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        [ViewVariables]
+        [DataField("transferAmount")]
+        protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
 
         [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
 
@@ -48,7 +55,7 @@ namespace Content.Server.Nutrition.Components
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
             }
         }
 
@@ -108,7 +115,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             var utensils = utensilUsed != null
-                ? new List<UtensilComponent> {utensilUsed}
+                ? new List<UtensilComponent> { utensilUsed }
                 : null;
 
             if (_utensilsNeeded != UtensilType.None)
@@ -132,7 +139,8 @@ namespace Content.Server.Nutrition.Components
 
                 if (!types.HasFlag(_utensilsNeeded))
                 {
-                    trueTarget.PopupMessage(user, Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
+                    trueTarget.PopupMessage(user,
+                        Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
                     return false;
                 }
             }
@@ -143,7 +151,8 @@ namespace Content.Server.Nutrition.Components
             }
 
             var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
-            var split = solution.SplitSolution(transferAmount);
+            var split = EntitySystem.Get<ChemistrySystem>()
+                .SplitSolution(solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)

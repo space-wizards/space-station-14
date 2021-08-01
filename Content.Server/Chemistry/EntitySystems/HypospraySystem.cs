@@ -16,10 +16,10 @@ namespace Content.Server.Chemistry.EntitySystems
 
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, ClickAttackEvent>(OnClickAttack);
-            SubscribeLocalEvent<HyposprayComponent, SolutionChangeEvent>(OnSolutionChange);
+            SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 
-        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangeEvent args)
+        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
         {
             component.Dirty();
         }

@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
@@ -88,7 +89,8 @@ namespace Content.Server.Fluids.Components
                 if (currentVolume > 0)
                 {
                     // Drop the liquid on the mop on to the ground
-                    contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                    EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, CurrentVolume)
+                        .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
                     return true;
                 }
 
@@ -154,11 +156,12 @@ namespace Content.Server.Fluids.Components
             if (
                 puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount)
+                    .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {
-                contents.SplitSolution(transferAmount);
+                EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount);
             }
 
             if (!string.IsNullOrWhiteSpace(_pickupSound))
