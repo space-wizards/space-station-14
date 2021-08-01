@@ -14,8 +14,6 @@ namespace Content.Shared.Tabletop.Events
     [Serializable, NetSerializable]
     public class TabletopPlayEvent : EntityEventArgs
     {
-        [Dependency] private IEntityManager _entityManager = default!;
-
         public EntityUid CameraUid;
         public string Title;
         public Vector2i Size;

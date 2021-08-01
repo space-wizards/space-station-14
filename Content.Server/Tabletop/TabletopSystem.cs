@@ -1,4 +1,5 @@
 ﻿using Content.Server.Tabletop.Components;
+using Content.Shared.GameTicking;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -19,7 +20,7 @@ namespace Content.Server.Tabletop
         public override void Initialize()
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(TabletopMoveHandler);
-            _tabletopMapId = _mapManager.CreateMap();
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Cleanup);
         }
 
         private void TabletopMoveHandler(TabletopMoveEvent msg)
@@ -41,7 +42,7 @@ namespace Content.Server.Tabletop
             var entityManager = component.Owner.EntityManager;
             var viewSubscriberSystem = Get<ViewSubscriberSystem>();
 
-            var viewCoordinates = new MapCoordinates((0, 0), _tabletopMapId);
+            var viewCoordinates = new MapCoordinates((0, 0), EnsureMapCreated());
             var camera = entityManager.SpawnEntity(null, viewCoordinates);
 
             var eyeComponent = camera.EnsureComponent<EyeComponent>();
@@ -51,6 +52,21 @@ namespace Content.Server.Tabletop
             entityManager.SpawnEntity("Crowbar", viewCoordinates);
 
             return camera;
+        }
+
+        private void Cleanup(RoundRestartCleanupEvent args)
+        {
+
+        }
+
+        private MapId EnsureMapCreated()
+        {
+            if (_tabletopMapId.Equals(MapId.Nullspace))
+            {
+                _tabletopMapId = _mapManager.CreateMap();
+            }
+
+            return _tabletopMapId;
         }
     }
 }
