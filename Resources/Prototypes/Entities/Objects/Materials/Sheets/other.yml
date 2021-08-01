@@ -101,6 +101,7 @@
   - type: Tag
     tags:
     - Grindable
+    - Sheet
 
 - type: entity
   parent: SheetPlasma
