@@ -6,7 +6,6 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
@@ -33,13 +32,14 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing, ISolutionChange
+    public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
     {
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private bool _bufferModeTransfer = true;
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables]
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private readonly Solution BufferSolution = new();
 
@@ -165,15 +165,17 @@ namespace Content.Server.Chemistry.Components
             if (beaker == null)
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
-                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
+                    "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
+                    BufferSolution.TotalVolume);
             }
 
             var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ChemMasterBoundUserInterfaceState(Powered, true, solution.CurrentVolume, solution.MaxVolume,
-                beaker.Name, Owner.Name, solution.ReagentList, BufferSolution.Contents, _bufferModeTransfer, BufferSolution.TotalVolume);
+                beaker.Name, Owner.Name, solution.ReagentList, BufferSolution.Contents, _bufferModeTransfer,
+                BufferSolution.TotalVolume);
         }
 
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
@@ -190,13 +192,14 @@ namespace Content.Server.Chemistry.Components
 
             var beaker = _beakerContainer.ContainedEntity;
 
-            if(beaker is null)
+            if (beaker is null)
                 return;
 
             _beakerContainer.Remove(beaker);
             UpdateUserInterface();
 
-            if(!user.TryGetComponent<HandsComponent>(out var hands) || !beaker.TryGetComponent<ItemComponent>(out var item))
+            if (!user.TryGetComponent<HandsComponent>(out var hands) ||
+                !beaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             if (hands.CanPutInHand(item))
                 hands.PutInHand(item);
@@ -207,7 +210,7 @@ namespace Content.Server.Chemistry.Components
             if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = _beakerContainer.ContainedEntity;
 
-            if(beaker is null)
+            if (beaker is null)
                 return;
 
             var beakerSolution = beaker.GetComponent<SolutionContainerComponent>();
@@ -218,7 +221,9 @@ namespace Content.Server.Chemistry.Components
                     if (reagent.ReagentId == id)
                     {
                         ReagentUnit actualAmount;
-                        if (amount == ReagentUnit.New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
+                        if (
+                            amount == ReagentUnit
+                                .New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
                         {
                             actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.EmptyVolume);
                         }
@@ -234,9 +239,9 @@ namespace Content.Server.Chemistry.Components
                             beakerSolution.TryAddReagent(id, actualAmount, out var _);
                             // beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
+
                         break;
                     }
-
                 }
             }
             else
@@ -254,6 +259,7 @@ namespace Content.Server.Chemistry.Components
                         {
                             actualAmount = ReagentUnit.Min(reagent.Quantity, amount);
                         }
+
                         beakerSolution.TryRemoveReagent(id, actualAmount);
                         BufferSolution.AddReagent(id, actualAmount);
                         break;
@@ -301,7 +307,6 @@ namespace Content.Server.Chemistry.Components
                     //Give it an offset
                     bottle.RandomOffset(0.2f);
                 }
-
             }
             else //Pills
             {
@@ -328,7 +333,6 @@ namespace Content.Server.Chemistry.Components
                             hands.PutInHand(item);
                             continue;
                         }
-
                     }
 
                     //Put it on the floor
@@ -396,7 +400,9 @@ namespace Content.Server.Chemistry.Components
                 else if (!solution.CanUseWithChemDispenser)
                 {
                     //If it can't fit in the chem master, don't put it in. For example, buckets and mop buckets can't fit.
-                    Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-container-too-large-message",("container", activeHandEntity)));
+                    Owner.PopupMessage(args.User,
+                        Loc.GetString("chem-master-component-container-too-large-message",
+                            ("container", activeHandEntity)));
                 }
                 else
                 {
@@ -406,17 +412,17 @@ namespace Content.Server.Chemistry.Components
             }
             else
             {
-                Owner.PopupMessage(args.User, Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
+                Owner.PopupMessage(args.User,
+                    Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
             }
 
             return true;
         }
 
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
-
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner,
+                AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]
@@ -439,6 +445,5 @@ namespace Content.Server.Chemistry.Components
                 component.TryEject(user);
             }
         }
-
     }
 }

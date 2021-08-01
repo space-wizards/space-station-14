@@ -21,7 +21,7 @@ namespace Content.Server.PowerCell.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(BatteryComponent))]
-    public class PowerCellComponent : BatteryComponent, IExamine, ISolutionChange
+    public class PowerCellComponent : BatteryComponent, IExamine
     {
         public override string Name => "PowerCell";
 
@@ -29,7 +29,7 @@ namespace Content.Server.PowerCell.Components
         [DataField("cellSize")]
         private PowerCellSize _cellSize = PowerCellSize.Small;
 
-        [ViewVariables] public bool IsRigged { get; private set; }
+        [ViewVariables] public bool IsRigged { get; set; }
 
         protected override void Initialize()
         {
@@ -95,13 +95,6 @@ namespace Content.Server.PowerCell.Components
             {
                 message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100}:F0")));
             }
-        }
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            IsRigged = Owner.TryGetComponent(out SolutionContainerComponent? solution)
-                       && solution.Solution.ContainsReagent("Plasma", out var plasma)
-                       && plasma >= 5;
         }
     }
 

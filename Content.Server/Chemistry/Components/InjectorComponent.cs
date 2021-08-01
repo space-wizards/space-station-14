@@ -22,7 +22,7 @@ namespace Content.Server.Chemistry.Components
     /// containers, and can directly inject into a mobs bloodstream.
     /// </summary>
     [RegisterComponent]
-    public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse, ISolutionChange
+    public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use
@@ -286,11 +286,6 @@ namespace Content.Server.Chemistry.Components
             {
                 ToggleState = InjectorToggleMode.Inject;
             }
-        }
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            Dirty();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

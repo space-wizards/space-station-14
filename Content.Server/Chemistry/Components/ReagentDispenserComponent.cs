@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing, ISolutionChange
+    public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing
     {
         private static ReagentInventoryComparer _comparer = new();
 
@@ -223,7 +223,7 @@ namespace Content.Server.Chemistry.Components
                 beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
         }
 
-        private void UpdateUserInterface()
+        public void UpdateUserInterface()
         {
             var state = GetUserInterfaceState();
             UserInterface?.SetState(state);
@@ -353,8 +353,6 @@ namespace Content.Server.Chemistry.Components
 
             return true;
         }
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => UpdateUserInterface();
 
         private void ClickSound()
         {

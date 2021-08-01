@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
@@ -14,19 +12,16 @@ using Robust.Shared.Prototypes;
 namespace Content.Shared.Chemistry
 {
     /// <summary>
-    /// This interface gives components behavior on whether entities solution (implying SolutionComponent is in place) is changed
+    /// This event alerts system that the solution was changed
     /// </summary>
-    public interface ISolutionChange
+    public class SolutionChangeEvent : EntityEventArgs
     {
-        /// <summary>
-        /// Called when solution is mixed with some other solution, or when some part of the solution is removed
-        /// </summary>
-        void SolutionChanged(SolutionChangeEventArgs eventArgs);
-    }
+        public IEntity Owner { get; }
 
-    public class SolutionChangeEventArgs : EventArgs
-    {
-        public IEntity Owner { get; set; } = default!;
+        public SolutionChangeEvent(IEntity owner)
+        {
+            Owner = owner;
+        }
     }
 
     [UsedImplicitly]
@@ -55,11 +50,14 @@ namespace Content.Shared.Chemistry
             var primaryReagent = component.Solution.GetPrimaryReagentId();
             if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
             {
-                Logger.Error($"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
+                Logger.Error(
+                    $"{nameof(SharedSolutionContainerComponent)} could not find the prototype associated with {primaryReagent}.");
                 return;
             }
 
-            var colorHex = component.Color.ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
+            var colorHex =
+                component.Color
+                    .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
             var messageString = "shared-solution-container-component-on-examine-main-text";
 
             args.Message.AddMarkup(Loc.GetString(messageString,
@@ -70,30 +68,16 @@ namespace Content.Shared.Chemistry
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
-        public void HandleSolutionChange(IEntity owner)
-        {
-            var eventArgs = new SolutionChangeEventArgs
-            {
-                Owner = owner,
-            };
-            var solutionChangeArgs = owner.GetAllComponents<ISolutionChange>().ToList();
 
-            foreach (var solutionChangeArg in solutionChangeArgs)
-            {
-                solutionChangeArg.SolutionChanged(eventArgs);
-
-                if (owner.Deleted)
-                    return;
-            }
-        }
-
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution.Solution? source)
+        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume,
+            Solution.Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent, ReagentUnit reactVolume, Solution.Solution? source)
+        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent,
+            ReagentUnit reactVolume, Solution.Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

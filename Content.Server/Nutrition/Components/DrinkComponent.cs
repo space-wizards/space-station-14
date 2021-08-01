@@ -31,7 +31,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IUse, IAfterInteract, ISolutionChange, IExamine, ILand
+    public class DrinkComponent : Component, IUse, IAfterInteract, IExamine, ILand
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -105,12 +105,8 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            UpdateAppearance();
-        }
-
-        private void UpdateAppearance()
+        // TODO move to DrinkSystem
+        public void UpdateAppearance()
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
                 !Owner.TryGetComponent(out ISolutionInteractionsComponent? contents))

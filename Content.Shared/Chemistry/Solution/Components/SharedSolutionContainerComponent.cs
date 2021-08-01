@@ -164,7 +164,7 @@ namespace Content.Shared.Chemistry.Solution.Components
 
         private void SolutionChanged()
         {
-            EntitySystem.Get<ChemistrySystem>().HandleSolutionChange(Owner);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new SolutionChangeEvent(Owner));
         }
 
         private void ProcessReactions()

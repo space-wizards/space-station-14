@@ -1,19 +1,15 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Act;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Server.Items;
 using Content.Server.Notification;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Temperature;
 using Content.Shared.Tool;
@@ -26,7 +22,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tools.Components
@@ -36,7 +31,7 @@ namespace Content.Server.Tools.Components
     [ComponentReference(typeof(IToolComponent))]
     [ComponentReference(typeof(IHotItem))]
     [NetworkedComponent()]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
+    public class WelderComponent : ToolComponent, IUse, ISuicideAct,  IHotItem, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -223,26 +218,6 @@ namespace Content.Server.Tools.Components
             return ToggleWelderStatus(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (WelderLit)
-            {
-                message.AddMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message") + "\n");
-            }
-            else
-            {
-                message.AddText(Loc.GetString("welder-component-on-examine-welder-not-lit-message") + "\n");
-            }
-
-            if (inDetailsRange)
-            {
-                message.AddMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                                                ("colorName", Fuel < FuelCapacity / 4f ? "darkorange" : "orange"),
-                                                ("fuelLeft", Math.Round(Fuel)),
-                                                ("fuelCapacity", FuelCapacity)));
-            }
-        }
-
         protected override void Shutdown()
         {
             base.Shutdown();
@@ -291,12 +266,6 @@ namespace Content.Server.Tools.Components
 
             return SuicideKind.Blunt;
         }
-
-        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            Dirty();
-        }
-
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

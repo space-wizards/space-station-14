@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange
+    public sealed class HyposprayComponent : SharedHyposprayComponent
     {
         [DataField("ClumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -59,7 +59,8 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",("other", target)));
+            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",
+                ("other", target)));
             if (target != user)
             {
                 target.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
@@ -77,7 +78,9 @@ namespace Content.Server.Chemistry.Components
 
             if (realTransferAmount <= 0)
             {
-                user.PopupMessage(user, Loc.GetString("hypospray-component-transfer-already-full-message ",("owner", targetSolution.Owner)));
+                user.PopupMessage(user,
+                    Loc.GetString("hypospray-component-transfer-already-full-message ",
+                        ("owner", targetSolution.Owner)));
                 return true;
             }
 
@@ -101,11 +104,6 @@ namespace Content.Server.Chemistry.Components
             }
 
             return true;
-        }
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            Dirty();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

@@ -13,14 +13,12 @@ using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
@@ -37,7 +35,7 @@ namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISolutionChange, ISuicideAct, IBreakAct
+    public class MicrowaveComponent : SharedMicrowaveComponent, IActivate, IInteractUsing, ISuicideAct, IBreakAct
     {
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
@@ -72,7 +70,10 @@ namespace Content.Server.Kitchen.Components
         private bool _lostPower = false;
         private int _currentCookTimeButtonIndex = 0;
 
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs) => _uiDirty = true;
+        public void DirtyUi()
+        {
+            _uiDirty = true;
+        }
         private AudioSystem _audioSystem = default!;
         private Container _storage = default!;
 
