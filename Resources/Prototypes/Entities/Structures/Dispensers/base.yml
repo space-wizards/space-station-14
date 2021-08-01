@@ -26,7 +26,6 @@
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key
       type: ReagentDispenserBoundUserInterface
-  - type: LoopingSound
   - type: Anchorable
   - type: Pullable
   - type: Damageable

@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.SubFloor;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -69,13 +70,16 @@ namespace Content.Client.Atmos.Visualizers
             if (!component.TryGetData(PipeVisuals.VisualState, out PipeVisualState state))
                 return;
 
+            if(!component.TryGetData(SubFloorVisuals.SubFloor, out bool subfloor))
+                subfloor = true;
+
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
             {
                 var dir = (PipeDirection) layerKey;
                 var layerVisible = state.ConnectedDirections.HasDirection(dir);
 
                 var layer = sprite.LayerMapGet(layerKey);
-                sprite.LayerSetVisible(layer, layerVisible);
+                sprite.LayerSetVisible(layer, layerVisible && subfloor);
                 sprite.LayerSetColor(layer, color);
             }
         }

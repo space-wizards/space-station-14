@@ -183,9 +183,6 @@
   desc: A combination of cream, wine and moonshine. Why would you do this?
   physicalDesc: foul
   color: "#a6969a"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: Lean
@@ -193,9 +190,6 @@
   desc: Turn up for days.
   physicalDesc: bubbly
   color: "#9400D3"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: LeanShine
@@ -203,8 +197,3 @@
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
-
-  

@@ -170,7 +170,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
-  - type: Metabolism
+  - type: Respirator
     suffocationDamageType: Asphyxiation
     metabolismHeat: 5000
     radiatedHeat: 400

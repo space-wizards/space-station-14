@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.Metabolizable;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -16,9 +15,6 @@ namespace Content.Shared.Chemistry.Reagent
     [DataDefinition]
     public class ReagentPrototype : IPrototype
     {
-        [DataField("metabolism", serverOnly: true)]
-        private readonly List<IMetabolizable> _metabolism = new() {new DefaultMetabolizable()};
-
         [DataField("tileReactions", serverOnly: true)]
         private readonly List<ITileReaction> _tileReactions = new(0);
 
@@ -60,7 +56,6 @@ namespace Content.Shared.Chemistry.Reagent
         public string SpriteReplacementPath { get; } = string.Empty;
 
         //List of metabolism effects this reagent has, should really only be used server-side.
-        public IReadOnlyList<IMetabolizable> Metabolism => _metabolism;
         public IReadOnlyList<ITileReaction> TileReactions => _tileReactions;
         public IReadOnlyList<IPlantMetabolizable> PlantMetabolism => _plantMetabolism;
 
