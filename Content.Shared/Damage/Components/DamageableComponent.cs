@@ -47,9 +47,9 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType => _damageDict;
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedDamageGroups);
-        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType => _damageDict;
 
         // TODO DAMAGE Cache this
         // Whenever sending over network, need a <string, int> dictionary
@@ -62,6 +62,9 @@ namespace Content.Shared.Damage.Components
         // "There should be a better way of doing this". I think might be a straight forward way is, and have some
         // comments in/on the damage.yml file, though maybe those are controversial oppinions about the definition of
         // damage groups.
+        //
+        // TODO PROTOTYPE Replace these datafield variables with prototype referencess, once they are supported.
+        // Also requires appropriate changes in OnExplosion() and RadiationAct()
         [ViewVariables]
         [DataField("radiationDamageTypes")]
         public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
@@ -484,9 +487,9 @@ namespace Content.Shared.Damage.Components
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
-            foreach (string damageTypeID in RadiationDamageTypeIDs)
+            foreach (var typeID in RadiationDamageTypeIDs)
             {
-                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), totalDamage, false, radiation.Owner);
+                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage, false, radiation.Owner);
             }
             
         }
@@ -501,9 +504,9 @@ namespace Content.Shared.Damage.Components
                 _ => throw new ArgumentOutOfRangeException()
             };
 
-            foreach (string damageTypeID in ExplosionDamageTypeIDs)
+            foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), damage, false);
+                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage, false);
             }
         }
 
