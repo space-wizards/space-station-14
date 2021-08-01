@@ -36,9 +36,6 @@ namespace Content.Server.Body.Respiratory
         private bool _isShivering;
         private bool _isSweating;
 
-
-        // TODO QUESTION Previously this was made a required datafield. I made it default to Asphyxiation. But should
-        // this even be a datafield? Doesn't the asphyxiation damage type exists exactly for this sort of purpose?
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("suffocationDamageType")]
