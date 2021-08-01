@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            if (grid.HasComponent<IGridAtmosphereComponent>())
+            if (grid.HasComponent<IAtmosphereComponent>())
             {
                 shell.WriteLine("Grid already has an atmosphere.");
                 return;

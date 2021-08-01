@@ -117,6 +117,10 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>All tile mixtures in a grid.</returns>
         public IEnumerable<GasMixture> GetAllTileMixtures(GridId grid, bool invalidate = false)
         {
+            // Return an array with a single space gas mixture for invalid grids.
+            if (!grid.IsValid())
+                return new []{ GasMixture.SpaceGas };
+
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<GasMixture>();
 
@@ -678,6 +682,10 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>The tile mixture, or null</returns>
         public GasMixture? GetTileMixture(GridId grid, Vector2i tile, bool invalidate = false)
         {
+            // Always return space gas mixtures for invalid grids (grid 0)
+            if (!grid.IsValid())
+                return GasMixture.SpaceGas;
+
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return null;
 
@@ -686,7 +694,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return GetTileMixture(gridAtmosphere, tile, invalidate);
             }
 
-            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out SpaceGridAtmosphereComponent? spaceAtmosphere))
+            if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out SpaceAtmosphereComponent? _))
             {
                 // Always return a new space gas mixture in this case.
                 return GasMixture.SpaceGas;
@@ -967,6 +975,10 @@ namespace Content.Server.Atmos.EntitySystems
         /// <returns>All adjacent tile gas mixtures to the tile in question</returns>
         public IEnumerable<GasMixture> GetAdjacentTileMixtures(GridId grid, Vector2i tile, bool includeBlocked = false, bool invalidate = false)
         {
+            // For invalid grids, return an array with a single space gas mixture in it.
+            if (!grid.IsValid())
+                return new []{ GasMixture.SpaceGas };
+
             if (!_mapManager.TryGetGrid(grid, out var mapGrid))
                 return Enumerable.Empty<GasMixture>();
 
@@ -1374,7 +1386,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return false;
 
             if (ComponentManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere)
-            && gridAtmosphere.AtmosDevices.Contains(atmosDevice))
+                && gridAtmosphere.AtmosDevices.Contains(atmosDevice))
             {
                 atmosDevice.JoinedGrid = null;
                 gridAtmosphere.AtmosDevices.Remove(atmosDevice);
