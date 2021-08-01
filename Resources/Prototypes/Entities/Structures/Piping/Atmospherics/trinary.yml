@@ -38,6 +38,12 @@
           state: pipeTJunction
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasFilter
 
 - type: entity
@@ -57,6 +63,12 @@
           state: pipeTJunction
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasFilter
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasMixer
       inletOne: inlet
       inletTwo: filter
