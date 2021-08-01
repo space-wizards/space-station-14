@@ -36,7 +36,7 @@ namespace Content.Server.Projectiles.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+        public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
@@ -46,9 +46,6 @@ namespace Content.Server.Projectiles.Components
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
-
-
-        public DamageTypePrototype DamageType => _damageType;
 
         public float MaxLength => 20.0f;
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
