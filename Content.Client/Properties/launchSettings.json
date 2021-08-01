@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Content.Client": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "Key": "Value"
+      }
+    }
+  }
+}
