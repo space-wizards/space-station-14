@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -44,6 +45,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentHandleState>(HandleComponentState);
         }
 
         public override void Shutdown()
@@ -52,6 +54,20 @@ namespace Content.Shared.SubFloor
 
             _mapManager.GridChanged -= MapManagerOnGridChanged;
             _mapManager.TileChanged -= MapManagerOnTileChanged;
+        }
+
+        public void SetEnabled(SubFloorHideComponent subFloor, bool enabled)
+        {
+            subFloor.Enabled = enabled;
+            subFloor.Dirty();
+            UpdateEntity(subFloor.Owner.Uid);
+        }
+
+        public void SetRequireAnchoring(SubFloorHideComponent subFloor, bool requireAnchored)
+        {
+            subFloor.RequireAnchored = requireAnchored;
+            subFloor.Dirty();
+            UpdateEntity(subFloor.Owner.Uid);
         }
 
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
@@ -70,6 +86,16 @@ namespace Content.Shared.SubFloor
             var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
 
             // We do this directly instead of calling UpdateEntity.
+            UpdateEntity(uid);
+        }
+
+        private void HandleComponentState(EntityUid uid, SubFloorHideComponent component, ComponentHandleState args)
+        {
+            if (args.Current is not SubFloorHideComponentState state)
+                return;
+
+            component.Enabled = state.Enabled;
+            component.RequireAnchored = state.RequireAnchored;
             UpdateEntity(uid);
         }
 
@@ -136,16 +162,21 @@ namespace Content.Shared.SubFloor
             if (subFloorHideEvent.Handled)
                 return;
 
-            // This might look weird, but basically we only need to query the SubFloorHide and Transform components
-            // if we are gonna hide the entity and we require it to be anchored to be hidden. Because getting components
-            // is "expensive", we have a slow path where we query them, and a fast path where we don't.
-            if (!subFloor
-                && ComponentManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent) &&
-                subFloorHideComponent.RequireAnchored
-                && ComponentManager.TryGetComponent(uid, out ITransformComponent? transformComponent))
+            // We only need to query the subfloor component to check if it's enabled or not when we're not on subfloor.
+            // Getting components is expensive, after all.
+            if (!subFloor && ComponentManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
             {
-                // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
-                subFloor = !transformComponent.Anchored;
+                // If the component isn't enabled, then subfloor will always be true, and the entity will be shown.
+                if (!subFloorHideComponent.Enabled)
+                {
+                    subFloor = true;
+                }
+                // We only need to query the TransformComp if the SubfloorHide is enabled and requires anchoring.
+                else if (subFloorHideComponent.RequireAnchored && ComponentManager.TryGetComponent(uid, out ITransformComponent? transformComponent))
+                {
+                    // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
+                    subFloor = !transformComponent.Anchored;
+                }
             }
 
             // Whether to show this entity as visible, visually.
