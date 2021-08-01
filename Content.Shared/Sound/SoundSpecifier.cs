@@ -8,13 +8,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Sound
 {
-    [DataDefinition]
+    [ImplicitDataDefinitionForInheritors]
     public abstract class SoundSpecifier
     {
         public abstract string GetSound();
     }
 
-    [DataDefinition]
     public sealed class SoundPathSpecifier : SoundSpecifier
     {
         public const string Node = "path";
@@ -42,7 +41,6 @@ namespace Content.Shared.Sound
         }
     }
 
-    [DataDefinition]
     public sealed class SoundCollectionSpecifier : SoundSpecifier
     {
         public const string Node = "collection";

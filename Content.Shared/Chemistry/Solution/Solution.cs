@@ -116,6 +116,27 @@ namespace Content.Shared.Chemistry.Solution
         }
 
         /// <summary>
+        ///     Scales the amount of solution.
+        /// </summary>
+        /// <param name="scale">The scalar to modify the solution by.</param>
+        public void ScaleSolution(float scale)
+        {
+            if (scale == 1) return;
+            var tempContents = new List<ReagentQuantity>(_contents);
+            foreach(ReagentQuantity current in tempContents)
+            {
+                if(scale > 1)
+                {
+                    AddReagent(current.ReagentId, current.Quantity * scale - current.Quantity);
+                }
+                else
+                {
+                    RemoveReagent(current.ReagentId, current.Quantity - current.Quantity * scale);
+                }
+            }
+        }
+
+        /// <summary>
         ///     Returns the amount of a single reagent inside the solution.
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>

@@ -1,9 +1,11 @@
+using System;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
@@ -146,10 +148,19 @@ namespace Content.Shared.SubFloor
                 subFloor = !transformComponent.Anchored;
             }
 
+            // Whether to show this entity as visible, visually.
+            var subFloorVisible = ShowAll || subFloor;
+
             // Show sprite
             if (ComponentManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
             {
-                spriteComponent.Visible = ShowAll || subFloor;
+                spriteComponent.Visible = subFloorVisible;
+            }
+
+            // Set an appearance data value so visualizers can use this as needed.
+            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
             }
 
             // So for collision all we care about is that the component is running.
@@ -168,5 +179,11 @@ namespace Content.Shared.SubFloor
         {
             SubFloor = subFloor;
         }
+    }
+
+    [Serializable, NetSerializable]
+    public enum SubFloorVisuals : byte
+    {
+        SubFloor,
     }
 }

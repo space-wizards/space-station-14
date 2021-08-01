@@ -32,7 +32,6 @@
       sprite: Objects/Misc/flare.rsi
       color: "#FF0000"
       HeldPrefix: unlit
-    - type: LoopingSound
     - type: Appearance
       visuals:
         - type: ExpendableLightVisualizer

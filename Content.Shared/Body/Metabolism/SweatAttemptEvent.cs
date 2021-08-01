@@ -1,6 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Metabolism.Events
+namespace Content.Shared.Body.Metabolism
 {
     public class SweatAttemptEvent : CancellableEntityEventArgs
     {

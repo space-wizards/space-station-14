@@ -1,7 +1,10 @@
-﻿using Content.Client.Light.Components;
+﻿using System;
+using Content.Client.Light.Components;
 using Content.Shared.Light.Component;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
 
 namespace Content.Client.Light.Visualizers
 {
@@ -17,7 +20,7 @@ namespace Content.Client.Light.Visualizers
                 return;
             }
 
-            if (component.TryGetData(ExpendableLightVisuals.State, out string lightBehaviourID))
+            if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {
                 if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
                 {
@@ -31,6 +34,35 @@ namespace Content.Client.Light.Visualizers
                     {
                         light.Enabled = false;
                     }
+                }
+            }
+
+            void TryStopStream(IPlayingAudioStream? stream)
+            {
+                try
+                {
+                    stream?.Stop();
+                }
+                catch (Exception _)
+                {
+                    // TODO: HOLY SHIT EXPOSE SOME DISPOSED PROPERTY ON PLAYING STREAM OR SOMETHING.
+                }
+            }
+
+            if (component.TryGetData(ExpendableLightVisuals.State, out ExpendableLightState state)
+            && component.Owner.TryGetComponent<ExpendableLightComponent>(out var expendableLight))
+            {
+                switch (state)
+                {
+                    case ExpendableLightState.Lit:
+                        TryStopStream(expendableLight.PlayingStream);
+                        expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(), expendableLight.LoopedSound,
+                            expendableLight.Owner, SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
+                        break;
+
+                    case ExpendableLightState.Dead:
+                        TryStopStream(expendableLight.PlayingStream);
+                        break;
                 }
             }
         }

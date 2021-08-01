@@ -89,9 +89,6 @@
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
   color: "#664330"
-  metabolism:
-    - !type:DefaultFood
-      rate: 1
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 1
@@ -218,9 +215,6 @@
   color: "#c0e0ff20"
   boilingPoint: 100.0
   meltingPoint: 0.0
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
   tileReactions:
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}

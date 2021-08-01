@@ -1,18 +1,18 @@
 ﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Metabolism
+namespace Content.Server.Body.Respiratory
 {
     [UsedImplicitly]
-    public class MetabolismSystem : EntitySystem
+    public class RespiratorSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var metabolism in ComponentManager.EntityQuery<MetabolismComponent>(true))
+            foreach (var respirator in ComponentManager.EntityQuery<RespiratorComponent>(false))
             {
-                metabolism.Update(frameTime);
+                respirator.Update(frameTime);
             }
         }
     }

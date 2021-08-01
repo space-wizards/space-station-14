@@ -23,7 +23,6 @@
       reagents:
       - ReagentId: Egg
         Quantity: 5
-  - type: LoopingSound
   - type: DamageOnLand
     amount: 1
   - type: DamageOtherOnHit

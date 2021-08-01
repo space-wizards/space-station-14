@@ -17,4 +17,3 @@
     size: 24
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     prefix: inhand
-  - type: LoopingSound
