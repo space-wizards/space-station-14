@@ -56,7 +56,7 @@ namespace Content.Client.MedicalScanner.UI
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
                 // Show the toal damage
-                var totalDamage = state.DamagePerSupportedGroupID.Values.Sum();
+                var totalDamage = state.DamagePerTypeID.Values.Sum();
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
                 // Keep track of how many damage types we have shown
