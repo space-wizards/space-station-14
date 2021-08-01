@@ -276,7 +276,7 @@ namespace Content.Server.Tools.Components
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
-                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
+                && eventArgs.Target.TryGetComponent(out SolutionContainerComponent? targetSolution)
                 && targetSolution.CanDrain
                 && _solutionComponent != null)
             {

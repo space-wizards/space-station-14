@@ -178,14 +178,14 @@ namespace Content.Shared.Chemistry.Solution.Components
                 .FullyReactSolution(Solution, Owner, MaxVolume);
         }
 
-        ReagentUnit ISolutionInteractionsComponent.RefillSpaceAvailable => EmptyVolume;
-        ReagentUnit ISolutionInteractionsComponent.InjectSpaceAvailable => EmptyVolume;
-        ReagentUnit ISolutionInteractionsComponent.DrawAvailable => CurrentVolume;
-        ReagentUnit ISolutionInteractionsComponent.DrainAvailable => CurrentVolume;
+        public ReagentUnit RefillSpaceAvailable => EmptyVolume;
+        public ReagentUnit InjectSpaceAvailable => EmptyVolume;
+        public ReagentUnit DrawAvailable => CurrentVolume;
+        public ReagentUnit DrainAvailable => CurrentVolume;
 
         [DataField("maxSpillRefill")] public ReagentUnit MaxSpillRefill { get; set; }
 
-        void ISolutionInteractionsComponent.Refill(Solution solution)
+        public void Refill(Solution solution)
         {
             if (!CanRefill)
                 return;
@@ -193,7 +193,7 @@ namespace Content.Shared.Chemistry.Solution.Components
             TryAddSolution(solution);
         }
 
-        void ISolutionInteractionsComponent.Inject(Solution solution)
+        public void Inject(Solution solution)
         {
             if (!CanInject)
                 return;
@@ -201,7 +201,7 @@ namespace Content.Shared.Chemistry.Solution.Components
             TryAddSolution(solution);
         }
 
-        Solution ISolutionInteractionsComponent.Draw(ReagentUnit amount)
+        public Solution Draw(ReagentUnit amount)
         {
             if (!CanDraw)
                 return new Solution();
@@ -209,7 +209,7 @@ namespace Content.Shared.Chemistry.Solution.Components
             return SplitSolution(amount);
         }
 
-        Solution ISolutionInteractionsComponent.Drain(ReagentUnit amount)
+        public Solution Drain(ReagentUnit amount)
         {
             if (!CanDrain)
                 return new Solution();

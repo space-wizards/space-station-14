@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry.Solution
     /// <summary>
     ///     Define common interaction behaviors for <see cref="SolutionContainerComponent"/>
     /// </summary>
-    /// <seealso cref="ISolutionInteractionsComponent"/>
+    /// <seealso cref="SolutionContainerComponent"/>
     [Flags]
     [Serializable, NetSerializable]
     public enum Capability : ushort

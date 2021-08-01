@@ -29,7 +29,7 @@ namespace Content.Server.Extinguisher
             }
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
-                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
+                && eventArgs.Target.TryGetComponent(out SolutionContainerComponent? targetSolution)
                 && targetSolution.CanDrain
                 && Owner.TryGetComponent(out SolutionContainerComponent? container))
             {

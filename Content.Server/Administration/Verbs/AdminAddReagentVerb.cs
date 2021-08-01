@@ -34,8 +34,7 @@ namespace Content.Server.Administration.Verbs
         {
             // ISolutionInteractionsComponent doesn't exactly have an interface for "admin tries to refill this", so...
             // Still have a path for SolutionContainerComponent in case it doesn't allow direct refilling.
-            if (!target.HasComponent<SolutionContainerComponent>()
-                && !(target.TryGetComponent(out ISolutionInteractionsComponent? interactions)
+            if (!(target.TryGetComponent(out SolutionContainerComponent? interactions)
                      && interactions.CanInject))
             {
                 data.Visibility = VerbVisibility.Invisible;
@@ -95,16 +94,6 @@ namespace Content.Server.Administration.Verbs
                     };
                 }
 
-                if (_target.TryGetComponent(out ISolutionInteractionsComponent? interactions))
-                {
-                    return new AdminAddReagentEuiState
-                    {
-                        // We don't exactly have an absolute total volume so good enough.
-                        CurVolume = ReagentUnit.Zero,
-                        MaxVolume = interactions.InjectSpaceAvailable
-                    };
-                }
-
                 return new AdminAddReagentEuiState
                 {
                     CurVolume = ReagentUnit.Zero,
@@ -133,12 +122,17 @@ namespace Content.Server.Administration.Verbs
 
                         if (_target.TryGetComponent(out SolutionContainerComponent? container))
                         {
-                            container.TryAddReagent(id, amount, out _);
-                        }
-                        else if (_target.TryGetComponent(out ISolutionInteractionsComponent? interactions))
-                        {
-                            var solution = new Solution(id, amount);
-                            interactions.Inject(solution);
+                            // TODO how do we decide when to inject?
+                            if (container.CanInject)
+                            {
+                                var solution = new Solution(id, amount);
+                                container.Inject(solution);
+                            }
+                            else
+                            {
+                                container.TryAddReagent(id, amount, out _);
+                            }
+
                         }
 
                         StateDirty();

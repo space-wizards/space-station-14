@@ -118,7 +118,7 @@ namespace Content.Server.Chemistry.Components
             var targetEntity = eventArgs.Target;
 
             // Handle injecting/drawing for solutions
-            if (targetEntity.TryGetComponent<ISolutionInteractionsComponent>(out var targetSolution))
+            if (targetEntity.TryGetComponent<SolutionContainerComponent>(out var targetSolution))
             {
                 if (ToggleState == InjectorToggleMode.Inject)
                 {
@@ -207,7 +207,7 @@ namespace Content.Server.Chemistry.Components
             AfterInject();
         }
 
-        private void TryInject(ISolutionInteractionsComponent targetSolution, IEntity user)
+        private void TryInject(SolutionContainerComponent targetSolution, IEntity user)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solution) || solution.CurrentVolume == 0)
             {
@@ -247,7 +247,7 @@ namespace Content.Server.Chemistry.Components
             }
         }
 
-        private void TryDraw(ISolutionInteractionsComponent targetSolution, IEntity user)
+        private void TryDraw(SolutionContainerComponent targetSolution, IEntity user)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solution) || solution.EmptyVolume == 0)
             {

@@ -242,7 +242,7 @@ namespace Content.Server.Kitchen.Components
 
             if (itemEntity.TryGetComponent<SolutionTransferComponent>(out var attackPourable))
             {
-                if (!itemEntity.TryGetComponent<ISolutionInteractionsComponent>(out var attackSolution)
+                if (!itemEntity.TryGetComponent<SolutionContainerComponent>(out var attackSolution)
                     || !attackSolution.CanDrain)
                 {
                     return false;

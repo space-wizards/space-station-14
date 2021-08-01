@@ -71,7 +71,7 @@ namespace Content.Server.Nutrition.Components
         }
 
         [ViewVariables]
-        public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
+        public bool Empty => Owner.GetComponentOrNull<SolutionContainerComponent>()?.DrainAvailable <= 0;
 
         [DataField("openSounds")]
         private string _soundCollection = "canOpenSounds";
@@ -109,7 +109,7 @@ namespace Content.Server.Nutrition.Components
         public void UpdateAppearance()
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !Owner.TryGetComponent(out ISolutionInteractionsComponent? contents))
+                !Owner.TryGetComponent(out SolutionContainerComponent? contents))
             {
                 return;
             }
@@ -130,7 +130,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? contents) ||
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
                 contents.DrainAvailable <= 0)
             {
                 args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty",("owner", Owner)));
@@ -170,7 +170,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? interactions) ||
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? interactions) ||
                 !interactions.CanDrain ||
                 interactions.DrainAvailable <= 0)
             {
@@ -237,7 +237,7 @@ namespace Content.Server.Nutrition.Components
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
-                Owner.TryGetComponent(out ISolutionInteractionsComponent? interactions))
+                Owner.TryGetComponent(out SolutionContainerComponent? interactions))
             {
                 Opened = true;
 

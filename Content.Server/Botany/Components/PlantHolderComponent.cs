@@ -713,7 +713,7 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (usingItem.TryGetComponent(out ISolutionInteractionsComponent? solution) && solution.CanDrain)
+            if (usingItem.TryGetComponent(out SolutionContainerComponent? solution) && solution.CanDrain)
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;

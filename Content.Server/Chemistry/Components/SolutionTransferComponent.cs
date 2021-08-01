@@ -125,11 +125,11 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? ownerSolution))
+            if (!Owner.TryGetComponent(out SolutionContainerComponent? ownerSolution))
                 return false;
 
             var target = eventArgs.Target;
-            if (!target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution))
+            if (!target.TryGetComponent(out SolutionContainerComponent? targetSolution))
             {
                 return false;
             }
@@ -170,8 +170,8 @@ namespace Content.Server.Chemistry.Components
 
         /// <returns>The actual amount transferred.</returns>
         private static ReagentUnit DoTransfer(
-            ISolutionInteractionsComponent source,
-            ISolutionInteractionsComponent target,
+            SolutionContainerComponent source,
+            SolutionContainerComponent target,
             ReagentUnit amount,
             IEntity user)
         {

@@ -119,7 +119,7 @@ namespace Content.Server.Fluids.Components
             var spillEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
             foreach (var spillEntity in spillEntities)
             {
-                if (spillEntity.TryGetComponent(out ISolutionInteractionsComponent? solutionContainerComponent) &&
+                if (spillEntity.TryGetComponent(out SolutionContainerComponent? solutionContainerComponent) &&
                     solutionContainerComponent.CanRefill)
                 {
                     solutionContainerComponent.Refill(
