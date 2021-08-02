@@ -159,30 +159,40 @@ namespace Content.Shared.Damage.Components
         {
             return SupportedDamageTypes.Contains(type);
         }
-        
 
 
-        public void SetGroupDamage(int newValue, DamageGroupPrototype group)
+
+        public bool TrySetDamage(DamageGroupPrototype group, int newValue, IEntity? source = null, DamageChangeParams? extraParams = null)
         {
+            // Is the damage group even supported?
+            if (!ApplicableDamageGroups.Contains(group))
+            {
+                return false;
+            }
+
+            var damageChanged = false;
             foreach (var type in group.DamageTypes)
             {
-                SetDamage(type, newValue);
+                damageChanged = damageChanged || TrySetDamage(type, newValue, source, extraParams );
             }
+            return damageChanged;
         }
 
-        public void SetAllDamage(int newValue)
+        public bool TrySetAllDamage(int newValue, IEntity? source = null, DamageChangeParams? extraParams = null)
         {
+            var damageChanged = false;
             foreach (var type in SupportedDamageTypes)
             {
-                SetDamage(type, newValue);
+                damageChanged = damageChanged || TrySetDamage(type, newValue, source, extraParams);
             }
+            return damageChanged;
         }
 
         // TODO QUESTION both source and extraParams are unused here. Should they be removed, or will they have use in
         // the future? The documentation for IDamageableComponent.SetDamage() mentions it would be used for targeting
         // limbs and such. But so far I've been under the assumption that each limb/organ would have it's own
         // DamageableComponent, and limb targeting would be elsewhere?
-        public bool ChangeDamage(
+        public bool TryChangeDamage(
             DamageTypePrototype type,
             int amount,
             bool ignoreDamageResistances = false,
@@ -197,7 +207,7 @@ namespace Content.Shared.Damage.Components
 
             if (amount == 0)
             {
-                return true;
+                return false;
             }
 
             // Apply resistances (does nothing if amount<0)
@@ -208,14 +218,14 @@ namespace Content.Shared.Damage.Components
             }
 
             if (finalDamage == 0)
-                return true;
+                return false;
 
             // Are we healing below zero?
             if (current + finalDamage < 0)
             {
                 if (current == 0)
                     // Damage type is supported, but there is nothing to do
-                    return true;
+                    return false;
 
                 // Cap healing down to zero
                 _damageDict[type] = 0;
@@ -236,16 +246,21 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
-        public bool ChangeDamage(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
+        public bool TryChangeDamage(
+            DamageGroupPrototype group,
+            int amount,
+            bool ignoreDamageResistances = false,
             IEntity? source = null,
             DamageChangeParams? extraParams = null)
         {
+            // Is the damage group even supported?
             if (!ApplicableDamageGroups.Contains(group))
             {
                 return false;
             }
 
             var types = group.DamageTypes.ToArray();
+            var damageChanged = false;
 
             if (amount < 0)
             {
@@ -281,13 +296,13 @@ namespace Content.Shared.Damage.Components
                         var healAmount = Math.Min(healingLeft, damage);
                         healAmount = Math.Min(healAmount, healPerType);
 
-                        ChangeDamage(type, -healAmount, ignoreDamageResistances, source, extraParams);
+                        damageChanged = damageChanged || TryChangeDamage(type, -healAmount, ignoreDamageResistances, source, extraParams);
                         healThisCycle += healAmount;
                         healingLeft -= healAmount;
                     }
                 }
 
-                return true;
+                return damageChanged;
             }
 
             var damageLeft = amount;
@@ -308,12 +323,12 @@ namespace Content.Shared.Damage.Components
                 foreach (var type in types)
                 {
                     var damageAmount = Math.Min(damagePerType, damageLeft);
-                    ChangeDamage(type, damageAmount, ignoreDamageResistances, source, extraParams);
+                    damageChanged = damageChanged || TryChangeDamage(type, damageAmount, ignoreDamageResistances, source, extraParams);
                     damageLeft -= damageAmount;
                 }
             }
 
-            return true;
+            return damageChanged;
         }
 
 
@@ -350,7 +365,7 @@ namespace Content.Shared.Damage.Components
         // This wasn't an intentional design decision, it just so happens that this is the easiest algorithm I can think
         // of that minimises calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
         // actually like this damage-scaling healing behaviour.
-        public void ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
+        public bool ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
     IEntity? source = null,
     DamageChangeParams? extraParams = null)
         {
@@ -367,11 +382,15 @@ namespace Content.Shared.Damage.Components
 
                 // Is there any damage to even heal?
                 if (damageToHeal == 0)
-                    return;
+                    return false;
 
                 // If total healing is more than there is damage, just set to 0 and return.
                 if (damageToHeal <= availableHealing)
-                    SetGroupDamage(0, group);
+                {
+                    TrySetDamage(group, 0, source, extraParams);
+                    return true;
+                }
+
 
                 // Partially heal each damage group
                 int healing;
@@ -388,16 +407,23 @@ namespace Content.Shared.Damage.Components
                     // Apply healing to the damage type. The healing amount may be zero if either damage==0, or if
                     // integer rounding made it zero (i.e., damage is small)
                     healing = (availableHealing * damage) / damageToHeal;
-                    ChangeDamage(type, -healing, ignoreDamageResistances, source, extraParams);
+                    TryChangeDamage(type, -healing, ignoreDamageResistances, source, extraParams);
 
                     // remove this damage type from the damage we consider for future loops, regardless of how much we
                     // actually healed this type.
                     damageToHeal -= damage;
                     availableHealing -= healing;
                 }
+
+                // Damage type is supported, there was damage to heal, and resistances were ignored
+                // --> Damage must have changed
+                return true;
             }
             else if (amount > 0)
             {
+                // Resistances may result in no actual damage change. We need to keep track if any damage got through.
+                var damageChanged = false;
+
                 // We are adding damage. Keep track of how much we can dish out (with a better var name for readbility).
                 var availableDamage = amount;
 
@@ -412,17 +438,26 @@ namespace Content.Shared.Damage.Components
                     damage = availableDamage / numberDamageTypes;
 
                     // Try apply the damage type. If damage type is not supported, this has no effect.
-                    ChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
+                    // We also use the return value to check whether any damage has changed
+                    damageChanged = damageChanged || TryChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
 
                     // regardless of whether we dealt damage, reduce the ammount to distribute.
                     availableDamage -= damage;
                     numberDamageTypes -= 1;
 
                 }
+                return damageChanged;
             }
+
+            // ammount==0 no damage change.
+            return false;
         }
 
-        public bool SetDamage(DamageTypePrototype type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
+        public bool TrySetDamage(
+            DamageTypePrototype type,
+            int newValue,
+            IEntity? source = null,
+            DamageChangeParams? extraParams = null)
         {
             if (!_damageDict.TryGetValue(type, out var oldValue))
             {
@@ -434,20 +469,21 @@ namespace Content.Shared.Damage.Components
             // Or are you just not allowed to Set the damage of a type to be larger than the current total???
             if (newValue >= TotalDamage)
             {
-                return true;
+                return false;
             }
 
             if (newValue < 0)
             {
-                return true;
+                // invalid value
+                return false;
             }
 
 
 
             if (oldValue == newValue)
             {
-                // Dont bother calling OnHealthChanged(data).
-                return true;
+                // No health change.
+                return false;
             }
 
             _damageDict[type] = newValue;
@@ -497,7 +533,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var typeID in RadiationDamageTypeIDs)
             {
-                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage, false, radiation.Owner);
+                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage, false, radiation.Owner);
             }
             
         }
@@ -514,7 +550,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage, false);
+                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage, false);
             }
         }
 

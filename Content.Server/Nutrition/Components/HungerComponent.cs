@@ -207,10 +207,10 @@ namespace Content.Server.Nutrition.Components
                 // --> But they are not dead yet.
                 var damage = 2 * frametime;
                 _acumulatedDamage += damage - ((int) damage);
-                damageable.ChangeDamage(_damageType, (int) damage);
+                damageable.TryChangeDamage(_damageType, (int) damage);
                 if (_acumulatedDamage >= 1) {
                     _acumulatedDamage -= 1;
-                    damageable.ChangeDamage(_damageType, 1, true);
+                    damageable.TryChangeDamage(_damageType, 1, true);
                 }
             }
         }

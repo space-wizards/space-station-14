@@ -30,7 +30,7 @@ namespace Content.Server.Damage.Components
         {
             if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
                 return;
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            damageable.TryChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
         }
     }
 }

@@ -107,7 +107,7 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    if (!damageable.ChangeDamage(damageGroup, amount, ignoreResistances))
+                    if (!damageable.TryChangeDamage(damageGroup, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
@@ -131,7 +131,7 @@ namespace Content.Server.Damage.Commands
                         return;
                     }
 
-                    if (!damageable.ChangeDamage(damageType, amount, ignoreResistances))
+                    if (!damageable.TryChangeDamage(damageType, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 

@@ -56,7 +56,7 @@ namespace Content.Server.Medical.Components
 
             foreach (var (damageTypeID, amount) in Heal)
             {
-                damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
+                damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
             }
 
             return true;

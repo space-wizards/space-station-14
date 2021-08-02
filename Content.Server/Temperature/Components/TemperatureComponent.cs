@@ -110,12 +110,12 @@ namespace Content.Server.Temperature.Components
             if (CurrentTemperature >= _heatDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                component.ChangeDamage(_hotDamageType, tempDamage, false);
+                component.TryChangeDamage(_hotDamageType, tempDamage, false);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                component.ChangeDamage(_coldDamageType, tempDamage, false);
+                component.TryChangeDamage(_coldDamageType, tempDamage, false);
             }
             
         }

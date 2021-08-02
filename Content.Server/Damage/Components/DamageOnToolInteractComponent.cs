@@ -59,7 +59,7 @@ namespace Content.Server.Damage.Components
             if (!eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
                 return false;
 
-            damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
+            damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
                     ? _weldingDamageType
                     : _defaultDamageType,
                 Damage, false, eventArgs.User);

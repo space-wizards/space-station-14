@@ -53,7 +53,7 @@ namespace Content.Server.Projectiles
 
                 foreach (var (damageType, amount) in component.Damages)
                 {
-                    damage.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageType), amount, false, shooter);
+                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageType), amount, false, shooter);
                 }
 
                 component.DamagedEntity = true;

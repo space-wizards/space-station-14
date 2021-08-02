@@ -37,7 +37,7 @@ namespace Content.Server.Chat.Commands
             var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
-                damageableComponent.SetDamage(kind switch
+                damageableComponent.TrySetDamage(kind switch
                     {
                         SuicideKind.Blunt => _prototypeManager.Index<DamageTypePrototype>("Blunt"),
                         SuicideKind.Slash => _prototypeManager.Index<DamageTypePrototype>("Slash"),
@@ -124,7 +124,7 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.SetDamage(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 200, owner);
+            dmgComponent.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 200, owner);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.

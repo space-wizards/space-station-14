@@ -357,7 +357,7 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
-            damageable.ChangeDamage(_suffocationDamageType, _suffocationDamage, false);
+            damageable.TryChangeDamage(_suffocationDamageType, _suffocationDamage, false);
         }
 
         private void StopSuffocation()
@@ -366,7 +366,7 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(_suffocationDamageType, -_suffocationDamageRecovery, false);
+                damageable.TryChangeDamage(_suffocationDamageType, -_suffocationDamageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

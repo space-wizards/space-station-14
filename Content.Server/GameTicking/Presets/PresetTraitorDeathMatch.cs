@@ -198,7 +198,7 @@ namespace Content.Server.GameTicking.Presets
                     if (entity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
+                        damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
                     }
                 }
                 else if (!mobState.IsDead())

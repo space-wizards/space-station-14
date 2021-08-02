@@ -45,20 +45,20 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                damageComponent.ChangeDamage(DamageGroup(), (int)AmountToChange, true);
+                damageComponent.TryChangeDamage(DamageGroup(), (int)AmountToChange, true);
 
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    damageComponent.ChangeDamage(DamageGroup(), 1, true);
+                    damageComponent.TryChangeDamage(DamageGroup(), 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    damageComponent.ChangeDamage(DamageGroup(), -1, true);
+                    damageComponent.TryChangeDamage(DamageGroup(), -1, true);
                     _accumulatedHealth += 1;
                 }
             }

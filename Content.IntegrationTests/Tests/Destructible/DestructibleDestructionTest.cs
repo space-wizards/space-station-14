@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.DoesNotThrow(() =>
                 {
-                    Assert.True(sDamageableComponent.ChangeDamage(bruteDamageGroup, 50, true));
+                    Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 50, true));
                 });
 
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));

@@ -129,10 +129,10 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     False if the given type is not supported or improper
+        ///     False if the given type is not supported, no damage change occured, or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool ChangeDamage(
+        bool TryChangeDamage(
             DamageTypePrototype type,
             int amount,
             bool ignoreDamageResistances = false,
@@ -140,31 +140,31 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageGroupPrototype"/>, applying
-        ///     resistance values only if it is damage.
-        ///     Spreads amount evenly between the <see cref="DamageTypePrototype"></see>s
-        ///     represented by that group.
-        ///     Note that if only a subset of the damage types in the group are actually supported, then the
-        ///     total change change will be less than expected.
+        ///     Changes damage of the specified <see cref="DamageGroupPrototype"/>, applying resistance values only if
+        ///     it is damage.
         /// </summary>
+        /// <remarks>
+        ///     This spreads the damage change amount evenly between the <see cref="DamageTypePrototype"></see>s in this
+        ///     group (subject to integer rounding). Note that if only a subset of the damage types in the group are
+        ///     actually supported by the container, then the total change change will be less than expected.
+        /// </remarks>
         /// <param name="group">group of damage being changed.</param>
         /// <param name="amount">
         ///     Amount of damage being received (positive for damage, negative for heals).
         /// </param>
         /// <param name="ignoreDamageResistances">
-        ///     Whether to ignore resistances when taking damage.
-        ///     Healing always ignores resistances, regardless of this input.
+        ///     Whether to ignore resistances when taking damage. Healing always ignores resistances, regardless of this
+        ///     input.
         /// </param>
         /// <param name="source">Entity that dealt or healed the damage, if any.</param>
         /// <param name="extraParams">
-        ///     Extra parameters that some components may require,
-        ///     such as a specific limb to target.
+        ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given group is not supported or improper
-        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if the given group is not applicable,  no damage change occured, or improper <see
+        ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool ChangeDamage(
+        bool TryChangeDamage(
             DamageGroupPrototype group,
             int amount,
             bool ignoreDamageResistances = false,
@@ -172,35 +172,61 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Forcefully sets the specified <see cref="DamageTypePrototype"/> to the given
-        ///     value, ignoring resistance values.
+        ///     Forcefully sets the specified <see cref="DamageTypePrototype"/> to the given value, ignoring resistance
+        ///     values.
         /// </summary>
-        /// <param name="type">Type of damage being changed.</param>
+        /// <param name="type">Type of damage being set.</param>
         /// <param name="newValue">New damage value to be set.</param>
         /// <param name="source">Entity that set the new damage value.</param>
         /// <param name="extraParams">
-        ///     Extra parameters that some components may require,
-        ///     such as a specific limb to target.
+        ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given type is not supported or improper
-        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if the given type is not supported, no damage change occured, or improper <see
+        ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
-        bool SetDamage(
+        bool TrySetDamage(
             DamageTypePrototype type,
             int newValue,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Sets all damage types in a specifc damage group using <see cref="SetDamage"></see>.
+        ///     Forcefully sets all damage types in a specified damage group using <see cref="TrySetDamage"></see>.
         /// </summary>
-        public void SetGroupDamage(int newValue, DamageGroupPrototype group);
+        /// <param name="group">Group of damage being set.</param>
+        /// <param name="newValue">New damage value to be set.</param>
+        /// <param name="source">Entity that set the new damage value.</param>
+        /// <param name="extraParams">
+        ///     Extra parameters that some components may require, such as a specific limb to target.
+        /// </param>
+        /// <returns>
+        ///     Returns false if the given group is not applicable,  no damage change occured, or improper <see
+        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        /// </returns>
+        bool TrySetDamage(
+            DamageGroupPrototype group,
+            int newValue,
+            IEntity? source = null,
+            DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Sets all supported damage types to specified value using <see cref="SetDamage"></see>.
+        ///     Sets all supported damage types to specified value using <see cref="TrySetDamage"></see>.
         /// </summary>
-        void SetAllDamage(int newValue);
+        /// <param name="group">Group of damage being set.</param>
+        /// <param name="newValue">New damage value to be set.</param>
+        /// <param name="source">Entity that set the new damage value.</param>
+        /// <param name="extraParams">
+        ///     Extra parameters that some components may require, such as a specific limb to target.
+        /// </param>
+        /// <returns>
+        ///     Returns false if no damage change occured or improper <see
+        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        /// </returns>
+        bool TrySetAllDamage(
+            int newValue,
+            IEntity? source = null,
+            DamageChangeParams? extraParams = null);
 
         /// <summary>
         ///     Invokes the HealthChangedEvent with the current values of health.

@@ -214,7 +214,7 @@ namespace Content.Shared.Body.Components
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.ChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
+                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
                 }
             }
 

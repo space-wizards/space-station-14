@@ -63,13 +63,13 @@ namespace Content.IntegrationTests.Tests.Damageable
                     Assert.That(sDamageableComponent.SupportedDamageTypes.Contains(damageType));
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(damageType, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.TryChangeDamage(damageType, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
                     Assert.That(sDamageableComponent.TryGetDamage(damageType, out var damage), Is.True);
                     Assert.That(damage, Is.EqualTo(damageToDeal));
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(damageType, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.TryChangeDamage(damageType, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
                     Assert.That(sDamageableComponent.TryGetDamage(damageType, out damage), Is.True);
                     Assert.That(damage, Is.Zero);
@@ -125,7 +125,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                     var damageToDeal = types.Count() * 5;
 
                     // Damage
-                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.TryChangeDamage(damageGroup, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
                     Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out var classDamage), Is.True);
                     Assert.That(classDamage, Is.EqualTo(damageToDeal));
@@ -137,7 +137,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                     }
 
                     // Heal
-                    Assert.That(sDamageableComponent.ChangeDamage(damageGroup, -damageToDeal, true), Is.True);
+                    Assert.That(sDamageableComponent.TryChangeDamage(damageGroup, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
                     Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out classDamage), Is.True);
                     Assert.That(classDamage, Is.Zero);
@@ -184,7 +184,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sPrototypeManager.TryIndex<DamageGroupPrototype>("Brute",out var damageGroup);
                 var damage = 10;
 
-                Assert.True(sDamageableComponent.ChangeDamage(damageGroup, damage, true));
+                Assert.True(sDamageableComponent.TryChangeDamage(damageGroup, damage, true));
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(10));
 
                 var totalTypeDamage = 0;

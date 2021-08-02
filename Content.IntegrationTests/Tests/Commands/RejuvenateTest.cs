@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                damageable.ChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000, true);
+                damageable.TryChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);
