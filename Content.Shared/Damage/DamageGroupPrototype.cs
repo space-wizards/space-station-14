@@ -23,7 +23,6 @@ namespace Content.Shared.Damage
 
         public HashSet<DamageTypePrototype> DamageTypes { get; } = new();
 
-
         // Create set of damage types
         void ISerializationHooks.AfterDeserialization()
         {

@@ -107,10 +107,10 @@ namespace Content.Shared.Damage.Container
             }
 
             // For each supported damage type, check whether it is in any existing group, and add it to _applicableDamageGroups
-            foreach (var type in _supportedDamageTypes) {
+            foreach (var type in _supportedDamageTypes)
+            {
                 foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
- 
                     if (group.DamageTypes.Contains(type))
                     {
                         _applicableDamageGroups.Add(group);
