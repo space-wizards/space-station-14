@@ -18,8 +18,15 @@ namespace Content.Shared.Damage.Components
 {
     /// <summary>
     ///     Component that allows attached entities to take damage.
-    ///     This basic version never dies (thus can take an indefinite amount of damage).
     /// </summary>
+    /// <remarks>
+    ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. DamageContainers
+    ///     are effectively a dictionary of damage types and damage numbers, along with functions to modify them. Damage
+    ///     groups are collections of damage types. A damage group is 'applicable' to a damageable component if it
+    ///     supports at least one damage type in that group. A subset of these groups may be 'fully supported' when every
+    ///     member of the group is supported by the container. This basic version never dies (thus can take an
+    ///     indefinite amount of damage).
+    /// </remarks>
     [RegisterComponent]
     [ComponentReference(typeof(IDamageableComponent))]
     [NetworkedComponent()]
@@ -29,6 +36,9 @@ namespace Content.Shared.Damage.Components
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
+        /// <summary>
+        ///     The main damage dictionary. All the damage information is stored in this dictionary with <see cref="DamageTypePrototype"/>  keys.
+        /// </summary>
         private Dictionary<DamageTypePrototype, int> _damageDict = new();
 
         // TODO define these in yaml?
@@ -47,15 +57,15 @@ namespace Content.Shared.Damage.Components
 
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
-        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType => _damageDict;
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, SupportedDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> GetDamagePerType => _damageDict;
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, FullySupportedDamageGroups);
 
+        // Whenever sending over network, also need a <string, int> dictionary
         // TODO DAMAGE Cache this
-        // Whenever sending over network, need a <string, int> dictionary
-        public IReadOnlyDictionary<string, int> DamagePerGroupIDs => ConvertDictKeysToIDs(DamagePerGroup);
-        public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
-        public IReadOnlyDictionary<string, int> DamagePerTypeIDs => ConvertDictKeysToIDs(DamagePerType);
+        public IReadOnlyDictionary<string, int> GetDamagePerApplicableGroupIDs => ConvertDictKeysToIDs(GetDamagePerApplicableGroup);
+        public IReadOnlyDictionary<string, int> GetDamagePerFullySupportedGroupIDs => ConvertDictKeysToIDs(GetDamagePerFullySupportedGroup);
+        public IReadOnlyDictionary<string, int> GetDamagePerTypeIDs => ConvertDictKeysToIDs(GetDamagePerType);
 
         // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
         // Also requires appropriate changes in OnExplosion() and RadiationAct()
@@ -68,7 +78,7 @@ namespace Content.Shared.Damage.Components
 
         public HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; } = new();
 
-        public HashSet<DamageGroupPrototype> SupportedDamageGroups { get; } = new();
+        public HashSet<DamageGroupPrototype> FullySupportedDamageGroups { get; } = new();
 
         public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
 
@@ -80,13 +90,13 @@ namespace Content.Shared.Damage.Components
             var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
             ApplicableDamageGroups.Clear();
-            SupportedDamageGroups.Clear();
+            FullySupportedDamageGroups.Clear();
             SupportedDamageTypes.Clear();
 
             //Get Damage groups/types from the DamageContainerPrototype.
             DamageContainerId = damageContainerPrototype.ID;
             ApplicableDamageGroups.UnionWith(damageContainerPrototype.ApplicableDamageGroups);
-            SupportedDamageGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
+            FullySupportedDamageGroups.UnionWith(damageContainerPrototype.FullySupportedDamageGroups);
             SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
             //initialize damage dictionary 0 damage
@@ -127,33 +137,29 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-
-        // TODO QUESTION These 7 functions here are just wrapping standard function of PUBLIC dictionaries. I'm not sure
-        // whether or not they should just be replaced by those dictionary calls, or whether we should make those
-        // dictionaries private?
         public int GetDamage(DamageTypePrototype type)
         {
-            return DamagePerType.GetValueOrDefault(type);
+            return GetDamagePerType.GetValueOrDefault(type);
         }
         public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
-            return DamagePerType.TryGetValue(type, out damage);
+            return GetDamagePerType.TryGetValue(type, out damage);
         }
         public int GetDamage(DamageGroupPrototype group)
         {
-            return DamagePerGroup.GetValueOrDefault(group);
+            return GetDamagePerApplicableGroup.GetValueOrDefault(group);
         }
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
-            return DamagePerGroup.TryGetValue(group, out damage);
+            return GetDamagePerApplicableGroup.TryGetValue(group, out damage);
         }
         public bool IsApplicableDamageGroup(DamageGroupPrototype group)
         {
             return ApplicableDamageGroups.Contains(group);
         }
-        public bool IsSupportedDamageGroup(DamageGroupPrototype group)
+        public bool IsFullySupportedDamageGroup(DamageGroupPrototype group)
         {
-            return SupportedDamageGroups.Contains(group);
+            return FullySupportedDamageGroups.Contains(group);
         }
         public bool IsSupportedDamageType(DamageTypePrototype type)
         {
@@ -378,7 +384,7 @@ namespace Content.Shared.Damage.Components
                 var availableHealing = -amount;
 
                 // Get total group damage.
-                var damageToHeal = DamagePerGroup[group];
+                var damageToHeal = GetDamagePerApplicableGroup[group];
 
                 // Is there any damage to even heal?
                 if (damageToHeal == 0)
@@ -398,7 +404,7 @@ namespace Content.Shared.Damage.Components
                 foreach (var type in types)
                 {
 
-                    if (!DamagePerType.TryGetValue(type, out damage))
+                    if (!GetDamagePerType.TryGetValue(type, out damage))
                     {
                         // Damage Type is not supported. Continue without reducing availableHealing
                         continue;

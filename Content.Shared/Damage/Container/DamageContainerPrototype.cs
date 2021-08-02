@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Damage.Container
 {
     /// <summary>
-    ///     Prototype for the DamageContainer class.
+    ///     Prototype for DamageableComponents.
     /// </summary>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
@@ -31,7 +31,7 @@ namespace Content.Shared.Damage.Container
         [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypeIDs = new();
 
         private HashSet<DamageGroupPrototype> _applicableDamageGroups = new();
-        private HashSet<DamageGroupPrototype> _supportedDamageGroups = new();
+        private HashSet<DamageGroupPrototype> _fullySupportedDamageGroups = new();
         private HashSet<DamageTypePrototype> _supportedDamageTypes = new();
 
         // TODO NET 5 IReadOnlySet
@@ -54,11 +54,11 @@ namespace Content.Shared.Damage.Container
         /// </summary>
         /// <remarks>
         /// This describes what damage groups this damage container explicitly supports. It supports every damage type
-        /// contained in these damage groups. It may also support other damage types not in these groupps. To see all
+        /// contained in these damage groups. It may also support other damage types not in these groups. To see all
         /// damage types <see cref="SupportedDamageTypes"/>, and to see all applicable damage groups <see
         /// cref="ApplicableDamageGroups"/>.
         /// </remarks>
-        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> SupportedDamageGroups => _supportedDamageGroups;
+        [ViewVariables] public IReadOnlyCollection<DamageGroupPrototype> FullySupportedDamageGroups => _fullySupportedDamageGroups;
 
         /// <summary>
         /// Collection of damage types supported by this container.
@@ -73,13 +73,13 @@ namespace Content.Shared.Damage.Container
         {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            // If all damge types are ALL supported, add all of them.
+            // Are all damage types are supported?
             if (_supportAll)
             {
                 foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
                     _applicableDamageGroups.Add(group);
-                    _supportedDamageGroups.Add(group);
+                    _fullySupportedDamageGroups.Add(group);
                 }
                 foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
@@ -92,21 +92,42 @@ namespace Content.Shared.Damage.Container
             foreach (var groupID in _supportedDamageGroupIDs)
             {
                 var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
-                _supportedDamageGroups.Add(group);
+                _fullySupportedDamageGroups.Add(group);
                 foreach (var type in group.DamageTypes)
                 {
                     _supportedDamageTypes.Add(type);
                 }
             }
 
-            // Add individual damage types, that are either not part of a group, or whose groups are not fully supported
+            // Add individual damage types, that are either not part of a group, or whose groups are (possibly) not fully supported
             foreach (var supportedTypeID in _supportedDamageTypeIDs)
             {
                 var type = _prototypeManager.Index<DamageTypePrototype>(supportedTypeID);
                 _supportedDamageTypes.Add(type);
             }
 
-            // For each supported damage type, check whether it is in any existing group, and add it to _applicableDamageGroups
+            // For whatever reason, someone may have listed all members of a group as supported instead of just listing
+            // the group as supported. Check for this.
+            foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+            {
+                if (_fullySupportedDamageGroups.Contains(group))
+                {
+                    continue;
+                }
+                // The group is not in the list of fully supported groups. Should it be?
+                foreach (var type in group.DamageTypes)
+                {
+                    if (!_supportedDamageTypes.Contains(type))
+                    {
+                        // not all members are supported
+                        continue;
+                    }
+                    // All members are supported. The silly goose should have just used a damage group.
+                    _fullySupportedDamageGroups.Add(group);
+                }
+            }
+
+            // For each supported damage type, check whether it is in any existing group, If it is add it to _applicableDamageGroups
             foreach (var type in _supportedDamageTypes)
             {
                 foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())

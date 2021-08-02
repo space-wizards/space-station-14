@@ -122,8 +122,8 @@ namespace Content.Server.Medical.Components
             }
 
             // Get dictionaries of damage, by fully supported damage groups and types
-            var groups = new Dictionary<string, int>(damageable.DamagePerSupportedGroupIDs);
-            var types = new Dictionary<string, int>(damageable.DamagePerTypeIDs);
+            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
+            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
 
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {

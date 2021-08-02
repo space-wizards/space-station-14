@@ -124,7 +124,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.SupportedDamageTypes.Contains(damageType))
+                    if (!damageable.IsSupportedDamageType(damageType))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage type {damageType}");
 

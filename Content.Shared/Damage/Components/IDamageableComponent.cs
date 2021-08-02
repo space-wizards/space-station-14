@@ -13,75 +13,75 @@ namespace Content.Shared.Damage.Components
         int TotalDamage { get; }
 
         /// <summary>
-        /// Returns a dictionary of the damage in the container, indexed by <see cref="DamageGroupPrototype"/>.
+        ///     Returns a dictionary of the damage in the container, indexed by applicable <see cref="DamageGroupPrototype"/>.
         /// </summary>
         /// <remarks>
-        /// The values represent the sum of all damage in each group. If a supported damage type is a member of more than one group, it will contribute to each one.
-        /// Therefore, the sum of the values may be greater than the sum of the values in the dictionary returned by <see cref="DamagePerType"/>
+        ///     The values represent the sum of all damage in each group. If a supported damage type is a member of more than one group, it will contribute to each one.
+        ///     Therefore, the sum of the values may be greater than the sum of the values in the dictionary returned by <see cref="GetDamagePerType"/>
         /// </remarks>
-        IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup { get; }
 
         /// <summary>
-        /// Returns a dictionary of the damage in the container, indexed by supported instances of <see
+        ///     Returns a dictionary of the damage in the container, indexed by fully supported instances of <see
         /// cref="DamageGroupPrototype"/>.
         /// </summary>
         /// <remarks>
-        /// The values represent the sum of all damage in each group. As the damage container may have some damage
-        /// types that are not part of a fully supported damage group, the sum of the values may be less of the values
-        /// in the dictionary returned by <see cref="DamagePerType"/>. On the other hand, if a supported damage type
-        /// is a member of more than one group, it will contribute to each one. Therefore, the sum may also be greater
-        /// instead.
+        ///     The values represent the sum of all damage in each group. As the damage container may have some damage
+        ///     types that are not part of a fully supported damage group, the sum of the values may be less of the values
+        ///     in the dictionary returned by <see cref="GetDamagePerType"/>. On the other hand, if a supported damage type
+        ///     is a member of more than one group, it will contribute to each one. Therefore, the sum may also be greater
+        ///     instead.
         /// </remarks>
-        IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup { get; }
+        IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup { get; }
 
         /// <summary>
-        /// Returns a dictionary of the damage in the container, indexed by <see cref="DamageTypePrototype"/>.
+        ///     Returns a dictionary of the damage in the container, indexed by <see cref="DamageTypePrototype"/>.
         /// </summary>
-        IReadOnlyDictionary<DamageTypePrototype, int> DamagePerType { get; }
+        IReadOnlyDictionary<DamageTypePrototype, int> GetDamagePerType { get; }
 
         /// <summary>
-        /// Like <see cref="DamagePerGroup"/>, but indexed by <see cref="DamageGroupPrototype.ID"/>
+        ///     Like <see cref="GetDamagePerApplicableGroup"/>, but indexed by <see cref="DamageGroupPrototype.ID"/>
         /// </summary>
-        public IReadOnlyDictionary<string, int> DamagePerGroupIDs { get;  }
+        IReadOnlyDictionary<string, int> GetDamagePerApplicableGroupIDs { get;  }
 
         /// <summary>
-        /// Like <see cref="DamagePerSupportedGroup"/>, but indexed by <see cref="DamageGroupPrototype.ID"/>
+        ///     Like <see cref="GetDamagePerFullySupportedGroup"/>, but indexed by <see cref="DamageGroupPrototype.ID"/>
         /// </summary>
-        public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs { get; }
+        IReadOnlyDictionary<string, int> GetDamagePerFullySupportedGroupIDs { get; }
 
         /// <summary>
-        /// Like <see cref="DamagePerType"/>, but indexed by <see cref="DamageGroupType.ID"/>
+        ///     Like <see cref="GetDamagePerType"/>, but indexed by <see cref="DamageTypePrototype.ID"/>
         /// </summary>
-        public IReadOnlyDictionary<string, int> DamagePerTypeIDs { get; }
+        IReadOnlyDictionary<string, int> GetDamagePerTypeIDs { get; }
 
         /// <summary>
-        /// Collection of damage types supported by this DamageableComponent.
+        ///     Collection of damage types supported by this DamageableComponent.
         /// </summary>
         /// <remarks>
-        /// Each of these damage types is fully supported. If any of these damage types is a
-        /// member of a damage group, these groups are represented in <see cref="ApplicableDamageGroups"></see>
+        ///     Each of these damage types is fully supported. If any of these damage types is a
+        ///     member of a damage group, these groups are represented in <see cref="ApplicableDamageGroups"></see>
         /// </remarks>
         HashSet<DamageTypePrototype> SupportedDamageTypes { get; }
 
         /// <summary>
-        /// Collection of damage groups that are fully supported by DamageableComponent.
+        ///     Collection of damage groups that are fully supported by DamageableComponent.
         /// </summary>
         /// <remarks>
-        /// This describes what damage groups this damage container explicitly supports. It supports every damage type
-        /// contained in these damage groups. It may also support other damage types not in these groups. To see all
-        /// damage types <see cref="SupportedDamageTypes"/>, and to see all applicable damage groups <see
+        ///     This describes what damage groups this damage container explicitly supports. It supports every damage type
+        ///     contained in these damage groups. It may also support other damage types not in these groups. To see all
+        ///     damage types <see cref="SupportedDamageTypes"/>, and to see all applicable damage groups <see
         /// cref="ApplicableDamageGroups"/>.
         /// </remarks>
-        public HashSet<DamageGroupPrototype> SupportedDamageGroups { get;  }
+        HashSet<DamageGroupPrototype> FullySupportedDamageGroups { get;  }
 
         /// <summary>
-        /// Collection of damage groups that could affect this DamageableComponent.
+        ///     Collection of damage groups that could apply damage to this DamageableComponent.
         /// </summary>
         /// <remarks>
-        /// This describes what damage groups could have an effect on this damage container. However not every damage
-        /// group has to be fully supported. For example, the container may support ONLY the piercing damage type. It should
-        /// therefore be affected by instances of brute damage, but does not necessarily support blunt or slash damage.
-        /// For a list of supported damage types, see <see cref="SupportedDamageTypes"/>.
+        ///     This describes what damage groups could have an effect on this damage container. However not every damage
+        ///     group has to be fully supported. For example, the container may support ONLY the piercing damage type. It should
+        ///     therefore be affected by instances of brute damage, but does not necessarily support blunt or slash damage.
+        ///     For a list of supported damage types, see <see cref="SupportedDamageTypes"/>.
         /// </remarks>
         HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; }
 
@@ -91,7 +91,7 @@ namespace Content.Shared.Damage.Components
         ResistanceSet Resistances { get; }
 
         /// <summary>
-        ///     Gets the amount of damage of a type.
+        ///     Tries to get the amount of damage of a type.
         /// </summary>
         /// <param name="type">The type to get the damage of.</param>
         /// <param name="damage">The amount of damage of that type.</param>
@@ -101,7 +101,12 @@ namespace Content.Shared.Damage.Components
         bool TryGetDamage(DamageTypePrototype type, out int damage);
 
         /// <summary>
-        ///     Gets the total amount of damage in a damage group.
+        ///     Returns the amount of damage of a given type, or zero if it is not supported.
+        /// </summary>
+        int GetDamage(DamageTypePrototype type);
+
+        /// <summary>
+        ///     Tries to get the total amount of damage in a damage group.
         /// </summary>
         /// <param name="group">The group to get the damage of.</param>
         /// <param name="damage">The amount of damage in that group.</param>
@@ -111,8 +116,13 @@ namespace Content.Shared.Damage.Components
         bool TryGetDamage(DamageGroupPrototype group, out int damage);
 
         /// <summary>
-        ///     Changes the specified <see cref="DamageTypePrototype"/>, applying
-        ///     resistance values only if it is damage.
+        ///     Returns the amount of damage present in an applicable group, or zero if no members are supported.
+        /// </summary>
+        int GetDamage(DamageGroupPrototype group);
+
+        /// <summary>
+        ///     Tries to change the specified <see cref="DamageTypePrototype"/>, applying
+        ///     resistance values only if it is dealing damage.
         /// </summary>
         /// <param name="type">Type of damage being changed.</param>
         /// <param name="amount">
@@ -130,7 +140,7 @@ namespace Content.Shared.Damage.Components
         /// </param>
         /// <returns>
         ///     False if the given type is not supported, no damage change occurred, or improper
-        ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
+        /// <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TryChangeDamage(
             DamageTypePrototype type,
@@ -140,7 +150,7 @@ namespace Content.Shared.Damage.Components
             DamageChangeParams? extraParams = null);
 
         /// <summary>
-        ///     Changes damage of the specified <see cref="DamageGroupPrototype"/>, applying resistance values only if
+        ///     Tries to change damage of the specified <see cref="DamageGroupPrototype"/>, applying resistance values only if
         ///     it is damage.
         /// </summary>
         /// <remarks>
@@ -227,6 +237,22 @@ namespace Content.Shared.Damage.Components
             int newValue,
             IEntity? source = null,
             DamageChangeParams? extraParams = null);
+
+        /// <summary>
+        ///     Returns true if the given damage group is applicable to this damage container.
+        /// </summary>
+        public bool IsApplicableDamageGroup(DamageGroupPrototype group);
+
+        /// <summary>
+        ///     Returns true if the given damage group is fully supported by this damage container.
+        /// </summary>
+        public bool IsFullySupportedDamageGroup(DamageGroupPrototype group);
+
+        /// <summary>
+        ///     Returns true if the given damage type is supported by this damage container.
+        /// </summary>
+        public bool IsSupportedDamageType(DamageTypePrototype type);
+
 
         /// <summary>
         ///     Invokes the HealthChangedEvent with the current values of health.

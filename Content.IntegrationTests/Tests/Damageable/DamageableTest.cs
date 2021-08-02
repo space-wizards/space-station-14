@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 foreach (var damageType in sPrototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportedDamageTypes.Contains(damageType));
+                    Assert.That(sDamageableComponent.IsSupportedDamageType(damageType));
 
                     // Damage
                     Assert.That(sDamageableComponent.TryChangeDamage(damageType, damageToDeal, true), Is.True);
@@ -112,14 +112,14 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 foreach (var damageGroup in sPrototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
                 {
-                    Assert.That(sDamageableComponent.SupportedDamageGroups.Contains(damageGroup));
-                    Assert.That(sDamageableComponent.ApplicableDamageGroups.Contains(damageGroup));
+                    Assert.That(sDamageableComponent.IsFullySupportedDamageGroup(damageGroup));
+                    Assert.That(sDamageableComponent.IsApplicableDamageGroup(damageGroup));
 
                     var types = damageGroup.DamageTypes;
 
                     foreach (var type in types)
                     {
-                        Assert.That(sDamageableComponent.SupportedDamageTypes.Contains(type));
+                        Assert.That(sDamageableComponent.IsSupportedDamageType(type));
                     }
 
                     var damageToDeal = types.Count() * 5;
