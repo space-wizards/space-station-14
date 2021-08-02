@@ -179,7 +179,7 @@ namespace Content.Server.Weapon.Ranged
                 {
                     foreach (KeyValuePair<string, int> damage in ClumsyDamage)
                     {
-                        health.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damage.Key), damage.Value, false, user);
+                        health.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damage.Key), damage.Value);
                     }
                 }
 

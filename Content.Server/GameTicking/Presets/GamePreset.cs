@@ -69,7 +69,7 @@ namespace Content.Server.GameTicking.Presets
                     {
                         //todo: what if they dont breathe lol
                         //cry deeply
-                        damageable.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200, playerEntity);
+                        damageable.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
                     }
                 }
             }

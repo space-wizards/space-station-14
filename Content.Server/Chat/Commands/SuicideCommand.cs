@@ -51,7 +51,7 @@ namespace Content.Server.Chat.Commands
                         SuicideKind.Bloodloss => _prototypeManager.Index<DamageTypePrototype>("Bloodloss"),
                         _ => _prototypeManager.Index<DamageTypePrototype>("Blunt")
                     },
-                200, source);
+                200);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 200, owner);
+            dmgComponent.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 200);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.

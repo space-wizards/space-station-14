@@ -62,7 +62,7 @@ namespace Content.Server.Damage.Components
             damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
                     ? _weldingDamageType
                     : _defaultDamageType,
-                Damage, false, eventArgs.User);
+                Damage);
 
             return true;
         }

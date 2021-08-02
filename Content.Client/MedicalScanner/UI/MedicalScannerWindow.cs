@@ -112,6 +112,7 @@ namespace Content.Client.MedicalScanner.UI
                 ScanButton.Disabled = state.IsScanned;
 
                 // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
+                // Also, maybe add color schemes for specific damage groups?
                 SetSize = (250, 600);
             }
         }

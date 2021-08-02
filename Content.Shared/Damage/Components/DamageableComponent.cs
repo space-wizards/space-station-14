@@ -58,8 +58,8 @@ namespace Content.Shared.Damage.Components
         // TODO DAMAGE Cache this
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> GetDamagePerType => _damageDict;
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
-        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup => DamageGroupPrototype.DamageTypeDictToDamageGroupDict(_damageDict, FullySupportedDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup => DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup => DamageTypeDictToDamageGroupDict(_damageDict, FullySupportedDamageGroups);
 
         // Whenever sending over network, also need a <string, int> dictionary
         // TODO DAMAGE Cache this
@@ -100,6 +100,7 @@ namespace Content.Shared.Damage.Components
             SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
             //initialize damage dictionary 0 damage
+            _damageDict = new(SupportedDamageTypes.Count);
             foreach (var type in SupportedDamageTypes)
             {
                 _damageDict.Add(type, 0);
@@ -117,7 +118,7 @@ namespace Content.Shared.Damage.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new DamageableComponentState(_damageDict);
+            return new DamageableComponentState(ConvertDictKeysToIDs(_damageDict));
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -131,9 +132,9 @@ namespace Content.Shared.Damage.Components
 
             _damageDict.Clear();
 
-            foreach (var (type, damage) in state.DamageList)
+            foreach (var (type, damage) in state.DamageDict)
             {
-                _damageDict[type] = damage;
+                _damageDict[_prototypeManager.Index<DamageTypePrototype>(type)] = damage;
             }
         }
 
@@ -168,7 +169,7 @@ namespace Content.Shared.Damage.Components
 
 
 
-        public bool TrySetDamage(DamageGroupPrototype group, int newValue, IEntity? source = null, DamageChangeParams? extraParams = null)
+        public bool TrySetDamage(DamageGroupPrototype group, int newValue)
         {
             // Is the damage group even supported?
             if (!ApplicableDamageGroups.Contains(group))
@@ -179,31 +180,22 @@ namespace Content.Shared.Damage.Components
             var damageChanged = false;
             foreach (var type in group.DamageTypes)
             {
-                damageChanged = damageChanged || TrySetDamage(type, newValue, source, extraParams );
+                damageChanged = damageChanged || TrySetDamage(type, newValue);
             }
             return damageChanged;
         }
 
-        public bool TrySetAllDamage(int newValue, IEntity? source = null, DamageChangeParams? extraParams = null)
+        public bool TrySetAllDamage(int newValue)
         {
             var damageChanged = false;
             foreach (var type in SupportedDamageTypes)
             {
-                damageChanged = damageChanged || TrySetDamage(type, newValue, source, extraParams);
+                damageChanged = damageChanged || TrySetDamage(type, newValue);
             }
             return damageChanged;
         }
 
-        // TODO QUESTION both source and extraParams are unused here. Should they be removed, or will they have use in
-        // the future? The documentation for IDamageableComponent.SetDamage() mentions it would be used for targeting
-        // limbs and such. But so far I've been under the assumption that each limb/organ would have it's own
-        // DamageableComponent, and limb targeting would be elsewhere?
-        public bool TryChangeDamage(
-            DamageTypePrototype type,
-            int amount,
-            bool ignoreDamageResistances = false,
-            IEntity? source = null,
-            DamageChangeParams? extraParams = null)
+        public bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false)
         {
             // Check if damage type is supported, and get the current value if it is.
             if (!_damageDict.TryGetValue(type, out var current))
@@ -252,12 +244,7 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
-        public bool TryChangeDamage(
-            DamageGroupPrototype group,
-            int amount,
-            bool ignoreDamageResistances = false,
-            IEntity? source = null,
-            DamageChangeParams? extraParams = null)
+        public bool TryChangeDamage(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false)
         {
             // Is the damage group even supported?
             if (!ApplicableDamageGroups.Contains(group))
@@ -302,7 +289,7 @@ namespace Content.Shared.Damage.Components
                         var healAmount = Math.Min(healingLeft, damage);
                         healAmount = Math.Min(healAmount, healPerType);
 
-                        damageChanged = damageChanged || TryChangeDamage(type, -healAmount, ignoreDamageResistances, source, extraParams);
+                        damageChanged = damageChanged || TryChangeDamage(type, -healAmount, ignoreDamageResistances);
                         healThisCycle += healAmount;
                         healingLeft -= healAmount;
                     }
@@ -329,7 +316,7 @@ namespace Content.Shared.Damage.Components
                 foreach (var type in types)
                 {
                     var damageAmount = Math.Min(damagePerType, damageLeft);
-                    damageChanged = damageChanged || TryChangeDamage(type, damageAmount, ignoreDamageResistances, source, extraParams);
+                    damageChanged = damageChanged || TryChangeDamage(type, damageAmount, ignoreDamageResistances);
                     damageLeft -= damageAmount;
                 }
             }
@@ -371,9 +358,7 @@ namespace Content.Shared.Damage.Components
         // This wasn't an intentional design decision, it just so happens that this is the easiest algorithm I can think
         // of that minimizes calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
         // actually like this damage-scaling healing behavior.
-        public bool ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
-    IEntity? source = null,
-    DamageChangeParams? extraParams = null)
+        public bool ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false)
         {
 
             var types = group.DamageTypes.ToArray();
@@ -393,7 +378,7 @@ namespace Content.Shared.Damage.Components
                 // If total healing is more than there is damage, just set to 0 and return.
                 if (damageToHeal <= availableHealing)
                 {
-                    TrySetDamage(group, 0, source, extraParams);
+                    TrySetDamage(group, 0);
                     return true;
                 }
 
@@ -413,7 +398,7 @@ namespace Content.Shared.Damage.Components
                     // Apply healing to the damage type. The healing amount may be zero if either damage==0, or if
                     // integer rounding made it zero (i.e., damage is small)
                     healing = (availableHealing * damage) / damageToHeal;
-                    TryChangeDamage(type, -healing, ignoreDamageResistances, source, extraParams);
+                    TryChangeDamage(type, -healing, ignoreDamageResistances);
 
                     // remove this damage type from the damage we consider for future loops, regardless of how much we
                     // actually healed this type.
@@ -445,7 +430,7 @@ namespace Content.Shared.Damage.Components
 
                     // Try apply the damage type. If damage type is not supported, this has no effect.
                     // We also use the return value to check whether any damage has changed
-                    damageChanged = damageChanged || TryChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
+                    damageChanged = damageChanged || TryChangeDamage(type, damage, ignoreDamageResistances);
 
                     // regardless of whether we dealt damage, reduce the amount to distribute.
                     availableDamage -= damage;
@@ -459,11 +444,7 @@ namespace Content.Shared.Damage.Components
             return false;
         }
 
-        public bool TrySetDamage(
-            DamageTypePrototype type,
-            int newValue,
-            IEntity? source = null,
-            DamageChangeParams? extraParams = null)
+        public bool TrySetDamage(DamageTypePrototype type, int newValue)
         {
             if (!_damageDict.TryGetValue(type, out var oldValue))
             {
@@ -483,8 +464,6 @@ namespace Content.Shared.Damage.Components
                 // invalid value
                 return false;
             }
-
-
 
             if (oldValue == newValue)
             {
@@ -539,7 +518,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var typeID in RadiationDamageTypeIDs)
             {
-                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage, false, radiation.Owner);
+                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage);
             }
             
         }
@@ -556,7 +535,7 @@ namespace Content.Shared.Damage.Components
 
             foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage, false);
+                TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage);
             }
         }
 
@@ -578,19 +557,51 @@ namespace Content.Shared.Damage.Components
             }
             return idDict;
         }
+
+        /// <summary>
+        ///     Convert a dictionary with damage type keys to a dictionary of damage groups keys.
+        /// </summary>
+        /// <remarks>
+        ///     Takes a dictionary with damage types as keys and integers as values, and an iterable list of damage
+        ///     groups. Returns a dictionary with damage group keys, with values calculated by adding up the values for
+        ///     each damage type in that group. If a damage type is associated with more than one supported damage
+        ///     group, it will contribute to the total of each group. Conversely, some damage types may not contribute
+        ///     to the new dictionary if their associated group(s) are not in given list of groups.
+        /// </remarks>
+        public static IReadOnlyDictionary<DamageGroupPrototype, int>
+            DamageTypeDictToDamageGroupDict(IReadOnlyDictionary<DamageTypePrototype, int> damageTypeDict, IEnumerable<DamageGroupPrototype> groupKeys)
+        {
+            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
+            int damageGroupSumDamage, damageTypeDamage;
+            // iterate over the list of group keys for our new dictionary
+            foreach (var group in groupKeys)
+            {
+                // For each damage type in this group, add up the damage present in the given dictionary
+                damageGroupSumDamage = 0;
+                foreach (var type in group.DamageTypes)
+                {
+                    // if the damage type is in the dictionary, add it's damage to the group total.
+                    if (damageTypeDict.TryGetValue(type, out damageTypeDamage))
+                    {
+                        damageGroupSumDamage += damageTypeDamage;
+                    }
+                }
+                damageGroupDict.Add(group, damageGroupSumDamage);
+            }
+            return damageGroupDict;
+        }
+
     }
 
     [Serializable, NetSerializable]
     public class DamageableComponentState : ComponentState
     {
-        public readonly Dictionary<DamageTypePrototype, int> DamageList;
+        public readonly IReadOnlyDictionary<string, int> DamageDict;
 
-        // TODO QUESTION I thought Prototypes could/should not be sent over the network? Was that just wrong or is this
-        // function doing something else? TBH I have no idea what its for.
-        public DamageableComponentState(Dictionary<DamageTypePrototype, int> damageList) 
+        public DamageableComponentState(IReadOnlyDictionary<string, int> damageDict) 
 
         {
-            DamageList = damageList;
+            DamageDict = damageDict;
         }
     }
 }

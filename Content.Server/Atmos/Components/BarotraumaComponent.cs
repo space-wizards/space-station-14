@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Components
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.TryChangeDamage(_damageType, Atmospherics.LowPressureDamage, false, Owner);
+                    damageable.TryChangeDamage(_damageType, Atmospherics.LowPressureDamage);
 
                     if (status == null) break;
 
@@ -77,7 +77,7 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.TryChangeDamage(_damageType, damage, false, Owner);
+                    damageable.TryChangeDamage(_damageType, damage);
 
                     if (status == null) break;
 

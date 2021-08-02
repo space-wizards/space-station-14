@@ -494,7 +494,7 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.TryChangeDamage(_damageType, DoorCrushDamage, false, Owner);
+                damage.TryChangeDamage(_damageType, DoorCrushDamage);
                 stun.Paralyze(DoorStunTime);
             }
 
