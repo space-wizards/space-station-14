@@ -17,15 +17,6 @@ namespace Content.Client.Doors
     {
         private const string AnimationKey = "airlock_animation";
 
-        [DataField("open_sound", required: true)]
-        private string _openSound = default!;
-
-        [DataField("close_sound", required: true)]
-        private string _closeSound = default!;
-
-        [DataField("deny_sound", required: true)]
-        private string _denySound = default!;
-
         [DataField("animation_time")]
         private float _delay = 0.8f;
 
@@ -51,14 +42,6 @@ namespace Content.Client.Doors
                 CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
                 flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
                 flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
-
-                var sound = new AnimationTrackPlaySound();
-                CloseAnimation.AnimationTracks.Add(sound);
-
-                if (_closeSound != null)
-                {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
-                }
             }
 
             OpenAnimation = new Animation {Length = TimeSpan.FromSeconds(_delay)};
@@ -80,11 +63,6 @@ namespace Content.Client.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 OpenAnimation.AnimationTracks.Add(sound);
-
-                if (_openSound != null)
-                {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
-                }
             }
 
             DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
@@ -96,11 +74,6 @@ namespace Content.Client.Doors
 
                 var sound = new AnimationTrackPlaySound();
                 DenyAnimation.AnimationTracks.Add(sound);
-
-                if (_denySound != null)
-                {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
-                }
             }
         }
 

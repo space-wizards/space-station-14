@@ -5,6 +5,7 @@ using System.Buffers;
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Doors.Components;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
