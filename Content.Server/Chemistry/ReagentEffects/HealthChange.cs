@@ -31,10 +31,6 @@ namespace Content.Server.Chemistry.ReagentEffects
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
-        private DamageGroupPrototype DamageGroup() {
-            IoCManager.InjectDependencies(this);
-            return _prototypeManager.Index<DamageGroupPrototype>(_damageGroupID);
-        }
 
         private float _accumulatedHealth;
 
@@ -45,20 +41,22 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                damageComponent.TryChangeDamage(DamageGroup(), (int)AmountToChange, true);
+                var damageGroup = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
+
+                damageComponent.TryChangeDamage(damageGroup, (int)AmountToChange, true);
 
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    damageComponent.TryChangeDamage(DamageGroup(), 1, true);
+                    damageComponent.TryChangeDamage(damageGroup, 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    damageComponent.TryChangeDamage(DamageGroup(), -1, true);
+                    damageComponent.TryChangeDamage(damageGroup, -1, true);
                     _accumulatedHealth += 1;
                 }
             }
