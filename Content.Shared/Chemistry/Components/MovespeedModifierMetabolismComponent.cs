@@ -16,7 +16,7 @@ namespace Content.Shared.Chemistry.Components
     public sealed class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
         [ViewVariables]
-        public override string Name => "MovespeedModifierMetabolismComponent";
+        public override string Name => "MovespeedModifierMetabolism";
 
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }
@@ -24,14 +24,11 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public float SprintSpeedModifier { get; set; }
 
-        [ViewVariables]
-        public int EffectTime { get; set; }
-
-        public TimeSpan? ModifierTimer { get; set; }
-
         /// <summary>
-        /// Perpetuate the modifiers further.
+        /// When the current modifier is expected to end.
         /// </summary>
+        [ViewVariables]
+        public TimeSpan? ModifierTimer { get; set; }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
