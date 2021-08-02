@@ -5,6 +5,7 @@ using Content.Shared.Spawning;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 
@@ -44,7 +45,9 @@ namespace Content.IntegrationTests.Tests.Utility
 
             await server.WaitAssertion(() =>
             {
+                var mapId = new MapId(1);
                 var grid = sMapManager.GetGrid(new GridId(1));
+                grid.SetTile(new Vector2i(0, 0), new Tile(1));
                 var entityCoordinates = new EntityCoordinates(grid.GridEntityId, 0, 0);
 
                 // Nothing blocking it, only entity is the grid
@@ -52,7 +55,6 @@ namespace Content.IntegrationTests.Tests.Utility
                 Assert.True(sEntityManager.TrySpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable, out var entity));
                 Assert.NotNull(entity);
 
-                var mapId = new MapId(1);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
                 // Nothing blocking it, only entity is the grid
