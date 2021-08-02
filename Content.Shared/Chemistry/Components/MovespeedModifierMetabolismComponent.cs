@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public int EffectTime { get; set; }
 
-        public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; set; }
+        public TimeSpan? ModifierTimer { get; set; }
 
         /// <summary>
         /// Perpetuate the modifiers further.
@@ -44,9 +44,9 @@ namespace Content.Shared.Chemistry.Components
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }
-            public (TimeSpan Start, TimeSpan End)? ModifierTimer { get; }
+            public TimeSpan? ModifierTimer { get; }
 
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, (TimeSpan Start, TimeSpan End)? modifierTimer)
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, TimeSpan? modifierTimer)
             {
                 WalkSpeedModifier = walkSpeedModifier;
                 SprintSpeedModifier = sprintSpeedModifier;
