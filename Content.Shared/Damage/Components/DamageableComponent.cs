@@ -560,54 +560,23 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-        // TODO QUESTION I created this function, and the one below it, to covert between Dictionary<IPrototype,int> and
-        // Dictionary<string,int> using the IPrototype ID field. Maybe such a function already exists somewhere, but I
-        // couldn't find where it was. This sort of function is apparently needed when sending damage dictionary data
-        // over the network, as is apparently doesn't support sending prototypes. However, given how generalizable this
-        // function is, and that it may be useful when sending other prototype data, this function should probably be
-        // moved somewhere else. Would this belong in PrototypeManager? Alternatively, as it is currently ONLY used for
-        // the health scanner display (i.e., only used in one place), you could remove the function and just add the
-        // required code in that one place, without all the generality.
-
         /// <summary>
-        /// Take a dictionary with prototype keys, and return a dictionary using the prototype ID strings as keys
-        /// instead.
+        ///     Take a dictionary with <see cref="IPrototype"/> keys and return a dictionary using <see cref="IPrototype.ID"/> as keys
+        ///     instead.
         /// </summary>
         /// <remarks>
-        /// Useful when sending prototypes dictionaries over the network.
+        ///     Useful when sending damage type and group prototypes dictionaries over the network.
         /// </remarks>
-        public static IReadOnlyDictionary<string, TValue>
-            ConvertDictKeysToIDs<TPrototype,TValue>(IReadOnlyDictionary<TPrototype, TValue> prototypeDict)
+        public static IReadOnlyDictionary<string, int>
+            ConvertDictKeysToIDs<TPrototype>(IReadOnlyDictionary<TPrototype, int> prototypeDict)
             where TPrototype : IPrototype
         {
-            Dictionary<string, TValue> idDict = new(prototypeDict.Count);
+            Dictionary<string, int> idDict = new(prototypeDict.Count);
             foreach (var entry in prototypeDict)
             {
                 idDict.Add(entry.Key.ID, entry.Value);
             }
             return idDict;
-        }
-
-        /// <summary>
-        /// Takes a dictionary with strings as keys and attempts to return one using Prototypes as keys.
-        /// </summary>
-        /// <remarks>
-        /// Finds prototypes with matching IDs using the prototype manager. Useful when receiving prototypes
-        /// dictionaries over the network.
-        /// </remarks>
-        /// <exception cref="KeyNotFoundException">
-        /// Thrown if one of the string IDs does not exist.
-        /// </exception>
-        public IReadOnlyDictionary<TPrototype, TValue>
-            ConvertDictKeysToPrototypes<TPrototype, TValue>(IReadOnlyDictionary<string, TValue> stringDict)
-            where TPrototype : class, IPrototype
-        {
-            Dictionary<TPrototype, TValue> prototypeDict = new(stringDict.Count);
-            foreach (var entry in stringDict)
-            {
-                prototypeDict.Add(_prototypeManager.Index<TPrototype>(entry.Key), entry.Value);
-            }
-            return prototypeDict;
         }
     }
 
