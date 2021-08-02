@@ -18,8 +18,6 @@ namespace Content.Server.GameTicking.Presets
     /// </summary>
     public abstract class GamePreset
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public abstract bool Start(IReadOnlyList<IPlayerSession> readyPlayers, bool force = false);
         public virtual string ModeTitle => "Sandbox";
         public virtual string Description => "Secret!";
@@ -69,7 +67,7 @@ namespace Content.Server.GameTicking.Presets
                     {
                         //todo: what if they dont breathe lol
                         //cry deeply
-                        damageable.TrySetDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 200);
+                        damageable.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
                     }
                 }
             }
