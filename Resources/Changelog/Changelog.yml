@@ -1637,3 +1637,8 @@ Entries:
   - {message: Made plasma Grindable, type: Tweak}
   id: 291
   time: '2021-08-01T19:05:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Door sounds no longer play twice sometimes., type: Fix}
+  id: 292
+  time: '2021-08-02T11:57:06.0000000+00:00'
