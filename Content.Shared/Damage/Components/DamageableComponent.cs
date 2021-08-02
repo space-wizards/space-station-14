@@ -57,7 +57,7 @@ namespace Content.Shared.Damage.Components
         public IReadOnlyDictionary<string, int> DamagePerSupportedGroupIDs => ConvertDictKeysToIDs(DamagePerSupportedGroup);
         public IReadOnlyDictionary<string, int> DamagePerTypeIDs => ConvertDictKeysToIDs(DamagePerType);
 
-        // TODO PROTOTYPE Replace these datafield variables with prototype referencess, once they are supported.
+        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
         // Also requires appropriate changes in OnExplosion() and RadiationAct()
         [ViewVariables]
         [DataField("radiationDamageTypes")]
@@ -89,7 +89,7 @@ namespace Content.Shared.Damage.Components
             SupportedDamageGroups.UnionWith(damageContainerPrototype.SupportedDamageGroups);
             SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 
-            //initialise damage dictionary 0 damage
+            //initialize damage dictionary 0 damage
             foreach (var type in SupportedDamageTypes)
             {
                 _damageDict.Add(type, 0);
@@ -332,39 +332,39 @@ namespace Content.Shared.Damage.Components
         }
 
 
-        // TODO QUESTION Please dont run away, its a very interesting wall of text.
+        // TODO QUESTION Please don't run away, its a very interesting wall of text.
         //
-        // Below is an alternative version of ChangeDamage(DamageGroupPrototype). Currently for a damge group with n
+        // Below is an alternative version of ChangeDamage(DamageGroupPrototype). Currently for a damage group with n
         // types, ChangeDamage() can call ChangeDamage(DamageTypePrototype) up to 2*n-1 times. As I think this function
-        // uses some sort of networking/messaging we probably want to minimise that down to n (or 1 if somehow possible
+        // uses some sort of networking/messaging we probably want to minimize that down to n (or 1 if somehow possible
         // with networking)? In the case where all of the damage is of one type, adding logic to reducing it to 1 is trivial.
         //
         // Additionally currently ChangeDamage will ignore a damageType if it is not supported by the container. As a
         // result, the actual amount by which the total group damage changes MAY be less than expected. I think this is
         // a good thing for dealing damage: if a damageContainer is 'immune' to some of the damage in the group, it
-        // should take less damage (even though this may overlap with how resistances are donw, I havent checked).
+        // should take less damage (even though this may overlap with how resistances are done, I haven't checked).
         //
         // On the other hand, I feel that when a doctor injects a patient with 1u drug that should heal 10 damage in a
         // damage group, they expect it to do so. The total health change should be the same, regardless of whether a
-        // damage type is supported, or whether a damge type is already set to zero. Otherwise a doctor could see a
-        // patient with brute, and try a brute drug, only to have it work at 1/3 effectivness because slash and piercing
+        // damage type is supported, or whether a damage type is already set to zero. Otherwise a doctor could see a
+        // patient with brute, and try a brute drug, only to have it work at 1/3 effectiveness because slash and piercing
         // are already at full health. Currently, this is also how ChangeDamage behaves.
         //
-        // I realise these are sort of contradictary opinions but I still think that's how it should work. Though if we
+        // I realize these are sort of contradictory opinions but I still think that's how it should work. Though if we
         // add code to restrict DamageContainerPrototypes to only allow for one damage group per damage type, and force
         // it to support all damage types in any groups, then this is a non-issue. (except for the networking/repeated
         // OnHealthChange() calls).
         //
-        // So below is an alternative version of ChangeDamage(DamageGroupPrototype) that keeps the same behaviour
-        // outlined above, but uses less ChangeDamage(DamageTypePrototype) calls. It does change healing behaviour
-        // somewhat: the ammount that each damage type is healed by is proportional to current damage in that type
+        // So below is an alternative version of ChangeDamage(DamageGroupPrototype) that keeps the same behavior
+        // outlined above, but uses less ChangeDamage(DamageTypePrototype) calls. It does change healing behavior
+        // somewhat: the amount that each damage type is healed by is proportional to current damage in that type
         // relative to the group.
         //
-        // So for example, consider someone with Blun/Slash/Piercing damage of 20/20/10.
-        // If you heal for 31 Brute using this code, you should heal for 12/12/7 (havent done rigorous testing).
+        // So for example, consider someone with Blunt/Slash/Piercing damage of 20/20/10.
+        // If you heal for 31 Brute using this code, you should heal for 12/12/7 (haven't done rigorous testing).
         // This wasn't an intentional design decision, it just so happens that this is the easiest algorithm I can think
-        // of that minimises calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
-        // actually like this damage-scaling healing behaviour.
+        // of that minimizes calls to ChangeDamage(damageType), while also not wasting any healing. Although, I do
+        // actually like this damage-scaling healing behavior.
         public bool ChangeDamageAlternative(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false,
     IEntity? source = null,
     DamageChangeParams? extraParams = null)
@@ -374,7 +374,7 @@ namespace Content.Shared.Damage.Components
 
             if (amount < 0)
             {
-                // We are Healing. Keep track of how much we can hand out (with a better var name for readbility).
+                // We are Healing. Keep track of how much we can hand out (with a better var name for readability).
                 var availableHealing = -amount;
 
                 // Get total group damage.
@@ -424,7 +424,7 @@ namespace Content.Shared.Damage.Components
                 // Resistances may result in no actual damage change. We need to keep track if any damage got through.
                 var damageChanged = false;
 
-                // We are adding damage. Keep track of how much we can dish out (with a better var name for readbility).
+                // We are adding damage. Keep track of how much we can dish out (with a better var name for readability).
                 var availableDamage = amount;
 
                 // How many damage types do we have to distribute over?.
@@ -441,7 +441,7 @@ namespace Content.Shared.Damage.Components
                     // We also use the return value to check whether any damage has changed
                     damageChanged = damageChanged || TryChangeDamage(type, damage, ignoreDamageResistances, source, extraParams);
 
-                    // regardless of whether we dealt damage, reduce the ammount to distribute.
+                    // regardless of whether we dealt damage, reduce the amount to distribute.
                     availableDamage -= damage;
                     numberDamageTypes -= 1;
 
@@ -449,7 +449,7 @@ namespace Content.Shared.Damage.Components
                 return damageChanged;
             }
 
-            // ammount==0 no damage change.
+            // amount==0 no damage change.
             return false;
         }
 
@@ -558,17 +558,17 @@ namespace Content.Shared.Damage.Components
         // Dictionary<string,int> using the IPrototype ID field. Maybe such a function already exists somewhere, but I
         // couldn't find where it was. This sort of function is apparently needed when sending damage dictionary data
         // over the network, as is apparently doesn't support sending prototypes. However, given how generalizable this
-        // function is, and that it may be usefull when sending other prototype data, this function should probably be
+        // function is, and that it may be useful when sending other prototype data, this function should probably be
         // moved somewhere else. Would this belong in PrototypeManager? Alternatively, as it is currently ONLY used for
         // the health scanner display (i.e., only used in one place), you could remove the function and just add the
         // required code in that one place, without all the generality.
 
         /// <summary>
-        /// Take a dictionary with protoype keys, and return a dictionary using the prototype ID strings as keys
+        /// Take a dictionary with prototype keys, and return a dictionary using the prototype ID strings as keys
         /// instead.
         /// </summary>
         /// <remarks>
-        /// Usefull when sending prototypes dictionaries over the network.
+        /// Useful when sending prototypes dictionaries over the network.
         /// </remarks>
         public static IReadOnlyDictionary<string, TValue>
             ConvertDictKeysToIDs<TPrototype,TValue>(IReadOnlyDictionary<TPrototype, TValue> prototypeDict)
@@ -586,7 +586,7 @@ namespace Content.Shared.Damage.Components
         /// Takes a dictionary with strings as keys and attempts to return one using Prototypes as keys.
         /// </summary>
         /// <remarks>
-        /// Finds prototypes with matching IDs using the prototype manager. Usefull when receiving prototypes
+        /// Finds prototypes with matching IDs using the prototype manager. Useful when receiving prototypes
         /// dictionaries over the network.
         /// </remarks>
         /// <exception cref="KeyNotFoundException">
