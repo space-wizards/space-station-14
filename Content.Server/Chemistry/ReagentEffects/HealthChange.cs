@@ -16,7 +16,6 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// </summary>
     public class HealthChange : ReagentEffect
     {
-
         /// <summary>
         /// How much damage is changed when 1u of the reagent is metabolized.
         /// </summary>

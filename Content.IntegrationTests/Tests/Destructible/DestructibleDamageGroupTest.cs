@@ -58,8 +58,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bruteDamageGroup = sPrototypeManager.Index <DamageGroupPrototype>("Brute");
-                var burnDamageGroup = sPrototypeManager.Index <DamageGroupPrototype>("Burn");
+                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("Brute");
+                var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("Burn");
 
                 // Raise brute damage to 5
                 Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 5, true));

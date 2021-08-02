@@ -31,13 +31,6 @@ namespace Content.Server.Nutrition.Components
 
         private float _accumulatedDamage;
 
-        // TODO QUESTION Just based on DrSmugleaf's other comments on similar situations: are all of _baseDecayRate,
-        // _actualDecayRate, _currentHunger all redundant here? i.e., shouldn't it just be:
-        //    [ViewVariables(VVAccess.ReadWrite)]
-        //    [DataField("baseDecayRate")]
-        //    private float BaseDecayRate { get; set; } = 0.1f;
-        // and similar for the others?
-
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -194,7 +187,6 @@ namespace Content.Server.Nutrition.Components
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
             // --> Current Hunger is below dead threshold
-
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;

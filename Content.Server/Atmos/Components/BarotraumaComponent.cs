@@ -55,8 +55,6 @@ namespace Content.Server.Atmos.Components
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-
-
                     damageable.TryChangeDamage(_damageType, Atmospherics.LowPressureDamage, false, Owner);
 
                     if (status == null) break;

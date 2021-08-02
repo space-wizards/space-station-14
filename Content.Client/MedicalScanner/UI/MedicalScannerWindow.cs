@@ -91,7 +91,6 @@ namespace Content.Client.MedicalScanner.UI
                     text.Append('\n');
                 }
 
-
                 // Then, lets also list any damageType that was not fully Supported by the entity's damageContainer
                 var textAppendix = new StringBuilder();
                 int totalMiscDamage = 0;
@@ -109,7 +108,6 @@ namespace Content.Client.MedicalScanner.UI
                     text.Append(textAppendix);
                 }
 
-                
                 _diagnostics.Text = text.ToString();
                 ScanButton.Disabled = state.IsScanned;
 

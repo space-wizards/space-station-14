@@ -16,7 +16,7 @@ namespace Content.Shared.Damage.Components
         /// Returns a dictionary of the damage in the container, indexed by <see cref="DamageGroupPrototype"/>.
         /// </summary>
         /// <remarks>
-        /// The values represent the sum of of all damage in each group. If a supported damage type is a memeber of more than one group, it will contribute to each one.
+        /// The values represent the sum of all damage in each group. If a supported damage type is a member of more than one group, it will contribute to each one.
         /// Therefore, the sum of the values may be greater than the sum of the values in the dictionary returned by <see cref="DamagePerType"/>
         /// </remarks>
         IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerGroup { get; }
@@ -26,10 +26,10 @@ namespace Content.Shared.Damage.Components
         /// cref="DamageGroupPrototype"/>.
         /// </summary>
         /// <remarks>
-        /// The values represent the sum of of all damage in each group. As the damage container may have some damage
+        /// The values represent the sum of all damage in each group. As the damage container may have some damage
         /// types that are not part of a fully supported damage group, the sum of the values may be less of the values
         /// in the dictionary returned by <see cref="DamagePerType"/>. On the other hand, if a supported damage type
-        /// is a memeber of more than one group, it will contribute to each one. Therefore, the sum may also be greater
+        /// is a member of more than one group, it will contribute to each one. Therefore, the sum may also be greater
         /// instead.
         /// </remarks>
         IReadOnlyDictionary<DamageGroupPrototype, int> DamagePerSupportedGroup { get; }
@@ -80,7 +80,7 @@ namespace Content.Shared.Damage.Components
         /// <remarks>
         /// This describes what damage groups could have an effect on this damage container. However not every damage
         /// group has to be fully supported. For example, the container may support ONLY the piercing damage type. It should
-        /// therefore be affected by instances of brute damage, but does not neccesarily support blunt or slash damage.
+        /// therefore be affected by instances of brute damage, but does not necessarily support blunt or slash damage.
         /// For a list of supported damage types, see <see cref="SupportedDamageTypes"/>.
         /// </remarks>
         HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; }
@@ -129,7 +129,7 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     False if the given type is not supported, no damage change occured, or improper
+        ///     False if the given type is not supported, no damage change occurred, or improper
         ///     <see cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TryChangeDamage(
@@ -146,7 +146,7 @@ namespace Content.Shared.Damage.Components
         /// <remarks>
         ///     This spreads the damage change amount evenly between the <see cref="DamageTypePrototype"></see>s in this
         ///     group (subject to integer rounding). Note that if only a subset of the damage types in the group are
-        ///     actually supported by the container, then the total change change will be less than expected.
+        ///     actually supported by the container, then the total change will be less than expected.
         /// </remarks>
         /// <param name="group">group of damage being changed.</param>
         /// <param name="amount">
@@ -161,7 +161,7 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given group is not applicable,  no damage change occured, or improper <see
+        ///     Returns false if the given group is not applicable,  no damage change occurred, or improper <see
         ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TryChangeDamage(
@@ -182,7 +182,7 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given type is not supported, no damage change occured, or improper <see
+        ///     Returns false if the given type is not supported, no damage change occurred, or improper <see
         ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TrySetDamage(
@@ -201,7 +201,7 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if the given group is not applicable,  no damage change occured, or improper <see
+        ///     Returns false if the given group is not applicable,  no damage change occurred, or improper <see
         ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TrySetDamage(
@@ -220,7 +220,7 @@ namespace Content.Shared.Damage.Components
         ///     Extra parameters that some components may require, such as a specific limb to target.
         /// </param>
         /// <returns>
-        ///     Returns false if no damage change occured or improper <see
+        ///     Returns false if no damage change occurred or improper <see
         ///     cref="DamageChangeParams"/> were provided; true otherwise.
         /// </returns>
         bool TrySetAllDamage(

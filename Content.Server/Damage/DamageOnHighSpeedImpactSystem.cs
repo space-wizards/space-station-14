@@ -18,7 +18,7 @@ namespace Content.Server.Damage
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        
+
         public override void Initialize()
         {
             base.Initialize();

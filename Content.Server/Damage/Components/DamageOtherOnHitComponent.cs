@@ -11,7 +11,6 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public class DamageOtherOnHitComponent : Component, IThrowCollide
     {
-
         public override string Name => "DamageOtherOnHit";
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.

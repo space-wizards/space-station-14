@@ -73,9 +73,8 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
-
         /// <summary>
-        /// Ammount of damage to deal when all vital organs are removed.
+        /// Amount of damage to deal when all vital organs are removed.
         /// </summary>
         [ViewVariables]
         [DataField("vitalPartsRemovedDamage", required: true)]
