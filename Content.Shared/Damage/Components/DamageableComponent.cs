@@ -337,14 +337,6 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
-            // TODO QUESTION what is this if statement supposed to do?
-            // Is TotalDamage supposed to be something like MaxDamage? I don't think DamageableComponents has a MaxDamage?
-            // Or are you just not allowed to Set the damage of a type to be larger than the current total???
-            if (newValue >= TotalDamage)
-            {
-                return false;
-            }
-
             if (newValue < 0)
             {
                 // invalid value
