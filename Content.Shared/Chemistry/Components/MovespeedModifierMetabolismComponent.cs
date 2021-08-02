@@ -15,7 +15,6 @@ namespace Content.Shared.Chemistry.Components
     [NetworkedComponent]
     public sealed class MovespeedModifierMetabolismComponent : Component, IMoveSpeedModifier
     {
-
         [ViewVariables]
         public override string Name => "MovespeedModifierMetabolismComponent";
 
