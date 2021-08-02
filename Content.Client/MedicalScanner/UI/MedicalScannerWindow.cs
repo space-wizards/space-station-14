@@ -55,7 +55,7 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
-                // Show the toal damage
+                // Show the total damage
                 var totalDamage = state.DamagePerTypeID.Values.Sum();
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
@@ -98,7 +98,7 @@ namespace Content.Client.MedicalScanner.UI
                 // Iterate over ids that have not been printed.
                 foreach (var damageTypeID in state.DamagePerTypeID.Keys.Where(typeID => !shownTypeIDs.Contains(typeID)))
                 {
-                     //This damge type was not yet added to the text.
+                     //This damage type was not yet added to the text.
                      textAppendix.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", damageTypeID), ("amount", state.DamagePerTypeID[damageTypeID]))}");
                      totalMiscDamage += state.DamagePerTypeID[damageTypeID];
                 }
@@ -113,7 +113,8 @@ namespace Content.Client.MedicalScanner.UI
                 _diagnostics.Text = text.ToString();
                 ScanButton.Disabled = state.IsScanned;
 
-                SetSize = (250, 575);
+                // TODO MEDICALSCANNER resize window based on the length of text / number of damage types?
+                SetSize = (250, 600);
             }
         }
     }

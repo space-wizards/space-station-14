@@ -19,3 +19,4 @@ medical-scanner-window-entity-health-text = {$entityName}'s health:
 medical-scanner-window-entity-damage-total-text = Total Damage: {$amount}
 medical-scanner-window-damage-group-text = {$damageGroup}: {$amount}
 medical-scanner-window-damage-type-text = {$damageType}: {$amount}
+medical-scanner-window-damage-type-duplicate-text = {$damageType}: {$amount} (duplicate)
