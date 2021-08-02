@@ -139,13 +139,21 @@ namespace Content.Shared.Damage.Components
         bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false);
 
         /// <summary>
-        ///     Tries to change damage of the specified <see cref="DamageGroupPrototype"/>, applying resistance values only if
-        ///     it is damage.
+        ///     Tries to change damage of the specified <see cref="DamageGroupPrototype"/>, applying resistance values
+        ///     only if it is damage.
         /// </summary>
         /// <remarks>
-        ///     This spreads the damage change amount evenly between the <see cref="DamageTypePrototype"></see>s in this
-        ///     group (subject to integer rounding). Note that if only a subset of the damage types in the group are
-        ///     actually supported by the container, then the total change will be less than expected.
+        /// <para>
+        ///     If dealing damage, this spreads the damage change amount evenly between the <see
+        ///     cref="DamageTypePrototype"></see>s in this group (subject to integer rounding). If only a subset of the
+        ///     damage types in the group are actually supported, then the total damage dealt may be less than expected
+        ///     (unsupported damage is ignored).
+        /// </para>
+        /// <para>
+        ///     If healing damage, this spreads the damage change proportional to the current damage value of each <see
+        ///     cref="DamageTypePrototype"></see> (subject to integer rounding). If there is less damage than is being
+        ///     healed, some healing is wasted. Unsupported damage types do not waste healing.
+        /// </para> 
         /// </remarks>
         /// <param name="group">group of damage being changed.</param>
         /// <param name="amount">
