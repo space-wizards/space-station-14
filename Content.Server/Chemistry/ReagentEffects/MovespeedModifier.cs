@@ -80,7 +80,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         }
         public void ResetTimer(MovespeedModifierMetabolismComponent status)
         {
-            status.ModifierTimer = (_gametiming.CurTime, _gametiming.CurTime.Add(TimeSpan.FromMilliseconds(status.EffectTime)));
+            status.ModifierTimer = (_gametiming.CurTime.Add(TimeSpan.FromMilliseconds(status.EffectTime)));
             status.Dirty();
         }
     }
