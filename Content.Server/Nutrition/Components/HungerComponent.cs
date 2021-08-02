@@ -29,7 +29,7 @@ namespace Content.Server.Nutrition.Components
         private readonly string _damageTypeID = "Blunt";
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
-        private float _acumulatedDamage;
+        private float _accumulatedDamage;
 
         // TODO QUESTION Just based on DrSmugleaf's other comments on similar situations: are all of _baseDecayRate,
         // _actualDecayRate, _currentHunger all redundant here? i.e., shouldn't it just be:
@@ -193,7 +193,7 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
-            // --> Current Hunger is below dead threhsold
+            // --> Current Hunger is below dead threshold
 
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
@@ -206,10 +206,10 @@ namespace Content.Server.Nutrition.Components
             {
                 // --> But they are not dead yet.
                 var damage = 2 * frametime;
-                _acumulatedDamage += damage - ((int) damage);
+                _accumulatedDamage += damage - ((int) damage);
                 damageable.TryChangeDamage(_damageType, (int) damage);
-                if (_acumulatedDamage >= 1) {
-                    _acumulatedDamage -= 1;
+                if (_accumulatedDamage >= 1) {
+                    _accumulatedDamage -= 1;
                     damageable.TryChangeDamage(_damageType, 1, true);
                 }
             }

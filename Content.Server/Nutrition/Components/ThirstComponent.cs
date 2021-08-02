@@ -15,7 +15,6 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Log;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -30,7 +29,7 @@ namespace Content.Server.Nutrition.Components
         private readonly string _damageTypeID = "Blunt";
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
-        private float _acumulatedDamage;
+        private float _accumulatedDamage;
 
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -184,7 +183,7 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentThirstThreshold != ThirstThreshold.Dead)
                 return;
-            // --> Current Hunger is below dead threhsold
+            // --> Current Hunger is below dead threshold
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
@@ -192,16 +191,15 @@ namespace Content.Server.Nutrition.Components
             if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
                 return;
 
-            Logger.ErrorS("aa", $"frametime:{frametime}");
             if (!mobState.IsDead())
             {
                 // --> But they are not dead yet.
                 var damage = 2 * frametime;
-                _acumulatedDamage += damage - ((int) damage);
+                _accumulatedDamage += damage - ((int) damage);
                 damageable.TryChangeDamage(_damageType, (int) damage);
-                if (_acumulatedDamage >= 1)
+                if (_accumulatedDamage >= 1)
                 {
-                    _acumulatedDamage -= 1;
+                    _accumulatedDamage -= 1;
                     damageable.TryChangeDamage(_damageType, 1, true);
                 }
             }
