@@ -11,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -61,6 +62,11 @@ namespace Content.Server.GameTicking
             {
                 throw new InvalidOperationException($"No grid found for map {map}");
             }
+
+            var maxStationOffset = _configurationManager.GetCVar(CCVars.MaxStationOffset);
+            var x = _robustRandom.NextFloat() * maxStationOffset * 2 - maxStationOffset;
+            var y = _robustRandom.NextFloat() * maxStationOffset * 2 - maxStationOffset;
+            _entityManager.GetEntity(grid.GridEntityId).Transform.LocalPosition = new Vector2(x, y);
 
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
