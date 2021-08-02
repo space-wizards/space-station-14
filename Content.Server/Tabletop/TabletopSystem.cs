@@ -1,4 +1,4 @@
-﻿using Content.Server.Tabletop.Components;
+﻿using System.Collections.Generic;
 using Content.Shared.GameTicking;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
@@ -11,16 +11,17 @@ using Robust.Shared.Map;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public class TabletopSystem : EntitySystem
+    public partial class TabletopSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private MapId _tabletopMapId;
+        private readonly Dictionary<EntityUid, MapId> _gameSessions = new();
 
         public override void Initialize()
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(TabletopMoveHandler);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Cleanup);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
         private void TabletopMoveHandler(TabletopMoveEvent msg)
@@ -37,36 +38,85 @@ namespace Content.Server.Tabletop
             movedEntity.Dirty();
         }
 
-        public IEntity CreateCamera(TabletopGameComponent component, IPlayerSession playerSession)
+        private IEntity CreateCamera(IEntity user, MapCoordinates coordinates)
         {
-            var entityManager = component.Owner.EntityManager;
-            var viewSubscriberSystem = Get<ViewSubscriberSystem>();
-
-            var viewCoordinates = new MapCoordinates((0, 0), EnsureMapCreated());
-            var camera = entityManager.SpawnEntity(null, viewCoordinates);
+            var camera = _entityManager.SpawnEntity(null, coordinates);
+            camera.Name = "camera";
 
             var eyeComponent = camera.EnsureComponent<EyeComponent>();
             eyeComponent.DrawFov = false;
-            viewSubscriberSystem.AddViewSubscriber(camera.Uid, playerSession);
 
-            entityManager.SpawnEntity("Crowbar", viewCoordinates);
+            var playerSession = user.PlayerSession();
+            if (playerSession != null)
+            {
+                Get<ViewSubscriberSystem>().AddViewSubscriber(camera.Uid, playerSession);
+            }
 
             return camera;
         }
 
-        private void Cleanup(RoundRestartCleanupEvent args)
+        private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
         {
-
+            Reset();
         }
 
-        private MapId EnsureMapCreated()
+        /**
+         * <summary>Remove all tabletop sessions and their maps.</summary>
+         */
+        private void Reset()
         {
-            if (_tabletopMapId.Equals(MapId.Nullspace))
+            foreach (var (_, mapId) in _gameSessions)
             {
-                _tabletopMapId = _mapManager.CreateMap();
+                _mapManager.DeleteMap(mapId);
             }
 
-            return _tabletopMapId;
+            _gameSessions.Clear();
+        }
+
+        /**
+         * <summary>Get the <see cref="MapId"/> related to this entity UID.</summary>
+         * <param name="uid">The identifier of the entity to get the map for.</param>
+         * <returns>The <see cref="MapId"/> that has been reserved for this entity.</returns>
+         */
+        private MapId GetMapId(EntityUid uid)
+        {
+            if (_gameSessions.ContainsKey(uid))
+            {
+                return _gameSessions[uid];
+            }
+
+            throw new KeyNotFoundException("The table for the requested entity has not been initialized yet.");
+        }
+
+        public void OpenTable(IEntity user, IEntity table)
+        {
+            EnsureTable(table.Uid);
+            var mapId = GetMapId(table.Uid);
+
+            // Create a camera for the user
+            IEntity camera = CreateCamera(user, new MapCoordinates(0, 0, mapId));
+
+            // Tell the client that it has to open a viewport for the tabletop game
+            // TODO: use actual title/size from prototype, for now we assume its chess
+            var playerSession = user.PlayerSession();
+            if (playerSession != null)
+            {
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(
+                    new TabletopPlayEvent(camera.Uid, "Chess", (8, 8)), playerSession.ConnectedClient
+                );
+            }
+        }
+
+        private void EnsureTable(EntityUid uid)
+        {
+            if (_gameSessions.ContainsKey(uid)) return;
+
+            // Map does not exist for this entity yet, create it, store it and return it
+            var mapId = _mapManager.CreateMap();
+            _gameSessions.Add(uid, mapId);
+
+            // TODO: don't assume chess
+            SetupChessBoard(GetMapId(uid));
         }
     }
 }

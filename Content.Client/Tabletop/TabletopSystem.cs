@@ -4,7 +4,7 @@ using Content.Client.Viewport;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
-using Robust.Client.Graphics;
+using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -13,7 +13,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Client.UserInterface;
-using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using EyeComponent = Robust.Client.GameObjects.EyeComponent;
 
 namespace Content.Client.Tabletop
@@ -24,6 +24,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         /**
          * Time in seconds to wait until sending the location of a dragged entity to the server again.
@@ -60,8 +61,8 @@ namespace Content.Client.Tabletop
 
             var window = new SS14Window
             {
-                MinWidth = 512,
-                MinHeight = 512 + 26,
+                MinWidth = 400,
+                MinHeight = 400 + 26,
                 Title = msg.Title
             };
 
@@ -97,10 +98,12 @@ namespace Content.Client.Tabletop
             // Increment total time passed
             _timePassed += frameTime;
 
+
+
             // Only send new position to server when Delay is reached
-            if (_timePassed >= Delay)
+            if (_timePassed >= Delay && _gameTiming.IsFirstTimePredicted)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, coords));
+                EntityManager.RaisePredictiveEvent(new TabletopMoveEvent(_draggedEntity.Uid, coords));
                 _timePassed = 0f;
             }
         }
@@ -139,6 +142,9 @@ namespace Content.Client.Tabletop
             // Unset the dragged entity and viewport
             _draggedEntity = null;
             _viewport = null;
+
+            // We set the time passed equal to the delay, so that Update() will send the final position one more time
+            _timePassed = Delay;
 
             return true;
         }

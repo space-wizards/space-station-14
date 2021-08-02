@@ -35,18 +35,7 @@ namespace Content.Server.Tabletop.Components
 
             protected override void Activate(IEntity user, TabletopGameComponent component)
             {
-                // Tell the client that it has to open a viewport for the tabletop game
-                var entityNetManager = component.Owner.EntityManager.EntityNetManager;
-                if (entityNetManager == null) return;
-
-                // TODO: use actual title/size from prototype
-
-                var playerSession = user.PlayerSession();
-                if (playerSession == null) return;
-
-                IEntity camera = EntitySystem.Get<TabletopSystem>().CreateCamera(component, playerSession);
-
-                entityNetManager.SendSystemNetworkMessage(new TabletopPlayEvent(camera.Uid, "Chess", (8, 8)));
+                EntitySystem.Get<TabletopSystem>().OpenTable(user, component.Owner);
             }
         }
     }
