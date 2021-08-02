@@ -2,7 +2,7 @@
 
 namespace Content.Server.Atmos.Components
 {
-    public interface IGridAtmosphereComponent : IComponent
+    public interface IAtmosphereComponent : IComponent
     {
         /// <summary>
         ///     Whether this atmosphere is simulated or not.

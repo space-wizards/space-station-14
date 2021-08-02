@@ -16,9 +16,9 @@ namespace Content.Server.Atmos.Components
     /// <summary>
     ///     This is our SSAir equivalent.
     /// </summary>
-    [ComponentReference(typeof(IGridAtmosphereComponent))]
+    [ComponentReference(typeof(IAtmosphereComponent))]
     [RegisterComponent, Serializable]
-    public class GridAtmosphereComponent : Component, IGridAtmosphereComponent, ISerializationHooks
+    public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
     {
         public override string Name => "GridAtmosphere";
         public virtual bool Simulated => true;

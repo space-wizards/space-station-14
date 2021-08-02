@@ -29,7 +29,6 @@ namespace Content.Server.Atmos.EntitySystems
             #region Events
 
             // Map events.
-            _mapManager.MapCreated += OnMapCreated;
             _mapManager.TileChanged += OnTileChanged;
 
             #endregion
@@ -39,7 +38,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Shutdown();
 
-            _mapManager.MapCreated -= OnMapCreated;
             _mapManager.TileChanged -= OnTileChanged;
         }
 
@@ -55,17 +53,6 @@ namespace Content.Server.Atmos.EntitySystems
             }
 
             InvalidateTile(eventArgs.NewTile.GridIndex, eventArgs.NewTile.GridIndices);
-        }
-
-        private void OnMapCreated(object? sender, MapEventArgs e)
-        {
-            if (e.Map == MapId.Nullspace)
-                return;
-
-            var map = _mapManager.GetMapEntity(e.Map);
-
-            if (!map.HasComponent<IGridAtmosphereComponent>())
-                map.AddComponent<SpaceGridAtmosphereComponent>();
         }
 
         public override void Update(float frameTime)
