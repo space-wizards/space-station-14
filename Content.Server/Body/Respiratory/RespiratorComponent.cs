@@ -39,12 +39,12 @@ namespace Content.Server.Body.Respiratory
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("suffocationDamageType")]
-        private readonly string _suffocationDamageTypeID = "Asphyxiation"!;
-        private DamageTypePrototype _suffocationDamageType => _prototypeManager.Index<DamageTypePrototype>(_suffocationDamageTypeID);
+        private readonly string _damageTypeID = "Asphyxiation"!;
+        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _damage = 1;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _damageRecovery = 1;
 
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
@@ -357,7 +357,7 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
-            damageable.TryChangeDamage(_suffocationDamageType, _suffocationDamage, false);
+            damageable.TryChangeDamage(_damageType, _damage, false);
         }
 
         private void StopSuffocation()
@@ -366,7 +366,7 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.TryChangeDamage(_suffocationDamageType, -_suffocationDamageRecovery, false);
+                damageable.TryChangeDamage(_damageType, -_damageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

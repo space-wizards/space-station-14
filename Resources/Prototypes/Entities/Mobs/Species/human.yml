@@ -171,7 +171,6 @@
   - type: Damageable
     damageContainer: biologicalDamageContainer
   - type: Respirator
-    suffocationDamageType: Asphyxiation
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
