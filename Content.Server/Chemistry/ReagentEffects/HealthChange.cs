@@ -26,10 +26,10 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// Damage group to change.
         /// </summary>
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also requires replacing DamageGroup() calls with something like _damageGroup
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
+        private DamageGroupPrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
 
         private float _accumulatedHealth;
 
@@ -40,22 +40,20 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
-                var damageGroup = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
-
-                damageComponent.TryChangeDamage(damageGroup, (int)AmountToChange, true);
+                damageComponent.TryChangeDamage(DamageGroup, (int)AmountToChange, true);
 
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
                 _accumulatedHealth += decHealthChange;
 
                 if (_accumulatedHealth >= 1)
                 {
-                    damageComponent.TryChangeDamage(damageGroup, 1, true);
+                    damageComponent.TryChangeDamage(DamageGroup, 1, true);
                     _accumulatedHealth -= 1;
                 }
 
                 else if(_accumulatedHealth <= -1)
                 {
-                    damageComponent.TryChangeDamage(damageGroup, -1, true);
+                    damageComponent.TryChangeDamage(DamageGroup, -1, true);
                     _accumulatedHealth += 1;
                 }
             }
