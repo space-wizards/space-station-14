@@ -1,0 +1,16 @@
+- type: entity
+  name: Crude homunculus
+  parent: CarpMob_Content
+  id: specimen_basic
+  description: I think it preffers to be called "Dmitriy"
+  components:
+  - type: SpecimenDietComponent
+    Diet:
+    - Ass
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: alive
+      sprite: Mobs/Aliens/specimen/HumanCarpSpecimen.rsi
+
