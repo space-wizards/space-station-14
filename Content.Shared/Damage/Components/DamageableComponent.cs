@@ -178,7 +178,7 @@ namespace Content.Shared.Damage.Components
             var damageChanged = false;
             foreach (var type in group.DamageTypes)
             {
-                damageChanged = damageChanged || TrySetDamage(type, newValue);
+                damageChanged = TrySetDamage(type, newValue) || damageChanged;
             }
             return damageChanged;
         }
@@ -188,7 +188,7 @@ namespace Content.Shared.Damage.Components
             var damageChanged = false;
             foreach (var type in SupportedDamageTypes)
             {
-                damageChanged = damageChanged || TrySetDamage(type, newValue);
+                damageChanged = TrySetDamage(type, newValue) || damageChanged;
             }
             return damageChanged;
         }
@@ -316,7 +316,7 @@ namespace Content.Shared.Damage.Components
 
                     // Try apply the damage type. If damage type is not supported, this has no effect.
                     // We also use the return value to check whether any damage has changed
-                    damageChanged = damageChanged || TryChangeDamage(type, damage, ignoreDamageResistances);
+                    damageChanged = TryChangeDamage(type, damage, ignoreDamageResistances) || damageChanged;
 
                     // regardless of whether we dealt damage, reduce the amount to distribute.
                     availableDamage -= damage;
