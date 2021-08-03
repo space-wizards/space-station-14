@@ -21,6 +21,12 @@ namespace Content.Client.Physics.Controllers
 
             body.Predict = true; // TODO: equal prediction instead of true?
 
+            foreach (var joint in body.Joints)
+            {
+                joint.BodyA.Predict = true;
+                joint.BodyB.Predict = true;
+            }
+
             // Server-side should just be handled on its own so we'll just do this shizznit
             if (player.TryGetComponent(out IMobMoverComponent? mobMover))
             {
