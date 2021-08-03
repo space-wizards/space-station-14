@@ -42,7 +42,7 @@ namespace Content.Shared.Damage.Container
         /// <remarks>
         /// This describes what damage groups can have an effect on this damage container. However not every damage
         /// group has to be fully supported. For example, the container may support ONLY the piercing damage type. It
-        /// should therefore be affected by instances of brute group damage, but does not neccesarily support blunt or slash
+        /// should therefore be affected by instances of brute group damage, but does not necessarily support blunt or slash
         /// damage. If damage containers are only specified by supported damage groups, and every damage type is in only
         /// one damage group, then SupportedDamageTypes should be equal to ApplicableDamageGroups. For a list of
         /// supported damage types, see <see cref="SupportedDamageTypes"/>.
@@ -114,16 +114,20 @@ namespace Content.Shared.Damage.Container
                     continue;
                 }
                 // The group is not in the list of fully supported groups. Should it be?
+                var allMembersSupported = true;
                 foreach (var type in group.DamageTypes)
                 {
                     if (!_supportedDamageTypes.Contains(type))
                     {
                         // not all members are supported
-                        continue;
+                        allMembersSupported = false;
+                        break;
                     }
+                }
+                if (allMembersSupported) {
                     // All members are supported. The silly goose should have just used a damage group.
                     _fullySupportedDamageGroups.Add(group);
-                }
+                } 
             }
 
             // For each supported damage type, check whether it is in any existing group, If it is add it to _applicableDamageGroups
