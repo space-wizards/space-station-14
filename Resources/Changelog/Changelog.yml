@@ -1652,3 +1652,9 @@ Entries:
   - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
   id: 294
   time: '2021-08-03T08:49:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix lerping for other physics bodies., type: Fix}
+  - {message: Fix joint prediction., type: Fix}
+  id: 295
+  time: '2021-08-03T15:02:44.0000000+00:00'
