@@ -17,11 +17,14 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     class HurtCommand : IConsoleCommand
     {
-        [Dependency]
-        private readonly IPrototypeManager _prototypeManager = default!;
         public string Command => "hurt";
         public string Description => "Ouch";
         public string Help => $"Usage: {Command} <type/?> <amount> (<entity uid/_>) (<ignoreResistances>)";
+
+        private readonly IPrototypeManager _prototypeManager = default!;
+        public HurtCommand() {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        }
 
         private string DamageTypes()
         {
