@@ -8,6 +8,9 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {
+    /// <summary>
+    ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
+    /// </summary>
     [UsedImplicitly]
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {

@@ -14,13 +14,14 @@ using Dependency = Robust.Shared.IoC.DependencyAttribute;
 namespace Content.Server.Atmos.Components
 {
     /// <summary>
-    ///     This is our SSAir equivalent.
+    ///     Internal Atmos class. Use <see cref="AtmosphereSystem"/> to interact with atmos instead.
     /// </summary>
     [ComponentReference(typeof(IAtmosphereComponent))]
     [RegisterComponent, Serializable]
     public class GridAtmosphereComponent : Component, IAtmosphereComponent, ISerializationHooks
     {
         public override string Name => "GridAtmosphere";
+
         public virtual bool Simulated => true;
 
         [ViewVariables]
