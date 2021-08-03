@@ -1,12 +1,23 @@
-﻿# Chessboard
+﻿# Chessboard item (normal in game item you can hold in your hand)
 - type: entity
   id: ChessBoard
-  name: game of chess
+  name: chessboard
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/Tabletop/chessboard.rsi
+    state: chessboard
+  - type: TabletopGame
+
+# Chessboard tabletop item (item only visible in tabletop game)
+- type: entity
+  id: ChessBoardTabletop
+  name: chessboard
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
-    state: chessboard
-  - type: TabletopGame
+    state: chessboard_tabletop
 
 ## Chess pieces
 - type: entity

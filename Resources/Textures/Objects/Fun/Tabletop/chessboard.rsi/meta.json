@@ -1,12 +1,12 @@
 ﻿{
     "version": 1,
     "size": {
-        "x": 274,
-        "y": 274
+        "x": 18,
+        "y": 18
     },
     "states": [
         {
-            "name": "chessboard_tabletop"
+            "name": "chessboard"
         }
     ]
 }
