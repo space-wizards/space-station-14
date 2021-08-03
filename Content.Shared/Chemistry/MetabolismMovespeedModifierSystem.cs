@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private readonly HashSet<MovespeedModifierMetabolismComponent> _components = new();
+        private readonly List<MovespeedModifierMetabolismComponent> _components = new();
 
         public override void Initialize()
         {
@@ -52,17 +52,19 @@ namespace Content.Shared.Chemistry
 
             var currentTime = _gameTiming.CurTime;
 
-            foreach (var component in _components.ToArray())
+            for (var i = _components.Count - 1; i >= 0; i--)
             {
+                var component = _components[i];
+
                 if (component.Deleted)
                 {
-                    _components.Remove(component);
+                    _components.RemoveAt(i);
                     continue;
                 }
 
                 if (component.ModifierTimer > currentTime) continue;
 
-                _components.Remove(component);
+                _components.RemoveAt(i);
                 ComponentManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner.Uid);
 
                 if (component.Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
