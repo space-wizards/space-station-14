@@ -73,7 +73,6 @@ namespace Content.Shared.Damage.Container
         {
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
-            // Are all damage types are supported?
             if (_supportAll)
             {
                 foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
