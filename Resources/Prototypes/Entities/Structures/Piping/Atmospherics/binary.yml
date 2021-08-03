@@ -33,11 +33,14 @@
       state: pipeStraight
       map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
     - state: pumpPressure
+      map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer", "enum.PressurePumpVisualizer+Layers.Enabled" ]
   - type: Appearance
     visuals:
+    - type: SubFloorShowLayerVisualizer
     - type: PipeConnectorVisualizer
     - type: PipeColorVisualizer
     - type: PressurePumpVisualizer
+      disabledState: pumpPressure
       enabledState: pumpPressureOn
   - type: GasPressurePump
 
@@ -57,6 +60,12 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpVolume
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasVolumePump
 
 - type: entity
@@ -75,6 +84,12 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasPassiveGate
 
 - type: entity
@@ -94,6 +109,12 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: pumpPassiveGate
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasValve
     - type: NodeContainer
       nodes:
@@ -118,6 +139,12 @@
           state: pipeHalf
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: gasCanisterPort
+          map: [ "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
+    - type: Appearance
+      visuals:
+        - type: SubFloorShowLayerVisualizer
+        - type: PipeConnectorVisualizer
+        - type: PipeColorVisualizer
     - type: GasPort
     - type: NodeContainer
       nodes:
@@ -142,9 +169,10 @@
           state: pipeStraight
           map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
         - state: vent_off
-          map: ["enum.VentVisualLayers.Vent"]
+          map: [ "enum.VentVisualLayers.Vent", "enum.SubFloorShowLayerVisualizer+Layers.FirstLayer" ]
     - type: Appearance
       visuals:
+        - type: SubFloorShowLayerVisualizer
         - type: PipeConnectorVisualizer
         - type: PipeColorVisualizer
         - type: VentPumpVisualizer

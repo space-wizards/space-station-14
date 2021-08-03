@@ -121,11 +121,6 @@
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
     metabolisms:
-      Dylovene:
-        effects:
-        - !type:HealthChange
-          damageClass: Toxin
-          healthChange: -1
       Arithrazine:
         effects:
         - !type:HealthChange
@@ -154,26 +149,39 @@
         - !type:HealthChange
           damageClass: Airloss
           healthChange: -3
-      Kelotane:
+      Dylovene:
         effects:
-        - !type:HealthChange
-          damageClass: Burn
-          healthChange: -1
-      Synaptizine:
+          - !type:HealthChange
+            damageClass: Toxin
+            healthChange: -1
+      Ephedrine:
         effects:
-        - !type:HealthChange
-          damageClass: Toxin
-          healthChange: 0.5
+          - !type:MovespeedModifier
+            walkSpeedModifier: 1.2
+            sprintSpeedModifier: 1.2
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
           damageClass: Airloss
           healthChange: 4
+      Kelotane:
+        effects:
+          - !type:HealthChange
+            damageClass: Burn
+            healthChange: -1
       Lexorin:
         effects:
         - !type:HealthChange
           damageClass: Airloss
           healthChange: 7
+      Meth:
+        effects:
+          - !type:HealthChange
+            healthChange: 2.5
+            damageClass: Toxin
+          - !type:MovespeedModifier
+            walkSpeedModifier: 1.3
+            sprintSpeedModifier: 1.3
       Omnizine:
         effects:
         - !type:HealthChange
@@ -188,6 +196,11 @@
         - !type:HealthChange
           healthChange: -2
           damageClass: Brute
+      Synaptizine:
+        effects:
+          - !type:HealthChange
+            damageClass: Toxin
+            healthChange: 0.5
 
 - type: entity
   id: OrganHumanStomach

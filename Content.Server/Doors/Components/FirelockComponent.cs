@@ -1,3 +1,4 @@
+using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Doors;
 using Content.Server.Doors.Components;
@@ -6,26 +7,34 @@ using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Atmos.Components
+namespace Content.Server.Doors.Components
 {
     /// <summary>
-    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying, and not being openable on open-hand click.
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying,
+    /// and not being openable on open-hand click.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IDoorCheck))]
-    public class FirelockComponent : Component, IDoorCheck
+    public class FirelockComponent : Component
     {
         public override string Name => "Firelock";
 
         [ComponentDependency]
-        private readonly ServerDoorComponent? _doorComponent = null;
+        public readonly ServerDoorComponent? DoorComponent = null;
+
+        /// <summary>
+        /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.
+        /// </summary>
+        /// <returns></returns>
+        [DataField("lockedPryTimeModifier")]
+        public float LockedPryTimeModifier = 1.5f;
 
         public bool EmergencyPressureStop()
         {
-            if (_doorComponent != null && _doorComponent.State == SharedDoorComponent.DoorState.Open && _doorComponent.CanCloseGeneric())
+            if (DoorComponent != null && DoorComponent.State == SharedDoorComponent.DoorState.Open && DoorComponent.CanCloseGeneric())
             {
-                _doorComponent.Close();
+                DoorComponent.Close();
                 if (Owner.TryGetComponent(out AirtightComponent? airtight))
                 {
                     EntitySystem.Get<AirtightSystem>().SetAirblocked(airtight, true);
@@ -33,41 +42,6 @@ namespace Content.Server.Atmos.Components
                 return true;
             }
             return false;
-        }
-
-        bool IDoorCheck.OpenCheck()
-        {
-            return !IsHoldingFire() && !IsHoldingPressure();
-        }
-
-        bool IDoorCheck.DenyCheck() => false;
-
-        float? IDoorCheck.GetPryTime()
-        {
-            if (IsHoldingFire() || IsHoldingPressure())
-            {
-                return 1.5f;
-            }
-            return null;
-        }
-
-        bool IDoorCheck.BlockActivate(ActivateEventArgs eventArgs) => true;
-
-        void IDoorCheck.OnStartPry(InteractUsingEventArgs eventArgs)
-        {
-            if (_doorComponent == null || _doorComponent.State != SharedDoorComponent.DoorState.Closed)
-            {
-                return;
-            }
-
-            if (IsHoldingPressure())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("firelock-component-is-holding-pressure-message"));
-            }
-            else if (IsHoldingFire())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("firelock-component-is-holding-fire-message"));
-            }
         }
 
         public bool IsHoldingPressure(float threshold = 20)

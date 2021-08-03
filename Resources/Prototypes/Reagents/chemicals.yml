@@ -223,6 +223,33 @@
       amount: 1
 
 - type: reagent
+  id: Meth
+  name: meth
+  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
+  physicalDesc: translucent
+  color: "#FAFAFA"
+  boilingPoint: 212.0 #Meth vape when?
+  meltingPoint: 170.0
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
+  physicalDesc: Dark Brown
+  color: "#BC8A00"
+  boilingPoint: 184.3
+  meltingPoint: 113.7
+
+- type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing
+  physicalDesc: Bone white
+  color: "#D2FFFA"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+
+- type: reagent
   id: Oil
   name: oil
   desc: Used by chefs to cook.

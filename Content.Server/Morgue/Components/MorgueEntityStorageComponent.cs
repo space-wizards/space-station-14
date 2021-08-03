@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;
@@ -12,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -129,6 +131,20 @@ namespace Content.Server.Morgue.Components
             if (_tray != null)
             {
                 TrayContainer?.Insert(_tray);
+            }
+        }
+
+        protected override IEnumerable<IEntity> DetermineCollidingEntities()
+        {
+            if (_tray == null)
+            {
+                yield break;
+            }
+
+            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray))
+            {
+                yield return entity;
             }
         }
 

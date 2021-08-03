@@ -8,10 +8,9 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IGridAtmosphereComponent))]
-    [ComponentReference(typeof(GridAtmosphereComponent))]
+    [ComponentReference(typeof(IAtmosphereComponent))]
     [Serializable]
-    public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent, IGridAtmosphereComponent
+    public class UnsimulatedGridAtmosphereComponent : GridAtmosphereComponent
     {
         public override string Name => "UnsimulatedGridAtmosphere";
 
