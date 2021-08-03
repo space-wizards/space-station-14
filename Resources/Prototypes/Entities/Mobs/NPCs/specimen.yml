@@ -1,12 +1,12 @@
 - type: entity
   name: Crude homunculus
-  parent: CarpMob_Content
+  parent: CatMob_Content
   id: specimen_basic
   description: I think it preffers to be called "Dmitriy"
   components:
   - type: SpecimenDietComponent
     Diet:
-    - Ass
+    - Flesh
   - type: Sprite
     drawdepth: Mobs
     layers:

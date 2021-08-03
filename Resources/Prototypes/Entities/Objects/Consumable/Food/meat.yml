@@ -23,12 +23,22 @@
 
 - type: Tag
   id: Raw
+  
+- type: Tag
+  id: Meat
+  
+- type: Tag
+  id: Flesh
 
 - type: Tag
   id: Cooked
 
 - type: Tag
   id: Cutlet
+  
+## Unqie item tags go after general ones (?)
+- type: Tag
+  id: RawMeat
 
 # Raw
 
@@ -41,6 +51,9 @@
   - type: Tag
     tags:
       - Raw
+      - Meat
+      - Flesh
+      - RawMeat
   - type: Sprite
     state: plain
   - type: SolutionContainer

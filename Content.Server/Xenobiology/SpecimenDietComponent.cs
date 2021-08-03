@@ -36,7 +36,7 @@ namespace Content.Server.Xenobiology
 
         public string SelectedDiet = default!;
 
-        private int GrowthState = 0; //0 for embryo, 5 for mature specimen. Anything in-between is embryo state.
+        public int GrowthState = 0; //0 for embryo, 5 for mature specimen. Anything in-between is embryo state.
         protected override void Initialize()
         {
             IoCManager.Resolve<IRobustRandom>();
@@ -52,7 +52,16 @@ namespace Content.Server.Xenobiology
             { 
                SelectedDiet = _random.Pick(DietPick);
             }
+        }
 
+        //A placeholder function for advancing specimen growth
+        //Should only be used to increase size in the adult stage outside of the tube
+        public void Grow() 
+        {
+            if (GrowthState >= 5)
+            {
+               // this.Owner.GetComponent<SpriteComponent>().LayerSetScale(0)
+            }
         }
 
 
