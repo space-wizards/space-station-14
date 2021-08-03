@@ -1647,3 +1647,8 @@ Entries:
   - {message: Added everyone's favorite stimulant meth!, type: Add}
   id: 293
   time: '2021-08-03T03:32:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
+  id: 294
+  time: '2021-08-03T08:49:25.0000000+00:00'
