@@ -127,8 +127,8 @@ namespace Content.IntegrationTests.Tests.Damageable
                     // Damage
                     Assert.That(sDamageableComponent.TryChangeDamage(damageGroup, damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out var classDamage), Is.True);
-                    Assert.That(classDamage, Is.EqualTo(damageToDeal));
+                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out var groupDamage), Is.True);
+                    Assert.That(groupDamage, Is.EqualTo(damageToDeal));
 
                     foreach (var type in types)
                     {
@@ -139,8 +139,8 @@ namespace Content.IntegrationTests.Tests.Damageable
                     // Heal
                     Assert.That(sDamageableComponent.TryChangeDamage(damageGroup, -damageToDeal, true), Is.True);
                     Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out classDamage), Is.True);
-                    Assert.That(classDamage, Is.Zero);
+                    Assert.That(sDamageableComponent.TryGetDamage(damageGroup, out groupDamage), Is.True);
+                    Assert.That(groupDamage, Is.Zero);
 
                     foreach (var type in types)
                     {
