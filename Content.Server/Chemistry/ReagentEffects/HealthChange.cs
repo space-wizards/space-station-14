@@ -23,7 +23,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("healthChange")]
         public float AmountToChange { get; set; } = 1.0f;
 
-        private float _accumulatedHealth;
+        // TODO DAMAGE UNITS When damage units support decimals, get rid of this.
+        // See also _accumulatedDamage in ThirstComponent and HungerComponent
+        private float _accumulatedDamage;
 
         /// <summary>
         /// Damage group to change.
@@ -48,18 +50,18 @@ namespace Content.Server.Chemistry.ReagentEffects
                 damageComponent.TryChangeDamage(DamageGroup, (int)AmountToChange, true);
 
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
-                _accumulatedHealth += decHealthChange;
+                _accumulatedDamage += decHealthChange;
 
-                if (_accumulatedHealth >= 1)
+                if (_accumulatedDamage >= 1)
                 {
                     damageComponent.TryChangeDamage(DamageGroup, 1, true);
-                    _accumulatedHealth -= 1;
+                    _accumulatedDamage -= 1;
                 }
 
-                else if(_accumulatedHealth <= -1)
+                else if(_accumulatedDamage <= -1)
                 {
                     damageComponent.TryChangeDamage(DamageGroup, -1, true);
-                    _accumulatedHealth += 1;
+                    _accumulatedDamage += 1;
                 }
             }
         }

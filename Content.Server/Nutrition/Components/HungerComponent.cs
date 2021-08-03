@@ -23,6 +23,8 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        // TODO DAMAGE UNITS When damage units support decimals, get rid of this.
+        // See also _accumulatedDamage in ThirstComponent and HealthChange.
         private float _accumulatedDamage;
 
         // Base stuff
