@@ -32,6 +32,7 @@ namespace Content.Server.Kitchen.EntitySystems
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
 
         private Queue<ReagentGrinderComponent> _uiUpdateQueue = new();
 
@@ -291,8 +292,8 @@ namespace Content.Server.Kitchen.EntitySystems
                             RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent, false);
                             if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
                             solution.Solution.ScaleSolution(juiceEvent.Scalar);
-                            Get<ChemistrySystem>().TryAddSolution(component.HeldBeaker, solution.Solution);
-                            Get<ChemistrySystem>().RemoveAllSolution(solution);
+                            _chemistrySystem.TryAddSolution(component.HeldBeaker, solution.Solution);
+                            _chemistrySystem.RemoveAllSolution(solution);
                             item.Delete();
                         }
                         component.Busy = false;
@@ -315,7 +316,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             }
                             if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
                             juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            Get<ChemistrySystem>().TryAddSolution(component.HeldBeaker, juiceMe.JuiceResultSolution);
+                            _chemistrySystem.TryAddSolution(component.HeldBeaker, juiceMe.JuiceResultSolution);
                             item.Delete();
                         }
                         bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage());

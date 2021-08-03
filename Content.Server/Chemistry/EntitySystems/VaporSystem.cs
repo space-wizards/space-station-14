@@ -20,6 +20,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -67,7 +68,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            var result = Get<ChemistrySystem>().TryAddSolution(contents, solution);
+            var result = _chemistrySystem.TryAddSolution(contents, solution);
 
             if (!result)
             {
@@ -106,7 +107,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    Get<ChemistrySystem>().TryRemoveReagent(contents, reagentQuantity.ReagentId,
+                    _chemistrySystem.TryRemoveReagent(contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }

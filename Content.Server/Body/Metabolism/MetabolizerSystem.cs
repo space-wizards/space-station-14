@@ -7,13 +7,18 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Metabolism
 {
     // TODO mirror in the future working on mechanisms move updating here to BodySystem so it can be ordered?
+    [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
+        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -59,6 +64,7 @@ namespace Content.Server.Body.Metabolism
                 solution = sol;
                 reagentList = sol.ReagentList.ToList();
             }
+
             if (solution == null || reagentList.Count == 0)
             {
                 // We're all outta ideas on where to metabolize from
@@ -99,7 +105,7 @@ namespace Content.Server.Body.Metabolism
                     effect.Metabolize(ent, reagent);
                 }
 
-                Get<ChemistrySystem>().TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
+                _chemistrySystem.TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
             }
         }
     }

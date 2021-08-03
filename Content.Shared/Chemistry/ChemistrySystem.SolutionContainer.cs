@@ -1,5 +1,4 @@
-﻿using System;
-using Content.Shared.Chemistry.Reaction;
+﻿using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
@@ -31,6 +30,7 @@ namespace Content.Shared.Chemistry
     public partial class ChemistrySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
 
         public override void Initialize()
         {
@@ -136,7 +136,7 @@ namespace Content.Shared.Chemistry
             // Process reactions
             if (needsReactionsProcessing && container.CanReact)
             {
-                Get<SharedChemicalReactionSystem>()
+                _chemistrySystem
                     .FullyReactSolution(container.Solution, container.Owner, container.MaxVolume);
             }
 
