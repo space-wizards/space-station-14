@@ -157,8 +157,8 @@
       Ephedrine:
         effects:
           - !type:MovespeedModifier
-            walkSpeedModifier: 1.5
-            sprintSpeedModifier: 1.5
+            walkSpeedModifier: 1.2
+            sprintSpeedModifier: 1.2
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
@@ -180,8 +180,8 @@
             healthChange: 2.5
             damageClass: Toxin
           - !type:MovespeedModifier
-            walkSpeedModifier: 1.65
-            sprintSpeedModifier: 1.65
+            walkSpeedModifier: 1.3
+            sprintSpeedModifier: 1.3
       Omnizine:
         effects:
         - !type:HealthChange
