@@ -34,7 +34,8 @@ namespace Content.Server.Tabletop
             // TODO: sanity checks; only allow moving the entity to within the tabletop space, is the user actually allowed to move this entity?
 
             // Move the entity and dirty it
-            movedEntity.Transform.Coordinates = msg.Coordinates;
+            var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(msg.Coordinates.MapId), msg.Coordinates.Position);
+            movedEntity.Transform.Coordinates = entityCoordinates;
             movedEntity.Dirty();
         }
 
@@ -102,7 +103,7 @@ namespace Content.Server.Tabletop
             if (playerSession != null)
             {
                 _entityManager.EntityNetManager?.SendSystemNetworkMessage(
-                    new TabletopPlayEvent(camera.Uid, "Chess", (8, 8)), playerSession.ConnectedClient
+                    new TabletopPlayEvent(camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient
                 );
             }
         }
@@ -111,9 +112,14 @@ namespace Content.Server.Tabletop
         {
             if (_gameSessions.ContainsKey(uid)) return;
 
-            // Map does not exist for this entity yet, create it, store it and return it
+            // Map does not exist for this entity yet, create it and store it
             var mapId = _mapManager.CreateMap();
             _gameSessions.Add(uid, mapId);
+
+            // Tabletop maps don't need lighting
+            var mapComponent = _mapManager.GetMapEntity(mapId).GetComponent<IMapComponent>();
+            mapComponent.LightingEnabled = false;
+            mapComponent.Dirty();
 
             // TODO: don't assume chess
             SetupChessBoard(GetMapId(uid));

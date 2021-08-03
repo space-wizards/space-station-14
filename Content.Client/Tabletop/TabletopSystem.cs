@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Linq;
 using Content.Client.Viewport;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Client.UserInterface;
-using Robust.Shared.Timing;
-using EyeComponent = Robust.Client.GameObjects.EyeComponent;
+using Robust.Shared.Maths;
 
 namespace Content.Client.Tabletop
 {
@@ -24,29 +22,86 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        /**
-         * Time in seconds to wait until sending the location of a dragged entity to the server again.
-         */
-        private const float Delay = 0.1f;
+        // Time in seconds to wait until sending the location of a dragged entity to the server again
+        private const float Delay = 1f / 10; // 10 Hz
+
+        // Time passed since last update sent to the server.
+        private float _timePassed;
 
         // Entity being dragged
         private IEntity? _draggedEntity;
 
         // Viewport being used
-        private IViewportControl? _viewport;
-
-        // Time passed since last update sent to the server.
-        private float _timePassed = 0f;
+        private ScalingViewport? _viewport;
 
         public override void Initialize()
         {
+            Console.WriteLine("abc");
+
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(TabletopPlayHandler);
+        }
+
+        public override void Update(float frameTime)
+        {
+            // If no entity is being dragged or no viewport is clicked, just return
+            if (_draggedEntity == null || _viewport == null) return;
+
+            if (!_draggedEntity.HasComponent<TabletopDraggableComponent>())
+            {
+                return;
+            }
+
+            // Map mouse position to EntityCoordinates
+            var coords = _viewport.ScreenToMap(_inputManager.MouseScreenPosition.Position);
+
+            // Clamp coordinates to viewport
+            var clampedCoords = ClampPositionToViewport(coords, _viewport);
+            if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
+
+            // Move the entity locally every update
+            _draggedEntity.Transform.LocalPosition = clampedCoords.Position;
+
+            // Increment total time passed
+            _timePassed += frameTime;
+
+            // Only send new position to server when Delay is reached
+            if (_timePassed >= Delay)
+            {
+                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords));
+                _timePassed = 0f;
+            }
+        }
+
+        /**
+         * <summary>Clamps coordinates within a viewport. ONLY ACCOUNTS FOR 90 DEGREE ROTATIONS!</summary>
+         */
+        private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
+        {
+            if (viewport.Eye == null) return MapCoordinates.Nullspace;
+
+            var size = (Vector2) viewport.ViewportSize / 32; // Convert to tiles instead of pixels
+            var eyePosition = viewport.Eye.Position.Position;
+            var rotation = viewport.Eye.Rotation;
+            var scale = viewport.Eye.Scale;
+
+            var min = (eyePosition - size / 2) / scale;
+            var max = (eyePosition + size / 2) / scale;
+
+            // If 90/270 degrees rotated, flip X and Y
+            if (MathHelper.CloseTo(rotation.Degrees % 180d, 90d) || MathHelper.CloseTo(rotation.Degrees % 180d, -90d))
+            {
+                (min.Y, min.X) = (min.X, min.Y);
+                (max.Y, max.X) = (max.X, max.Y);
+            }
+
+            var clampedPosition = Vector2.Clamp(coordinates.Position, min, max);
+
+            return new MapCoordinates(clampedPosition, coordinates.MapId);
         }
 
         /**
@@ -61,7 +116,7 @@ namespace Content.Client.Tabletop
 
             var window = new SS14Window
             {
-                MinWidth = 400,
+                MinWidth = 500,
                 MinHeight = 400 + 26,
                 Title = msg.Title
             };
@@ -74,38 +129,13 @@ namespace Content.Client.Tabletop
             var viewport = new ScalingViewport
             {
                 Eye = eyeComponent.Eye,
-                ViewportSize = (msg.Size.X * 32, msg.Size.Y * 32),
+                ViewportSize = (msg.Size.X, msg.Size.Y),
                 MouseFilter = Control.MouseFilterMode.Stop, // Make the mouse interact with the viewport
                 RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt // Nearest neighbor scaling
             };
 
             window.Contents.AddChild(viewport);
             window.OpenCentered();
-        }
-
-        public override void Update(float frameTime)
-        {
-            // If no entity is being dragged or no viewport is clicked, just return
-            if (_draggedEntity == null || _viewport == null) return;
-
-            // Map mouse position to EntityCoordinates
-            var worldPos = _viewport.ScreenToMap(_inputManager.MouseScreenPosition.Position);
-            EntityCoordinates coords = new(_mapManager.GetMapEntityId(worldPos.MapId), worldPos.Position);
-
-            // Move the entity locally every update
-            _draggedEntity.Transform.Coordinates = coords;
-
-            // Increment total time passed
-            _timePassed += frameTime;
-
-
-
-            // Only send new position to server when Delay is reached
-            if (_timePassed >= Delay && _gameTiming.IsFirstTimePredicted)
-            {
-                EntityManager.RaisePredictiveEvent(new TabletopMoveEvent(_draggedEntity.Uid, coords));
-                _timePassed = 0f;
-            }
         }
 
         private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -120,19 +150,18 @@ namespace Content.Client.Tabletop
 
         private bool OnMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!EntityManager.TryGetEntity(args.EntityUid, out var entity))
+            // Set the entity being dragged and the viewport under the mouse
+            if (!EntityManager.TryGetEntity(args.EntityUid, out _draggedEntity))
             {
                 return false;
             }
 
-            if (!entity.GetAllComponents<TabletopDraggableComponent>().Any(x => x.CanStartDrag()))
+            if (!_draggedEntity.HasComponent<TabletopDraggableComponent>())
             {
                 return false;
             }
 
-            // Set the dragged entity and the viewport it was clicked in
-            _draggedEntity = entity;
-            _viewport = _uiManger.MouseGetControl(args.ScreenCoordinates) as IViewportControl;
+            _viewport = _uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport;
 
             return true;
         }
@@ -143,11 +172,7 @@ namespace Content.Client.Tabletop
             _draggedEntity = null;
             _viewport = null;
 
-            // We set the time passed equal to the delay, so that Update() will send the final position one more time
-            _timePassed = Delay;
-
             return true;
         }
-
     }
 }

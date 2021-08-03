@@ -9,17 +9,17 @@ namespace Content.Server.Tabletop
     {
         private void SetupChessBoard(MapId mapId)
         {
-            var chessboard = _entityManager.SpawnEntity("ChessBoard", new MapCoordinates(0, 0, mapId));
+            var chessboard = _entityManager.SpawnEntity("ChessBoardTabletop", new MapCoordinates(-1, 0, mapId));
 
             if (chessboard.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
-                spriteComponent.Scale = new Vector2(16, 16);
+                spriteComponent.Scale = new Vector2(1, 1);
                 spriteComponent.DrawDepth = (int) DrawDepth.FloorTiles;
             }
 
             chessboard.Transform.Anchored = true;
 
-            SpawnPieces(new MapCoordinates(-3.5f, 3.5f, mapId));
+            SpawnPieces(new MapCoordinates(-4.5f, 3.5f, mapId));
         }
 
         private void SpawnPieces(MapCoordinates topLeft, float separation = 1f)
@@ -33,6 +33,10 @@ namespace Content.Server.Tabletop
             // Spawn all white pieces
             SpawnPawns("White", new MapCoordinates(x, y - 6 * separation, mapId) , separation);
             SpawnPiecesRow("White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
+
+            // Extra queens
+            _entityManager.SpawnEntity( "BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+            _entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
         }
 
         private void SpawnPiecesRow(string color, MapCoordinates left, float separation = 1f)

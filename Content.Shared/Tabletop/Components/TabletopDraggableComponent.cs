@@ -11,17 +11,5 @@ namespace Content.Shared.Tabletop.Components
     public class TabletopDraggableComponent : Component
     {
         public override string Name => "TabletopDraggable";
-
-        /**
-         * <summary>
-         * Decides whether this entity can be moved.
-         * </summary>
-         */
-        public bool CanStartDrag()
-        {
-            // TODO: implement permissions; only allow specific users to move object (may or may not be necessery)
-
-            return true;
-        }
     }
 }
