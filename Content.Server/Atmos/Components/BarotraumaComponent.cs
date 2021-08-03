@@ -9,6 +9,7 @@ using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Components
 {
@@ -21,10 +22,15 @@ namespace Content.Server.Atmos.Components
         public override string Name => "Barotrauma";
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Robust.Shared.IoC.Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+        private DamageTypePrototype _damageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)

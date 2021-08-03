@@ -24,16 +24,6 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
-        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("coldDamageType")]
-        private readonly string _coldDamageTypeID = "Cold";
-        private DamageTypePrototype _coldDamageType => _prototypeManager.Index<DamageTypePrototype>(_coldDamageTypeID);
-        [DataField("hotDamageType")]
-        private readonly string _hotDamageTypeID = "Heat";
-        private DamageTypePrototype _hotDamageType => _prototypeManager.Index<DamageTypePrototype>(_hotDamageTypeID);
-
-
         [DataField("heatDamageThreshold")]
         private float _heatDamageThreshold = default;
         [DataField("coldDamageThreshold")]
@@ -59,6 +49,21 @@ namespace Content.Server.Temperature.Components
 
                 return Atmospherics.MinimumHeatCapacity;
             }
+        }
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("coldDamageType")]
+        private readonly string _coldDamageTypeID = "Cold";
+        private DamageTypePrototype _coldDamageType = default!;
+        [DataField("hotDamageType")]
+        private readonly string _hotDamageTypeID = "Heat";
+        private DamageTypePrototype _hotDamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _coldDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_coldDamageTypeID);
+            _hotDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_hotDamageTypeID);
         }
 
         public void Update()

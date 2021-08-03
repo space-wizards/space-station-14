@@ -24,15 +24,14 @@ namespace Content.Server.Mining.Components
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("damageType", required: true)]
         private readonly string _damageTypeID = default!;
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+        private DamageTypePrototype _damageType = default!;
 
         protected override void Initialize()
         {
             base.Initialize();
-
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));

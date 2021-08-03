@@ -13,17 +13,22 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnLand";
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
-
         [DataField("amount")]
         private int _amount = 1;
 
         [DataField("ignoreResistances")]
         private bool _ignoreResistances;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        private DamageTypePrototype _damageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         void ILand.Land(LandEventArgs eventArgs)
         {

@@ -31,13 +31,6 @@ namespace Content.Server.Atmos.Components
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 
-
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Heat";
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
-
         [ViewVariables(VVAccess.ReadWrite)]
         public bool OnFire { get; set; }
 
@@ -51,6 +44,17 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat"!;
+        private DamageTypePrototype _damageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         public void Extinguish()
         {

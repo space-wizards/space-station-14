@@ -47,10 +47,15 @@ namespace Content.Server.Doors.Components
         private string? _boardPrototype;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        private DamageTypePrototype _damageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         public override DoorState State
         {

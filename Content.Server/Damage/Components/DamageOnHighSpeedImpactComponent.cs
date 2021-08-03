@@ -15,12 +15,6 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnHighSpeedImpact";
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        public string DamageTypeID { get; set; } = default!;
-        public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
-
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]
@@ -39,5 +33,16 @@ namespace Content.Server.Damage.Components
         public float DamageCooldown { get; set; } = 2f;
 
         internal TimeSpan LastHit = TimeSpan.Zero;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
     }
 }

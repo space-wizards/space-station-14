@@ -24,14 +24,20 @@ namespace Content.Server.Damage.Components
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("weldingDamageType",required: true)]
-        private readonly string _weldingDamageTypeID = default!;
-        private DamageTypePrototype _weldingDamageType => _prototypeManager.Index<DamageTypePrototype>(_weldingDamageTypeID);
-        [DataField("defaultDamageType",required: true)]
-        private readonly string _defaultDamageTypeID = default!;
-        private DamageTypePrototype _defaultDamageType => _prototypeManager.Index<DamageTypePrototype>(_defaultDamageTypeID);
+        // TODO PROTOTYPE Replace these datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("weldingDamageType")]
+        private readonly string _weldingDamageTypeID = "Heat";
+        private DamageTypePrototype _weldingDamageType = default!;
+        [DataField("defaultDamageType")]
+        private readonly string _defaultDamageTypeID = "Blunt";
+        private DamageTypePrototype _defaultDamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _weldingDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_weldingDamageTypeID);
+            _defaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
+        }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

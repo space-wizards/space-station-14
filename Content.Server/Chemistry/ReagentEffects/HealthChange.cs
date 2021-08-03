@@ -7,6 +7,7 @@ using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
@@ -14,7 +15,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for medicine reagents. Attempts to find a DamageableComponent on the target,
     /// and to update its damage values.
     /// </summary>
-    public class HealthChange : ReagentEffect
+    public class HealthChange : ReagentEffect, ISerializationHooks
     {
         /// <summary>
         /// How much damage is changed when 1u of the reagent is metabolized.
@@ -22,16 +23,20 @@ namespace Content.Server.Chemistry.ReagentEffects
         [DataField("healthChange")]
         public float AmountToChange { get; set; } = 1.0f;
 
+        private float _accumulatedHealth;
+
         /// <summary>
         /// Damage group to change.
         /// </summary>
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        // Also remove ISerializationHooks, if no longer needed.
         [DataField("damageGroup", required: true)]
         private readonly string _damageGroupID = default!;
-        private DamageGroupPrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
-
-        private float _accumulatedHealth;
+        public DamageGroupPrototype DamageGroup = default!;
+        void ISerializationHooks.AfterDeserialization()
+        {
+            DamageGroup = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
+        }
 
         /// <summary>
         ///     Changes damage if a DamageableComponent can be found.

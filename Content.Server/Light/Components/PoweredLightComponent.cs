@@ -52,12 +52,6 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Heat";
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
-
         [ViewVariables] [DataField("on")]
         private bool _on = true;
 
@@ -74,6 +68,18 @@ namespace Content.Server.Light.Components
         public LightBulbType BulbType => _bulbType;
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat";
+        private DamageTypePrototype _damageType = default!;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
+        }
 
         [ViewVariables]
         public LightBulbComponent? LightBulb
@@ -245,13 +251,6 @@ namespace Content.Server.Light.Components
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

@@ -33,13 +33,6 @@ namespace Content.Server.Projectiles.Components
         [DataField("damage")]
         public float Damage { get; set; } = 10f;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also, should probably a be a dictionary along with the 'damage' field.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("damageType", required: true)]
-        private readonly string _damageTypeID = default!;
-        public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
-
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
         [DataField("impactFlash")]
@@ -51,6 +44,17 @@ namespace Content.Server.Projectiles.Components
 
         public float MaxLength => 20.0f;
         public float ColorModifier { get; set; } = 1.0f;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Piercing";
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {

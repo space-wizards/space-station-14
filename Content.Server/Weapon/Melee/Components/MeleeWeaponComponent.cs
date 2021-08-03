@@ -49,18 +49,22 @@ namespace Content.Server.Weapon.Melee.Components
         [DataField("damage")]
         public int Damage { get; set; } = 5;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("damageType")]
-        public  string DamageTypeID { get; set; } = "Blunt";
-        public DamageTypePrototype DamageType => _prototypeManager.Index<DamageTypePrototype>(DamageTypeID);
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clickAttackEffect")]
         public bool ClickAttackEffect { get; set; } = true;
 
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
     }
 }
