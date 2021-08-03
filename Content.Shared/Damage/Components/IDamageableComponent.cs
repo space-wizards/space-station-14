@@ -133,8 +133,7 @@ namespace Content.Shared.Damage.Components
         ///     Healing always ignores resistances, regardless of this input.
         /// </param>
         /// <returns>
-        ///     False if the given type is not supported, no damage change occurred, or improper
-        /// <see cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     False if the given type is not supported or no damage change occurred; true otherwise.
         /// </returns>
         bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false);
 
@@ -164,8 +163,7 @@ namespace Content.Shared.Damage.Components
         ///     input.
         /// </param>
         /// <returns>
-        ///     Returns false if the given group is not applicable,  no damage change occurred, or improper <see
-        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if the given group is not applicable or no damage change occurred; true otherwise.
         /// </returns>
         bool TryChangeDamage(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false);
 
@@ -176,19 +174,21 @@ namespace Content.Shared.Damage.Components
         /// <param name="type">Type of damage being set.</param>
         /// <param name="newValue">New damage value to be set.</param>
         /// <returns>
-        ///     Returns false if the given type is not supported, no damage change occurred, or improper <see
-        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if a given type is not supported or a negative value is provided; true otherwise.
         /// </returns>
         bool TrySetDamage(DamageTypePrototype type, int newValue);
 
         /// <summary>
         ///     Forcefully sets all damage types in a specified damage group using <see cref="TrySetDamage"></see>.
         /// </summary>
+        /// <remarks>
+        ///     Note that the actual damage of this group will be equal to the given value times the number damage group
+        ///     members that this container supports.
+        /// </remarks>
         /// <param name="group">Group of damage being set.</param>
         /// <param name="newValue">New damage value to be set.</param>
         /// <returns>
-        ///     Returns false if the given group is not applicable,  no damage change occurred, or improper <see
-        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if the given group is not applicable or a negative value is provided; true otherwise.
         /// </returns>
         bool TrySetDamage(DamageGroupPrototype group, int newValue);
 
@@ -197,8 +197,7 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         /// <param name="newValue">New damage value to be set.</param>
         /// <returns>
-        ///     Returns false if no damage change occurred or improper <see
-        ///     cref="DamageChangeParams"/> were provided; true otherwise.
+        ///     Returns false if a negative value is provided; true otherwise.
         /// </returns>
         bool TrySetAllDamage(int newValue);
 

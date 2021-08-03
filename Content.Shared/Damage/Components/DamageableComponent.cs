@@ -169,28 +169,38 @@ namespace Content.Shared.Damage.Components
 
         public bool TrySetDamage(DamageGroupPrototype group, int newValue)
         {
-            // Is the damage group even supported?
             if (!ApplicableDamageGroups.Contains(group))
             {
                 return false;
             }
 
-            var damageChanged = false;
+            if (newValue < 0)
+            {
+                // invalid value
+                return false;
+            }
+
             foreach (var type in group.DamageTypes)
             {
-                damageChanged = TrySetDamage(type, newValue) || damageChanged;
+                TrySetDamage(type, newValue);
             }
-            return damageChanged;
+            return true;
         }
 
         public bool TrySetAllDamage(int newValue)
         {
-            var damageChanged = false;
+            if (newValue < 0)
+            {
+                // invalid value
+                return false;
+            }
+
             foreach (var type in SupportedDamageTypes)
             {
-                damageChanged = TrySetDamage(type, newValue) || damageChanged;
+                TrySetDamage(type, newValue);
             }
-            return damageChanged;
+
+            return true;
         }
 
         public bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false)
@@ -346,7 +356,8 @@ namespace Content.Shared.Damage.Components
             if (oldValue == newValue)
             {
                 // No health change.
-                return false;
+                // But we are trying to set, not trying to change.
+                return true;
             }
 
             _damageDict[type] = newValue;
