@@ -1642,3 +1642,8 @@ Entries:
   - {message: Door sounds no longer play twice sometimes., type: Fix}
   id: 292
   time: '2021-08-02T11:57:06.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added everyone's favorite stimulant meth!, type: Add}
+  id: 293
+  time: '2021-08-03T03:32:08.0000000+00:00'
