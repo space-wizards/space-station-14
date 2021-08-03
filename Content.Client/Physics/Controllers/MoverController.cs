@@ -19,8 +19,13 @@ namespace Content.Client.Physics.Controllers
                 !player.TryGetComponent(out IMoverComponent? mover) ||
                 !player.TryGetComponent(out PhysicsComponent? body)) return;
 
-            body.Predict = true; // TODO: equal prediction instead of true?
+            // Essentially we only want to set our mob to predicted so every other entity we just interpolate
+            // (i.e. only see what the server has sent us).
+            // The exception to this is joints.
+            body.Predict = true;
 
+            // We set joints to predicted given these can affect how our mob moves.
+            // I would only recommend disabling this if you make pulling not use joints anymore (someday maybe?)
             foreach (var joint in body.Joints)
             {
                 joint.BodyA.Predict = true;
