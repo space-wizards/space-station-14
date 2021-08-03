@@ -29,6 +29,13 @@ namespace Content.Shared.Chemistry
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
 
+            if (ComponentManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
+                (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
+                !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
+            {
+                modifier.RefreshMovementSpeedModifiers();
+            }
+
             component.WalkSpeedModifier = cast.WalkSpeedModifier;
             component.SprintSpeedModifier = cast.SprintSpeedModifier;
             component.ModifierTimer = cast.ModifierTimer;

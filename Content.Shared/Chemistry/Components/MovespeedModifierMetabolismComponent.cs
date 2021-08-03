@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.Components
         /// When the current modifier is expected to end.
         /// </summary>
         [ViewVariables]
-        public TimeSpan? ModifierTimer { get; set; }
+        public TimeSpan ModifierTimer { get; set; } = TimeSpan.Zero;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -40,9 +40,9 @@ namespace Content.Shared.Chemistry.Components
         {
             public float WalkSpeedModifier { get; }
             public float SprintSpeedModifier { get; }
-            public TimeSpan? ModifierTimer { get; }
+            public TimeSpan ModifierTimer { get; }
 
-            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, TimeSpan? modifierTimer)
+            public MovespeedModifierMetabolismComponentState(float walkSpeedModifier, float sprintSpeedModifier, TimeSpan modifierTimer)
             {
                 WalkSpeedModifier = walkSpeedModifier;
                 SprintSpeedModifier = sprintSpeedModifier;

@@ -50,7 +50,7 @@ namespace Content.Server.Chemistry.ReagentEffects
             status.WalkSpeedModifier = WalkSpeedModifier;
             status.SprintSpeedModifier = SprintSpeedModifier;
 
-            IncreaseTimer(status, StatusLifetime);
+            IncreaseTimer(status, StatusLifetime * amount.Quantity.Float());
 
             if (modified)
                 movement.RefreshMovementSpeedModifiers();
@@ -60,7 +60,9 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             var gameTiming = IoCManager.Resolve<IGameTiming>();
 
-            status.ModifierTimer = gameTiming.CurTime.Add(TimeSpan.FromSeconds(time));
+            var offsetTime = Math.Max(status.ModifierTimer.TotalSeconds, gameTiming.CurTime.TotalSeconds);
+
+            status.ModifierTimer = TimeSpan.FromSeconds(offsetTime + time);
             status.Dirty();
         }
     }
