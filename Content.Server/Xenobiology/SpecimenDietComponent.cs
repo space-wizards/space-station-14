@@ -55,15 +55,6 @@ namespace Content.Server.Xenobiology
 
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            //Newline + base hungry string and empty space + Colored SelectedDiet string picked before
-            message.AddText("\n"); 
-            message.AddMarkup(Loc.GetString("specimen-growth-hungry") + (" "));
-            message.AddText($"[color=#f6ff05]SelectedDiet[/color]");
-        }
-
-
 
 
 
