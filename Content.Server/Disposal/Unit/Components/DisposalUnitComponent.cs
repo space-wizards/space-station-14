@@ -7,6 +7,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
@@ -39,8 +40,6 @@ namespace Content.Server.Disposal.Unit.Components
     [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IGasMixtureHolder, IDestroyAct
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
         public override string Name => "DisposalUnit";
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables]
         [DataField("pressure")]
-        private float _pressure;
+        public float _pressure;
 
         private bool _engaged;
 
@@ -84,7 +83,7 @@ namespace Content.Server.Disposal.Unit.Components
         ///     Token used to cancel the automatic engage of a disposal unit
         ///     after an entity enters it.
         /// </summary>
-        private CancellationTokenSource? _automaticEngageToken;
+        public CancellationTokenSource? _automaticEngageToken;
 
         /// <summary>
         ///     Container of entities inside this disposal unit.
@@ -102,7 +101,7 @@ namespace Content.Server.Disposal.Unit.Components
         private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private bool Engaged
+        public bool Engaged
         {
             get => _engaged;
             set
@@ -132,9 +131,9 @@ namespace Content.Server.Disposal.Unit.Components
             return _container.CanInsert(entity);
         }
 
-        private void TryQueueEngage()
+        public void TryQueueEngage()
         {
-            if (!Powered && ContainedEntities.Count == 0)
+            if (Deleted || !Powered && ContainedEntities.Count == 0)
             {
                 return;
             }
@@ -143,7 +142,7 @@ namespace Content.Server.Disposal.Unit.Components
 
             Owner.SpawnTimer(_automaticEngageTime, () =>
             {
-                if (!TryFlush())
+                if (!EntitySystem.Get<DisposalUnitSystem>().TryFlush(this))
                 {
                     TryQueueEngage();
                 }
@@ -228,7 +227,7 @@ namespace Content.Server.Disposal.Unit.Components
             UpdateVisualState();
         }
 
-        private bool CanFlush()
+        public bool CanFlush()
         {
             return _pressure >= 1 && Powered && Anchored;
         }
@@ -239,51 +238,8 @@ namespace Content.Server.Disposal.Unit.Components
 
             if (Engaged && CanFlush())
             {
-                Owner.SpawnTimer(_flushDelay, () => TryFlush());
+                Owner.SpawnTimer(_flushDelay, () => EntitySystem.Get<DisposalUnitSystem>().TryFlush(this));
             }
-        }
-
-        public bool TryFlush()
-        {
-            if (!CanFlush())
-            {
-                return false;
-            }
-
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-            var coords = Owner.Transform.Coordinates;
-            var entry = grid.GetLocal(coords)
-                .FirstOrDefault(entity => Owner.EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
-
-            if (entry == default)
-            {
-                return false;
-            }
-
-            var entryComponent = Owner.EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
-
-            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
-
-            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {Temperature: > 0} environment)
-            {
-                var transferMoles = 0.1f * (0.05f * Atmospherics.OneAtmosphere * 1.01f - Air.Pressure) * Air.Volume / (environment.Temperature * Atmospherics.R);
-
-                Air = environment.Remove(transferMoles);
-            }
-
-            entryComponent.TryInsert(this);
-
-            _automaticEngageToken?.Cancel();
-            _automaticEngageToken = null;
-
-            _pressure = 0;
-
-            Engaged = false;
-
-            UpdateVisualState(true);
-            UpdateInterface();
-
-            return true;
         }
 
         public void TryEjectContents()
@@ -302,15 +258,15 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             receiver.PowerDisabled = !receiver.PowerDisabled;
-            UpdateInterface();
+            UpdateInterface(Powered);
         }
 
-        public void UpdateInterface()
+        public void UpdateInterface(bool powered)
         {
             string stateString;
 
             stateString = Loc.GetString($"{State}");
-            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -371,7 +327,7 @@ namespace Content.Server.Disposal.Unit.Components
             UpdateVisualState(false);
         }
 
-        private void UpdateVisualState(bool flush)
+        public void UpdateVisualState(bool flush)
         {
             if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
@@ -416,53 +372,6 @@ namespace Content.Server.Disposal.Unit.Components
                 : LightState.Ready);
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-            if (!Powered)
-            {
-                return;
-            }
-
-            var oldPressure = _pressure;
-
-            _pressure = _pressure + frameTime > 1
-                ? 1
-                : _pressure + 0.05f * frameTime;
-
-            if (oldPressure < 1 && _pressure >= 1)
-            {
-                UpdateVisualState();
-
-                if (Engaged)
-                {
-                    TryFlush();
-                }
-            }
-
-            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
-            if (_pressure < 1.0f || oldPressure < 1.0f && _pressure >= 1.0f)
-            {
-                UpdateInterface();
-            }
-        }
-
-        public void PowerStateChanged(PowerChangedEvent args)
-        {
-            if (!args.Powered)
-            {
-                _automaticEngageToken?.Cancel();
-                _automaticEngageToken = null;
-            }
-
-            UpdateVisualState();
-
-            if (Engaged && !TryFlush())
-            {
-                TryQueueEngage();
-            }
-        }
-
         protected override void Startup()
         {
             base.Startup();
@@ -473,7 +382,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             UpdateVisualState();
-            UpdateInterface();
+            UpdateInterface(Powered);
         }
 
         protected override void OnRemove()
@@ -597,7 +506,7 @@ namespace Content.Server.Disposal.Unit.Components
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
                 component.Engaged = true;
-                component.TryFlush();
+                EntitySystem.Get<DisposalUnitSystem>().TryFlush(component);
             }
         }
 
@@ -605,11 +514,5 @@ namespace Content.Server.Disposal.Unit.Components
         {
             TryEjectContents();
         }
-    }
-
-    public enum DisposalState : byte
-    {
-        Inactive,
-        Active,
     }
 }

@@ -14,13 +14,10 @@ namespace Content.Shared.Disposal.Components
     {
         public override string Name => "DisposalUnit";
 
-        [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysBody? physics) ||
-            physics.BodyType == BodyType.Static;
+        [ViewVariables] public bool Anchored => Owner.Transform.Anchored;
 
         [Serializable, NetSerializable]
-        public enum Visuals
+        public enum Visuals : byte
         {
             VisualState,
             Handle,
@@ -28,7 +25,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum VisualState
+        public enum VisualState : byte
         {
             UnAnchored,
             Anchored,
@@ -37,14 +34,14 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum HandleState
+        public enum HandleState : byte
         {
             Normal,
             Engaged
         }
 
         [Serializable, NetSerializable]
-        public enum LightState
+        public enum LightState : byte
         {
             Off,
             Charging,
@@ -53,7 +50,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Eject,
             Engage,
@@ -61,7 +58,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum PressureState
+        public enum PressureState : byte
         {
             Ready,
             Pressurizing

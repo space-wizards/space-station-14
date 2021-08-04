@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
+using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.GameObjects.Components;
 using Content.Server.Power.Components;
 using NUnit.Framework;
@@ -56,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             Assert.That(unit.ContainedEntities, Is.SupersetOf(entities));
             Assert.That(entities.Length, Is.EqualTo(unit.ContainedEntities.Count));
 
-            Assert.That(result, Is.EqualTo(unit.TryFlush()));
+            Assert.That(result, Is.EqualTo(EntitySystem.Get<DisposalUnitSystem>().TryFlush(unit)));
             Assert.That(result || entities.Length == 0, Is.EqualTo(unit.ContainedEntities.Count == 0));
         }
 
