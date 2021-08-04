@@ -37,8 +37,6 @@ namespace Content.Client.Tabletop
 
         public override void Initialize()
         {
-            Console.WriteLine("abc");
-
             CommandBinds.Builder
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopSystem>();
