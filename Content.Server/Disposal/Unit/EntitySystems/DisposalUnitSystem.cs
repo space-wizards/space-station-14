@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -95,7 +96,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 component.UserInterface.OnReceiveMessage += component.OnUiReceiveMessage;
             }
 
-            component.UpdateInterface(component.Powered);
+            UpdateInterface(component, component.Powered);
 
             if (!component.Owner.HasComponent<AnchorableComponent>())
             {
@@ -116,6 +117,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component._automaticEngageToken = null;
 
             component._container = null!;
+            _activeDisposals.Remove(component);
         }
 
         private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
@@ -129,7 +131,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             HandleStateChange(component, args.Powered && component.State == SharedDisposalUnitComponent.PressureState.Pressurizing);
             component.UpdateVisualState();
-            component.UpdateInterface(args.Powered);
+            UpdateInterface(component, args.Powered);
 
             if (component.Engaged && !TryFlush(component))
             {
@@ -183,9 +185,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         {
             var oldPressure = component.Pressure;
 
-            // Percentage
-            const float PressurePerSecond = 0.05f;
-
             component.Pressure = MathF.Min(1.0f, component.Pressure + PressurePerSecond * frameTime);
 
             var state = component.State;
@@ -198,13 +197,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     TryFlush(component);
                 }
-            }
-
-            // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
-            if (state == SharedDisposalUnitComponent.PressureState.Pressurizing || oldPressure < 1.0f && state == SharedDisposalUnitComponent.PressureState.Ready)
-            {
-                // Should be powered still so no need to check.
-                component.UpdateInterface(true);
             }
 
             return state == SharedDisposalUnitComponent.PressureState.Ready;
@@ -248,9 +240,26 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             HandleStateChange(component, true);
             component.UpdateVisualState(true);
-            component.UpdateInterface(component.Powered);
+            UpdateInterface(component, component.Powered);
 
             return true;
+        }
+
+        public void UpdateInterface(DisposalUnitComponent component, bool powered)
+        {
+            var stateString = Loc.GetString($"{component.State}");
+            var state = new SharedDisposalUnitComponent.DisposalUnitBoundUserInterfaceState(component.Owner.Name, stateString, EstimatedFullPressure(component), powered, component.Engaged);
+            component.UserInterface?.SetState(state);
+        }
+
+        private TimeSpan EstimatedFullPressure(DisposalUnitComponent component)
+        {
+            if (component.State == SharedDisposalUnitComponent.PressureState.Ready) return TimeSpan.Zero;
+
+            var currentTime = GameTiming.CurTime;
+            var pressure = component.Pressure;
+
+            return TimeSpan.FromSeconds(currentTime.TotalSeconds + (1.0f - pressure) / PressurePerSecond);
         }
     }
 }

@@ -250,16 +250,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             receiver.PowerDisabled = !receiver.PowerDisabled;
-            UpdateInterface(Powered);
-        }
-
-        public void UpdateInterface(bool powered)
-        {
-            string stateString;
-
-            stateString = Loc.GetString($"{State}");
-            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, Pressure, powered, Engaged);
-            UserInterface?.SetState(state);
+            EntitySystem.Get<DisposalUnitSystem>().UpdateInterface(this, Powered);
         }
 
         private bool PlayerCanUse(IEntity? player)

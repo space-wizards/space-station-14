@@ -12,5 +12,8 @@ namespace Content.Shared.Disposal
         [Dependency] protected readonly IGameTiming GameTiming = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
+
+        // Percentage
+        public const float PressurePerSecond = 0.05f;
     }
 }

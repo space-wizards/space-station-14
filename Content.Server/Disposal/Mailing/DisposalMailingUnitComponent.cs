@@ -382,10 +382,8 @@ namespace Content.Server.Disposal.Mailing
 
         private void UpdateInterface()
         {
-            string stateString;
-
-            stateString = Loc.GetString($"{State}");
-            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, Powered, Engaged);
+            string stateString = Loc.GetString($"{State}");
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, TimeSpan.Zero, Powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -508,9 +506,8 @@ namespace Content.Server.Disposal.Mailing
                 : LightState.Ready);
         }
 
-        public override void Update(float frameTime)
+        public virtual void Update(float frameTime)
         {
-            base.Update(frameTime);
             if (!Powered)
             {
                 return;

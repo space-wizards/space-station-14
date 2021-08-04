@@ -8,6 +8,8 @@ namespace Content.Client.Disposal.Components
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent
     {
+        public DisposalUnitBoundUserInterfaceState? UiState;
+
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;

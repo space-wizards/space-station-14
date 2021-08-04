@@ -64,26 +64,21 @@ namespace Content.Shared.Disposal.Components
             Pressurizing
         }
 
-        public virtual void Update(float frameTime)
-        {
-            return;
-        }
-
         [Serializable, NetSerializable]
         public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
         {
             public readonly string UnitName;
             public readonly string UnitState;
-            public readonly float Pressure;
+            public readonly TimeSpan FullPressureTime;
             public readonly bool Powered;
             public readonly bool Engaged;
 
-            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered,
+            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, TimeSpan fullPressureTime, bool powered,
                 bool engaged)
             {
                 UnitName = unitName;
                 UnitState = unitState;
-                Pressure = pressure;
+                FullPressureTime = fullPressureTime;
                 Powered = powered;
                 Engaged = engaged;
             }
@@ -96,7 +91,7 @@ namespace Content.Shared.Disposal.Components
                        UnitState == other.UnitState &&
                        Powered == other.Powered &&
                        Engaged == other.Engaged &&
-                       Pressure.Equals(other.Pressure);
+                       FullPressureTime.Equals(other.FullPressureTime);
             }
         }
 
