@@ -1658,3 +1658,8 @@ Entries:
   - {message: Fix joint prediction., type: Fix}
   id: 295
   time: '2021-08-03T15:02:44.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes mobs not taking pressure damage on space., type: Fix}
+  id: 296
+  time: '2021-08-04T07:49:53.509340+00:00'
