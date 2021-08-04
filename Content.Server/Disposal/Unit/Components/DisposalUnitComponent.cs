@@ -14,8 +14,6 @@ using Content.Shared.Acts;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -30,7 +28,6 @@ namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    [ComponentReference(typeof(IInteractUsing))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder, IDestroyAct
     {
         public override string Name => "DisposalUnit";

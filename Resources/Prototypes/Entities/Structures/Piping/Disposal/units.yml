@@ -26,10 +26,10 @@
           bounds: "-0.4,-0.25,0.4,0.25"
       mass: 30
       mask:
-      - SmallImpassable
+      - Impassable
       layer:
       - Opaque
-      - Impassable
+      - SmallImpassable
       - MobImpassable
   - type: Destructible
     thresholds:
@@ -70,6 +70,7 @@
   name: disposal unit
   components:
   - type: DisposalUnit
+    netsync: false
     flushTime: 2
   - type: UserInterface
     interfaces:
