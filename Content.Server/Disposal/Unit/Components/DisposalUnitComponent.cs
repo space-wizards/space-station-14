@@ -17,7 +17,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Throwing;
 using Content.Shared.Verbs;
@@ -30,34 +29,25 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IActivate, IInteractUsing, IThrowCollide, IGasMixtureHolder, IDestroyAct
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IGasMixtureHolder, IDestroyAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "DisposalUnit";
 
         /// <summary>
-        ///     The delay for an entity trying to move out of this unit.
-        /// </summary>
-        private static readonly TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
-
-        /// <summary>
         ///     Last time that an entity tried to exit this disposal unit.
         /// </summary>
         [ViewVariables]
-        private TimeSpan _lastExitAttempt;
+        public TimeSpan LastExitAttempt;
 
         /// <summary>
         ///     The current pressure of this disposal unit.
@@ -99,8 +89,7 @@ namespace Content.Server.Disposal.Unit.Components
         /// <summary>
         ///     Container of entities inside this disposal unit.
         /// </summary>
-        [ViewVariables]
-        private Container _container = default!;
+        [ViewVariables] public Container _container = default!;
 
         [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
 
@@ -130,7 +119,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
         }
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
@@ -161,7 +150,7 @@ namespace Content.Server.Disposal.Unit.Components
             }, _automaticEngageToken.Token);
         }
 
-        private void AfterInsert(IEntity entity)
+        public void AfterInsert(IEntity entity)
         {
             TryQueueEngage();
 
@@ -226,7 +215,7 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-        private void Remove(IEntity entity)
+        public void Remove(IEntity entity)
         {
             _container.Remove(entity);
 
@@ -316,7 +305,7 @@ namespace Content.Server.Disposal.Unit.Components
             UpdateInterface();
         }
 
-        private void UpdateInterface()
+        public void UpdateInterface()
         {
             string stateString;
 
@@ -343,7 +332,7 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-        private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
+        public void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
         {
             if (obj.Session.AttachedEntity == null)
             {
@@ -384,7 +373,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         private void UpdateVisualState(bool flush)
         {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
                 return;
             }
@@ -396,14 +385,8 @@ namespace Content.Server.Disposal.Unit.Components
                 appearance.SetData(Visuals.Light, LightState.Off);
                 return;
             }
-            else if (_pressure < 1)
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Charging);
-            }
-            else
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Anchored);
-            }
+
+            appearance.SetData(Visuals.VisualState, _pressure < 1 ? VisualState.Charging : VisualState.Anchored);
 
             appearance.SetData(Visuals.Handle, Engaged
                 ? HandleState.Engaged
@@ -464,7 +447,7 @@ namespace Content.Server.Disposal.Unit.Components
             }
         }
 
-        private void PowerStateChanged(PowerChangedMessage args)
+        public void PowerStateChanged(PowerChangedEvent args)
         {
             if (!args.Powered)
             {
@@ -478,20 +461,6 @@ namespace Content.Server.Disposal.Unit.Components
             {
                 TryQueueEngage();
             }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _container = ContainerHelpers.EnsureContainer<Container>(Owner, Name);
-
-            if (UserInterface != null)
-            {
-                UserInterface.OnReceiveMessage += OnUiReceiveMessage;
-            }
-
-            UpdateInterface();
         }
 
         protected override void Startup()
@@ -524,31 +493,7 @@ namespace Content.Server.Disposal.Unit.Components
             base.OnRemove();
         }
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RelayMovementEntityMessage msg:
-                    if (!msg.Entity.TryGetComponent(out HandsComponent? hands) ||
-                        hands.Count == 0 ||
-                        _gameTiming.CurTime < _lastExitAttempt + ExitAttemptDelay)
-                    {
-                        break;
-                    }
-
-                    _lastExitAttempt = _gameTiming.CurTime;
-                    Remove(msg.Entity);
-                    break;
-
-                case PowerChangedMessage powerChanged:
-                    PowerStateChanged(powerChanged);
-                    break;
-            }
-        }
-
-        bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
+        public bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
             {
@@ -572,7 +517,6 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
@@ -588,21 +532,6 @@ namespace Content.Server.Disposal.Unit.Components
             }
 
             return false;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return;
-            }
-
-            if (IsValidInteraction(eventArgs))
-            {
-                UserInterface?.Open(actor.PlayerSession);
-            }
-
-            return;
         }
 
 
@@ -622,18 +551,6 @@ namespace Content.Server.Disposal.Unit.Components
         {
             _ = TryInsert(eventArgs.Dragged, eventArgs.User);
             return true;
-        }
-
-        void IThrowCollide.HitBy(ThrowCollideEventArgs eventArgs)
-        {
-            if (!CanInsert(eventArgs.Thrown) ||
-                IoCManager.Resolve<IRobustRandom>().NextDouble() > 0.75 ||
-                !_container.Insert(eventArgs.Thrown))
-            {
-                return;
-            }
-
-            AfterInsert(eventArgs.Thrown);
         }
 
         [Verb]
@@ -688,5 +605,11 @@ namespace Content.Server.Disposal.Unit.Components
         {
             TryEjectContents();
         }
+    }
+
+    public enum DisposalState : byte
+    {
+        Inactive,
+        Active,
     }
 }
