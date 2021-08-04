@@ -72,7 +72,6 @@ namespace Content.Server.GameTicking
             UpdateRoundFlow(frameTime);
         }
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IMapLoader _mapLoader = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
