@@ -72,7 +72,7 @@ namespace Content.Server.Explosion
 
             var exAct = EntitySystem.Get<ActSystem>();
 
-            var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(mapId, boundingBox, 0).ToList();
+            var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(mapId, boundingBox).ToList();
 
             var impassableEntities = new List<Tuple<IEntity, float>>();
             var nonImpassableEntities = new List<Tuple<IEntity, float>>();
@@ -82,11 +82,12 @@ namespace Content.Server.Explosion
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if (entity.Deleted || !entity.Transform.IsMapTransform)
+                if (!entity.Transform.IsMapTransform)
                 {
                     continue;
                 }
 
+                // TODO: Why in the fack would you pass in a boundingBox that WASN'T MAX RANGE?
                 if (!entity.Transform.Coordinates.TryDistance(entityManager, epicenter, out var distance) || distance > maxRange)
                 {
                     continue;
