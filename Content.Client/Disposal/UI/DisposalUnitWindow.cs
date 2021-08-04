@@ -133,6 +133,10 @@ namespace Content.Client.Disposal.UI
                 Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
         }
 
+        /// <summary>
+        /// Update the interface state for the disposals window.
+        /// </summary>
+        /// <returns>true if we should stop updating every frame.</returns>
         public bool UpdateState(DisposalUnitBoundUserInterfaceState state)
         {
             var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
@@ -145,7 +149,7 @@ namespace Content.Client.Disposal.UI
             Power.Pressed = state.Powered;
             Engage.Pressed = state.Engaged;
 
-            return pressure >= 1.0f;
+            return !state.Powered || pressure >= 1.0f;
         }
     }
 }
