@@ -49,15 +49,13 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("pressure")]
         public float Pressure = 1f;
 
-        private bool _engaged;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoEngageTime")]
         private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("flushDelay")]
-        private readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
+        public readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
 
         /// <summary>
         ///     Delay from trying to enter disposals ourselves.
@@ -93,22 +91,7 @@ namespace Content.Server.Disposal.Unit.Components
         [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Engaged
-        {
-            get => _engaged;
-            set
-            {
-                var oldEngaged = _engaged;
-                _engaged = value;
-
-                if (oldEngaged == value)
-                {
-                    return;
-                }
-
-                UpdateVisualState();
-            }
-        }
+        public bool Engaged { get; set; }
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalUnitUiKey.Key);
 
@@ -224,16 +207,6 @@ namespace Content.Server.Disposal.Unit.Components
             return State == PressureState.Ready && Powered && Anchored;
         }
 
-        private void ToggleEngage()
-        {
-            Engaged ^= true;
-
-            if (Engaged && CanFlush())
-            {
-                Owner.SpawnTimer(_flushDelay, () => EntitySystem.Get<DisposalUnitSystem>().TryFlush(this));
-            }
-        }
-
         public void TryEjectContents()
         {
             foreach (var entity in _container.ContainedEntities.ToArray())
@@ -294,7 +267,7 @@ namespace Content.Server.Disposal.Unit.Components
                     TryEjectContents();
                     break;
                 case UiButton.Engage:
-                    ToggleEngage();
+                    EntitySystem.Get<DisposalUnitSystem>().ToggleEngage(this);
                     break;
                 case UiButton.Power:
                     TogglePower();
@@ -458,8 +431,7 @@ namespace Content.Server.Disposal.Unit.Components
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
-                component.Engaged = true;
-                EntitySystem.Get<DisposalUnitSystem>().TryFlush(component);
+                EntitySystem.Get<DisposalUnitSystem>().Engage(component);
             }
         }
 

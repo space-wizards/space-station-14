@@ -59,6 +59,41 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
+        #region UI Handlers
+        public void ToggleEngage(DisposalUnitComponent component)
+        {
+            component.Engaged ^= true;
+
+            if (component.Engaged)
+            {
+                Engage(component);
+            }
+            else
+            {
+                Disengage(component);
+            }
+        }
+        #endregion
+
+        public void Engage(DisposalUnitComponent component)
+        {
+            component.Engaged = true;
+            component.UpdateVisualState();
+            UpdateInterface(component, component.Powered);
+
+            if (component.CanFlush())
+            {
+                component.Owner.SpawnTimer(component._flushDelay, () => TryFlush(component));
+            }
+        }
+
+        public void Disengage(DisposalUnitComponent component)
+        {
+            component.Engaged = false;
+            component.UpdateVisualState();
+            UpdateInterface(component, component.Powered);
+        }
+
         #region Eventbus Handlers
         private void HandleActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
         {
