@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
@@ -34,6 +34,7 @@ namespace Content.Server.Explosion
         {
             base.Initialize();
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(HandleCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
@@ -92,6 +93,10 @@ namespace Content.Server.Explosion
         }
 
         private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        {
+            Trigger(component.Owner);
+        }
+        private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             Trigger(component.Owner);
         }
