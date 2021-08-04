@@ -31,7 +31,7 @@ namespace Content.Server.Disposal.Unit.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     [ComponentReference(typeof(IInteractUsing))]
-    public class DisposalUnitComponent : SharedDisposalUnitComponent, IInteractHand, IInteractUsing, IGasMixtureHolder, IDestroyAct
+    public class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder, IDestroyAct
     {
         public override string Name => "DisposalUnit";
 
@@ -55,7 +55,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("flushDelay")]
-        public readonly TimeSpan _flushDelay = TimeSpan.FromSeconds(3);
+        public readonly TimeSpan FlushDelay = TimeSpan.FromSeconds(3);
 
         /// <summary>
         ///     Delay from trying to enter disposals ourselves.
@@ -74,14 +74,14 @@ namespace Content.Server.Disposal.Unit.Components
         ///     Token used to cancel the automatic engage of a disposal unit
         ///     after an entity enters it.
         /// </summary>
-        public CancellationTokenSource? _automaticEngageToken;
+        public CancellationTokenSource? AutomaticEngageToken;
 
         /// <summary>
         ///     Container of entities inside this disposal unit.
         /// </summary>
-        [ViewVariables] public Container _container = default!;
+        [ViewVariables] public Container Container = default!;
 
-        [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => _container.ContainedEntities;
+        [ViewVariables] public IReadOnlyList<IEntity> ContainedEntities => Container.ContainedEntities;
 
         [ViewVariables]
         public bool Powered =>
@@ -103,7 +103,7 @@ namespace Content.Server.Disposal.Unit.Components
             if (!base.CanInsert(entity))
                 return false;
 
-            return _container.CanInsert(entity);
+            return Container.CanInsert(entity);
         }
 
         public void TryQueueEngage()
@@ -113,7 +113,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return;
             }
 
-            _automaticEngageToken = new CancellationTokenSource();
+            AutomaticEngageToken = new CancellationTokenSource();
 
             Owner.SpawnTimer(_automaticEngageTime, () =>
             {
@@ -121,7 +121,7 @@ namespace Content.Server.Disposal.Unit.Components
                 {
                     TryQueueEngage();
                 }
-            }, _automaticEngageToken.Token);
+            }, AutomaticEngageToken.Token);
         }
 
         public void AfterInsert(IEntity entity)
@@ -164,7 +164,7 @@ namespace Content.Server.Disposal.Unit.Components
                     return false;
             }
 
-            if (!_container.Insert(entity))
+            if (!Container.Insert(entity))
                 return false;
 
             AfterInsert(entity);
@@ -172,14 +172,14 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-        private bool TryDrop(IEntity user, IEntity entity)
+        public bool TryDrop(IEntity user, IEntity entity)
         {
             if (!user.TryGetComponent(out HandsComponent? hands))
             {
                 return false;
             }
 
-            if (!CanInsert(entity) || !hands.Drop(entity, _container))
+            if (!CanInsert(entity) || !hands.Drop(entity, Container))
             {
                 return false;
             }
@@ -191,12 +191,12 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void Remove(IEntity entity)
         {
-            _container.Remove(entity);
+            Container.Remove(entity);
 
             if (ContainedEntities.Count == 0)
             {
-                _automaticEngageToken?.Cancel();
-                _automaticEngageToken = null;
+                AutomaticEngageToken?.Cancel();
+                AutomaticEngageToken = null;
             }
 
             UpdateVisualState();
@@ -209,21 +209,10 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void TryEjectContents()
         {
-            foreach (var entity in _container.ContainedEntities.ToArray())
+            foreach (var entity in Container.ContainedEntities.ToArray())
             {
                 Remove(entity);
             }
-        }
-
-        private void TogglePower()
-        {
-            if (!Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
-            {
-                return;
-            }
-
-            receiver.PowerDisabled = !receiver.PowerDisabled;
-            EntitySystem.Get<DisposalUnitSystem>().UpdateInterface(this, Powered);
         }
 
         private bool PlayerCanUse(IEntity? player)
@@ -270,7 +259,7 @@ namespace Content.Server.Disposal.Unit.Components
                     EntitySystem.Get<DisposalUnitSystem>().ToggleEngage(this);
                     break;
                 case UiButton.Power:
-                    TogglePower();
+                    EntitySystem.Get<DisposalUnitSystem>().TogglePower(this);
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
                     break;
                 default:
@@ -326,53 +315,6 @@ namespace Content.Server.Disposal.Unit.Components
             appearance.SetData(Visuals.Light, Pressure < 1
                 ? LightState.Charging
                 : LightState.Ready);
-        }
-
-        public bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot=interact"));
-                return false;
-            }
-
-            if (eventArgs.User.IsInContainer())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-cannot-reach"));
-                return false;
-            }
-            // This popup message doesn't appear on clicks, even when code was seperate. Unsure why.
-
-            if (!eventArgs.User.HasComponent<IHandsComponent>())
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("ui-disposal-unit-is-valid-interaction-no-hands"));
-                return false;
-            }
-
-            return true;
-        }
-
-        bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-            {
-                return false;
-            }
-            // Duplicated code here, not sure how else to get actor inside to make UserInterface happy.
-
-            if (IsValidInteraction(eventArgs))
-            {
-                UserInterface?.Open(actor.PlayerSession);
-                return true;
-            }
-
-            return false;
-        }
-
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            return TryDrop(eventArgs.User, eventArgs.Using);
         }
 
         public override bool CanDragDropOn(DragDropEvent eventArgs)

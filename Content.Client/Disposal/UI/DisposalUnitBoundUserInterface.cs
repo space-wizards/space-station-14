@@ -22,6 +22,8 @@ namespace Content.Client.Disposal.UI
         private void ButtonPressed(UiButton button)
         {
             SendMessage(new UiButtonPressedMessage(button));
+            // If we get client-side power stuff then we can predict the button presses but for now we won't as it stuffs
+            // the pressure lerp up.
         }
 
         protected override void Open()
