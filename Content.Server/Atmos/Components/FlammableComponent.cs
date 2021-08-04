@@ -63,7 +63,7 @@ namespace Content.Server.Atmos.Components
             UpdateAppearance();
         }
 
-        public void Update(TileAtmosphere tile)
+        public void Update(GasMixture air)
         {
             // Slowly dry ourselves off if wet.
             if (FireStacks < 0)
@@ -104,13 +104,13 @@ namespace Content.Server.Atmos.Components
             }
 
             // If we're in an oxygenless environment, put the fire out.
-            if (tile.Air?.GetMoles(Gas.Oxygen) < 1f)
+            if (air.GetMoles(Gas.Oxygen) < 1f)
             {
                 Extinguish();
                 return;
             }
 
-            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(tile.GridIndex, tile.GridIndices, 700f, 50f, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700f, 50f, true);
 
             var physics = Owner.GetComponent<IPhysBody>();
 

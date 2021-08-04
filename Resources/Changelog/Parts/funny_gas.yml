@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes mobs not taking pressure damage on space.
