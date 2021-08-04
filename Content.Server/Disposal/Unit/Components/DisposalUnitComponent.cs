@@ -4,9 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
-using Content.Server.Atmos.EntitySystems;
-using Content.Server.Construction.Components;
-using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
@@ -19,16 +16,12 @@ using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -54,7 +47,7 @@ namespace Content.Server.Disposal.Unit.Components
         /// </summary>
         [ViewVariables]
         [DataField("pressure")]
-        public float _pressure;
+        public float Pressure = 1f;
 
         private bool _engaged;
 
@@ -97,8 +90,7 @@ namespace Content.Server.Disposal.Unit.Components
             !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
             receiver.Powered;
 
-        [ViewVariables]
-        private PressureState State => _pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
+        [ViewVariables] public PressureState State => Pressure >= 1 ? PressureState.Ready : PressureState.Pressurizing;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Engaged
@@ -229,7 +221,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public bool CanFlush()
         {
-            return _pressure >= 1 && Powered && Anchored;
+            return State == PressureState.Ready && Powered && Anchored;
         }
 
         private void ToggleEngage()
@@ -266,7 +258,7 @@ namespace Content.Server.Disposal.Unit.Components
             string stateString;
 
             stateString = Loc.GetString($"{State}");
-            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, _pressure, powered, Engaged);
+            var state = new DisposalUnitBoundUserInterfaceState(Owner.Name, stateString, Pressure, powered, Engaged);
             UserInterface?.SetState(state);
         }
 
@@ -342,7 +334,7 @@ namespace Content.Server.Disposal.Unit.Components
                 return;
             }
 
-            appearance.SetData(Visuals.VisualState, _pressure < 1 ? VisualState.Charging : VisualState.Anchored);
+            appearance.SetData(Visuals.VisualState, Pressure < 1 ? VisualState.Charging : VisualState.Anchored);
 
             appearance.SetData(Visuals.Handle, Engaged
                 ? HandleState.Engaged
@@ -367,39 +359,9 @@ namespace Content.Server.Disposal.Unit.Components
                 return;
             }
 
-            appearance.SetData(Visuals.Light, _pressure < 1
+            appearance.SetData(Visuals.Light, Pressure < 1
                 ? LightState.Charging
                 : LightState.Ready);
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            if(!Owner.HasComponent<AnchorableComponent>())
-            {
-                Logger.WarningS("VitalComponentMissing", $"Disposal unit {Owner.Uid} is missing an {nameof(AnchorableComponent)}");
-            }
-
-            UpdateVisualState();
-            UpdateInterface(Powered);
-        }
-
-        protected override void OnRemove()
-        {
-            foreach (var entity in _container.ContainedEntities.ToArray())
-            {
-                _container.ForceRemove(entity);
-            }
-
-            UserInterface?.CloseAll();
-
-            _automaticEngageToken?.Cancel();
-            _automaticEngageToken = null;
-
-            _container = null!;
-
-            base.OnRemove();
         }
 
         public bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)

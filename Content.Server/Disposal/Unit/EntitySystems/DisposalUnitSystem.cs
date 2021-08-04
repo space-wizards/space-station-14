@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.EntitySystems;
@@ -8,6 +9,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;
 using Content.Shared.Throwing;
@@ -15,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
 
@@ -39,6 +42,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, RelayMovementEntityEvent>(HandleMovement);
             SubscribeLocalEvent<DisposalUnitComponent, PowerChangedEvent>(HandlePowerChange);
             SubscribeLocalEvent<DisposalUnitComponent, ComponentInit>(HandleDisposalInit);
+            SubscribeLocalEvent<DisposalUnitComponent, ComponentShutdown>(HandleDisposalShutdown);
             SubscribeLocalEvent<DisposalUnitComponent, ThrowCollideEvent>(HandleThrowCollide);
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
         }
@@ -92,6 +96,26 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             component.UpdateInterface(component.Powered);
+
+            if (!component.Owner.HasComponent<AnchorableComponent>())
+            {
+                Logger.WarningS("VitalComponentMissing", $"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
+            }
+        }
+
+        private void HandleDisposalShutdown(EntityUid uid, DisposalUnitComponent component, ComponentShutdown args)
+        {
+            foreach (var entity in component._container.ContainedEntities.ToArray())
+            {
+                component._container.ForceRemove(entity);
+            }
+
+            component.UserInterface?.CloseAll();
+
+            component._automaticEngageToken?.Cancel();
+            component._automaticEngageToken = null;
+
+            component._container = null!;
         }
 
         private void HandlePowerChange(EntityUid uid, DisposalUnitComponent component, PowerChangedEvent args)
@@ -103,7 +127,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 component._automaticEngageToken = null;
             }
 
-            HandleStateChange(component, args.Powered && component._pressure < 1.0f);
+            HandleStateChange(component, args.Powered && component.State == SharedDisposalUnitComponent.PressureState.Pressurizing);
             component.UpdateVisualState();
             component.UpdateInterface(args.Powered);
 
@@ -157,13 +181,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private bool Update(DisposalUnitComponent component, float frameTime)
         {
-            var oldPressure = component._pressure;
+            var oldPressure = component.Pressure;
 
-            component._pressure = component._pressure + frameTime > 1
-                ? 1
-                : component._pressure + 0.05f * frameTime;
+            // Percentage
+            const float PressurePerSecond = 0.05f;
 
-            if (oldPressure < 1 && component._pressure >= 1)
+            component.Pressure = MathF.Min(1.0f, component.Pressure + PressurePerSecond * frameTime);
+
+            var state = component.State;
+
+            if (oldPressure < 1 && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
                 component.UpdateVisualState();
 
@@ -174,18 +201,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             // TODO: Ideally we'd just send the start and end and client could lerp as the bandwidth would be way lower
-            if (component._pressure < 1.0f || oldPressure < 1.0f && component._pressure >= 1.0f)
+            if (state == SharedDisposalUnitComponent.PressureState.Pressurizing || oldPressure < 1.0f && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
                 // Should be powered still so no need to check.
                 component.UpdateInterface(true);
             }
 
-            if (component._pressure >= 1.0f)
-            {
-                return true;
-            }
-
-            return false;
+            return state == SharedDisposalUnitComponent.PressureState.Ready;
         }
 
         public bool TryFlush(DisposalUnitComponent component)
@@ -220,7 +242,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component._automaticEngageToken?.Cancel();
             component._automaticEngageToken = null;
 
-            component._pressure = 0;
+            component.Pressure = 0;
 
             component.Engaged = false;
 

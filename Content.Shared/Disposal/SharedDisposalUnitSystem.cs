@@ -1,5 +1,4 @@
 ﻿using System;
-using Content.Shared.Disposal.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,18 +12,5 @@ namespace Content.Shared.Disposal
         [Dependency] protected readonly IGameTiming GameTiming = default!;
 
         protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
-
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
-        public override void Update(float frameTime)
-        {
-            foreach (var comp in ComponentManager.EntityQuery<SharedDisposalUnitComponent>(true))
-            {
-                comp.Update(frameTime);
-            }
-        }
     }
 }
