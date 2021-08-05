@@ -52,15 +52,11 @@
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
     - type: Sprite
-      sprite: Objects\Weapons\pflash.rsi
+      sprite: Objects/Weapons/pflash.rsi
       state: flash
     - type: FlashOnTrigger
     - type: ProximityTrigger
+      shape: PhysShapeCircle
     - type: Physics
-      bodyType: Static
-      fixture:
-      - shape:
-          !type: PhysShapeCircle
-          radius: 2
-        mass: 25
+
 
