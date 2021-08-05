@@ -56,17 +56,17 @@ grids:
   - ind: "0,1"
     tiles: IQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAACEAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAAAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAACEAAAAAAAAAIQAAACEAAAAWAAAAIQAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAIQAAAAAAAAAPAAAADwAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACEAAAAAAAAADwAAAA8AAAAWAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-2,0"
-    tiles: IQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAAFgAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAhAAAAIAAAACAAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAGAAAABgAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAACAAAAAgAAAAIAAAABgAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAhAAAAIQAAACAAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAgAAAAGAAAAA==
+    tiles: IQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAAFgAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAhAAAAIAAAACAAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAGAAAABgAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAACAAAAAgAAAAIAAAABgAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAhAAAAIQAAACAAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAgAAAAGAAAAA==
   - ind: "1,-1"
     tiles: GwAAABsAAAAbAAAAGwAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAABsAAAAbAAAAGwAAABsAAAAhAAAAGwAAABsAAAAbAAAAGwAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAhAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAbAAAAGwAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAABsAAAAbAAAAGwAAABsAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAbAAAAGwAAABsAAAAbAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAGwAAABsAAAAbAAAAGwAAACEAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAABsAAAAbAAAAGwAAABsAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAABsAAAAbAAAAGwAAABsAAAAhAAAAIAAAABgAAAAhAAAAIAAAACAAAAAgAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAgAAAAIAAAACAAAAAYAAAAGAAAABsAAAAbAAAAGwAAABsAAAAhAAAAGwAAABsAAAAbAAAAGwAAACEAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAABsAAAAbAAAAGwAAABsAAAAhAAAAIAAAABgAAAAhAAAAFgAAABYAAAAWAAAAIQAAABsAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAABYAAAAWAAAAFgAAABsAAAAbAAAAGwAAACEAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAACEAAAAWAAAAFgAAABYAAAAbAAAAGwAAABsAAAAhAAAAIAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAGwAAABsAAAAbAAAAIQAAACAAAAAYAAAAGAAAACAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAAA==
   - ind: "0,-2"
     tiles: AAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAAB4AAAAeAAAAIQAAAAAAAAAAAAAAIQAAACEAAAAWAAAAFgAAABYAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAABgAAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAAAAAAAAAAAAYAAAAIQAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAhAAAAGAAAACEAAAAWAAAAFgAAABYAAAAhAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAgAAAAIAAAABgAAAAhAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAIAAAABgAAAAgAAAAGAAAABYAAAAWAAAAFgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAYAAAAIQAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAgAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAABgAAAAbAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAYAAAAGwAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAgAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAABgAAAAYAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAbAAAAGwAAABsAAAAbAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABsAAAAbAAAAGwAAABsAAAAhAAAAGwAAABsAAAAbAAAAGwAAAA==
   - ind: "1,-2"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAGwAAACEAAAAYAAAAIAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAABsAAAAhAAAAGAAAACAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAGwAAABsAAAAbAAAAIQAAABgAAAAgAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABsAAAAbAAAAGwAAACEAAAAYAAAAIAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAABsAAAAhAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAGwAAABsAAAAbAAAAGwAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAIQAAABsAAAAbAAAAGwAAACEAAAAYAAAAIAAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAAAAAAAAAAAAAAAAAACEAAAAbAAAAGwAAABsAAAAhAAAAGAAAACAAAAAhAAAAGAAAABgAAAAYAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAgAAAAGwAAABsAAAAbAAAAIQAAABgAAAAgAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAGAAAABsAAAAbAAAAGwAAACEAAAAYAAAAIAAAACEAAAAhAAAAIQAAABgAAAAhAAAAIQAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAABsAAAAhAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAbAAAAGwAAABsAAAAbAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAGwAAABsAAAAbAAAAGwAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,1"
     tiles: IQAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAGAAAABgAAAAYAAAAGAAAACEAAAAhAAAAIQAAABYAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABgAAAAYAAAAGAAAABgAAAAhAAAAEQAAABEAAAARAAAAEQAAACEAAAAhAAAAFgAAACEAAAAhAAAAIQAAACEAAAAYAAAAGAAAABgAAAAYAAAAIQAAABEAAAARAAAAEQAAABEAAAAhAAAACAAAAAgAAAAIAAAACAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAARAAAAEQAAABEAAAARAAAAFgAAAAgAAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAGAAAACAAAAAhAAAAEQAAABEAAAARAAAAEQAAACEAAAAIAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAACAAAAB4AAAAeAAAAHgAAACEAAAAgAAAAIQAAACEAAAAPAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAACEAAAAPAAAADwAAAA8AAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAgAAAAIAAAACAAAAAhAAAADwAAAA8AAAAPAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIQAAACEAAAAhAAAAIQAAAA8AAAAPAAAADwAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAACEAAAAPAAAADwAAAA8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAWAAAAFgAAAA==
   - ind: "-2,1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: AAAAAAAAAAAAAAAAAAAAACEAAAAYAAAAIAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAYAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGAAAACAAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABgAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAYAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAhAAAAIAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAABgAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-1,2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,1"
@@ -7968,10 +7968,9 @@ entities:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
 - uid: 823
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-12.5
+  - pos: -11.5,-12.5
     parent: 853
     type: Transform
   - IsPlaceable: False
@@ -12315,6 +12314,89 @@ entities:
       45,-33: 0
       46,-34: 0
       47,-34: 0
+      24,-27: 0
+      24,-26: 0
+      24,-25: 0
+      24,-24: 0
+      24,-23: 0
+      24,-22: 0
+      24,-21: 0
+      25,-27: 0
+      25,-26: 0
+      25,-25: 0
+      25,-24: 0
+      25,-23: 0
+      25,-22: 0
+      25,-21: 0
+      26,-27: 0
+      26,-26: 0
+      26,-25: 0
+      26,-24: 0
+      26,-23: 0
+      26,-22: 0
+      26,-21: 0
+      27,-27: 0
+      27,-26: 0
+      27,-25: 0
+      27,-24: 0
+      27,-23: 0
+      27,-22: 0
+      27,-21: 0
+      28,-27: 0
+      28,-26: 0
+      28,-25: 0
+      28,-24: 0
+      28,-23: 0
+      28,-22: 0
+      28,-21: 0
+      -28,16: 0
+      -28,17: 0
+      -28,18: 0
+      -28,19: 0
+      -28,20: 0
+      -28,21: 0
+      -27,16: 0
+      -27,17: 0
+      -27,18: 0
+      -27,19: 0
+      -27,20: 0
+      -27,21: 0
+      -26,16: 0
+      -26,17: 0
+      -26,18: 0
+      -26,19: 0
+      -26,20: 0
+      -26,21: 0
+      -25,16: 0
+      -25,17: 0
+      -25,18: 0
+      -25,19: 0
+      -25,20: 0
+      -25,21: 0
+      -24,16: 0
+      -24,17: 0
+      -24,18: 0
+      -24,19: 0
+      -24,20: 0
+      -24,21: 0
+      -23,16: 0
+      -23,17: 0
+      -23,18: 0
+      -23,19: 0
+      -23,20: 0
+      -23,21: 0
+      -22,16: 0
+      -22,17: 0
+      -22,18: 0
+      -22,19: 0
+      -22,20: 0
+      -22,21: 0
+      -21,16: 0
+      -21,17: 0
+      -21,18: 0
+      -21,19: 0
+      -21,20: 0
+      -21,21: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -12440,16 +12522,6 @@ entities:
       mask: []
       layer: []
       mass: 256
-    - shape: !type:PolygonShape
-        vertices:
-        - -16,16
-        - -16,27
-        - -20,27
-        - -20,16
-      id: grid_chunk--2-1
-      mask: []
-      layer: []
-      mass: 44
     - shape: !type:PolygonShape
         vertices:
         - 0,32
@@ -12610,6 +12682,16 @@ entities:
       mask: []
       layer: []
       mass: 16
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,16
+        - -16,27
+        - -28,27
+        - -28,16
+      id: grid_chunk--2-1
+      mask: []
+      layer: []
+      mass: 132
     bodyType: Dynamic
     type: Physics
 - uid: 854
@@ -15839,8 +15921,7 @@ entities:
 - uid: 1248
   type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -33.5,9.5
+  - pos: -33.5,9.5
     parent: 853
     type: Transform
 - uid: 1249
@@ -19315,9 +19396,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1657
-  type: WallReinforced
+  type: RandomSpawner
   components:
-  - pos: 23.5,-24.5
+  - pos: 26.5,-25.5
     parent: 853
     type: Transform
 - uid: 1658
@@ -19399,11 +19480,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 1671
-  type: WallReinforced
+  type: CableApcExtension
   components:
-  - pos: 26.5,-19.5
+  - anchored: True
+    pos: 28.5,-24.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 1672
   type: WallReinforced
   components:
@@ -19526,11 +19612,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1692
-  type: WallReinforced
+  type: AirlockMaint
   components:
-  - pos: -25.5,15.5
+  - pos: 23.5,-24.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1693
   type: WallReinforced
   components:
@@ -19634,11 +19724,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 1709
-  type: WallReinforced
+  type: AirlockMaint
   components:
-  - pos: -19.5,19.5
+  - pos: -25.5,15.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 1710
   type: WallReinforced
   components:
@@ -23154,12 +23248,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2210
-  type: WallSolid
+  type: AirlockMaint
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 25.5,-15.5
+  - pos: -23.5,18.5
     parent: 853
     type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 2211
   type: WallSolid
   components:
@@ -23219,8 +23316,7 @@ entities:
 - uid: 2219
   type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 20.5,-17.5
+  - pos: 20.5,-17.5
     parent: 853
     type: Transform
 - uid: 2220
@@ -24589,7 +24685,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 2414
-  type: ClosetBase
+  type: ClosetMaintenanceFilledRandom
   components:
   - pos: -8.5,-25.5
     parent: 853
@@ -49218,4 +49314,1010 @@ entities:
     pos: 2.5,31.5
     parent: 853
     type: Transform
+- uid: 4961
+  type: WallReinforced
+  components:
+  - pos: 28.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 4962
+  type: WallReinforced
+  components:
+  - pos: 24.5,-26.5
+    parent: 853
+    type: Transform
+- uid: 4963
+  type: WallReinforced
+  components:
+  - pos: 25.5,-26.5
+    parent: 853
+    type: Transform
+- uid: 4964
+  type: WallReinforced
+  components:
+  - pos: 26.5,-26.5
+    parent: 853
+    type: Transform
+- uid: 4965
+  type: WallReinforced
+  components:
+  - pos: 28.5,-20.5
+    parent: 853
+    type: Transform
+- uid: 4966
+  type: WallReinforced
+  components:
+  - pos: 28.5,-23.5
+    parent: 853
+    type: Transform
+- uid: 4967
+  type: WallReinforced
+  components:
+  - pos: 28.5,-21.5
+    parent: 853
+    type: Transform
+- uid: 4968
+  type: WallReinforced
+  components:
+  - pos: 28.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 4969
+  type: WallReinforced
+  components:
+  - pos: 28.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4970
+  type: WallReinforced
+  components:
+  - pos: 28.5,-26.5
+    parent: 853
+    type: Transform
+- uid: 4971
+  type: WallReinforced
+  components:
+  - pos: 27.5,-26.5
+    parent: 853
+    type: Transform
+- uid: 4972
+  type: WallSolid
+  components:
+  - pos: 25.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 4973
+  type: WallSolid
+  components:
+  - pos: 25.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4974
+  type: AirlockMaint
+  components:
+  - pos: 25.5,-23.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 4975
+  type: WallSolid
+  components:
+  - pos: 25.5,-21.5
+    parent: 853
+    type: Transform
+- uid: 4976
+  type: WallSolid
+  components:
+  - pos: 27.5,-21.5
+    parent: 853
+    type: Transform
+- uid: 4977
+  type: WallSolid
+  components:
+  - pos: 26.5,-21.5
+    parent: 853
+    type: Transform
+- uid: 4978
+  type: WallSolid
+  components:
+  - pos: 25.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 4979
+  type: AcousticGuitarInstrument
+  components:
+  - pos: 27.500875,-23.377102
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 4980
+  type: WallSolid
+  components:
+  - pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 4981
+  type: Table
+  components:
+  - pos: 27.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4982
+  type: Table
+  components:
+  - pos: 26.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 4983
+  type: PoweredSmallLight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 28,-24.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4984
+  type: PoweredSmallLight
+  components:
+  - pos: 25.5,-20
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4985
+  type: PoweredSmallLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 24,-23.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 4986
+  type: ComfyChair
+  components:
+  - pos: 26.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 4987
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 26.5,-19.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4988
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 26.5,-20.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4989
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-19.5
+    parent: 853
+    type: Transform
+- uid: 4990
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4991
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-23.5
+    parent: 853
+    type: Transform
+- uid: 4992
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 4993
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-21.5
+    parent: 853
+    type: Transform
+- uid: 4994
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-20.5
+    parent: 853
+    type: Transform
+- uid: 4995
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 23.5,-19.5
+    parent: 853
+    type: Transform
+- uid: 4996
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 24.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4997
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4998
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 26.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 4999
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 27.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5000
+  type: AirlockMaint
+  components:
+  - pos: 26.5,-19.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5001
+  type: AirlockMaint
+  components:
+  - pos: -19.5,19.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5002
+  type: WallReinforced
+  components:
+  - pos: -27.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5003
+  type: WallReinforced
+  components:
+  - pos: -27.5,17.5
+    parent: 853
+    type: Transform
+- uid: 5004
+  type: WallReinforced
+  components:
+  - pos: -27.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5005
+  type: WallReinforced
+  components:
+  - pos: -27.5,19.5
+    parent: 853
+    type: Transform
+- uid: 5006
+  type: WallReinforced
+  components:
+  - pos: -27.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5007
+  type: CrateEngineeringCableMV
+  components:
+  - pos: -20.5,16.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5008
+  type: WallSolid
+  components:
+  - pos: -20.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5009
+  type: WallSolid
+  components:
+  - pos: -22.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5010
+  type: WallSolid
+  components:
+  - pos: -21.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5011
+  type: WallSolid
+  components:
+  - pos: -24.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5012
+  type: WallSolid
+  components:
+  - pos: -24.5,17.5
+    parent: 853
+    type: Transform
+- uid: 5013
+  type: WallSolid
+  components:
+  - pos: -24.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5014
+  type: WallReinforced
+  components:
+  - pos: -27.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5015
+  type: WallReinforced
+  components:
+  - pos: -26.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5016
+  type: WallReinforced
+  components:
+  - pos: -25.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5017
+  type: WallReinforced
+  components:
+  - pos: -24.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5018
+  type: WallReinforced
+  components:
+  - pos: -23.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5019
+  type: WallReinforced
+  components:
+  - pos: -22.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5020
+  type: WallReinforced
+  components:
+  - pos: -21.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5021
+  type: WallReinforced
+  components:
+  - pos: -20.5,21.5
+    parent: 853
+    type: Transform
+- uid: 5022
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -27.5,14.5
+    parent: 853
+    type: Transform
+- uid: 5023
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -26.5,14.5
+    parent: 853
+    type: Transform
+- uid: 5024
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,14.5
+    parent: 853
+    type: Transform
+- uid: 5025
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,15.5
+    parent: 853
+    type: Transform
+- uid: 5026
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -19.5,19.5
+    parent: 853
+    type: Transform
+- uid: 5027
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -18.5,19.5
+    parent: 853
+    type: Transform
+- uid: 5028
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -19.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5029
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -20.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5030
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -21.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5031
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -22.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5032
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5033
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5034
+  type: PoweredSmallLight
+  components:
+  - pos: -21.5,18
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5035
+  type: PoweredSmallLight
+  components:
+  - pos: -23.5,21
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5036
+  type: PoweredSmallLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -27,17.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5037
+  type: CrateEngineeringCableLV
+  components:
+  - pos: -20.5,17.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5038
+  type: CableHVStack
+  components:
+  - pos: -22.628485,16.665777
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5039
+  type: Rack
+  components:
+  - pos: -23.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5040
+  type: RandomSpawner
+  components:
+  - pos: -20.5,17.5
+    parent: 853
+    type: Transform
+- uid: 5041
+  type: Rack
+  components:
+  - pos: -22.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5042
+  type: ClothingMaskGas
+  components:
+  - pos: -23.68732,16.378263
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5043
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-23.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5044
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5045
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-23.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5046
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5047
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-23.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5048
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5049
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-24.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5050
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: 25.5,-22.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5051
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5052
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,17.5
+    parent: 853
+    type: Transform
+- uid: 5053
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -25.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5054
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -24.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5055
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5056
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -22.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5057
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -21.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5058
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -23.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5059
+  type: CableApcExtension
+  components:
+  - anchored: True
+    pos: -24.5,18.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5060
+  type: Firelock
+  components:
+  - pos: 26.5,-19.5
+    parent: 853
+    type: Transform
+- uid: 5061
+  type: Firelock
+  components:
+  - pos: 23.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 5062
+  type: Firelock
+  components:
+  - pos: -25.5,15.5
+    parent: 853
+    type: Transform
+- uid: 5063
+  type: Firelock
+  components:
+  - pos: -19.5,19.5
+    parent: 853
+    type: Transform
+- uid: 5064
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: 26.5,-22.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5065
+  type: SignToolStorage
+  components:
+  - pos: 26.514614,-21.5
+    parent: 853
+    type: Transform
+- uid: 5066
+  type: Rack
+  components:
+  - pos: 27.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 5067
+  type: CableMVStack
+  components:
+  - rot: 0.0004529799334704876 rad
+    pos: 27.736885,-22.289246
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5068
+  type: Wirecutter
+  components:
+  - pos: 27.503157,-22.435783
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5069
+  type: CableApcStack
+  components:
+  - pos: 27.36774,-22.300274
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5070
+  type: SignEngineering
+  components:
+  - pos: -22.503485,18.5
+    parent: 853
+    type: Transform
+- uid: 5071
+  type: ClothingHandsGlovesCombat
+  components:
+  - pos: -23.447739,16.722254
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5072
+  type: HarmonicaInstrument
+  components:
+  - pos: -22.46857,16.513775
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5073
+  type: ClothingHeadHatOrangesoft
+  components:
+  - pos: -23.316175,16.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5074
+  type: ClosetMaintenanceFilledRandom
+  components:
+  - pos: -26.5,19.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5075
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: -26.5,18.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5076
+  type: ClosetFireFilled
+  components:
+  - pos: -26.5,17.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5077
+  type: ClothingHandsGlovesColorYellow
+  components:
+  - pos: 27.39341,-25.414946
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+- uid: 5078
+  type: DrinkBottleBeer
+  components:
+  - pos: 26.341326,-25.258587
+    parent: 853
+    type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
+  - canCollide: False
+    type: Physics
+- uid: 5079
+  type: DrinkBeerglass
+  components:
+  - pos: 26.73716,-25.331554
+    parent: 853
+    type: Transform
+  - caps: Refillable, Drainable
+    type: SolutionContainer
+  - canCollide: False
+    type: Physics
+- uid: 5080
+  type: ClosetFireFilled
+  components:
+  - pos: 24.5,-25.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5081
+  type: ClosetEmergencyFilledRandom
+  components:
+  - pos: 27.5,-20.5
+    parent: 853
+    type: Transform
+  - IsPlaceable: False
+    type: PlaceableSurface
+  - containers:
+      EntityStorageComponent: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5082
+  type: CableHVStack
+  components:
+  - pos: -22.638397,16.589691
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 ...
