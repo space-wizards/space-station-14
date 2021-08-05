@@ -7,6 +7,7 @@ using Content.Server.Disposal.Unit.Components;
 using Content.Server.Construction.Components;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Atmos;
@@ -250,6 +251,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         }
         #endregion
 
+        /// <summary>
+        /// Work out if we can stop updating this disposals component i.e. full pressure and nothing colliding.
+        /// </summary>
         private bool Update(DisposalUnitComponent component, float frameTime)
         {
             var oldPressure = component.Pressure;
@@ -283,7 +287,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-
             for (var i = component.RecentlyEjected.Count - 1; i >= 0; i--)
             {
                 var uid = component.RecentlyEjected[i];
@@ -291,7 +294,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     ComponentManager.TryGetComponent(uid, out PhysicsComponent? body))
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
-                    if (body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
+                    if (!ComponentManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
                     component.RecentlyEjected.RemoveAt(i);
                 }
             }
