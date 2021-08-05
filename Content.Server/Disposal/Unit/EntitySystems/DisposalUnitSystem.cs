@@ -36,7 +36,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
 
-        private List<DisposalUnitComponent> _activeDisposals = new();
+        private readonly List<DisposalUnitComponent> _activeDisposals = new();
 
         public override void Initialize()
         {
@@ -101,7 +101,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public void Engage(DisposalUnitComponent component)
         {
             component.Engaged = true;
-            component.UpdateVisualState();
+            UpdateVisualState(component);
             UpdateInterface(component, component.Powered);
 
             if (component.CanFlush())
@@ -113,7 +113,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public void Disengage(DisposalUnitComponent component)
         {
             component.Engaged = false;
-            component.UpdateVisualState();
+            UpdateVisualState(component);
             UpdateInterface(component, component.Powered);
         }
 
@@ -215,7 +215,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             HandleStateChange(component, args.Powered && component.State == SharedDisposalUnitComponent.PressureState.Pressurizing);
-            component.UpdateVisualState();
+            UpdateVisualState(component);
             UpdateInterface(component, args.Powered);
 
             if (component.Engaged && !TryFlush(component))
@@ -255,14 +255,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.Remove(args.Entity);
         }
 
-        private static void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
+        private void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
         {
-            component.UpdateVisualState();
+            UpdateVisualState(component);
         }
 
-        private static void OnUnanchored(EntityUid uid, DisposalUnitComponent component, UnanchoredEvent args)
+        private void OnUnanchored(EntityUid uid, DisposalUnitComponent component, UnanchoredEvent args)
         {
-            component.UpdateVisualState();
+            UpdateVisualState(component);
             component.TryEjectContents();
         }
         #endregion
@@ -277,7 +277,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (oldPressure < 1 && state == SharedDisposalUnitComponent.PressureState.Ready)
             {
-                component.UpdateVisualState();
+                UpdateVisualState(component);
 
                 if (component.Engaged)
                 {
@@ -380,7 +380,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             component.Engaged = false;
 
             HandleStateChange(component, true);
-            component.UpdateVisualState(true);
+            UpdateVisualState(component, true);
             UpdateInterface(component, component.Powered);
 
             return true;
@@ -401,6 +401,56 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var pressure = component.Pressure;
 
             return TimeSpan.FromSeconds(currentTime.TotalSeconds + (1.0f - pressure) / PressurePerSecond);
+        }
+
+        public void UpdateVisualState(DisposalUnitComponent component)
+        {
+            UpdateVisualState(component, false);
+        }
+
+        public void UpdateVisualState(DisposalUnitComponent component, bool flush)
+        {
+            if (!component.Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+            {
+                return;
+            }
+
+            if (!component.Owner.Transform.Anchored)
+            {
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.UnAnchored);
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.Handle, SharedDisposalUnitComponent.HandleState.Normal);
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
+                return;
+            }
+
+            appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, component.Pressure < 1 ? SharedDisposalUnitComponent.VisualState.Charging : SharedDisposalUnitComponent.VisualState.Anchored);
+
+            appearance.SetData(SharedDisposalUnitComponent.Visuals.Handle, component.Engaged
+                ? SharedDisposalUnitComponent.HandleState.Engaged
+                : SharedDisposalUnitComponent.HandleState.Normal);
+
+            if (!component.Powered)
+            {
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
+                return;
+            }
+
+            if (flush)
+            {
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.VisualState, SharedDisposalUnitComponent.VisualState.Flushing);
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Off);
+                return;
+            }
+
+            if (component.ContainedEntities.Count > 0)
+            {
+                appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, SharedDisposalUnitComponent.LightState.Full);
+                return;
+            }
+
+            appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, component.Pressure < 1
+                ? SharedDisposalUnitComponent.LightState.Charging
+                : SharedDisposalUnitComponent.LightState.Ready);
         }
     }
 }

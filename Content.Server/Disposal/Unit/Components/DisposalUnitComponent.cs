@@ -29,8 +29,6 @@ namespace Content.Server.Disposal.Unit.Components
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
     public class DisposalUnitComponent : SharedDisposalUnitComponent, IGasMixtureHolder, IDestroyAct
     {
-        public override string Name => "DisposalUnit";
-
         /// <summary>
         ///     Last time that an entity tried to exit this disposal unit.
         /// </summary>
@@ -129,7 +127,7 @@ namespace Content.Server.Disposal.Unit.Components
                 UserInterface?.Close(actor.PlayerSession);
             }
 
-            UpdateVisualState();
+            EntitySystem.Get<DisposalUnitSystem>().UpdateVisualState(this);
         }
 
         public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
@@ -182,8 +180,9 @@ namespace Content.Server.Disposal.Unit.Components
                 RecentlyEjected.Add(entity.Uid);
 
             Dirty();
-            EntitySystem.Get<DisposalUnitSystem>().HandleStateChange(this, true);
-            UpdateVisualState();
+            var disposals = EntitySystem.Get<DisposalUnitSystem>();
+            disposals.HandleStateChange(this, true);
+            disposals.UpdateVisualState(this);
         }
 
         public bool CanFlush()
@@ -249,56 +248,6 @@ namespace Content.Server.Disposal.Unit.Components
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-        }
-
-        public void UpdateVisualState()
-        {
-            UpdateVisualState(false);
-        }
-
-        public void UpdateVisualState(bool flush)
-        {
-            if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
-            {
-                return;
-            }
-
-            if (!Anchored)
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.UnAnchored);
-                appearance.SetData(Visuals.Handle, HandleState.Normal);
-                appearance.SetData(Visuals.Light, LightState.Off);
-                return;
-            }
-
-            appearance.SetData(Visuals.VisualState, Pressure < 1 ? VisualState.Charging : VisualState.Anchored);
-
-            appearance.SetData(Visuals.Handle, Engaged
-                ? HandleState.Engaged
-                : HandleState.Normal);
-
-            if (!Powered)
-            {
-                appearance.SetData(Visuals.Light, LightState.Off);
-                return;
-            }
-
-            if (flush)
-            {
-                appearance.SetData(Visuals.VisualState, VisualState.Flushing);
-                appearance.SetData(Visuals.Light, LightState.Off);
-                return;
-            }
-
-            if (ContainedEntities.Count > 0)
-            {
-                appearance.SetData(Visuals.Light, LightState.Full);
-                return;
-            }
-
-            appearance.SetData(Visuals.Light, Pressure < 1
-                ? LightState.Charging
-                : LightState.Ready);
         }
 
         public override bool CanDragDropOn(DragDropEvent eventArgs)
