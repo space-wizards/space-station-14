@@ -1668,3 +1668,8 @@ Entries:
   - {message: Added an alternate jumpsuit for Botany, type: Add}
   id: 297
   time: '2021-08-05T10:18:05.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added two new maintenance areas, type: Add}
+  id: 298
+  time: '2021-08-05T22:20:58.0000000+00:00'
