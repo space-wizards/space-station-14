@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
+  "copyright": "Taken from baystation12 and modified by Swept at commit https://github.com/Baystation12/Baystation12/commit/80b2ded014aa871e6bceb6913b2961a23109aa23",
   "size": {
     "x": 32,
     "y": 32
