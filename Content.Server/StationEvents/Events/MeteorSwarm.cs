@@ -84,10 +84,11 @@ namespace Content.Server.StationEvents.Events
             var compManager = IoCManager.Resolve<IComponentManager>();
 
             Box2? playableArea = null;
+            var mapId = EntitySystem.Get<GameTicker>().DefaultMap;
 
             foreach (var grid in mapManager.GetAllGrids())
             {
-                if (!compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
+                if (grid.ParentMapId != mapId || !compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
                 playableArea ??= aabb;
                 playableArea = playableArea.Value.Union(aabb);
@@ -102,7 +103,6 @@ namespace Content.Server.StationEvents.Events
             var minimumDistance = (playableArea.Value.TopRight - playableArea.Value.Center).Length + 50f;
             var maximumDistance = minimumDistance + 100f;
 
-            var mapId = EntitySystem.Get<GameTicker>().DefaultMap;
             var center = playableArea.Value.Center;
 
             for (var i = 0; i < MeteorsPerWave; i++)
