@@ -3,6 +3,7 @@ using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Tabletop.Components
 {
@@ -28,8 +29,7 @@ namespace Content.Server.Tabletop.Components
                     return;
                 }
 
-                // TODO: use localisation
-                data.Text = "Play Game";
+                data.Text = Loc.GetString("tabletop-verb-play-game");
                 // TODO: add icon
             }
 

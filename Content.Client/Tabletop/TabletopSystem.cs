@@ -1,11 +1,15 @@
 ﻿using System;
+using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -19,21 +23,18 @@ namespace Content.Client.Tabletop
     [UsedImplicitly]
     public class TabletopSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
 
-        // Time passed since last update sent to the server.
-        private float _timePassed;
-
-        // Entity being dragged
-        private IEntity? _draggedEntity;
-
-        // Viewport being used
-        private ScalingViewport? _viewport;
+        private float _timePassed; // Time passed since last update sent to the server.
+        private IEntity? _draggedEntity; // Entity being dragged
+        private ScalingViewport? _viewport; // Viewport currently being used
+        private SS14Window? _window; // Current open tabletop window (only allow one at a time)
+        private IEntity? _table; // The table entity of the currently open game session
 
         public override void Initialize()
         {
@@ -41,11 +42,19 @@ namespace Content.Client.Tabletop
                         .Bind(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false))
                         .Register<TabletopSystem>();
 
-            SubscribeNetworkEvent<TabletopPlayEvent>(TabletopPlayHandler);
+            SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
         }
 
         public override void Update(float frameTime)
         {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            // If the player leaves the range of the tabletop game, close the window
+            if (player != null && _table != null && !player.InRangeUnobstructed(_table))
+            {
+                _window?.Close();
+            }
+
             // If no entity is being dragged or no viewport is clicked, just return
             if (_draggedEntity == null || _viewport == null) return;
 
@@ -75,32 +84,7 @@ namespace Content.Client.Tabletop
             }
         }
 
-        /**
-         * <summary>Clamps coordinates within a viewport. ONLY ACCOUNTS FOR 90 DEGREE ROTATIONS!</summary>
-         */
-        private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
-        {
-            if (viewport.Eye == null) return MapCoordinates.Nullspace;
-
-            var size = (Vector2) viewport.ViewportSize / 32; // Convert to tiles instead of pixels
-            var eyePosition = viewport.Eye.Position.Position;
-            var rotation = viewport.Eye.Rotation;
-            var scale = viewport.Eye.Scale;
-
-            var min = (eyePosition - size / 2) / scale;
-            var max = (eyePosition + size / 2) / scale;
-
-            // If 90/270 degrees rotated, flip X and Y
-            if (MathHelper.CloseTo(rotation.Degrees % 180d, 90d) || MathHelper.CloseTo(rotation.Degrees % 180d, -90d))
-            {
-                (min.Y, min.X) = (min.X, min.Y);
-                (max.Y, max.X) = (max.X, max.Y);
-            }
-
-            var clampedPosition = Vector2.Clamp(coordinates.Position, min, max);
-
-            return new MapCoordinates(clampedPosition, coordinates.MapId);
-        }
+        #region Event handlers
 
         /**
          * <summary>
@@ -108,32 +92,33 @@ namespace Content.Client.Tabletop
          * Opens a viewport where they can then play the game.
          * </summary>
          */
-        private void TabletopPlayHandler(TabletopPlayEvent msg)
+        private void OnTabletopPlay(TabletopPlayEvent msg)
         {
-            var camera = EntityManager.GetEntity(msg.CameraUid);
+            _table = EntityManager.GetEntity(msg.TableUid);
 
-            var window = new SS14Window
-            {
-                MinWidth = 500,
-                MinHeight = 400 + 26,
-                Title = msg.Title
-            };
+            // Get the camera entity that the server has created for us
+            var camera = EntityManager.GetEntity(msg.CameraUid);
 
             if (!camera.TryGetComponent<EyeComponent>(out var eyeComponent))
             {
                 throw new Exception("Camera does not have EyeComponent.");
             }
 
-            var viewport = new ScalingViewport
+            // Create a window to contain the viewport
+            _window = new TabletopWindow(eyeComponent.Eye, (msg.Size.X, msg.Size.Y))
             {
-                Eye = eyeComponent.Eye,
-                ViewportSize = (msg.Size.X, msg.Size.Y),
-                MouseFilter = Control.MouseFilterMode.Stop, // Make the mouse interact with the viewport
-                RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt // Nearest neighbor scaling
+                MinWidth = 500,
+                MinHeight = 400 + 26,
+                Title = msg.Title
             };
 
-            window.Contents.AddChild(viewport);
-            window.OpenCentered();
+            _window.OnClose += OnWindowClose;
+
+        }
+
+        private void OnWindowClose()
+        {
+            _window = null;
         }
 
         private bool OnUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -172,5 +157,44 @@ namespace Content.Client.Tabletop
 
             return true;
         }
+
+        #endregion
+
+        #region Utility
+
+        /**
+         * <summary>Clamps coordinates within a viewport. ONLY WORKS FOR 90 DEGREE ROTATIONS!</summary>
+         * <param name="coordinates">The coordinates to be clamped.</param>
+         * <param name="viewport">The viewport to clamp the coordinates to.</param>
+         * <returns>Coordinates clamped to the viewport.</returns>
+         */
+        private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
+        {
+            var eye = viewport.Eye;
+
+            if (eye == null) return MapCoordinates.Nullspace;
+
+            var size = (Vector2) viewport.ViewportSize / 32; // Convert to tiles instead of pixels
+            var eyePosition = eye.Position.Position;
+            var eyeRotation = eye.Rotation;
+            var eyeScale = eye.Scale;
+
+            var min = (eyePosition - size / 2) / eyeScale;
+            var max = (eyePosition + size / 2) / eyeScale;
+
+            // If 90/270 degrees rotated, flip X and Y
+            if (MathHelper.CloseTo(eyeRotation.Degrees % 180d, 90d) || MathHelper.CloseTo(eyeRotation.Degrees % 180d, -90d))
+            {
+                (min.Y, min.X) = (min.X, min.Y);
+                (max.Y, max.X) = (max.X, max.Y);
+            }
+
+            var clampedPosition = Vector2.Clamp(coordinates.Position, min, max);
+
+            // Use the eye's map ID, we don't want anything moving to a different map!
+            return new MapCoordinates(clampedPosition, eye.Position.MapId);
+        }
+
+        #endregion
     }
 }

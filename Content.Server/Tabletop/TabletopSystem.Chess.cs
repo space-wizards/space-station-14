@@ -39,6 +39,7 @@ namespace Content.Server.Tabletop
             _entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
         }
 
+        // TODO: refactor to load FEN instead
         private void SpawnPiecesRow(string color, MapCoordinates left, float separation = 1f)
         {
             const string piecesRow = "rnbqkbnr";
@@ -68,6 +69,7 @@ namespace Content.Server.Tabletop
             }
         }
 
+        // TODO: refactor to load FEN instead
         private void SpawnPawns(string color, MapCoordinates left, float separation = 1f)
         {
             var (mapId, x, y) = left;

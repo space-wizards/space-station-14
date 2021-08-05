@@ -18,6 +18,7 @@
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard_tabletop.rsi
     state: chessboard_tabletop
+    noRot: false
 
 ## Chess pieces
 - type: entity
@@ -26,6 +27,8 @@
   abstract: true
   components:
   - type: TabletopDraggable
+  - type: Sprite
+    noRot: true
 
 # White pieces
 - type: entity
