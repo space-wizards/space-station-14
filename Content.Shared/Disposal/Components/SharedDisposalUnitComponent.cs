@@ -1,18 +1,27 @@
 using System;
+using System.Collections.Generic;
 using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Item;
 using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Disposal.Components
 {
+    [NetworkedComponent]
     public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
     {
         public override string Name => "DisposalUnit";
+
+        /// <summary>
+        /// We'll track whatever just left disposals so we know what collision we need to ignore.
+        /// </summary>
+        public List<EntityUid> RecentlyEjected = new();
 
         [ViewVariables] public bool Anchored => Owner.Transform.Anchored;
 
@@ -64,6 +73,22 @@ namespace Content.Shared.Disposal.Components
             Pressurizing
         }
 
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new DisposalUnitComponentState(RecentlyEjected);
+        }
+
+        [Serializable, NetSerializable]
+        protected sealed class DisposalUnitComponentState : ComponentState
+        {
+            public List<EntityUid> RecentlyEjected;
+
+            public DisposalUnitComponentState(List<EntityUid> uids)
+            {
+                RecentlyEjected = uids;
+            }
+        }
+
         [Serializable, NetSerializable]
         public class DisposalUnitBoundUserInterfaceState : BoundUserInterfaceState, IEquatable<DisposalUnitBoundUserInterfaceState>
         {
@@ -110,7 +135,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum DisposalUnitUiKey
+        public enum DisposalUnitUiKey : byte
         {
             Key
         }

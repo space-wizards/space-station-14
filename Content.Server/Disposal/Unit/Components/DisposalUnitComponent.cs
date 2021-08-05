@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.DoAfter;
-using Content.Server.Hands.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
@@ -169,23 +168,6 @@ namespace Content.Server.Disposal.Unit.Components
             return true;
         }
 
-        public bool TryDrop(IEntity user, IEntity entity)
-        {
-            if (!user.TryGetComponent(out HandsComponent? hands))
-            {
-                return false;
-            }
-
-            if (!CanInsert(entity) || !hands.Drop(entity, Container))
-            {
-                return false;
-            }
-
-            AfterInsert(entity);
-
-            return true;
-        }
-
         public void Remove(IEntity entity)
         {
             Container.Remove(entity);
@@ -196,6 +178,11 @@ namespace Content.Server.Disposal.Unit.Components
                 AutomaticEngageToken = null;
             }
 
+            if (!RecentlyEjected.Contains(entity.Uid))
+                RecentlyEjected.Add(entity.Uid);
+
+            Dirty();
+            EntitySystem.Get<DisposalUnitSystem>().HandleStateChange(this, true);
             UpdateVisualState();
         }
 

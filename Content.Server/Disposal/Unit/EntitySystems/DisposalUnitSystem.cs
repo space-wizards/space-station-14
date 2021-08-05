@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Construction.Components;
@@ -22,6 +23,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -143,10 +146,18 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void HandleInteractUsing(EntityUid uid, DisposalUnitComponent component, InteractUsingEvent args)
         {
-            var result = component.TryDrop(args.User, args.Used);
+            if (!args.User.TryGetComponent(out HandsComponent? hands))
+            {
+                return;
+            }
 
-            if (result)
-                args.Handled = true;
+            if (!component.CanInsert(args.Used) || !hands.Drop(args.Used, component.Container))
+            {
+                return;
+            }
+
+            component.AfterInsert(args.Used);
+            args.Handled = true;
         }
 
         private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ThrowCollideEvent args)
@@ -216,11 +227,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// Add or remove this disposal from the active ones for updating.
         /// </summary>
-        private void HandleStateChange(DisposalUnitComponent component, bool active)
+        public void HandleStateChange(DisposalUnitComponent component, bool active)
         {
             if (active)
             {
-                _activeDisposals.Add(component);
+                if (!_activeDisposals.Contains(component))
+                    _activeDisposals.Add(component);
             }
             else
             {
@@ -273,7 +285,38 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 }
             }
 
-            return state == SharedDisposalUnitComponent.PressureState.Ready;
+            Box2? disposalsBounds = null;
+            var count = component.RecentlyEjected.Count;
+
+            if (count > 0)
+            {
+                if (!component.Owner.TryGetComponent(out PhysicsComponent? disposalsBody))
+                {
+                    component.RecentlyEjected.Clear();
+                }
+                else
+                {
+                    disposalsBounds = disposalsBody.GetWorldAABB();
+                }
+            }
+
+
+            for (var i = component.RecentlyEjected.Count - 1; i >= 0; i--)
+            {
+                var uid = component.RecentlyEjected[i];
+                if (EntityManager.EntityExists(uid) &&
+                    ComponentManager.TryGetComponent(uid, out PhysicsComponent? body))
+                {
+                    // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
+                    if (body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    component.RecentlyEjected.RemoveAt(i);
+                }
+            }
+
+            if (count != component.RecentlyEjected.Count)
+                component.Dirty();
+
+            return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
         }
 
         private bool IsValidInteraction(ITargetedInteractEventArgs eventArgs)

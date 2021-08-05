@@ -30,6 +30,7 @@
       layer:
       - Opaque
       - SmallImpassable
+      - VaultImpassable
       - MobImpassable
   - type: Destructible
     thresholds:
@@ -70,7 +71,6 @@
   name: disposal unit
   components:
   - type: DisposalUnit
-    netsync: false
     flushTime: 2
   - type: UserInterface
     interfaces:

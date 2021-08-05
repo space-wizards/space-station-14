@@ -55,9 +55,7 @@ namespace Content.Client.Disposal.UI
             if (!Owner.Owner.TryGetComponent(out DisposalUnitComponent? component)) return;
 
             component.UiState = cast;
-            var disposals = EntitySystem.Get<DisposalUnitSystem>().PressuringDisposals;
-            if (disposals.Contains(component)) return;
-            disposals.Add(component);
+            EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);
         }
 
         protected override void Dispose(bool disposing)

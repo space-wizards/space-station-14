@@ -10,6 +10,19 @@ namespace Content.Client.Disposal.Systems
     {
         public List<DisposalUnitComponent> PressuringDisposals = new();
 
+        public void UpdateActive(DisposalUnitComponent component, bool active)
+        {
+            if (active)
+            {
+                if (!PressuringDisposals.Contains(component))
+                    PressuringDisposals.Add(component);
+            }
+            else
+            {
+                PressuringDisposals.Remove(component);
+            }
+        }
+
         public override void FrameUpdate(float frameTime)
         {
             base.FrameUpdate(frameTime);

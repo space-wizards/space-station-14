@@ -10,6 +10,14 @@ namespace Content.Client.Disposal.Components
     {
         public DisposalUnitBoundUserInterfaceState? UiState;
 
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+            if (curState is not DisposalUnitComponentState state) return;
+
+            RecentlyEjected = state.RecentlyEjected;
+        }
+
         public override bool DragDropOn(DragDropEvent eventArgs)
         {
             return false;
