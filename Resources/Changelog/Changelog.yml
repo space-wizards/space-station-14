@@ -1663,3 +1663,8 @@ Entries:
   - {message: Fixes mobs not taking pressure damage on space., type: Fix}
   id: 296
   time: '2021-08-04T07:49:53.509340+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added an alternate jumpsuit for Botany, type: Add}
+  id: 297
+  time: '2021-08-05T10:18:05.0000000+00:00'
