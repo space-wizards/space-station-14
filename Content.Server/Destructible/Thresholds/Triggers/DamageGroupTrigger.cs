@@ -19,8 +19,8 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         // While you're at it, maybe also combine damageGroup and damage into a dictionary, and allow it to test a sum
         // of damage types?
         [DataField("damageGroup", required: true)]
-        public string DamageGroupID { get; set; } = default!;
-        public DamageTypePrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(DamageGroupID);
+        private string _damageGroupID { get; set; } = default!;
+        public DamageTypePrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageGroupID);
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.

@@ -72,12 +72,13 @@ namespace Content.Server.Light.Components
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Heat";
-        private DamageTypePrototype _damageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
 
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
             _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
@@ -130,7 +131,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.TryChangeDamage(_damageType, 20);
+                damageableComponent.TryChangeDamage(DamageType, 20);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 

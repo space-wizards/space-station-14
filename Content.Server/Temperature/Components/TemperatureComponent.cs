@@ -55,15 +55,17 @@ namespace Content.Server.Temperature.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("coldDamageType")]
         private readonly string _coldDamageTypeID = "Cold";
-        private DamageTypePrototype _coldDamageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype ColdDamageType = default!;
         [DataField("hotDamageType")]
         private readonly string _hotDamageTypeID = "Heat";
-        private DamageTypePrototype _hotDamageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype HotDamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _coldDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_coldDamageTypeID);
-            _hotDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_hotDamageTypeID);
+            ColdDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_coldDamageTypeID);
+            HotDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_hotDamageTypeID);
         }
 
         public void Update()
@@ -115,12 +117,12 @@ namespace Content.Server.Temperature.Components
             if (CurrentTemperature >= _heatDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                component.TryChangeDamage(_hotDamageType, tempDamage, false);
+                component.TryChangeDamage(HotDamageType, tempDamage, false);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                component.TryChangeDamage(_coldDamageType, tempDamage, false);
+                component.TryChangeDamage(ColdDamageType, tempDamage, false);
             }
             
         }

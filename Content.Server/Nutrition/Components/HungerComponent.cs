@@ -82,11 +82,12 @@ namespace Content.Server.Nutrition.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt"!;
-        private DamageTypePrototype _damageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         public void HungerThresholdEffect(bool force = false)
@@ -206,10 +207,10 @@ namespace Content.Server.Nutrition.Components
                 // --> But they are not dead yet.
                 var damage = 2 * frametime;
                 _accumulatedDamage += damage - ((int) damage);
-                damageable.TryChangeDamage(_damageType, (int) damage);
+                damageable.TryChangeDamage(DamageType, (int) damage);
                 if (_accumulatedDamage >= 1) {
                     _accumulatedDamage -= 1;
-                    damageable.TryChangeDamage(_damageType, 1, true);
+                    damageable.TryChangeDamage(DamageType, 1, true);
                 }
             }
         }

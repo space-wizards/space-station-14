@@ -34,10 +34,10 @@ namespace Content.Shared.Damage.Resistances
         void ISerializationHooks.AfterDeserialization()
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            foreach (var damageType in coefficients)
+            foreach (var damageTypeID in coefficients.Keys)
             {
-                var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageType.Key);
-                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageType.Key], flatReductions[damageType.Key]));
+                var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageTypeID);
+                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageTypeID], flatReductions[damageTypeID]));
             }
         }
     }

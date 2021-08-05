@@ -76,10 +76,9 @@ namespace Content.Shared.Body.Components
         /// <summary>
         /// Amount of damage to deal when all vital organs are removed.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("vitalPartsRemovedDamage")]
         public int VitalPartsRemovedDamage { get; set; } = 300!;
-
 
         /// <summary>
         /// Damage type to deal when all vital organs are removed.
@@ -87,7 +86,8 @@ namespace Content.Shared.Body.Components
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [ViewVariables]
         [DataField("vitalPartsRemovedDamageType")]
-        public string VitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
+        private string _vitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageTypePrototype VitalPartsRemovedDamageType = default!;
 
         protected override void Initialize()
@@ -98,7 +98,7 @@ namespace Content.Shared.Body.Components
             // TODO BODY Move to template or somewhere else
             if (TemplateId != null)
             {
-                VitalPartsRemovedDamageType = _prototypeManager.Index<DamageTypePrototype>(VitalPartsRemovedDamageTypeID);
+                VitalPartsRemovedDamageType = _prototypeManager.Index<DamageTypePrototype>(_vitalPartsRemovedDamageTypeID);
                 var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
                 foreach (var (id, partType) in template.Slots)

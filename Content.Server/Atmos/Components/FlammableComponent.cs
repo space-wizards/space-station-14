@@ -49,11 +49,12 @@ namespace Content.Server.Atmos.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Heat"!;
-        private DamageTypePrototype _damageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         public void Extinguish()
@@ -105,7 +106,7 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.TryChangeDamage(_damageType, damage, false);
+                    damageable.TryChangeDamage(DamageType, damage, false);
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));

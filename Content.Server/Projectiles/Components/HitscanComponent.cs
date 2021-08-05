@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -49,6 +50,7 @@ namespace Content.Server.Projectiles.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Piercing";
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {

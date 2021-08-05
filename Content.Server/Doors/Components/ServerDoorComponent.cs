@@ -50,11 +50,12 @@ namespace Content.Server.Doors.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
-        private DamageTypePrototype _damageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         public override DoorState State
@@ -499,7 +500,7 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.TryChangeDamage(_damageType, DoorCrushDamage);
+                damage.TryChangeDamage(DamageType, DoorCrushDamage);
                 stun.Paralyze(DoorStunTime);
             }
 

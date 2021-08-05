@@ -100,11 +100,12 @@ namespace Content.Server.Body.Respiratory
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Asphyxiation"!;
-        private DamageTypePrototype _damageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
@@ -362,7 +363,7 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
-            damageable.TryChangeDamage(_damageType, _damage, false);
+            damageable.TryChangeDamage(DamageType, _damage, false);
         }
 
         private void StopSuffocation()
@@ -371,7 +372,7 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.TryChangeDamage(_damageType, -_damageRecovery, false);
+                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
@@ -23,13 +24,13 @@ namespace Content.Server.Atmos.Components
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt";
-        private DamageTypePrototype _damageType = default!;
+        [DataField("damageType")] private readonly string _damageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -57,7 +58,8 @@ namespace Content.Server.Atmos.Components
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.TryChangeDamage(_damageType, Atmospherics.LowPressureDamage);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    damageable.TryChangeDamage(DamageType, Atmospherics.LowPressureDamage,true);
 
                     if (status == null) break;
 
@@ -79,7 +81,8 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.TryChangeDamage(_damageType, damage);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    damageable.TryChangeDamage(DamageType, damage,true);
 
                     if (status == null) break;
 

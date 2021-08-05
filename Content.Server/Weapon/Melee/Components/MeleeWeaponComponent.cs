@@ -60,6 +60,7 @@ namespace Content.Server.Weapon.Melee.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {

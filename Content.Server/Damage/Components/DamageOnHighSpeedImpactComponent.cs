@@ -4,6 +4,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
@@ -38,6 +39,7 @@ namespace Content.Server.Damage.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
         public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
         {

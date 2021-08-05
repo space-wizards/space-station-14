@@ -5,13 +5,13 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -24,7 +24,8 @@ namespace Content.Server.Medical.Components
         // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("heal", required: true )]
-        public Dictionary<string, int> Heal { get; private set; } = new();
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<string, int> Heal = new();
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

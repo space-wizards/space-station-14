@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
@@ -28,15 +29,17 @@ namespace Content.Server.Damage.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("weldingDamageType")]
         private readonly string _weldingDamageTypeID = "Heat";
-        private DamageTypePrototype _weldingDamageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype WeldingDamageType = default!;
         [DataField("defaultDamageType")]
         private readonly string _defaultDamageTypeID = "Blunt";
-        private DamageTypePrototype _defaultDamageType = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DefaultDamageType = default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _weldingDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_weldingDamageTypeID);
-            _defaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
+            WeldingDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_weldingDamageTypeID);
+            DefaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -66,8 +69,8 @@ namespace Content.Server.Damage.Components
                 return false;
 
             damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                    ? _weldingDamageType
-                    : _defaultDamageType,
+                    ? WeldingDamageType
+                    : DefaultDamageType,
                 Damage);
 
             return true;

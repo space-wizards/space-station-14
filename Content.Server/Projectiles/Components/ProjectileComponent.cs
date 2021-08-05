@@ -16,14 +16,8 @@ namespace Content.Server.Projectiles.Components
         // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
         // While thats being done, also replace "damages" -> "damageTypes" For consistency.
         [DataField("damages")]
-        private Dictionary<string, int> _damageTypes = new();
-
-        [ViewVariables]
-        public Dictionary<string, int> Damages
-        {
-            get => _damageTypes;
-            set => _damageTypes = value;
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<string, int> Damages { get; set; } = new();
 
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;

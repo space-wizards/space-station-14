@@ -51,9 +51,9 @@ namespace Content.Server.Projectiles
             {
                 EntityManager.TryGetEntity(component.Shooter, out var shooter);
 
-                foreach (var (damageType, amount) in component.Damages)
+                foreach (var (damageTypeID, amount) in component.Damages)
                 {
-                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageType), amount);
+                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), amount);
                 }
 
                 component.DamagedEntity = true;
