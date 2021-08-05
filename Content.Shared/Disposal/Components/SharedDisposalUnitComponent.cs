@@ -135,6 +135,7 @@ namespace Content.Shared.Disposal.Components
             Key
         }
 
+        // TODO: Unfortunately these aren't really ECS yet so soontm
         public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
             return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);

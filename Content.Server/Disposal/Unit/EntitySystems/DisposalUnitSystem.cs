@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Construction.Components;
@@ -135,7 +136,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            component.AfterInsert(args.Used);
+            AfterInsert(component, args.Used);
             args.Handled = true;
         }
 
@@ -151,7 +152,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            component.AfterInsert(args.Thrown);
+            AfterInsert(component, args.Thrown);
         }
 
         private void HandleDisposalInit(EntityUid uid, DisposalUnitComponent component, ComponentInit args)
@@ -202,7 +203,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (component.Engaged && !TryFlush(component))
             {
-                component.TryQueueEngage();
+                TryQueueEngage(component);
             }
         }
 
@@ -477,6 +478,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             UpdateInterface(component, component.Powered);
         }
 
+        /// <summary>
+        /// Remove all entities currently in the disposal unit.
+        /// </summary>
         public void TryEjectContents(DisposalUnitComponent component)
         {
             foreach (var entity in component.Container.ContainedEntities.ToArray())
@@ -491,6 +495,39 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
 
             return serverComp.Container.CanInsert(entity);
+        }
+
+        /// <summary>
+        /// If something is inserted (or the likes) then we'll queue up a flush in the future.
+        /// </summary>
+        public void TryQueueEngage(DisposalUnitComponent component)
+        {
+            if (component.Deleted || !component.Powered && component.ContainedEntities.Count == 0)
+            {
+                return;
+            }
+
+            component.AutomaticEngageToken = new CancellationTokenSource();
+
+            component.Owner.SpawnTimer(component._automaticEngageTime, () =>
+            {
+                if (!TryFlush(component))
+                {
+                    TryQueueEngage(component);
+                }
+            }, component.AutomaticEngageToken.Token);
+        }
+
+        public void AfterInsert(DisposalUnitComponent component, IEntity entity)
+        {
+            TryQueueEngage(component);
+
+            if (entity.TryGetComponent(out ActorComponent? actor))
+            {
+                component.UserInterface?.Close(actor.PlayerSession);
+            }
+
+            UpdateVisualState(component);
         }
     }
 }

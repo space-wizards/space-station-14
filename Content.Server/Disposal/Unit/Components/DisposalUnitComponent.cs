@@ -45,7 +45,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("autoEngageTime")]
-        private readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
+        public readonly TimeSpan _automaticEngageTime = TimeSpan.FromSeconds(30);
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("flushDelay")]
@@ -92,36 +92,6 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
-        public void TryQueueEngage()
-        {
-            if (Deleted || !Powered && ContainedEntities.Count == 0)
-            {
-                return;
-            }
-
-            AutomaticEngageToken = new CancellationTokenSource();
-
-            Owner.SpawnTimer(_automaticEngageTime, () =>
-            {
-                if (!EntitySystem.Get<DisposalUnitSystem>().TryFlush(this))
-                {
-                    TryQueueEngage();
-                }
-            }, AutomaticEngageToken.Token);
-        }
-
-        public void AfterInsert(IEntity entity)
-        {
-            TryQueueEngage();
-
-            if (entity.TryGetComponent(out ActorComponent? actor))
-            {
-                UserInterface?.Close(actor.PlayerSession);
-            }
-
-            EntitySystem.Get<DisposalUnitSystem>().UpdateVisualState(this);
-        }
-
         public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
         {
             if (!EntitySystem.Get<DisposalUnitSystem>().CanInsert(this, entity))
@@ -153,7 +123,7 @@ namespace Content.Server.Disposal.Unit.Components
             if (!Container.Insert(entity))
                 return false;
 
-            AfterInsert(entity);
+            EntitySystem.Get<DisposalUnitSystem>().AfterInsert(this, entity);
 
             return true;
         }
