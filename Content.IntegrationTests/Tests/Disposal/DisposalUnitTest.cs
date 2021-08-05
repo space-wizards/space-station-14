@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
-using Content.Server.GameObjects.Components;
 using Content.Server.Power.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -25,7 +24,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             foreach (var entity in entities)
             {
                 var insertTask = unit.TryInsert(entity);
-                Assert.That(unit.CanInsert(entity), Is.EqualTo(result));
+                Assert.That(EntitySystem.Get<DisposalUnitSystem>().CanInsert(unit, entity), Is.EqualTo(result));
                 insertTask.ContinueWith(task =>
                 {
                     Assert.That(task.Result, Is.EqualTo(result));
@@ -128,7 +127,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Can't insert, unanchored and unpowered
                 var physics = disposalUnit.GetComponent<IPhysBody>();
                 physics.BodyType = BodyType.Dynamic;
-                Assert.False(unit.Anchored);
+                Assert.False(unit.Owner.Transform.Anchored);
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit

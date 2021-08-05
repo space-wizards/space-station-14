@@ -92,14 +92,6 @@ namespace Content.Server.Disposal.Unit.Components
         [DataField("air")]
         public GasMixture Air { get; set; } = new GasMixture(Atmospherics.CellVolume);
 
-        public override bool CanInsert(IEntity entity)
-        {
-            if (!base.CanInsert(entity))
-                return false;
-
-            return Container.CanInsert(entity);
-        }
-
         public void TryQueueEngage()
         {
             if (Deleted || !Powered && ContainedEntities.Count == 0)
@@ -132,7 +124,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public async Task<bool> TryInsert(IEntity entity, IEntity? user = default)
         {
-            if (!CanInsert(entity))
+            if (!EntitySystem.Get<DisposalUnitSystem>().CanInsert(this, entity))
                 return false;
 
             var delay = user == entity ? _entryDelay : _draggedEntryDelay;
@@ -164,38 +156,6 @@ namespace Content.Server.Disposal.Unit.Components
             AfterInsert(entity);
 
             return true;
-        }
-
-        public void Remove(IEntity entity)
-        {
-            Container.Remove(entity);
-
-            if (ContainedEntities.Count == 0)
-            {
-                AutomaticEngageToken?.Cancel();
-                AutomaticEngageToken = null;
-            }
-
-            if (!RecentlyEjected.Contains(entity.Uid))
-                RecentlyEjected.Add(entity.Uid);
-
-            Dirty();
-            var disposals = EntitySystem.Get<DisposalUnitSystem>();
-            disposals.HandleStateChange(this, true);
-            disposals.UpdateVisualState(this);
-        }
-
-        public bool CanFlush()
-        {
-            return State == PressureState.Ready && Powered && Anchored;
-        }
-
-        public void TryEjectContents()
-        {
-            foreach (var entity in Container.ContainedEntities.ToArray())
-            {
-                Remove(entity);
-            }
         }
 
         private bool PlayerCanUse(IEntity? player)
@@ -236,7 +196,7 @@ namespace Content.Server.Disposal.Unit.Components
             switch (message.Button)
             {
                 case UiButton.Eject:
-                    TryEjectContents();
+                    EntitySystem.Get<DisposalUnitSystem>().TryEjectContents(this);
                     break;
                 case UiButton.Engage:
                     EntitySystem.Get<DisposalUnitSystem>().ToggleEngage(this);
@@ -254,7 +214,7 @@ namespace Content.Server.Disposal.Unit.Components
         {
             // Base is redundant given this already calls the base CanInsert
             // If that changes then update this
-            return CanInsert(eventArgs.Dragged);
+            return EntitySystem.Get<DisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
         }
 
         public override bool DragDropOn(DragDropEvent eventArgs)
@@ -312,7 +272,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            TryEjectContents();
+            EntitySystem.Get<DisposalUnitSystem>().TryEjectContents(this);
         }
     }
 }

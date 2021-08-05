@@ -76,20 +76,3 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
-
-# - type: entity
-#   parent: DisposalUnitBase
-#   id: DisposalMailingUnit
-#   name: disposal mailing unit
-#   components:
-#   - type: Configuration
-#     keys:
-#     - Tag
-#   - type: DisposalMailingUnit
-#     flushTime: 2
-#   - type: UserInterface
-#     interfaces:
-#     - key: enum.DisposalMailingUnitUiKey.Key
-#       type: DisposalMailingUnitBoundUserInterface
-#     - key: enum.ConfigurationUiKey.Key
-#       type: ConfigurationBoundUserInterface

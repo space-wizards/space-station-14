@@ -1,15 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Content.Shared.Body.Components;
 using Content.Shared.DragDrop;
-using Content.Shared.Item;
-using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Disposal.Components
 {
@@ -18,12 +13,12 @@ namespace Content.Shared.Disposal.Components
     {
         public override string Name => "DisposalUnit";
 
+        // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
+        // Need to suss it out.
         /// <summary>
-        /// We'll track whatever just left disposals so we know what collision we need to ignore.
+        /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
         /// </summary>
         public List<EntityUid> RecentlyEjected = new();
-
-        [ViewVariables] public bool Anchored => Owner.Transform.Anchored;
 
         [Serializable, NetSerializable]
         public enum Visuals : byte
@@ -140,32 +135,9 @@ namespace Content.Shared.Disposal.Components
             Key
         }
 
-        public virtual bool CanInsert(IEntity entity)
-        {
-            if (!Anchored)
-                return false;
-
-            // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
-            {
-                return false;
-            }
-
-
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide && storable == null)
-            {
-                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
         public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
-            return CanInsert(eventArgs.Dragged);
+            return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

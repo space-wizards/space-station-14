@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Construction.Components;
@@ -24,7 +23,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Random;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -98,25 +96,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         }
         #endregion
 
-        public void Engage(DisposalUnitComponent component)
-        {
-            component.Engaged = true;
-            UpdateVisualState(component);
-            UpdateInterface(component, component.Powered);
-
-            if (component.CanFlush())
-            {
-                component.Owner.SpawnTimer(component.FlushDelay, () => TryFlush(component));
-            }
-        }
-
-        public void Disengage(DisposalUnitComponent component)
-        {
-            component.Engaged = false;
-            UpdateVisualState(component);
-            UpdateInterface(component, component.Powered);
-        }
-
         #region Eventbus Handlers
         private void HandleActivate(EntityUid uid, DisposalUnitComponent component, ActivateInWorldEvent args)
         {
@@ -151,7 +130,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!component.CanInsert(args.Used) || !hands.Drop(args.Used, component.Container))
+            if (!CanInsert(component, args.Used) || !hands.Drop(args.Used, component.Container))
             {
                 return;
             }
@@ -160,9 +139,12 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             args.Handled = true;
         }
 
+        /// <summary>
+        /// Thrown items have a chance of bouncing off the unit and not going in.
+        /// </summary>
         private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ThrowCollideEvent args)
         {
-            if (!component.CanInsert(args.Thrown) ||
+            if (!CanInsert(component, args.Thrown) ||
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
@@ -252,7 +234,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             component.LastExitAttempt = currentTime;
-            component.Remove(args.Entity);
+            Remove(component, args.Entity);
         }
 
         private void OnAnchored(EntityUid uid, DisposalUnitComponent component, AnchoredEvent args)
@@ -263,7 +245,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         private void OnUnanchored(EntityUid uid, DisposalUnitComponent component, UnanchoredEvent args)
         {
             UpdateVisualState(component);
-            component.TryEjectContents();
+            TryEjectContents(component);
         }
         #endregion
 
@@ -345,7 +327,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public bool TryFlush(DisposalUnitComponent component)
         {
-            if (component.Deleted || !component.CanFlush())
+            if (component.Deleted || !CanFlush(component))
             {
                 return false;
             }
@@ -451,6 +433,64 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             appearance.SetData(SharedDisposalUnitComponent.Visuals.Light, component.Pressure < 1
                 ? SharedDisposalUnitComponent.LightState.Charging
                 : SharedDisposalUnitComponent.LightState.Ready);
+        }
+
+        public void Remove(DisposalUnitComponent component, IEntity entity)
+        {
+            component.Container.Remove(entity);
+
+            if (component.ContainedEntities.Count == 0)
+            {
+                component.AutomaticEngageToken?.Cancel();
+                component.AutomaticEngageToken = null;
+            }
+
+            if (!component.RecentlyEjected.Contains(entity.Uid))
+                component.RecentlyEjected.Add(entity.Uid);
+
+            component.Dirty();
+            HandleStateChange(component, true);
+            UpdateVisualState(component);
+        }
+
+        public bool CanFlush(DisposalUnitComponent component)
+        {
+            return component.State == SharedDisposalUnitComponent.PressureState.Ready && component.Powered && component.Owner.Transform.Anchored;
+        }
+
+        public void Engage(DisposalUnitComponent component)
+        {
+            component.Engaged = true;
+            UpdateVisualState(component);
+            UpdateInterface(component, component.Powered);
+
+            if (CanFlush(component))
+            {
+                component.Owner.SpawnTimer(component.FlushDelay, () => TryFlush(component));
+            }
+        }
+
+        public void Disengage(DisposalUnitComponent component)
+        {
+            component.Engaged = false;
+            UpdateVisualState(component);
+            UpdateInterface(component, component.Powered);
+        }
+
+        public void TryEjectContents(DisposalUnitComponent component)
+        {
+            foreach (var entity in component.Container.ContainedEntities.ToArray())
+            {
+                Remove(component, entity);
+            }
+        }
+
+        public override bool CanInsert(SharedDisposalUnitComponent component, IEntity entity)
+        {
+            if (!base.CanInsert(component, entity) || component is not DisposalUnitComponent serverComp)
+                return false;
+
+            return serverComp.Container.CanInsert(entity);
         }
     }
 }
