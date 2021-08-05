@@ -41,31 +41,28 @@ namespace Content.Shared.Damage.Components
         /// </summary>
         private Dictionary<DamageTypePrototype, int> _damageDict = new();
 
-        // TODO define these in yaml?
-        public const string DefaultResistanceSet = "defaultResistances";
-        public const string DefaultDamageContainer = "metallicDamageContainer";
-
         [DataField("resistances")]
-        public string ResistanceSetId { get; set; } = DefaultResistanceSet;
+        public string ResistanceSetId { get; set; } = "defaultResistances";
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
         [ViewVariables]
         [DataField("damageContainer")]
-        public string DamageContainerId { get; set; } = DefaultDamageContainer;
+        public string DamageContainerId { get; set; } = "metallicDamageContainer";
 
         // TODO DAMAGE Cache this
+        // When moving logic from damageableComponent --> Damage System, make damageSystem update these on damage change.
         [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
         [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> GetDamagePerType => _damageDict;
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup => DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
         [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup => DamageTypeDictToDamageGroupDict(_damageDict, FullySupportedDamageGroups);
 
         // Whenever sending over network, also need a <string, int> dictionary
-        // TODO DAMAGE Cache this
+        // TODO DAMAGE MAYBE Cache this?
         public IReadOnlyDictionary<string, int> GetDamagePerApplicableGroupIDs => ConvertDictKeysToIDs(GetDamagePerApplicableGroup);
         public IReadOnlyDictionary<string, int> GetDamagePerFullySupportedGroupIDs => ConvertDictKeysToIDs(GetDamagePerFullySupportedGroup);
-        public IReadOnlyDictionary<string, int> GetDamagePerTypeIDs => ConvertDictKeysToIDs(GetDamagePerType);
+        public IReadOnlyDictionary<string, int> GetDamagePerTypeIDs => ConvertDictKeysToIDs(_damageDict);
 
         // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
         // Also requires appropriate changes in OnExplosion() and RadiationAct()
@@ -118,7 +115,7 @@ namespace Content.Shared.Damage.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new DamageableComponentState(ConvertDictKeysToIDs(_damageDict));
+            return new DamageableComponentState(GetDamagePerTypeIDs);
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -206,7 +203,7 @@ namespace Content.Shared.Damage.Components
         public bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false)
         {
             // Check if damage type is supported, and get the current value if it is.
-            if (!_damageDict.TryGetValue(type, out var current))
+            if (!GetDamagePerType.TryGetValue(type, out var current))
             {
                 return false;
             }
@@ -279,7 +276,7 @@ namespace Content.Shared.Damage.Components
                 int healing, damage;
                 foreach (var type in types)
                 {
-                    if (!GetDamagePerType.TryGetValue(type, out damage))
+                    if (!_damageDict.TryGetValue(type, out damage))
                     {
                         // Damage Type is not supported. Continue without reducing availableHealing
                         continue;
