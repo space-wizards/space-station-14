@@ -670,7 +670,7 @@ namespace Content.Server.Atmos.EntitySystems
         public GasMixture? GetTileMixture(EntityCoordinates coordinates, bool invalidate = false)
         {
             return TryGetGridAndTile(coordinates, out var tuple)
-                ? GetTileMixture(tuple.Value.Grid, tuple.Value.Tile, invalidate) : null;
+                ? GetTileMixture(tuple.Value.Grid, tuple.Value.Tile, invalidate) : GasMixture.SpaceGas;
         }
 
         /// <summary>

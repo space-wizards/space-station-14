@@ -116,7 +116,7 @@ namespace Content.Client.Storage
             for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
                 var entityId = msg.StoredEntities[i];
-                var initialPosition = msg.EntityPositions[i];
+                var initialPosition = msg.EntityPositions[i].ToMap(Owner.EntityManager);
 
                 if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
                 {
