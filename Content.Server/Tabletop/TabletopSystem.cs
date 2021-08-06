@@ -103,10 +103,7 @@ namespace Content.Server.Tabletop
         {
             var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
 
-            if (!draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
-            {
-                return;
-            }
+            if (!draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent)) return;
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
