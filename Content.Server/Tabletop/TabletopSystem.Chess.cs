@@ -35,7 +35,7 @@ namespace Content.Server.Tabletop
             SpawnPiecesRow("White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
             // Extra queens
-            _entityManager.SpawnEntity( "BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+            _entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
             _entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
         }
 
