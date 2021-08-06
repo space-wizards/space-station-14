@@ -207,7 +207,7 @@
   description: It opens, it closes, and you can see through it!
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
-    state: assembly
+    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -224,7 +224,7 @@
   description: It opens, it closes, and you can see through it! This one looks tough.
   icon:
     sprite: Structures/Doors/Windoors/windoor.rsi
-    state: assembly
+    state: closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
