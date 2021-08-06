@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Client.MobState;
 using Content.Client.Tabletop.Components;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
@@ -50,8 +51,15 @@ namespace Content.Client.Tabletop
             // If there is no player entity, return
             if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return;
 
-            // If the player leaves the range of the tabletop game, close the window and unset dragged entity
-            if (_table != null && !playerEntity.InRangeUnobstructed(_table))
+            // If player is not a mob then return
+            if (!playerEntity.TryGetComponent<MobStateComponent>(out var mobStateComponent))
+            {
+                _window?.Close();
+                return;
+            }
+
+            // If the player leaves the range of the tabletop game or is not alive, close the window and unset dragged entity
+            if (_table != null && !playerEntity.InRangeUnobstructed(_table) || !mobStateComponent.IsAlive())
             {
                 _window?.Close();
                 return;
