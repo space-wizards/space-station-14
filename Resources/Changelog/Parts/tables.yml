@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fixes a bug where items would disappear when placed in tables, in certain situations.
