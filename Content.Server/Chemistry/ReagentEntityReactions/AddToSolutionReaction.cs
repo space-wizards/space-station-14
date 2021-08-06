@@ -10,7 +10,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEntityReactions
 {
     [UsedImplicitly]
-    [DataDefinition]
     public class AddToSolutionReaction : ReagentEntityReaction
     {
         [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]

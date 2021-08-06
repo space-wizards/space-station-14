@@ -1,7 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Alert;
-using Content.Shared.Movement.Components;
-using Content.Shared.Physics.Pull;
+﻿using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
 using Component = Robust.Shared.GameObjects.Component;
 
@@ -46,31 +43,6 @@ namespace Content.Shared.Pulling.Components
             }
 
             base.OnRemove();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            if (message is not PullMessage pullMessage ||
-                pullMessage.Puller.Owner != Owner)
-            {
-                return;
-            }
-
-            SharedAlertsComponent? ownerStatus = Owner.GetComponentOrNull<SharedAlertsComponent>();
-
-            switch (message)
-            {
-                case PullStartedMessage msg:
-                    Pulling = msg.Pulled.Owner;
-                    ownerStatus?.ShowAlert(AlertType.Pulling);
-                    break;
-                case PullStoppedMessage _:
-                    Pulling = null;
-                    ownerStatus?.ClearAlert(AlertType.Pulling);
-                    break;
-            }
         }
     }
 }

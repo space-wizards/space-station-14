@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Acts;
 using Content.Shared.Gravity;

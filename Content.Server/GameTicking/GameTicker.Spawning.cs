@@ -155,7 +155,7 @@ namespace Content.Server.GameTicking
         private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
-            var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
 
             if (job.StartingGear != null)
             {
@@ -175,7 +175,7 @@ namespace Content.Server.GameTicking
         private IEntity SpawnObserverMob()
         {
             var coordinates = GetObserverSpawnPoint();
-            return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
+            return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
         #endregion
 
@@ -189,7 +189,7 @@ namespace Content.Server.GameTicking
                     var equipmentStr = startingGear.GetGear(slot, profile);
                     if (equipmentStr != string.Empty)
                     {
-                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                     }
                 }
@@ -200,7 +200,7 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }

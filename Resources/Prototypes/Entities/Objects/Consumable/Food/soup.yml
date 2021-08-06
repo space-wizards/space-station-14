@@ -5,14 +5,12 @@
   components:
   - type: Food
     trash: FoodBowlBig
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20
     contents:
       reagents:
       - ReagentId: Nutriment
         Quantity: 20
-    trash: BowlBigTrash
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     netsync: false

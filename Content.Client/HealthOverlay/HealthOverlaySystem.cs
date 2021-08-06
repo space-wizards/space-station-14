@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;

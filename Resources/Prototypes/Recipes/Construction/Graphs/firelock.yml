@@ -53,7 +53,7 @@
             - tag: FirelockElectronics
               name: Firelock Electronics
               icon:
-                sprite: "Constructible/Misc/module.rsi"
+                sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"
 
         - to: frame1

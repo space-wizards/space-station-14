@@ -6,8 +6,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.Chat.Managers;
-using Content.Server.GameTicking;
 using Content.Shared.Administration;
 using Content.Shared.Collections;
 using Content.Shared.Voting;
@@ -17,10 +17,10 @@ using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
-#nullable enable
 
 namespace Content.Server.Voting.Managers
 {
@@ -32,12 +32,15 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IAdminManager _adminMgr = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IAfkManager _afkManager = default!;
 
         private int _nextVoteId = 1;
 
         private readonly Dictionary<int, VoteReg> _votes = new();
         private readonly Dictionary<int, VoteHandle> _voteHandles = new();
 
+        private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeout = new();
         private readonly Dictionary<NetUserId, TimeSpan> _voteTimeout = new();
         private readonly HashSet<IPlayerSession> _playerCanCallVoteDirty = new();
 
@@ -145,6 +148,21 @@ namespace Content.Server.Voting.Managers
                     DirtyCanCallVote(session);
             }
 
+            // Handle standard vote timeouts.
+            var stdTimeoutRemQueue = new RemQueue<StandardVoteType>();
+            foreach (var (type, timeout) in _standardVoteTimeout)
+            {
+                if (timeout < _timing.RealTime)
+                    stdTimeoutRemQueue.Add(type);
+            }
+
+            foreach (var type in stdTimeoutRemQueue)
+            {
+                _standardVoteTimeout.Remove(type);
+
+                DirtyCanCallVoteAll();
+            }
+
             // Handle dirty canCallVotes.
             foreach (var dirtyPlayer in _playerCanCallVoteDirty)
             {
@@ -239,26 +257,47 @@ namespace Content.Server.Voting.Managers
         private void SendUpdateCanCallVote(IPlayerSession player)
         {
             var msg = _netManager.CreateNetMessage<MsgVoteCanCall>();
-            msg.CanCall = CanCallVote(player);
+            msg.CanCall = CanCallVote(player, null, out var isAdmin, out var timeSpan);
+            msg.WhenCanCallVote = timeSpan;
+
+            msg.VotesUnavailable = isAdmin
+                ? Array.Empty<(StandardVoteType, TimeSpan)>()
+                : _standardVoteTimeout.Select(kv => (kv.Key, kv.Value)).ToArray();
 
             _netManager.ServerSendMessage(msg, player.ConnectedClient);
         }
 
-        public bool CanCallVote(IPlayerSession player)
+        private bool CanCallVote(
+            IPlayerSession initiator,
+            StandardVoteType? voteType,
+            out bool isAdmin,
+            out TimeSpan timeSpan)
         {
+            isAdmin = false;
+            timeSpan = default;
+
             // Admins can always call votes.
-            if (_adminMgr.HasAdminFlag(player, AdminFlags.Admin))
+            if (_adminMgr.HasAdminFlag(initiator, AdminFlags.Admin))
             {
+                isAdmin = true;
                 return true;
             }
 
             // Cannot start vote if vote is already active (as non-admin).
             if (_votes.Count != 0)
-            {
                 return false;
-            }
 
-            return !_voteTimeout.ContainsKey(player.UserId);
+            // Standard vote on timeout, no calling.
+            // Ghosts I understand you're dead but stop spamming the restart vote bloody hell.
+            if (voteType != null && _standardVoteTimeout.ContainsKey(voteType.Value))
+                return false;
+
+            return !_voteTimeout.TryGetValue(initiator.UserId, out timeSpan);
+        }
+
+        public bool CanCallVote(IPlayerSession initiator, StandardVoteType? voteType = null)
+        {
+            return CanCallVote(initiator, voteType, out _, out _);
         }
 
         private void EndVote(VoteReg v)
@@ -483,7 +522,7 @@ namespace Content.Server.Voting.Managers
                 }
 
                 public IEnumerable<object> Keys => _reg.Entries.Select(c => c.Data);
-                public IEnumerable<int> Values  => _reg.Entries.Select(c => c.Votes);
+                public IEnumerable<int> Values => _reg.Entries.Select(c => c.Votes);
             }
         }
 

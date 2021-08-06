@@ -19,6 +19,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using static Robust.Client.UserInterface.Control;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Storage
 {
@@ -258,8 +259,9 @@ namespace Content.Client.Storage
                     }
                 };
 
-                _vBox = new VBoxContainer()
+                _vBox = new BoxContainer()
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     MouseFilter = MouseFilterMode.Ignore,
                 };
                 containerButton.AddChild(_vBox);

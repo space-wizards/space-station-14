@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;

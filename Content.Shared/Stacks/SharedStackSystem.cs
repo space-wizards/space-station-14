@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 
 namespace Content.Shared.Stacks
@@ -12,6 +13,7 @@ namespace Content.Shared.Stacks
         {
             base.Initialize();
 
+            SubscribeLocalEvent<SharedStackComponent, ComponentHandleState>(OnStackHandleState);
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
         }
@@ -58,6 +60,16 @@ namespace Content.Shared.Stacks
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+        }
+
+        private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ComponentHandleState args)
+        {
+            if (args.Current is not StackComponentState cast)
+                return;
+
+            // This will change the count and call events.
+            SetCount(uid, component, cast.Count);
+            component.MaxCount = cast.MaxCount;
         }
 
         private void OnStackExamined(EntityUid uid, SharedStackComponent component, ExaminedEvent args)

@@ -1,0 +1,30 @@
+- type: entity
+  name: particles
+  description: Accelerated particles.
+  id: ParticlesProjectile
+  parent: BulletBase
+  components:
+    - type: Sprite
+      layers:
+      - sprite: Structures/Power/Generation/PA/particle.rsi
+        state: particle0
+        shader: unshaded
+    - type: Projectile
+      deleteOnCollide: false
+      soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+      damages:
+        Radiation: 10
+    - type: Physics
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.48,-0.48,0.48,0.48"
+        hard: false
+        layer: [None]
+        mask:
+          # Has to hit mobs, singularity, and singularity generator
+          - MobMask
+          - Opaque
+    - type: ParticleProjectile
+    - type: SinguloFood
+      # Energy is setup by the PA particle fire function.

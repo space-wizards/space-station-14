@@ -19,7 +19,6 @@
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: Clothing
     sprite: Clothing/Shoes/Specific/clown.rsi
-  - type: LoopingSound
   - type: FootstepModifier
     footstepSoundCollection: footstep_clown
 

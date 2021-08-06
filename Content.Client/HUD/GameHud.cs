@@ -25,6 +25,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using static Robust.Client.Input.Keyboard.Key;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Control = Robust.Client.UserInterface.Control;
 using LC = Robust.Client.UserInterface.Controls.LayoutContainer;
 
@@ -94,7 +95,7 @@ namespace Content.Client.HUD
 
     internal sealed class GameHud : IGameHud
     {
-        private HBoxContainer _topButtonsContainer = default!;
+        private BoxContainer _topButtonsContainer = default!;
         private TopButton _buttonEscapeMenu = default!;
         private TopButton _buttonInfo = default!;
         private TopButton _buttonCharacterMenu = default!;
@@ -105,8 +106,8 @@ namespace Content.Client.HUD
         private TopButton _buttonSandboxMenu = default!;
         private InfoWindow _infoWindow = default!;
         private TargetingDoll _targetingDoll = default!;
-        private VBoxContainer _combatPanelContainer = default!;
-        private VBoxContainer _topNotificationContainer = default!;
+        private BoxContainer _combatPanelContainer = default!;
+        private BoxContainer _topNotificationContainer = default!;
 
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -183,8 +184,9 @@ namespace Content.Client.HUD
             var infoTexture = _resourceCache.GetTexture("/Textures/Interface/info.svg.192dpi.png");
             var sandboxTexture = _resourceCache.GetTexture("/Textures/Interface/sandbox.svg.192dpi.png");
 
-            _topButtonsContainer = new HBoxContainer
+            _topButtonsContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 8
             };
 
@@ -307,8 +309,9 @@ namespace Content.Client.HUD
                 InputCmdHandler.FromDelegate(s => ButtonInfoOnOnToggled()));
 
 
-            _combatPanelContainer = new VBoxContainer
+            _combatPanelContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = Control.HAlignment.Left,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 Children =
@@ -324,8 +327,9 @@ namespace Content.Client.HUD
 
             _targetingDoll.OnZoneChanged += args => OnTargetingZoneChanged?.Invoke(args);
 
-            var centerBottomContainer = new VBoxContainer
+            var centerBottomContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 SeparationOverride = 5,
                 HorizontalAlignment = Control.HAlignment.Center
             };
@@ -340,24 +344,28 @@ namespace Content.Client.HUD
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
-            BottomRightInventoryQuickButtonContainer = new HBoxContainer()
+            BottomRightInventoryQuickButtonContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Right
             };
-            BottomLeftInventoryQuickButtonContainer = new HBoxContainer()
+            BottomLeftInventoryQuickButtonContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Left
             };
-            TopInventoryQuickButtonContainer = new HBoxContainer()
+            TopInventoryQuickButtonContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Visible = false,
                 VerticalAlignment = Control.VAlignment.Bottom,
                 HorizontalAlignment = Control.HAlignment.Center
             };
-            var bottomRow = new HBoxContainer()
+            var bottomRow = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = Control.HAlignment.Center
 
             };
@@ -376,8 +384,9 @@ namespace Content.Client.HUD
                 HorizontalAlignment = Control.HAlignment.Center
             };
 
-            var rightBottomContainer = new HBoxContainer
+            var rightBottomContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 5
             };
             LC.SetAnchorAndMarginPreset(rightBottomContainer, LC.LayoutPreset.BottomRight);
@@ -396,8 +405,9 @@ namespace Content.Client.HUD
             LC.SetGrowHorizontal(SuspicionContainer, LC.GrowDirection.End);
             LC.SetGrowVertical(SuspicionContainer, LC.GrowDirection.Begin);
 
-            _topNotificationContainer = new VBoxContainer
+            _topNotificationContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 MinSize = (600, 0)
             };
             RootControl.AddChild(_topNotificationContainer);
@@ -405,7 +415,10 @@ namespace Content.Client.HUD
             LC.SetGrowHorizontal(_topNotificationContainer, LC.GrowDirection.Both);
             LC.SetGrowVertical(_topNotificationContainer, LC.GrowDirection.End);
 
-            VoteContainer = new VBoxContainer();
+            VoteContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             RootControl.AddChild(VoteContainer);
             LC.SetAnchorPreset(VoteContainer, LC.LayoutPreset.TopLeft);
             LC.SetMarginLeft(VoteContainer, 180);
@@ -564,8 +577,9 @@ namespace Content.Client.HUD
                 TooltipDelay = CustomTooltipDelay;
 
                 AddChild(
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (_textureRect = new TextureRect

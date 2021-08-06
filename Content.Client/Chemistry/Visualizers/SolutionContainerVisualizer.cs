@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;

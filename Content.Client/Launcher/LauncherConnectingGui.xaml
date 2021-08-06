@@ -6,48 +6,48 @@
     <parallax:ParallaxControl />
     <Control HorizontalAlignment="Center" VerticalAlignment="Center">
         <PanelContainer StyleClasses="AngleRect" />
-        <VBoxContainer MinSize="300 200">
-            <HBoxContainer>
+        <BoxContainer Orientation="Vertical" MinSize="300 200">
+            <BoxContainer Orientation="Horizontal">
                 <Label Margin="8 0 0 0" Text="{Loc 'connecting-title'}"
                        StyleClasses="LabelHeading" VAlign="Center" />
                 <Button Name="ExitButton" Text="{Loc 'connecting-exit'}"
                         HorizontalAlignment="Right" HorizontalExpand="True" />
-            </HBoxContainer>
+            </BoxContainer>
             <ui:HighDivider />
-            <VBoxContainer VerticalExpand="True" Margin="4 4 4 0">
+            <BoxContainer Orientation="Vertical" VerticalExpand="True" Margin="4 4 4 0">
                 <Control VerticalExpand="True" Margin="0 0 0 8">
-                    <VBoxContainer Name="ConnectingStatus">
+                    <BoxContainer Orientation="Vertical" Name="ConnectingStatus">
                         <Label Text="{Loc 'connecting-in-progress'}" Align="Center" />
                         <!-- Who the fuck named these cont- oh wait I did -->
                         <Label Name="ConnectStatus" StyleClasses="LabelSubText" Align="Center" />
-                    </VBoxContainer>
-                    <VBoxContainer Name="ConnectFail" Visible="False">
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" Name="ConnectFail" Visible="False">
                         <Label Name="ConnectFailReason" Align="Center" />
                         <Button Name="RetryButton" Text="{Loc 'connecting-retry'}"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
-                    </VBoxContainer>
-                    <VBoxContainer Name="Disconnected">
+                    </BoxContainer>
+                    <BoxContainer Orientation="Vertical" Name="Disconnected">
                         <Label Text="{Loc 'connecting-disconnected'}" Align="Center" />
                         <Label Name="DisconnectReason" Align="Center" />
                         <Button Name="ReconnectButton" Text="{Loc 'connecting-reconnect'}"
                                 HorizontalAlignment="Center"
                                 VerticalExpand="True" VerticalAlignment="Bottom" />
-                    </VBoxContainer>
+                    </BoxContainer>
                 </Control>
                 <Label Name="ConnectingAddress" StyleClasses="LabelSubText" HorizontalAlignment="Center" />
-            </VBoxContainer>
+            </BoxContainer>
             <PanelContainer>
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#444" ContentMarginTopOverride="2" />
                 </PanelContainer.PanelOverride>
             </PanelContainer>
 
-            <HBoxContainer Margin="12 0 4 0" VerticalAlignment="Bottom">
+            <BoxContainer Orientation="Horizontal" Margin="12 0 4 0" VerticalAlignment="Bottom">
                 <Label Text="{Loc 'connecting-tip'}" StyleClasses="LabelSubText" />
                 <Label Text="{Loc 'connecting-version'}" StyleClasses="LabelSubText"
                        HorizontalAlignment="Right" HorizontalExpand="True" />
-            </HBoxContainer>
-        </VBoxContainer>
+            </BoxContainer>
+        </BoxContainer>
     </Control>
 </Control>

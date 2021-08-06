@@ -2,6 +2,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
@@ -15,21 +16,24 @@ namespace Content.Client.Cloning.UI
 
             Title = Loc.GetString("accept-cloning-window-title");
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (new Label()
                             {
                                 Text = Loc.GetString("accept-cloning-window-prompt-text-part")
                             }),
-                            new HBoxContainer
+                            new BoxContainer
                             {
-                                Align  = BoxContainer.AlignMode.Center,
+                                Orientation = LayoutOrientation.Horizontal,
+                                Align = AlignMode.Center,
                                 Children =
                                 {
                                     (AcceptButton = new Button

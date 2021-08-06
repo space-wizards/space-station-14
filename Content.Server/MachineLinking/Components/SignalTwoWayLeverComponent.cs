@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
 using Content.Shared.Notification;

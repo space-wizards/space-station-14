@@ -23,7 +23,6 @@
       radius: 3
       energy: 2.5
       color: "#FFC458"
-    - type: LoopingSound
     - type: Appearance
       visuals:
         - type: LanternVisualizer
@@ -39,4 +38,3 @@
       radius: 5
       energy: 10
       color: "#FFC458"
-    - type: LoopingSound

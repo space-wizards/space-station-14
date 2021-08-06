@@ -37,8 +37,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
          */
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        private PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
 
         /// <summary>
         /// Queued region updates
@@ -80,7 +79,6 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
         public override void Initialize()
         {
-            _pathfindingSystem = Get<PathfindingSystem>();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
 #if DEBUG

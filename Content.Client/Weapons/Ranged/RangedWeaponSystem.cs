@@ -24,20 +24,11 @@ namespace Content.Client.Weapons.Ranged
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly InputSystem _inputSystem = default!;
+        [Dependency] private readonly CombatModeSystem _combatModeSystem = default!;
 
-        private InputSystem _inputSystem = default!;
-        private CombatModeSystem _combatModeSystem = default!;
         private bool _blocked;
         private int _shotCounter;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            IoCManager.InjectDependencies(this);
-            _inputSystem = Get<InputSystem>();
-            _combatModeSystem = Get<CombatModeSystem>();
-        }
 
         public override void Update(float frameTime)
         {

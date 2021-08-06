@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
+using Content.Client.UserInterface;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Client.Graphics;
@@ -12,6 +13,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Chemistry.Dispenser.SharedReagentDispenserComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -23,7 +25,7 @@ namespace Content.Client.Chemistry.UI
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>Contains info about the reagent container such as it's contents, if one is loaded into the dispenser.</summary>
-        private readonly VBoxContainer ContainerInfo;
+        private readonly BoxContainer ContainerInfo;
 
         /// <summary>Sets the dispense amount to 1 when pressed.</summary>
         public Button DispenseButton1 { get; }
@@ -72,13 +74,15 @@ namespace Content.Client.Chemistry.UI
 
             var dispenseAmountGroup = new ButtonGroup();
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     //First, our dispense amount buttons
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-amount-to-dispense-label")},
@@ -104,8 +108,9 @@ namespace Content.Client.Chemistry.UI
                     }),
                     //Padding
                     new Control {MinSize = (0.0f, 10.0f)},
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = Loc.GetString("reagent-dispenser-window-container-label") + " "},
@@ -126,8 +131,9 @@ namespace Content.Client.Chemistry.UI
                         Children =
                         {
                             //Currently empty, when server sends state data this will have container contents and fill volume.
-                            (ContainerInfo = new VBoxContainer
+                            (ContainerInfo = new BoxContainer
                             {
+                                Orientation = LayoutOrientation.Vertical,
                                 HorizontalExpand = true,
                                 Children =
                                 {
@@ -169,29 +175,6 @@ namespace Content.Client.Chemistry.UI
         }
 
         /// <summary>
-        /// This searches recursively through all the children of "parent"
-        /// and sets the Disabled value of any buttons found to "val"
-        /// </summary>
-        /// <param name="parent">The control which childrens get searched</param>
-        /// <param name="val">The value to which disabled gets set</param>
-        private void SetButtonDisabledRecursive(Control parent, bool val)
-        {
-            foreach (var child in parent.Children)
-            {
-                if (child is Button but)
-                {
-                    but.Disabled = val;
-                    continue;
-                }
-
-                if (child.Children != null)
-                {
-                    SetButtonDisabledRecursive(child, val);
-                }
-            }
-        }
-
-        /// <summary>
         /// Update the UI state when new state data is received from the server.
         /// </summary>
         /// <param name="state">State data sent by the server.</param>
@@ -204,7 +187,7 @@ namespace Content.Client.Chemistry.UI
             // Disable all buttons if not powered
             if (Contents.Children != null)
             {
-                SetButtonDisabledRecursive(Contents, !castState.HasPower);
+                ButtonHelpers.SetButtonDisabledRecursive(Contents, !castState.HasPower);
                 EjectButton.Disabled = false;
             }
 
@@ -263,8 +246,9 @@ namespace Content.Client.Chemistry.UI
                 return;
             }
 
-            ContainerInfo.Children.Add(new HBoxContainer // Name of the container and its fill status (Ex: 44/100u)
+            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     new Label {Text = $"{state.ContainerName}: "},
@@ -293,8 +277,9 @@ namespace Content.Client.Chemistry.UI
                 //Check if the reagent is being moused over. If so, color it green.
                 if (proto != null && proto.ID == highlightedReagentId)
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label
@@ -312,8 +297,9 @@ namespace Content.Client.Chemistry.UI
                 }
                 else //Otherwise, color it the normal colors.
                 {
-                    ContainerInfo.Children.Add(new HBoxContainer
+                    ContainerInfo.Children.Add(new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label {Text = $"{name}: "},
