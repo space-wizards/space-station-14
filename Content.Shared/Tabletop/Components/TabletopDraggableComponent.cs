@@ -1,4 +1,6 @@
 ﻿using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Tabletop.Components
 {
@@ -11,5 +13,9 @@ namespace Content.Shared.Tabletop.Components
     public class TabletopDraggableComponent : Component
     {
         public override string Name => "TabletopDraggable";
+
+        // The player dragging the piece
+        [ViewVariables]
+        public NetUserId? DraggingPlayer;
     }
 }

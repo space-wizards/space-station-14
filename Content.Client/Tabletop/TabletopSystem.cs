@@ -47,19 +47,30 @@ namespace Content.Client.Tabletop
 
         public override void Update(float frameTime)
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            // If there is no player entity, return
+            if (_playerManager.LocalPlayer?.ControlledEntity is not { } playerEntity) return;
 
-            // If the player leaves the range of the tabletop game, close the window
-            if (player != null && _table != null && !player.InRangeUnobstructed(_table))
+            // If the player leaves the range of the tabletop game, close the window and unset dragged entity
+            if (_table != null && !playerEntity.InRangeUnobstructed(_table))
             {
                 _window?.Close();
+                return;
             }
 
-            // If no entity is being dragged or no viewport is clicked, just return
+            // If no entity is being dragged or no viewport is clicked, return
             if (_draggedEntity == null || _viewport == null) return;
 
-            if (!_draggedEntity.HasComponent<TabletopDraggableComponent>())
+            // Make sure the dragged entity has a draggable component
+            if (!_draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
             {
+                return;
+            }
+
+            // If the dragged entity has another dragging player, drop the item
+            // This should happen if the local player is dragging an item, and another player grabs it out of their hand
+            if (draggableComponent.DraggingPlayer != _playerManager.LocalPlayer?.Session.UserId)
+            {
+                StopDragging();
                 return;
             }
 
@@ -104,20 +115,23 @@ namespace Content.Client.Tabletop
                 throw new Exception("Camera does not have EyeComponent.");
             }
 
+            // Close the currently opened window, if it exists
+            _window?.Close();
+
             // Create a window to contain the viewport
             _window = new TabletopWindow(eyeComponent.Eye, (msg.Size.X, msg.Size.Y))
             {
                 MinWidth = 500,
-                MinHeight = 400 + 26,
+                MinHeight = 436,
                 Title = msg.Title
             };
 
             _window.OnClose += OnWindowClose;
-
         }
 
         private void OnWindowClose()
         {
+            StopDragging();
             _window = null;
         }
 
@@ -134,33 +148,64 @@ namespace Content.Client.Tabletop
         private bool OnMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             // Set the entity being dragged and the viewport under the mouse
-            if (!EntityManager.TryGetEntity(args.EntityUid, out _draggedEntity))
+            if (!EntityManager.TryGetEntity(args.EntityUid, out var draggedEntity))
             {
                 return false;
             }
 
-            if (!_draggedEntity.HasComponent<TabletopDraggableComponent>())
+            // Try to get the viewport under the cursor, then start dragging the entity
+            if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is { } viewport)
             {
-                return false;
+                StartDragging(draggedEntity, viewport);
             }
-
-            _viewport = _uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport;
 
             return true;
         }
 
         private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            // Unset the dragged entity and viewport
-            _draggedEntity = null;
-            _viewport = null;
-
+            StopDragging();
             return true;
         }
 
         #endregion
 
         #region Utility
+
+        /**
+         * <summary>Start dragging an entity in a specific viewport.</summary>
+         * <param name="draggedEntity">The entity that we start dragging.</param>
+         * <param name="viewport">The viewport in which we are dragging.</param>
+         */
+        private void StartDragging(IEntity draggedEntity, ScalingViewport viewport)
+        {
+            // Set the dragging player to the local player
+            if (draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            {
+                if (_playerManager.LocalPlayer is not { } localPlayer) return;
+
+                draggableComponent.DraggingPlayer = localPlayer.UserId;
+                draggableComponent.Dirty();
+            }
+
+            _draggedEntity = draggedEntity;
+            _viewport = viewport;
+        }
+
+        /**
+         * <summary>Stop dragging the entity.</summary>
+         */
+        private void StopDragging()
+        {
+            // Set the dragging player on the component to noone
+            if (_draggedEntity != null && _draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            {
+                draggableComponent.DraggingPlayer = null;
+            }
+
+            _draggedEntity = null;
+            _viewport = null;
+        }
 
         /**
          * <summary>Clamps coordinates within a viewport. ONLY WORKS FOR 90 DEGREE ROTATIONS!</summary>
