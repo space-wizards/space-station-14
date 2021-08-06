@@ -163,15 +163,16 @@ namespace Content.Client.Tabletop
             if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is { } viewport)
             {
                 StartDragging(draggedEntity, viewport);
+                return true;
             }
 
-            return true;
+            return false;
         }
 
         private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             StopDragging();
-            return true;
+            return false;
         }
 
         #endregion
