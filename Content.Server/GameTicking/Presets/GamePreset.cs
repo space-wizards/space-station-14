@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Content.Shared.Ghost;
 using Content.Shared.MobState;
 using Content.Shared.Preferences;
 using Robust.Server.Player;
@@ -75,7 +76,7 @@ namespace Content.Server.GameTicking.Presets
             ghost.Name = mind.CharacterName ?? string.Empty;
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();
-            ghostComponent.CanReturnToBody = canReturn;
+            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
                 mind.Visit(ghost);

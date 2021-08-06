@@ -16,8 +16,9 @@ namespace Content.Shared.Ghost
         public override string Name => "Ghost";
 
         /// <summary>
-        ///     Changed by <see cref="GhostChangeCanReturnToBodyEvent"/>
+        ///     Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
         /// </summary>
+        // TODO MIRROR change this to use friend classes when thats merged
         [DataField("canReturnToBody")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReturnToBody { get; set; }
