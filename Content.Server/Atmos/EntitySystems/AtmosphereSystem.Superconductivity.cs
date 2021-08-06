@@ -21,9 +21,6 @@ namespace Content.Server.Atmos.EntitySystems
                 if (adjacent == null || adjacent.ThermalConductivity == 0f)
                     continue;
 
-                if(adjacent.ArchivedCycle < gridAtmosphere.UpdateCounter)
-                    Archive(adjacent, gridAtmosphere.UpdateCounter);
-
                 NeighborConductWithSource(gridAtmosphere, adjacent, tile);
 
                 ConsiderSuperconductivity(gridAtmosphere, adjacent);
@@ -37,8 +34,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if(tile.Air == null)
             {
-                if(tile.ArchivedCycle < gridAtmosphere.UpdateCounter)
-                    Archive(tile, gridAtmosphere.UpdateCounter);
                 return AtmosDirection.All;
             }
 
@@ -128,7 +123,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void TemperatureShareMutualSolid(TileAtmosphere tile, TileAtmosphere other, float conductionCoefficient)
         {
-            var deltaTemperature = (tile.TemperatureArchived - other.TemperatureArchived);
+            var deltaTemperature = (tile.Temperature - other.Temperature);
             if (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider
                 && tile.HeatCapacity != 0f && other.HeatCapacity != 0f)
             {
@@ -146,7 +141,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (tile.Temperature > Atmospherics.T0C)
             {
                 // Hardcoded space temperature.
-                var deltaTemperature = (tile.TemperatureArchived - Atmospherics.TCMB);
+                var deltaTemperature = (tile.Temperature - Atmospherics.TCMB);
                 if ((tile.HeatCapacity > 0) && (MathF.Abs(deltaTemperature) > Atmospherics.MinimumTemperatureDeltaToConsider))
                 {
                     var heat = tile.ThermalConductivity * deltaTemperature * (tile.HeatCapacity *

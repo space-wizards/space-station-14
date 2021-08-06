@@ -16,7 +16,6 @@
         !type:PhysShapeAabb
           bounds: "-0.45, -0.15, 0.45, 0.35"
       layer: [ Passable ]
-  - type: LoopingSound
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     layers:

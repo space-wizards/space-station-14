@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Piping.Unary.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
@@ -16,6 +17,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
     [UsedImplicitly]
     public class GasVentScrubberSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -34,28 +37,24 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
-
-            if (!scrubber.Enabled)
+            if (!scrubber.Enabled
+            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
+            {
+                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
                 return;
+            }
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
+            var environment = _atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
 
-            if (!nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
-                return;
-
-            var atmosphereSystem = Get<AtmosphereSystem>();
-            var environment = atmosphereSystem.GetTileMixture(scrubber.Owner.Transform.Coordinates, true);
-
-            Scrub(atmosphereSystem, scrubber, appearance, environment, outlet);
+            Scrub(_atmosphereSystem, scrubber, appearance, environment, outlet);
 
             if (!scrubber.WideNet) return;
 
             // Scrub adjacent tiles too.
-            foreach (var adjacent in atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
+            foreach (var adjacent in _atmosphereSystem.GetAdjacentTileMixtures(scrubber.Owner.Transform.Coordinates, false, true))
             {
-                Scrub(atmosphereSystem, scrubber, null, adjacent, outlet);
+                Scrub(_atmosphereSystem, scrubber, null, adjacent, outlet);
             }
         }
 
@@ -70,12 +69,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void Scrub(AtmosphereSystem atmosphereSystem, GasVentScrubberComponent scrubber, AppearanceComponent? appearance, GasMixture? tile, PipeNode outlet)
         {
             // Cannot scrub if tile is null or air-blocked.
-            if (tile == null)
+            if (tile == null
+                || outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere) // Cannot scrub if pressure too high.
+            {
+                appearance?.SetData(ScrubberVisuals.State, ScrubberState.Off);
                 return;
-
-            // Cannot scrub if pressure too high.
-            if (outlet.Air.Pressure >= 50 * Atmospherics.OneAtmosphere)
-                return;
+            }
 
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {

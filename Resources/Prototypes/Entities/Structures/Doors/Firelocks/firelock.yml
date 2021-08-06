@@ -54,13 +54,16 @@
       startOpen: true
       bumpOpen: false
       inhibitCrush: false
+      openSound:
+        path: /Audio/Machines/airlock_open.ogg
+      closeSound:
+        path: /Audio/Machines/airlock_close.ogg
+      denySound:
+        path: /Audio/Machines/airlock_deny.ogg
     - type: Firelock
     - type: Appearance
       visuals:
         - type: AirlockVisualizer
-          open_sound: /Audio/Machines/airlock_open.ogg
-          close_sound: /Audio/Machines/airlock_close.ogg
-          deny_sound: /Audio/Machines/airlock_deny.ogg
           animation_time: 0.6
         - type: WiresVisualizer
     - type: Wires

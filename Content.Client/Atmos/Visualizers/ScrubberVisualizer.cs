@@ -44,7 +44,7 @@ namespace Content.Client.Atmos.Visualizers
         }
     }
 
-    public enum ScrubberVisualLayers
+    public enum ScrubberVisualLayers : byte
     {
         Scrubber,
     }

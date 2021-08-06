@@ -12,6 +12,7 @@
     sprite: Objects/Tools/bucket.rsi
     state: icon
   - type: Clothing
+    size: 100
     sprite: Objects/Tools/bucket.rsi
     Slots:
     - Helmet

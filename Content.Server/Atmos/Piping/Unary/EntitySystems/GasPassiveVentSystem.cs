@@ -7,12 +7,15 @@ using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasPassiveVentSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -22,8 +25,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPassiveVentUpdated(EntityUid uid, GasPassiveVentComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var atmosphereSystem = Get<AtmosphereSystem>();
-            var environment = atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
+            var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
 
             if (environment == null)
                 return;
@@ -44,7 +46,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     var airTemperature = environment.Temperature > 0 ? environment.Temperature : inlet.Air.Temperature;
                     var transferMoles = pressureDelta * environment.Volume / (airTemperature * Atmospherics.R);
                     var removed = inlet.Air.Remove(transferMoles);
-                    atmosphereSystem.Merge(environment, removed);
+                    _atmosphereSystem.Merge(environment, removed);
                 }
                 else
                 {

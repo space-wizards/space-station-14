@@ -1,5 +1,4 @@
-#nullable disable warnings
-#nullable enable annotations
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
 using Robust.Shared.Map;
@@ -10,20 +9,15 @@ namespace Content.Server.Atmos
 {
     /// <summary>
     ///     Internal Atmos class that stores data about the atmosphere in a grid.
+    ///     You shouldn't use this directly, use <see cref="AtmosphereSystem"/> instead.
     /// </summary>
     public class TileAtmosphere : IGasMixtureHolder
     {
-        [ViewVariables]
-        public int ArchivedCycle;
-
         [ViewVariables]
         public int CurrentCycle;
 
         [ViewVariables]
         public float Temperature { get; set; } = Atmospherics.T20C;
-
-        [ViewVariables]
-        public float TemperatureArchived { get; set; } = Atmospherics.T20C;
 
         [ViewVariables]
         public TileAtmosphere? PressureSpecificTarget { get; set; }
@@ -76,6 +70,12 @@ namespace Content.Server.Atmos
         /// </summary>
         [ViewVariables]
         public GasMixture? Air { get; set; }
+
+        GasMixture IGasMixtureHolder.Air
+        {
+            get => Air ?? new GasMixture(Atmospherics.CellVolume){ Temperature = Temperature };
+            set => Air = value;
+        }
 
         [ViewVariables]
         public float MaxFireTemperatureSustained { get; set; }

@@ -4,9 +4,6 @@
   desc: A sweet, carbonated soft drink. Caffeine free.
   physicalDesc: fizzy
   color: "#422912"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 0.1
@@ -21,12 +18,6 @@
   desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.
   physicalDesc: fizzy
   color: "#deb928"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
-    - !type:HealthChangeMetabolism 
-      healthChange: 2
-      damageClass: Toxin
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 0.1

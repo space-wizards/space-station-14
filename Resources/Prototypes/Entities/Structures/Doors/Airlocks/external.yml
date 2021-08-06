@@ -6,12 +6,15 @@
   components:
   - type: Door
     bumpOpen: false
+    openSound:
+      path: /Audio/Machines/airlock_ext_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_ext_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/external.rsi
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-      open_sound: /Audio/Machines/airlock_ext_open.ogg
-      close_sound: /Audio/Machines/airlock_ext_close.ogg
-      deny_sound: /Audio/Machines/airlock_deny.ogg
     - type: WiresVisualizer

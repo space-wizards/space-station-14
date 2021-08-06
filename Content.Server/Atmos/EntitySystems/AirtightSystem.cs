@@ -12,6 +12,7 @@ namespace Content.Server.Atmos.EntitySystems
     public class AirtightSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -42,7 +43,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (airtight.FixVacuum)
             {
-                Get<AtmosphereSystem>().FixVacuum(airtight.LastPosition.Item1, airtight.LastPosition.Item2);
+                _atmosphereSystem.FixVacuum(airtight.LastPosition.Item1, airtight.LastPosition.Item2);
             }
         }
 
@@ -93,9 +94,8 @@ namespace Content.Server.Atmos.EntitySystems
             if (!gridId.IsValid())
                 return;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-            atmosphereSystem.UpdateAdjacent(gridId, pos);
-            atmosphereSystem.InvalidateTile(gridId, pos);
+            _atmosphereSystem.UpdateAdjacent(gridId, pos);
+            _atmosphereSystem.InvalidateTile(gridId, pos);
         }
 
         private AtmosDirection Rotate(AtmosDirection myDirection, Angle myAngle)

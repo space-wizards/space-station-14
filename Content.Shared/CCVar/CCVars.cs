@@ -56,6 +56,18 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether a random position offset will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationOffset =
+            CVarDef.Create<bool>("game.station_offset", false);
+
+        /// <summary>
+        /// When the default blueprint is loaded what is the maximum amount it can be offset from 0,0.
+        /// </summary>
+        public static readonly CVarDef<float> MaxStationOffset =
+            CVarDef.Create("game.maxstationoffset", 1000.0f);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool>
@@ -291,7 +303,6 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<bool> AtmosGridImpulse =
             CVarDef.Create("atmos.grid_impulse", false, CVar.SERVERONLY);
 
-
         /// <summary>
         ///     Whether atmos superconduction is enabled.
         /// </summary>
@@ -300,9 +311,16 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether excited groups will be processed and created.
+        /// </summary>
+        public static readonly CVarDef<bool> ExcitedGroups =
+            CVarDef.Create("atmos.excited_groups", true, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether all tiles in an excited group will clear themselves once being exposed to space.
         ///     Similar to <see cref="MonstermosDepressurization"/>, without none of the tile ripping or
         ///     things being thrown around very violently.
+        ///     Needs <see cref="ExcitedGroups"/> to be enabled to work.
         /// </summary>
         public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
             CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
