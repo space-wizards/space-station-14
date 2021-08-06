@@ -3,6 +3,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
+using static Content.Shared.Tabletop.SharedTabletopSystem;
 
 namespace Content.Server.Tabletop.Components
 {

@@ -12,14 +12,5 @@ namespace Content.Client.Tabletop.Components
         // The player dragging the piece
         [ViewVariables]
         public NetUserId? DraggingPlayer;
-
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not TabletopDraggableComponentState state) return;
-
-            DraggingPlayer = state.DraggingPlayer;
-        }
     }
 }

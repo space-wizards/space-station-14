@@ -1,8 +1,5 @@
-﻿using System;
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Network;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Components
 {
@@ -15,16 +12,5 @@ namespace Content.Shared.Tabletop.Components
     public class SharedTabletopDraggableComponent : Component
     {
         public override string Name => "TabletopDraggable";
-
-        [Serializable, NetSerializable]
-        protected sealed class TabletopDraggableComponentState : ComponentState
-        {
-            public NetUserId? DraggingPlayer;
-
-            public TabletopDraggableComponentState(NetUserId? draggingPlayer)
-            {
-                DraggingPlayer = draggingPlayer;
-            }
-        }
     }
 }

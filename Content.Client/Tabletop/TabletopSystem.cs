@@ -1,9 +1,12 @@
 ﻿using System;
+using Content.Client.Hands;
 using Content.Client.MobState;
+using Content.Client.Stunnable;
 using Content.Client.Tabletop.Components;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -12,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -22,7 +26,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
-    public class TabletopSystem : EntitySystem
+    public class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiManger = default!;
@@ -44,6 +48,7 @@ namespace Content.Client.Tabletop
                         .Register<TabletopSystem>();
 
             SubscribeNetworkEvent<TabletopPlayEvent>(OnTabletopPlay);
+            SubscribeLocalEvent<TabletopDraggableComponent, ComponentHandleState>(HandleComponentState);
         }
 
         public override void Update(float frameTime)
@@ -51,16 +56,19 @@ namespace Content.Client.Tabletop
             // If there is no player entity, return
             if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return;
 
-            // If player is not a mob then return
-            if (!playerEntity.TryGetComponent<MobStateComponent>(out var mobStateComponent))
+            // Stunned or no hands => drop piece
+            var stunned = playerEntity.TryGetComponent<StunnableComponent>(out var stun) &&
+                          stun.Stunned;
+            var hasHand = playerEntity.TryGetComponent<HandsComponent>(out var handsComponent) &&
+                          handsComponent.Hands.Count > 0;
+            if (stunned || !hasHand)
             {
-                _window?.Close();
-                return;
+                StopDragging();
             }
 
-            // If the player leaves the range of the tabletop game or is not alive, close the window and unset dragged entity
-            if (_table != null && !playerEntity.InRangeUnobstructed(_table) || !mobStateComponent.IsAlive())
+            if (!CanSeeTable(playerEntity, _table))
             {
+                StopDragging();
                 _window?.Close();
                 return;
             }
@@ -69,10 +77,7 @@ namespace Content.Client.Tabletop
             if (_draggedEntity == null || _viewport == null) return;
 
             // Make sure the dragged entity has a draggable component
-            if (!_draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
-            {
-                return;
-            }
+            if (!_draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent)) return;
 
             // If the dragged entity has another dragging player, drop the item
             // This should happen if the local player is dragging an item, and another player grabs it out of their hand
@@ -138,6 +143,13 @@ namespace Content.Client.Tabletop
             _window.OnClose += OnWindowClose;
         }
 
+        private void HandleComponentState(EntityUid uid, TabletopDraggableComponent component, ComponentHandleState args)
+        {
+            if (args.Current is not TabletopDraggableComponentState state) return;
+
+            component.DraggingPlayer = state.DraggingPlayer;
+        }
+
         private void OnWindowClose()
         {
             StopDragging();
@@ -186,6 +198,21 @@ namespace Content.Client.Tabletop
         #endregion
 
         #region Utility
+
+        /**
+         * <summary>Whether the table exists, is in range and the player is alive.</summary>
+         * <param name="playerEntity">The player entity to check.</param>
+         * <param name="table">The table entity to check.</param>
+         */
+        private static bool CanSeeTable(IEntity playerEntity, IEntity? table)
+        {
+            if (table == null) return false;
+
+            var alive = playerEntity.TryGetComponent<MobStateComponent>(out var mob) && mob.IsAlive();
+            var inRange = playerEntity.InRangeUnobstructed(table);
+
+            return alive && inRange;
+        }
 
         /**
          * <summary>Start dragging an entity in a specific viewport.</summary>

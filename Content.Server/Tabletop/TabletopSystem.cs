@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Tabletop.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -15,7 +15,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public partial class TabletopSystem : EntitySystem
+    public partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
