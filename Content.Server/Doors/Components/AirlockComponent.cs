@@ -59,6 +59,12 @@ namespace Content.Server.Doors.Components
         [DataField("powerWiresTimeout")]
         public float PowerWiresTimeout = 5.0f;
 
+        /// <summary>
+        /// Whether the maintenance panel should be visible even if the airlock is opened.
+        /// </summary>
+        [DataField("openPanelVisible")]
+        public bool OpenPanelVisible = false;
+
         private CancellationTokenSource _powerWiresPulsedTimerCancel = new();
         private bool _powerWiresPulsed;
 
