@@ -3,8 +3,7 @@
     "size": {"x":32,"y":32},
     "states":
     [
-        {"name":"assembly2","directions":4,"delays":[[0.3,0.3],[0.3,0.3],[0.3,0.3],[0.3,0.3]]},
-        {"name":"assembly1","directions":4},
+        {"name":"assembly","directions":4,"delays":[[0.3,0.3],[0.3,0.3],[0.3,0.3],[0.3,0.3]]},
         {"name":"closed","directions":4},
         {"name":"closed_unlit","directions":4},
         {"name":"closing","directions":4,"delays":[[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1],[0.1,0.1,0.1,0.1,0.1,0.1,0.1]]},
