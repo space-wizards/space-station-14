@@ -1695,3 +1695,14 @@ Entries:
   - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
   id: 302
   time: '2021-08-06T16:13:07.405459+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix pointing at an item in your inventory resulting in the pointing
+      arrow playing a weird animation., type: Fix}
+  id: 303
+  time: '2021-08-06T16:28:43.947928+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where you couldn't point at space., type: Fix}
+  id: 304
+  time: '2021-08-06T16:28:43.948705+00:00'
