@@ -10,6 +10,7 @@
   name: secure windoor
   description: It's a sturdy window and a sliding door. Wow!
 
+# TODO remove these with parameterized prototypes/whatever we end up doing
 # Bar windoor
 - type: entity
   parent: Windoor

@@ -64,7 +64,7 @@
     - type: Appearance
       visuals:
         - type: AirlockVisualizer
-          animation_time: 0.6
+          animationTime: 0.6
         - type: WiresVisualizer
     - type: Wires
       BoardName: "Firelock Control"

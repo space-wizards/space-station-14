@@ -22,20 +22,20 @@
   - type: Sprite
     netsync: false
     drawdepth: FloorObjects
-    sprite: Structures/Doors/Windoors/glass.rsi
+    sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
-      map: [ "enum.DoorVisualLayers.Base" ]
+      map: ["enum.DoorVisualLayers.Base"]
     - state: closed_unlit
       shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+      map: ["enum.DoorVisualLayers.BaseUnlit"]
     - state: welded
-      map: [ "enum.DoorVisualLayers.BaseWelded" ]
+      map: ["enum.DoorVisualLayers.BaseWelded"]
     - state: bolted_unlit
       shader: unshaded
-      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+      map: ["enum.DoorVisualLayers.BaseBolted"]
     - state: panel_open
-      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
   - type: Damageable
     resistances: glassResistances
@@ -54,10 +54,14 @@
         acts: [ "Destruction" ]
   - type: AccessReader
   - type: Airlock
+    openPanelVisible: true
   - type: Door
-    openSound: /Audio/Machines/windoor_open.ogg
-    closeSound: /Audio/Machines/windoor_open.ogg
-    denySound: /Audio/Machines/airlock_deny.ogg
+    openSound:
+      path: /Audio/Machines/windoor_open.ogg
+    closeSound:
+      path: /Audio/Machines/windoor_open.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
   - type: Wires
     BoardName: "Windoor Control"
     LayoutId: Airlock
@@ -68,9 +72,11 @@
   - type: Appearance
     visuals:
       - type: AirlockVisualizer
-        hasMaintenancePanel: false
-        openCloseUnlit: false
-        delay: 0.7
+        animationTime: 0.9
+        denyAnimationTime: 0.4
+        animatedPanel: false
+        openUnlitVisible: true
+      - type: WiresVisualizer
 
 - type: entity
   id: BaseSecureWindoor
@@ -83,7 +89,24 @@
     airBlockedDirection:
     - South
   - type: Sprite
-    sprite: Structures/Doors/Windoors/secure.rsi
+    netsync: false
+    drawdepth: FloorObjects
+    sprite: Structures/Doors/Windoors/windoor.rsi
+    layers:
+    - state: secure_underlay
+    - state: closed
+      map: [ "enum.DoorVisualLayers.Base" ]
+    - state: closed_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseUnlit" ]
+    - state: welded
+      map: [ "enum.DoorVisualLayers.BaseWelded" ]
+    - state: bolted_unlit
+      shader: unshaded
+      map: [ "enum.DoorVisualLayers.BaseBolted" ]
+    - state: panel_open
+      map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
+      visible: false
   - type: Destructible
     thresholds:
     - trigger:
