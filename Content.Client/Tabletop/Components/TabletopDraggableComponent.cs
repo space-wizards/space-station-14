@@ -1,0 +1,25 @@
+﻿using Content.Shared.Tabletop.Components;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Network;
+using Robust.Shared.ViewVariables;
+
+namespace Content.Client.Tabletop.Components
+{
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedTabletopDraggableComponent))]
+    public class TabletopDraggableComponent : SharedTabletopDraggableComponent
+    {
+        // The player dragging the piece
+        [ViewVariables]
+        public NetUserId? DraggingPlayer;
+
+        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+        {
+            base.HandleComponentState(curState, nextState);
+
+            if (curState is not TabletopDraggableComponentState state) return;
+
+            DraggingPlayer = state.DraggingPlayer;
+        }
+    }
+}

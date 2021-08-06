@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Content.Server.Tabletop.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
@@ -84,6 +85,11 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetEntity(msg.MovedEntity, out var movedEntity))
             {
                 return;
+            }
+
+            if (msg.FirstDrag && movedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            {
+                draggableComponent.DraggingPlayer = msg.DraggingPlayer;
             }
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item

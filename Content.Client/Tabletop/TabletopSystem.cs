@@ -1,15 +1,14 @@
 ﻿using System;
+using Content.Client.Tabletop.Components;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
@@ -31,6 +30,7 @@ namespace Content.Client.Tabletop
         private const float Delay = 1f / 10; // 10 Hz
 
         private float _timePassed; // Time passed since last update sent to the server.
+        private bool _firstDrag; // Whether this is the first tick we are dragging this entity.
         private IEntity? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
         private SS14Window? _window; // Current open tabletop window (only allow one at a time)
@@ -48,7 +48,7 @@ namespace Content.Client.Tabletop
         public override void Update(float frameTime)
         {
             // If there is no player entity, return
-            if (_playerManager.LocalPlayer?.ControlledEntity is not { } playerEntity) return;
+            if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity } localPlayer) return;
 
             // If the player leaves the range of the tabletop game, close the window and unset dragged entity
             if (_table != null && !playerEntity.InRangeUnobstructed(_table))
@@ -68,7 +68,8 @@ namespace Content.Client.Tabletop
 
             // If the dragged entity has another dragging player, drop the item
             // This should happen if the local player is dragging an item, and another player grabs it out of their hand
-            if (draggableComponent.DraggingPlayer != _playerManager.LocalPlayer?.Session.UserId)
+            if (draggableComponent.DraggingPlayer != null &&
+                draggableComponent.DraggingPlayer != _playerManager.LocalPlayer?.Session.UserId)
             {
                 StopDragging();
                 return;
@@ -90,8 +91,9 @@ namespace Content.Client.Tabletop
             // Only send new position to server when Delay is reached
             if (_timePassed >= Delay)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords));
+                RaiseNetworkEvent(new TabletopMoveEvent(localPlayer.UserId, _draggedEntity.Uid, clampedCoords, _firstDrag));
                 _timePassed = 0f;
+                _firstDrag = false;
             }
         }
 
@@ -179,15 +181,7 @@ namespace Content.Client.Tabletop
          */
         private void StartDragging(IEntity draggedEntity, ScalingViewport viewport)
         {
-            // Set the dragging player to the local player
-            if (draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
-            {
-                if (_playerManager.LocalPlayer is not { } localPlayer) return;
-
-                draggableComponent.DraggingPlayer = localPlayer.UserId;
-                draggableComponent.Dirty();
-            }
-
+            _firstDrag = true;
             _draggedEntity = draggedEntity;
             _viewport = viewport;
         }
