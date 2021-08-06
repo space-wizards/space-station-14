@@ -1679,3 +1679,8 @@ Entries:
     type: Add}
   id: 299
   time: '2021-08-06T06:09:39.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
+  id: 300
+  time: '2021-08-06T07:02:36.0000000+00:00'
