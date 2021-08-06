@@ -116,11 +116,11 @@ namespace Content.Client.Storage
             for (var i = 0; msg.StoredEntities.Count > i; i++)
             {
                 var entityId = msg.StoredEntities[i];
-                var initialPosition = msg.EntityPositions[i].ToMap(Owner.EntityManager);
+                var initialPosition = msg.EntityPositions[i];
 
                 if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.WorldPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
                 }
             }
         }

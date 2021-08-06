@@ -62,7 +62,7 @@ namespace Content.Client.Hands
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
+            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.FinalPosition);
         }
 
         public HandsGuiState GetGuiState()

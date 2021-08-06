@@ -923,13 +923,13 @@ namespace Content.Shared.Hands.Components
     public class PickupAnimationMessage : EntityEventArgs
     {
         public EntityUid EntityUid { get; }
-        public MapCoordinates InitialPosition { get; }
-        public Vector2 PickupDirection { get; }
+        public EntityCoordinates InitialPosition { get; }
+        public Vector2 FinalPosition { get; }
 
-        public PickupAnimationMessage(EntityUid entityUid, Vector2 pickupDirection, MapCoordinates initialPosition)
+        public PickupAnimationMessage(EntityUid entityUid, Vector2 finalPosition, EntityCoordinates initialPosition)
         {
             EntityUid = entityUid;
-            PickupDirection = pickupDirection;
+            FinalPosition = finalPosition;
             InitialPosition = initialPosition;
         }
     }
