@@ -30,7 +30,6 @@ namespace Content.Client.Tabletop
         private const float Delay = 1f / 10; // 10 Hz
 
         private float _timePassed; // Time passed since last update sent to the server.
-        private bool _firstDrag; // Whether this is the first tick we are dragging this entity.
         private IEntity? _draggedEntity; // Entity being dragged
         private ScalingViewport? _viewport; // Viewport currently being used
         private SS14Window? _window; // Current open tabletop window (only allow one at a time)
@@ -71,7 +70,7 @@ namespace Content.Client.Tabletop
             if (draggableComponent.DraggingPlayer != null &&
                 draggableComponent.DraggingPlayer != _playerManager.LocalPlayer?.Session.UserId)
             {
-                StopDragging();
+                StopDragging(false);
                 return;
             }
 
@@ -91,9 +90,8 @@ namespace Content.Client.Tabletop
             // Only send new position to server when Delay is reached
             if (_timePassed >= Delay)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(localPlayer.UserId, _draggedEntity.Uid, clampedCoords, _firstDrag));
+                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords));
                 _timePassed = 0f;
-                _firstDrag = false;
             }
         }
 
@@ -181,20 +179,22 @@ namespace Content.Client.Tabletop
          */
         private void StartDragging(IEntity draggedEntity, ScalingViewport viewport)
         {
-            _firstDrag = true;
+            RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity.Uid, _playerManager.LocalPlayer?.UserId));
+
             _draggedEntity = draggedEntity;
             _viewport = viewport;
         }
 
         /**
          * <summary>Stop dragging the entity.</summary>
+         * <param name="broadcast">Whether to tell other clients that we stopped dragging.</param>
          */
-        private void StopDragging()
+        private void StopDragging(bool broadcast = true)
         {
             // Set the dragging player on the component to noone
-            if (_draggedEntity != null && _draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            if (broadcast && _draggedEntity != null && _draggedEntity.HasComponent<TabletopDraggableComponent>())
             {
-                draggableComponent.DraggingPlayer = null;
+                RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(_draggedEntity.Uid, null));
             }
 
             _draggedEntity = null;

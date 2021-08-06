@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop
@@ -22,6 +23,7 @@ namespace Content.Server.Tabletop
         public override void Initialize()
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
+            SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChangedEvent);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
         }
 
@@ -87,17 +89,23 @@ namespace Content.Server.Tabletop
                 return;
             }
 
-            if (msg.FirstDrag && movedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
-            {
-                draggableComponent.DraggingPlayer = msg.DraggingPlayer;
-            }
-
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(movedEntity.Transform.MapID), msg.Coordinates.Position);
             movedEntity.Transform.Coordinates = entityCoordinates;
             movedEntity.Dirty();
+        }
+
+        private void OnDraggingPlayerChangedEvent(TabletopDraggingPlayerChangedEvent msg)
+        {
+            var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
+
+            if (draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            {
+                Logger.Error(msg.DraggingPlayer.ToString() ?? "null");
+                draggableComponent.DraggingPlayer = msg.DraggingPlayer;
+            }
         }
 
         // Remove all tabletop sessions and maps when the round restarts
