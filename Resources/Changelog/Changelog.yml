@@ -1673,3 +1673,9 @@ Entries:
   - {message: Added two new maintenance areas, type: Add}
   id: 298
   time: '2021-08-05T22:20:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Windoors and secure windoors have been added and are constructible.,
+    type: Add}
+  id: 299
+  time: '2021-08-06T06:09:39.0000000+00:00'
