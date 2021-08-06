@@ -1,8 +1,9 @@
 ﻿# Chessboard item (normal in game item you can hold in your hand)
 - type: entity
+  parent: BaseItem
   id: ChessBoard
   name: chessboard
-  parent: BaseItem
+  description: A chessboard. Pieces included!
   components:
   - type: Sprite
     sprite: Objects/Fun/Tabletop/chessboard.rsi
