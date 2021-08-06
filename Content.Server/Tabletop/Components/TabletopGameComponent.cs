@@ -1,7 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
-using Content.Shared.Tabletop.Events;
 using Content.Shared.Verbs;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
@@ -30,7 +28,7 @@ namespace Content.Server.Tabletop.Components
                 }
 
                 data.Text = Loc.GetString("tabletop-verb-play-game");
-                // TODO: add icon
+                data.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, TabletopGameComponent component)
