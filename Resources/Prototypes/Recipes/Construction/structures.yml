@@ -125,7 +125,7 @@
   canRotate: false
 
 - type: construction
-  name: Firelock
+  name: firelock
   id: Firelock
   graph: Firelock
   startNode: start
@@ -142,7 +142,7 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Catwalk
+  name: catwalk
   id: Catwalk
   graph: Catwalk
   startNode: start
@@ -164,7 +164,7 @@
   canBuildInImpassable: false
 
 - type: construction
-  name: Wooden Barricade
+  name: wooden barricade
   id: Barricade
   graph: barricade
   startNode: start
@@ -181,7 +181,7 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Airlock
+  name: airlock
   id: airlock
   graph: airlock
   startNode: start
@@ -196,3 +196,37 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: windoor
+  id: windoor
+  graph: windoor
+  startNode: start
+  targetNode: windoor
+  category: Structures
+  description: It opens, it closes, and you can see through it!
+  icon:
+    sprite: Structures/Doors/Windoors/windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked {}
+
+- type: construction
+  name: secure windoor
+  id: secureWindoor
+  graph: windoor
+  startNode: start
+  targetNode: windoorSecure
+  category: Structures
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  icon:
+    sprite: Structures/Doors/Windoors/windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked {}
