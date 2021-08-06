@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Fix pointing at an item in your inventory resulting in the pointing arrow playing a weird animation.
