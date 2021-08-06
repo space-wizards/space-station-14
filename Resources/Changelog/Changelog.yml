@@ -1690,3 +1690,8 @@ Entries:
       situations.', type: Fix}
   id: 301
   time: '2021-08-06T15:53:48.856573+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
+  id: 302
+  time: '2021-08-06T16:13:07.405459+00:00'
