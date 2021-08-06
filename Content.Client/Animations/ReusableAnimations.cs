@@ -11,7 +11,7 @@ namespace Content.Client.Animations
 {
     public static class ReusableAnimations
     {
-        public static void AnimateEntityPickup(IEntity entity, EntityCoordinates initialPosition, Vector2 finalPosition)
+        public static void AnimateEntityPickup(IEntity entity, MapCoordinates initialPosition, Vector2 finalPosition)
         {
             var animatableClone = entity.EntityManager.SpawnEntity("clientsideclone", initialPosition);
             animatableClone.Name = entity.Name;

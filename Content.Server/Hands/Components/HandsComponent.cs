@@ -86,15 +86,15 @@ namespace Content.Server.Hands.Components
 
         protected override void HandlePickupAnimation(IEntity entity)
         {
-            var pickupDirection = Owner.Transform.WorldPosition;
+            var pickupDirection = Owner.Transform.MapPosition.Position;
 
             var outermostEntity = entity;
             while (outermostEntity.TryGetContainer(out var container)) //TODO: Use WorldPosition instead of this loop
                 outermostEntity = container.Owner;
 
-            var initialPosition = outermostEntity.Transform.Coordinates;
+            var initialPosition = outermostEntity.Transform.MapPosition;
 
-            if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
+            if (pickupDirection == initialPosition.Position)
                 return;
 
             Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
