@@ -13,6 +13,7 @@ using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -144,7 +145,8 @@ namespace Content.Server.GameTicking
 
             var mob = SpawnObserverMob();
             mob.Name = name;
-            mob.GetComponent<GhostComponent>().CanReturnToBody = false;
+            var ghost = mob.GetComponent<GhostComponent>();
+            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             data.Mind.TransferTo(mob);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
