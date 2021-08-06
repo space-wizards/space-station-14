@@ -1,0 +1,23 @@
+﻿## Should probably add some kind of a DNA sampler thing later but for now this will do
+## Note that we should probably add specific specimen-creator components to items like this
+- type: Tag
+  id: XenobioTool
+
+- type: Tag
+  id: Embryo_creator
+
+- type: entity
+  name: Embryo jar
+  parent: BaseItem
+  id: Embryo_jar
+  description: A fetus swimming in a pool of amniotic fluid.
+  components:
+   - type: Tag
+     tags:
+     - XenobioTool
+     - Embryo_jar
+   - type: Sprite
+     sprite: Objects/Tools/embryo_jar.rsi
+     state: icon
+   - type: Item
+     sprite: Objects/Tools/embryo_jar.rsi

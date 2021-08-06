@@ -1,11 +1,13 @@
 using Content.Server.CombatMode;
 using Content.Server.Interaction;
+using Content.Server.Notification;
 using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Content.Shared.Xenobiology;
 using Robust.Server.GameObjects;
@@ -16,8 +18,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Numerics;
+using System.Threading.Tasks;
 using YamlDotNet.Core.Tokens;
-
+using Content.Server.Xenobiology;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Xenobiology
 {
@@ -48,27 +52,6 @@ namespace Content.Server.Xenobiology
         }
 
         [Verb]
-        public sealed class EnterVerb : Verb<SpecimenContainmentComponent>
-        {
-            protected override void GetData(IEntity user, SpecimenContainmentComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("enter-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, SpecimenContainmentComponent component)
-            {
-                component.InsertBody(user);
-            }
-        }
-
-        [Verb]
         public sealed class EjectVerb : Verb<SpecimenContainmentComponent>
         {
             protected override void GetData(IEntity user, SpecimenContainmentComponent component, VerbData data)
@@ -89,6 +72,27 @@ namespace Content.Server.Xenobiology
             }
         }
 
+        [Verb]
+        public sealed class DebugCreateSpecimenVerb : Verb<SpecimenContainmentComponent>
+        {
+            protected override void GetData(IEntity user, SpecimenContainmentComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+                data.Text = Loc.GetString("debug-specimen-create");
+                data.Visibility = !component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+
+            }
+
+            protected override void Activate(IEntity user, SpecimenContainmentComponent component)
+            {
+                component.DebugCreateSpecimen();
+            }
+        }
+
         public void InsertBody(IEntity user)
         {
             TubeContainer.Insert(user);
@@ -99,23 +103,35 @@ namespace Content.Server.Xenobiology
         {
             var containedEntity = TubeContainer.ContainedEntity;
             if (containedEntity == null) return;
+            if (containedEntity.TryGetComponent<SpecimenDietComponent>(out SpecimenDietComponent? DietComp))
+            {
+                containedEntity.PopupMessage(Loc.GetString("specimen-growth-ejection-fail"));
+                return;
+            }
             TubeContainer.Remove(containedEntity);
             UpdateAppearance();
         }
 
         void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
         {
-            EjectBody();
+
         }
 
+        public void DebugCreateSpecimen()
+        {
+            IEntity debugspecimen = Owner.EntityManager.SpawnEntity("specimen_basic", Owner.Transform.Coordinates);
+            TubeContainer.Insert(debugspecimen);
+            UpdateAppearance();
+        }
+
+
         public void UpdateAppearance() //Communicates with the visualiser through a Shared component
-        { 
+        {
             if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
             {
                 appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Powered, Powered);
                 appearancecomp.SetData(SharedXenoTubeComponent.XenoTubeStatus.Occupied, TubeContainer.ContainedEntity != null);
             }
         }
-
     }
 }

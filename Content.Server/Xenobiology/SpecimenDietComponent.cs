@@ -56,12 +56,9 @@ namespace Content.Server.Xenobiology
 
         //A placeholder function for advancing specimen growth
         //Should only be used to increase size in the adult stage outside of the tube
-        public void Grow() 
+        public void SpecimenGrow() 
         {
-            if (GrowthState >= 5)
-            {
-               // this.Owner.GetComponent<SpriteComponent>().LayerSetScale(0)
-            }
+            GrowthState++;
         }
 
 
