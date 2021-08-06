@@ -56,12 +56,7 @@ namespace Content.Client.Tabletop
             // If there is no player entity, return
             if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return;
 
-            // Stunned or no hands => drop piece
-            var stunned = playerEntity.TryGetComponent<StunnableComponent>(out var stun) &&
-                          stun.Stunned;
-            var hasHand = playerEntity.TryGetComponent<HandsComponent>(out var handsComponent) &&
-                          handsComponent.Hands.Count > 0;
-            if (stunned || !hasHand)
+            if (StunnedOrNoHands(playerEntity))
             {
                 StopDragging();
             }
@@ -168,12 +163,22 @@ namespace Content.Client.Tabletop
 
         private bool OnMouseDown(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
+            // Return if no player entity
+            if (_playerManager.LocalPlayer is not { ControlledEntity: { } playerEntity }) return false;
+
+            // Return if can not see table or stunned/no hands
+            if (!CanSeeTable(playerEntity, _table) || StunnedOrNoHands(playerEntity))
+            {
+                return false;
+            }
+
             // Set the entity being dragged and the viewport under the mouse
             if (!EntityManager.TryGetEntity(args.EntityUid, out var draggedEntity))
             {
                 return false;
             }
 
+            // Make sure that entity can be dragged
             if (!draggedEntity.HasComponent<TabletopDraggableComponent>())
             {
                 return false;
@@ -213,6 +218,17 @@ namespace Content.Client.Tabletop
 
             return alive && inRange;
         }
+
+        private static bool StunnedOrNoHands(IEntity playerEntity)
+        {
+            var stunned = playerEntity.TryGetComponent<StunnableComponent>(out var stun) &&
+                          stun.Stunned;
+            var hasHand = playerEntity.TryGetComponent<HandsComponent>(out var handsComponent) &&
+                          handsComponent.Hands.Count > 0;
+
+            return stunned || !hasHand;
+        }
+
 
         /**
          * <summary>Start dragging an entity in a specific viewport.</summary>
