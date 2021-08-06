@@ -9,6 +9,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Server.Tabletop
 {
@@ -101,10 +103,24 @@ namespace Content.Server.Tabletop
         {
             var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
 
-            if (draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
+            if (!draggedEntity.TryGetComponent<TabletopDraggableComponent>(out var draggableComponent))
             {
-                Logger.Error(msg.DraggingPlayer.ToString() ?? "null");
-                draggableComponent.DraggingPlayer = msg.DraggingPlayer;
+                return;
+            }
+
+            draggableComponent.DraggingPlayer = msg.DraggingPlayer;
+
+            if (!draggedEntity.TryGetComponent<SpriteComponent>(out var spriteComponent)) return;
+
+            if (draggableComponent.DraggingPlayer != null)
+            {
+                spriteComponent.Scale = new Vector2(1.25f, 1.25f);
+                spriteComponent.DrawDepth = (int) DrawDepth.Items + 1;
+            }
+            else
+            {
+                spriteComponent.Scale = Vector2.One;
+                spriteComponent.DrawDepth = (int) DrawDepth.Items;
             }
         }
 

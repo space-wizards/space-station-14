@@ -16,6 +16,7 @@ using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Tabletop
 {
@@ -153,6 +154,11 @@ namespace Content.Client.Tabletop
                 return false;
             }
 
+            if (!draggedEntity.HasComponent<TabletopDraggableComponent>())
+            {
+                return false;
+            }
+
             // Try to get the viewport under the cursor, then start dragging the entity
             if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is { } viewport)
             {
@@ -180,6 +186,12 @@ namespace Content.Client.Tabletop
         private void StartDragging(IEntity draggedEntity, ScalingViewport viewport)
         {
             RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity.Uid, _playerManager.LocalPlayer?.UserId));
+
+            if (draggedEntity.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            {
+                spriteComponent.Scale = new Vector2(1.25f, 1.25f);
+                spriteComponent.DrawDepth = (int) DrawDepth.Items + 1;
+            }
 
             _draggedEntity = draggedEntity;
             _viewport = viewport;
