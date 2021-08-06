@@ -11,8 +11,6 @@
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: assembly
-    - state: panel_open
-      visible: true
   - type: Physics
     fixtures:
     - shape:
@@ -59,8 +57,6 @@
     layers:
     - state: secure_underlay
     - state: assembly
-    - state: panel_open
-      visible: false
   - type: Destructible
     thresholds:
     - trigger:
