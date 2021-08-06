@@ -1684,3 +1684,9 @@ Entries:
   - {message: Ghosts can now properly return to their body if applicable., type: Fix}
   id: 300
   time: '2021-08-06T07:02:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
+      situations.', type: Fix}
+  id: 301
+  time: '2021-08-06T15:53:48.856573+00:00'
