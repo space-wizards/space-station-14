@@ -1711,3 +1711,8 @@ Entries:
   - {message: Added a hardsuit into CMO's Locker, type: Add}
   id: 305
   time: '2021-08-06T23:11:18.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Maps in windoors, type: Add}
+  id: 306
+  time: '2021-08-07T02:47:43.0000000+00:00'
