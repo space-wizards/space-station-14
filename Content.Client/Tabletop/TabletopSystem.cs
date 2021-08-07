@@ -115,13 +115,9 @@ namespace Content.Client.Tabletop
         {
             _table = EntityManager.GetEntity(msg.TableUid);
 
-            // Get the camera entity that the server has created for us
+            // Get the camera entity that the server has created for us, and its eye
             var camera = EntityManager.GetEntity(msg.CameraUid);
-
-            if (!camera.TryGetComponent<EyeComponent>(out var eyeComponent))
-            {
-                throw new Exception("Camera does not have EyeComponent.");
-            }
+            var eyeComponent = ComponentManager.GetComponent<EyeComponent>(camera.Uid);
 
             // Close the currently opened window, if it exists
             _window?.Close();
