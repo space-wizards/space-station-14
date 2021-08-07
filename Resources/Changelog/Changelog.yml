@@ -1716,3 +1716,9 @@ Entries:
   - {message: Maps in windoors, type: Add}
   id: 306
   time: '2021-08-07T02:47:43.0000000+00:00'
+- author: scrato
+  changes:
+  - {message: 'When the head is detached from the body, the hair, eyes and ears will
+      not remain at the body.', type: Add}
+  id: 307
+  time: '2021-08-07T21:18:43.0000000+00:00'
