@@ -24,3 +24,12 @@
   materials:
      Steel: 50
      Glass: 50
+
+- type: latheRecipe
+  id: CloningPodMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CloningPodMachineCircuitboard
+  completetime: 500
+  materials:
+     Steel: 50
+     Glass: 50
