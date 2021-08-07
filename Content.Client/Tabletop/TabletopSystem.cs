@@ -10,6 +10,7 @@ using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
