@@ -13994,7 +13994,7 @@ entities:
   type: SpawnPointStationEngineer
   components:
   - rot: 4.371139006309477E-08 rad
-    pos: 33.5,-2.5
+    pos: 33.5,-1.5
     parent: 853
     type: Transform
 - uid: 1024
