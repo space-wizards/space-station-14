@@ -5507,8 +5507,7 @@ entities:
 - uid: 576
   type: Firelock
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 15.5,-3.5
+  - pos: 15.5,-3.5
     parent: 853
     type: Transform
 - uid: 577
@@ -12371,8 +12370,6 @@ entities:
         - -16,16
         - -16,0
       id: grid_chunk--1-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -50175,8 +50172,7 @@ entities:
 - uid: 5083
   type: WallSolid
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-14.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 5084
@@ -50189,36 +50185,31 @@ entities:
 - uid: 5085
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 11.5,27.5
+  - pos: 11.5,27.5
     parent: 853
     type: Transform
 - uid: 5086
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,27.5
+  - pos: 12.5,27.5
     parent: 853
     type: Transform
 - uid: 5087
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 13.5,27.5
+  - pos: 13.5,27.5
     parent: 853
     type: Transform
 - uid: 5088
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 13.5,26.5
+  - pos: 13.5,26.5
     parent: 853
     type: Transform
 - uid: 5089
   type: AirlockCommandLocked
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 10.5,26.5
+  - pos: 10.5,26.5
     parent: 853
     type: Transform
   - containers:
@@ -50587,8 +50578,7 @@ entities:
 - uid: 5133
   type: Firelock
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 13.5,-0.5
+  - pos: 13.5,-0.5
     parent: 853
     type: Transform
 - uid: 5134
@@ -50601,8 +50591,7 @@ entities:
 - uid: 5135
   type: Firelock
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 0.5,-15.5
+  - pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 5136
@@ -50683,4 +50672,22 @@ entities:
       storagebase: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 5145
+  type: Firelock
+  components:
+  - pos: 6.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5146
+  type: Firelock
+  components:
+  - pos: -3.5,8.5
+    parent: 853
+    type: Transform
+- uid: 5147
+  type: Firelock
+  components:
+  - pos: -3.5,7.5
+    parent: 853
+    type: Transform
 ...
