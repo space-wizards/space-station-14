@@ -100,7 +100,7 @@ namespace Content.Client.Tabletop
             if (_timePassed >= Delay)
             {
                 RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords));
-                _timePassed = 0f;
+                _timePassed -= Delay;
             }
         }
 
