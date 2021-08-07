@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Tabletop.Components;
-using Content.Shared.GameTicking;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
@@ -26,7 +25,7 @@ namespace Content.Server.Tabletop
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
             SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChangedEvent);
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
+            SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
         }
 
         /**
@@ -118,10 +117,14 @@ namespace Content.Server.Tabletop
             }
         }
 
-        // Remove all tabletop sessions and maps when the round restarts
-        private void OnRoundRestartCleanup(RoundRestartCleanupEvent args)
+        // TODO: needs to be refactored such that the corresponding entity on the table gets removed, instead of the whole map
+        private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
         {
-            Reset();
+            if (!_gameSessions.ContainsKey(uid)) return;
+
+            // Delete the map and remove it from the list of sessions
+            _mapManager.DeleteMap(_gameSessions[uid]);
+            _gameSessions.Remove(uid);
         }
 
         #endregion
@@ -165,19 +168,6 @@ namespace Content.Server.Tabletop
             }
 
             throw new KeyNotFoundException("The table for the requested entity has not been initialized yet.");
-        }
-
-        /**
-         * <summary>Remove all tabletop sessions and their maps.</summary>
-         */
-        private void Reset()
-        {
-            foreach (var (_, mapId) in _gameSessions)
-            {
-                _mapManager.DeleteMap(mapId);
-            }
-
-            _gameSessions.Clear();
         }
 
         #endregion
