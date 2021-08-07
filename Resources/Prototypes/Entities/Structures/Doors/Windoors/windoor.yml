@@ -55,3 +55,12 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+
+# Security windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
