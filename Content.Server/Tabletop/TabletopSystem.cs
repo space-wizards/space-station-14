@@ -18,7 +18,6 @@ namespace Content.Server.Tabletop
     public partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         private readonly Dictionary<EntityUid, MapId> _gameSessions = new();
 
@@ -52,7 +51,7 @@ namespace Content.Server.Tabletop
             {
                 // Send a message to the client to open a chess UI window
                 // TODO: use actual title/size from prototype, for now we assume its chess
-                _entityManager.EntityNetManager?.SendSystemNetworkMessage(
+                EntityManager.EntityNetManager?.SendSystemNetworkMessage(
                     new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient
                 );
             }
@@ -140,7 +139,7 @@ namespace Content.Server.Tabletop
         private IEntity CreateCamera(IEntity user, MapCoordinates coordinates)
         {
             // Spawn an empty entity at the coordinates
-            var camera = _entityManager.SpawnEntity(null, coordinates);
+            var camera = EntityManager.SpawnEntity(null, coordinates);
 
             // Add an eye component and disable FOV
             var eyeComponent = camera.EnsureComponent<EyeComponent>();

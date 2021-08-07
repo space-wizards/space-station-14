@@ -9,7 +9,7 @@ namespace Content.Server.Tabletop
     {
         private void SetupChessBoard(MapId mapId)
         {
-            var chessboard = _entityManager.SpawnEntity("ChessBoardTabletop", new MapCoordinates(-1, 0, mapId));
+            var chessboard = EntityManager.SpawnEntity("ChessBoardTabletop", new MapCoordinates(-1, 0, mapId));
 
             if (chessboard.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
@@ -35,8 +35,8 @@ namespace Content.Server.Tabletop
             SpawnPiecesRow("White", new MapCoordinates(x, y - 7 * separation, mapId), separation);
 
             // Extra queens
-            _entityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
-            _entityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
+            EntityManager.SpawnEntity("BlackQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 3 * separation, mapId));
+            EntityManager.SpawnEntity("WhiteQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - 4 * separation, mapId));
         }
 
         // TODO: refactor to load FEN instead
@@ -51,19 +51,19 @@ namespace Content.Server.Tabletop
                 switch (piecesRow[i])
                 {
                     case 'r':
-                        _entityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityManager.SpawnEntity(color + "Rook", new MapCoordinates(x + i * separation, y, mapId));
                         break;
                     case 'n':
-                        _entityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityManager.SpawnEntity(color + "Knight", new MapCoordinates(x + i * separation, y, mapId));
                         break;
                     case 'b':
-                        _entityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityManager.SpawnEntity(color + "Bishop", new MapCoordinates(x + i * separation, y, mapId));
                         break;
                     case 'q':
-                        _entityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityManager.SpawnEntity(color + "Queen", new MapCoordinates(x + i * separation, y, mapId));
                         break;
                     case 'k':
-                        _entityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
+                        EntityManager.SpawnEntity(color + "King", new MapCoordinates(x + i * separation, y, mapId));
                         break;
                 }
             }
@@ -76,7 +76,7 @@ namespace Content.Server.Tabletop
 
             for (int i = 0; i < 8; i++)
             {
-                _entityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
+                EntityManager.SpawnEntity(color + "Pawn", new MapCoordinates(x + i * separation, y, mapId));
             }
         }
     }
