@@ -12393,12 +12393,29 @@ entities:
       -21,19: 0
       -21,20: 0
       -21,21: 0
+      11,26: 1
+      11,27: 1
+      12,26: 1
+      12,27: 1
+      13,26: 1
+      13,27: 1
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
       moles:
       - 21.824879
       - 82.10312
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 293.15
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -12455,8 +12472,6 @@ entities:
         - 0,32
         - 0,16
       id: grid_chunk-0-1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -14010,10 +14025,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1033
-  type: TableReinforced
+  type: Windoor
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-15.5
+  - pos: 15.5,-3.5
     parent: 853
     type: Transform
 - uid: 1034
@@ -15157,9 +15171,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1169
-  type: LowWall
+  type: FirelockGlass
   components:
-  - pos: 13.5,0.5
+  - pos: 15.5,-3.5
     parent: 853
     type: Transform
 - uid: 1170
@@ -22655,9 +22669,10 @@ entities:
     parent: 853
     type: Transform
 - uid: 2136
-  type: ReinforcedWindow
+  type: FirelockGlass
   components:
-  - pos: 13.5,0.5
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 2137
@@ -41357,10 +41372,9 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4019
-  type: WindoorMedicalLocked
+  type: LowWall
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-15.5
+  - pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 4020
@@ -41549,13 +41563,11 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4042
-  type: FirelockGlass
+  type: Window
   components:
   - pos: 0.5,-15.5
     parent: 853
     type: Transform
-  - airBlocked: False
-    type: Airtight
 - uid: 4043
   type: FirelockGlass
   components:
@@ -48935,9 +48947,10 @@ entities:
     parent: 853
     type: Transform
 - uid: 4916
-  type: Firelock
+  type: WindoorScienceLocked
   components:
-  - pos: 15.5,-3.5
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 4917
@@ -50262,9 +50275,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5083
-  type: WallSolid
+  type: Windoor
   components:
-  - rot: -1.5707963267948966 rad
+  - rot: 1.5707963267948966 rad
     pos: 0.5,-14.5
     parent: 853
     type: Transform
@@ -50329,6 +50342,48 @@ entities:
   components:
   - rot: -1.5668895244598389 rad
     pos: 11.687332,26.585844
+    parent: 853
+    type: Transform
+- uid: 5092
+  type: TableReinforced
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-14.5
+    parent: 853
+    type: Transform
+- uid: 5093
+  type: WindoorMedicalLocked
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 13.5,0.5
+    parent: 853
+    type: Transform
+- uid: 5094
+  type: Windoor
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,0.5
+    parent: 853
+    type: Transform
+- uid: 5095
+  type: TableReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,0.5
+    parent: 853
+    type: Transform
+- uid: 5096
+  type: FirelockGlass
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,0.5
+    parent: 853
+    type: Transform
+- uid: 5097
+  type: ChairOfficeDark
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 14.5,0.5
     parent: 853
     type: Transform
 ...
