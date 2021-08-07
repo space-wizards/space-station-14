@@ -46,14 +46,11 @@ namespace Content.Server.Tabletop
             IEntity camera = CreateCamera(user, new MapCoordinates(0, 0, mapId));
 
             // Tell the client that it has to open a viewport for the tabletop game
-            var playerSession = user.PlayerSession();
-            if (playerSession != null)
+            if (user.PlayerSession() is { } playerSession)
             {
                 // Send a message to the client to open a chess UI window
                 // TODO: use actual title/size from prototype, for now we assume its chess
-                EntityManager.EntityNetManager?.SendSystemNetworkMessage(
-                    new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient
-                );
+                RaiseNetworkEvent(new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient);
             }
         }
 
