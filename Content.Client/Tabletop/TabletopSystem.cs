@@ -20,6 +20,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -115,9 +116,15 @@ namespace Content.Client.Tabletop
         {
             _table = EntityManager.GetEntity(msg.TableUid);
 
-            // Get the camera entity that the server has created for us, and its eye
+            // Get the camera entity that the server has created for us
             var camera = EntityManager.GetEntity(msg.CameraUid);
-            var eyeComponent = ComponentManager.GetComponent<EyeComponent>(camera.Uid);
+
+            if (!ComponentManager.TryGetComponent<EyeComponent>(camera.Uid, out var eyeComponent))
+            {
+                // If there is no eye, print error and do not open any window
+                Logger.Error("Camera entity does not have eye component!");
+                return;
+            }
 
             // Close the currently opened window, if it exists
             _window?.Close();
