@@ -9,7 +9,7 @@ namespace Content.Shared.Tabletop.Components
      * </summary>
      */
     [NetworkedComponent]
-    public class SharedTabletopDraggableComponent : Component
+    public abstract class SharedTabletopDraggableComponent : Component
     {
         public override string Name => "TabletopDraggable";
     }

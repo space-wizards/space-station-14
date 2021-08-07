@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop
 {
-    public class SharedTabletopSystem : EntitySystem
+    public abstract class SharedTabletopSystem : EntitySystem
     {
         [Serializable, NetSerializable]
         public sealed class TabletopDraggableComponentState : ComponentState
