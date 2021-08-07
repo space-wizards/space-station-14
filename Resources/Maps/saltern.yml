@@ -54,7 +54,7 @@ grids:
   - ind: "1,0"
     tiles: GwAAABsAAAAbAAAAIQAAACAAAAAYAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABsAAAAbAAAAGwAAACEAAAAgAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAACAAAAAgAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAABgAAAAYAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAGAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABgAAAAYAAAAGAAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAhAAAAFgAAABYAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAA==
   - ind: "0,1"
-    tiles: IQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAACEAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAAAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAACEAAAAAAAAAIQAAACEAAAAWAAAAIQAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAIQAAAAAAAAAPAAAADwAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACEAAAAAAAAADwAAAA8AAAAWAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: IQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAACEAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAAAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAACEAAAAAAAAAIQAAACEAAAAWAAAAIQAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAIQAAAAAAAAAPAAAADwAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACEAAAAAAAAADwAAAA8AAAAWAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFAAAABQAAAAhAAAAAAAAAAAAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-2,0"
     tiles: IQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAAFgAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAhAAAAIAAAACAAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAGAAAABgAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAACAAAAAgAAAAIAAAABgAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAhAAAAIQAAACAAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAgAAAAGAAAAA==
   - ind: "1,-1"
@@ -879,15 +879,11 @@ entities:
     parent: 853
     type: Transform
 - uid: 105
-  type: AirlockBarGlassLocked
+  type: WindoorBarLocked
   components:
   - pos: -7.5,-3.5
     parent: 853
     type: Transform
-  - containers:
-      board: !type:Container
-        ents: []
-    type: ContainerContainer
 - uid: 106
   type: WeldingFuelTankFull
   components:
@@ -12419,8 +12415,6 @@ entities:
         - -16,0
         - -16,-16
       id: grid_chunk--1--1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12429,8 +12423,6 @@ entities:
         - -16,16
         - -16,0
       id: grid_chunk--1-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12439,8 +12431,6 @@ entities:
         - 0,0
         - 0,-16
       id: grid_chunk-0--1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12449,8 +12439,6 @@ entities:
         - 0,16
         - 0,0
       id: grid_chunk-0-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12459,8 +12447,6 @@ entities:
         - 16,16
         - 16,0
       id: grid_chunk-1-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12479,8 +12465,6 @@ entities:
         - -32,16
         - -32,0
       id: grid_chunk--2-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12489,8 +12473,6 @@ entities:
         - 16,0
         - 16,-16
       id: grid_chunk-1--1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12499,8 +12481,6 @@ entities:
         - 0,-16
         - 0,-32
       id: grid_chunk-0--2
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12509,8 +12489,6 @@ entities:
         - 16,-16
         - 16,-27
       id: grid_chunk-1--2
-      mask: []
-      layer: []
       mass: 143
     - shape: !type:PolygonShape
         vertices:
@@ -12519,8 +12497,6 @@ entities:
         - -16,32
         - -16,16
       id: grid_chunk--1-1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12529,8 +12505,6 @@ entities:
         - -3,34
         - -3,32
       id: grid_chunk--1-2
-      mask: []
-      layer: []
       mass: 6
     - shape: !type:PolygonShape
         vertices:
@@ -12539,8 +12513,6 @@ entities:
         - 16,17
         - 16,16
       id: grid_chunk-1-1
-      mask: []
-      layer: []
       mass: 2
     - shape: !type:PolygonShape
         vertices:
@@ -12549,8 +12521,6 @@ entities:
         - 0,34
         - 0,32
       id: grid_chunk-0-2
-      mask: []
-      layer: []
       mass: 20
     - shape: !type:PolygonShape
         vertices:
@@ -12559,8 +12529,6 @@ entities:
         - 32,16
         - 32,0
       id: grid_chunk-2-0
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12569,8 +12537,6 @@ entities:
         - 48,15
         - 48,0
       id: grid_chunk-3-0
-      mask: []
-      layer: []
       mass: 60
     - shape: !type:PolygonShape
         vertices:
@@ -12579,8 +12545,6 @@ entities:
         - 32,0
         - 32,-16
       id: grid_chunk-2--1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12589,8 +12553,6 @@ entities:
         - -16,-16
         - -16,-31
       id: grid_chunk--1--2
-      mask: []
-      layer: []
       mass: 240
     - shape: !type:PolygonShape
         vertices:
@@ -12599,8 +12561,6 @@ entities:
         - -26,-16
         - -26,-28
       id: grid_chunk--2--2
-      mask: []
-      layer: []
       mass: 120
     - shape: !type:PolygonShape
         vertices:
@@ -12609,8 +12569,6 @@ entities:
         - -32,0
         - -32,-16
       id: grid_chunk--2--1
-      mask: []
-      layer: []
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12619,8 +12577,6 @@ entities:
         - -42,16
         - -42,0
       id: grid_chunk--3-0
-      mask: []
-      layer: []
       mass: 160
     - shape: !type:PolygonShape
         vertices:
@@ -12629,8 +12585,6 @@ entities:
         - -40,0
         - -40,-13
       id: grid_chunk--3--1
-      mask: []
-      layer: []
       mass: 104
     - shape: !type:PolygonShape
         vertices:
@@ -12639,8 +12593,6 @@ entities:
         - 48,0
         - 48,-16
       id: grid_chunk-3--1
-      mask: []
-      layer: []
       mass: 128
     - shape: !type:PolygonShape
         vertices:
@@ -12649,8 +12601,6 @@ entities:
         - 40,-16
         - 40,-32
       id: grid_chunk-2--2
-      mask: []
-      layer: []
       mass: 128
     - shape: !type:PolygonShape
         vertices:
@@ -12659,8 +12609,6 @@ entities:
         - 48,-16
         - 48,-32
       id: grid_chunk-3--2
-      mask: []
-      layer: []
       mass: 176
     - shape: !type:PolygonShape
         vertices:
@@ -12669,8 +12617,6 @@ entities:
         - 48,-32
         - 48,-34
       id: grid_chunk-3--3
-      mask: []
-      layer: []
       mass: 22
     - shape: !type:PolygonShape
         vertices:
@@ -12679,8 +12625,6 @@ entities:
         - 40,-32
         - 40,-34
       id: grid_chunk-2--3
-      mask: []
-      layer: []
       mass: 16
     - shape: !type:PolygonShape
         vertices:
@@ -12689,8 +12633,6 @@ entities:
         - -28,27
         - -28,16
       id: grid_chunk--2-1
-      mask: []
-      layer: []
       mass: 132
     bodyType: Dynamic
     type: Physics
@@ -13659,6 +13601,10 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - containers:
+      storagebase: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 985
   type: VendingMachineCoffee
   components:
@@ -14057,10 +14003,10 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 1032
-  type: TableReinforced
+  type: Windoor
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 6.5,20.5
     parent: 853
     type: Transform
 - uid: 1033
@@ -20737,10 +20683,10 @@ entities:
     parent: 853
     type: Transform
 - uid: 1855
-  type: WallReinforced
+  type: EmergencyLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 10.5,26.5
+  - rot: -1.5707963267948966 rad
+    pos: 9.693537,24.5
     parent: 853
     type: Transform
 - uid: 1856
@@ -40400,16 +40346,12 @@ entities:
   - startingCharge: 30000
     type: Battery
 - uid: 3909
-  type: EmergencyLight
+  type: WindoorMedicalLocked
   components:
-  - rot: 4.71238902409608 rad
-    pos: 9.704595,26.5
+  - rot: 3.141592653589793 rad
+    pos: 15.5,-3.5
     parent: 853
     type: Transform
-  - powerLoad: 1
-    type: ApcPowerReceiver
-  - startingCharge: 30000
-    type: Battery
 - uid: 3910
   type: EmergencyLight
   components:
@@ -41415,13 +41357,12 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4019
-  type: FirelockGlass
+  type: WindoorMedicalLocked
   components:
-  - pos: 0.5,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-15.5
     parent: 853
     type: Transform
-  - airBlocked: False
-    type: Airtight
 - uid: 4020
   type: ShellShotgunBeanbag
   components:
@@ -50320,4 +50261,74 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 5083
+  type: WallSolid
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-14.5
+    parent: 853
+    type: Transform
+- uid: 5084
+  type: WindoorCommandLocked
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 6.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5085
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 11.5,27.5
+    parent: 853
+    type: Transform
+- uid: 5086
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 12.5,27.5
+    parent: 853
+    type: Transform
+- uid: 5087
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,27.5
+    parent: 853
+    type: Transform
+- uid: 5088
+  type: WallReinforced
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 13.5,26.5
+    parent: 853
+    type: Transform
+- uid: 5089
+  type: AirlockCommandLocked
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 10.5,26.5
+    parent: 853
+    type: Transform
+  - containers:
+      board: !type:Container
+        ents: []
+    type: ContainerContainer
+- uid: 5090
+  type: ToiletEmpty
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 12.5,26.5
+    parent: 853
+    type: Transform
+  - containers:
+      stash: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5091
+  type: SoapNT
+  components:
+  - rot: -1.5668895244598389 rad
+    pos: 11.687332,26.585844
+    parent: 853
+    type: Transform
 ...
