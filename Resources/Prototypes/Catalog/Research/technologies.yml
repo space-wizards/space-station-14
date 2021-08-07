@@ -247,7 +247,7 @@
 - type: technology
   name: "Basic Parts Technology"
   id: BasicPartsTechnology
-  description: They aren't great but at least is something.
+  description: They aren't great, but at least they're something.
   icon:
     sprite: Objects/Misc/stock_parts.rsi
     state: micro_mani
