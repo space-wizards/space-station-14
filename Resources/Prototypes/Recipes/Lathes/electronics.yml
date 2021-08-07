@@ -29,7 +29,16 @@
   id: CloningPodMachineCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: CloningPodMachineCircuitboard
-  completetime: 500
+  completetime: 1000
   materials:
-     Steel: 50
-     Glass: 50
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: MedicalScannerMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: MedicalScannerMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100

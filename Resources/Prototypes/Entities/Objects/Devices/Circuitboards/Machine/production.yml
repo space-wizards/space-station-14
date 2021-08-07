@@ -41,3 +41,19 @@
         Manipulator: 2
       materialRequirements:
         Glass: 1
+        Cable: 1
+
+- type: entity
+  id: MedicalScannerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Medical Scanner (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: MedicalScanner
+      requirements:
+        ScanningModule: 1
+        Manipulator: 1
+        Laser: 1
+      materialRequirements:
+        Glass: 1
+        Cable: 1
