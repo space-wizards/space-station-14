@@ -277,7 +277,7 @@ namespace Content.Client.Tabletop
 
             if (eye == null) return MapCoordinates.Nullspace;
 
-            var size = (Vector2) viewport.ViewportSize / 32; // Convert to tiles instead of pixels
+            var size = (Vector2) viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
             var eyePosition = eye.Position.Position;
             var eyeRotation = eye.Rotation;
             var eyeScale = eye.Scale;
