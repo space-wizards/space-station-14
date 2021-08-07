@@ -18,12 +18,6 @@ namespace Content.Client.Tabletop.UI
             ScalingVp.Eye = eye;
             ScalingVp.ViewportSize = size;
 
-            // Make the mouse interact with the viewport
-            ScalingVp.MouseFilter = MouseFilterMode.Stop;
-
-            // Set nearest neighbor scaling
-            ScalingVp.RenderScaleMode = ScalingViewportRenderScaleMode.CeilInt;
-
             FlipButton.OnButtonUp += Flip;
             OpenCentered();
         }
