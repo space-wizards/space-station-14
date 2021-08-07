@@ -18,6 +18,7 @@ namespace Content.Server.Tabletop
     public partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
 
         private readonly Dictionary<EntityUid, MapId> _gameSessions = new();
 
@@ -145,7 +146,7 @@ namespace Content.Server.Tabletop
             // Add the user to the view subscribers. If there is no player session, just skip this step
             if (user.PlayerSession() is { } playerSession)
             {
-                Get<ViewSubscriberSystem>().AddViewSubscriber(camera.Uid, playerSession);
+                _viewSubscriberSystem.AddViewSubscriber(camera.Uid, playerSession);
             }
 
             return camera;
