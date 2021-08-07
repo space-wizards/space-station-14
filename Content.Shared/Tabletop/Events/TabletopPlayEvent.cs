@@ -5,11 +5,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop.Events
 {
-    /**
-     * <summary>
-     * An event sent by the server to the client to tell the client to open a tabletop game window.
-     * </summary>
-     */
+    /// <summary>
+    /// An event sent by the server to the client to tell the client to open a tabletop game window.
+    /// </summary>
     [Serializable, NetSerializable]
     public class TabletopPlayEvent : EntityEventArgs
     {

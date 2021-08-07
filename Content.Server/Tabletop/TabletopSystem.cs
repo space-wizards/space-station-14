@@ -28,13 +28,11 @@ namespace Content.Server.Tabletop
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
         }
 
-        /**
-         * <summary>
-         * For a specific user, create a table if it does not exist yet and let the user open a UI window to play it.
-         * </summary>
-         * <param name="user">The user entity for which to open the window.</param>
-         * <param name="table">The entity with which the tabletop game session will be associated.</param>
-         */
+        /// <summary>
+        /// For a specific user, create a table if it does not exist yet and let the user open a UI window to play it.
+        /// </summary>
+        /// <param name="user">The user entity for which to open the window.</param>
+        /// <param name="table">The entity with which the tabletop game session will be associated.</param>
         public void OpenTable(IEntity user, IEntity table)
         {
             // Make sure we have a table, and get its map ID
@@ -54,10 +52,10 @@ namespace Content.Server.Tabletop
             }
         }
 
-        /**
-         * <summary>Create a map related to this entity UID, if it does not already exist.</summary>
-         * <param name="uid">The entity UID to ensure a table for.</param>
-         */
+        /// <summary>
+        /// Create a map related to this entity UID, if it does not already exist.
+        /// </summary>
+        /// <param name="uid">The entity UID to ensure a table for.</param>
         private void EnsureTable(EntityUid uid)
         {
             // We already have a table, return
@@ -131,11 +129,11 @@ namespace Content.Server.Tabletop
 
         #region Utility
 
-        /**
-         * <summary>Create a camera entity for a user to control, and add the user to the view subscribers.</summary>
-         * <param name="user">The user entity to create this camera for and add to the view subscribers.</param>
-         * <param name="coordinates">The map coordinates to spawn this camera at.</param>
-         */
+        /// <summary>
+        /// Create a camera entity for a user to control, and add the user to the view subscribers.
+        /// </summary>
+        /// <param name="user">The user entity to create this camera for and add to the view subscribers.</param>
+        /// <param name="coordinates">The map coordinates to spawn this camera at.</param>
         // TODO: this can probably be generalized into a "CctvSystem" or whatever
         private IEntity CreateCamera(IEntity user, MapCoordinates coordinates)
         {
@@ -155,11 +153,11 @@ namespace Content.Server.Tabletop
             return camera;
         }
 
-        /**
-         * <summary>Get the <see cref="MapId"/> related to this entity UID.</summary>
-         * <param name="uid">The identifier of the entity to get the map for.</param>
-         * <returns>The <see cref="MapId"/> that has been reserved for this entity.</returns>
-         */
+        /// <summary>
+        /// Get the <see cref="MapId"/> related to this entity UID.
+        /// </summary>
+        /// <param name="uid">The identifier of the entity to get the map for.</param>
+        /// <returns>The <see cref="MapId"/> that has been reserved for this entity.</returns>
         private MapId GetMapId(EntityUid uid)
         {
             if (_gameSessions.ContainsKey(uid))

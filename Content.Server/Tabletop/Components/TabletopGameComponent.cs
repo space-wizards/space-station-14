@@ -5,17 +5,17 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Tabletop.Components
 {
-    /**
-     * <summary>A component that makes an object playable as a tabletop game.</summary>
-     */
+    /// <summary>
+    /// A component that makes an object playable as a tabletop game.
+    /// </summary>
     [RegisterComponent]
     public class TabletopGameComponent : Component
     {
         public override string Name => "TabletopGame";
 
-        /**
-         * <summary>A verb that allows the player to start playing a tabletop game.</summary>
-         */
+        /// <summary>
+        /// A verb that allows the player to start playing a tabletop game.
+        /// </summary>
         [Verb]
         public class PlayVerb : Verb<TabletopGameComponent>
         {

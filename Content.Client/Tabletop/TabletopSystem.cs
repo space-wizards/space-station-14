@@ -107,12 +107,10 @@ namespace Content.Client.Tabletop
 
         #region Event handlers
 
-        /**
-         * <summary>
-         * Runs when the player presses the "Play Game" verb on a tabletop game.
-         * Opens a viewport where they can then play the game.
-         * </summary>
-         */
+        /// <summary>
+        /// Runs when the player presses the "Play Game" verb on a tabletop game.
+        /// Opens a viewport where they can then play the game.
+        /// </summary>
         private void OnTabletopPlay(TabletopPlayEvent msg)
         {
             _table = EntityManager.GetEntity(msg.TableUid);
@@ -205,11 +203,11 @@ namespace Content.Client.Tabletop
 
         #region Utility
 
-        /**
-         * <summary>Whether the table exists, is in range and the player is alive.</summary>
-         * <param name="playerEntity">The player entity to check.</param>
-         * <param name="table">The table entity to check.</param>
-         */
+        /// <summary>
+        /// Whether the table exists, is in range and the player is alive.
+        /// </summary>
+        /// <param name="playerEntity">The player entity to check.</param>
+        /// <param name="table">The table entity to check.</param>
         private static bool CanSeeTable(IEntity playerEntity, IEntity? table)
         {
             if (table == null) return false;
@@ -231,11 +229,11 @@ namespace Content.Client.Tabletop
         }
 
 
-        /**
-         * <summary>Start dragging an entity in a specific viewport.</summary>
-         * <param name="draggedEntity">The entity that we start dragging.</param>
-         * <param name="viewport">The viewport in which we are dragging.</param>
-         */
+        /// <summary>
+        /// Start dragging an entity in a specific viewport.
+        /// </summary>
+        /// <param name="draggedEntity">The entity that we start dragging.</param>
+        /// <param name="viewport">The viewport in which we are dragging.</param>
         private void StartDragging(IEntity draggedEntity, ScalingViewport viewport)
         {
             RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity.Uid, _playerManager.LocalPlayer?.UserId));
@@ -250,10 +248,10 @@ namespace Content.Client.Tabletop
             _viewport = viewport;
         }
 
-        /**
-         * <summary>Stop dragging the entity.</summary>
-         * <param name="broadcast">Whether to tell other clients that we stopped dragging.</param>
-         */
+        /// <summary>
+        /// Stop dragging the entity.
+        /// </summary>
+        /// <param name="broadcast">Whether to tell other clients that we stopped dragging.</param>
         private void StopDragging(bool broadcast = true)
         {
             // Set the dragging player on the component to noone
@@ -266,12 +264,12 @@ namespace Content.Client.Tabletop
             _viewport = null;
         }
 
-        /**
-         * <summary>Clamps coordinates within a viewport. ONLY WORKS FOR 90 DEGREE ROTATIONS!</summary>
-         * <param name="coordinates">The coordinates to be clamped.</param>
-         * <param name="viewport">The viewport to clamp the coordinates to.</param>
-         * <returns>Coordinates clamped to the viewport.</returns>
-         */
+        /// <summary>
+        /// Clamps coordinates within a viewport. ONLY WORKS FOR 90 DEGREE ROTATIONS!
+        /// </summary>
+        /// <param name="coordinates">The coordinates to be clamped.</param>
+        /// <param name="viewport">The viewport to clamp the coordinates to.</param>
+        /// <returns>Coordinates clamped to the viewport.</returns>
         private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
         {
             var eye = viewport.Eye;
