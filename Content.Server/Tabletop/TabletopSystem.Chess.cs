@@ -1,7 +1,4 @@
-﻿using Content.Shared.DrawDepth;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
+﻿using Robust.Shared.Map;
 
 namespace Content.Server.Tabletop
 {
@@ -10,13 +7,6 @@ namespace Content.Server.Tabletop
         private void SetupChessBoard(MapId mapId)
         {
             var chessboard = EntityManager.SpawnEntity("ChessBoardTabletop", new MapCoordinates(-1, 0, mapId));
-
-            if (chessboard.TryGetComponent<SpriteComponent>(out var spriteComponent))
-            {
-                spriteComponent.Scale = new Vector2(1, 1);
-                spriteComponent.DrawDepth = (int) DrawDepth.FloorTiles;
-            }
-
             chessboard.Transform.Anchored = true;
 
             SpawnPieces(new MapCoordinates(-4.5f, 3.5f, mapId));
