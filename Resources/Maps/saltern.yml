@@ -13956,9 +13956,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1033
-  type: TableReinforced
+  type: WindoorScienceLocked
   components:
-  - rot: 4.371139006309477E-08 rad
+  - rot: -1.5707963267948966 rad
     pos: 0.5,-15.5
     parent: 853
     type: Transform
@@ -14097,10 +14097,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1050
-  type: ChairOfficeLight
+  type: Window
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -0.5,-14.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 1051
@@ -23668,10 +23667,10 @@ entities:
     parent: 853
     type: Transform
 - uid: 2284
-  type: WallSolid
+  type: Windoor
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,-13.5
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 2285
@@ -41319,10 +41318,9 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4019
-  type: WindoorMedicalLocked
+  type: TableReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-15.5
+  - pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 4020
@@ -50172,7 +50170,8 @@ entities:
 - uid: 5083
   type: WallSolid
   components:
-  - pos: 0.5,-14.5
+  - rot: 1.5707963267948966 rad
+    pos: 0.5,-13.5
     parent: 853
     type: Transform
 - uid: 5084
@@ -50582,18 +50581,24 @@ entities:
     parent: 853
     type: Transform
 - uid: 5134
-  type: Windoor
+  type: Firelock
   components:
   - rot: 1.5707963267948966 rad
     pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 5135
-  type: Firelock
+  type: CableApcExtension
   components:
-  - pos: 0.5,-15.5
+  - anchored: True
+    rot: -1.5707963267948966 rad
+    pos: 10.5,26.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 5136
   type: Poweredlight
   components:
@@ -50688,6 +50693,31 @@ entities:
   type: Firelock
   components:
   - pos: -3.5,7.5
+    parent: 853
+    type: Transform
+- uid: 5148
+  type: CableApcExtension
+  components:
+  - anchored: True
+    rot: -1.5707963267948966 rad
+    pos: 11.5,26.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5149
+  type: LowWall
+  components:
+  - pos: 0.5,-14.5
+    parent: 853
+    type: Transform
+- uid: 5150
+  type: ChairOfficeLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-15.5
     parent: 853
     type: Transform
 ...
