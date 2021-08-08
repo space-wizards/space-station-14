@@ -10,20 +10,7 @@ namespace Content.Server.Explosion
 {
     public class ProximityTriggerSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<TriggerOnProximityComponent, AlterProximityFixtureEvent>(AddFixture);
-            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentInit>(EnabledOnInit);
-        }
-
-        private void EnabledOnInit(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
-        {
-            component.Enabled = true;
-        }
-
-        private void AddFixture(EntityUid uid, TriggerOnProximityComponent component, AlterProximityFixtureEvent args)
+        public void AddProximityFixture(EntityUid uid, TriggerOnProximityComponent component)
         {
             var entity = EntityManager.GetEntity(uid);
             var broadphase = Get<SharedBroadphaseSystem>();
@@ -31,25 +18,20 @@ namespace Content.Server.Explosion
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 var fixture = physics.GetFixture(component.ProximityFixture);
-                if (!args.Remove)
-                {
-                    if (fixture == null)
-                        broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { Hard = false, ID = component.ProximityFixture });
-                }
-                else
-                {
-                    if (fixture != null)
-                        broadphase.DestroyFixture(physics, fixture);
-                }
+                if (fixture == null)
+                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { Hard = false, ID = component.ProximityFixture });                
             }
         }
-
-        public class AlterProximityFixtureEvent : EntityEventArgs
+        public void RemoveProximityFixture(EntityUid uid, TriggerOnProximityComponent component)
         {
-            public bool Remove { get; set; }
-            public AlterProximityFixtureEvent(bool remove)
+            var entity = EntityManager.GetEntity(uid);
+            var broadphase = Get<SharedBroadphaseSystem>();
+
+            if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
-                Remove = remove;
+                var fixture = physics.GetFixture(component.ProximityFixture);
+                if (fixture != null)
+                    broadphase.DestroyFixture(physics, fixture);
             }
         }
     }

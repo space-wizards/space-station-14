@@ -1,9 +1,7 @@
-using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Server.Explosion.ProximityTriggerSystem;
 
 namespace Content.Server.Explosion.Components
 {
@@ -18,6 +16,7 @@ namespace Content.Server.Explosion.Components
         public IPhysShape Shape { get; set; } = default!;
 
         private bool _enabled;
+        [DataField("Enabled")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled
         {
@@ -26,18 +25,16 @@ namespace Content.Server.Explosion.Components
 
                 if (value)
                 {
-                    AlterProximityFixtureEvent fixtureEvent = new(false);
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, fixtureEvent);
+                    Owner.EntityManager.EntitySysManager.GetEntitySystem<ProximityTriggerSystem>().AddProximityFixture(Owner.Uid, this);
                 }
                 else
                 {
-                    AlterProximityFixtureEvent fixtureEvent = new(true);
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, fixtureEvent);
+                    Owner.EntityManager.EntitySysManager.GetEntitySystem<ProximityTriggerSystem>().RemoveProximityFixture(Owner.Uid, this);
                 }
                 _enabled = value;
-                
+
             }
-            get { return _enabled; }
+            get => _enabled;
         }
 
     }

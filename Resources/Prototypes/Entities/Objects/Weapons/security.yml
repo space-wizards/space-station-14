@@ -53,6 +53,7 @@
   components:
     - type: FlashOnTrigger
     - type: TriggerOnProximity
+      Enabled: true
       shape:
         !type:PhysShapeCircle
           radius: 2
