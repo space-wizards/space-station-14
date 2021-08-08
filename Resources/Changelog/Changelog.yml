@@ -1727,3 +1727,8 @@ Entries:
   - {message: Security windoors for planned mapping rework., type: Add}
   id: 308
   time: '2021-08-07T21:29:47.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Partially re-mapped Security and Chemistry., type: Add}
+  id: 309
+  time: '2021-08-08T00:32:18.0000000+00:00'
