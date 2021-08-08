@@ -26,7 +26,6 @@
   - type: PointLight
     enabled: false
     radius: 3
-  - type: LoopingSound
   - type: Appearance
     visuals:
       - type: FlashLightVisualizer

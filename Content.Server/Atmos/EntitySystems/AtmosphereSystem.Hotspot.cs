@@ -1,11 +1,8 @@
-#nullable disable warnings
-#nullable enable annotations
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -140,7 +137,7 @@ namespace Content.Server.Atmos.EntitySystems
                 Merge(tile.Air, affected);
             }
 
-            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
+            var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex, _mapManager);
 
             foreach (var entity in tileRef.GetEntitiesInTileFast())
             {

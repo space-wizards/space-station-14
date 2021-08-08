@@ -9,7 +9,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 5
     contents:

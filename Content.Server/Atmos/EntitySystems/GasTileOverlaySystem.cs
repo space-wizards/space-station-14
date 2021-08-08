@@ -29,6 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
@@ -58,8 +59,6 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private float _updateCooldown;
 
-        private AtmosphereSystem _atmosphereSystem = default!;
-
         private int _thresholds;
 
         public override void Initialize()
@@ -68,7 +67,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
-            _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
             var configManager = IoCManager.Resolve<IConfigurationManager>();

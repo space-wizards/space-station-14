@@ -2,6 +2,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.DragDrop;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;

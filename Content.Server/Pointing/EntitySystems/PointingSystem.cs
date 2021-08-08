@@ -31,6 +31,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -88,6 +89,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
+            var mapCoords = coords.ToMap(EntityManager);
             var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
@@ -112,16 +114,16 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player))
+            if (_actionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+                var diff = mapCoords.Position - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     player.Transform.LocalRotation = new Angle(diff);
                 }
             }
 
-            var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
+            var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
             if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
@@ -159,8 +161,14 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                var tileRef = _mapManager.GetGrid(coords.GetGridId(EntityManager)).GetTileRef(coords);
-                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+                TileRef? tileRef = null;
+
+                if (_mapManager.TryFindGridAt(mapCoords, out var grid))
+                {
+                    tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
+                }
+
+                var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 

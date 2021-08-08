@@ -29,7 +29,6 @@
     - type: Item
       sprite: Objects/Misc/torch.rsi
       HeldPrefix: unlit
-    - type: LoopingSound
     - type: Construction
       graph: lightTorch
       node: torch

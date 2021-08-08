@@ -15,6 +15,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool MonstermosRipTiles { get; private set; }
         public bool GridImpulse { get; private set; }
         public bool Superconduction { get; private set; }
+        public bool ExcitedGroups { get; private set; }
         public bool ExcitedGroupsSpaceIsAllConsuming { get; private set; }
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
@@ -31,6 +32,7 @@ namespace Content.Server.Atmos.EntitySystems
             _cfg.OnValueChanged(CCVars.Superconduction, value => Superconduction = value, true);
             _cfg.OnValueChanged(CCVars.AtmosMaxProcessTime, value => AtmosMaxProcessTime = value, true);
             _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
+            _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
         }
     }
