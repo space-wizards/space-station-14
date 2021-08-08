@@ -924,12 +924,12 @@ namespace Content.Shared.Hands.Components
     {
         public EntityUid EntityUid { get; }
         public EntityCoordinates InitialPosition { get; }
-        public Vector2 PickupDirection { get; }
+        public Vector2 FinalPosition { get; }
 
-        public PickupAnimationMessage(EntityUid entityUid, Vector2 pickupDirection, EntityCoordinates initialPosition)
+        public PickupAnimationMessage(EntityUid entityUid, Vector2 finalPosition, EntityCoordinates initialPosition)
         {
             EntityUid = entityUid;
-            PickupDirection = pickupDirection;
+            FinalPosition = finalPosition;
             InitialPosition = initialPosition;
         }
     }

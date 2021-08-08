@@ -63,10 +63,13 @@ namespace Content.Server.GameTicking
                 throw new InvalidOperationException($"No grid found for map {map}");
             }
 
-            var maxStationOffset = _configurationManager.GetCVar(CCVars.MaxStationOffset);
-            var x = _robustRandom.NextFloat() * maxStationOffset * 2 - maxStationOffset;
-            var y = _robustRandom.NextFloat() * maxStationOffset * 2 - maxStationOffset;
-            _entityManager.GetEntity(grid.GridEntityId).Transform.LocalPosition = new Vector2(x, y);
+            if (StationOffset)
+            {
+                // Apply a random offset to the station grid entity.
+                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                EntityManager.GetEntity(grid.GridEntityId).Transform.LocalPosition = new Vector2(x, y);
+            }
 
             DefaultGridId = grid.Index;
             _spawnPoint = grid.ToCoordinates();
@@ -286,7 +289,7 @@ namespace Content.Server.GameTicking
             }
 
             // Delete all entities.
-            foreach (var entity in _entityManager.GetEntities().ToList())
+            foreach (var entity in EntityManager.GetEntities().ToList())
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.

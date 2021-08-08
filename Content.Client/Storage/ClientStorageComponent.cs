@@ -120,7 +120,7 @@ namespace Content.Client.Storage
 
                 if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.WorldPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
                 }
             }
         }
