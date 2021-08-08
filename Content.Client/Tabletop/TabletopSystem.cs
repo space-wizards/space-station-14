@@ -275,8 +275,9 @@ namespace Content.Client.Tabletop
         /// <returns>Coordinates clamped to the viewport.</returns>
         private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
         {
-            var eye = viewport.Eye;
+            if (coordinates == MapCoordinates.Nullspace) return MapCoordinates.Nullspace;
 
+            var eye = viewport.Eye;
             if (eye == null) return MapCoordinates.Nullspace;
 
             var size = (Vector2) viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
