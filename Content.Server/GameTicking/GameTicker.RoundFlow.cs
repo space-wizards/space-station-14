@@ -11,6 +11,7 @@ using Robust.Server.Player;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -60,6 +61,14 @@ namespace Content.Server.GameTicking
             if (grid == null)
             {
                 throw new InvalidOperationException($"No grid found for map {map}");
+            }
+
+            if (StationOffset)
+            {
+                // Apply a random offset to the station grid entity.
+                var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
+                EntityManager.GetEntity(grid.GridEntityId).Transform.LocalPosition = new Vector2(x, y);
             }
 
             DefaultGridId = grid.Index;
@@ -280,7 +289,7 @@ namespace Content.Server.GameTicking
             }
 
             // Delete all entities.
-            foreach (var entity in _entityManager.GetEntities().ToList())
+            foreach (var entity in EntityManager.GetEntities().ToList())
             {
                 // TODO: Maybe something less naive here?
                 // FIXME: Actually, definitely.

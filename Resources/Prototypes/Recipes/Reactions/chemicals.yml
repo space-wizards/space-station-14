@@ -226,3 +226,31 @@
       amount: 1
   products:
     Fluorosurfactant: 5
+    
+- type: reaction
+  id: Meth
+  reactants:
+    Ephedrine:
+      amount: 1
+    Carbon:
+      amount: 1
+    Iodine:
+      amount: 1
+    Phosphorus:
+     amount: 1
+  products:
+    Meth: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+    
+- type: reaction
+  id: Ephedrine
+  reactants:
+    Oil:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Sugar:
+      amount: 1
+    Diethylamine:
+     amount: 1
+  products:
+    Ephedrine: 4

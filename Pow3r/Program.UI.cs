@@ -36,30 +36,30 @@ namespace Pow3r
 
             if (Button("Generator"))
             {
-                var id = AllocId();
-                _state.Supplies.Add(id, new Supply { Id = id });
-                _displaySupplies.Add(id, new DisplaySupply());
+                var supply = new Supply();
+                _state.Supplies.Allocate(out supply.Id) = supply;
+                _displaySupplies.Add(supply.Id, new DisplaySupply());
             }
 
             if (Button("Load"))
             {
-                var id = AllocId();
-                _state.Loads.Add(id, new Load { Id = id });
-                _displayLoads.Add(id, new DisplayLoad());
+                var load = new Load();
+                _state.Loads.Allocate(out load.Id) = load;
+                _displayLoads.Add(load.Id, new DisplayLoad());
             }
 
             if (Button("Network"))
             {
-                var id = AllocId();
-                _state.Networks.Add(id, new Network { Id = id });
-                _displayNetworks.Add(id, new DisplayNetwork());
+                var network = new Network();
+                _state.Networks.Allocate(out network.Id) = network;
+                _displayNetworks.Add(network.Id, new DisplayNetwork());
             }
 
             if (Button("Battery"))
             {
-                var id = AllocId();
-                _state.Batteries.Add(id, new Battery { Id = id });
-                _displayBatteries.Add(id, new DisplayBattery());
+                var battery = new Battery();
+                _state.Batteries.Allocate(out battery.Id) = battery;
+                _displayBatteries.Add(battery.Id, new DisplayBattery());
             }
 
             Checkbox("Paused", ref _paused);
@@ -355,25 +355,25 @@ namespace Pow3r
                 switch (item)
                 {
                     case Network n:
-                        _state.Networks.Remove(n.Id);
+                        _state.Networks.Free(n.Id);
                         _displayNetworks.Remove(n.Id);
                         reLink = true;
                         break;
 
                     case Supply s:
-                        _state.Supplies.Remove(s.Id);
+                        _state.Supplies.Free(s.Id);
                         _state.Networks.Values.ForEach(n => n.Supplies.Remove(s.Id));
                         _displaySupplies.Remove(s.Id);
                         break;
 
                     case Load l:
-                        _state.Loads.Remove(l.Id);
+                        _state.Loads.Free(l.Id);
                         _state.Networks.Values.ForEach(n => n.Loads.Remove(l.Id));
                         _displayLoads.Remove(l.Id);
                         break;
 
                     case Battery b:
-                        _state.Batteries.Remove(b.Id);
+                        _state.Batteries.Free(b.Id);
                         _state.Networks.Values.ForEach(n => n.BatteriesCharging.Remove(b.Id));
                         _state.Networks.Values.ForEach(n => n.BatteriesDischarging.Remove(b.Id));
                         _displayBatteries.Remove(b.Id);

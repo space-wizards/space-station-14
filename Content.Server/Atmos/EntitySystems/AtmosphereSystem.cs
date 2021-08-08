@@ -8,6 +8,9 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {
+    /// <summary>
+    ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
+    /// </summary>
     [UsedImplicitly]
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {
@@ -29,7 +32,6 @@ namespace Content.Server.Atmos.EntitySystems
             #region Events
 
             // Map events.
-            _mapManager.MapCreated += OnMapCreated;
             _mapManager.TileChanged += OnTileChanged;
 
             #endregion
@@ -39,7 +41,6 @@ namespace Content.Server.Atmos.EntitySystems
         {
             base.Shutdown();
 
-            _mapManager.MapCreated -= OnMapCreated;
             _mapManager.TileChanged -= OnTileChanged;
         }
 
@@ -57,17 +58,6 @@ namespace Content.Server.Atmos.EntitySystems
             InvalidateTile(eventArgs.NewTile.GridIndex, eventArgs.NewTile.GridIndices);
         }
 
-        private void OnMapCreated(object? sender, MapEventArgs e)
-        {
-            if (e.Map == MapId.Nullspace)
-                return;
-
-            var map = _mapManager.GetMapEntity(e.Map);
-
-            if (!map.HasComponent<IGridAtmosphereComponent>())
-                map.AddComponent<SpaceGridAtmosphereComponent>();
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -81,7 +71,7 @@ namespace Content.Server.Atmos.EntitySystems
                 foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
                 {
                     // TODO ATMOS: Kill this with fire.
-                    var tile = GetTileAtmosphereOrCreateSpace(exposed.Owner.Transform.Coordinates);
+                    var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
                     if (tile == null) continue;
                     exposed.Update(tile, _exposedTimer, this);
                 }

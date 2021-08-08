@@ -8,7 +8,9 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Client.IoC.StaticIoC;
@@ -18,6 +20,8 @@ namespace Content.Client.Items.UI
 {
     public class ItemStatusPanel : Control
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+
         [ViewVariables]
         private readonly List<(IItemStatus, Control)> _activeStatusComponents = new();
 
@@ -33,6 +37,8 @@ namespace Content.Client.Items.UI
 
         public ItemStatusPanel(Texture texture, StyleBox.Margin cutout, StyleBox.Margin flat, Label.AlignMode textAlign)
         {
+            IoCManager.InjectDependencies(this);
+
             var panel = new StyleBoxTexture
             {
                 Texture = texture
@@ -117,6 +123,13 @@ namespace Content.Client.Items.UI
             return new ItemStatusPanel(ResC.GetTexture(texture), cutOut, flat, textAlign);
         }
 
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
+            UpdateItemName();
+        }
+
         public void Update(IEntity? entity)
         {
             if (entity == null)
@@ -131,10 +144,27 @@ namespace Content.Client.Items.UI
             {
                 _entity = entity;
                 BuildNewEntityStatus();
-                _itemNameLabel.Text = entity.Name;
+
+                UpdateItemName();
             }
 
             _panel.Visible = true;
+        }
+
+        private void UpdateItemName()
+        {
+            if (_entity == null)
+                return;
+
+            if (_entity.TryGetComponent(out HandVirtualPullComponent? virtualPull)
+                && _entityManager.TryGetEntity(virtualPull.PulledEntity, out var pulledEnt))
+            {
+                _itemNameLabel.Text = pulledEnt.Name;
+            }
+            else
+            {
+                _itemNameLabel.Text = _entity.Name;
+            }
         }
 
         private void ClearOldStatus()
@@ -161,6 +191,14 @@ namespace Content.Client.Items.UI
                 _statusContents.AddChild(control);
 
                 _activeStatusComponents.Add((statusComponent, control));
+            }
+
+            var collectMsg = new ItemStatusCollectMessage();
+            _entity.EntityManager.EventBus.RaiseLocalEvent(_entity.Uid, collectMsg);
+
+            foreach (var control in collectMsg.Controls)
+            {
+                _statusContents.AddChild(control);
             }
         }
     }

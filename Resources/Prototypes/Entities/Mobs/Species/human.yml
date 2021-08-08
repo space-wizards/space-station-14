@@ -167,7 +167,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000

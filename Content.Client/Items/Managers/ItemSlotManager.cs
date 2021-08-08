@@ -1,8 +1,11 @@
+using System;
+using System.Collections.Generic;
 using Content.Client.Examine;
 using Content.Client.Items.UI;
 using Content.Client.Storage;
 using Content.Client.Verbs;
 using Content.Shared.Cooldown;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -28,6 +31,11 @@ namespace Content.Client.Items.Managers
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IComponentManager _componentManager = default!;
+
+        private readonly HashSet<EntityUid> _highlightEntities = new();
+
+        public event Action<EntitySlotHighlightedEventArgs>? EntityHighlightedUpdated;
 
         public bool SetItemSlot(ItemSlotButton button, IEntity? entity)
         {
@@ -38,13 +46,26 @@ namespace Content.Client.Items.Managers
             }
             else
             {
-                if (!entity.TryGetComponent(out ISpriteComponent? sprite))
+                ISpriteComponent? sprite;
+                if (entity.TryGetComponent(out HandVirtualPullComponent? virtPull)
+                    && _componentManager.TryGetComponent(virtPull.PulledEntity, out ISpriteComponent pulledSprite))
+                {
+                    sprite = pulledSprite;
+                }
+                else if (!entity.TryGetComponent(out sprite))
+                {
                     return false;
+                }
 
                 button.ClearHover();
                 button.SpriteView.Sprite = sprite;
                 button.StorageButton.Visible = entity.HasComponent<ClientStorageComponent>();
             }
+
+            button.Entity = entity?.Uid ?? default;
+
+            // im lazy
+            button.UpdateSlotHighlighted();
             return true;
         }
 
@@ -145,5 +166,38 @@ namespace Content.Client.Items.Managers
 
             button.HoverSpriteView.Sprite = hoverSprite;
         }
+
+        public bool IsHighlighted(EntityUid uid)
+        {
+            return _highlightEntities.Contains(uid);
+        }
+
+        public void HighlightEntity(EntityUid uid)
+        {
+            if (!_highlightEntities.Add(uid))
+                return;
+
+            EntityHighlightedUpdated?.Invoke(new EntitySlotHighlightedEventArgs(uid, true));
+        }
+
+        public void UnHighlightEntity(EntityUid uid)
+        {
+            if (!_highlightEntities.Remove(uid))
+                return;
+
+            EntityHighlightedUpdated?.Invoke(new EntitySlotHighlightedEventArgs(uid, false));
+        }
+    }
+
+    public readonly struct EntitySlotHighlightedEventArgs
+    {
+        public EntitySlotHighlightedEventArgs(EntityUid entity, bool newHighlighted)
+        {
+            Entity = entity;
+            NewHighlighted = newHighlighted;
+        }
+
+        public EntityUid Entity { get; }
+        public bool NewHighlighted { get; }
     }
 }
