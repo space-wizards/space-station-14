@@ -1,6 +1,7 @@
 using Content.Shared.Cabinet;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Cabinet
@@ -15,11 +16,14 @@ namespace Content.Client.Cabinet
         [DataField("emptyState", required: true)]
         private string _emptyState = default!;
 
+        [DataField("state", required: true)]
+        private string _baseState = default!;
+
+        [DataField("openState", required: true)]
+        private string _openState = default!;
+
         [DataField("closedState", required: true)]
         private string _closedState = default!;
-
-        [DataField("closedEmptyState", required: true)]
-        private string _closedEmptyState = default!;
 
         public override void OnChangeData(AppearanceComponent component)
         {
@@ -29,28 +33,32 @@ namespace Content.Client.Cabinet
                 && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
                 && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
             {
+                sprite.LayerSetState(0, _baseState);
+
+                var state = isOpen ? _openState : _closedState;
+                sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
+
                 if (isOpen)
                 {
                     if (contains)
                     {
-                        sprite.LayerSetState(0, _fullState);
+                        sprite.LayerSetState(ItemCabinetVisuals.ContainsItem, _fullState);
                     }
                     else
                     {
-                        sprite.LayerSetState(0, _emptyState);
+                        sprite.LayerSetState(ItemCabinetVisuals.ContainsItem, _emptyState);
                     }
                 }
                 else
 
-                if (contains)
-                {
-                    sprite.LayerSetState(0, _closedState);
-                }
-                else
-                {
-                    sprite.LayerSetState(0, _closedEmptyState);
-                }
+                sprite.LayerSetState(0, _closedState);
             }
         }
+    }
+
+    public enum ItemCabinetVisualLayers : byte
+    {
+        Door
+        //Welded
     }
 }
