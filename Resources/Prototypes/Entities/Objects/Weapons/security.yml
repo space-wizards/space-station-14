@@ -47,16 +47,30 @@
         
 - type: entity
   name: portable flasher
-  parent: BaseItem
+  parent: BaseStructure
   id: Portableflasher
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
+    - type: FlashOnTrigger
+    - type: TriggerOnProximity
+      shape:
+        !type:PhysShapeCircle
+          radius: 2
+    - type: Anchorable
     - type: Sprite
       sprite: Objects/Weapons/pflash.rsi
-      state: flash
-    - type: FlashOnTrigger
-    - type: ProximityTrigger
-      shape: PhysShapeCircle
+      state: "off"
     - type: Physics
-
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.2,-0.3,0.2,0.3"
+        mask:
+        - Impassable
+        - VaultImpassable
+        - SmallImpassable
+        layer:
+        - Opaque
+        - MobImpassable
+        mass: 70
 

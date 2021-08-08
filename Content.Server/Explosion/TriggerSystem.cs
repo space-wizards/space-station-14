@@ -99,7 +99,7 @@ namespace Content.Server.Explosion
         private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             component.Owner.TryGetComponent(out PhysicsComponent? physics);
-            if (physics?.GetFixture(component.ProximityFixture) != null && component.Enabled)
+            if (args.OurFixture.ID == component.ProximityFixture && component.Enabled)
                 Trigger(component.Owner);
         }
 
