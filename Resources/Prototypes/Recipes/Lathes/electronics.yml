@@ -24,3 +24,21 @@
   materials:
      Steel: 50
      Glass: 50
+
+- type: latheRecipe
+  id: CloningPodMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: CloningPodMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: MedicalScannerMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: MedicalScannerMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
