@@ -1732,3 +1732,10 @@ Entries:
   - {message: Partially re-mapped Security and Chemistry., type: Add}
   id: 309
   time: '2021-08-08T00:32:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added cloning pod and medical scanner circuit boards into the protolathe,
+    type: Add}
+  - {message: Made the cloning pod and medical scanner constructible, type: Add}
+  id: 310
+  time: '2021-08-08T20:21:19.0000000+00:00'
