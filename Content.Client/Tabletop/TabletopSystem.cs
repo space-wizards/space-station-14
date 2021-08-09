@@ -93,7 +93,7 @@ namespace Content.Client.Tabletop
             if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
 
             // Move the entity locally every update
-            _draggedEntity.Transform.LocalPosition = clampedCoords.Position;
+            _draggedEntity.Transform.WorldPosition = clampedCoords.Position;
 
             // Increment total time passed
             _timePassed += frameTime;
