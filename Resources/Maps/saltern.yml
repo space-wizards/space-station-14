@@ -1253,6 +1253,10 @@ entities:
     type: Transform
   - containers:
       CloningPod-bodyContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 152
   type: CableHV
@@ -12362,6 +12366,10 @@ entities:
         - -16,0
         - -16,-16
       id: grid_chunk--1--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12370,6 +12378,10 @@ entities:
         - -16,16
         - -16,0
       id: grid_chunk--1-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12378,6 +12390,10 @@ entities:
         - 0,0
         - 0,-16
       id: grid_chunk-0--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12386,6 +12402,10 @@ entities:
         - 0,16
         - 0,0
       id: grid_chunk-0-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12394,6 +12414,10 @@ entities:
         - 16,16
         - 16,0
       id: grid_chunk-1-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12402,6 +12426,10 @@ entities:
         - 0,32
         - 0,16
       id: grid_chunk-0-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12410,6 +12438,10 @@ entities:
         - -32,16
         - -32,0
       id: grid_chunk--2-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12418,6 +12450,10 @@ entities:
         - 16,0
         - 16,-16
       id: grid_chunk-1--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12426,6 +12462,10 @@ entities:
         - 0,-16
         - 0,-32
       id: grid_chunk-0--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12434,6 +12474,10 @@ entities:
         - 16,-16
         - 16,-27
       id: grid_chunk-1--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 143
     - shape: !type:PolygonShape
         vertices:
@@ -12442,6 +12486,10 @@ entities:
         - -16,32
         - -16,16
       id: grid_chunk--1-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12450,6 +12498,10 @@ entities:
         - -3,34
         - -3,32
       id: grid_chunk--1-2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 6
     - shape: !type:PolygonShape
         vertices:
@@ -12458,6 +12510,10 @@ entities:
         - 16,17
         - 16,16
       id: grid_chunk-1-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 2
     - shape: !type:PolygonShape
         vertices:
@@ -12466,6 +12522,10 @@ entities:
         - 0,34
         - 0,32
       id: grid_chunk-0-2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 20
     - shape: !type:PolygonShape
         vertices:
@@ -12474,6 +12534,10 @@ entities:
         - 32,16
         - 32,0
       id: grid_chunk-2-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12482,6 +12546,10 @@ entities:
         - 48,15
         - 48,0
       id: grid_chunk-3-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 60
     - shape: !type:PolygonShape
         vertices:
@@ -12490,6 +12558,10 @@ entities:
         - 32,0
         - 32,-16
       id: grid_chunk-2--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12498,6 +12570,10 @@ entities:
         - -16,-16
         - -16,-31
       id: grid_chunk--1--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 240
     - shape: !type:PolygonShape
         vertices:
@@ -12506,6 +12582,10 @@ entities:
         - -26,-16
         - -26,-28
       id: grid_chunk--2--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 120
     - shape: !type:PolygonShape
         vertices:
@@ -12514,6 +12594,10 @@ entities:
         - -32,0
         - -32,-16
       id: grid_chunk--2--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 256
     - shape: !type:PolygonShape
         vertices:
@@ -12522,6 +12606,10 @@ entities:
         - -42,16
         - -42,0
       id: grid_chunk--3-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 160
     - shape: !type:PolygonShape
         vertices:
@@ -12530,6 +12618,10 @@ entities:
         - -40,0
         - -40,-13
       id: grid_chunk--3--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 104
     - shape: !type:PolygonShape
         vertices:
@@ -12538,6 +12630,10 @@ entities:
         - 48,0
         - 48,-16
       id: grid_chunk-3--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 128
     - shape: !type:PolygonShape
         vertices:
@@ -12546,6 +12642,10 @@ entities:
         - 40,-16
         - 40,-32
       id: grid_chunk-2--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 128
     - shape: !type:PolygonShape
         vertices:
@@ -12554,6 +12654,10 @@ entities:
         - 48,-16
         - 48,-32
       id: grid_chunk-3--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 176
     - shape: !type:PolygonShape
         vertices:
@@ -12562,6 +12666,10 @@ entities:
         - 48,-32
         - 48,-34
       id: grid_chunk-3--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 22
     - shape: !type:PolygonShape
         vertices:
@@ -12570,6 +12678,10 @@ entities:
         - 40,-32
         - 40,-34
       id: grid_chunk-2--3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 16
     - shape: !type:PolygonShape
         vertices:
@@ -12578,6 +12690,10 @@ entities:
         - -28,27
         - -28,16
       id: grid_chunk--2-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
       mass: 132
     bodyType: Dynamic
     type: Physics
@@ -14097,10 +14213,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1050
-  type: ChairOfficeLight
+  type: Window
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -0.5,-14.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 1051
@@ -18437,6 +18552,10 @@ entities:
     type: Transform
   - containers:
       MedicalScanner-bodyContainer: !type:ContainerSlot {}
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
     type: ContainerContainer
 - uid: 1545
   type: CrateMaterialSteel
@@ -41319,10 +41438,9 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4019
-  type: WindoorMedicalLocked
+  type: Firelock
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-15.5
+  - pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 4020
@@ -50170,9 +50288,10 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5083
-  type: WallSolid
+  type: WindoorScienceLocked
   components:
-  - pos: 0.5,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 5084
@@ -50589,9 +50708,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 5135
-  type: Firelock
+  type: LowWall
   components:
-  - pos: 0.5,-15.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 5136
@@ -50690,4 +50809,23 @@ entities:
   - pos: -3.5,7.5
     parent: 853
     type: Transform
+- uid: 5148
+  type: ChairOfficeLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 5149
+  type: CableApcExtension
+  components:
+  - anchored: True
+    rot: 1.5707963267948966 rad
+    pos: 10.5,26.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 ...

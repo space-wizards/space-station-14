@@ -122,6 +122,7 @@
   components:
   - type: Tag
     tags:
+    - Crowbar
     - CrowbarRed
   - type: Sprite
     sprite: Objects/Tools/crowbar_red.rsi

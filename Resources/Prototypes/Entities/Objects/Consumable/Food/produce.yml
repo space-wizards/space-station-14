@@ -142,6 +142,9 @@
   id: FoodCarrot
   description: It's good for the eyes!
   components:
+  - type: Tag
+    tags:
+    - Carrot
   - type: Food
   - type: SolutionContainer
     contents:

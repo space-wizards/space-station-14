@@ -1,4 +1,10 @@
 - type: Tag
+  id: Baguette
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
   id: BotanyHatchet
 
 - type: Tag
@@ -14,10 +20,19 @@
   id: Bottle
 
 - type: Tag
+  id: CableCoil
+
+- type: Tag
+  id: Carrot
+
+- type: Tag
   id: CanPilot
 
 - type: Tag
   id: CaptainSabre
+
+- type: Tag
+  id: CigPack
 
 - type: Tag
   id: Crayon
@@ -56,6 +71,9 @@
   id: ConveyorAssembly
 
 - type: Tag
+  id: CombatKnife
+
+- type: Tag
   id: DoorElectronics
 
 - type: Tag
@@ -74,7 +92,16 @@
   id: FirelockElectronics
 
 - type: Tag
+  id: Flare
+
+- type: Tag
+  id: Flashlight
+
+- type: Tag
   id: FootstepSound
+
+- type: Tag
+  id: Gauze
 
 - type: Tag
   id: GlassBeaker
@@ -92,10 +119,22 @@
   id: JawsOfLife
 
 - type: Tag
+  id: Katana
+
+- type: Tag
+  id: Knife
+
+- type: Tag
+  id: Machete
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
   id: NoSpinOnThrow
+
+- type: Tag
+  id: Ointment
 
 - type: Tag
   id: Ore
@@ -116,6 +155,9 @@
   id: Powerdrill
 
 - type: Tag
+  id: RodMetal1
+
+- type: Tag
   id: RollingPaper
 
 - type: Tag
@@ -125,10 +167,22 @@
   id: Sheet
 
 - type: Tag
+  id: ShotgunShell
+
+- type: Tag
   id: Shovel
 
 - type: Tag
+  id: Soap
+
+- type: Tag
   id: Spray
+
+- type: Tag
+  id: Spear
+
+- type: Tag
+  id: Taser
 
 - type: Tag
   id: Wall
