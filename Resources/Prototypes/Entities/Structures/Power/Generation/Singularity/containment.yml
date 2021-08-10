@@ -1,7 +1,7 @@
 - type: entity
   id: ContainmentFieldGenerator
   name: containment field generator
-  description: A machine that generates a containment field when powered by an emitter.\nKeeps the Singularity docile.
+  description: A machine that generates a containment field when powered by an emitter. Keeps the Singularity docile.
   placement:
     mode: SnapgridCenter
   components:

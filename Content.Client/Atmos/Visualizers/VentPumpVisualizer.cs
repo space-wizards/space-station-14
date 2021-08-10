@@ -40,7 +40,7 @@ namespace Content.Client.Atmos.Visualizers
         }
     }
 
-    public enum VentVisualLayers
+    public enum VentVisualLayers : byte
     {
         Vent,
     }

@@ -69,7 +69,9 @@ namespace Content.Server.Throwing
                     EntitySystem.Get<InteractionSystem>().ThrownInteraction(user, entity);
             }
 
-            physicsComponent.ApplyLinearImpulse(direction.Normalized * strength * physicsComponent.Mass);
+            var impulseVector = direction.Normalized * strength * physicsComponent.Mass;
+            physicsComponent.ApplyLinearImpulse(impulseVector);
+            
             // Estimate time to arrival so we can apply OnGround status and slow it much faster.
             var time = (direction / strength).Length;
 
@@ -96,7 +98,7 @@ namespace Content.Server.Throwing
 
                 if (!msg.Cancelled)
                 {
-                    body.ApplyLinearImpulse(-direction * pushbackRatio);
+                    body.ApplyLinearImpulse(-impulseVector * pushbackRatio);
                 }
             }
         }

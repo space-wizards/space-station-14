@@ -22,6 +22,9 @@ namespace Content.Shared.Doors
         [ComponentDependency]
         protected readonly IPhysBody? PhysicsComponent = null;
 
+        [Dependency]
+        protected readonly IGameTiming _gameTiming = default!;
+
         [ViewVariables]
         private DoorState _state = DoorState.Closed;
         /// <summary>

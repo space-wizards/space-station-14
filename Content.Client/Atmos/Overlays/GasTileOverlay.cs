@@ -40,9 +40,7 @@ namespace Content.Client.Atmos.Overlays
                 if (!_gasTileOverlaySystem.HasData(mapGrid.Index))
                     continue;
 
-                var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
-
-                foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
+                foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                 {
                     foreach (var (texture, color) in _gasTileOverlaySystem.GetOverlays(mapGrid.Index, tile.GridIndices))
                     {

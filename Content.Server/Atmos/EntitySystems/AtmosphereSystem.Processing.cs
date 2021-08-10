@@ -14,6 +14,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
+        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
         private readonly Stopwatch _simulationStopwatch = new();
 
         /// <summary>
@@ -204,11 +205,10 @@ namespace Content.Server.Atmos.EntitySystems
                 atmosphere.CurrentRunAtmosDevices = new Queue<AtmosDeviceComponent>(atmosphere.AtmosDevices);
 
             var time = _gameTiming.CurTime;
-            var updateEvent = new AtmosDeviceUpdateEvent();
             var number = 0;
             while (atmosphere.CurrentRunAtmosDevices.TryDequeue(out var device))
             {
-                EntityManager.EventBus.RaiseLocalEvent(device.Owner.Uid, updateEvent, false);
+                RaiseLocalEvent(device.Owner.Uid, _updateEvent, false);
                 device.LastProcess = time;
 
                 if (number++ < LagCheckIterations) continue;
@@ -241,7 +241,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var atmosphere = _currentRunAtmosphere[_currentRunAtmosphereIndex];
 
-                if (atmosphere.Paused || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
+                if (atmosphere.Paused || !atmosphere.Simulated || atmosphere.LifeStage >= ComponentLifeStage.Stopping)
                     continue;
 
                 atmosphere.Timer += frameTime;

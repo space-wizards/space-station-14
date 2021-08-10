@@ -166,6 +166,8 @@
       - FirelockElectronics
       - DoorElectronics
       - APCElectronics
+      - CloningPodMachineCircuitboard
+      - MedicalScannerMachineCircuitboard
       - Bucket
       - MopItem
       - SprayBottle

@@ -2,8 +2,8 @@ using System;
 using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Body.Respiratory;
 using Content.Server.Chemistry.Components;
-using Content.Server.Metabolism;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Reagent;
@@ -72,7 +72,7 @@ namespace Content.Server.Body.Circulatory
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.TryGetComponent(out MetabolismComponent? metabolism))
+            if (!Owner.TryGetComponent(out RespiratorComponent? metabolism))
             {
                 atmosphereSystem.Merge(to, Air);
                 Air.Clear();

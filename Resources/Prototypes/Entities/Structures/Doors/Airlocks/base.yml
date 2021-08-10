@@ -38,16 +38,16 @@
       - SmallImpassable
   - type: Door
     board: DoorElectronics
+    openSound:
+      path: /Audio/Machines/airlock_open.ogg
+    closeSound:
+      path: /Audio/Machines/airlock_close.ogg
+    denySound:
+      path: /Audio/Machines/airlock_deny.ogg
   - type: Airlock
   - type: Appearance
     visuals:
     - type: AirlockVisualizer
-      open_sound:
-        path: /Audio/Machines/airlock_open.ogg
-      close_sound:
-        path: /Audio/Machines/airlock_close.ogg
-      deny_sound:
-        path: /Audio/Machines/airlock_deny.ogg
     - type: WiresVisualizer
   - type: ApcPowerReceiver
   - type: Wires

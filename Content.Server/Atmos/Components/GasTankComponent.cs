@@ -1,4 +1,3 @@
-#nullable disable warnings
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;

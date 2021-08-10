@@ -1620,3 +1620,122 @@ Entries:
       pulling in your hand!, type: Tweak}
   id: 288
   time: '2021-07-31T01:14:00.0000000+00:00'
+- author: plinyvic
+  changes:
+  - {message: Fixed reagent grinder not giving correct output with stacked items,
+    type: Fix}
+  id: 289
+  time: '2021-07-31T12:06:25.0000000+00:00'
+- author: michaelcooke
+  changes:
+  - {message: Throwing items in space will now push you in the opposite direction
+      to the thrown object, type: Fix}
+  id: 290
+  time: '2021-07-31T12:53:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Made plasma Grindable, type: Tweak}
+  id: 291
+  time: '2021-08-01T19:05:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Door sounds no longer play twice sometimes., type: Fix}
+  id: 292
+  time: '2021-08-02T11:57:06.0000000+00:00'
+- author: scaly-chimp
+  changes:
+  - {message: Added everyone's favorite stimulant meth!, type: Add}
+  id: 293
+  time: '2021-08-03T03:32:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Station will spawn at a random position rather than 0,0.', type: Tweak}
+  id: 294
+  time: '2021-08-03T08:49:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix lerping for other physics bodies., type: Fix}
+  - {message: Fix joint prediction., type: Fix}
+  id: 295
+  time: '2021-08-03T15:02:44.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes mobs not taking pressure damage on space., type: Fix}
+  id: 296
+  time: '2021-08-04T07:49:53.509340+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Added an alternate jumpsuit for Botany, type: Add}
+  id: 297
+  time: '2021-08-05T10:18:05.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added two new maintenance areas, type: Add}
+  id: 298
+  time: '2021-08-05T22:20:58.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Windoors and secure windoors have been added and are constructible.,
+    type: Add}
+  id: 299
+  time: '2021-08-06T06:09:39.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Ghosts can now properly return to their body if applicable., type: Fix}
+  id: 300
+  time: '2021-08-06T07:02:36.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes a bug where items would disappear when placed in tables, in certain
+      situations.', type: Fix}
+  id: 301
+  time: '2021-08-06T15:53:48.856573+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pickup animation not showing under certain conditions., type: Fix}
+  id: 302
+  time: '2021-08-06T16:13:07.405459+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix pointing at an item in your inventory resulting in the pointing
+      arrow playing a weird animation., type: Fix}
+  id: 303
+  time: '2021-08-06T16:28:43.947928+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where you couldn't point at space., type: Fix}
+  id: 304
+  time: '2021-08-06T16:28:43.948705+00:00'
+- author: Seth
+  changes:
+  - {message: Added a hardsuit into CMO's Locker, type: Add}
+  id: 305
+  time: '2021-08-06T23:11:18.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Maps in windoors, type: Add}
+  id: 306
+  time: '2021-08-07T02:47:43.0000000+00:00'
+- author: scrato
+  changes:
+  - {message: 'When the head is detached from the body, the hair, eyes and ears will
+      not remain at the body.', type: Add}
+  id: 307
+  time: '2021-08-07T21:18:43.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Security windoors for planned mapping rework., type: Add}
+  id: 308
+  time: '2021-08-07T21:29:47.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Partially re-mapped Security and Chemistry., type: Add}
+  id: 309
+  time: '2021-08-08T00:32:18.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added cloning pod and medical scanner circuit boards into the protolathe,
+    type: Add}
+  - {message: Made the cloning pod and medical scanner constructible, type: Add}
+  id: 310
+  time: '2021-08-08T20:21:19.0000000+00:00'

@@ -23,6 +23,25 @@
       - Opaque
       mask:
       - MobMask
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: CloningPodMachineCircuitboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "CloningPod"
+    LayoutId: CloningPod
   - type: Appearance
     visuals:
       - type: CloningPodVisualizer
