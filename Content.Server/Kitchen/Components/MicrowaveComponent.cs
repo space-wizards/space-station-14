@@ -339,39 +339,40 @@ namespace Content.Server.Kitchen.Components
             SetAppearance(MicrowaveVisualState.Cooking);
             SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
             Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), (Action) (() =>
-              {
-                  if (_lostPower)
-                  {
-                      return;
-                  }
+            {
+                if (_lostPower)
+                {
+                    return;
+                }
 
-                  if (failState == MicrowaveSuccessState.UnwantedForeignObject)
-                  {
-                      VaporizeReagents();
-                      EjectSolids();
-                  }
-                  else
-                  {
-                      if (recipeToCook != null)
-                      {
-                          SubtractContents(recipeToCook);
-                          Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
-                      }
-                      else
-                      {
-                          VaporizeReagents();
-                          VaporizeSolids();
-                          Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
-                      }
-                  }
+                if (failState == MicrowaveSuccessState.UnwantedForeignObject)
+                {
+                    VaporizeReagents();
+                    EjectSolids();
+                }
+                else
+                {
+                    if (recipeToCook != null)
+                    {
+                        SubtractContents(recipeToCook);
+                        Owner.EntityManager.SpawnEntity(recipeToCook.Result, Owner.Transform.Coordinates);
+                    }
+                    else
+                    {
+                        VaporizeReagents();
+                        VaporizeSolids();
+                        Owner.EntityManager.SpawnEntity(_badRecipeName, Owner.Transform.Coordinates);
+                    }
+                }
 
-                  SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
+                    AudioParams.Default.WithVolume(-1f));
 
-                  SetAppearance(MicrowaveVisualState.Idle);
-                  _busy = false;
+                SetAppearance(MicrowaveVisualState.Idle);
+                _busy = false;
 
-                  _uiDirty = true;
-              }));
+                _uiDirty = true;
+            }));
             _lostPower = false;
             _uiDirty = true;
         }
