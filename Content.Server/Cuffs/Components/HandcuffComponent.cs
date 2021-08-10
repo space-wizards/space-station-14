@@ -116,7 +116,8 @@ namespace Content.Server.Cuffs.Components
         [DataField("startCuffSound")]
         public SoundSpecifier StartCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
 
-        [DataField("endCuffSound")] public SoundSpecifier EndCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
+        [DataField("endCuffSound")]
+        public SoundSpecifier EndCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
 
         [DataField("startBreakoutSound")]
         public SoundSpecifier StartBreakoutSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_breakout_start.ogg");

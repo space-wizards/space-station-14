@@ -35,7 +35,7 @@ namespace Content.Server.Singularity.Components
 
         [ViewVariables] public int FireShotCounter;
 
-        [ViewVariables] [DataField("fireSound")] public string FireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("fireSound")] public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
         [ViewVariables] [DataField("boltType")] public string BoltType = "EmitterBolt";
         [ViewVariables] [DataField("powerUseActive")] public int PowerUseActive = 500;
         [ViewVariables] [DataField("fireBurstSize")] public int FireBurstSize = 3;

@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -24,11 +29,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Content.Server.Storage.Components
 {
@@ -387,79 +387,77 @@ namespace Content.Server.Storage.Components
             switch (message)
             {
                 case RemoveEntityMessage remove:
+                {
+                    EnsureInitialCalculated();
+
+                    var player = session.AttachedEntity;
+
+                    if (player == null)
                     {
-                        EnsureInitialCalculated();
-
-                        var player = session.AttachedEntity;
-
-                        if (player == null)
-                        {
-                            break;
-                        }
-
-                        var ownerTransform = Owner.Transform;
-                        var playerTransform = player.Transform;
-
-                        if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                            !ownerTransform.IsMapTransform &&
-                            !playerTransform.ContainsEntity(ownerTransform))
-                        {
-                            break;
-                        }
-
-                        var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                        if (entity == null || _storage?.Contains(entity) == false)
-                        {
-                            break;
-                        }
-
-                        var item = entity.GetComponent<ItemComponent>();
-                        if (item == null ||
-                            !player.TryGetComponent(out HandsComponent? hands))
-                        {
-                            break;
-                        }
-
-                        if (!hands.CanPutInHand(item))
-                        {
-                            break;
-                        }
-
-                        hands.PutInHand(item);
-
                         break;
                     }
+
+                    var ownerTransform = Owner.Transform;
+                    var playerTransform = player.Transform;
+
+                    if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
+                        !ownerTransform.IsMapTransform && !playerTransform.ContainsEntity(ownerTransform))
+                    {
+                        break;
+                    }
+
+                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
+
+                    if (entity == null || _storage?.Contains(entity) == false)
+                    {
+                        break;
+                    }
+
+                    var item = entity.GetComponent<ItemComponent>();
+                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
+                    {
+                        break;
+                    }
+
+                    if (!hands.CanPutInHand(item))
+                    {
+                        break;
+                    }
+
+                    hands.PutInHand(item);
+
+                    break;
+                }
                 case InsertEntityMessage _:
+                {
+                    EnsureInitialCalculated();
+
+                    var player = session.AttachedEntity;
+
+                    if (player == null)
                     {
-                        EnsureInitialCalculated();
-
-                        var player = session.AttachedEntity;
-
-                        if (player == null)
-                        {
-                            break;
-                        }
-
-                        if (!player.InRangeUnobstructed(Owner, popup: true))
-                        {
-                            break;
-                        }
-
-                        PlayerInsertHeldEntity(player);
-
                         break;
                     }
+
+                    if (!player.InRangeUnobstructed(Owner, popup: true))
+                    {
+                        break;
+                    }
+
+                    PlayerInsertHeldEntity(player);
+
+                    break;
+                }
                 case CloseStorageUIMessage _:
+                {
+                    if (session is not IPlayerSession playerSession)
                     {
-                        if (session is not IPlayerSession playerSession)
-                        {
-                            break;
-                        }
-
-                        UnsubscribeSession(playerSession);
                         break;
                     }
+
+                    UnsubscribeSession(playerSession);
+                    break;
+                }
             }
         }
 

@@ -48,11 +48,11 @@ namespace Content.Server.Window
             switch (message)
             {
                 case DamageChangedMessage msg:
-                    {
-                        var current = msg.Damageable.TotalDamage;
-                        UpdateVisuals(current);
-                        break;
-                    }
+                {
+                    var current = msg.Damageable.TotalDamage;
+                    UpdateVisuals(current);
+                    break;
+                }
             }
         }
 

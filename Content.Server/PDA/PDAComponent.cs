@@ -104,49 +104,49 @@ namespace Content.Server.PDA
             switch (message.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    {
-                        UpdatePDAUserInterface();
-                        break;
-                    }
+                {
+                    UpdatePDAUserInterface();
+                    break;
+                }
                 case PDAToggleFlashlightMessage _:
-                    {
-                        ToggleLight();
-                        break;
-                    }
+                {
+                    ToggleLight();
+                    break;
+                }
 
                 case PDAEjectIDMessage _:
-                    {
-                        HandleIDEjection(message.Session.AttachedEntity!);
-                        break;
-                    }
+                {
+                    HandleIDEjection(message.Session.AttachedEntity!);
+                    break;
+                }
 
                 case PDAEjectPenMessage _:
-                    {
-                        HandlePenEjection(message.Session.AttachedEntity!);
-                        break;
-                    }
+                {
+                    HandlePenEjection(message.Session.AttachedEntity!);
+                    break;
+                }
 
                 case PDAUplinkBuyListingMessage buyMsg:
+                {
+                    var player = message.Session.AttachedEntity;
+                    if (player == null) break;
+
+                    if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
+                        player.Transform.Coordinates, out var entity))
                     {
-                        var player = message.Session.AttachedEntity;
-                        if (player == null)
-                            break;
-
-                        if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                            player.Transform.Coordinates, out var entity))
-                        {
-                            SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
-                            break;
-                        }
-
-                        if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
-                            break;
-
-                        hands.PutInHandOrDrop(item);
-
-                        SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
+                        SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
                         break;
                     }
+
+                    if (!player.TryGetComponent(out HandsComponent? hands) ||
+                        !entity.TryGetComponent(out ItemComponent? item))
+                        break;
+
+                    hands.PutInHandOrDrop(item);
+
+                    SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
+                    break;
+                }
             }
         }
 

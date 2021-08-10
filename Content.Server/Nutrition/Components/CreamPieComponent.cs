@@ -21,7 +21,7 @@ namespace Content.Server.Nutrition.Components
         public float ParalyzeTime { get; set; } = 1f;
 
         [DataField("sound")]
-        private SoundSpecifier _sound = new SoundCollectionSpecifier("desacration");
+        private SoundSpecifier _sound = new SoundCollectionSpecifier("desecration");
 
         public void PlaySound()
         {
