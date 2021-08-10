@@ -36,11 +36,6 @@ namespace Content.Shared.Buckle.Components
 
         public abstract bool TryBuckle(IEntity? user, IEntity to);
 
-        bool IActionBlocker.CanMove()
-        {
-            return !Buckled;
-        }
-
         bool IActionBlocker.CanChangeDirection()
         {
             return !Buckled;
