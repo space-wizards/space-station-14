@@ -14213,10 +14213,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 1050
-  type: ChairOfficeLight
+  type: Window
   components:
-  - rot: 1.5707963705062866 rad
-    pos: -0.5,-14.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 1051
@@ -41439,10 +41438,9 @@ entities:
   - airBlocked: False
     type: Airtight
 - uid: 4019
-  type: WindoorMedicalLocked
+  type: Firelock
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 0.5,-15.5
+  - pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 4020
@@ -50290,9 +50288,10 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 5083
-  type: WallSolid
+  type: WindoorScienceLocked
   components:
-  - pos: 0.5,-14.5
+  - rot: -1.5707963267948966 rad
+    pos: 0.5,-15.5
     parent: 853
     type: Transform
 - uid: 5084
@@ -50709,9 +50708,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 5135
-  type: Firelock
+  type: LowWall
   components:
-  - pos: 0.5,-15.5
+  - pos: 0.5,-14.5
     parent: 853
     type: Transform
 - uid: 5136
@@ -50810,4 +50809,23 @@ entities:
   - pos: -3.5,7.5
     parent: 853
     type: Transform
+- uid: 5148
+  type: ChairOfficeLight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -0.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 5149
+  type: CableApcExtension
+  components:
+  - anchored: True
+    rot: 1.5707963267948966 rad
+    pos: 10.5,26.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 ...
