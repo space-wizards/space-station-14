@@ -13,23 +13,25 @@
   - type: Storage
     capacity: 40
     # TODO: Fill this out more.
-    # whitelist:
-    #   tags:
-    #     - Wirecutter
-    #     - Crowbar
-    #     - CrowbarRed
-    #     - Screwdriver
-    #     - Flashlight
-    #     - Welder
-    #     - Wrench
-    #     - Painter
-    #     - GeigerCounter
-    #     - Flare
-    #     - Coilsofwire
-    #     -
-    #     -
-    #   components:
-    #     - SignalLinker
+    whitelist:
+      tags:
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+#        - Painter
+#        - GeigerCounter
+        - Flare
+        - CableCoil
+        - CigPack
+      components:
+        - SignalLinker
+        - RCD
+        - RCDAmmo
+        - Welder
+        - Radio
+        - PowerCell
   - type: ItemCounter
     mapLayers:
       cutters_red:
@@ -72,25 +74,31 @@
   - type: Clothing
     sprite: Clothing/Belt/ce.rsi
   - type: Storage
-    # TODO: Fill this out more.
-    # whitelist:
-    #   tags:
-    #     - Wirecutter
-    #     - Crowbar
-    #     - CrowbarRed
-    #     - Screwdriver
-    #     - Flashlight
-    #     - Welder
-    #     - Wrench
-    #     - Painter
-    #     - GeigerCounter
-    #     - Flare
-    #     - Coilsofwire
-    #     -
-    #     -
-    #   components:
-    #     - SignalLinker
     capacity: 100
+    # TODO: Fill this out more.
+    whitelist:
+      tags:
+        - Wirecutter
+        - Crowbar
+        - Screwdriver
+        - Flashlight
+        - Wrench
+#        - Painter
+#        - GeigerCounter
+        - Flare
+        - CableCoil
+        - Powerdrill
+        - JawsOfLife
+        - CigPack
+      components:
+        - SignalLinker
+        - RCD
+        - RCDAmmo
+        - Welder
+        - Flash
+        - Radio
+        - Handcuff
+        - PowerCell
   - type: ItemCounter
     mapLayers:
       drill:
@@ -142,6 +150,17 @@
     sprite: Clothing/Belt/assault.rsi
   - type: Storage
     capacity: 40
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - Flash
+        - Handcuff
+        - RangedMagazine
+        - Ammo
   - type: ItemCounter
     mapLayers:
       flashbang:
@@ -169,6 +188,14 @@
     sprite: Clothing/Belt/janitor.rsi
   - type: Storage
     capacity: 40
+    whitelist:
+      tags:
+        - Wrench
+        - Bottle
+        - Spray
+        - Soap
+        - Flashlight
+        - CigPack
   - type: ItemCounter
     mapLayers:
       bottle:
@@ -179,6 +206,10 @@
         whitelist:
           tags:
           - Spray
+      wrench:
+        whitelist:
+          tags:
+          - Wrench
   - type: Appearance
     visuals:
     - type: MappedItemVisualizer
@@ -196,6 +227,20 @@
     sprite: Clothing/Belt/medical.rsi
   - type: Storage
     capacity: 40
+    whitelist:
+      tags:
+        - Wrench
+        - Bottle
+        - Spray
+        - Brutepack
+        - Gauze
+        - Ointment
+        - CigPack
+      components:
+        - Hypospray
+        - Pill
+        - SurgeryTool
+        - Radio
   - type: ItemCounter
     mapLayers:
       bottle:
@@ -242,27 +287,29 @@
   - type: Clothing
     sprite: Clothing/Belt/plant.rsi
   - type: Storage
-    # whitelist:
-    #   tags:
-    #     - BotanyHoe
-    #     - PlantAnalyzer
-    #     - BotanyHoe
-    #     - BotanyShovel
-    #     - PlantBGone
-    #     - Bottle
-    #   components:
-    #     - Seed
     capacity: 40
+    whitelist:
+      tags:
+        - BotanyHoe
+        # - PlantAnalyzer
+        - BotanyHoe
+        - BotanyShovel
+        - PlantBGone
+        - Bottle
+        - CigPack
+      components:
+        - Seed
+        - Smoking
   - type: ItemCounter
     mapLayers:
       hatchet:
         whitelist:
           tags:
           - BotanyHatchet
-      hydro:
-        whitelist:
-          tags:
-          - PlantAnalyzer # Dunno what to put here, should be aight.
+      # hydro:
+      #   whitelist:
+      #     tags:
+      #     - PlantAnalyzer # Dunno what to put here, should be aight.
       hoe:
         whitelist:
           tags:
@@ -296,6 +343,15 @@
     sprite: Clothing/Belt/security.rsi
   - type: Storage
     capacity: 40
+    whitelist:
+      tags:
+        - CigPack
+        - Taser
+      components:
+        - Stunbaton
+        - FlashOnTrigger
+        - Flash
+        - Handcuff
   - type: ItemCounter
     mapLayers:
       flashbang:
@@ -324,11 +380,58 @@
     sprite: Clothing/Belt/sheath.rsi
   - type: Storage
     capacity: 15
+    whitelist:
+      tags:
+        - CaptainSabre
+        - Baguette
+        - Carrot
+        - Crowbar
+        - Katana
+        - Machete
+        - CombatKnife
+        - RodMetal1
+        - Spear
+      components:
+        - Mop
   - type: StorageFill
     contents:
       - id: CaptainSabre
   - type: ItemCounter
     mapLayers:
+      sheath-bag:
+        whitelist:
+          tags:
+          - Baguette
+      sheath-carrot:
+        whitelist:
+          tags:
+          - Carrot
+      sheath-crowbar:
+        whitelist:
+          tags:
+          - Crowbar
+      sheath-crowbarr:
+        whitelist:
+          tags:
+          - CrowbarRed
+      sheath-katana:
+        whitelist:
+          tags:
+          - Katana
+      sheath-knife:
+        whitelist:
+          tags:
+          - Machete
+          - CombatKnife
+      sheath-mop:
+        whitelist:
+          components:
+          - Mop
+      sheath-rod:
+        whitelist:
+          tags:
+          - RodMetal1
+          - Spear
       sheath-sabre:
         whitelist:
           tags:
@@ -350,7 +453,10 @@
   - type: Clothing
     sprite: Clothing/Belt/bandolier.rsi
   - type: Storage
-    capacity: 40
+    capacity: 60
+    whitelist:
+      tags:
+        - ShotgunShell
 
 - type: entity
   parent: ClothingBeltBase

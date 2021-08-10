@@ -34,9 +34,9 @@
     Plastic: 50
 
 - type: latheRecipe
-  id: FlareBase
+  id: Flare
   icon: Objects/Misc/flare.rsi
-  result: FlareBase
+  result: Flare
   completetime: 500
   materials:
     Plastic: 50

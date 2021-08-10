@@ -123,6 +123,9 @@
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
+  - type: Tag
+    tags:
+    - Taser
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
