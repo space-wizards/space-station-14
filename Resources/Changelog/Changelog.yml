@@ -1739,3 +1739,9 @@ Entries:
   - {message: Made the cloning pod and medical scanner constructible, type: Add}
   id: 310
   time: '2021-08-08T20:21:19.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Fixed the light in the captain's bathroom and the inner windoor at the
+      science desk., type: Tweak}
+  id: 311
+  time: '2021-08-10T00:28:11.0000000+00:00'
