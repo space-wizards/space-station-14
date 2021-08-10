@@ -1,7 +1,7 @@
 - type: entity
-  abstract: true
   id: GasCanister
   name: gas canister
+  abstract: true
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
   parent: BaseStructureDynamic
   components:
@@ -32,7 +32,8 @@
             damage: 300
           behaviors:
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
             - !type:SpawnEntitiesBehavior
               spawn:
                 GasCanisterBrokenBase:

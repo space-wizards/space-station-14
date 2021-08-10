@@ -42,6 +42,5 @@ namespace Content.Server.Singularity.Components
         [ViewVariables] [DataField("fireInterval")] public TimeSpan FireInterval = TimeSpan.FromSeconds(2);
         [ViewVariables] [DataField("fireBurstDelayMin")] public TimeSpan FireBurstDelayMin = TimeSpan.FromSeconds(2);
         [ViewVariables] [DataField("fireBurstDelayMax")] public TimeSpan FireBurstDelayMax = TimeSpan.FromSeconds(10);
-
     }
 }
