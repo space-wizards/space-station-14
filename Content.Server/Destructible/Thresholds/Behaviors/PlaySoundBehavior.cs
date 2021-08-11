@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Audio;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
@@ -14,17 +15,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// <summary>
         ///     Sound played upon destruction.
         /// </summary>
-        [DataField("sound")] public string Sound { get; set; } = string.Empty;
+        [DataField("sound", required: true)] public SoundSpecifier Sound { get; set; } = default!;
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            if (string.IsNullOrEmpty(Sound))
-            {
-                return;
-            }
-
             var pos = owner.Transform.Coordinates;
-            SoundSystem.Play(Filter.Pvs(pos), Sound, pos, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(pos), Sound.GetSound(), pos, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

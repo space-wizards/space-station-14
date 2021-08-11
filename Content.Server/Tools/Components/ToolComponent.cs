@@ -4,6 +4,7 @@ using Content.Server.DoAfter;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -43,11 +44,8 @@ namespace Content.Server.Tools.Components
         [DataField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
-        [DataField("useSound")]
-        public string? UseSound { get; set; }
-
-        [DataField("useSoundCollection")]
-        public string? UseSoundCollection { get; set; }
+        [DataField("useSound", required: true)]
+        public SoundSpecifier UseSound { get; set; } = default!;
 
         public void AddQuality(ToolQuality quality)
         {
@@ -96,30 +94,9 @@ namespace Content.Server.Tools.Components
             return true;
         }
 
-        protected void PlaySoundCollection(string? name, float volume = -5f)
+        public void PlayUseSound(float volume = -5f)
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                return;
-            }
-
-            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
-        }
-
-        public void PlayUseSound(float volume=-5f)
-        {
-            if (string.IsNullOrEmpty(UseSoundCollection))
-            {
-                if (!string.IsNullOrEmpty(UseSound))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), UseSound, Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
-                }
-            }
-            else
-            {
-                PlaySoundCollection(UseSoundCollection, volume);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), UseSound.GetSound(), Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
     }
 }

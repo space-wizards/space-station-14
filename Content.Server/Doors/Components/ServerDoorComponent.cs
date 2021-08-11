@@ -42,6 +42,9 @@ namespace Content.Server.Doors.Components
         [DataField("board")]
         private string? _boardPrototype;
 
+        [DataField("tryOpenDoorSound")]
+        private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
         public override DoorState State
         {
             get => base.State;
@@ -251,8 +254,7 @@ namespace Content.Server.Doors.Components
 
                 if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner,
-                                                                   AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
             }
             else

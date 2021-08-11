@@ -127,7 +127,7 @@ namespace Content.Server.RoundEnd
         private void EndRound()
         {
             OnRoundEndCountdownFinished?.Invoke();
-            var gameTicker = EntitySystem.Get<GameTicker>();
+            var gameTicker = Get<GameTicker>();
             gameTicker.EndRound();
 
             _chatManager.DispatchServerAnnouncement(Loc.GetString("round-end-system-round-restart-eta-announcement", ("seconds", RestartRoundTime)));

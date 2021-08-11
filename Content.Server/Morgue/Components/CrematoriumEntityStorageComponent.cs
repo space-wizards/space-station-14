@@ -11,6 +11,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Morgue;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
@@ -19,6 +20,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -32,6 +34,8 @@ namespace Content.Server.Morgue.Components
     public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
     {
         public override string Name => "CrematoriumEntityStorage";
+
+        [DataField("cremateFinishSound")] private SoundSpecifier _cremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
 
         [ViewVariables]
         public bool Cooking { get; private set; }
@@ -49,7 +53,7 @@ namespace Content.Server.Morgue.Components
             {
                 if (Appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
                 {
-                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning",("owner", Owner)) + "\n");
+                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", Owner)) + "\n");
                 }
 
                 if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
@@ -67,7 +71,8 @@ namespace Content.Server.Morgue.Components
         {
             if (Cooking)
             {
-                if (!silent) Owner.PopupMessage(user, Loc.GetString("crematorium-entity-storage-component-is-cooking-safety-message"));
+                if (!silent)
+                    Owner.PopupMessage(user, Loc.GetString("crematorium-entity-storage-component-is-cooking-safety-message"));
                 return false;
             }
             return base.CanOpen(user, silent);
@@ -115,7 +120,8 @@ namespace Content.Server.Morgue.Components
 
                 TryOpenStorage(Owner);
 
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/ding.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
+
             }, _cremateCancelToken.Token);
         }
 

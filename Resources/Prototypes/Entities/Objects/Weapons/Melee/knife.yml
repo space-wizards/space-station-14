@@ -11,7 +11,8 @@
       - Knife
   - type: ItemCooldown
   - type: MeleeWeapon
-    hitSound: /Audio/Weapons/bladeslice.ogg
+    hitSound: 
+      path: /Audio/Weapons/bladeslice.ogg
     damage: 12
   - type: Sprite
     netsync: false

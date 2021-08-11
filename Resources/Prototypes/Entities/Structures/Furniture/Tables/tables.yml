@@ -17,7 +17,8 @@
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           PartRodMetal1:
@@ -48,7 +49,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -77,7 +79,8 @@
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -109,7 +112,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -135,7 +139,8 @@
         damage: 75
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -164,7 +169,8 @@
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/glass_break2.ogg
+        sound:
+          path: /Audio/Effects/glass_break2.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -193,7 +199,8 @@
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/glass_break2.ogg
+        sound:
+          path: /Audio/Effects/glass_break2.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -225,7 +232,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+          path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -254,7 +262,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+          path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank:
@@ -286,7 +295,8 @@
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/picaxe2.ogg
+        sound:
+          path: /Audio/Effects/picaxe2.ogg
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
