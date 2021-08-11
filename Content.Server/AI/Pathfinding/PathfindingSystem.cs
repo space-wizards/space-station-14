@@ -224,6 +224,8 @@ namespace Content.Server.AI.Pathfinding
 
         private void HandleTileUpdate(TileRef tile)
         {
+            if (!_mapManager.GridExists(tile.GridIndex)) return;
+
             var node = GetNode(tile);
             node.UpdateTile(tile);
         }
