@@ -20,6 +20,7 @@
 - type: entity
   parent: BaseItem
   id: ReagentContainerBase
+  abstract: true
   components:
   - type: Sprite
     netsync: false

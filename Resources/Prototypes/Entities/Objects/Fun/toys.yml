@@ -3,6 +3,7 @@
 - type: entity
   parent: BaseItem
   id: BasePlushie
+  abstract: true
   components:
   - type: EmitSoundOnUse
     sound:
