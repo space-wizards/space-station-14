@@ -70,7 +70,7 @@ namespace Content.Server.Nutrition.Components
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner.Transform.Coordinates,
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner,
                 AudioParams.Default.WithVolume(-2));
 
             Count--;
