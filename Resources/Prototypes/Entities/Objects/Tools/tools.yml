@@ -116,29 +116,20 @@
 
 - type: entity
   name: emergency crowbar
-  parent: BaseItem
+  parent: Crowbar
   id: CrowbarRed
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Tag
     tags:
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar_red.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    state: red-icon
   - type: Item
-    sprite: Objects/Tools/crowbar_red.rsi
-    size: 5
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage: 7
-  - type: Tool
-    qualities:
-      - Prying
-    useSound:
-      path: /Audio/Items/crowbar.ogg
-  - type: TilePrying
+    sprite: Objects/Tools/crowbar.rsi
+    size: 10
+    HeldPrefix: red
 
 - type: entity
   name: multitool
