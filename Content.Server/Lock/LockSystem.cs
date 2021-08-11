@@ -43,6 +43,11 @@ namespace Content.Server.Lock
             {
                 DoUnlock(lockComp, args);
             }
+            else
+            {
+                if (lockComp.LockOnClick)
+                    DoLock(lockComp, args);
+            }
         }
 
         private void OnExamined(EntityUid eUI, LockComponent lockComp, ExaminedEvent args)

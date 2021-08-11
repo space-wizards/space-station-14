@@ -12,4 +12,5 @@
     access: [["Security"]]
   - type: Lock
     locked: true
+    lockOnClick: true # toggle lock just by clicking on barrier
   - type: DeployableBarrier     
