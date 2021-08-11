@@ -57,6 +57,7 @@ namespace Content.Client.Entry
             "CablePlacer",
             "Drink",
             "Food",
+            "DeployableBarrier",
             "MagicMirror",
             "FloorTile",
             "ShuttleController",
