@@ -1,0 +1,15 @@
+- type: entity
+  name: deployable barrier
+  id: DeployableBarrier
+  description: A deployable barrier. Swipe your ID card to lock/unlock it.
+  parent: BaseStructure
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Security/barrier.rsi
+    state: idle
+  - type: InteractionOutline
+  - type: AccessReader
+    access: [["Security"]]
+  - type: Lock
+    locked: true
+  - type: DeployableBarrier     
