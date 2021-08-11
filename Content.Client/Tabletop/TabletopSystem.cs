@@ -1,11 +1,6 @@
-﻿using System;
-using Content.Client.Hands;
-using Content.Client.MobState;
-using Content.Client.Stunnable;
-using Content.Client.Tabletop.Components;
+﻿using Content.Client.Tabletop.Components;
 using Content.Client.Tabletop.UI;
 using Content.Client.Viewport;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
@@ -99,9 +94,9 @@ namespace Content.Client.Tabletop
             _timePassed += frameTime;
 
             // Only send new position to server when Delay is reached
-            if (_timePassed >= Delay)
+            if (_timePassed >= Delay && _table != null)
             {
-                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords));
+                RaiseNetworkEvent(new TabletopMoveEvent(_draggedEntity.Uid, clampedCoords, _table.Uid));
                 _timePassed -= Delay;
             }
         }
@@ -149,6 +144,11 @@ namespace Content.Client.Tabletop
 
         private void OnWindowClose()
         {
+            if (_table != null)
+            {
+                RaiseNetworkEvent(new TabletopStopPlayingEvent(_table.Uid));
+            }
+
             StopDragging();
             _window = null;
         }
@@ -181,19 +181,19 @@ namespace Content.Client.Tabletop
             }
 
             // Make sure that entity can be dragged
-            if (!draggedEntity.HasComponent<TabletopDraggableComponent>())
+            if (!ComponentManager.HasComponent<TabletopDraggableComponent>(draggedEntity.Uid))
             {
                 return false;
             }
 
-            // Try to get the viewport under the cursor, then start dragging the entity
-            if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is { } viewport)
+            // Try to get the viewport under the cursor
+            if (_uiManger.MouseGetControl(args.ScreenCoordinates) as ScalingViewport is not { } viewport)
             {
-                StartDragging(draggedEntity, viewport);
-                return true;
+                return false;
             }
 
-            return false;
+            StartDragging(draggedEntity, viewport);
+            return true;
         }
 
         private bool OnMouseUp(in PointerInputCmdHandler.PointerInputCmdArgs args)
@@ -205,32 +205,6 @@ namespace Content.Client.Tabletop
         #endregion
 
         #region Utility
-
-        /// <summary>
-        /// Whether the table exists, is in range and the player is alive.
-        /// </summary>
-        /// <param name="playerEntity">The player entity to check.</param>
-        /// <param name="table">The table entity to check.</param>
-        private static bool CanSeeTable(IEntity playerEntity, IEntity? table)
-        {
-            if (table == null) return false;
-
-            var alive = playerEntity.TryGetComponent<MobStateComponent>(out var mob) && mob.IsAlive();
-            var inRange = playerEntity.InRangeUnobstructed(table);
-
-            return alive && inRange;
-        }
-
-        private static bool StunnedOrNoHands(IEntity playerEntity)
-        {
-            var stunned = playerEntity.TryGetComponent<StunnableComponent>(out var stun) &&
-                          stun.Stunned;
-            var hasHand = playerEntity.TryGetComponent<HandsComponent>(out var handsComponent) &&
-                          handsComponent.Hands.Count > 0;
-
-            return stunned || !hasHand;
-        }
-
 
         /// <summary>
         /// Start dragging an entity in a specific viewport.

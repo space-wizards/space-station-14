@@ -14,19 +14,25 @@ namespace Content.Shared.Tabletop.Events
     public class TabletopMoveEvent : EntityEventArgs
     {
         /// <summary>
-        /// The entity being moved.
+        /// The UID of the entity being moved.
         /// </summary>
-        public EntityUid MovedEntity { get; }
+        public EntityUid MovedEntityUid { get; }
 
         /// <summary>
         /// The new coordinates of the entity being moved.
         /// </summary>
         public MapCoordinates Coordinates { get; }
 
-        public TabletopMoveEvent(EntityUid movedEntity, MapCoordinates coordinates)
+        /// <summary>
+        /// The UID of the table the entity is being moved on.
+        /// </summary>
+        public EntityUid TableUid { get; }
+
+        public TabletopMoveEvent(EntityUid movedEntityUid, MapCoordinates coordinates, EntityUid tableUid)
         {
-            MovedEntity = movedEntity;
+            MovedEntityUid = movedEntityUid;
             Coordinates = coordinates;
+            TableUid = tableUid;
         }
     }
 }

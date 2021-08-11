@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -19,12 +20,17 @@ namespace Content.Server.Tabletop
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
 
-        private readonly Dictionary<EntityUid, MapId> _gameSessions = new();
+        /// <summary>
+        /// All tabletop games currently in progress. Sessions are associated with an entity UID, which acts as a
+        /// key, such that an entity can only have one running tabletop game session.
+        /// </summary>
+        private readonly Dictionary<EntityUid, TabletopSession> _gameSessions = new();
 
         public override void Initialize()
         {
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
-            SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChangedEvent);
+            SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChanged);
+            SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
         }
 
@@ -35,55 +41,70 @@ namespace Content.Server.Tabletop
         /// <param name="table">The entity with which the tabletop game session will be associated.</param>
         public void OpenTable(IEntity user, IEntity table)
         {
-            // Make sure we have a table, and get its map ID
-            EnsureTable(table.Uid);
-            var mapId = GetMapId(table.Uid);
+            if (user.PlayerSession() is not { } playerSession) return;
+
+            // Make sure we have a session, and add the player to it
+            var session = EnsureSession(table.Uid);
+            session.StartPlaying(playerSession);
 
             // Create a camera for the user to use
             // TODO: set correct coordinates, depending on the piece the game was started from
-            IEntity camera = CreateCamera(user, new MapCoordinates(0, 0, mapId));
+            IEntity camera = CreateCamera(user, new MapCoordinates(0, 0, session.MapId));
 
-            // Tell the client that it has to open a viewport for the tabletop game
-            if (user.PlayerSession() is { } playerSession)
-            {
-                // Send a message to the client to open a chess UI window
-                // TODO: use actual title/size from prototype, for now we assume its chess
-                RaiseNetworkEvent(new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient);
-            }
+            // Tell the client to open a viewport for the tabletop game
+            // TODO: use actual title/size from prototype, for now we assume its chess
+            RaiseNetworkEvent(new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient);
         }
 
         /// <summary>
-        /// Create a map related to this entity UID, if it does not already exist.
+        /// Create a session associated to this entity UID, if it does not already exist, and return it.
         /// </summary>
-        /// <param name="uid">The entity UID to ensure a table for.</param>
-        private void EnsureTable(EntityUid uid)
+        /// <param name="uid">The entity UID to ensure a session for.</param>
+        /// <returns>The created/stored tabletop game session.</returns>
+        private TabletopSession EnsureSession(EntityUid uid)
         {
-            // We already have a table, return
+            // We already have a session, return it
             // TODO: if tables are connected, treat them as a single entity
-            if (_gameSessions.ContainsKey(uid)) return;
+            if (_gameSessions.ContainsKey(uid))
+            {
+                return _gameSessions[uid];
+            }
 
-            // Map does not exist for this entity yet, create it and store it
+            // Session does not exist for this entity yet, create a map and create a session
             var mapId = _mapManager.CreateMap();
-            _gameSessions.Add(uid, mapId);
 
             // Tabletop maps do not need lighting, turn it off
             var mapComponent = _mapManager.GetMapEntity(mapId).GetComponent<IMapComponent>();
             mapComponent.LightingEnabled = false;
             mapComponent.Dirty();
 
-            // TODO: don't assume chess
-            SetupChessBoard(GetMapId(uid));
+            _gameSessions.Add(uid, new TabletopSession(mapId));
+            var session = _gameSessions[uid];
+
+            // Since this is the first time opening this session, set up the game
+            // TODO: don't assume we're playing chess
+            SetupChessBoard(session.MapId);
+
+            return session;
         }
 
         #region Event handlers
 
         // Move an entity which is dragged by the user, but check if they are allowed to do so and to these coordinates
-        private void OnTabletopMove(TabletopMoveEvent msg)
+        private void OnTabletopMove(TabletopMoveEvent msg, EntitySessionEventArgs args)
         {
-            if (!EntityManager.TryGetEntity(msg.MovedEntity, out var movedEntity))
-            {
-                return;
-            }
+            if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession) return;
+
+            // Check if player is actually playing at this table
+            if (!_gameSessions[msg.TableUid].IsPlaying(playerSession)) return;
+
+            // Return if can not see table or stunned/no hands
+            if (!EntityManager.TryGetEntity(msg.TableUid, out var table)) return;
+            if (!CanSeeTable(playerEntity, table) || StunnedOrNoHands(playerEntity)) return;
+
+            // Check if moved entity exists and has tabletop draggable component
+            if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity)) return;
+            if (!movedEntity.HasComponent<TabletopDraggableComponent>()) return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
@@ -93,7 +114,7 @@ namespace Content.Server.Tabletop
             movedEntity.Dirty();
         }
 
-        private void OnDraggingPlayerChangedEvent(TabletopDraggingPlayerChangedEvent msg)
+        private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)
         {
             var draggedEntity = EntityManager.GetEntity(msg.DraggedEntityUid);
 
@@ -115,13 +136,21 @@ namespace Content.Server.Tabletop
             }
         }
 
+        private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
+        {
+            if (_gameSessions.ContainsKey(msg.TableUid) && args.SenderSession as IPlayerSession is { } playerSession)
+            {
+                _gameSessions[msg.TableUid].StopPlaying(playerSession);
+            }
+        }
+
         // TODO: needs to be refactored such that the corresponding entity on the table gets removed, instead of the whole map
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
         {
             if (!_gameSessions.ContainsKey(uid)) return;
 
             // Delete the map and remove it from the list of sessions
-            _mapManager.DeleteMap(_gameSessions[uid]);
+            _mapManager.DeleteMap(_gameSessions[uid].MapId);
             _gameSessions.Remove(uid);
         }
 
@@ -151,21 +180,6 @@ namespace Content.Server.Tabletop
             }
 
             return camera;
-        }
-
-        /// <summary>
-        /// Get the <see cref="MapId"/> related to this entity UID.
-        /// </summary>
-        /// <param name="uid">The identifier of the entity to get the map for.</param>
-        /// <returns>The <see cref="MapId"/> that has been reserved for this entity.</returns>
-        private MapId GetMapId(EntityUid uid)
-        {
-            if (_gameSessions.ContainsKey(uid))
-            {
-                return _gameSessions[uid];
-            }
-
-            throw new KeyNotFoundException("The table for the requested entity has not been initialized yet.");
         }
 
         #endregion
