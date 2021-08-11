@@ -74,6 +74,9 @@
   id: CombatKnife
 
 - type: Tag
+  id: Debug
+
+- type: Tag
   id: DoorElectronics
 
 - type: Tag

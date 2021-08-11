@@ -111,7 +111,11 @@
   parent: WallBase
   id: WallDebug
   name: debug wall
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/debug.rsi

@@ -5,6 +5,9 @@
   description: ded
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/debug.rsi
   - type: Icon
@@ -28,6 +31,9 @@
   parent: MagazinePistolBase
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: RangedMagazine
     fillPrototype: CartridgeDebug
     capacity: 1000
@@ -41,6 +47,9 @@
   abstract: true
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Projectile
     damages:
       Blunt: 20000
@@ -51,6 +60,9 @@
   parent: CartridgePistolBase
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Ammo
     projectile: BulletDebug
 
@@ -61,6 +73,9 @@
   description: hit hard ye
   suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Sprite
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
@@ -76,6 +91,9 @@
   parent: MeleeDebugGib
   id: MeleeDebug100
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: MeleeWeapon
     damage: 100
 
@@ -84,5 +102,8 @@
   parent: MeleeDebugGib
   id: MeleeDebug200
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: MeleeWeapon
     damage: 200
