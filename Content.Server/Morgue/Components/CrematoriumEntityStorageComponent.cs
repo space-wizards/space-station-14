@@ -35,13 +35,15 @@ namespace Content.Server.Morgue.Components
     {
         public override string Name => "CrematoriumEntityStorage";
 
+        [DataField("cremateStartSound")] private SoundSpecifier _cremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
+        [DataField("crematingSound")] private SoundSpecifier _crematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
         [DataField("cremateFinishSound")] private SoundSpecifier _cremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
 
         [ViewVariables]
         public bool Cooking { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int _burnMilis = 3000;
+        private int _burnMilis = 5000;
 
         private CancellationTokenSource? _cremateCancelToken;
 
@@ -83,6 +85,8 @@ namespace Content.Server.Morgue.Components
             if (Cooking) return;
             if (Open) return;
 
+            SoundSystem.Play(Filter.Pvs(Owner), _cremateStartSound.GetSound(), Owner);
+
             Cremate();
         }
 
@@ -93,6 +97,8 @@ namespace Content.Server.Morgue.Components
 
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
+
+            SoundSystem.Play(Filter.Pvs(Owner), _crematingSound.GetSound(), Owner);
 
             _cremateCancelToken?.Cancel();
 
