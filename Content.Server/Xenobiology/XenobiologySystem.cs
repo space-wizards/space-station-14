@@ -7,6 +7,11 @@ using YamlDotNet.Core.Tokens;
 using Content.Shared.Tag;
 using Content.Shared.Notification.Managers;
 using Content.Server.Notification;
+using System;
+using Robust.Shared.Audio;
+using Robust.Shared.Player;
+using Content.Shared.Audio;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Xenobiology
 {
@@ -28,9 +33,12 @@ namespace Content.Server.Xenobiology
             base.Initialize();
             SubscribeLocalEvent<SpecimenContainmentComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnTubeFeed);
+            SubscribeLocalEvent<SpecimenContainmentComponent, ExaminedEvent>(OnContainmentExamined);
             SubscribeLocalEvent<SpecimenDietComponent, ExaminedEvent>(OnSpecimenExamined);
             SubscribeLocalEvent<SpecimenDietComponent, FeedEvent>(OnSpecimenFed);
         }
+
+       
 
         /// <summary>
         /// Builds a dynamic specimen examination
@@ -66,11 +74,17 @@ namespace Content.Server.Xenobiology
                     EntityManager.QueueDeleteEntity(usedItem.Uid); //Delete the food
                     comp.SelectDiet(); //Set a new random diet
                     comp.SpecimenGrow(); //Advance the growth state
+                    if (comp.GrowthState >= 5)
+                    {
+                        specimen.TryRemoveFromContainer();
+                        SoundSystem.Play(Filter.Broadcast(), "gib1.ogg", specimen);
+                    }
                 }
                 else
                 {
                     specimen.PopupMessageEveryone(Loc.GetString("specimen-wrong-food"));
                 }
+               
             }
         }
 
@@ -100,8 +114,38 @@ namespace Content.Server.Xenobiology
                 if (comp.TubeContainer.ContainedEntity.TryGetComponent(out SpecimenDietComponent? dietcomp))
                 {
                     RaiseLocalEvent(comp.TubeContainer.ContainedEntity.Uid, new FeedEvent(args.Used));
+                    comp.UpdateAppearance();
                 }
             }
+        }
+
+        /// <summary>
+        /// Relays the information from the specimen diet to the containment component
+        /// To show information in it's markup to the user
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnContainmentExamined(EntityUid uid, SpecimenContainmentComponent component, ExaminedEvent args)
+        {
+            //First, we take care of showing if the containment has someone in it
+            if (component.TubeContainer.ContainedEntity == null)
+            {
+                args.Message.AddText("\n");
+                args.Message.AddMarkup($"[color=#35f131]{Loc.GetString("specimen-growth-empty")}[/color]");
+            }
+            else if (component.TubeContainer.ContainedEntity != null)
+            {
+                args.Message.AddText("\n");
+                args.Message.AddMarkup($"[color=#35f131]{Loc.GetString("specimen-growth-embryo")}[/color]");
+                if (component.TubeContainer.ContainedEntity.TryGetComponent(out SpecimenDietComponent? dietcomp))
+                {
+                    args.Message.AddText("\n");
+                    args.Message.AddMarkup(Loc.GetString("specimen-hungry") + (" "));
+                    args.Message.AddMarkup($"[color=#f6ff05]{dietcomp.SelectedDiet}[/color]");
+                }
+            }
+            
         }
     }
 }

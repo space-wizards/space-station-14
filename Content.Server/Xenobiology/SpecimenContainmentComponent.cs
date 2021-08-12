@@ -105,10 +105,10 @@ namespace Content.Server.Xenobiology
             if (containedEntity == null) return;
             if (containedEntity.TryGetComponent<SpecimenDietComponent>(out SpecimenDietComponent? DietComp))
             {
-                containedEntity.PopupMessage(Loc.GetString("specimen-growth-ejection-fail"));
-                return;
+                if (DietComp.GrowthState < 5) return;
             }
             TubeContainer.Remove(containedEntity);
+            
             UpdateAppearance();
         }
 
