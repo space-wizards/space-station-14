@@ -100,11 +100,8 @@ namespace Content.Server.Light.Components
                 switch (CurrentState)
                 {
                     case ExpendableLightState.Lit:
-                        if (LitSound != string.Empty)
-                        {
-                            SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
-                        }
-
+                        SoundSystem.Play(Filter.Pvs(Owner), LitSound.GetSound(), Owner);
+                        
                         if (IconStateLit != string.Empty)
                         {
                             sprite.LayerSetState(2, IconStateLit);
@@ -119,11 +116,7 @@ namespace Content.Server.Light.Components
 
                     default:
                     case ExpendableLightState.Dead:
-
-                        if (DieSound != string.Empty)
-                        {
-                            SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
-                        }
+                        SoundSystem.Play(Filter.Pvs(Owner), DieSound.GetSound(), Owner);
 
                         sprite.LayerSetState(0, IconStateSpent);
                         sprite.LayerSetShader(0, "shaded");

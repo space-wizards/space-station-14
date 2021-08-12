@@ -14,6 +14,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -45,7 +46,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("useSound")]
-        private string _useSound = "/Audio/Items/drink.ogg";
+        private SoundSpecifier _useSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
         [ViewVariables]
         [DataField("isOpen")]
@@ -74,11 +75,11 @@ namespace Content.Server.Nutrition.Components
         public bool Empty => Owner.GetComponentOrNull<ISolutionInteractionsComponent>()?.DrainAvailable <= 0;
 
         [DataField("openSounds")]
-        private string _soundCollection = "canOpenSounds";
+        private SoundSpecifier _openSounds = new SoundCollectionSpecifier("canOpenSounds");
         [DataField("pressurized")]
         private bool _pressurized = default;
         [DataField("burstSound")]
-        private string _burstSound = "/Audio/Effects/flash_bang.ogg";
+        private SoundSpecifier _burstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         protected override void Initialize()
         {
@@ -126,10 +127,8 @@ namespace Content.Server.Nutrition.Components
             if (!Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
-                var file = _random.Pick(soundCollection.PickFiles);
+                SoundSystem.Play(Filter.Pvs(args.User), _openSounds.GetSound(), args.User, AudioParams.Default);
 
-                SoundSystem.Play(Filter.Pvs(args.User), file, args.User, AudioParams.Default);
                 Opened = true;
                 return false;
             }
@@ -137,7 +136,7 @@ namespace Content.Server.Nutrition.Components
             if (!Owner.TryGetComponent(out ISolutionInteractionsComponent? contents) ||
                 contents.DrainAvailable <= 0)
             {
-                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty",("owner", Owner)));
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", Owner)));
                 return true;
             }
 
@@ -163,14 +162,14 @@ namespace Content.Server.Nutrition.Components
             }
             var color = Empty ? "gray" : "yellow";
             var openedText = Loc.GetString(Empty ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text",("colorName", color),("text", openedText)));
+            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
         }
 
         private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
         {
             if (!Opened)
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", Owner)));
                 return false;
             }
 
@@ -180,7 +179,7 @@ namespace Content.Server.Nutrition.Components
             {
                 if (!forced)
                 {
-                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity",Owner)));
+                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", Owner)));
                 }
 
                 return false;
@@ -189,7 +188,7 @@ namespace Content.Server.Nutrition.Components
             if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
                 return false;
             }
 
@@ -207,7 +206,7 @@ namespace Content.Server.Nutrition.Components
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough",("owner", Owner)));
+                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough", ("owner", Owner)));
 
                 if (!interactions.CanRefill)
                 {
@@ -219,10 +218,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(_useSound))
-            {
-                SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
-            }
+            SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
             target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
             UpdateAppearance();
@@ -253,8 +249,7 @@ namespace Content.Server.Nutrition.Components
                 var solution = interactions.Drain(interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
-                SoundSystem.Play(Filter.Pvs(Owner), _burstSound, Owner,
-                    AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(Filter.Pvs(Owner), _burstSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4));
             }
         }
     }

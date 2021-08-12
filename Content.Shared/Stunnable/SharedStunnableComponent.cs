@@ -323,8 +323,6 @@ namespace Content.Shared.Stunnable
         }
 
         #region ActionBlockers
-        public bool CanMove() => (!Stunned);
-
         public bool CanInteract() => (!Stunned);
 
         public bool CanUse() => (!Stunned);

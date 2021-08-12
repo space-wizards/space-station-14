@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -68,15 +69,15 @@ namespace Content.Shared.Light.Component
         protected string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
-        [DataField("litSound")]
-        protected string LitSound { get; set; } = string.Empty;
+        [DataField("litSound", required: true)]
+        protected SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
-        [DataField("loopedSound")]
+        [DataField("loopedSound", required: true)]
         public string LoopedSound { get; set; } = string.Empty;
 
         [ViewVariables]
         [DataField("dieSound")]
-        protected string DieSound { get; set; } = string.Empty;
+        protected SoundSpecifier DieSound { get; set; } = default!;
     }
 }

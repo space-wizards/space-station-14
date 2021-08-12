@@ -78,12 +78,12 @@ namespace Content.Server.Weapon.Melee
             if (target != null)
             {
                 // Raise event before doing damage so we can cancel damage if the event is handled
-                var hitEvent = new MeleeHitEvent(new List<IEntity>() {target}, args.User);
+                var hitEvent = new MeleeHitEvent(new List<IEntity>() { target }, args.User);
                 RaiseLocalEvent(uid, hitEvent, false);
 
                 if (!hitEvent.Handled)
                 {
-                    var targets = new[] {target};
+                    var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
@@ -91,12 +91,12 @@ namespace Content.Server.Weapon.Melee
                         damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
                     }
 
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, target);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User);
+                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User);
                 return;
             }
 
@@ -146,11 +146,11 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, entities.First().Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), entities.First().Transform.Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
                 }
 
                 foreach (var entity in hitEntities)

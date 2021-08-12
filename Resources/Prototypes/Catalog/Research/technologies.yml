@@ -241,6 +241,8 @@
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
 
 # Bluespace Theory Technology Tree
 

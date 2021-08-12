@@ -5,6 +5,7 @@ using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -12,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -26,6 +28,8 @@ namespace Content.Server.Power.Components
         public override string Name => "Apc";
 
         public bool MainBreakerEnabled { get; private set; } = true;
+
+        [DataField("onReceiveMessageSound")] private SoundSpecifier _onReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         private ApcChargeState _lastChargeState;
 
@@ -81,7 +85,7 @@ namespace Content.Server.Power.Components
             if (serverMsg.Message is ApcToggleMainBreakerMessage)
             {
                 var user = serverMsg.Session.AttachedEntity;
-                if(user == null) return;
+                if (user == null) return;
 
                 if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
@@ -89,7 +93,7 @@ namespace Content.Server.Power.Components
                     Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
 
                     _uiDirty = true;
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                 }
                 else
                 {

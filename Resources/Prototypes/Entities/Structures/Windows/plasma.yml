@@ -16,8 +16,8 @@
         !type:DamageTrigger
         damage: 200
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassPlasma:

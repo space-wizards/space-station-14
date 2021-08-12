@@ -7,6 +7,7 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_wood
+  footstep_sounds:
+    collection: footstep_wood
   friction: 0.30
   item_drop: FloorTileItemWood

@@ -20,6 +20,7 @@
 - type: entity
   parent: BaseItem
   id: ReagentContainerBase
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -28,8 +29,10 @@
     maxVol: 50
   - type: SolutionTransfer
   - type: Drink
-    openSounds: packetOpenSounds
-    useSound: /Audio/Items/eating_1.ogg
+    openSounds:
+      collection: packetOpenSounds
+    useSound:
+      path: /Audio/Items/eating_1.ogg
   - type: Spillable
 
 - type: entity
@@ -56,8 +59,8 @@
         !type:DamageTrigger
         damage: 2
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        collection:: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleFlour:
@@ -91,8 +94,8 @@
         !type:DamageTrigger
         damage: 2
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        collection:: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleFlour:

@@ -2,6 +2,10 @@
   id: DebugGenerator
   parent: BaseGenerator
   suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
 
 - type: entity
   id: DebugConsumer
@@ -10,6 +14,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -48,6 +55,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -75,6 +85,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -100,16 +113,28 @@
   id: DebugSmes
   parent: BaseSmes
   suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
 
 - type: entity
   id: DebugSubstation
   parent: BaseSubstation
   suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
 
 - type: entity
   id: DebugApc
   parent: BaseApc
   suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
 
 - type: entity
   id: DebugPowerReceiver
@@ -118,6 +143,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

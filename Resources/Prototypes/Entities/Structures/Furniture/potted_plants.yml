@@ -34,7 +34,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/plant_rustle.ogg
+        sound:
+          path: /Audio/Effects/plant_rustle.ogg
 
 - type: entity
   id: PottedPlantRandom

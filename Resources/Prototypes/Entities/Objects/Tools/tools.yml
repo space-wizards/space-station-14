@@ -18,7 +18,8 @@
   - type: Tool
     qualities:
       - Cutting
-    useSound: /Audio/Items/wirecutter.ogg
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
   - type: RandomSpriteColor
     state: cutters
     colors:
@@ -85,7 +86,8 @@
   - type: Tool
     qualities:
       - Anchoring
-    useSound: /Audio/Items/ratchet.ogg
+    useSound:
+      path: /Audio/Items/ratchet.ogg
 
 - type: entity
   name: crowbar
@@ -108,32 +110,26 @@
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/crowbar.ogg
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: TilePrying
 
 - type: entity
   name: emergency crowbar
-  parent: BaseItem
+  parent: Crowbar
   id: CrowbarRed
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
   - type: Tag
     tags:
+    - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar_red.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    state: red-icon
   - type: Item
-    sprite: Objects/Tools/crowbar_red.rsi
-    size: 5
-  - type: ItemCooldown
-  - type: MeleeWeapon
-    damage: 7
-  - type: Tool
-    qualities:
-      - Prying
-    useSound: /Audio/Items/crowbar.ogg
-  - type: TilePrying
+    sprite: Objects/Tools/crowbar.rsi
+    size: 10
+    HeldPrefix: red
 
 - type: entity
   name: multitool
@@ -181,12 +177,16 @@
     tools:
       - behavior: Screwing
         state: drill_screw
-        useSound: /Audio/Items/drill_use.ogg
-        changeSound: /Audio/Items/change_drill.ogg
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
         state: drill_bolt
-        useSound: /Audio/Items/drill_use.ogg
-        changeSound: /Audio/Items/change_drill.ogg
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
 
 - type: entity
   name: RCD
