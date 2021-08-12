@@ -20,7 +20,7 @@ namespace Content.Server.Movement.Components
 
         public void PlayFootstep()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2f));
         }
     }
 }

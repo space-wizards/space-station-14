@@ -104,7 +104,7 @@ namespace Content.Server.Body
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner, AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))
             {

@@ -103,7 +103,7 @@ namespace Content.Server.Singularity.Components
         protected override void OnRemove()
         {
             _playingSound?.Stop();
-            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }
