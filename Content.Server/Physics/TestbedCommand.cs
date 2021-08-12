@@ -107,9 +107,10 @@ namespace Content.Server.Physics
 
         private void SetupPlayer(MapId mapId, IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
         {
+            if (mapId == MapId.Nullspace) return;
             var pauseManager = IoCManager.Resolve<IPauseManager>();
             pauseManager.SetMapPaused(mapId, false);
-            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -4.9f);
+            IoCManager.Resolve<IMapManager>().GetMapEntity(mapId).GetComponent<SharedPhysicsMapComponent>().Gravity = new Vector2(0, -4.9f);
 
             return;
         }
