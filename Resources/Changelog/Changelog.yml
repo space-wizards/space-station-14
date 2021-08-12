@@ -1751,3 +1751,9 @@ Entries:
     type: Add}
   id: 312
   time: '2021-08-10T20:36:01.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Crematorium makes a sound on and during cremate, type: Add}
+  - {message: Crematorium burns for 5 seconds instead of 3, type: Tweak}
+  id: 313
+  time: '2021-08-12T02:29:57.0000000+00:00'
