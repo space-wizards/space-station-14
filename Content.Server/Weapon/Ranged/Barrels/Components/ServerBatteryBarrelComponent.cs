@@ -223,7 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             _powerCellContainer.Insert(entity);
 
@@ -273,7 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
