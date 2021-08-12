@@ -7,6 +7,8 @@
   - type: SpecimenDietComponent
     Diet:
     - Flesh
+    - JunkFood
+    - PowderedCheese
   - type: Sprite
     drawdepth: Mobs
     layers:

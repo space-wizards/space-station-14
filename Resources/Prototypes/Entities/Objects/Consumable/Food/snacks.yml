@@ -25,12 +25,21 @@
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
 # reagents and shit for healing or different effects.
 
+- type: Tag
+  id: JunkFood
+  
+- type: Tag
+  id: PowderedCheese
+
 - type: entity
   name: boritos
   parent: FoodSnackBase
   id: FoodSnackBoritos
   description: Crunchy, salty tortilla chips. You could probably make nachos with these.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: boritos
   - type: Item
@@ -44,6 +53,10 @@
   id: FoodSnackCheesie
   description: Bite sized cheesie snacks that will honk all over your mouth.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
+      - PowderedCheese
   - type: Sprite
     state: cheesiehonkers
   - type: Item
@@ -57,6 +70,9 @@
   id: FoodSnackChips
   description: Commander Riker's What-The-Crisps.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: chips
   - type: Item
@@ -70,6 +86,9 @@
   id: FoodSnackChocolate
   description: Tastes like cardboard.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     layers:
       - state: chocolatebar-open
@@ -98,6 +117,9 @@
   id: FoodSnackPopcorn
   description: Grown on an unknown planet, by an unknown farmer, popped by some jerk on a space station.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: popcorn
   - type: Item
@@ -111,6 +133,9 @@
   id: FoodSnackRaisins
   description: Best raisins in the universe. Not sure why.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: raisins
   - type: Item
@@ -124,6 +149,9 @@
   id: FoodSnackSus
   description: Something about this packet makes you feel incredibly uneasy. Jerky's good though.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: susjerky
   - type: Item
@@ -137,6 +165,9 @@
   id: FoodSnackSyndi
   description: An extremely moist snack cake that tastes just as good after being nuked.
   components:
+  - type: Tag
+    tags:
+      - JunkFood
   - type: Sprite
     state: syndicakes
   - type: Item
