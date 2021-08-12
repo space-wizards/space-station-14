@@ -254,7 +254,8 @@ namespace Content.Server.Doors.Components
 
                 if (user.TryGetComponent(out HandsComponent? hands) && hands.Count == 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _tryOpenDoorSound.GetSound(), Owner,
+                        AudioParams.Default.WithVolume(-2));
                 }
             }
             else
@@ -334,7 +335,7 @@ namespace Content.Server.Doors.Components
 
             if (OpenSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), OpenSound.GetSound(),
+                SoundSystem.Play(Filter.Pvs(Owner), OpenSound.GetSound(), Owner,
                     AudioParams.Default.WithVolume(-5));
             }
 
@@ -457,7 +458,7 @@ namespace Content.Server.Doors.Components
 
             if (CloseSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound(),
+                SoundSystem.Play(Filter.Pvs(Owner), CloseSound.GetSound(), Owner,
                     AudioParams.Default.WithVolume(-10));
             }
 
@@ -579,7 +580,7 @@ namespace Content.Server.Doors.Components
                 }
 
                 LastDenySoundTime = _gameTiming.CurTime;
-                SoundSystem.Play(Filter.Pvs(Owner), DenySound.GetSound(),
+                SoundSystem.Play(Filter.Pvs(Owner), DenySound.GetSound(), Owner,
                     AudioParams.Default.WithVolume(-3));
             }
 
