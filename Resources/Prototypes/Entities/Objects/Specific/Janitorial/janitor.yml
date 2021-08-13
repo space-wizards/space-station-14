@@ -13,7 +13,9 @@
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Mop
   - type: SolutionContainer
-    maxVol: 10
+    solutions:
+      mop:
+        maxVol: 10
 
 - type: entity
   name: mop bucket
@@ -31,9 +33,10 @@
   - type: InteractionOutline
   - type: Bucket
   - type: SolutionContainer
-    maxVol: 500
-    contents:
-      reagents:
+    solutions:
+      bucket:
+        maxVol: 500
+        reagents:
         - ReagentId: Water
           Quantity: 500
   - type: Physics

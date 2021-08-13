@@ -11,11 +11,12 @@
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: SliceableFood
     count: 8
   - type: Item
@@ -32,11 +33,12 @@
   - type: Food
     trash: FoodPlateSmall
   - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Item
     size: 1
   - type: Tag

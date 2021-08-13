@@ -40,8 +40,13 @@
   - type: Thirst
   # Organs
   - type: SolutionContainer
-    maxVol: 250
-    caps: Injectable, Drawable
+    solutions:
+      organ:
+        maxVol: 250
+  - type: InjectableSolution
+    solution: organ
+  - type: DrawableSolution
+    solution: organ
   - type: Bloodstream
     max_volume: 100
   # StatusEffects

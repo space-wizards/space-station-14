@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: SolutionContainer
-    caps: None
   - type: Sprite
     netsync: false
     state: produce
@@ -22,11 +21,11 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
   - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Flour
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Flour
+          Quantity: 10
   - type: Produce
     seed: wheat
 
@@ -39,11 +38,11 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
   - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Oats
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Oats
+          Quantity: 10
   - type: Produce
     seed: oat
   - type: Juiceable
@@ -61,11 +60,11 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
   - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Glucose
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Glucose
+          Quantity: 10
   - type: Produce
     seed: sugarcane
 
@@ -78,7 +77,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
   - type: SolutionContainer
-    caps: None
   - type: MeleeWeapon
   - type: Produce
     seed: towercap
@@ -93,10 +91,11 @@
   - type: Food
     trash: TrashBananaPeel
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
@@ -144,10 +143,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
@@ -166,10 +166,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
@@ -188,10 +189,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
@@ -213,10 +215,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
@@ -230,10 +233,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
@@ -284,10 +288,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
@@ -301,10 +306,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
@@ -324,10 +330,11 @@
   - type: Food
     trash: FoodCornTrash
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -354,10 +361,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
@@ -374,10 +382,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Produce
@@ -394,10 +403,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
@@ -412,10 +422,11 @@
   components:
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 2
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
   - type: Sprite
     netsync: false
     state: slice

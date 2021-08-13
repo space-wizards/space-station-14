@@ -388,10 +388,11 @@
 # a mob is dead or something idk
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: MouseAccent
 
 - type: entity

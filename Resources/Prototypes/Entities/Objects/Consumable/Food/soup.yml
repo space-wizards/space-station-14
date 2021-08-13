@@ -6,12 +6,12 @@
   - type: Food
     trash: FoodBowlBig
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
-    trash: BowlBigTrash
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     netsync: false
@@ -403,12 +403,13 @@
   id: FoodSoupMiso
   description: Salty, fishy soup, best had with ramen.
   components:
+  - type: Food
+    trash: FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
     - state: milo
   - type: SolutionContainer
-    trash: FoodBowlFancy
 # Tastes like miso.
 
 - type: entity

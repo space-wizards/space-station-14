@@ -12,11 +12,12 @@
     sprite: Objects/Consumable/Food/noodles.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Noodles
 

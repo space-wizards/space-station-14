@@ -9,7 +9,9 @@
   - type: Sprite
     state: icon
   - type: SolutionContainer
-    maxVol: 10
+    solutions:
+      food:
+        maxVol: 10
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5

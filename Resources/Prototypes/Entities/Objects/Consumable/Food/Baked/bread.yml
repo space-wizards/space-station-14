@@ -10,11 +10,12 @@
     sprite: Objects/Consumable/Food/Baked/bread.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 - type: entity
   parent: FoodBreadBase
@@ -22,11 +23,12 @@
   abstract: true
   components:
   - type: SolutionContainer
-    maxVol: 7
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 7
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
 
 # Custom Bread Example
 

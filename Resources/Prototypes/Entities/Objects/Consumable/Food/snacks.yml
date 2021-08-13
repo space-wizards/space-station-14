@@ -10,11 +10,12 @@
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 30 # Room for extra condiments
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet

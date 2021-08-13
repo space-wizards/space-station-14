@@ -18,7 +18,9 @@
     - Helmet
   - type: Bucket
   - type: SolutionContainer
-    maxVol: 500
+    solutions:
+      bucket:
+        maxVol: 500
   - type: SolutionTransfer
     transferAmount: 50
     maxTransferAmount: 100

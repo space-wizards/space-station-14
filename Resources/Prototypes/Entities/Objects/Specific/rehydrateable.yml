@@ -5,12 +5,14 @@
   description: Just add water!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-    maxVol: 11 # needs room for water
-    caps: Refillable
+    solutions:
+      cube:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: RefillableSolution
+    solution: cube
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: cube
@@ -35,10 +37,10 @@
       mass: 2.5
       hard: false
       layer:
-        - SmallImpassable
+      - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - Impassable
+      - MobImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -47,12 +49,14 @@
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-    maxVol: 11 # needs room for water
-    caps: Refillable
+    solutions:
+      plushie:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: RefillableSolution
+    solution: cube
   - type: Reactive
     reactions:
     - !type:AddToSolutionReaction
@@ -60,7 +64,7 @@
       ingestion: true
       injection: true
       reagents:
-        - Water
+      - Water
   - type: Rehydratable
     target: CarpMob_Content
   - type: CollisionWake
@@ -74,7 +78,7 @@
       mass: 2.5
       hard: false
       layer:
-        - SmallImpassable
+      - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - Impassable
+      - MobImpassable

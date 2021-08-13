@@ -25,10 +25,11 @@
     lightImpactRange: 6
     flashRange: 5
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: WeldingFuel
-        Quantity: 1500
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 1500
 
 # Water
 
@@ -49,7 +50,8 @@
   suffix: Full
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Water
-        Quantity: 1500
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: Water
+          Quantity: 1500

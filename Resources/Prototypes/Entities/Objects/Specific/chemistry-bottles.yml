@@ -15,8 +15,15 @@
   - type: Drink
     isOpen: true
   - type: SolutionContainer
-    maxVol: 30
-    caps: OpenContainer
+    solutions:
+      drink:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
+    solution: drink
   - type: SolutionTransfer
     maxTransferAmount: 30
     canChangeTransferAmount: true

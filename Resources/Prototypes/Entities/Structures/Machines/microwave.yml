@@ -6,8 +6,11 @@
   components:
   - type: Microwave
   - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable
+    solutions:
+      microwave:
+        maxVol: 100
+  - type: RefillableSolution
+    solution: microwave
   - type: Appearance
     visuals:
     - type: MicrowaveVisualizer

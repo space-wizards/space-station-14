@@ -98,7 +98,12 @@
     ammoSpread: 0
   - type: ChemicalAmmo
   - type: SolutionContainer
-    maxVol: 15
-    caps: Refillable, Drainable
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
   - type: SolutionTransfer
     maxTransferAmount: 15

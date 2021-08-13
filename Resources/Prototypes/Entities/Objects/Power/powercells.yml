@@ -16,9 +16,13 @@
   - type: Sprite
     netsync: false
   - type: SolutionContainer
-    maxVol: 5
-    caps: Injectable, Drawable
-
+    solutions:
+      powerCell:
+        maxVol: 5
+  - type: InjectableSolution
+    solution: powerCell
+  - type: DrawableSolution
+    solution: powerCell
 
 - type: entity
   id: PowerCellSmallBase

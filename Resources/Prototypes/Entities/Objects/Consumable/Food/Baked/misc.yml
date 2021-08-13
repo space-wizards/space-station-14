@@ -10,11 +10,12 @@
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Item
     size: 1
 
@@ -259,11 +260,12 @@
       - state: tray
       - state: waffles
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: soy waffles
@@ -318,8 +320,9 @@
   - type: Sprite
     state: cannoli
   - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15

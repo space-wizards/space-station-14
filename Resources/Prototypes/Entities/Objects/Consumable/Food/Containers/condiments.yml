@@ -12,7 +12,9 @@
   - type: Drink
     openSounds: packetOpenSounds
   - type: SolutionContainer
-    maxVol: 10
+    solutions:
+      food:
+        maxVol: 10
   - type: SolutionTransfer
     maxTransferAmount: 10
   - type: Sprite
@@ -30,10 +32,12 @@
   description: The sweetness of a thousand sugars but none of the calories.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Astrotame
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Astrotame
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -55,10 +59,12 @@
   description: Hand wipes not included.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: BbqSauce
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -80,10 +86,12 @@
   description: Corn oil. A delicious oil used in cooking. Made from corn.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Cornoil
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Cornoil
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -105,10 +113,12 @@
   description: Coldsauce. Leaves the tongue numb in its passage.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -130,10 +140,12 @@
   description: A packet of smelly horseradish sauce.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: HorseradishSauce
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: HorseradishSauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -155,10 +167,12 @@
   description: You can almost TASTE the stomach ulcers now!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 10
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -180,10 +194,11 @@
   description: You feel more American already.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -205,10 +220,11 @@
   description: Often used to flavor food or make people sneeze.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Blackpepper
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -230,10 +246,11 @@
   description: Salt. From space oceans, presumably.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Salt
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Salt
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -257,10 +274,11 @@
   description: A salty soy-based flavoring.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Soysauce
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Soysauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -282,10 +300,11 @@
   description: Tasty spacey sugar!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Sugar
-        Quantity: 10
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -311,7 +330,9 @@
   - type: Drink
     openSounds: pop
   - type: SolutionContainer
-    maxVol: 30
+    solutions:
+      food:
+        maxVol: 30
   - type: SolutionTransfer
     maxTransferAmount: 30
   - type: Sprite
@@ -331,10 +352,11 @@
   description: Leaves the tongue numb in its passage.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 30
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -353,10 +375,11 @@
   description: Used in cooking various dishes.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Enzyme
-        Quantity: 30
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Enzyme
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -375,10 +398,11 @@
   description: You can almost TASTE the stomach ulcers now!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 30
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -397,10 +421,11 @@
   description: You feel more American already.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 30
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -419,10 +444,11 @@
   description: Hand wipes not included.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: BbqSauce
-        Quantity: 30
+    solutions:
+      food:
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -446,7 +472,9 @@
   - type: Drink
     openSounds: pop
   - type: SolutionContainer
-    maxVol: 15
+    solutions:
+      food:
+        maxVol: 15
   - type: SolutionTransfer
     maxTransferAmount: 15
   - type: Sprite
@@ -466,10 +494,11 @@
   description: Leaves the tongue numb in its passage.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 15
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -488,10 +517,11 @@
   description: You can almost TASTE the stomach ulcers now!
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 15
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -510,10 +540,11 @@
   description: You feel more American already.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 15
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -532,10 +563,11 @@
   description: Used in cooking to enhance flavor.
   components:
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Vinegar
-        Quantity: 15
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vinegar
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty

@@ -18,13 +18,15 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
+  - type: RefillableSolution
+    solution: welder
   - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable
-    contents:
-      reagents:
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 100
+        maxVol: 100
   - type: Welder
     weldSoundCollection: Welder
   - type: PointLight
@@ -42,13 +44,15 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
+  - type: RefillableSolution
+    solution: welder
   - type: SolutionContainer
-    maxVol: 1000
-    caps: Refillable
-    contents:
-      reagents:
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 1000
+        maxVol: 1000
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -64,13 +68,15 @@
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
     sprite: Objects/Tools/welder_mini.rsi
+  - type: RefillableSolution
+    solution: welder
   - type: SolutionContainer
-    maxVol: 25
-    caps: Refillable
-    contents:
-      reagents:
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 25
+        maxVol: 25
   - type: PointLight
     enabled: false
     radius: 1.0

@@ -14,11 +14,12 @@
     sprite: Objects/Consumable/Food/meals.rsi
     netsync: false
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Meals
 
@@ -101,11 +102,12 @@
   - type: Sprite
     state: mint
   - type: SolutionContainer
-    maxVol: 1
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 1
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
 # Tastes like parsnips, salt.
 
 - type: entity

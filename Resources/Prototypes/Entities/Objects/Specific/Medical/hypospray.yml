@@ -10,6 +10,11 @@
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
   - type: SolutionContainer
-    maxVol: 30
-    caps: Refillable, CanExamine
+    solutions:
+      hypospray:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: hypospray
+  - type: ExaminableSolution
+    solution: hypospray
   - type: Hypospray

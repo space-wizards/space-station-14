@@ -12,10 +12,11 @@
   - type: Mechanism
   - type: Food
   - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    solutions:
+      organ:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   id: OrganHumanBrain
@@ -205,7 +206,9 @@
       max_volume: 250
       digestionDelay: 20
   - type: SolutionContainer
-    maxVol: 250
+    solutions:
+      organ:
+        maxVol: 250
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.

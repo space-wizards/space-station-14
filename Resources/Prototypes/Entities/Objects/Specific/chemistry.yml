@@ -18,8 +18,17 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: SolutionContainer
-    maxVol: 50
-    caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -55,7 +64,7 @@
     amount: 5
   - type: DamageOtherOnHit
     amount: 5
-  
+
 - type: entity
   name: large beaker
   parent: Beaker
@@ -72,7 +81,9 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
   - type: SolutionContainer
-    maxVol: 100
+    solutions:
+      beaker:
+        maxVol: 100
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -90,8 +101,10 @@
     layers:
       - state: beakernoreact
   - type: SolutionContainer
-    maxVol: 60
-    canReact: false
+    solutions:
+      beaker:
+        maxVol: 60
+        canReact: false
 
 - type: entity
   name: bluespace beaker
@@ -104,7 +117,9 @@
     layers:
       - state: beakerbluespace
   - type: SolutionContainer
-    maxVol: 300
+    solutions:
+      beaker:
+        maxVol: 300
 
 - type: entity
   name: dropper
@@ -121,8 +136,15 @@
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: SolutionContainer
-    caps: OpenContainer
-    maxVol: 5
+    solutions:
+      dropper:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: dropper
+  - type: DrainableSolution
+    solution: dropper
+  - type: ExaminableSolution
+    solution: dropper
   - type: SolutionTransfer
     minTransferAmount: 1
     transferAmount: 1
@@ -157,7 +179,9 @@
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
   - type: SolutionContainer
-    maxVol: 15
+    solutions:
+      syringe:
+        maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
@@ -188,5 +212,6 @@
     state: pill
   - type: Pill
   - type: SolutionContainer
-    maxVol: 50
-    caps: None
+    solutions:
+      pill:
+        maxVol: 50

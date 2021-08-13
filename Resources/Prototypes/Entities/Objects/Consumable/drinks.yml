@@ -7,7 +7,9 @@
   abstract: true
   components:
   - type: SolutionContainer
-    maxVol: 50
+    solutions:
+      drink:
+        maxVol: 50
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: Drink
@@ -58,7 +60,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
   - type: SolutionContainer
-    maxVol: 50
+    solutions:
+      drink:
+        maxVol: 50
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: TransformableContainer
@@ -74,11 +78,12 @@
   description: A dark alchoholic beverage made with malted barley and yeast.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Ale
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Ale
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/aleglass.rsi
 
@@ -89,11 +94,12 @@
   description: Ultimate refreshment.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Antifreeze
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Antifreeze
+          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/antifreeze.rsi
@@ -105,11 +111,12 @@
   description: Nuclear proliferation never tasted so good.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: AtomicBomb
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: AtomicBomb
+          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/atomicbombglass.rsi
@@ -121,11 +128,12 @@
   description: Coffee, Irish Cream, and cognac. You will get bombed.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: B52
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: B52
+          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/b52glass.rsi
@@ -157,11 +165,12 @@
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Beer
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Beer
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beer.rsi
 
@@ -172,11 +181,12 @@
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Beer
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Beer
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beerglass.rsi
 
@@ -188,9 +198,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceBerry
           Quantity: 20
   - type: Sprite
@@ -265,9 +276,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceCarrot
           Quantity: 20
   - type: Sprite
@@ -303,11 +315,12 @@
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Coffee
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Coffee
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffee.rsi
 
@@ -319,11 +332,12 @@
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. Classy as fornication.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Cognac
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cognac
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
 
@@ -335,11 +349,12 @@
   description: Cola. in space
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Cola
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cola
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
 
@@ -351,11 +366,12 @@
   description: Dairy product composed of the higher-fat layer skimmed from the top of milk before homogenization.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Cream
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cream
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
@@ -367,11 +383,12 @@
   description: Rum, mixed with cola. Viva la revolucion.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: CubaLibre
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: CubaLibre
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
 
@@ -582,9 +599,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceLime
           Quantity: 20
   - type: Sprite
@@ -599,9 +617,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceOrange
           Quantity: 20
   - type: Sprite
@@ -615,9 +634,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceLemon
           Quantity: 20
   - type: Sprite
@@ -632,9 +652,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceTomato
           Quantity: 20
   - type: Sprite
@@ -648,11 +669,12 @@
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Milk
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Milk
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_white.rsi
 
@@ -675,9 +697,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceGrape
           Quantity: 20
   - type: Sprite
@@ -791,11 +814,12 @@
   description: Water frozen into a solid state.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Ice
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Ice
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
 
@@ -807,11 +831,12 @@
   description: Mmm, tastes like chocolate cake...
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: IrishCarBomb
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: IrishCarBomb
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
 
@@ -823,11 +848,12 @@
   description: Coffee, and alcohol. More fun than a Mimosa to drink in the morning.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: IrishCoffee
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: IrishCoffee
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
 
@@ -839,11 +865,12 @@
   description: Whiskey-imbued cream, what else would you expect from the Irish.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: IrishCream
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: IrishCream
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
 
@@ -888,11 +915,12 @@
   description: A widely known, Mexican coffee-flavoured liqueur.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Kahlua
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Kahlua
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
 
@@ -949,9 +977,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceLemon
           Quantity: 20
   - type: Sprite
@@ -966,9 +995,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceLemon
           Quantity: 10
         - ReagentId: JuiceLime
@@ -985,9 +1015,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceLime
           Quantity: 20
   - type: Sprite
@@ -1034,11 +1065,12 @@
   description: Beer and Ale, brought together in a delicious mix. Intended for true men only.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: ManlyDorf
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: ManlyDorf
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
 
@@ -1083,11 +1115,12 @@
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Milk
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Milk
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
 
@@ -1166,9 +1199,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceOrange
           Quantity: 20
   - type: Sprite
@@ -1194,9 +1228,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceBerryPoison
           Quantity: 20
   - type: Sprite
@@ -1509,11 +1544,12 @@
   description: Tastes like terrorism!
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: SyndicateBomb
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: SyndicateBomb
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
 
@@ -1525,11 +1561,12 @@
   description: Tasty black tea. Contains caffeine.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Tea
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Tea
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teaglass.rsi
 
@@ -1541,11 +1578,12 @@
   description: An elegant teapot. It simply oozes class.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Tea
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Tea
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
 
@@ -1602,9 +1640,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceTomato
           Quantity: 20
   - type: Sprite
@@ -1696,9 +1735,10 @@
   components:
   - type: Drink
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 20
   - type: Sprite
@@ -1723,11 +1763,12 @@
   description: Whiskey, mixed with cola. Surprisingly refreshing.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: WhiskeyCola
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: WhiskeyCola
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
 
@@ -1739,11 +1780,12 @@
   description: Just when you thought regular station whiskey was good... This silky, amber goodness has to come along and ruin everything.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Whiskey
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Whiskey
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
 
@@ -1788,10 +1830,11 @@
   description: An premium alchoholic beverage made from distilled grape juice.
   components:
   - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Wine
-        Quantity: 20
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Wine
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/wineglass.rsi
