@@ -278,7 +278,8 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
-            "SpawnItemsOnUse"
+            "SpawnItemsOnUse",
+            "EntityStorageECS"
         };
     }
 }

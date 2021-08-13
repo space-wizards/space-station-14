@@ -11,6 +11,19 @@
       state: eng
       state_closed: eng_tool_door
 
+# ECS Tool closet
+- type: entity
+  id: ECSClosetTool
+  name: ECS tool closet
+  parent: ECSClosetBase
+  description: It's a storage unit for tools.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state: eng
+      state_closed: eng_tool_door
+
 # Radiation suit closet
 - type: entity
   id: ClosetRadiationSuit
