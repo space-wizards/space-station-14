@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Act;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
@@ -14,7 +13,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Temperature;
@@ -60,8 +58,8 @@ namespace Content.Server.Tools.Components
         private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
-        [DataField("weldSounds", required: true)]
-        private SoundSpecifier WeldSounds { get; set; } = default!;
+        [DataField("weldSounds")]
+        private SoundSpecifier WeldSounds { get; set; } = new SoundCollectionSpecifier("Welder");
 
         [DataField("welderOffSounds")]
         private SoundSpecifier WelderOffSounds { get; set; } = new SoundCollectionSpecifier("WelderOff");

@@ -54,7 +54,8 @@
   - type: Tool
     qualities:
       - Screwing
-    useSoundCollection: Screwdriver
+    useSound:
+      collection: Screwdriver
   - type: RandomSpriteColor
     state: screwdriver
     colors:
