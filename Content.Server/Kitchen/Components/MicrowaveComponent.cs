@@ -40,22 +40,23 @@ namespace Content.Server.Kitchen.Components
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
-        [DataField("cookTime")]
-        private uint _cookTimeDefault = 5;
-        [DataField("cookTimeMultiplier")]
-        private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
-        [DataField("failureResult")]
-        private string _badRecipeName = "FoodBadRecipe";
-        [DataField("beginCookingSound")]
-        private SoundSpecifier _startCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
-        [DataField("foodDoneSound")]
-        private SoundSpecifier _cookingCompleteSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+
+        [DataField("cookTime")] private uint _cookTimeDefault = 5;
+        [DataField("cookTimeMultiplier")] private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
+        [DataField("failureResult")] private string _badRecipeName = "FoodBadRecipe";
+
+        [DataField("beginCookingSound")] private SoundSpecifier _startCookingSound =
+            new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+
+        [DataField("foodDoneSound")] private SoundSpecifier _cookingCompleteSound =
+            new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
         #endregion YAMLSERIALIZE
 
-        [ViewVariables]
-        private bool _busy = false;
+        [ViewVariables] private bool _busy = false;
         private bool _broken;
 
         /// <summary>
@@ -110,11 +111,11 @@ namespace Content.Server.Kitchen.Components
 
             switch (message.Message)
             {
-                case MicrowaveStartCookMessage msg:
+                case MicrowaveStartCookMessage:
                     Wzhzhzh();
                     break;
-                case MicrowaveEjectMessage msg:
-                    if (_hasContents)
+                case MicrowaveEjectMessage:
+                    if (HasContents)
                     {
                         VaporizeReagents();
                         EjectSolids();
@@ -345,7 +346,7 @@ namespace Content.Server.Kitchen.Components
 
             SetAppearance(MicrowaveVisualState.Cooking);
             SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
-            Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), (Action) (() =>
+            Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), () =>
             {
                 if (_lostPower)
                 {

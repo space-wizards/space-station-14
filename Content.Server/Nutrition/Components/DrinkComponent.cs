@@ -69,9 +69,9 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
-        [ViewVariables] public bool Empty => B();
+        [ViewVariables] public bool Empty => IsEmpty();
 
-        private bool B()
+        private bool IsEmpty()
         {
             var drainAvailable = EntitySystem.Get<SolutionContainerSystem>()
                 .DrainAvailable(Owner);
