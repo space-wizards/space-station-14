@@ -9,7 +9,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     {
         public override string Name => "DrawableSolution";
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("solution")]
         public string Solution { get; set; } = default!;
     }

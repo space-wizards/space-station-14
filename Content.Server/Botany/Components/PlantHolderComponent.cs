@@ -11,7 +11,6 @@ using Content.Shared.Audio;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
@@ -519,7 +518,7 @@ namespace Content.Server.Botany.Components
 
         public void UpdateReagents()
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "plant", out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "soil", out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -533,12 +532,10 @@ namespace Content.Server.Botany.Components
             else
             {
                 var one = ReagentUnit.New(1);
-
-                foreach (var (reagent, amount) in solution.Contents)
+                foreach (var reagent in EntitySystem.Get<SolutionContainerSystem>().RemoveEachReagent(solution, one))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
                     reagentProto.ReactionPlant(Owner);
-                    solution.RemoveReagent(reagent, amount < one ? amount : one);
                 }
             }
 
@@ -698,7 +695,8 @@ namespace Content.Server.Botany.Components
             }
 
             if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetDrainableSolution(usingItem, out var solution))
+                    .TryGetDrainableSolution(usingItem, out var solution)
+                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "soil", out var targetSolution))
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;
@@ -708,7 +706,8 @@ namespace Content.Server.Botany.Components
                     sprayed = true;
                     amount = ReagentUnit.New(1);
 
-                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem, AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem,
+                        AudioHelpers.WithVariation(0.125f));
                 }
 
                 var split = EntitySystem.Get<SolutionContainerSystem>().Drain(solution, amount);
@@ -724,7 +723,7 @@ namespace Content.Server.Botany.Components
                     ("owner", Owner),
                     ("amount", split.TotalVolume)));
 
-                EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution, split);
+                EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetSolution, split);
 
                 ForceUpdateByExternalCause();
 
@@ -783,7 +782,7 @@ namespace Content.Server.Botany.Components
                     ("owner", Owner)));
 
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(usingItem, "",  out var solution2))
+                    .TryGetSolution(usingItem, "", out var solution2))
                 {
                     // This deliberately discards overfill.
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution2,

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chemistry.Reaction;
@@ -13,6 +14,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 using SolutionAlias = Content.Shared.Chemistry.Solution.Solution;
 
 
@@ -121,7 +123,10 @@ namespace Content.Shared.Chemistry
         public SolutionAlias Draw(SolutionAlias solutionHolder, ReagentUnit amount)
         {
             if (!solutionHolder.Owner.HasComponent<DrawableSolutionComponent>())
-                return new SolutionAlias();
+            {
+                var newSolution = new SolutionAlias();
+                newSolution.Owner = solutionHolder.Owner;
+            }
 
             return SplitSolution(solutionHolder, amount);
         }
@@ -129,7 +134,10 @@ namespace Content.Shared.Chemistry
         public SolutionAlias Drain(SolutionAlias solutionHolder, ReagentUnit amount)
         {
             if (!solutionHolder.Owner.HasComponent<DrainableSolutionComponent>())
-                return new SolutionAlias();
+            {
+                var newSolution = new SolutionAlias();
+                newSolution.Owner = solutionHolder.Owner;
+            }
 
             return SplitSolution(solutionHolder, amount);
         }
@@ -143,6 +151,7 @@ namespace Content.Shared.Chemistry
         public SolutionAlias SplitSolution(SolutionAlias solutionHolder, ReagentUnit quantity)
         {
             var splitSol = solutionHolder.SplitSolution(quantity);
+            splitSol.Owner = solutionHolder.Owner;
             UpdateChemicals(solutionHolder);
             return splitSol;
         }
@@ -244,7 +253,7 @@ namespace Content.Shared.Chemistry
         {
             if (owner.TryGetComponent(out InjectableSolutionComponent? injectable) &&
                 owner.TryGetComponent(out SolutionContainerManager? manager) &&
-                manager.Solutions.TryGetValue(injectable.Name, out solution))
+                manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
                 return true;
             }
@@ -264,7 +273,7 @@ namespace Content.Shared.Chemistry
         {
             if (owner.TryGetComponent(out RefillableSolutionComponent? refillable) &&
                 owner.TryGetComponent(out SolutionContainerManager? manager) &&
-                manager.Solutions.TryGetValue(refillable.Name, out solution))
+                manager.Solutions.TryGetValue(refillable.Solution, out solution))
             {
                 return true;
             }
@@ -278,7 +287,7 @@ namespace Content.Shared.Chemistry
         {
             if (owner.TryGetComponent(out DrainableSolutionComponent? drainable) &&
                 owner.TryGetComponent(out SolutionContainerManager? manager) &&
-                manager.Solutions.TryGetValue(drainable.Name, out solution))
+                manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
                 solution.Owner = owner;
                 return true;
@@ -293,7 +302,7 @@ namespace Content.Shared.Chemistry
         {
             if (owner.TryGetComponent(out DrawableSolutionComponent? drawable) &&
                 owner.TryGetComponent(out SolutionContainerManager? manager) &&
-                manager.Solutions.TryGetValue(drawable.Name, out solution))
+                manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
                 solution.Owner = owner;
                 return true;
@@ -333,7 +342,7 @@ namespace Content.Shared.Chemistry
         {
             if (owner.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
                 owner.TryGetComponent(out SolutionContainerManager? manager) &&
-                manager.Solutions.TryGetValue(dispenserFits.Name, out solution))
+                manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
             {
                 return true;
             }
@@ -366,8 +375,11 @@ namespace Content.Shared.Chemistry
             }
 
             if (!solutionsMgr.Solutions.ContainsKey(name))
-                solutionsMgr.Solutions.Add(name, new SolutionAlias());
-
+            {
+                var newSolution = new SolutionAlias();
+                newSolution.Owner = owner;
+                solutionsMgr.Solutions.Add(name, newSolution);
+            }
             return solutionsMgr.Solutions[name];
         }
 
@@ -384,7 +396,7 @@ namespace Content.Shared.Chemistry
 
             if (!owner.TryGetComponent(out DrainableSolutionComponent? component))
             {
-                component = new DrainableSolutionComponent();
+                component = owner.AddComponent<DrainableSolutionComponent>();
             }
 
             component.Solution = name;
@@ -397,7 +409,7 @@ namespace Content.Shared.Chemistry
 
             if (!owner.TryGetComponent(out RefillableSolutionComponent? component))
             {
-                component = new RefillableSolutionComponent();
+                component = owner.AddComponent<RefillableSolutionComponent>();
             }
 
             component.Solution = name;
@@ -417,6 +429,33 @@ namespace Content.Shared.Chemistry
                 return;
 
             owner.RemoveComponent<DrainableSolutionComponent>();
+        }
+
+        public IList<string> RemoveEachReagent(SolutionAlias solution, ReagentUnit quantity)
+        {
+            var removedReagent = new List<string>(solution.Contents.Count);
+            if (quantity <= 0)
+                return removedReagent;
+
+            for (var i = 0; i < solution.Contents.Count; i++)
+            {
+                var (reagentId, curQuantity) = solution.Contents[i];
+                removedReagent.Add(reagentId);
+
+                var newQuantity = curQuantity - quantity;
+                if (newQuantity <= 0)
+                {
+                    solution.Contents.RemoveSwap(i);
+                    solution.TotalVolume -= curQuantity;
+                }
+                else
+                {
+                    solution.Contents[i] = new SolutionAlias.ReagentQuantity(reagentId, newQuantity);
+                    solution.TotalVolume -= quantity;
+                }
+
+            }
+            return removedReagent;
         }
     }
 

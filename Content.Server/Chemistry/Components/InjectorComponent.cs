@@ -5,7 +5,6 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -168,8 +167,8 @@ namespace Content.Server.Chemistry.Components
 
         private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bloodstream", out var solution)
-                || solution.CurrentVolume == 0)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(user, "bloodstream", out var bloodstream)
+                || bloodstream.CurrentVolume == 0)
                 return;
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
@@ -184,18 +183,18 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solution, realTransferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(bloodstream, realTransferAmount);
 
-            if (!solution.CanAddSolution(removedSolution))
+            if (!bloodstream.CanAddSolution(removedSolution))
             {
                 return;
             }
 
             // TODO: Account for partial transfer.
 
-            removedSolution.DoEntityReaction(solution.Owner, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(bloodstream.Owner, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bloodstream, removedSolution);
 
             removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
