@@ -24,7 +24,8 @@
       sprite: Objects/Tools/matches.rsi
     - type: Matchstick
       duration: 10
-      igniteSound: /Audio/Items/match_strike.ogg
+      igniteSound:
+        path: /Audio/Items/match_strike.ogg
     - type: PointLight
       enabled: false
       radius: 1.1

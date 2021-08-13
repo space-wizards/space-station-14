@@ -34,7 +34,8 @@
   - type: MovedByPressure
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/hit_kick.ogg
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
   - type: Sprite
     noRot: true
     drawdepth: Mobs

@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
+using System.Collections.Generic;
 
 namespace Content.Shared.Maps
 {
@@ -31,7 +32,7 @@ namespace Content.Shared.Maps
 
         [DataField("can_crowbar")] public bool CanCrowbar { get; private set; }
 
-        [DataField("footstep_sounds")] public string FootstepSounds { get; } = string.Empty;
+        [DataField("footstep_sounds", required: true)] public SoundSpecifier FootstepSounds { get; } = default!;
 
         [DataField("friction")] public float Friction { get; set; }
 

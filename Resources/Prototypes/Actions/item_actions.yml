@@ -107,15 +107,19 @@
   parent: BaseItem
   id: ItemActionExample
   description: for testing item actions
+  suffix: DEBUG
   components:
-    - type: Sprite
-      sprite: Objects/Fun/bikehorn.rsi
-      state: icon
-    - type: ItemActions
-      actions:
-        - actionType: DebugInstant
-        - actionType: DebugToggle
-        - actionType: DebugTargetPoint
-        - actionType: DebugTargetPointRepeat
-        - actionType: DebugTargetEntity
-        - actionType: DebugTargetEntityRepeat
+  - type: Tag
+    tags:
+      - Debug
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+  - type: ItemActions
+    actions:
+      - actionType: DebugInstant
+      - actionType: DebugToggle
+      - actionType: DebugTargetPoint
+      - actionType: DebugTargetPointRepeat
+      - actionType: DebugTargetEntity
+      - actionType: DebugTargetEntityRepeat

@@ -103,8 +103,8 @@
   #       !type:DamageTrigger
   #       damage: 10
   #     behaviors:
-  #     - !type:PlaySoundCollectionBehavior
-  #       soundCollection: desecration
+  #     - !type:PlaySoundBehavior
+  #       collection:: desecration
   #     - !type:SpawnEntitiesBehavior
   #       spawn:
   #         EggBoxBroken:

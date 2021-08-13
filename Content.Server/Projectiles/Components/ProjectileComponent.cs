@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -25,8 +26,8 @@ namespace Content.Server.Projectiles.Components
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
-        [DataField("soundHit")] public string? SoundHit = default;
-        [DataField("soundHitSpecies")] public string? SoundHitSpecies = default;
+        [DataField("soundHit", required: true)] public SoundSpecifier SoundHit = default!;
+        [DataField("soundHitSpecies", required: true)] public SoundSpecifier SoundHitSpecies = default!;
 
         public bool DamagedEntity;
 

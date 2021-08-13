@@ -23,6 +23,9 @@
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
+  - type: Tag
+    tags:
+    - Katana
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
     state: icon
@@ -39,6 +42,9 @@
   id: Machete
   description: A large, vicious looking blade.
   components:
+  - type: Tag
+    tags:
+    - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/machete.rsi
     state: icon

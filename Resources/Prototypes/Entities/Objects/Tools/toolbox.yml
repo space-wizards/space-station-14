@@ -10,7 +10,8 @@
   - type: ItemCooldown
   - type: MeleeWeapon
     damage: 10
-    hitSound: "/Audio/Weapons/smash.ogg"
+    hitSound:
+      path: "/Audio/Weapons/smash.ogg"
 
 - type: entity
   name: emergency toolbox

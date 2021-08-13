@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
+using Content.Shared.Sound;
 using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -57,6 +58,10 @@ namespace Content.Server.PDA
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
+
+        [DataField("insertIdSound")] private SoundSpecifier _insertIdSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
+        [DataField("toggleFlashlightSound")] private SoundSpecifier _toggleFlashlightSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        [DataField("ejectIdSound")] private SoundSpecifier _ejectIdSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
 
         public PDAComponent()
         {
@@ -124,8 +129,7 @@ namespace Content.Server.PDA
                 case PDAUplinkBuyListingMessage buyMsg:
                 {
                     var player = message.Session.AttachedEntity;
-                    if (player == null)
-                        break;
+                    if (player == null) break;
 
                     if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
                         player.Transform.Coordinates, out var entity))
@@ -134,7 +138,8 @@ namespace Content.Server.PDA
                         break;
                     }
 
-                    if (!player.TryGetComponent(out HandsComponent? hands) || !entity.TryGetComponent(out ItemComponent? item))
+                    if (!player.TryGetComponent(out HandsComponent? hands) ||
+                        !entity.TryGetComponent(out ItemComponent? item))
                         break;
 
                     hands.PutInHandOrDrop(item);
@@ -300,7 +305,7 @@ namespace Content.Server.PDA
         {
             _idSlot.Insert(card.Owner);
             ContainedID = card;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _insertIdSound.GetSound(), Owner);
         }
 
         /// <summary>
@@ -329,7 +334,7 @@ namespace Content.Server.PDA
 
             _lightOn = !_lightOn;
             light.Enabled = _lightOn;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/flashlight_toggle.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _toggleFlashlightSound.GetSound(), Owner);
             UpdatePDAUserInterface();
         }
 
@@ -348,7 +353,7 @@ namespace Content.Server.PDA
             hands.PutInHandOrDrop(cardItemComponent);
             ContainedID = null;
 
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/id_swipe.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _ejectIdSound.GetSound(), Owner);
             UpdatePDAUserInterface();
         }
 

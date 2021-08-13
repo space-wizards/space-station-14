@@ -28,7 +28,6 @@
           Quantity: 100
         maxVol: 100
   - type: Welder
-    weldSoundCollection: Welder
   - type: PointLight
     enabled: false
     radius: 1.5

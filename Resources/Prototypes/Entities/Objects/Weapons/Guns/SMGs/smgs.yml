@@ -25,13 +25,20 @@
     angleIncrease: 10
     angleDecay: 60
     magFillPrototype: MagazinePistolSmg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/smg.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/smg_cock.ogg
-    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/smg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/smg_cock.ogg
+    soundBoltOpen:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/smg_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/smg_magout.ogg
 
 - type: entity
   name: Atreides

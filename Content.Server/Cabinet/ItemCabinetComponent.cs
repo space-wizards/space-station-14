@@ -1,5 +1,6 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -23,8 +24,8 @@ namespace Content.Server.Cabinet
         ///     Sound to be played when the cabinet door is opened.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("doorSound")]
-        public string? DoorSound { get; set; }
+        [DataField("doorSound", required: true)]
+        public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>
         ///     The prototype that should be spawned inside the cabinet when it is map initialized.

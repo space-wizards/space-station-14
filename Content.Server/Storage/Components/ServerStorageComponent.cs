@@ -8,12 +8,11 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Placeable;
 using Content.Shared.Acts;
-using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
@@ -65,7 +64,7 @@ namespace Content.Server.Storage.Components
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
-        public string? StorageSoundCollection { get; set; }
+        public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -161,7 +160,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -257,7 +256,7 @@ namespace Content.Server.Storage.Components
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
@@ -402,8 +401,7 @@ namespace Content.Server.Storage.Components
                     var playerTransform = player.Transform;
 
                     if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform &&
-                        !playerTransform.ContainsEntity(ownerTransform))
+                        !ownerTransform.IsMapTransform && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
@@ -416,8 +414,7 @@ namespace Content.Server.Storage.Components
                     }
 
                     var item = entity.GetComponent<ItemComponent>();
-                    if (item == null ||
-                        !player.TryGetComponent(out HandsComponent? hands))
+                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -510,7 +507,7 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
+            if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
@@ -555,9 +552,9 @@ namespace Content.Server.Storage.Components
                 }
 
                 // If we picked up atleast one thing, play a sound and do a cool animation!
-                if (successfullyInserted.Count>0)
+                if (successfullyInserted.Count > 0)
                 {
-                    PlaySoundCollection(StorageSoundCollection);
+                    PlaySoundCollection();
                     SendNetworkMessage(
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
@@ -568,7 +565,7 @@ namespace Content.Server.Storage.Components
                 return true;
             }
             // Pick up the clicked entity
-            else if(_quickInsert)
+            else if (_quickInsert)
             {
                 if (eventArgs.Target == null
                     || !eventArgs.Target.Transform.IsMapTransform
@@ -576,7 +573,7 @@ namespace Content.Server.Storage.Components
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
                 var position = eventArgs.Target.Transform.Coordinates;
-                if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
+                if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
                         new List<EntityUid>() { eventArgs.Target.Uid },
@@ -628,15 +625,9 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        protected void PlaySoundCollection(string? name)
+        private void PlaySoundCollection()
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                return;
-            }
-
-            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

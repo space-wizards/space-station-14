@@ -222,7 +222,7 @@ namespace Content.Server.Singularity.EntitySystems
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound, component.Owner,
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
                 AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 

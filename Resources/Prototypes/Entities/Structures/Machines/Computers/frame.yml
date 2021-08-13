@@ -35,8 +35,8 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: monitorBroken
       - !type:DoActsBehavior
@@ -61,7 +61,8 @@
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

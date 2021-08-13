@@ -20,6 +20,7 @@ using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Power;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -39,16 +40,22 @@ namespace Content.Server.Kitchen.Components
         [Dependency] private readonly RecipeManager _recipeManager = default!;
 
         #region YAMLSERIALIZE
+        [DataField("cookTime")]
+        private uint _cookTimeDefault = 5;
+        [DataField("cookTimeMultiplier")]
+        private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
+        [DataField("failureResult")]
+        private string _badRecipeName = "FoodBadRecipe";
+        [DataField("beginCookingSound")]
+        private SoundSpecifier _startCookingSound = new SoundPathSpecifier("/Audio/Machines/microwave_start_beep.ogg");
+        [DataField("foodDoneSound")]
+        private SoundSpecifier _cookingCompleteSound = new SoundPathSpecifier("/Audio/Machines/microwave_done_beep.ogg");
+        [DataField("clickSound")]
+        private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        #endregion YAMLSERIALIZE
 
-        [DataField("cookTime")] private uint _cookTimeDefault = 5;
-        [DataField("cookTimeMultiplier")] private int _cookTimeMultiplier = 1000; //For upgrades and stuff I guess?
-        [DataField("failureResult")] private string _badRecipeName = "FoodBadRecipe";
-        [DataField("beginCookingSound")] private string _startCookingSound = "/Audio/Machines/microwave_start_beep.ogg";
-        [DataField("foodDoneSound")] private string _cookingCompleteSound = "/Audio/Machines/microwave_done_beep.ogg";
-
-        #endregion
-
-        [ViewVariables] private bool _busy = false;
+        [ViewVariables]
+        private bool _busy = false;
         private bool _broken;
 
         /// <summary>
@@ -103,11 +110,11 @@ namespace Content.Server.Kitchen.Components
 
             switch (message.Message)
             {
-                case MicrowaveStartCookMessage:
+                case MicrowaveStartCookMessage msg:
                     Wzhzhzh();
                     break;
-                case MicrowaveEjectMessage:
-                    if (HasContents)
+                case MicrowaveEjectMessage msg:
+                    if (_hasContents)
                     {
                         VaporizeReagents();
                         EjectSolids();
@@ -337,8 +344,8 @@ namespace Content.Server.Kitchen.Components
             }
 
             SetAppearance(MicrowaveVisualState.Cooking);
-            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound, Owner, AudioParams.Default);
-            Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), () =>
+            SoundSystem.Play(Filter.Pvs(Owner), _startCookingSound.GetSound(), Owner, AudioParams.Default);
+            Owner.SpawnTimer((int) (_currentCookTimerTime * _cookTimeMultiplier), (Action) (() =>
             {
                 if (_lostPower)
                 {
@@ -365,7 +372,8 @@ namespace Content.Server.Kitchen.Components
                     }
                 }
 
-                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound, Owner, AudioParams.Default.WithVolume(-1f));
+                SoundSystem.Play(Filter.Pvs(Owner), _cookingCompleteSound.GetSound(), Owner,
+                    AudioParams.Default.WithVolume(-1f));
 
                 SetAppearance(MicrowaveVisualState.Idle);
                 _busy = false;
@@ -497,8 +505,7 @@ namespace Content.Server.Kitchen.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner,
-                AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

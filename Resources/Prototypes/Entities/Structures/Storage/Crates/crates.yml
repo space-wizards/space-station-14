@@ -538,7 +538,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+          path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:

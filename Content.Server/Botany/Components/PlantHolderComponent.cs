@@ -708,11 +708,7 @@ namespace Content.Server.Botany.Components
                     sprayed = true;
                     amount = ReagentUnit.New(1);
 
-                    if (!string.IsNullOrEmpty(spray.SpraySound))
-                    {
-                        SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound, usingItem,
-                            AudioHelpers.WithVariation(0.125f));
-                    }
+                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem, AudioHelpers.WithVariation(0.125f));
                 }
 
                 var split = EntitySystem.Get<SolutionContainerSystem>().Drain(solution, amount);

@@ -125,7 +125,7 @@ namespace Content.Shared.Throwing
         {
             // TODO: Just pass in the bodies directly
             var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
-            RaiseLocalEvent(collideMsg);
+            RaiseLocalEvent(target.Owner.Uid, collideMsg);
             if (collideMsg.Handled)
             {
                 return;

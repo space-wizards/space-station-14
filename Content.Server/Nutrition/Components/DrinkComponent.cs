@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -38,12 +39,16 @@ namespace Content.Server.Nutrition.Components
 
         int IAfterInteract.Priority => 10;
 
-        [ViewVariables] private bool _opened;
+        [ViewVariables]
+        private bool _opened;
 
-        [ViewVariables] [DataField("useSound")]
-        private string _useSound = "/Audio/Items/drink.ogg";
+        [ViewVariables]
+        [DataField("useSound")]
+        private SoundSpecifier _useSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-        [ViewVariables] [DataField("isOpen")] private bool _defaultToOpened;
+        [ViewVariables]
+        [DataField("isOpen")]
+        private bool _defaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(5);
@@ -73,9 +78,12 @@ namespace Content.Server.Nutrition.Components
             return drainAvailable <= 0;
         }
 
-        [DataField("openSounds")] private string _soundCollection = "canOpenSounds";
-        [DataField("pressurized")] private bool _pressurized = default;
-        [DataField("burstSound")] private string _burstSound = "/Audio/Effects/flash_bang.ogg";
+        [DataField("openSounds")]
+        private SoundSpecifier _openSounds = new SoundCollectionSpecifier("canOpenSounds");
+        [DataField("pressurized")]
+        private bool _pressurized = default;
+        [DataField("burstSound")]
+        private SoundSpecifier _burstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         protected override void Initialize()
         {
@@ -123,10 +131,8 @@ namespace Content.Server.Nutrition.Components
             if (!Opened)
             {
                 //Do the opening stuff like playing the sounds.
-                var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(_soundCollection);
-                var file = _random.Pick(soundCollection.PickFiles);
+                SoundSystem.Play(Filter.Pvs(args.User), _openSounds.GetSound(), args.User, AudioParams.Default);
 
-                SoundSystem.Play(Filter.Pvs(args.User), file, args.User, AudioParams.Default);
                 Opened = true;
                 return false;
             }
@@ -162,8 +168,7 @@ namespace Content.Server.Nutrition.Components
             var color = Empty ? "gray" : "yellow";
             var openedText =
                 Loc.GetString(Empty ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color),
-                ("text", openedText)));
+            message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
         }
 
         private bool TryUseDrink(IEntity user, IEntity target, bool forced = false)
@@ -219,10 +224,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(_useSound))
-            {
-                SoundSystem.Play(Filter.Pvs(target), _useSound, target, AudioParams.Default.WithVolume(-2f));
-            }
+            SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
             target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
             UpdateAppearance();
@@ -249,8 +251,7 @@ namespace Content.Server.Nutrition.Components
                     .Drain(interactions, interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
-                SoundSystem.Play(Filter.Pvs(Owner), _burstSound, Owner,
-                    AudioParams.Default.WithVolume(-4));
+                SoundSystem.Play(Filter.Pvs(Owner), _burstSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4));
             }
         }
     }

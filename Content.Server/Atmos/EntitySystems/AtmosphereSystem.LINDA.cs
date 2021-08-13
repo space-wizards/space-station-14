@@ -1,5 +1,3 @@
-#nullable disable warnings
-#nullable enable annotations
 using Content.Server.Atmos.Components;
 using Content.Shared.Atmos;
 

@@ -95,9 +95,9 @@ namespace Content.Server.Placeable
             }
             handComponent.Drop(eventArgs.Using);
             if (_placeCentered)
-                eventArgs.Using.Transform.WorldPosition = eventArgs.Target.Transform.WorldPosition + _positionOffset;
+                eventArgs.Using.Transform.LocalPosition = eventArgs.Target.Transform.LocalPosition + _positionOffset;
             else
-                eventArgs.Using.Transform.WorldPosition = eventArgs.ClickLocation.Position;
+                eventArgs.Using.Transform.Coordinates = eventArgs.ClickLocation;
             return true;
         }
     }

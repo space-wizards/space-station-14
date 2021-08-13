@@ -36,8 +36,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: MorgueTray
   - type: Appearance
     visuals:
@@ -54,6 +56,18 @@
   name: morgue tray
   description: If you lay down to have a rest on this, you'll soon have a problem.
   components:
+  - type: Physics
+    bodyType: Static
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5, -0.5, 0.5, 0.5"
+        mass: 25
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - SmallImpassable
   - type: Sprite
     netsync: false
     sprite: Structures/Storage/morgue.rsi
@@ -101,8 +115,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: CrematoriumTray
     doSoulBeep: false
   - type: Appearance

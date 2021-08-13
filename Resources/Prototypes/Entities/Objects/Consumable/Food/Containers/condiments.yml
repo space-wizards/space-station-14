@@ -10,7 +10,8 @@
   description: A small plastic pack with condiments to put on your food.
   components:
   - type: Drink
-    openSounds: packetOpenSounds
+    openSounds:
+      collection: packetOpenSounds
   - type: SolutionContainer
     solutions:
       food:
@@ -328,7 +329,8 @@
   description: A thin glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
+    openSounds:
+      collection: pop
   - type: SolutionContainer
     solutions:
       food:
@@ -470,7 +472,8 @@
   description: A smaller glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
+    openSounds:
+      collection: pop
   - type: SolutionContainer
     solutions:
       food:

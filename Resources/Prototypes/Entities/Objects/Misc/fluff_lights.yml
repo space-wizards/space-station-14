@@ -110,7 +110,8 @@
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/glass_break1.ogg
+        sound:
+          path: /Audio/Effects/glass_break1.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           FloodlightBroken:
@@ -141,7 +142,8 @@
         damage: 20
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

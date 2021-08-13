@@ -37,9 +37,12 @@
     caliber: Magnum
     capacity: 5
     autoCycle: true
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -67,10 +70,14 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
 
 - type: entity
   name: Mateba
@@ -91,7 +98,11 @@
     fillPrototype: CartridgeMagnum
     caliber: Magnum
     capacity: 7
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg

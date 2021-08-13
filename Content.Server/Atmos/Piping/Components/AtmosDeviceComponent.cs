@@ -8,7 +8,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Piping.Components
 {
     /// <summary>
-    ///     Adds itself to a <see cref="IGridAtmosphereComponent"/> to be updated by.
+    ///     Adds itself to a <see cref="IAtmosphereComponent"/> to be updated by.
     /// </summary>
     [RegisterComponent]
     public class AtmosDeviceComponent : Component
@@ -21,6 +21,19 @@ namespace Content.Server.Atmos.Piping.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("requireAnchored")]
         public bool RequireAnchored { get; private set; } = true;
+
+        /// <summary>
+        ///     Whether this device will join an entity system to process when not in a grid.
+        /// </summary>
+        [ViewVariables]
+        [DataField("joinSystem")]
+        public bool JoinSystem { get; } = false;
+
+        /// <summary>
+        ///     Whether we have joined an entity system to process.
+        /// </summary>
+        [ViewVariables]
+        public bool JoinedSystem { get; set; } = false;
 
         [ViewVariables]
         public TimeSpan LastProcess { get; set; } = TimeSpan.Zero;

@@ -84,3 +84,7 @@
         prob: 0.8
       - id: TomatoSeeds
         prob: 1
+      - id: ClothingUniformOveralls
+        prob: 1
+      - id: ClothingHeadHatTrucker
+        prob: 0.1

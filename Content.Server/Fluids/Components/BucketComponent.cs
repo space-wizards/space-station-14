@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -45,7 +46,7 @@ namespace Content.Server.Fluids.Components
             : ReagentUnit.Zero;
 
         [DataField("sound")]
-        private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
+        private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
 
         /// <inheritdoc />
         protected override void Initialize()
@@ -117,10 +118,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            if (_sound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner);
 
             return true;
         }

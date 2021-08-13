@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -57,9 +58,11 @@ namespace Content.Server.Fluids.Components
         // Picking up a puddle requires multiple clicks
         // Dumping in a bucket requires 1 click
         // Long-term you'd probably use a cooldown and start the pickup once we have some form of global cooldown
-        [DataField("pickup_amount")] public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
+        [DataField("pickup_amount")]
+        public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
-        [DataField("pickup_sound")] private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
+        [DataField("pickup_sound")]
+        private SoundSpecifier _pickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
@@ -172,10 +175,7 @@ namespace Content.Server.Fluids.Components
                 EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, transferAmount);
             }
 
-            if (!string.IsNullOrWhiteSpace(_pickupSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _pickupSound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             return true;
         }

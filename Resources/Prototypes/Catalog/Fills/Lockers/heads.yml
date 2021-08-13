@@ -131,6 +131,10 @@
         prob: 1
       - id: ClothingMaskSterile
         prob: 1
+      - id: ClothingHeadHelmetHardsuitMedical
+        prob: 1
+      - id: ClothingOuterHardsuitMedical
+        prob: 1
 
 - type: entity
   id: LockerResearchDirectorFilled
