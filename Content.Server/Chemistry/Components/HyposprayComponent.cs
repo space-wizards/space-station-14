@@ -28,8 +28,6 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
 
-        [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -54,7 +52,10 @@ namespace Content.Server.Chemistry.Components
                 target = user;
             }
 
-            if (_solution == null || _solution.CurrentVolume == 0)
+            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            var hypoSpraySolution = solutionsSys.GetInjectableSolution(Owner);
+
+            if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
                 user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
                 return true;
@@ -72,10 +73,10 @@ namespace Content.Server.Chemistry.Components
 
             SoundSystem.Play(Filter.Pvs(user), "/Audio/Items/hypospray.ogg", user);
 
-            var targetSolution = target.GetComponent<SolutionContainerComponent>();
+            var targetSolution = solutionsSys.GetInjectableSolution(target);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution!.EmptyVolume);
 
             if (realTransferAmount <= 0)
             {
@@ -86,7 +87,9 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = EntitySystem.Get<ChemistrySystem>().SplitSolution(_solution, realTransferAmount);
+            var removedSolution =
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .SplitSolution(hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
@@ -95,13 +98,13 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
 
-            EntitySystem.Get<ChemistrySystem>().TryAddSolution(targetSolution, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetSolution, removedSolution);
 
             static bool EligibleEntity(IEntity entity)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
-                return entity.HasComponent<SolutionContainerComponent>() && entity.HasComponent<MobStateComponent>();
+                return EntitySystem.Get<SolutionContainerSystem>().HasSolution(entity) && entity.HasComponent<MobStateComponent>();
             }
 
             return true;
@@ -109,10 +112,11 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            if (_solution == null)
+            var solution = EntitySystem.Get<SolutionContainerSystem>().GetInjectableSolution(Owner);
+            if (solution == null)
                 return new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
 
-            return new HyposprayComponentState(_solution.CurrentVolume, _solution.MaxVolume);
+            return new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume);
         }
     }
 }

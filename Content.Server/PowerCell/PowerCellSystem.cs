@@ -3,12 +3,14 @@ using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.PowerCell
 {
     [UsedImplicitly]
     public class PowerCellSystem  : EntitySystem
     {
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -18,8 +20,8 @@ namespace Content.Server.PowerCell
 
         private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
         {
-            component.IsRigged = args.Owner.TryGetComponent(out SolutionContainerComponent? solution)
-                                && solution.Solution.ContainsReagent("Plasma", out var plasma)
+            component.IsRigged =_solutionsSystem.TryGetSolution(args.Owner, "powerCell", out var solution)
+                                && solution.ContainsReagent("Plasma", out var plasma)
                                 && plasma >= 5;
         }
     }

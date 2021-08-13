@@ -9,7 +9,6 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -28,17 +27,20 @@ namespace Content.Server.Fluids.Components
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get =>
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution)
+                    ? solution.MaxVolume
+                    : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionContainerComponent? solution)
+        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
@@ -49,12 +51,13 @@ namespace Content.Server.Fluids.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<SolutionContainerComponent>();
+            // Owner.EnsureComponentWarn<SolutionContainerManager>();
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionsSys.TryGetSolution(Owner, "bucket", out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
                 !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
@@ -101,15 +104,15 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var mopContents = mopComponent.Contents;
+            var mopContents = mopComponent.MopSolution;
 
             if (mopContents == null)
             {
                 return false;
             }
 
-            var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount);
-            if (!EntitySystem.Get<ChemistrySystem>().TryAddSolution(mopContents, solution))
+            var solution = solutionsSys.SplitSolution(contents, transferAmount);
+            if (!solutionsSys.TryAddSolution(mopContents, solution))
             {
                 return false;
             }

@@ -9,6 +9,7 @@ using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
@@ -51,15 +52,22 @@ namespace Content.Server.Tools.Components
         private bool _welderLit;
         private WelderSystem _welderSystem = default!;
         private SpriteComponent? _spriteComponent;
-        private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
         [DataField("weldSoundCollection")] public string? WeldSoundCollection { get; set; }
 
-        [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
+        [ViewVariables] public float Fuel => WelderSolution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
 
-        [ViewVariables] public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
+        [ViewVariables] public float FuelCapacity => WelderSolution?.MaxVolume.Float() ?? 0f;
+
+        private Solution? WelderSolution
+        {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "welder", out var solution);
+                return solution;
+            }
+        }
 
         /// <summary>
         /// Status of welder, whether it is ignited
@@ -88,7 +96,7 @@ namespace Content.Server.Tools.Components
 
             _welderSystem = _entitySystemManager.GetEntitySystem<WelderSystem>();
 
-            Owner.TryGetComponent(out _solutionComponent);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "welder");
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
         }
@@ -152,11 +160,11 @@ namespace Content.Server.Tools.Components
                 return false;
             }
 
-            if (_solutionComponent == null)
+            if (WelderSolution == null)
                 return false;
 
-            var succeeded = EntitySystem.Get<ChemistrySystem>()
-                .TryRemoveReagent(_solutionComponent, "WeldingFuel", ReagentUnit.New(value));
+            var succeeded = EntitySystem.Get<SolutionContainerSystem>()
+                .TryRemoveReagent(WelderSolution, "WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
@@ -233,7 +241,7 @@ namespace Content.Server.Tools.Components
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(_solutionComponent, "WeldingFuel",
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(WelderSolution, "WeldingFuel",
                 ReagentUnit.New(FuelLossRate * frameTime));
 
             EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
@@ -280,9 +288,9 @@ namespace Content.Server.Tools.Components
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
-                && eventArgs.Target.TryGetComponent(out SolutionContainerComponent? targetSolution)
-                && targetSolution.CanDrain
-                && _solutionComponent != null)
+                && EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
+                && WelderSolution != null)
             {
                 if (WelderLit)
                 {
@@ -291,11 +299,11 @@ namespace Content.Server.Tools.Components
                     return true;
                 }
 
-                var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
+                var trans = ReagentUnit.Min(WelderSolution.EmptyVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
-                    var drained = EntitySystem.Get<ChemistrySystem>().Drain(targetSolution, trans);
-                    EntitySystem.Get<ChemistrySystem>().TryAddSolution(_solutionComponent, drained);
+                    var drained = EntitySystem.Get<SolutionContainerSystem>().Drain(targetSolution, trans);
+                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(WelderSolution, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/refill.ogg", Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,

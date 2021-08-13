@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
                 IEntity beaker;
-                SolutionContainerComponent component = null;
+                Solution component = null;
 
                 server.Assert(() =>
                 {
@@ -43,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     Assert.That(beaker.TryGetComponent(out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
-                        Assert.That(EntitySystem.Get<ChemistrySystem>()
+                        Assert.That(EntitySystem.Get<SolutionContainerSystem>()
                             .TryAddReagent(component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
@@ -58,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     var foundProductsMap = reactionPrototype.Products
                         .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
                         .ToDictionary(x => x, x => false);
-                    foreach (var reagent in component.Solution.Contents)
+                    foreach (var reagent in component.Contents)
                     {
                         Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.ReagentId && x.Key.Value == reagent.Quantity, out var foundProduct));
                         foundProductsMap[foundProduct.Value.Key] = true;

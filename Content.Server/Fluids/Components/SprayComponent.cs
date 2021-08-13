@@ -80,13 +80,17 @@ namespace Content.Server.Fluids.Components
 
         public string? SpraySound => _spraySound;
 
-        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+        public ReagentUnit CurrentVolume {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "spray", out var solution);
+                return solution?.CurrentVolume ?? ReagentUnit.Zero;
+            }
+        }
 
         protected override void Initialize()
         {
             base.Initialize();
-
-            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
 
             if (_hasSafety)
             {
@@ -122,7 +126,7 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "spray", out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
@@ -146,7 +150,7 @@ namespace Content.Server.Fluids.Components
                 if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
                     target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
 
-                var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, _transferAmount);
+                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, _transferAmount);
 
                 if (solution.TotalVolume <= ReagentUnit.Zero)
                     break;

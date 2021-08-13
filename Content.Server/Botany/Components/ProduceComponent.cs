@@ -17,8 +17,7 @@ namespace Content.Server.Botany.Components
     {
         public override string Name => "Produce";
 
-        [DataField("seed")]
-        private string? _seedName;
+        [DataField("seed")] private string? _seedName;
 
         [ViewVariables]
         public Seed? Seed
@@ -40,18 +39,17 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            var solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
-
-            EntitySystem.Get<ChemistrySystem>().RemoveAllSolution(solutionContainer);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner);
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "seedChem");
 
             foreach (var (chem, quantity) in Seed.Chemicals)
             {
                 var amount = ReagentUnit.New(quantity.Min);
-                if(quantity.PotencyDivisor > 0 && Potency > 0)
-                    amount += ReagentUnit.New(Potency/quantity.PotencyDivisor);
+                if (quantity.PotencyDivisor > 0 && Potency > 0)
+                    amount += ReagentUnit.New(Potency / quantity.PotencyDivisor);
                 amount = ReagentUnit.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
                 solutionContainer.MaxVolume += amount;
-                solutionContainer.Solution.AddReagent(chem, amount);
+                solutionContainer.AddReagent(chem, amount);
             }
         }
     }

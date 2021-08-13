@@ -33,13 +33,9 @@ namespace Content.Server.Chemistry.Components
         [DataField("transferAmount")]
         protected override ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(1000);
 
-        [ViewVariables] private SolutionContainerComponent _contents = default!;
-
         protected override void Initialize()
         {
             base.Initialize();
-
-            Owner.EnsureComponentWarn(out _contents);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -79,14 +75,19 @@ namespace Content.Server.Chemistry.Components
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(TransferAmount, _contents.CurrentVolume);
-            var split = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, transferAmount);
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "pill", out var pillSolution))
+            {
+                return false;
+            }
+
+            var transferAmount = ReagentUnit.Min(TransferAmount, pillSolution.CurrentVolume);
+            var split = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(pillSolution, transferAmount);
 
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
-                EntitySystem.Get<ChemistrySystem>().TryAddSolution(_contents, split);
+                EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pillSolution, split);
                 trueTarget.PopupMessage(user, Loc.GetString("pill-component-cannot-eat-more-message"));
                 return false;
             }

@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
@@ -9,7 +8,6 @@ using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -17,8 +15,6 @@ namespace Content.Server.Body.Metabolism
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
-        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -39,9 +35,10 @@ namespace Content.Server.Body.Metabolism
         private void TryMetabolize(MetabolizerComponent comp)
         {
             var owner = comp.Owner;
-            var reagentList = new List<Solution.ReagentQuantity>();
-            SolutionContainerComponent? solution = null;
+            IReadOnlyList<Solution.ReagentQuantity> reagentList = new List<Solution.ReagentQuantity>();
+            Solution? solution = null;
             SharedBodyComponent? body = null;
+            var solutionsSys = Get<SolutionContainerSystem>();
 
             // if this field is passed we should try and take from the bloodstream over anything else
             if (comp.TakeFromBloodstream && owner.TryGetComponent<SharedMechanismComponent>(out var mech))
@@ -49,20 +46,21 @@ namespace Content.Server.Body.Metabolism
                 body = mech.Body;
                 if (body != null)
                 {
-                    if (body.Owner.TryGetComponent<BloodstreamComponent>(out var bloodstream)
-                        && bloodstream.Solution.CurrentVolume >= ReagentUnit.Zero)
+                    if (body.Owner.HasComponent<BloodstreamComponent>()
+                        && solutionsSys.TryGetSolution(body.Owner, "bloodstream", out solution)
+                        && solution.CurrentVolume >= ReagentUnit.Zero)
                     {
-                        solution = bloodstream.Solution;
-                        reagentList = bloodstream.Solution.ReagentList.ToList();
+                        reagentList = solution.Contents;
                     }
                 }
             }
-            else if (owner.TryGetComponent<SolutionContainerComponent>(out var sol))
+            // TODO What goes here??
+            else if (Get<SolutionContainerSystem>().TryGetDefaultSolution(owner,  out var sol))
             {
                 // if we have no mechanism/body but a solution container instead,
                 // we'll just use that to metabolize from
                 solution = sol;
-                reagentList = sol.ReagentList.ToList();
+                reagentList = solution.Contents;
             }
 
             if (solution == null || reagentList.Count == 0)
@@ -105,7 +103,7 @@ namespace Content.Server.Body.Metabolism
                     effect.Metabolize(ent, reagent);
                 }
 
-                _chemistrySystem.TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
+                solutionsSys.TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
             }
         }
     }

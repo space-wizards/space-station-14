@@ -3,7 +3,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
@@ -40,7 +39,7 @@ namespace Content.Server.Nutrition.Components
             base.Initialize();
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "food");
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -49,7 +48,7 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
             {
                 return false;
             }
@@ -77,7 +76,7 @@ namespace Content.Server.Nutrition.Components
                 return true;
             }
 
-            EntitySystem.Get<ChemistrySystem>().TryRemoveReagent(solution, "Nutriment",
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(solution, "Nutriment",
                 solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }

@@ -52,8 +52,14 @@ namespace Content.Server.Chemistry.Components
 
         [UsedImplicitly]
         [ViewVariables]
-        private SolutionContainerComponent? Solution =>
-            _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
+        private Solution? Solution
+        {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "reagent", out var solution);
+                return solution;
+            }
+        }
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
@@ -218,17 +224,17 @@ namespace Content.Server.Chemistry.Components
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = _beakerContainer.ContainedEntity;
-            if (beaker == null)
+            if (beaker == null ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, "beaker", out var solution))
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0),
                     ReagentUnit.New(0),
                     string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
             }
 
-            var solution = beaker.GetComponent<SolutionContainerComponent>();
             return new ReagentDispenserBoundUserInterfaceState(Powered, true, solution.CurrentVolume,
                 solution.MaxVolume,
-                beaker.Name, Inventory, Owner.Name, solution.ReagentList.ToList(), _dispenseAmount);
+                beaker.Name, Inventory, Owner.Name, solution.Contents.ToList(), _dispenseAmount);
         }
 
         public void UpdateUserInterface()
@@ -238,7 +244,7 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, eject it.
+        /// If this component contains an entity with a <see cref="SolutionHolder"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
         /// </summary>
         private void TryEject(IEntity user)
@@ -261,33 +267,32 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, remove all of it's reagents / solutions.
+        /// If this component contains an entity with a <see cref="SolutionHolder"/>, remove all of it's reagents / solutions.
         /// </summary>
         private void TryClear()
         {
-            if (!HasBeaker) return;
-            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
-            if (solution is null)
+            if (!HasBeaker ||
+                !EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetSolution(_beakerContainer.ContainedEntity, "beaker", out var solution))
                 return;
 
-            EntitySystem.Get<ChemistrySystem>().RemoveAllSolution(solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(solution);
 
             UpdateUserInterface();
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionContainerComponent"/>, attempt to dispense the specified reagent to it.
+        /// If this component contains an entity with a <see cref="SolutionHolder"/>, attempt to dispense the specified reagent to it.
         /// </summary>
         /// <param name="dispenseIndex">The index of the reagent in <c>Inventory</c>.</param>
         private void TryDispense(int dispenseIndex)
         {
             if (!HasBeaker) return;
 
-            var solution = _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
-            if (solution is null)
-                return;
+            if (!EntitySystem.Get<SolutionContainerSystem>()
+                .TryGetSolution(_beakerContainer.ContainedEntity, "beaker", out var solution)) return;
 
-            EntitySystem.Get<ChemistrySystem>()
+            EntitySystem.Get<SolutionContainerSystem>()
                 .TryAddReagent(solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
@@ -319,7 +324,7 @@ namespace Content.Server.Chemistry.Components
 
         /// <summary>
         /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="SolutionContainerComponent"/>, if you have hands, and if the dispenser doesn't already
+        /// contains a <see cref="SolutionHolder"/>, if you have hands, and if the dispenser doesn't already
         /// hold a container, it will be added to the dispenser.
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>
@@ -339,15 +344,16 @@ namespace Content.Server.Chemistry.Components
                 return false;
             }
 
+            var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (activeHandEntity.TryGetComponent<SolutionContainerComponent>(out var solution))
+            if (solutionSys.TryGetDefaultSolution(activeHandEntity,  out var solution))
             {
                 if (HasBeaker)
                 {
                     Owner.PopupMessage(args.User,
                         Loc.GetString("reagent-dispenser-component-has-container-already-message"));
                 }
-                else if ((solution.Capabilities & Capability.FitsInDispenser) == 0)
+                else if (!solutionSys.HasFitsInDispenser(activeHandEntity))
                 {
                     //If it can't fit in the dispenser, don't put it in. For example, buckets and mop buckets can't fit.
                     Owner.PopupMessage(args.User, Loc.GetString("reagent-dispenser-component-cannot-fit-message"));

@@ -15,6 +15,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public class TransformableContainerSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
         public override void Initialize()
         {
@@ -26,15 +27,16 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnSolutionChange(EntityUid uid, TransformableContainerComponent component,
             SolutionChangedEvent args)
         {
-            var solution = args.Owner.GetComponent<SolutionContainerComponent>();
+            if (!_solutionsSystem.TryGetFitsInDispenser(args.Owner, out var solution))
+                return;
             //Transform container into initial state when emptied
-            if (component.CurrentReagent != null && solution.ReagentList.Count == 0)
+            if (component.CurrentReagent != null && solution.Contents.Count == 0)
             {
                 CancelTransformation(component);
             }
 
             //the biggest reagent in the solution decides the appearance
-            var reagentId = solution.Solution.GetPrimaryReagentId();
+            var reagentId = solution.GetPrimaryReagentId();
 
             //If biggest reagent didn't changed - don't change anything at all
             if (component.CurrentReagent != null && component.CurrentReagent.ID == reagentId)

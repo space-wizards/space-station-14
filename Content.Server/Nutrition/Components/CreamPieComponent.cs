@@ -1,6 +1,6 @@
 using Content.Server.Fluids.Components;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.Solution.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -39,9 +39,9 @@ namespace Content.Server.Nutrition.Components
         {
             PlaySound();
 
-            if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
             {
-                solution.Solution.SpillAt(Owner, "PuddleSmear", false);
+                solution.SpillAt(Owner, "PuddleSmear", false);
             }
 
             Owner.QueueDelete();

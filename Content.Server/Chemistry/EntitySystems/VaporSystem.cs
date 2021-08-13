@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly ChemistrySystem _chemistrySystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         private const float ReactTime = 0.125f;
 
@@ -32,9 +32,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerComponent? contents)) return;
+            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManager? contents)) return;
 
-            contents.Solution.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+            foreach (var (_, value) in contents.Solutions)
+            {
+                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+            }
 
             // Check for collision with a impassable object (e.g. wall) and stop
             if ((args.OtherFixture.CollisionLayer & (int) CollisionGroup.Impassable) != 0 && args.OtherFixture.Hard)
@@ -63,14 +66,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!vapor.Owner.TryGetComponent(out SolutionContainerComponent? contents))
-            {
-                return false;
-            }
-
-            var result = _chemistrySystem.TryAddSolution(contents, solution);
-
-            if (!result)
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, "vapor", out _))
             {
                 return false;
             }
@@ -81,13 +77,16 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Update(float frameTime)
         {
             foreach (var (vaporComp, solution) in ComponentManager
-                .EntityQuery<VaporComponent, SolutionContainerComponent>(true))
+                .EntityQuery<VaporComponent, SolutionContainerManager>(true))
             {
-                Update(frameTime, vaporComp, solution);
+                foreach (var (_, value) in solution.Solutions)
+                {
+                    Update(frameTime, vaporComp, value);
+                }
             }
         }
 
-        private void Update(float frameTime, VaporComponent vapor, SolutionContainerComponent contents)
+        private void Update(float frameTime, VaporComponent vapor, Solution contents)
         {
             if (!vapor.Active)
                 return;
@@ -103,11 +102,11 @@ namespace Content.Server.Chemistry.EntitySystems
                 var mapGrid = _mapManager.GetGrid(entity.Transform.GridID);
 
                 var tile = mapGrid.GetTileRef(entity.Transform.Coordinates.ToVector2i(EntityManager, _mapManager));
-                foreach (var reagentQuantity in contents.ReagentList.ToArray())
+                foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _chemistrySystem.TryRemoveReagent(contents, reagentQuantity.ReagentId,
+                    _solutionContainerSystem.TryRemoveReagent(contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }

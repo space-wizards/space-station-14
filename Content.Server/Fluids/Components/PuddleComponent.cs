@@ -6,7 +6,6 @@ using System.Threading;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Directions;
 using Content.Shared.Examine;
 using Content.Shared.Maps;
@@ -87,11 +86,17 @@ namespace Content.Server.Fluids.Components
 
         public ReagentUnit MaxVolume
         {
-            get => _contents.MaxVolume;
-            set => _contents.MaxVolume = value;
+            get => PuddleSolution?.MaxVolume ?? ReagentUnit.Zero;
+            set
+            {
+                if (PuddleSolution != null)
+                {
+                    PuddleSolution.MaxVolume = value;
+                }
+            }
         }
 
-        [ViewVariables] public ReagentUnit CurrentVolume => _contents.CurrentVolume;
+        [ViewVariables] public ReagentUnit CurrentVolume => PuddleSolution?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Volume at which the fluid will try to spill to adjacent components
         // Currently a random number, potentially change
@@ -102,8 +107,7 @@ namespace Content.Server.Fluids.Components
 
         private ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 
-        private SolutionContainerComponent _contents = default!;
-        public bool EmptyHolder => _contents.ReagentList.Count == 0;
+        public bool EmptyHolder => PuddleSolution?.Contents.Count == 0;
 
         [DataField("variants")] private int _spriteVariants = 1;
 
@@ -114,11 +118,11 @@ namespace Content.Server.Fluids.Components
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
+        public Solution PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "puddle");
+
         protected override void Initialize()
         {
             base.Initialize();
-
-            _contents = Owner.EnsureComponentWarn<SolutionContainerComponent>();
 
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
             MaxVolume = ReagentUnit.New(1000);
@@ -171,7 +175,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var result = EntitySystem.Get<ChemistrySystem>().TryAddSolution(_contents, solution);
+            var result = EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(PuddleSolution, solution);
             if (!result)
             {
                 return false;
@@ -199,12 +203,15 @@ namespace Content.Server.Fluids.Components
             return true;
         }
 
-        internal Solution SplitSolution(ReagentUnit quantity)
+        internal void SplitSolution(ReagentUnit quantity)
         {
-            var split = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, quantity);
-            CheckEvaporate();
-            UpdateAppearance();
-            return split;
+            if (PuddleSolution != null)
+            {
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution, quantity);
+                CheckEvaporate();
+                UpdateAppearance();
+            }
+
         }
 
         public void CheckEvaporate()
@@ -217,8 +224,8 @@ namespace Content.Server.Fluids.Components
 
         public void Evaporate()
         {
-            EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents,
-                ReagentUnit.Min(ReagentUnit.New(1), _contents.CurrentVolume));
+            EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution,
+                ReagentUnit.Min(ReagentUnit.New(1), PuddleSolution.CurrentVolume));
 
             if (CurrentVolume == 0)
             {
@@ -278,7 +285,7 @@ namespace Content.Server.Fluids.Components
             Color newColor;
             if (_recolor)
             {
-                newColor = _contents.Color.WithAlpha(cappedScale);
+                newColor = PuddleSolution.Color.WithAlpha(cappedScale);
             }
             else
             {
@@ -329,7 +336,7 @@ namespace Content.Server.Fluids.Components
                     {
                         var adjacentPuddle = adjacent();
                         var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
-                        var spillAmount = EntitySystem.Get<ChemistrySystem>().SplitSolution(_contents, quantity);
+                        var spillAmount = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution, quantity);
 
                         adjacentPuddle.TryAddSolution(spillAmount, false, false, false);
                         nextPuddles.Add(adjacentPuddle);

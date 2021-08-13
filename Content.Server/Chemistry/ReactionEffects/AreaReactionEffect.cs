@@ -4,7 +4,6 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -89,10 +88,10 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public void React(IEntity solutionEntity, double intensity)
         {
-            if (!solutionEntity.TryGetComponent(out SolutionContainerComponent? contents))
+            if (! EntitySystem.Get<SolutionContainerSystem>().TryGetDefaultSolution(solutionEntity, out var contents))
                 return;
 
-            var solution = EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, contents.MaxVolume);
+            var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, contents.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);

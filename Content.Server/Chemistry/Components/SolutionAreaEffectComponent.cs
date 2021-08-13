@@ -5,7 +5,6 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -23,8 +22,6 @@ namespace Content.Server.Chemistry.Components
     {
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-
-        [ComponentDependency] protected readonly SolutionContainerComponent? SolutionContainerComponent = default!;
         public int Amount { get; set; }
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
 
@@ -85,9 +82,9 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                if (SolutionContainerComponent != null)
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "solutionArea", out var solution))
                 {
-                    effectComponent.TryAddSolution(SolutionContainerComponent.Solution.Clone());
+                    effectComponent.TryAddSolution(solution.Clone());
                 }
 
                 effectComponent.Amount = Amount - 1;
@@ -122,7 +119,7 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "solutionArea", out var solution))
                 return;
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
@@ -131,7 +128,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
-            foreach (var reagentQuantity in SolutionContainerComponent.ReagentList.ToArray())
+            foreach (var reagentQuantity in solution.Contents)
             {
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
@@ -143,7 +140,7 @@ namespace Content.Server.Chemistry.Components
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
                     chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
-                        reagentQuantity.Quantity * solutionFraction, SolutionContainerComponent.Solution);
+                        reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
@@ -160,13 +157,13 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "solutionArea", out var solutionArea))
                 return;
 
             var addSolution =
-                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, SolutionContainerComponent.EmptyVolume));
+                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.EmptyVolume));
 
-            EntitySystem.Get<ChemistrySystem>().TryAddSolution(SolutionContainerComponent, addSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solutionArea, addSolution);
 
             UpdateVisuals();
         }

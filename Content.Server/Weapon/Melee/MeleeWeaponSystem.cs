@@ -5,6 +5,7 @@ using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
@@ -25,6 +26,7 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -232,7 +234,8 @@ namespace Content.Server.Weapon.Melee
 
         private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
-            if (!ComponentManager.TryGetComponent<SolutionContainerComponent>(uid, out var solutionContainer))
+            IEntity owner = EntityManager.GetEntity(uid);
+            if (!_solutionsSystem.TryGetDefaultSolution(owner,  out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();
@@ -248,7 +251,7 @@ namespace Content.Server.Weapon.Melee
             if (hitBloodstreams.Count < 1)
                 return;
 
-            var removedSolution = solutionContainer.Solution.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+            var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
             var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);

@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -12,6 +13,7 @@ namespace Content.Server.Chemistry.EntitySystems
     [UsedImplicitly]
     public class RehydratableSystem : EntitySystem
     {
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -21,8 +23,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
         {
-            var solution = args.Owner.GetComponent<SolutionContainerComponent>();
-            if (solution.Solution.GetReagentQuantity(component._catalystPrototype) > ReagentUnit.Zero)
+            if (!_solutionsSystem.TryGetDefaultSolution(args.Owner, out var solution))
+            {
+                return;
+            }
+
+            if (solution.GetReagentQuantity(component._catalystPrototype) > ReagentUnit.Zero)
             {
                 Expand(component, component.Owner);
             }

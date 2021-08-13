@@ -6,7 +6,6 @@ using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -65,8 +64,14 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
-        [ViewVariables]
-        public bool Empty => Owner.GetComponentOrNull<SolutionContainerComponent>()?.DrainAvailable <= 0;
+        [ViewVariables] public bool Empty => B();
+
+        private bool B()
+        {
+            var drainAvailable = EntitySystem.Get<SolutionContainerSystem>()
+                .DrainAvailable(Owner);
+            return drainAvailable <= 0;
+        }
 
         [DataField("openSounds")] private string _soundCollection = "canOpenSounds";
         [DataField("pressurized")] private bool _pressurized = default;
@@ -82,18 +87,21 @@ namespace Content.Server.Nutrition.Components
 
         private void OpenedChanged()
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+            var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionSys.TryGetSolution(Owner, "food", out _))
             {
                 return;
             }
 
             if (Opened)
             {
-                contents.Capabilities |= Capability.Refillable | Capability.Drainable;
+                solutionSys.AddRefillable(Owner, "food");
+                solutionSys.AddDrainable(Owner, "food");
             }
             else
             {
-                contents.Capabilities &= ~(Capability.Refillable | Capability.Drainable);
+                solutionSys.RemoveRefillable(Owner);
+                solutionSys.RemoveDrainable(Owner);
             }
         }
 
@@ -101,12 +109,13 @@ namespace Content.Server.Nutrition.Components
         public void UpdateAppearance()
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !Owner.TryGetComponent(out SolutionContainerComponent? contents))
+                !EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner))
             {
                 return;
             }
 
-            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, contents.DrainAvailable.Float());
+            var drainAvailable = EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner);
+            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, drainAvailable.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -122,8 +131,8 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
-                contents.DrainAvailable <= 0)
+            if (!EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner) ||
+                EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner) <= 0)
             {
                 args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", Owner)));
                 return true;
@@ -165,8 +174,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? interactions) ||
-                !interactions.CanDrain ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner, out var interactions) ||
                 interactions.DrainAvailable <= 0)
             {
                 if (!forced)
@@ -191,9 +199,9 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            var chemistrySystem = EntitySystem.Get<ChemistrySystem>();
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             var transferAmount = ReagentUnit.Min(TransferAmount, interactions.DrainAvailable);
-            var drain = chemistrySystem.Drain(interactions, transferAmount);
+            var drain = solutionContainerSystem.Drain(interactions, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 
             // All stomach are full or can't handle whatever solution we have.
@@ -201,13 +209,13 @@ namespace Content.Server.Nutrition.Components
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough", ("owner", Owner)));
 
-                if (!interactions.CanRefill)
+                if (!interactions.Owner.HasComponent<RefillableSolutionComponent>())
                 {
                     drain.SpillAt(target, "PuddleSmear");
                     return false;
                 }
 
-                chemistrySystem.Refill(interactions, drain);
+                solutionContainerSystem.Refill(interactions, drain);
                 return false;
             }
 
@@ -233,16 +241,12 @@ namespace Content.Server.Nutrition.Components
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
-                Owner.TryGetComponent(out SolutionContainerComponent? interactions))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner, out var interactions))
             {
                 Opened = true;
 
-                if (!interactions.CanDrain)
-                {
-                    return;
-                }
-
-                var solution = EntitySystem.Get<ChemistrySystem>().Drain(interactions, interactions.DrainAvailable);
+                var solution = EntitySystem.Get<SolutionContainerSystem>()
+                    .Drain(interactions, interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(Owner), _burstSound, Owner,

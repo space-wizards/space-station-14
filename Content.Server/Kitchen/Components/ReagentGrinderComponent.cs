@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Kitchen.Components;
 using Robust.Shared.Containers;
@@ -21,7 +22,7 @@ namespace Content.Server.Kitchen.Components
         /// <summary>
         /// Can be null since we won't always have a beaker in the grinder.
         /// </summary>
-        [ViewVariables] public SolutionContainerComponent? HeldBeaker = default!;
+        [ViewVariables] public Solution? HeldBeaker = default!;
 
         /// <summary>
         /// Contains the things that are going to be ground or juiced.

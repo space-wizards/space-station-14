@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -28,22 +29,29 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         public bool Mopping { get; private set; }
 
-        public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
+        public Solution? MopSolution
+        {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "mop", out var solution);
+                return solution;
+            }
+        }
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.GetComponentOrNull<SolutionContainerComponent>()?.MaxVolume ?? ReagentUnit.Zero;
+            get => MopSolution?.MaxVolume ?? ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                var solution = MopSolution;
+                if (solution != null)
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume =>
-            Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+        public ReagentUnit CurrentVolume => MopSolution?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -62,7 +70,7 @@ namespace Content.Server.Fluids.Components
         {
             base.Initialize();
 
-            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
+            // Owner.EnsureComponentWarn(out SolutionContainerManager _);
         }
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
@@ -75,7 +83,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "mop", out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -89,7 +97,7 @@ namespace Content.Server.Fluids.Components
                 if (currentVolume > 0)
                 {
                     // Drop the liquid on the mop on to the ground
-                    EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, CurrentVolume)
+                    EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, CurrentVolume)
                         .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
                     return true;
                 }
@@ -156,12 +164,12 @@ namespace Content.Server.Fluids.Components
             if (
                 puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount)
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, transferAmount)
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {
-                EntitySystem.Get<ChemistrySystem>().SplitSolution(contents, transferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, transferAmount);
             }
 
             if (!string.IsNullOrWhiteSpace(_pickupSound))

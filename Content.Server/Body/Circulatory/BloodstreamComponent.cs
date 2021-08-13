@@ -30,7 +30,7 @@ namespace Content.Server.Body.Circulatory
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionContainerComponent _internalSolution = default!;
+        [ViewVariables] private Solution _internalSolution = default!;
 
         /// <summary>
         ///     Empty volume of internal solution
@@ -42,13 +42,11 @@ namespace Content.Server.Body.Circulatory
         public GasMixture Air { get; set; } = new(6)
             { Temperature = Atmospherics.NormalBodyTemperature };
 
-        [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
-
         protected override void Initialize()
         {
             base.Initialize();
 
-            _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
+            // _internalSolution = Owner.GetComponent<SolutionContainerManager>().Solutions["bloodstream"];
             _internalSolution.MaxVolume = _initialMaxVolume;
         }
 
@@ -66,7 +64,7 @@ namespace Content.Server.Body.Circulatory
                 return false;
             }
 
-            EntitySystem.Get<ChemistrySystem>().TryAddSolution(_internalSolution, solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(_internalSolution, solution);
             return true;
         }
 

@@ -1,7 +1,5 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Chemistry.Components;
 using Content.Server.EUI;
-using Content.Server.Stack;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -14,7 +12,6 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-
 
 namespace Content.Server.Administration.Verbs
 {
@@ -36,8 +33,8 @@ namespace Content.Server.Administration.Verbs
         {
             // ISolutionInteractionsComponent doesn't exactly have an interface for "admin tries to refill this", so...
             // Still have a path for SolutionContainerComponent in case it doesn't allow direct refilling.
-            if (!(target.TryGetComponent(out SolutionContainerComponent? interactions)
-                     && interactions.CanInject))
+            if (!(EntitySystem.Get<SolutionContainerSystem>().HasSolution(target)
+                  && target.HasComponent<InjectableSolutionComponent>()))
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -87,7 +84,8 @@ namespace Content.Server.Administration.Verbs
 
             public override EuiStateBase GetNewState()
             {
-                if (_target.TryGetComponent(out SolutionContainerComponent? container))
+                if (EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetSolution(_target, "default", out var container))
                 {
                     return new AdminAddReagentEuiState
                     {
@@ -121,20 +119,18 @@ namespace Content.Server.Administration.Verbs
 
                         var id = doAdd.ReagentId;
                         var amount = doAdd.Amount;
+                        var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
-                        if (_target.TryGetComponent(out SolutionContainerComponent? container))
+                        if (_target.TryGetComponent(out InjectableSolutionComponent? injectable)
+                            && solutionsSys.TryGetSolution(_target, injectable.Name, out var solutionHolder))
                         {
-                            // TODO how do we decide when to inject?
-                            if (container.CanInject)
-                            {
-                                var solution = new Solution(id, amount);
-                                EntitySystem.Get<ChemistrySystem>().Inject(container, solution);
-                            }
-                            else
-                            {
-                                EntitySystem.Get<ChemistrySystem>().TryAddReagent(container, id, amount, out _);
-                            }
-
+                            var solution = new Solution(id, amount);
+                            solutionsSys.Inject(solutionHolder, solution);
+                        }
+                        else
+                        {
+                            solutionsSys.TryGetSolution(_target, "default", out var solution);
+                            solutionsSys.TryAddReagent(solution, id, amount, out _);
                         }
 
                         StateDirty();

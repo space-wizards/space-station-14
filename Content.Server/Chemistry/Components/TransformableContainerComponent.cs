@@ -1,5 +1,4 @@
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -37,9 +36,8 @@ namespace Content.Server.Chemistry.Components
         {
             base.Startup();
 
-            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
-
-            solution.Capabilities |= Capability.FitsInDispenser;
+            // Owner.EnsureComponentWarn<SolutionContainerManager>();
+            Owner.EnsureComponentWarn<FitsInDispenserComponent>();
         }
     }
 }

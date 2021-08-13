@@ -18,15 +18,15 @@ namespace Content.Server.Chemistry.Components
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                SolutionContainerComponent != null)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "smoke", out var solution))
             {
-                appearance.SetData(SmokeVisuals.Color, SolutionContainerComponent.Color);
+                appearance.SetData(SmokeVisuals.Color, solution.Color);
             }
         }
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "smoke", out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
@@ -37,7 +37,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
-            var cloneSolution = SolutionContainerComponent.Solution.Clone();
+            var cloneSolution = solution.Clone();
             var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 

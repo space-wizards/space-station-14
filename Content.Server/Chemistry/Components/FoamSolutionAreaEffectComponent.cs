@@ -1,6 +1,7 @@
 ﻿using Content.Server.Body.Circulatory;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
@@ -21,15 +22,15 @@ namespace Content.Server.Chemistry.Components
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                SolutionContainerComponent != null)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "foam", out var solution))
             {
-                appearance.SetData(FoamVisuals.Color, SolutionContainerComponent.Color.WithAlpha(0.80f));
+                appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
         }
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "foam", out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))
@@ -53,8 +54,9 @@ namespace Content.Server.Chemistry.Components
                 }
             }
 
-            var cloneSolution = SolutionContainerComponent.Solution.Clone();
-            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection), bloodstream.EmptyVolume);
+            var cloneSolution = solution.Clone();
+            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
+                bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             bloodstream.TryTransferSolution(transferSolution);
@@ -68,12 +70,14 @@ namespace Content.Server.Chemistry.Components
             {
                 appearance.SetData(FoamVisuals.State, true);
             }
+
             Owner.SpawnTimer(600, () =>
             {
                 if (!string.IsNullOrEmpty(_foamedMetalPrototype))
                 {
                     Owner.EntityManager.SpawnEntity(_foamedMetalPrototype, Owner.Transform.Coordinates);
                 }
+
                 Owner.QueueDelete();
             });
         }

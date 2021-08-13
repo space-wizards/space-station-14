@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.Components
         {
             get
             {
-                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
                 {
                     return 0;
                 }
@@ -62,7 +62,7 @@ namespace Content.Server.Nutrition.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<SolutionContainerComponent>();
+            // Owner.EnsureComponentWarn<SolutionContainerManager>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -90,7 +90,7 @@ namespace Content.Server.Nutrition.Components
 
         public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
             {
                 return false;
             }
@@ -151,7 +151,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
-            var split = EntitySystem.Get<ChemistrySystem>()
+            var split = EntitySystem.Get<SolutionContainerSystem>()
                 .SplitSolution(solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 

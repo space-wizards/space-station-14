@@ -4,7 +4,6 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -128,10 +127,10 @@ namespace Content.Server.Fluids.Components
                 .GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
             foreach (var spillEntity in spillEntities)
             {
-                if (spillEntity.TryGetComponent(out SolutionContainerComponent? solutionContainerComponent) &&
-                    solutionContainerComponent.CanRefill)
+                if (EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetRefillableSolution(spillEntity, out var solutionContainerComponent))
                 {
-                    EntitySystem.Get<ChemistrySystem>().Refill(solutionContainerComponent,
+                    EntitySystem.Get<SolutionContainerSystem>().Refill(solutionContainerComponent,
                         solution.SplitSolution(ReagentUnit.Min(
                             solutionContainerComponent.RefillSpaceAvailable,
                             solutionContainerComponent.MaxSpillRefill))
