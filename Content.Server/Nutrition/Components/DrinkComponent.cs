@@ -88,15 +88,15 @@ namespace Content.Server.Nutrition.Components
         private void OpenedChanged()
         {
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSys.TryGetSolution(Owner, "food", out _))
+            if (!solutionSys.TryGetSolution(Owner, "drink", out _))
             {
                 return;
             }
 
             if (Opened)
             {
-                solutionSys.AddRefillable(Owner, "food");
-                solutionSys.AddDrainable(Owner, "food");
+                solutionSys.AddRefillable(Owner, "drink");
+                solutionSys.AddDrainable(Owner, "drink");
             }
             else
             {

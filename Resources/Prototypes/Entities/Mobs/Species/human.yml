@@ -41,7 +41,7 @@
   # Organs
   - type: SolutionContainer
     solutions:
-      organ:
+      bloodstream:
         maxVol: 250
   - type: InjectableSolution
     solution: organ

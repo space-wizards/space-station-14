@@ -118,7 +118,7 @@ namespace Content.Server.Fluids.Components
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
-        public Solution PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "puddle");
+        private Solution? PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "puddle");
 
         protected override void Initialize()
         {
@@ -224,8 +224,11 @@ namespace Content.Server.Fluids.Components
 
         public void Evaporate()
         {
-            EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution,
-                ReagentUnit.Min(ReagentUnit.New(1), PuddleSolution.CurrentVolume));
+            if (PuddleSolution != null)
+            {
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution,
+                    ReagentUnit.Min(ReagentUnit.New(1), PuddleSolution.CurrentVolume));
+            }
 
             if (CurrentVolume == 0)
             {
@@ -283,7 +286,7 @@ namespace Content.Server.Fluids.Components
             var cappedScale = Math.Min(1.0f, volumeScale);
             // Color based on the underlying solutioncomponent
             Color newColor;
-            if (_recolor)
+            if (_recolor && PuddleSolution != null)
             {
                 newColor = PuddleSolution.Color.WithAlpha(cappedScale);
             }
@@ -302,10 +305,8 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         private void CheckOverflow()
         {
-            if (CurrentVolume <= _overflowVolume || _overflown)
-            {
+            if (PuddleSolution == null || CurrentVolume <= _overflowVolume || _overflown)
                 return;
-            }
 
             var nextPuddles = new List<PuddleComponent>() { this };
             var overflownPuddles = new List<PuddleComponent>();

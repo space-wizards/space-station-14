@@ -357,11 +357,12 @@ namespace Content.Shared.Chemistry
             return true;
         }
 
-        public SolutionAlias EnsureSolution(IEntity owner, string name)
+        public SolutionAlias? EnsureSolution(IEntity owner, string name)
         {
             if (owner.Deleted || !owner.TryGetComponent(out SolutionContainerManager? solutionsMgr))
             {
-                throw new Exception($@"Entity (id:{owner.Uid}) is deleted or has no container manager");
+                Logger.Warning($@"Entity (id:{owner.Uid}) is deleted or has no container manager");
+                return null;
             }
 
             if (!solutionsMgr.Solutions.ContainsKey(name))

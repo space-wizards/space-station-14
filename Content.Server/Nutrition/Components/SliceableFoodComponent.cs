@@ -3,6 +3,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Robust.Shared.Audio;
@@ -39,6 +40,7 @@ namespace Content.Server.Nutrition.Components
             base.Initialize();
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
+            Owner.EnsureComponent<SolutionContainerManager>();
             EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "food");
         }
 

@@ -21,7 +21,7 @@
           Quantity: 100
   - type: RefillableSolution
     solution: fireExtinguisher
-  - type: RefillableSolution
+  - type: DrainableSolution
     solution: fireExtinguisher
   - type: ItemCooldown
   - type: Spray

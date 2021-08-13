@@ -7,9 +7,7 @@ using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -30,13 +28,13 @@ namespace Content.Server.Body.Circulatory
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private Solution _internalSolution = default!;
+        [ViewVariables] private Solution? _internalSolution;
 
         /// <summary>
         ///     Empty volume of internal solution
         /// </summary>
         [ViewVariables]
-        public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
+        public ReagentUnit EmptyVolume => _internalSolution?.EmptyVolume ?? ReagentUnit.Zero;
 
         [ViewVariables]
         public GasMixture Air { get; set; } = new(6)
@@ -46,8 +44,11 @@ namespace Content.Server.Body.Circulatory
         {
             base.Initialize();
 
-            // _internalSolution = Owner.GetComponent<SolutionContainerManager>().Solutions["bloodstream"];
-            _internalSolution.MaxVolume = _initialMaxVolume;
+            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "bloodstream");
+            if (_internalSolution != null)
+            {
+                _internalSolution.MaxVolume = _initialMaxVolume;
+            }
         }
 
         /// <summary>
@@ -59,7 +60,9 @@ namespace Content.Server.Body.Circulatory
         public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
-            if (solution.TotalVolume + _internalSolution.CurrentVolume > _internalSolution.MaxVolume)
+            var current = _internalSolution?.CurrentVolume ?? ReagentUnit.Zero;
+            var max = _internalSolution?.MaxVolume ?? ReagentUnit.Zero;
+            if (solution.TotalVolume + current > max)
             {
                 return false;
             }

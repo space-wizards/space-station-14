@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Solution.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -40,7 +41,12 @@ namespace Content.Server.Botany.Components
             }
 
             EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner);
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "seedChem");
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "produce");
+            if (solutionContainer == null)
+            {
+                Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");
+                return;
+            }
 
             foreach (var (chem, quantity) in Seed.Chemicals)
             {

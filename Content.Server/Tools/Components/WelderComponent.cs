@@ -64,7 +64,8 @@ namespace Content.Server.Tools.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "welder", out var solution);
+                Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                    .TryGetSolution(Owner, "welder", out var solution);
                 return solution;
             }
         }
@@ -96,9 +97,10 @@ namespace Content.Server.Tools.Components
 
             _welderSystem = _entitySystemManager.GetEntitySystem<WelderSystem>();
 
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "welder");
+            Owner.EnsureComponent<SolutionContainerManager>();
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "welder");
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

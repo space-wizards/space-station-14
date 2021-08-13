@@ -300,7 +300,8 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "injector", out var solution);
+            Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                .TryGetSolution(Owner, "injector", out var solution);
 
             var currentVolume = solution?.CurrentVolume ?? ReagentUnit.Zero;
             var maxVolume = solution?.MaxVolume ?? ReagentUnit.Zero;
