@@ -1763,3 +1763,8 @@ Entries:
   - {message: Items no longer collide with disposal units (except when thrown!), type: Tweak}
   id: 314
   time: '2021-08-12T03:40:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes some tool sounds not playing., type: Fix}
+  id: 315
+  time: '2021-08-13T09:06:13.304552+00:00'
