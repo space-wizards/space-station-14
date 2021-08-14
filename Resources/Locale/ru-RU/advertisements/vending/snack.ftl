@@ -1,0 +1,12 @@
+﻿advertisement-snack-1 = Попробуйте наш новый нуга-бар!
+advertisement-snack-2 = В два раза больше калорий за полцены!
+advertisement-snack-3 = Самым здоровым!
+advertisement-snack-4 = Шоколадные плитки, удостоенные наград!
+advertisement-snack-5 = Ммм! Так вкусно!
+advertisement-snack-6 = Боже мой, какой он сочный!
+advertisement-snack-7 = Сделайте перекус.
+advertisement-snack-8 = Перекусы полезны для вас!
+advertisement-snack-9 = Выпейте еще немного "ЕщёНемнога"!
+advertisement-snack-10 = Закуски лучшего качества прямо с Марса.
+advertisement-snack-11 = Мы любим шоколад!
+advertisement-snack-12 = Попробуйте наше новое вяленое мясо!

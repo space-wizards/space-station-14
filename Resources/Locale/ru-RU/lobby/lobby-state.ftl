@@ -1,0 +1,9 @@
+lobby-state-paused = На паузе
+lobby-state-right-now-question = Сейчас?
+lobby-state-right-now-confirmation = Сейчас
+lobby-state-round-start-countdown-text = Раунды начинаются через: {$timeLeft}
+lobby-state-ready-button-join-state = Присоединиться
+lobby-state-ready-button-ready-up-state = Приготовиться
+lobby-state-player-status-not-ready = Не готов
+lobby-state-player-status-ready = Готов
+lobby-state-player-status-observer = Наблюдатель

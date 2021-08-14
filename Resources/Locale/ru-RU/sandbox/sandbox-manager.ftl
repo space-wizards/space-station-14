@@ -1,0 +1,14 @@
+sandbox-window-title = Панель песочницы
+sandbox-window-respawn-button = Перерождение
+sandbox-window-spawn-entities-button = Спавн сущностей
+sandbox-window-spawn-tiles-button = Спавн тайлов
+sandbox-window-grant-full-access-button = Предоставить полный доступ
+sandbox-window-ghost-button = Призрак
+sandbox-window-toggle-lights-button = Переключить свет
+sandbox-window-toggle-fov-button = Переключить FOV
+sandbox-window-toggle-shadows-button = Переключить тени
+sandbox-window-toggle-subfloor-button = Переключить подпол
+sandbox-window-toggle-suicide-button = Суицид
+sandbox-window-show-spawns-button = Показать Спавны
+sandbox-window-show-bb-button = Показать BB
+sandbox-window-link-machines-button = Связать машины

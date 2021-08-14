@@ -1,0 +1,13 @@
+admin-add-reagent-eui-title = Добавить реагент...
+admin-add-reagent-eui-current-volume-label = Текущая громкость:
+admin-add-reagent-eui-reagent-label = Реагент:
+admin-add-reagent-eui-reagent-id-edit = ID реагента...
+admin-add-reagent-eui-amount-label = Количество:
+admin-add-reagent-eui-amount-edit = Число...
+admin-add-reagent-eui-add-close-button = Добавить и закрыть
+admin-add-reagent-eui-add-button = Добавить
+admin-add-reagent-eui-no-reagent-id-error = Должен быть указан id реагента
+admin-add-reagent-eui-reagent-does-not-exist-error = '{$reagent}' не существует.
+admin-add-reagent-eui-no-reagent-amount-specified-error = Должно быть указано количество реагента
+admin-add-reagent-eui-invalid-amount-error = Недопустимое количество
+admin-add-reagent-eui-current-and-max-volume-label = {$currentVolume}/{$maxVolume} ед.

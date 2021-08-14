@@ -1,0 +1,9 @@
+admin-manager-self-de-admin-message = {$exAdminName} деадминистрировал себя.
+admin-manager-self-re-admin-message = {$newAdminName} повторно администрирует себя.
+admin-manager-became-normal-player-message = Теперь вы нормальный игрок.
+admin-manager-became-admin-message = Теперь вы администратор.
+admin-manager-no-longer-admin-message = Вы больше не администратор.
+admin-manager-admin-permissions-updated-message = Ваши права администратора были обновлены.
+admin-manager-admin-logout-message = Администратор вышел: {$name}
+admin-manager-admin-login-message = Администратор зашел: {$name}
+admin-manager-admin-data-host-title = Хост

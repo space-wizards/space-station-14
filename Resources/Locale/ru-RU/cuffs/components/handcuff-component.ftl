@@ -1,0 +1,11 @@
+handcuff-component-target-self-error = Вы не можете надеть на себя наручники!
+handcuff-component-cuffs-broken-error = Наручники сломаны!
+handcuff-component-target-has-no-hands-error = У {$targetName} нет рук!
+handcuff-component-target-has-no-free-hands-error = У {$targetName} нет свободных рук!
+handcuff-component-too-far-away-error = Вы слишком далеко, чтобы использовать наручники!
+handcuff-component-start-cuffing-target-message = Вы начинаете надевать наручники на {$targetName}.
+handcuff-component-start-cuffing-by-other-message = {$otherName} начинает надевать на тебя наручники!
+handcuff-component-cuff-other-success-message = Вы успешно надели наручники на {$otherName}.
+handcuff-component-cuff-by-other-success-message = На вас надели наручники {$otherName}!
+handcuff-component-cuff-interrupt-message = Вас прервали во время надевания наручников на {$targetName}!
+handcuff-component-cuff-interrupt-other-message = Вы прерываете {$otherName}, пока они надевают на вас наручники!
