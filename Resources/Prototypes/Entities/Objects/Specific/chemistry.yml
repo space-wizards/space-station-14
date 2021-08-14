@@ -192,6 +192,7 @@
       - Pill
   - type: Food
     transferAmount: 1000
+    pill: true
   - type: SolutionContainer
     maxVol: 50
     caps: None

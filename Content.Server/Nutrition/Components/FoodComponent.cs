@@ -44,6 +44,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("utensilsNeeded")]
         private UtensilType _utensilsNeeded = UtensilType.None;
 
+        [DataField("pill")]
+        private bool _pill = false;
+
         [ViewVariables]
         public int UsesRemaining
         {
@@ -170,7 +173,9 @@ namespace Content.Server.Nutrition.Components
 
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
-            trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
+            trueTarget.PopupMessage(user, _pill ?
+                Loc.GetString("food-swallow", ("food", Owner.Name)) :
+                Loc.GetString("food-nom"));
 
             // If utensils were used
             if (utensils != null)
