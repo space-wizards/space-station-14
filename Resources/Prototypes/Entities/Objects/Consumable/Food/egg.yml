@@ -35,7 +35,8 @@
         damage: 1
       behaviors:
       - !type:PlaySoundBehavior
-        collection:: desecration
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           Eggshells:

@@ -73,11 +73,11 @@ namespace Content.Shared.Light.Component
         protected SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
-        [DataField("loopedSound", required: true)]
-        public string LoopedSound { get; set; } = string.Empty;
+        [DataField("loopedSound")]
+        public string? LoopedSound { get; set; } = null;
 
         [ViewVariables]
         [DataField("dieSound")]
-        protected SoundSpecifier DieSound { get; set; } = default!;
+        protected SoundSpecifier? DieSound { get; set; } = null;
     }
 }

@@ -60,7 +60,8 @@
         damage: 2
       behaviors:
       - !type:PlaySoundBehavior
-        collection:: desecration
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleFlour:
@@ -95,7 +96,8 @@
         damage: 2
       behaviors:
       - !type:PlaySoundBehavior
-        collection:: desecration
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleFlour:
