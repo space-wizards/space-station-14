@@ -20,7 +20,7 @@ zzzz-the = { PROPER($ent) ->
 zzzz-subject-pronoun = { GENDER($ent) ->
     [male] он
     [female] она
-    [epicene] Они
+    [epicene] они
    *[neuter] оно
    }
 
@@ -58,7 +58,7 @@ zzzz-reflexive-pronoun = { GENDER($ent) ->
 
 # Used internally by the CONJUGATE-BE() function.
 zzzz-conjugate-be = { GENDER($ent) ->
-    [epicene] являются
+    [epicene] является
    *[other] есть
    }
 
