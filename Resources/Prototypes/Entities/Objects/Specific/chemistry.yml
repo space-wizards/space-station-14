@@ -55,7 +55,7 @@
     amount: 5
   - type: DamageOtherOnHit
     amount: 5
-  
+
 - type: entity
   name: large beaker
   parent: Beaker

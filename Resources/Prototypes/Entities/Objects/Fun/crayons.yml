@@ -15,6 +15,10 @@
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
+  - type: Crayon
+    capacity: 5
+    useSound:
+      path: ""
 
 - type: entity
   parent: Crayon
