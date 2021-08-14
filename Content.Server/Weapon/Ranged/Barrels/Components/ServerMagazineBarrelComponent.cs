@@ -133,7 +133,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private SoundSpecifier _soundMagInsert = default!;
         [DataField("soundMagEject", required: true)]
         private SoundSpecifier _soundMagEject = default!;
-        [DataField("soundAutoEject", required: true)]
+        [DataField("soundAutoEject")]
         private SoundSpecifier _soundAutoEject = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
 
         private List<MagazineType> GetMagazineTypes()

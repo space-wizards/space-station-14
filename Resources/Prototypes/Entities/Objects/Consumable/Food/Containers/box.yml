@@ -104,7 +104,7 @@
   #       damage: 10
   #     behaviors:
   #     - !type:PlaySoundBehavior
-  #       collection:: desecration
+  #       collection: desecration
   #     - !type:SpawnEntitiesBehavior
   #       spawn:
   #         EggBoxBroken:

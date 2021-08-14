@@ -32,7 +32,8 @@ namespace Content.Server.Projectiles
             var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!otherEntity.Deleted && otherEntity.HasComponent<SharedBodyComponent>())
+            if (!otherEntity.Deleted && component.SoundHitSpecies != null &&
+                otherEntity.HasComponent<SharedBodyComponent>())
             {
                 SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
