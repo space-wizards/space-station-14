@@ -10,7 +10,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -30,13 +29,20 @@ namespace Content.Server.Nutrition.Components
     {
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+        [ViewVariables]
+        [DataField("useSound")]
+        protected virtual SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-        [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
+        [ViewVariables]
+        [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        protected virtual string? TrashPrototype { get; set; }
 
-        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        [ViewVariables]
+        [DataField("transferAmount")]
+        protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
 
-        [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
+        [DataField("utensilsNeeded")]
+        private UtensilType _utensilsNeeded = UtensilType.None;
 
         [ViewVariables]
         public int UsesRemaining
@@ -150,6 +156,7 @@ namespace Content.Server.Nutrition.Components
 
             if (firstStomach == null)
             {
+                solution.TryAddSolution(split);
                 trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }

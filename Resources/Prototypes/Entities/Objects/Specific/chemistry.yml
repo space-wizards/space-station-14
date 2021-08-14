@@ -187,7 +187,8 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
-  - type: Pill
+  - type: Food
+    transferAmount: 1000
   - type: SolutionContainer
     maxVol: 50
     caps: None
