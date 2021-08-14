@@ -18,7 +18,8 @@
         damage: 150
       behaviors:
       - !type:PlaySoundBehavior
-        collection: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlassReinforced:
