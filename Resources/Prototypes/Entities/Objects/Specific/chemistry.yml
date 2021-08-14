@@ -192,7 +192,7 @@
       - Pill
   - type: Food
     transferAmount: 1000
-    pill: true
+    eatMessage: food-swallow
   - type: SolutionContainer
     maxVol: 50
     caps: None
