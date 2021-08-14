@@ -2,32 +2,32 @@
 
 ## General
 
-shell-server-cannot = Server cannot do this.
-shell-command-success = Command successful
-shell-invalid-command = Invalid command.
-shell-invalid-command-specific = Invalid {$commandName} command.
-shell-cannot-run-command-from-server = You cannot run this command from the server. 
-shell-only-players-can-run-this-command = Only players can run this command.
+shell-server-cannot = Сервер не может этого сделать.
+shell-command-success = Команда выполнена
+shell-invalid-command = Неверная команда.
+shell-invalid-command-specific = Неверная команда {$commandName}.
+shell-cannot-run-command-from-server = Вы не можете выполнить эту команду с сервера.
+shell-only-players-can-run-this-command = Только игроки могут выполнять эту команду.
 
 ## Arguments
 
-shell-need-exactly-one-argument = Need exactly one argument.
-shell-wrong-arguments-number-need-specific = Need {$properAmount} arguments, there were {$currentAmount}.
-shell-argument-must-be-number = Argument must be a number.
-shell-wrong-arguments-number = Wrong number of arguments.
-shell-need-between-arguments = Need {$lower} to {$upper} arguments!
+shell-need-exactly-one-argument = Нужен всего один аргумент.
+shell-wrong-arguments-number-need-specific = Нужны аргументы {$properAmount}, были {$currentAmount}.
+shell-argument-must-be-number = Аргумент должен быть числовым.
+shell-wrong-arguments-number = Неправильное число аргументов.
+shell-need-between-arguments = Нужны аргументы от {$lower} до {$upper}!
 
 ## Guards
 
-shell-entity-is-not-mob = Target entity is not a mob!
-shell-invalid-entity-id = Invalid entity ID.
-shell-invalid-entity-uid = {$uid} is not a valid entity uid
-shell-entity-uid-must-be-number = EntityUid must be a number.
-shell-could-not-find-entity = Could not find entity {$entity}
-shell-could-not-find-entity-with-uid = Could not find entity with uid {$uid}
-shell-entity-with-uid-lacks-component = Entity with uid {$uid} doesn't have a {$componentName} component
-shell-invalid-color-hex = Invalid color hex!
-shell-target-player-does-not-exist = Target player does not exist!
-shell-target-entity-does-not-have-message = Target entity does not have a(n) {$missing}!
+shell-entity-is-not-mob = Целевой субъект не является мобом!
+shell-invalid-entity-id = Неверный ID объекта.
+shell-invalid-entity-uid = {$uid} не является действительным ID объекта
+shell-entity-uid-must-be-number = UID объекта должен быть числом.
+shell-could-not-find-entity = Не удалось найти объект {$entity}
+shell-could-not-find-entity-with-uid = Не удалось найти объект с uid {$uid}
+shell-entity-with-uid-lacks-component = Объект с uid {$uid} не имеет компонента {$componentName}
+shell-invalid-color-hex = Неверный шестнадцатеричный цвет!
+shell-target-player-does-not-exist = Целевой игрок не существует!
+shell-target-entity-does-not-have-message = Целевой объект не имеет a(n) {$missing}!
 
 
