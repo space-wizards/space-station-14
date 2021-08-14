@@ -105,8 +105,9 @@
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       mask:
-          - Impassable
-          - MobImpassable
+      - Impassable
+      layer:
+      - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
