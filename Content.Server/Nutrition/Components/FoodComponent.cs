@@ -104,6 +104,7 @@ namespace Content.Server.Nutrition.Components
             if (UsesRemaining <= 0)
             {
                 user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
+                DeleteAndSpawnTrash(user);
                 return false;
             }
 
@@ -191,6 +192,13 @@ namespace Content.Server.Nutrition.Components
                 return true;
             }
 
+            DeleteAndSpawnTrash(user);
+
+            return true;
+        }
+
+        private void DeleteAndSpawnTrash(IEntity user)
+        {
             //We're empty. Become trash.
             var position = Owner.Transform.Coordinates;
             var finisher = Owner.EntityManager.SpawnEntity(TrashPrototype, position);
@@ -212,8 +220,6 @@ namespace Content.Server.Nutrition.Components
             {
                 Owner.Delete();
             }
-
-            return true;
         }
     }
 }
