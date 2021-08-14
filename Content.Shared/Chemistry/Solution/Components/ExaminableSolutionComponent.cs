@@ -11,6 +11,6 @@ namespace Content.Shared.Chemistry.Solution.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("solution")]
-        public string Solution { get; set; } = default!;
+        public string Solution { get; set; } = "default";
     }
 }

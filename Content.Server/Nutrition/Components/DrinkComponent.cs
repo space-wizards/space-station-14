@@ -90,8 +90,11 @@ namespace Content.Server.Nutrition.Components
             base.Initialize();
 
             Opened = _defaultToOpened;
+            // TODO move into drinkSystem
             UpdateAppearance();
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "drink");
         }
+
 
         private void OpenedChanged()
         {

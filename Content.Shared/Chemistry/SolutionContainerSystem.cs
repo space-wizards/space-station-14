@@ -401,6 +401,13 @@ namespace Content.Shared.Chemistry
 
             component.Solution = name;
         }
+        public void RemoveDrainable(IEntity owner)
+        {
+            if (owner.Deleted || !owner.HasComponent<DrainableSolutionComponent>())
+                return;
+
+            owner.RemoveComponent<DrainableSolutionComponent>();
+        }
 
         public void AddRefillable(IEntity owner, string name)
         {
@@ -423,13 +430,6 @@ namespace Content.Shared.Chemistry
             owner.RemoveComponent<RefillableSolutionComponent>();
         }
 
-        public void RemoveDrainable(IEntity owner)
-        {
-            if (owner.Deleted || !owner.HasComponent<DrainableSolutionComponent>())
-                return;
-
-            owner.RemoveComponent<DrainableSolutionComponent>();
-        }
 
         public IList<string> RemoveEachReagent(SolutionAlias solution, ReagentUnit quantity)
         {

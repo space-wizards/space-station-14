@@ -93,11 +93,11 @@
       - plasma_2
       - plasma_3
   - type: SolutionContainer
-    caps: 1
-    contents:
-      reagents:
-      - ReagentId: Plasma
-        Quantity: 10
+    solutions:
+      plasma:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
   - type: Tag
     tags:
     - Grindable
