@@ -4,87 +4,90 @@
   name: cigarette pack
   abstract: true
   components:
-    - type: Storage
-      capacity: 6
-    - type: Item
-      size: 6
-    - type: StorageFill
-      contents:
-        - id: Cigarette
-          amount: 6
-    - type: StorageCounter
-      countTag: Cigarette
-    - type: Appearance
-      visuals:
-        - type: BagOpenCloseVisualizer
-          openIcon: open
-        - type: StackVisualizer
-          sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-          composite: true
-          stackLayers:
-            - cig1
-            - cig2
-            - cig3
-            - cig4
-            - cig5
-            - cig6
+  - type: Tag
+    tags:
+    - CigPack
+  - type: Storage
+    capacity: 6
+  - type: Item
+    size: 6
+  - type: StorageFill
+    contents:
+      - id: Cigarette
+        amount: 6
+  - type: StorageCounter
+    countTag: Cigarette
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: open
+      - type: StackVisualizer
+        sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+        composite: true
+        stackLayers:
+          - cig1
+          - cig2
+          - cig3
+          - cig4
+          - cig5
+          - cig6
 
 - type: entity
   id: CigPackGreen
   parent: CigPackBase
   name: Spessman's Smokes packet
-  description: "A label on the packaging reads, 'Wouldn't a slow death make a change?'"
+  description: A label on the packaging reads, Wouldn't a slow death make a change?
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-      layers:
-        - state: closed
-    - type: Item
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
-      size: 6
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
+    size: 6
 
 - type: entity
   id: CigPackRed
   parent: CigPackBase
   name: DromedaryCo packet
-  description: "The most popular brand of Space Cigarettes, sponsors of the Space Olympics."
+  description: The most popular brand of Space Cigarettes, sponsors of the Space Olympics.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-      layers:
-        - state: closed
-    - type: Item
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
-      size: 6
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
+    size: 6
 
 - type: entity
   id: CigPackBlue
   parent: CigPackBase
   name: AcmeCo packet
-  description: "For those who somehow want to obtain the record for the most amount of cancerous tumors."
+  description: For those who somehow want to obtain the record for the most amount of cancerous tumors.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-      layers:
-        - state: closed
-    - type: Item
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
-      size: 6
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
+    size: 6
 
 - type: entity
   id: CigPackBlack
   parent: CigPackBase
   name: Nomads packet
-  description: "Nomads's extra strong, for when your life is more extra hard."
+  description: Nomads's extra strong, for when your life is more extra hard.
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-      layers:
-        - state: closed
-    - type: Item
-      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
-      size: 6
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+    layers:
+      - state: closed
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
+    size: 6

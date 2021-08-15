@@ -20,7 +20,8 @@
   - type: Clothing
     sprite: Clothing/Shoes/Specific/clown.rsi
   - type: FootstepModifier
-    footstepSoundCollection: footstep_clown
+    footstepSoundCollection:
+      collection: footstep_clown
 
 - type: entity
   parent: ClothingShoesBase

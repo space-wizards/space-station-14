@@ -4,6 +4,7 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Research.Components;
 using Content.Shared.Research.Prototypes;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -12,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Research.Components
@@ -23,7 +25,8 @@ namespace Content.Server.Research.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private const string SoundCollectionName = "keyboard";
+        [DataField("sound")]
+        private SoundSpecifier _soundCollectionName = new SoundCollectionSpecifier("keyboard");
 
         [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -122,9 +125,7 @@ namespace Content.Server.Research.Components
 
         private void PlayKeyboardSound()
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>(SoundCollectionName);
-            var file = _random.Pick(soundCollection.PickFiles);
-            SoundSystem.Play(Filter.Pvs(Owner), file,Owner,AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), _soundCollectionName.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

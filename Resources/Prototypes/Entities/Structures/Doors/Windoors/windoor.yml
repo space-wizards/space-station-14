@@ -29,6 +29,15 @@
   - type: AccessReader
     access: [["Medical"]]
 
+# Science windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
 # HOP's office windoor
 - type: entity
   parent: WindoorSecure
@@ -46,3 +55,12 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+
+# Security windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]

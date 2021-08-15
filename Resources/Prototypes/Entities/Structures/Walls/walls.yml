@@ -111,7 +111,11 @@
   parent: WallBase
   id: WallDebug
   name: debug wall
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/debug.rsi
@@ -431,12 +435,14 @@
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:ChangeConstructionNodeBehavior
         node: girder
       - !type:DoActsBehavior
         acts: ["Destruction"]
-    destroySound: /Audio/Effects/metalbreak.ogg
+    destroySound:
+      path: /Audio/Effects/metalbreak.ogg
   - type: IconSmooth
     key: walls
     base: solid

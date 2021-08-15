@@ -295,7 +295,7 @@ namespace Content.Server.Doors.Components
 
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
-            if(DoorComponent == null)
+            if (DoorComponent == null)
             {
                 return;
             }

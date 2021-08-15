@@ -1,9 +1,9 @@
 - type: entity
   abstract: true
+  parent: BaseStructureDynamic
   id: GasCanister
   name: gas canister
   description: A canister that can contain any type of gas. It can be attached to connector ports using a wrench.
-  parent: BaseStructureDynamic
   components:
     - type: InteractionOutline
     - type: Sprite
@@ -32,7 +32,8 @@
             damage: 300
           behaviors:
             - !type:PlaySoundBehavior
-              sound: /Audio/Effects/metalbreak.ogg
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
             - !type:SpawnEntitiesBehavior
               spawn:
                 GasCanisterBrokenBase:
@@ -97,7 +98,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             StorageCanisterBroken:
@@ -129,7 +131,8 @@
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           AirCanisterBroken:
@@ -158,7 +161,8 @@
         damage: 300
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           OxygenCanisterBroken:
@@ -188,7 +192,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             NitrogenCanisterBroken:
@@ -219,7 +224,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             CarbonDioxideCanisterBroken:
@@ -251,7 +257,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             PlasmaCanisterBroken:
@@ -284,7 +291,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             TritiumCanisterBroken:
@@ -318,7 +326,8 @@
           damage: 300
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             WaterVaporCanisterBroken:
@@ -343,7 +352,8 @@
           damage: 100
         behaviors:
         - !type:PlaySoundBehavior
-          sound: /Audio/Effects/metalbreak.ogg
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
         - !type:SpawnEntitiesBehavior
           spawn:
             SheetPlasteel1:

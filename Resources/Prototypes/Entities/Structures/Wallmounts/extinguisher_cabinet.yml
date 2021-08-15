@@ -10,7 +10,8 @@
       netsync: false
       state: extinguisher_closed
     - type: ItemCabinet
-      doorSound: /Audio/Machines/machine_switch.ogg
+      doorSound:
+        path: /Audio/Machines/machine_switch.ogg
       whitelist:
         components:
         - FireExtinguisher

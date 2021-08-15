@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rounding;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -45,9 +46,9 @@ namespace Content.Server.Light.Components
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public string? TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public string? TurnOnFailSound = "/Audio/Machines/button.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public string? TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
@@ -121,7 +122,7 @@ namespace Content.Server.Light.Components
 
             if (makeNoise)
             {
-                if (TurnOffSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound.GetSound(), Owner);
             }
 
             return true;
@@ -136,7 +137,7 @@ namespace Content.Server.Light.Components
 
             if (Cell == null)
             {
-                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-missing-message"));
                 UpdateLightAction();
                 return false;
@@ -147,7 +148,7 @@ namespace Content.Server.Light.Components
             // Simple enough.
             if (Wattage > Cell.CurrentCharge)
             {
-                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-dead-message"));
                 UpdateLightAction();
                 return false;
@@ -158,7 +159,7 @@ namespace Content.Server.Light.Components
             SetState(true);
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
-            if (TurnOnSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;
         }
 

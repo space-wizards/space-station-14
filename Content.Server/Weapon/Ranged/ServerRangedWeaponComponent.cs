@@ -12,6 +12,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -48,6 +49,12 @@ namespace Content.Server.Weapon.Ranged
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canHotspot")]
         private bool _canHotspot = true;
+
+        [DataField("clumsyWeaponHandlingSound")]
+        private SoundSpecifier _clumsyWeaponHandlingSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+
+        [DataField("clumsyWeaponShotSound")]
+        private SoundSpecifier _clumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -140,7 +147,8 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
+            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            {
                 return;
             }
 
@@ -160,10 +168,12 @@ namespace Content.Server.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
                     Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
                     Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 if (user.TryGetComponent(out IDamageableComponent? health))
