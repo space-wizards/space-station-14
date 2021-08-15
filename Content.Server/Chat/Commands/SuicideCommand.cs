@@ -93,7 +93,7 @@ namespace Content.Server.Chat.Commands
                 }
             }
             // Get all entities in range of the suicider
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, true).ToArray();
+            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(owner, 1, LookupFlags.Approximate).ToArray();
 
             if (entities.Length > 0)
             {

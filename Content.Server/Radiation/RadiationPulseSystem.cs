@@ -51,7 +51,7 @@ namespace Content.Server.Radiation
 
                 if (ent.Deleted) continue;
 
-                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, LookupFlags.Approximate))
                 {
                     if (entity.Deleted) continue;
 
