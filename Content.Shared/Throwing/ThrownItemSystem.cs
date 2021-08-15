@@ -36,7 +36,6 @@ namespace Content.Shared.Throwing
             var fixture = physicsComponent.GetFixture(ThrowingFixture);
             if (fixture == null)
             {
-                Logger.Error($"Tried to remove throwing fixture for {component.Owner} but none found?");
                 return;
             }
 
