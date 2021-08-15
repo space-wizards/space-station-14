@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
-using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -92,7 +91,10 @@ namespace Content.Server.Nutrition.Components
             Opened = _defaultToOpened;
             // TODO move into drinkSystem
             UpdateAppearance();
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "drink");
+            if (!EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner))
+            {
+                EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "drink");
+            }
         }
 
 

@@ -64,7 +64,7 @@ namespace Content.Shared.Chemistry
             ExaminedEvent args)
         {
             if (!args.Examined.TryGetComponent(out SolutionContainerManager? solutionsManager)
-                || !solutionsManager.Solutions.TryGetValue(examinableComponent.Name, out var solutionHolder))
+                || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
             if (solutionHolder.Contents.Count == 0)

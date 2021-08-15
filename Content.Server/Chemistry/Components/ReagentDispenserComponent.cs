@@ -350,7 +350,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (solutionSys.TryGetDefaultSolution(activeHandEntity,  out var solution))
+            if (solutionSys.TryGetSolution(activeHandEntity, "beaker", out _))
             {
                 if (HasBeaker)
                 {
