@@ -457,6 +457,14 @@ namespace Content.Shared.Chemistry
             }
             return removedReagent;
         }
+
+        public void TryRemoveAllReagents(SolutionAlias solution, List<SolutionAlias.ReagentQuantity> removeReagents)
+        {
+            foreach (var reagent in removeReagents)
+            {
+                solution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
+            }
+        }
     }
 
     public static class SolutionContainerHelpers

@@ -69,6 +69,8 @@ namespace Content.Server.Body.Metabolism
                 return;
             }
 
+            List<Solution.ReagentQuantity> removeReagents = new (5);
+
             // Run metabolism for each reagent, remove metabolized reagents
             foreach (var reagent in reagentList)
             {
@@ -103,8 +105,9 @@ namespace Content.Server.Body.Metabolism
                     effect.Metabolize(ent, reagent);
                 }
 
-                solutionsSys.TryRemoveReagent(solution, reagent.ReagentId, metabolism.MetabolismRate);
+                removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
             }
+            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
         }
     }
 }
