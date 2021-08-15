@@ -24,7 +24,7 @@ namespace Content.Shared.Explosion
     }
 
     /// <summary>
-    ///     Raised when a target entity is interacted with by a user while holding an object in their hand.
+    ///     Raised when an explosion reaches an IExploadable
     /// </summary>
     [PublicAPI]
     public class ExplosionEvent : EntityEventArgs
