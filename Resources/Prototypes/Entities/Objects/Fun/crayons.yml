@@ -15,6 +15,8 @@
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
+  - type: Crayon
+    capacity: 5
 
 - type: entity
   parent: Crayon

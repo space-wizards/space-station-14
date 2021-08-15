@@ -13,6 +13,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Tool;
 using Content.Shared.Verbs;
@@ -74,10 +75,10 @@ namespace Content.Server.Storage.Components
         private bool _isWeldedShut;
 
         [DataField("closeSound")]
-        private string _closeSound = "/Audio/Machines/closetclose.ogg";
+        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Machines/closetclose.ogg");
 
         [DataField("openSound")]
-        private string _openSound = "/Audio/Machines/closetopen.ogg";
+        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Machines/closetopen.ogg");
 
         [ViewVariables]
         protected Container Contents = default!;
@@ -225,7 +226,7 @@ namespace Content.Server.Storage.Components
             }
 
             ModifyComponents();
-            SoundSystem.Play(Filter.Pvs(Owner), _closeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -234,7 +235,7 @@ namespace Content.Server.Storage.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            SoundSystem.Play(Filter.Pvs(Owner), _openSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
 
         private void UpdateAppearance()

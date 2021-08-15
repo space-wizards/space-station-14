@@ -12,7 +12,7 @@ namespace Content.Server.Sound.Components
     public abstract class BaseEmitSoundComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("sound")]
+        [DataField("sound", required: true)]
         public SoundSpecifier Sound { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]

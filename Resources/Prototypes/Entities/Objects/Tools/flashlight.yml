@@ -4,25 +4,28 @@
   id: FlashlightLantern
   description: It lights the way to freedom.
   components:
-    - type: HandheldLight
-    - type: ItemActions
-      actions:
-        - actionType: ToggleLight
-    - type: PowerCellSlot
-      startingCellType: PowerCellSmallHigh
-    - type: Sprite
-      sprite: Objects/Tools/flashlight.rsi
-      layers:
-        - state: lantern_off
-        - state: HandheldLightOnOverlay
-          shader: unshaded
-          visible: false
-    - type: Item
-      sprite: Objects/Tools/flashlight.rsi
-      HeldPrefix: off
-    - type: PointLight
-      enabled: false
-      radius: 3
-    - type: Appearance
-      visuals:
-        - type: FlashLightVisualizer
+  - type: Tag
+    tags:
+    - Flashlight
+  - type: HandheldLight
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
+  - type: PowerCellSlot
+    startingCellType: PowerCellSmallHigh
+  - type: Sprite
+    sprite: Objects/Tools/flashlight.rsi
+    layers:
+      - state: lantern_off
+      - state: HandheldLightOnOverlay
+        shader: unshaded
+        visible: false
+  - type: Item
+    sprite: Objects/Tools/flashlight.rsi
+    HeldPrefix: off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: Appearance
+    visuals:
+      - type: FlashLightVisualizer

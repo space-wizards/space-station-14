@@ -41,8 +41,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -55,7 +56,7 @@
     amount: 5
   - type: DamageOtherOnHit
     amount: 5
-  
+
 - type: entity
   name: large beaker
   parent: Beaker

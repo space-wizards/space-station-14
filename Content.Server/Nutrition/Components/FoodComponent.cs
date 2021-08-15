@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -29,7 +30,7 @@ namespace Content.Server.Nutrition.Components
     {
         public override string Name => "Food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+        [ViewVariables] [DataField("useSound")] protected virtual SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
 
@@ -49,7 +50,7 @@ namespace Content.Server.Nutrition.Components
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
             }
         }
 
@@ -109,7 +110,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             var utensils = utensilUsed != null
-                ? new List<UtensilComponent> {utensilUsed}
+                ? new List<UtensilComponent> { utensilUsed }
                 : null;
 
             if (_utensilsNeeded != UtensilType.None)
@@ -159,10 +160,7 @@ namespace Content.Server.Nutrition.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
-            }
+            SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
             trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
 

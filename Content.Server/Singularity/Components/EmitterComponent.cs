@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Content.Server.Access.Components;
 using Content.Server.Power.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -34,7 +35,7 @@ namespace Content.Server.Singularity.Components
 
         [ViewVariables] public int FireShotCounter;
 
-        [ViewVariables] [DataField("fireSound")] public string FireSound = "/Audio/Weapons/emitter.ogg";
+        [ViewVariables] [DataField("fireSound")] public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Weapons/emitter.ogg");
         [ViewVariables] [DataField("boltType")] public string BoltType = "EmitterBolt";
         [ViewVariables] [DataField("powerUseActive")] public int PowerUseActive = 500;
         [ViewVariables] [DataField("fireBurstSize")] public int FireBurstSize = 3;

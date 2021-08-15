@@ -9,6 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
@@ -82,10 +83,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private AppearanceComponent? _appearanceComponent;
 
         // Sounds
-        [DataField("soundPowerCellInsert")]
-        private string? _soundPowerCellInsert = default;
-        [DataField("soundPowerCellEject")]
-        private string? _soundPowerCellEject = default;
+        [DataField("soundPowerCellInsert", required: true)]
+        private SoundSpecifier _soundPowerCellInsert = default!;
+        [DataField("soundPowerCellEject", required: true)]
+        private SoundSpecifier _soundPowerCellEject = default!;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -222,10 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (_soundPowerCellInsert != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
 
             _powerCellContainer.Insert(entity);
 
@@ -275,10 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            if (_soundPowerCellEject != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
