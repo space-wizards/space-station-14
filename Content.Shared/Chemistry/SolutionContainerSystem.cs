@@ -166,7 +166,7 @@ namespace Content.Shared.Chemistry
             }
 
             UpdateAppearance(solutionHolder);
-            RaiseLocalEvent(new SolutionChangedEvent(solutionHolder.Owner));
+            RaiseLocalEvent(solutionHolder.Owner.Uid, new SolutionChangedEvent(solutionHolder.Owner));
         }
 
         public void RemoveAllSolution(SolutionAlias solutionHolder)
