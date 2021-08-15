@@ -279,7 +279,8 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
-            "EntityStorageECS"
+            "EntityStorageECS",
+            "CursedEntityStorageECS"
         };
     }
 }

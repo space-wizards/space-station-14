@@ -6,3 +6,12 @@
   description: A standard-issue Nanotrasen storage unit.
   components:
   - type: CursedEntityStorage
+
+- type: entity
+  id: ClosetCursedECS
+  parent: ECSClosetBase
+  name: cursed closet ECS
+  suffix: cursed
+  description: A standard-issue Nanotrasen storage unit.
+  components:
+  - type: CursedEntityStorageECS

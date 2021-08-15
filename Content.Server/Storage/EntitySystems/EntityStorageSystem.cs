@@ -25,6 +25,14 @@ using System.Linq;
 
 namespace Content.Server.Storage.EntitySystems
 {
+    public class EntityStorageClosedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     EntityStorage that was closed;
+        /// </summary>
+        public IEntity Target { get; set; } = default!;
+    }
+
     [UsedImplicitly]
     public class EntityStorageSystem : EntitySystem
     {
@@ -125,6 +133,13 @@ namespace Content.Server.Storage.EntitySystems
             ModifyComponents(comp);
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.CloseSound.GetSound(), comp.Owner);
             comp.LastInternalOpenAttempt = default;
+
+            var closedEvent = new EntityStorageClosedEvent
+            {
+                Target = comp.Owner
+            };
+
+            RaiseLocalEvent(comp.Owner.Uid, closedEvent);
         }
 
         protected virtual void OpenStorage(EntityStorageECSComponent comp)
