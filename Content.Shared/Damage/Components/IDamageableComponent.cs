@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Resistances;
+using Content.Shared.Explosion;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Damage.Components
 {
-    public interface IDamageableComponent : IComponent, IExAct
+    public interface IDamageableComponent : IComponent, IExploadable
     {
         /// <summary>
         ///     Sum of all damages taken.

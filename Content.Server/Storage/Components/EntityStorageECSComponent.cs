@@ -1,4 +1,3 @@
-using Content.Shared.Acts;
 using Content.Shared.Physics;
 using Content.Shared.Sound;
 using Robust.Shared.Containers;
@@ -6,12 +5,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
-using System.Linq;
 
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
-    public class EntityStorageECSComponent : Component, IExAct
+    public class EntityStorageECSComponent : Component
     {
         public override string Name => "EntityStorageECS";
 
@@ -28,11 +26,11 @@ namespace Content.Server.Storage.Components
         public TimeSpan LastInternalOpenAttempt { get; set; }
 
         [ViewVariables]
-        [DataField("Capacity")]
+        [DataField("capacity")]
         public int StorageCapacityMax { get; set; } = 30;
 
         [ViewVariables]
-        [DataField("IsCollidableWhenOpen")]
+        [DataField("isCollidableWhenOpen")]
         public bool IsCollidableWhenOpen { get; set; }
 
         [DataField("showContents")]
@@ -67,7 +65,7 @@ namespace Content.Server.Storage.Components
         [DataField("open")]
         public bool Open { get; set; }
 
-        [DataField("CanWeldShut")]
+        [DataField("canWeldShut")]
         private bool _canWeldShut = true;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -82,7 +80,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        [DataField("IsWeldedShut")]
+        [DataField("isWeldedShut")]
         private bool _isWeldedShut;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -107,23 +105,5 @@ namespace Content.Server.Storage.Components
         public Container Contents { get; set; } = default!;
 
         public bool BeingWelded { get; set; }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            var containedEntities = Contents.ContainedEntities.ToList();
-            foreach (var entity in containedEntities)
-            {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
-        }
     }
 }

@@ -29,6 +29,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Storage.Components
 {
@@ -38,7 +39,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExAct, IAfterInteract
+    public class ServerStorageComponent : SharedStorageComponent, IInteractUsing, IUse, IActivate, IStorageComponent, IDestroyAct, IExploadable, IAfterInteract
     {
         private const string LoggerName = "Storage";
 
@@ -601,7 +602,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        void IExploadable.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (eventArgs.Severity < ExplosionSeverity.Heavy)
             {
@@ -617,7 +618,7 @@ namespace Content.Server.Storage.Components
 
             foreach (var entity in storedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = entity.GetAllComponents<IExploadable>().ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

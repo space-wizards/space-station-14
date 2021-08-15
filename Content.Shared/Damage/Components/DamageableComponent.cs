@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Container;
 using Content.Shared.Damage.Resistances;
+using Content.Shared.Explosion;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;

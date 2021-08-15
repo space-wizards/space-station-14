@@ -3,6 +3,7 @@ using Content.Server.Storage.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
+using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
@@ -38,8 +39,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntityStorageECSComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<EntityStorageECSComponent, InteractUsingEvent>(OnInteracted);
             SubscribeLocalEvent<EntityStorageECSComponent, DestructionEventArgs>(OnDestroyed);
-            //SubscribeLocalEvent<EntityStorageECSComponent, ExplosionEventArgs>(OnExplosion);
-            //SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+            SubscribeLocalEvent<EntityStorageECSComponent, ExplosionEvent>(OnExplosion);
         }
 
         private void OnInit(EntityUid eUI, EntityStorageECSComponent comp, ComponentInit args)
@@ -346,20 +346,28 @@ namespace Content.Server.Storage.EntitySystems
             return entityLookup.GetEntitiesIntersecting(comp.Owner);
         }
 
-        private void OnExplosion(EntityUid eUI, EntityStorageECSComponent comp, ExplosionEventArgs eventArgs)
+        private void OnExplosion(EntityUid eUI, EntityStorageECSComponent comp, ExplosionEvent eventArgs)
         {
             if (eventArgs.Severity < ExplosionSeverity.Heavy)
             {
                 return;
             }
 
+            var oldExplosionEvent = new ExplosionEventArgs
+            {
+                Source = eventArgs.Source,
+                Target = eventArgs.Target,
+                Severity = eventArgs.Severity
+            };
+
             var containedEntities = comp.Contents.ContainedEntities.ToList();
+            // TODO remove this once ExplosionEventArgs get replaced with ExplosionEvent
             foreach (var entity in containedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
-                foreach (var exAct in exActs)
+                var exploadables = entity.GetAllComponents<IExploadable>().ToArray();
+                foreach (var exploadable in exploadables)
                 {
-                    exAct.OnExplosion(eventArgs);
+                    exploadable.OnExplosion(oldExplosionEvent);
                 }
             }
         }

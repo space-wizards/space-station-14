@@ -13,7 +13,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
+using Content.Shared.Explosion;
 using Content.Shared.Movement.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -36,7 +36,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExploadable, IPressureProtection, IEffectBlocker
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -619,7 +619,7 @@ namespace Content.Server.Inventory.Components
             return new InventoryComponentState(list, hover);
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        void IExploadable.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (eventArgs.Severity < ExplosionSeverity.Heavy)
             {
@@ -630,7 +630,7 @@ namespace Content.Server.Inventory.Components
             {
                 foreach (var entity in slot.ContainedEntities)
                 {
-                    var exActs = entity.GetAllComponents<IExAct>().ToList();
+                    var exActs = entity.GetAllComponents<IExploadable>().ToList();
                     foreach (var exAct in exActs)
                     {
                         exAct.OnExplosion(eventArgs);

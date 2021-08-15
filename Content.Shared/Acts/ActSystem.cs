@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Linq;
+using Content.Shared.Explosion;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -35,21 +36,6 @@ namespace Content.Shared.Acts
         void OnBreak(BreakageEventArgs eventArgs);
     }
 
-    public interface IExAct
-    {
-        /// <summary>
-        /// Called when explosion reaches the entity
-        /// </summary>
-        void OnExplosion(ExplosionEventArgs eventArgs);
-    }
-
-    public class ExplosionEventArgs : EventArgs
-    {
-        public EntityCoordinates Source { get; set; }
-        public IEntity Target { get; set; } = default!;
-        public ExplosionSeverity Severity { get; set; }
-    }
-
     [UsedImplicitly]
     public sealed class ActSystem : EntitySystem
     {
@@ -72,13 +58,25 @@ namespace Content.Shared.Acts
 
         public void HandleExplosion(EntityCoordinates source, IEntity target, ExplosionSeverity severity)
         {
+            // ECS system
+            var explosionEvent = new ExplosionEvent
+            {
+                Source = source,
+                Target = target,
+                Severity = severity
+            };
+
+            RaiseLocalEvent(target.Uid, explosionEvent);
+
+            // Old component system
+            // TODO remove old Explosion system, port it to ECS
             var eventArgs = new ExplosionEventArgs
             {
                 Source = source,
                 Target = target,
                 Severity = severity
             };
-            var exActs = target.GetAllComponents<IExAct>().ToList();
+            var exActs = target.GetAllComponents<IExploadable>().ToList();
 
             foreach (var exAct in exActs)
             {

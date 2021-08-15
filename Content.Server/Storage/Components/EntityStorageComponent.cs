@@ -29,13 +29,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExploadable
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -492,7 +493,7 @@ namespace Content.Server.Storage.Components
             data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        void IExploadable.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (eventArgs.Severity < ExplosionSeverity.Heavy)
             {
@@ -502,7 +503,7 @@ namespace Content.Server.Storage.Components
             var containedEntities = Contents.ContainedEntities.ToList();
             foreach (var entity in containedEntities)
             {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
+                var exActs = entity.GetAllComponents<IExploadable>().ToArray();
                 foreach (var exAct in exActs)
                 {
                     exAct.OnExplosion(eventArgs);

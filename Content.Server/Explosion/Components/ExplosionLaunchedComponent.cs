@@ -1,15 +1,16 @@
 using Content.Server.Throwing;
 using Content.Shared.Acts;
 using Robust.Shared.GameObjects;
+using Content.Shared.Explosion;
 
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public class ExplosionLaunchedComponent : Component, IExAct
+    public class ExplosionLaunchedComponent : Component, IExploadable
     {
         public override string Name => "ExplosionLaunched";
 
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
+        void IExploadable.OnExplosion(ExplosionEventArgs eventArgs)
         {
             if (Owner.Deleted)
                 return;
