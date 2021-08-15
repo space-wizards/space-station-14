@@ -35,7 +35,7 @@
   - type: MovedByPressure
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
-    soundHit: 
+    soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
@@ -45,9 +45,9 @@
       bloodstream:
         maxVol: 250
   - type: InjectableSolution
-    solution: organ
+    solution: bloodstream
   - type: DrawableSolution
-    solution: organ
+    solution: bloodstream
   - type: Bloodstream
     max_volume: 100
   # StatusEffects

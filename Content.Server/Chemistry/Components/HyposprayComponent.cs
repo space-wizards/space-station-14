@@ -32,6 +32,9 @@ namespace Content.Server.Chemistry.Components
         [DataField("InjectSound")]
         private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
+        [DataField("solution")]
+        private string Solution { get; set; } = "hypospray";
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -57,12 +60,19 @@ namespace Content.Server.Chemistry.Components
             }
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            var hypoSpraySolution = solutionsSys.GetInjectableSolution(Owner);
+            solutionsSys.TryGetSolution(Owner, Solution, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
                 user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
                 return true;
+            }
+
+            if (!solutionsSys.TryGetInjectableSolution(target, out var targetSolution))
+            {
+                user.PopupMessage(user,
+                    Loc.GetString("hypospray-cant-inject", ("target", target)));
+                return false;
             }
 
             user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",
@@ -77,15 +87,13 @@ namespace Content.Server.Chemistry.Components
 
             SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
-            var targetSolution = solutionsSys.GetInjectableSolution(target);
-
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution!.EmptyVolume);
 
             if (realTransferAmount <= 0)
             {
                 user.PopupMessage(user,
-                    Loc.GetString("hypospray-component-transfer-already-full-message ",
+                    Loc.GetString("hypospray-component-transfer-already-full-message",
                         ("owner", targetSolution.Owner)));
                 return true;
             }
@@ -116,11 +124,10 @@ namespace Content.Server.Chemistry.Components
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            var solution = EntitySystem.Get<SolutionContainerSystem>().GetInjectableSolution(Owner);
-            if (solution == null)
-                return new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
-
-            return new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume);
+            var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+            return solutionSys.TryGetSolution(Owner, Solution, out var solution)
+                ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
+                : new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
         }
     }
 }

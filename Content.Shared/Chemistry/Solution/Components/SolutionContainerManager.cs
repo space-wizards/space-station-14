@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,6 +10,7 @@ namespace Content.Shared.Chemistry.Solution.Components
     [NetworkedComponent()]
     [RegisterComponent]
     [DataDefinition]
+    [Friend(typeof(SolutionContainerSystem))]
     public class SolutionContainerManager : Component
     {
         public override string Name => "SolutionContainer";

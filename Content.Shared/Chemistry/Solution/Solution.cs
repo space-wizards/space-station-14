@@ -21,7 +21,6 @@ namespace Content.Shared.Chemistry.Solution
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    [SerializedType(nameof(Solution))]
     public class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
