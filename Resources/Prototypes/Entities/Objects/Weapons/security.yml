@@ -53,7 +53,6 @@
   components:
     - type: FlashOnTrigger
     - type: TriggerOnProximity
-      Enabled: true
       shape:
         !type:PhysShapeCircle
           radius: 2
@@ -65,7 +64,7 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.2,-0.3,0.2,0.3"
+            bounds: "-0.4,-0.3,0.4,0.3"
         mask:
         - Impassable
         - VaultImpassable
