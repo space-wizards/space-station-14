@@ -20,7 +20,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         // of damage types?
         [DataField("damageGroup", required: true)]
         private string _damageGroupID { get; set; } = default!;
-        public DamageTypePrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageGroupID);
+        public DamageGroupPrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
