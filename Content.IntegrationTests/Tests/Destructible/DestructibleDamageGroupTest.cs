@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
 
                 // Raise burn damage to 20
-                Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 10, true));
+                Assert.True(sDamageableComponent.TryChangeDamage(burnDamageGroup, 10, true));
 
                 // No new thresholds reached
                 Assert.IsEmpty(sThresholdListenerComponent.ThresholdsReached);
@@ -117,7 +117,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 // Raise brute damage back up to 10
                 Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 10, true));
 
-                // 10 brute + 10 burn threshold reached, brute was healed and brought back to its threshold amount and slash stayed the same
+                // 10 brute + 10 burn threshold reached, brute was healed and brought back to its threshold amount and burn stayed the same
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
 
                 sThresholdListenerComponent.ThresholdsReached.Clear();
