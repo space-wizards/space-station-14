@@ -1768,3 +1768,8 @@ Entries:
   - {message: Fixes some tool sounds not playing., type: Fix}
   id: 315
   time: '2021-08-13T09:06:13.304552+00:00'
+- author: YggOne
+  changes:
+  - {message: Added foaming agent sound to prevent a crash., type: Fix}
+  id: 316
+  time: '2021-08-16T02:44:35.0000000+00:00'
