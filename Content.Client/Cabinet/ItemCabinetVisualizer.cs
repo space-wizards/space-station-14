@@ -9,16 +9,6 @@ namespace Content.Client.Cabinet
     [UsedImplicitly]
     public class ItemCabinetVisualizer : AppearanceVisualizer
     {
-        // TODO proper layering
-        [DataField("fullState", required: true)]
-        private string _fullState = default!;
-
-        [DataField("emptyState", required: true)]
-        private string _emptyState = default!;
-
-        [DataField("state", required: true)]
-        private string _baseState = default!;
-
         [DataField("openState", required: true)]
         private string _openState = default!;
 
@@ -33,32 +23,18 @@ namespace Content.Client.Cabinet
                 && component.TryGetData(ItemCabinetVisuals.IsOpen, out bool isOpen)
                 && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
             {
-                sprite.LayerSetState(0, _baseState);
-
                 var state = isOpen ? _openState : _closedState;
+                var contents = contains ? true : false;
                 sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
-
-                if (isOpen)
-                {
-                    if (contains)
-                    {
-                        sprite.LayerSetState(ItemCabinetVisuals.ContainsItem, _fullState);
-                    }
-                    else
-                    {
-                        sprite.LayerSetState(ItemCabinetVisuals.ContainsItem, _emptyState);
-                    }
-                }
-                else
-
-                sprite.LayerSetState(0, _closedState);
+                sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contents);
             }
         }
     }
 
     public enum ItemCabinetVisualLayers : byte
     {
-        Door
+        Door,
+        ContainsItem
         //Welded
     }
 }
