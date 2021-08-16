@@ -24,9 +24,8 @@ namespace Content.Client.Cabinet
                 && component.TryGetData(ItemCabinetVisuals.ContainsItem, out bool contains))
             {
                 var state = isOpen ? _openState : _closedState;
-                var contents = contains ? true : false;
                 sprite.LayerSetState(ItemCabinetVisualLayers.Door, state);
-                sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contents);
+                sprite.LayerSetVisible(ItemCabinetVisualLayers.ContainsItem, contains);
             }
         }
     }
