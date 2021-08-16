@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -48,10 +49,17 @@ namespace Content.Server.Light.Components
         private TimeSpan _lastThunk;
         private TimeSpan? _lastGhostBlink;
 
+        [DataField("burnHandSound")]
+        private SoundSpecifier _burnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+        [DataField("turnOnSound")]
+        private SoundSpecifier _turnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
+
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [ViewVariables] [DataField("on")]
+        [ViewVariables]
+        [DataField("on")]
         private bool _on = true;
 
         [ViewVariables]
@@ -60,7 +68,8 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         private bool _isBlinking;
 
-        [ViewVariables] [DataField("ignoreGhostsBoo")]
+        [ViewVariables]
+        [DataField("ignoreGhostsBoo")]
         private bool _ignoreGhostsBoo;
 
         [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
@@ -95,9 +104,9 @@ namespace Content.Server.Light.Components
                 Eject();
                 return false;
             }
-            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
+            if (eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
             {
-                if(CanBurn(heatResistanceComponent.GetHeatResistance()))
+                if (CanBurn(heatResistanceComponent.GetHeatResistance()))
                 {
                     Burn();
                     return true;
@@ -118,7 +127,7 @@ namespace Content.Server.Light.Components
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
             void Eject()
@@ -220,7 +229,7 @@ namespace Content.Server.Light.Components
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            SoundSystem.Play(Filter.Pvs(Owner), _turnOnSound.GetSound(), Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
@@ -329,7 +338,8 @@ namespace Content.Server.Light.Components
             _lastGhostBlink = time;
 
             ToggleBlinkingLight(true);
-            Owner.SpawnTimer(ghostBlinkingTime, () => {
+            Owner.SpawnTimer(ghostBlinkingTime, () =>
+            {
                 ToggleBlinkingLight(false);
             });
 

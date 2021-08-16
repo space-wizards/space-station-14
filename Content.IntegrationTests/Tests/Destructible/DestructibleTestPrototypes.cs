@@ -1,4 +1,4 @@
-﻿namespace Content.IntegrationTests.Tests.Destructible
+namespace Content.IntegrationTests.Tests.Destructible
 {
     public static class DestructibleTestPrototypes
     {
@@ -30,7 +30,8 @@
         triggersOnce: false
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:
@@ -52,7 +53,8 @@
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:

@@ -36,7 +36,6 @@ namespace Content.Shared.Throwing
             var fixture = physicsComponent.GetFixture(ThrowingFixture);
             if (fixture == null)
             {
-                Logger.Error($"Tried to remove throwing fixture for {component.Owner} but none found?");
                 return;
             }
 
@@ -125,7 +124,7 @@ namespace Content.Shared.Throwing
         {
             // TODO: Just pass in the bodies directly
             var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
-            RaiseLocalEvent(collideMsg);
+            RaiseLocalEvent(target.Owner.Uid, collideMsg);
             if (collideMsg.Handled)
             {
                 return;

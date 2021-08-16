@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using Content.Shared.Damage;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -21,8 +22,8 @@ namespace Content.Server.Damage.Components
         public int BaseDamage { get; set; } = 5;
         [DataField("factor")]
         public float Factor { get; set; } = 1f;
-        [DataField("soundHit")]
-        public string SoundHit { get; set; } = "";
+        [DataField("soundHit", required: true)]
+        public SoundSpecifier SoundHit { get; set; } = default!;
         [DataField("stunChance")]
         public float StunChance { get; set; } = 0.25f;
         [DataField("stunMinimumDamage")]

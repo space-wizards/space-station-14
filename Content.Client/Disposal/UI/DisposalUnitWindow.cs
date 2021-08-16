@@ -1,4 +1,6 @@
+using System;
 using Content.Client.Stylesheets;
+using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -7,6 +9,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
@@ -130,13 +133,23 @@ namespace Content.Client.Disposal.UI
                 Color.FromHsv(new Vector4(finalHue, saturation, value, alpha));
         }
 
-        public void UpdateState(DisposalUnitBoundUserInterfaceState state)
+        /// <summary>
+        /// Update the interface state for the disposals window.
+        /// </summary>
+        /// <returns>true if we should stop updating every frame.</returns>
+        public bool UpdateState(DisposalUnitBoundUserInterfaceState state)
         {
+            var currentTime = IoCManager.Resolve<IGameTiming>().CurTime;
+            var fullTime = state.FullPressureTime;
+            var pressure = (float) Math.Min(1.0f, 1.0f - (fullTime.TotalSeconds - currentTime.TotalSeconds) * SharedDisposalUnitSystem.PressurePerSecond);
+
             Title = state.UnitName;
             _unitState.Text = state.UnitState;
-            UpdatePressureBar(state.Pressure);
+            UpdatePressureBar(pressure);
             Power.Pressed = state.Powered;
             Engage.Pressed = state.Engaged;
+
+            return !state.Powered || pressure >= 1.0f;
         }
     }
 }

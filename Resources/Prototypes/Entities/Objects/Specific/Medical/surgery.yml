@@ -49,7 +49,8 @@
     sprite: Objects/Specific/Medical/Surgery/drill.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    hitSound: /Audio/Items/drill_hit.ogg
+    hitSound:
+      path: /Audio/Items/drill_hit.ogg
 
 # Scalpel
 
@@ -72,7 +73,8 @@
     sprite: Objects/Specific/Medical/Surgery/scalpel.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
-    hitSound: /Audio/Weapons/bladeslice.ogg
+    hitSound:
+      path: /Audio/Weapons/bladeslice.ogg
     damage: 12
 
 - type: entity
@@ -140,12 +142,15 @@
 #    tools:
 #    - behavior: VesselCompression
 #      state: hemostat
-#      useSound: /Audio/Items/jaws_pry.ogg
-#      changeSound: /Audio/Items/change_jaws.ogg
+#      useSound:
+#        path: /Audio/Items/jaws_pry.ogg
+#      changeSound:
+#        path: /Audio/Items/change_jaws.ogg
 #    - behavior: Setting
 #      state: setter
 #      useSound:
-#      changeSound: /Audio/Items/change_jaws.ogg
+#      changeSound:
+#        path: /Audio/Items/change_jaws.ogg
 
 - type: entity
   name: hemostat
@@ -209,7 +214,8 @@
   - type: Item
     HeldPrefix: improv
   - type: MeleeWeapon
-    hitSound: /Audio/Weapons/bladeslice.ogg
+    hitSound:
+      path: /Audio/Weapons/bladeslice.ogg
     damage: 10
 
 - type: entity
@@ -227,7 +233,8 @@
   - type: Item
     HeldPrefix: electric
   - type: MeleeWeapon
-    hitSound: /Audio/Items/drill_hit.ogg
+    hitSound:
+      path: /Audio/Items/drill_hit.ogg
     damage: 15
 
 - type: entity
@@ -245,5 +252,6 @@
   - type: Item
     HeldPrefix: advanced
   - type: MeleeWeapon
-    hitSound: /Audio/Items/drill_hit.ogg
+    hitSound:
+      path: /Audio/Items/drill_hit.ogg
     damage: 20
