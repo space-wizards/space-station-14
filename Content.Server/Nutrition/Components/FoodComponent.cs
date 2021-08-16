@@ -31,15 +31,15 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("useSound")]
-        protected virtual SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+        protected SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [ViewVariables]
         [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        protected virtual string? TrashPrototype { get; set; }
+        protected string? TrashPrototype { get; set; }
 
         [ViewVariables]
         [DataField("transferAmount")]
-        protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        protected ReagentUnit? TransferAmount { get; set; } = ReagentUnit.New(5);
 
         [DataField("utensilsNeeded")]
         private UtensilType _utensilsNeeded = UtensilType.None;
@@ -57,9 +57,12 @@ namespace Content.Server.Nutrition.Components
                     return 0;
                 }
 
+                if (TransferAmount == null)
+                    return solution.CurrentVolume == 0 ? 0 : 1;
+
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (ReagentUnit)TransferAmount).Float()));
             }
         }
 
@@ -92,7 +95,7 @@ namespace Content.Server.Nutrition.Components
             return true;
         }
 
-        public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
+        public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
             {
@@ -154,7 +157,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
+            var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = solution.SplitSolution(transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 

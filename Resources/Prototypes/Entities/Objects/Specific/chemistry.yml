@@ -191,7 +191,7 @@
     tags:
       - Pill
   - type: Food
-    transferAmount: 1000
+    transferAmount: null
     eatMessage: food-swallow
   - type: SolutionContainer
     maxVol: 50
