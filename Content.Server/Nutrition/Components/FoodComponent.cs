@@ -31,15 +31,15 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("useSound")]
-        protected SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+        private SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [ViewVariables]
         [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        protected string? TrashPrototype { get; set; }
+        private string? TrashPrototype { get; set; }
 
         [ViewVariables]
         [DataField("transferAmount")]
-        protected ReagentUnit? TransferAmount { get; set; } = ReagentUnit.New(5);
+        private ReagentUnit? TransferAmount { get; set; } = ReagentUnit.New(5);
 
         [DataField("utensilsNeeded")]
         private UtensilType _utensilsNeeded = UtensilType.None;
