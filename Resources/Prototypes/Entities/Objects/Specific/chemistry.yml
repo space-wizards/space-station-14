@@ -12,7 +12,7 @@
     netsync: false
     layers:
       - state: beaker
-      - state: beaker1  
+      - state: beaker1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
@@ -21,7 +21,11 @@
     maxVol: 50
     caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
   - type: SolutionTransfer
-    transferAmount: 5.0
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
   - type: Drink
     isOpen: true
@@ -37,8 +41,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -51,7 +56,7 @@
     amount: 5
   - type: DamageOtherOnHit
     amount: 5
-  
+
 - type: entity
   name: large beaker
   parent: Beaker
@@ -62,7 +67,7 @@
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
       - state: beakerlarge
-      - state: beakerlarge1  
+      - state: beakerlarge1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
@@ -120,7 +125,14 @@
     caps: OpenContainer
     maxVol: 5
   - type: SolutionTransfer
-    transferAmount: 5.0
+    minTransferAmount: 1
+    transferAmount: 1
+    maxTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
@@ -140,7 +152,7 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     netsync: false
     layers:
-      - state: syringe1  
+      - state: syringe1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringe_base0
@@ -155,7 +167,7 @@
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
-    - type: SolutionContainerVisualizer 
+    - type: SolutionContainerVisualizer
       maxFillLevels: 4
       fillBaseName: syringe
       # this one for syrigine itself (plunger)

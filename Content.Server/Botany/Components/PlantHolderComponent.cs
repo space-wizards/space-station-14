@@ -1,8 +1,8 @@
-#nullable enable
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
@@ -248,8 +248,7 @@ namespace Content.Server.Botany.Components
                     _updateSpriteAfterUpdate = true;
             }
 
-            var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-            var environment = tileAtmos?.Air ?? GasMixture.SpaceGas;
+            var environment = EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates, true)?? GasMixture.SpaceGas;
 
             if (Seed.ConsumeGasses.Count > 0)
             {
@@ -724,10 +723,7 @@ namespace Content.Server.Botany.Components
                     sprayed = true;
                     amount = ReagentUnit.New(1);
 
-                    if (!string.IsNullOrEmpty(spray.SpraySound))
-                    {
-                        SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound, usingItem, AudioHelpers.WithVariation(0.125f));
-                    }
+                    SoundSystem.Play(Filter.Pvs(usingItem), spray.SpraySound.GetSound(), usingItem, AudioHelpers.WithVariation(0.125f));
                 }
 
                 var split = solution.Drain(amount);

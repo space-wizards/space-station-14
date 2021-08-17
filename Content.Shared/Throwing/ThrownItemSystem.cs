@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Physics;
@@ -37,10 +36,10 @@ namespace Content.Shared.Throwing
             var fixture = physicsComponent.GetFixture(ThrowingFixture);
             if (fixture == null)
             {
-                Logger.Error($"Tried to remove throwing fixture for {component.Owner} but none found?");
                 return;
             }
-            physicsComponent.RemoveFixture(fixture);
+
+            Get<SharedBroadphaseSystem>().DestroyFixture(physicsComponent, fixture);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -55,8 +54,7 @@ namespace Content.Shared.Throwing
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            var fixture = new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture};
-            physicsComponent.AddFixture(fixture);
+            Get<SharedBroadphaseSystem>().CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
@@ -126,7 +124,7 @@ namespace Content.Shared.Throwing
         {
             // TODO: Just pass in the bodies directly
             var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
-            RaiseLocalEvent(collideMsg);
+            RaiseLocalEvent(target.Owner.Uid, collideMsg);
             if (collideMsg.Handled)
             {
                 return;

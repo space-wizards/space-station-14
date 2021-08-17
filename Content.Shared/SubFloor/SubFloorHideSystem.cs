@@ -1,10 +1,12 @@
-#nullable enable
+using System;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.SubFloor
@@ -33,21 +35,9 @@ namespace Content.Shared.SubFloor
             }
         }
 
-        private void UpdateAll()
-        {
-            foreach (var comp in ComponentManager.EntityQuery<SubFloorHideComponent>(true))
-            {
-                var transform = comp.Owner.Transform;
-                if (!_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
-                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
-            }
-        }
-
         public override void Initialize()
         {
             base.Initialize();
-
-            IoCManager.InjectDependencies(this);
 
             _mapManager.GridChanged += MapManagerOnGridChanged;
             _mapManager.TileChanged += MapManagerOnTileChanged;
@@ -55,6 +45,7 @@ namespace Content.Shared.SubFloor
             SubscribeLocalEvent<SubFloorHideComponent, ComponentStartup>(OnSubFloorStarted);
             SubscribeLocalEvent<SubFloorHideComponent, ComponentShutdown>(OnSubFloorTerminating);
             SubscribeLocalEvent<SubFloorHideComponent, AnchorStateChangedEvent>(HandleAnchorChanged);
+            SubscribeLocalEvent<SubFloorHideComponent, ComponentHandleState>(HandleComponentState);
         }
 
         public override void Shutdown()
@@ -65,6 +56,20 @@ namespace Content.Shared.SubFloor
             _mapManager.TileChanged -= MapManagerOnTileChanged;
         }
 
+        public void SetEnabled(SubFloorHideComponent subFloor, bool enabled)
+        {
+            subFloor.Enabled = enabled;
+            subFloor.Dirty();
+            UpdateEntity(subFloor.Owner.Uid);
+        }
+
+        public void SetRequireAnchoring(SubFloorHideComponent subFloor, bool requireAnchored)
+        {
+            subFloor.RequireAnchored = requireAnchored;
+            subFloor.Dirty();
+            UpdateEntity(subFloor.Owner.Uid);
+        }
+
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
         {
             UpdateEntity(uid);
@@ -72,7 +77,8 @@ namespace Content.Shared.SubFloor
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
-            UpdateEntity(uid);
+            // Regardless of whether we're on a subfloor or not, unhide.
+            UpdateEntity(uid, true);
         }
 
         private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, AnchorStateChangedEvent args)
@@ -80,8 +86,17 @@ namespace Content.Shared.SubFloor
             var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
 
             // We do this directly instead of calling UpdateEntity.
-            if(_mapManager.TryGetGrid(transform.GridID, out var grid))
-                UpdateTile(grid, grid.TileIndicesFor(transform.Coordinates));
+            UpdateEntity(uid);
+        }
+
+        private void HandleComponentState(EntityUid uid, SubFloorHideComponent component, ComponentHandleState args)
+        {
+            if (args.Current is not SubFloorHideComponentState state)
+                return;
+
+            component.Enabled = state.Enabled;
+            component.RequireAnchored = state.RequireAnchored;
+            UpdateEntity(uid);
         }
 
         private void MapManagerOnTileChanged(object? sender, TileChangedEventArgs e)
@@ -97,37 +112,109 @@ namespace Content.Shared.SubFloor
             }
         }
 
-        private void UpdateEntity(EntityUid uid)
+        private bool IsSubFloor(IMapGrid grid, Vector2i position)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ITransformComponent? transform) ||
-                !_mapManager.TryGetGrid(transform.GridID, out var grid)) return;
+            var tileDef = (ContentTileDefinition) _tileDefinitionManager[grid.GetTileRef(position).Tile.TypeId];
+            return tileDef.IsSubFloor;
+        }
 
-            UpdateTile(grid, grid.WorldToTile(transform.WorldPosition));
+        private void UpdateAll()
+        {
+            foreach (var comp in ComponentManager.EntityQuery<SubFloorHideComponent>(true))
+            {
+                UpdateEntity(comp.Owner.Uid);
+            }
         }
 
         private void UpdateTile(IMapGrid grid, Vector2i position)
         {
-            var tile = grid.GetTileRef(position);
-            var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-            foreach (var anchored in grid.GetAnchoredEntities(position))
+            var isSubFloor = IsSubFloor(grid, position);
+
+            foreach (var uid in grid.GetAnchoredEntities(position))
             {
-                if (!ComponentManager.TryGetComponent(anchored, out SubFloorHideComponent? subFloorComponent))
-                {
-                    continue;
-                }
-
-                // Show sprite
-                if (ComponentManager.TryGetComponent(anchored, out SharedSpriteComponent ? spriteComponent))
-                {
-                    spriteComponent.Visible = ShowAll || !subFloorComponent.Running || tileDef.IsSubFloor;
-                }
-
-                // So for collision all we care about is that the component is running.
-                if (ComponentManager.TryGetComponent(anchored, out PhysicsComponent ? physicsComponent))
-                {
-                    physicsComponent.CanCollide = !subFloorComponent.Running;
-                }
+                if(ComponentManager.HasComponent<SubFloorHideComponent>(uid))
+                    UpdateEntity(uid, isSubFloor);
             }
         }
+
+        private void UpdateEntity(EntityUid uid)
+        {
+            var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+
+            if (!_mapManager.TryGetGrid(transform.GridID, out var grid))
+            {
+                // Not being on a grid counts as no subfloor, unhide this.
+                UpdateEntity(uid, true);
+                return;
+            }
+
+            // Update normally.
+            UpdateEntity(uid, IsSubFloor(grid, grid.TileIndicesFor(transform.Coordinates)));
+        }
+
+        private void UpdateEntity(EntityUid uid, bool subFloor)
+        {
+            // We raise an event to allow other entity systems to handle this.
+            var subFloorHideEvent = new SubFloorHideEvent(subFloor);
+            RaiseLocalEvent(uid, subFloorHideEvent, false);
+
+            // Check if it has been handled by someone else.
+            if (subFloorHideEvent.Handled)
+                return;
+
+            // We only need to query the subfloor component to check if it's enabled or not when we're not on subfloor.
+            // Getting components is expensive, after all.
+            if (!subFloor && ComponentManager.TryGetComponent(uid, out SubFloorHideComponent? subFloorHideComponent))
+            {
+                // If the component isn't enabled, then subfloor will always be true, and the entity will be shown.
+                if (!subFloorHideComponent.Enabled)
+                {
+                    subFloor = true;
+                }
+                // We only need to query the TransformComp if the SubfloorHide is enabled and requires anchoring.
+                else if (subFloorHideComponent.RequireAnchored && ComponentManager.TryGetComponent(uid, out ITransformComponent? transformComponent))
+                {
+                    // If we require the entity to be anchored but it's not, this will set subfloor to true, unhiding it.
+                    subFloor = !transformComponent.Anchored;
+                }
+            }
+
+            // Whether to show this entity as visible, visually.
+            var subFloorVisible = ShowAll || subFloor;
+
+            // Show sprite
+            if (ComponentManager.TryGetComponent(uid, out SharedSpriteComponent? spriteComponent))
+            {
+                spriteComponent.Visible = subFloorVisible;
+            }
+
+            // Set an appearance data value so visualizers can use this as needed.
+            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
+            }
+
+            // So for collision all we care about is that the component is running.
+            if (ComponentManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+            {
+                physicsComponent.CanCollide = subFloor;
+            }
+        }
+    }
+
+    public class SubFloorHideEvent : HandledEntityEventArgs
+    {
+        public bool SubFloor { get; }
+
+        public SubFloorHideEvent(bool subFloor)
+        {
+            SubFloor = subFloor;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public enum SubFloorVisuals : byte
+    {
+        SubFloor,
     }
 }

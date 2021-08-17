@@ -3,14 +3,17 @@
 - type: entity
   parent: BaseItem
   id: BasePlushie
+  abstract: true
   components:
   - type: EmitSoundOnUse
-    soundCollection: ToySqueak
+    sound:
+      collection: ToySqueak
   - type: EmitSoundOnLand
-    soundCollection: ToySqueak
+    sound:
+      collection: ToySqueak
   - type: EmitSoundOnActivate
-    soundCollection: ToySqueak
-  - type: LoopingSound
+    sound:
+      collection: ToySqueak
   - type: ItemCooldown
   - type: UseDelay
     delay: 1.0
@@ -88,9 +91,9 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_snake
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/rattle.ogg
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -104,9 +107,9 @@
     sprite: Objects/Fun/toys.rsi
     state: toy_mouse
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/mousesqueek.ogg
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -120,9 +123,9 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_vox
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Voice/Vox/shriek1.ogg
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -142,11 +145,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/helpme.ogg
+    sound:
+      path: /Audio/Items/Toys/helpme.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/helpme.ogg
+    sound:
+      path: /Audio/Items/Toys/helpme.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -162,11 +166,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/hellothere.ogg
+    sound:
+      path: /Audio/Items/Toys/hellothere.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/hellothere.ogg
+    sound:
+      path: /Audio/Items/Toys/hellothere.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -182,11 +187,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/thankyou.ogg
+    sound:
+      path: /Audio/Items/Toys/thankyou.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/thankyou.ogg
+    sound:
+      path: /Audio/Items/Toys/thankyou.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -202,11 +208,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/verygood.ogg
+    sound:
+      path: /Audio/Items/Toys/verygood.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/verygood.ogg
+    sound:
+      path: /Audio/Items/Toys/verygood.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -222,11 +229,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/imsorry.ogg
+    sound:
+      path: /Audio/Items/Toys/imsorry.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/imsorry.ogg
+    sound:
+      path: /Audio/Items/Toys/imsorry.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -295,9 +303,9 @@
     sprite: Objects/Fun/toys.rsi
     state: ian
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/ian.ogg
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -471,9 +479,12 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/click.ogg
+    soundInsert:
+      path: /Audio/Weapons/drawbow2.ogg
 
 - type: entity
   parent: BaseItem
@@ -510,9 +521,12 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer

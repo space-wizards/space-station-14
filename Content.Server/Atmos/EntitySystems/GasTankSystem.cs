@@ -1,12 +1,15 @@
 using Content.Server.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
     public class GasTankSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
 
@@ -19,11 +22,9 @@ namespace Content.Server.Atmos.EntitySystems
             if (_timer < TimerDelay) return;
             _timer -= TimerDelay;
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-
             foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>())
             {
-                atmosphereSystem.React(gasTank.Air, gasTank);
+                _atmosphereSystem.React(gasTank.Air, gasTank);
                 gasTank.CheckStatus();
                 gasTank.UpdateUserInterface();
             }

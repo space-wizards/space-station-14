@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Hoe
+    - BotanyHoe
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -40,6 +41,7 @@
   components:
   - type: Tag
     tags:
+    - BotanyHatchet
     - BotanySharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
@@ -58,6 +60,7 @@
   - type: Tag
     tags:
     - Shovel
+    - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon

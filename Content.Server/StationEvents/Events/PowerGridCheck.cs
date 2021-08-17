@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Power.Components;
@@ -41,7 +40,7 @@ namespace Content.Server.StationEvents.Events
         {
             var componentManager = IoCManager.Resolve<IComponentManager>();
 
-            foreach (var component in componentManager.EntityQuery<PowerReceiverComponent>(true))
+            foreach (var component in componentManager.EntityQuery<ApcPowerReceiverComponent>(true))
             {
                 component.PowerDisabled = true;
                 _powered.Add(component.Owner);
@@ -56,7 +55,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if (entity.Deleted) continue;
 
-                if (entity.TryGetComponent(out PowerReceiverComponent? powerReceiverComponent))
+                if (entity.TryGetComponent(out ApcPowerReceiverComponent? powerReceiverComponent))
                 {
                     powerReceiverComponent.PowerDisabled = false;
                 }

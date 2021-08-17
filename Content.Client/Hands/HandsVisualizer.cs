@@ -38,19 +38,21 @@ namespace Content.Client.Hands
             {
                 var rsi = resourceCache.GetResource<RSIResource>(SharedSpriteComponent.TextureRoot / hand.RsiPath).RSI;
 
-                var layerKey = LocationToLayerKey(hand.Location);
-                sprite.LayerMapReserveBlank(layerKey);
-
-                var layer = sprite.LayerMapGet(layerKey);
-                sprite.LayerSetVisible(layer, true);
-                sprite.LayerSetRSI(layer, rsi);
-                sprite.LayerSetColor(layer, hand.Color);
-
                 var state = $"inhand-{hand.Location.ToString().ToLowerInvariant()}";
                 if (hand.EquippedPrefix != null)
                     state = $"{hand.EquippedPrefix}-" + state;
 
-                sprite.LayerSetState(layer, state);
+                if (rsi.TryGetState(state, out var _))
+                {
+                    var layerKey = LocationToLayerKey(hand.Location);
+                    sprite.LayerMapReserveBlank(layerKey);
+
+                    var layer = sprite.LayerMapGet(layerKey);
+                    sprite.LayerSetVisible(layer, true);
+                    sprite.LayerSetRSI(layer, rsi);
+                    sprite.LayerSetColor(layer, hand.Color);
+                    sprite.LayerSetState(layer, state);
+                }
             }
         }
 

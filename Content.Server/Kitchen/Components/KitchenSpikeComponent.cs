@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Act;
@@ -133,7 +132,7 @@ namespace Content.Server.Kitchen.Components
 
             _beingButchered.Add(victimUid);
 
-            var result = await doAfterSystem.DoAfter(doAfterArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
             _beingButchered.Remove(victimUid);
 
@@ -161,8 +160,7 @@ namespace Content.Server.Kitchen.Components
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
 
-            if (SpikeSound != null)
-                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

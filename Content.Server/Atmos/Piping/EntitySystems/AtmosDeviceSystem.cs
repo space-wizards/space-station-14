@@ -1,10 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Physics;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
@@ -12,7 +12,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     [UsedImplicitly]
     public class AtmosDeviceSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
+        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
+
+        private float _timer = 0f;
+        private readonly HashSet<AtmosDeviceComponent> _joinedDevices = new();
 
         public override void Initialize()
         {
@@ -20,40 +26,60 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentInit>(OnDeviceInitialize);
             SubscribeLocalEvent<AtmosDeviceComponent, ComponentShutdown>(OnDeviceShutdown);
-            SubscribeLocalEvent<AtmosDeviceComponent, PhysicsBodyTypeChangedEvent>(OnDeviceBodyTypeChanged);
             SubscribeLocalEvent<AtmosDeviceComponent, EntParentChangedMessage>(OnDeviceParentChanged);
+            SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
         private bool CanJoinAtmosphere(AtmosDeviceComponent component)
         {
-            return !component.RequireAnchored || !component.Owner.TryGetComponent(out PhysicsComponent? physics) || physics.BodyType == BodyType.Static;
+            return !component.RequireAnchored || !component.Owner.Transform.Anchored;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)
         {
             if (!CanJoinAtmosphere(component))
+            {
                 return;
+            }
 
-            // We try to get a valid, simulated atmosphere.
-            if (!Get<AtmosphereSystem>().TryGetSimulatedGridAtmosphere(component.Owner.Transform.MapPosition, out var atmosphere))
-                return;
+            // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
+            if (!_atmosphereSystem.AddAtmosDevice(component))
+            {
+                if (component.JoinSystem)
+                {
+                    _joinedDevices.Add(component);
+                    component.JoinedSystem = true;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
 
             component.LastProcess = _gameTiming.CurTime;
-            component.Atmosphere = atmosphere;
-            atmosphere.AddAtmosDevice(component);
 
-            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(atmosphere), false);
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceEnabledEvent(), false);
         }
 
         public void LeaveAtmosphere(AtmosDeviceComponent component)
         {
-            var atmosphere = component.Atmosphere;
-            atmosphere?.RemoveAtmosDevice(component);
-            component.Atmosphere = null;
-            component.LastProcess = TimeSpan.Zero;
+            // Try to remove the component from an atmosphere, and if not
+            if (component.JoinedGrid != null && !_atmosphereSystem.RemoveAtmosDevice(component))
+            {
+                // The grid might have been removed but not us... This usually shouldn't happen.
+                component.JoinedGrid = null;
+                return;
+            }
 
-            if(atmosphere != null)
-                RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(atmosphere), false);
+            if (component.JoinedSystem)
+            {
+                _joinedDevices.Remove(component);
+                component.JoinedSystem = false;
+            }
+
+            component.LastProcess = TimeSpan.Zero;
+            RaiseLocalEvent(component.Owner.Uid, new AtmosDeviceDisabledEvent(), false);
         }
 
         public void RejoinAtmosphere(AtmosDeviceComponent component)
@@ -72,13 +98,13 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             LeaveAtmosphere(component);
         }
 
-        private void OnDeviceBodyTypeChanged(EntityUid uid, AtmosDeviceComponent component, PhysicsBodyTypeChangedEvent args)
+        private void OnDeviceAnchorChanged(EntityUid uid, AtmosDeviceComponent component, AnchorStateChangedEvent args)
         {
             // Do nothing if the component doesn't require being anchored to function.
             if (!component.RequireAnchored)
                 return;
 
-            if (args.New == BodyType.Static)
+            if(component.Owner.Transform.Anchored)
                 JoinAtmosphere(component);
             else
                 LeaveAtmosphere(component);
@@ -87,6 +113,23 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         private void OnDeviceParentChanged(EntityUid uid, AtmosDeviceComponent component, EntParentChangedMessage args)
         {
             RejoinAtmosphere(component);
+        }
+
+        public override void Update(float frameTime)
+        {
+            _timer += frameTime;
+
+            if (_timer < _atmosphereSystem.AtmosTime)
+                return;
+
+            _timer -= _atmosphereSystem.AtmosTime;
+
+            var time = _gameTiming.CurTime;
+            foreach (var device in _joinedDevices)
+            {
+                RaiseLocalEvent(device.Owner.Uid, _updateEvent, false);
+                device.LastProcess = time;
+            }
         }
     }
 }

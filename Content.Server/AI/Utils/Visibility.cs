@@ -41,7 +41,7 @@ namespace Content.Server.AI.Utils
                 angle.ToVec(),
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
-            var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
+            var rayCastResults = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
 
             return rayCastResults.Count > 0 && rayCastResults[0].HitEntity == target;
         }

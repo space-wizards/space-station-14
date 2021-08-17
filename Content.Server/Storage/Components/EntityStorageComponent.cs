@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Tool;
 using Content.Shared.Verbs;
@@ -25,7 +25,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -76,10 +75,10 @@ namespace Content.Server.Storage.Components
         private bool _isWeldedShut;
 
         [DataField("closeSound")]
-        private string _closeSound = "/Audio/Machines/closetclose.ogg";
+        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Machines/closetclose.ogg");
 
         [DataField("openSound")]
-        private string _openSound = "/Audio/Machines/closetopen.ogg";
+        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Machines/closetopen.ogg");
 
         [ViewVariables]
         protected Container Contents = default!;
@@ -132,7 +131,8 @@ namespace Content.Server.Storage.Components
         private bool _beingWelded;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool CanWeldShut {
+        public bool CanWeldShut
+        {
             get => _canWeldShut;
             set
             {
@@ -161,6 +161,13 @@ namespace Content.Server.Storage.Components
 
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
+            // HACK until EntityStorageComponent gets refactored to the new ECS system
+            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            {
+                // Do nothing, LockSystem is responsible for handling this case
+                return;
+            }
+
             ToggleOpen(eventArgs.User);
         }
 
@@ -168,7 +175,7 @@ namespace Content.Server.Storage.Components
         {
             if (IsWeldedShut)
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
             return true;
@@ -219,7 +226,7 @@ namespace Content.Server.Storage.Components
             }
 
             ModifyComponents();
-            SoundSystem.Play(Filter.Pvs(Owner), _closeSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
             _lastInternalOpenAttempt = default;
         }
 
@@ -228,7 +235,7 @@ namespace Content.Server.Storage.Components
             Open = true;
             EmptyContents();
             ModifyComponents();
-            SoundSystem.Play(Filter.Pvs(Owner), _openSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _openSound.GetSound(), Owner);
         }
 
         private void UpdateAppearance()
@@ -437,7 +444,7 @@ namespace Content.Server.Storage.Components
             EmptyContents();
         }
 
-        protected IEnumerable<IEntity> DetermineCollidingEntities()
+        protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
             return entityLookup.GetEntitiesIntersecting(Owner);
@@ -466,7 +473,8 @@ namespace Content.Server.Storage.Components
 
         protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
         {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
+                component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -476,7 +484,7 @@ namespace Content.Server.Storage.Components
             {
                 data.Visibility = VerbVisibility.Disabled;
                 var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message",("verb", verb));
+                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message", ("verb", verb));
                 return;
             }
 

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;

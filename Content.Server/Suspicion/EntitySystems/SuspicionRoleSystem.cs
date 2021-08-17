@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Suspicion.EntitySystems
 {
     [UsedImplicitly]
-    public class SuspicionRoleSystem : EntitySystem, IResettingEntitySystem
+    public class SuspicionRoleSystem : EntitySystem
     {
         private readonly HashSet<SuspicionRoleComponent> _traitors = new();
 
@@ -19,6 +19,7 @@ namespace Content.Server.Suspicion.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SuspicionRoleComponent, PlayerAttachedEvent>((HandlePlayerAttached));
             SubscribeLocalEvent<SuspicionRoleComponent, PlayerDetachedEvent>((HandlePlayerDetached));
         }
@@ -71,7 +72,7 @@ namespace Content.Server.Suspicion.EntitySystems
             base.Shutdown();
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _traitors.Clear();
         }

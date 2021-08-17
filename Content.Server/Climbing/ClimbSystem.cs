@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Climbing.Components;
+using Content.Shared.Climbing;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -8,9 +9,16 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Climbing
 {
     [UsedImplicitly]
-    internal sealed class ClimbSystem : EntitySystem, IResettingEntitySystem
+    internal sealed class ClimbSystem : SharedClimbSystem
     {
         private readonly HashSet<ClimbingComponent> _activeClimbers = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+        }
 
         public void AddActiveClimber(ClimbingComponent climbingComponent)
         {
@@ -30,7 +38,7 @@ namespace Content.Server.Climbing
             }
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _activeClimbers.Clear();
         }

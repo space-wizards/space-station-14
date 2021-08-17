@@ -9,6 +9,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.CharacterInterface
 {
@@ -110,14 +111,17 @@ namespace Content.Client.CharacterInterface
         /// </summary>
         public class CharacterWindow : SS14Window
         {
-            private readonly VBoxContainer _contentsVBox;
+            private readonly BoxContainer _contentsVBox;
             private readonly List<ICharacterUI> _windowComponents;
 
             public CharacterWindow(List<ICharacterUI> windowComponents)
             {
                 Title = "Character";
 
-                _contentsVBox = new VBoxContainer();
+                _contentsVBox = new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Vertical
+                };
                 Contents.AddChild(_contentsVBox);
 
                 windowComponents.Sort((a, b) => ((int) a.Priority).CompareTo((int) b.Priority));

@@ -28,7 +28,6 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-  - type: LoopingSound
 
 - type: entity
   parent: BasePDA

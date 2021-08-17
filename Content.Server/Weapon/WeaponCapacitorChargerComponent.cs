@@ -1,6 +1,4 @@
-﻿#nullable enable
-using Content.Server.Battery.Components;
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;

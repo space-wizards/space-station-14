@@ -7,6 +7,8 @@
   - type: Projectile
     damages:
       Blunt: 1
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
   id: BulletDonkSoft

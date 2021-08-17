@@ -1,8 +1,5 @@
 # Base
 
-- type: Tag
-  id: Egg
-
 - type: entity
   parent: BaseItem
   id: FoodEggBase
@@ -26,7 +23,6 @@
       reagents:
       - ReagentId: Egg
         Quantity: 5
-  - type: LoopingSound
   - type: DamageOnLand
     amount: 1
   - type: DamageOtherOnHit
@@ -38,8 +34,9 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           Eggshells:
@@ -66,7 +63,7 @@
   - type: Puddle
     variants: 4
     state: egg
-    
+
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -86,6 +83,9 @@
       reagents:
       - ReagentId: Egg
         Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
 
 # Egg
 

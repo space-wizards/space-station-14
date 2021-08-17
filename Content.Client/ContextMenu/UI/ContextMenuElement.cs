@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Interactable.Components;
@@ -14,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Vector2 = Robust.Shared.Maths.Vector2;
 
 namespace Content.Client.ContextMenu.UI
@@ -64,8 +64,9 @@ namespace Content.Client.ContextMenu.UI
             OutlineComponent = ContextEntity.GetComponentOrNull<InteractionOutlineComponent>();
 
             AddChild(
-                new HBoxContainer
+                new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         new LayoutContainer
@@ -130,14 +131,16 @@ namespace Content.Client.ContextMenu.UI
              LayoutContainer.SetGrowVertical(_label, LayoutContainer.GrowDirection.Begin);
 
              AddChild(
-                 new HBoxContainer()
+                 new BoxContainer
                  {
+                     Orientation = LayoutOrientation.Horizontal,
                      SeparationOverride = 6,
                      Children =
                      {
                          new LayoutContainer { Children = { _spriteView, _label } },
-                         new HBoxContainer()
+                         new BoxContainer
                          {
+                             Orientation = LayoutOrientation.Horizontal,
                              SeparationOverride = 6,
                              Children =
                              {
@@ -180,7 +183,7 @@ namespace Content.Client.ContextMenu.UI
         private const int MaxItemsBeforeScroll = 10;
         private const int MarginSizeBetweenElements = 2;
 
-        public VBoxContainer List { get; }
+        public BoxContainer List { get; }
         public int Depth { get; }
 
         public ContextMenuPopup(int depth = 0)
@@ -191,7 +194,10 @@ namespace Content.Client.ContextMenu.UI
                 HScrollEnabled = false,
                 Children = { new PanelContainer
                 {
-                    Children = { (List = new VBoxContainer()) },
+                    Children = { (List = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }) },
                     PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
                 }}
             });

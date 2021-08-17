@@ -1,6 +1,6 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,13 +9,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
+    [NetworkedComponent()]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";
-        public sealed override uint? NetID => ContentNetIDs.STACK;
-
-        [DataField("max")]
-        private int _maxCount = 30;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -29,19 +26,12 @@ namespace Content.Shared.Stacks
         [DataField("count")]
         public int Count { get; set; } = 30;
 
-        [ViewVariables]
-        public int MaxCount
-        {
-            get => _maxCount;
-            private set
-            {
-                if (_maxCount == value)
-                    return;
-
-                _maxCount = value;
-                Dirty();
-            }
-        }
+        /// <summary>
+        ///     Max amount of things that can be in the stack.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        [DataField("max")]
+        public int MaxCount { get; set; } = 30;
 
         [ViewVariables]
         public int AvailableSpace => MaxCount - Count;
@@ -50,29 +40,18 @@ namespace Content.Shared.Stacks
         {
             return new StackComponentState(Count, MaxCount);
         }
+    }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
+    [Serializable, NetSerializable]
+    public sealed class StackComponentState : ComponentState
+    {
+        public int Count { get; }
+        public int MaxCount { get; }
+
+        public StackComponentState(int count, int maxCount)
         {
-            if (curState is not StackComponentState cast)
-                return;
-
-            // This will change the count and call events.
-            EntitySystem.Get<SharedStackSystem>().SetCount(Owner.Uid, this, cast.Count);
-            MaxCount = cast.MaxCount;
-        }
-
-
-        [Serializable, NetSerializable]
-        private sealed class StackComponentState : ComponentState
-        {
-            public int Count { get; }
-            public int MaxCount { get; }
-
-            public StackComponentState(int count, int maxCount) : base(ContentNetIDs.STACK)
-            {
-                Count = count;
-                MaxCount = maxCount;
-            }
+            Count = count;
+            MaxCount = maxCount;
         }
     }
 }

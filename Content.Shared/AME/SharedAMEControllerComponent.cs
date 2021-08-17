@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -55,7 +54,6 @@ namespace Content.Shared.AME
             ToggleInjection,
             IncreaseFuel,
             DecreaseFuel,
-            RefreshParts
         }
 
         [Serializable, NetSerializable]

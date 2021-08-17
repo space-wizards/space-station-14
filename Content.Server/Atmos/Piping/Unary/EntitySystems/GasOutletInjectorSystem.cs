@@ -1,16 +1,20 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasOutletInjectorSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -31,9 +35,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))
                 return;
 
-            var environment = args.Atmosphere.GetTile(injector.Owner.Transform.Coordinates)!;
+            var environment = _atmosphereSystem.GetTileMixture(injector.Owner.Transform.Coordinates, true);
 
-            if (environment.Air == null)
+            if (environment == null)
                 return;
 
             if (inlet.Air.Temperature > 0)
@@ -42,8 +46,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
                 var removed = inlet.Air.Remove(transferMoles);
 
-                environment.AssumeAir(removed);
-                environment.Invalidate();
+                _atmosphereSystem.Merge(environment, removed);
             }
         }
     }

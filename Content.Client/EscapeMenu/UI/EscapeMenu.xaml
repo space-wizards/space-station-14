@@ -4,11 +4,11 @@
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
-    <VBoxContainer SeparationOverride="4" CustomMinimumSize="150 160">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" CustomMinimumSize="150 160">
         <changelog:ChangelogButton />
         <ui:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
-    </VBoxContainer>
+    </BoxContainer>
 </SS14Window>

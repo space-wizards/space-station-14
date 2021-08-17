@@ -8,7 +8,7 @@
   components:
   - type: Tag
     tags:
-    - Teleportable
+    - CanPilot
     - FootstepSound
   - type: Reactive
     reactions:
@@ -35,7 +35,8 @@
   - type: MovedByPressure
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/hit_kick.ogg
+    soundHit: 
+      path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
@@ -151,7 +152,6 @@
       - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
@@ -168,7 +168,7 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -237,7 +237,7 @@
   - type: Grammar
     attributes:
       proper: true
-
+  - type: StandingState
 
 - type: entity
   save: false
@@ -254,6 +254,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      noRot: true
       # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
@@ -340,7 +341,7 @@
         - VaultImpassable
         - SmallImpassable
         layer:
-        - MobImpassable
+        - Opaque
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate

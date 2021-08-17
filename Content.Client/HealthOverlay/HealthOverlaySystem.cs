@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
 using Content.Shared.Damage.Components;
 using Content.Shared.GameTicking;
@@ -13,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.HealthOverlay
 {
     [UsedImplicitly]
-    public class HealthOverlaySystem : EntitySystem, IResettingEntitySystem
+    public class HealthOverlaySystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -44,10 +43,11 @@ namespace Content.Client.HealthOverlay
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             foreach (var gui in _guis.Values)
             {

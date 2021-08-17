@@ -7,7 +7,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Cargo
 {
-    public class CargoConsoleSystem : EntitySystem, IResettingEntitySystem
+    public class CargoConsoleSystem : EntitySystem
     {
         /// <summary>
         /// How much time to wait (in seconds) before increasing bank accounts balance.
@@ -45,6 +45,8 @@ namespace Content.Server.Cargo
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+
             CreateBankAccount("Space Station 14", 1000);
             CreateOrderDatabase(0);
         }
@@ -64,7 +66,7 @@ namespace Content.Server.Cargo
             }
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _accountsDict.Clear();
             _databasesDict.Clear();

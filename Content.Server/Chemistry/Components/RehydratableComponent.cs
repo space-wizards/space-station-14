@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Notification;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;

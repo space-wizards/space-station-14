@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Plants
 {
     [UsedImplicitly]
-    public class PlantSystem : EntitySystem, IResettingEntitySystem
+    public class PlantSystem : EntitySystem
     {
         [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -25,6 +25,8 @@ namespace Content.Server.Plants
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
             PopulateDatabase();
         }
@@ -73,7 +75,7 @@ namespace Content.Server.Plants
             }
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             PopulateDatabase();
         }

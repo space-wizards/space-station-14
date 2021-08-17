@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Robust.Server.Player;
 using Robust.Shared.Localization;
 
-#nullable enable
 
 namespace Content.Server.Voting
 {

@@ -12,30 +12,14 @@ using Robust.Shared.Timing;
 namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
-    public class ParticleProjectileComponent : Component, IStartCollide
+    public class ParticleProjectileComponent : Component
     {
         public override string Name => "ParticleProjectile";
-        private ParticleAcceleratorPowerState _state;
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (otherFixture.Body.Owner.TryGetComponent<SingularityGeneratorComponent>(out var singularityGeneratorComponent))
-            {
-                singularityGeneratorComponent.Power += _state switch
-                {
-                    ParticleAcceleratorPowerState.Standby => 0,
-                    ParticleAcceleratorPowerState.Level0 => 1,
-                    ParticleAcceleratorPowerState.Level1 => 2,
-                    ParticleAcceleratorPowerState.Level2 => 4,
-                    ParticleAcceleratorPowerState.Level3 => 8,
-                    _ => 0
-                };
-                Owner.Delete();
-            }
-        }
+        public ParticleAcceleratorPowerState State;
 
         public void Fire(ParticleAcceleratorPowerState state, Angle angle, IEntity firer)
         {
-            _state = state;
+            State = state;
 
             if (!Owner.TryGetComponent<PhysicsComponent>(out var physicsComponent))
             {
@@ -56,7 +40,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 Logger.Error("ParticleProjectile tried firing, but it was spawned without a SinguloFoodComponent");
                 return;
             }
-            var multiplier = _state switch
+            var multiplier = State switch
             {
                 ParticleAcceleratorPowerState.Standby => 0,
                 ParticleAcceleratorPowerState.Level0 => 1,

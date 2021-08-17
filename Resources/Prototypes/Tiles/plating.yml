@@ -5,7 +5,8 @@
   base_turfs:
   - underplating
   is_subfloor: true
-  footstep_sounds: footstep_plating
+  footstep_sounds:
+    collection: footstep_plating
   friction: 0.5
 
 - type: tile
@@ -15,7 +16,8 @@
   base_turfs:
   - space
   is_subfloor: true
-  footstep_sounds: footstep_plating
+  footstep_sounds:
+    collection: footstep_plating
   friction: 0.5
   is_space: true
 
@@ -26,5 +28,6 @@
   base_turfs:
   - lattice
   is_subfloor: true
-  footstep_sounds: footstep_plating
+  footstep_sounds:
+    collection: footstep_plating
   friction: 0.5

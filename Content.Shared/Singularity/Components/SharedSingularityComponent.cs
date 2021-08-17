@@ -1,16 +1,16 @@
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Singularity.Components
 {
+    [NetworkedComponent]
     public abstract class SharedSingularityComponent : Component
     {
         public override string Name => "Singularity";
-        public override uint? NetID => ContentNetIDs.SINGULARITY;
 
         [DataField("deleteFixture")] public string? DeleteFixtureId { get; } = default;
 
@@ -36,7 +36,7 @@ namespace Content.Shared.Singularity.Components
     {
         public int Level { get; }
 
-        public SingularityComponentState(int level) : base(ContentNetIDs.SINGULARITY)
+        public SingularityComponentState(int level)
         {
             Level = level;
         }

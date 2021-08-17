@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Triggers;
@@ -9,6 +8,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Rounding;
+using Content.Shared.Sound;
 using Content.Shared.Window;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -31,11 +31,15 @@ namespace Content.Server.Window
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("knockDelay")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
         [DataField("rateLimitedKnocking")]
         [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
+
+        [DataField("knockSound")]
+        private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -130,7 +134,8 @@ namespace Content.Server.Window
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(eventArgs.Target), "/Audio/Effects/glass_knock.ogg",
+            SoundSystem.Play(
+                Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
                 eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 

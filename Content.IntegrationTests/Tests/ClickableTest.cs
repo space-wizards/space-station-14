@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Client.Clickable;
+using Content.Server.GameTicking;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -57,12 +60,19 @@ namespace Content.IntegrationTests.Tests
         [TestCase("ClickTestRotatingCornerInvisibleNoRot", 0.25f, 0.25f, DirSouthEastJustShy, 1, ExpectedResult = true)]
         public async Task<bool> Test(string prototype, float clickPosX, float clickPosY, double angle, float scale)
         {
+            Vector2? worldPos = null;
             EntityUid entity = default;
+            var clientEntManager = _client.ResolveDependency<IEntityManager>();
+            var serverEntManager = _server.ResolveDependency<IEntityManager>();
+            var mapManager = _server.ResolveDependency<IMapManager>();
+            var gameTicker = _server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
 
             await _server.WaitPost(() =>
             {
-                var entMgr = IoCManager.Resolve<IEntityManager>();
-                var ent = entMgr.SpawnEntity(prototype, new MapCoordinates(0, 0, new MapId(1)));
+                var gridEnt = mapManager.GetGrid(gameTicker.DefaultGridId).GridEntityId;
+                worldPos = serverEntManager.GetEntity(gridEnt).Transform.WorldPosition;
+
+                var ent = serverEntManager.SpawnEntity(prototype, new EntityCoordinates(gridEnt, 0f, 0f));
                 ent.Transform.LocalRotation = angle;
                 ent.GetComponent<SpriteComponent>().Scale = (scale, scale);
                 entity = ent.Uid;
@@ -75,17 +85,15 @@ namespace Content.IntegrationTests.Tests
 
             await _client.WaitPost(() =>
             {
-                var entMgr = IoCManager.Resolve<IEntityManager>();
-                var ent = entMgr.GetEntity(entity);
+                var ent = clientEntManager.GetEntity(entity);
                 var clickable = ent.GetComponent<ClickableComponent>();
 
-                hit = clickable.CheckClick((clickPosX, clickPosY), out _, out _);
+                hit = clickable.CheckClick((clickPosX, clickPosY) + worldPos!.Value, out _, out _);
             });
 
             await _server.WaitPost(() =>
             {
-                var entMgr = IoCManager.Resolve<IEntityManager>();
-                entMgr.DeleteEntity(entity);
+                serverEntManager.DeleteEntity(entity);
             });
 
             return hit;

@@ -10,7 +10,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 15
     contents:
@@ -21,6 +20,9 @@
     count: 8
   - type: Item
     size: 8
+  - type: Tag
+    tags:
+    - Pizza
 
 - type: entity
   parent: FoodPizzaBase
@@ -37,6 +39,9 @@
         Quantity: 5
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+    - Pizza
 
 # Pizza
 

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Camera;
 using Content.Shared.Gravity;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -15,7 +16,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class GravitySystem : EntitySystem
+    internal sealed class GravitySystem : SharedGravitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -29,63 +30,104 @@ namespace Content.Server.Gravity.EntitySystems
 
         private float _internalTimer = 0.0f;
 
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<GravityComponent, ComponentInit>(HandleGravityInitialize);
+            SubscribeLocalEvent<GravityGeneratorUpdateEvent>(HandleGeneratorUpdate);
+        }
+
+        private void HandleGeneratorUpdate(GravityGeneratorUpdateEvent ev)
+        {
+            if (ev.GridId == GridId.Invalid) return;
+
+            var gravity = ComponentManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
+
+            if (ev.Status == GravityGeneratorStatus.On)
+            {
+                EnableGravity(gravity);
+            }
+            else
+            {
+                DisableGravity(gravity);
+            }
+        }
+
+        private void HandleGravityInitialize(EntityUid uid, GravityComponent component, ComponentInit args)
+        {
+            // Incase there's already a generator on the grid we'll just set it now.
+            var gridId = component.Owner.Transform.GridID;
+            GravityChangedMessage message;
+
+            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
+            {
+                if (generator.Owner.Transform.GridID == gridId && generator.Status == GravityGeneratorStatus.On)
+                {
+                    component.Enabled = true;
+                    message = new GravityChangedMessage(gridId, true);
+                    RaiseLocalEvent(message);
+                    return;
+                }
+            }
+
+            component.Enabled = false;
+            message = new GravityChangedMessage(gridId, false);
+            RaiseLocalEvent(message);
+        }
+
         public override void Update(float frameTime)
         {
-            _internalTimer += frameTime;
-            var gridsWithGravity = new List<GridId>();
+            // TODO: Pointless iteration, just make both of these event-based PLEASE
             foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.NeedsUpdate)
                 {
                     generator.UpdateState();
                 }
-
-                if (generator.Status == GravityGeneratorStatus.On)
-                {
-                    gridsWithGravity.Add(generator.Owner.Transform.GridID);
-                }
             }
 
-            foreach (var grid in _mapManager.GetAllGrids())
+            if (_gridsToShake.Count > 0)
             {
-                if (grid.HasGravity && !gridsWithGravity.Contains(grid.Index))
+                _internalTimer += frameTime;
+
+                if (_internalTimer > 0.2f)
                 {
-                    DisableGravity(grid);
-                }
-                else if (!grid.HasGravity && gridsWithGravity.Contains(grid.Index))
-                {
-                    EnableGravity(grid);
+                    // TODO: Could just have clients do this themselves via event and save bandwidth.
+                    ShakeGrids();
+                    _internalTimer -= 0.2f;
                 }
             }
-
-            if (_internalTimer > 0.2f)
+            else
             {
-                ShakeGrids();
                 _internalTimer = 0.0f;
             }
         }
 
-        private void EnableGravity(IMapGrid grid)
+        private void EnableGravity(GravityComponent comp)
         {
-            grid.HasGravity = true;
-            ScheduleGridToShake(grid.Index, ShakeTimes);
+            if (comp.Enabled) return;
+            comp.Enabled = true;
 
-            var message = new GravityChangedMessage(grid);
+            var gridId = comp.Owner.Transform.GridID;
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
+            var message = new GravityChangedMessage(gridId, true);
             RaiseLocalEvent(message);
         }
 
-        private void DisableGravity(IMapGrid grid)
+        private void DisableGravity(GravityComponent comp)
         {
-            grid.HasGravity = false;
-            ScheduleGridToShake(grid.Index, ShakeTimes);
+            if (!comp.Enabled) return;
+            comp.Enabled = false;
 
-            var message = new GravityChangedMessage(grid);
+            var gridId = comp.Owner.Transform.GridID;
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
+            var message = new GravityChangedMessage(gridId, false);
             RaiseLocalEvent(message);
         }
 
-        private void ScheduleGridToShake(GridId gridId, uint shakeTimes)
+        private void ScheduleGridToShake(GridId gridId, uint shakeTimes, GravityComponent comp)
         {
             if (!_gridsToShake.Keys.Contains(gridId))
             {
@@ -99,8 +141,10 @@ namespace Content.Server.Gravity.EntitySystems
             foreach (var player in _playerManager.GetAllPlayers())
             {
                 if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId) continue;
-                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), "/Audio/Effects/alert.ogg", player.AttachedEntity);
+                    || player.AttachedEntity.Transform.GridID != gridId)
+                    continue;
+
+                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), comp.GravityShakeSound.GetSound(), player.AttachedEntity);
             }
         }
 

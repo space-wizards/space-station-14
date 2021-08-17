@@ -1,5 +1,9 @@
-﻿#nullable enable
 using System;
+using Content.Shared.Sound;
+using Robust.Shared.Audio;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -9,7 +13,8 @@ namespace Content.Shared.Light.Component
     [Serializable, NetSerializable]
     public enum ExpendableLightVisuals
     {
-        State
+        State,
+        Behavior
     }
 
     [Serializable, NetSerializable]
@@ -21,8 +26,11 @@ namespace Content.Shared.Light.Component
         Dead
     }
 
+    [NetworkedComponent]
     public abstract class SharedExpendableLightComponent: Robust.Shared.GameObjects.Component
     {
+        public static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, true, 0.3f);
+
         public sealed override string Name => "ExpendableLight";
 
         [ViewVariables(VVAccess.ReadOnly)]
@@ -61,15 +69,15 @@ namespace Content.Shared.Light.Component
         protected string IconStateLit { get; set; } = string.Empty;
 
         [ViewVariables]
-        [DataField("litSound")]
-        protected string LitSound { get; set; } = string.Empty;
+        [DataField("litSound", required: true)]
+        protected SoundSpecifier LitSound { get; set; } = default!;
 
         [ViewVariables]
         [DataField("loopedSound")]
-        protected string LoopedSound { get; set; } = string.Empty;
+        public string? LoopedSound { get; set; } = null;
 
         [ViewVariables]
         [DataField("dieSound")]
-        protected string DieSound { get; set; } = string.Empty;
+        protected SoundSpecifier? DieSound { get; set; } = null;
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Damage;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -13,11 +14,11 @@ namespace Content.Server.Weapon.Melee.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("hitSound")]
-        public string HitSound { get; set; } = "/Audio/Weapons/genhit1.ogg";
+        public SoundSpecifier HitSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/genhit1.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("missSound")]
-        public string MissSound { get; set; } = "/Audio/Weapons/punchmiss.ogg";
+        public SoundSpecifier MissSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/punchmiss.ogg");
 
         [ViewVariables]
         [DataField("arcCooldownTime")]

@@ -10,11 +10,12 @@
   description: A small plastic pack with condiments to put on your food.
   components:
   - type: Drink
-    openSounds: packetOpenSounds
+    openSounds:
+      collection: packetOpenSounds
   - type: SolutionContainer
     maxVol: 10
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 10
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -309,11 +310,12 @@
   description: A thin glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
+    openSounds:
+      collection: pop
   - type: SolutionContainer
     maxVol: 30
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 30
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -444,11 +446,12 @@
   description: A smaller glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
+    openSounds:
+      collection: pop
   - type: SolutionContainer
     maxVol: 15
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 15
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi

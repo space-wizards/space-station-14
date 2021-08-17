@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    public class WeightlessSystem : EntitySystem, IResettingEntitySystem
+    public class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -22,11 +22,12 @@ namespace Content.Server.Gravity.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _alerts.Clear();
         }
@@ -40,7 +41,8 @@ namespace Content.Server.Gravity.EntitySystems
 
             if (_mapManager.TryGetGrid(status.Owner.Transform.GridID, out var grid))
             {
-                if (grid.HasGravity)
+                var gridEntity = EntityManager.GetEntity(grid.GridEntityId);
+                if (gridEntity.GetComponent<GravityComponent>().Enabled)
                 {
                     RemoveWeightless(status);
                 }
@@ -64,7 +66,7 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void GravityChanged(GravityChangedMessage ev)
         {
-            if (!_alerts.TryGetValue(ev.Grid.Index, out var statuses))
+            if (!_alerts.TryGetValue(ev.ChangedGridIndex, out var statuses))
             {
                 return;
             }

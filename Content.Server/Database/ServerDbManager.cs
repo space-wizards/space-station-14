@@ -21,7 +21,6 @@ using Robust.Shared.Network;
 using LogLevel = Robust.Shared.Log.LogLevel;
 using MSLogLevel = Microsoft.Extensions.Logging.LogLevel;
 
-#nullable enable
 
 namespace Content.Server.Database
 {

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
@@ -17,12 +16,6 @@ namespace Content.Server.ParticleAccelerator.Components
             base.Initialize();
 
             PowerConsumerComponent = Owner.EnsureComponentWarn<PowerConsumerComponent>();
-            PowerConsumerComponent.OnReceivedPowerChanged += PowerReceivedChanged;
-        }
-
-        private void PowerReceivedChanged(object? sender, ReceivedPowerChangedEventArgs e)
-        {
-            Master?.PowerBoxReceivedChanged(sender, e);
         }
     }
 }

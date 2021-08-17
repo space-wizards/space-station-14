@@ -9,6 +9,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -96,11 +97,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public bool CanMuzzleFlash { get; } = true;
 
         // Sounds
-        [DataField("soundGunshot")]
-        public string? SoundGunshot { get; set; }
+        [DataField("soundGunshot", required: true)]
+        public SoundSpecifier SoundGunshot { get; set; } = default!;
 
         [DataField("soundEmpty")]
-        public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
+        public SoundSpecifier SoundEmpty { get; } = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
         void ISerializationHooks.BeforeSerialization()
         {
@@ -196,10 +197,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (ShotsLeft == 0)
             {
-                if (SoundEmpty != null)
-                {
-                    SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
-                }
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -207,7 +205,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
                 return;
             }
 
@@ -219,7 +217,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
-
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent? hitscan))
@@ -248,10 +245,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException();
             }
 
-            if (!string.IsNullOrEmpty(SoundGunshot))
-            {
-                SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
-            }
+            SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner.Transform.Coordinates);
 
             _lastFire = _gameTiming.CurTime;
         }
@@ -282,16 +276,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            if (ammo.SoundCollectionEject == null || !playSound)
-            {
-                return;
-            }
-
-            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
-
-            var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
-            var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            SoundSystem.Play(Filter.Broadcast(), randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));   
         }
 
         /// <summary>
@@ -366,7 +351,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
                 // then setting its linear velocity in the same tick resets velocity back to zero.
-                // See SharedBroadPhaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
+                // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
                     projectile
@@ -402,7 +387,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physicsManager = EntitySystem.Get<SharedBroadphaseSystem>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)

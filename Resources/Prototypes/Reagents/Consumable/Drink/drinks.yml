@@ -4,9 +4,6 @@
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   physicalDesc: aromatic
   color: "#664300"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: Tea
@@ -14,9 +11,6 @@
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
   physicalDesc: aromatic
   color: "#8a5a3a"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: Cream
@@ -24,9 +18,6 @@
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: Milk
@@ -34,9 +25,6 @@
   desc: An opaque white liquid produced by the mammary glands of mammals.
   physicalDesc: opaque
   color: "#DFDFDF"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 0.1
@@ -49,9 +37,6 @@
   desc: This milk has gone rancid.
   physicalDesc: putrid
   color: "#faffba"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: MilkSoy
@@ -59,9 +44,6 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: MilkOat
@@ -69,6 +51,3 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1

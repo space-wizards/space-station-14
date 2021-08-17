@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.Serialization;
+﻿using Robust.Shared.Serialization;
 
 namespace Content.Shared.Construction
 {

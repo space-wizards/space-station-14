@@ -63,16 +63,22 @@ binds:
   key: T
 - function: FocusLocalChatWindow
   type: State
-  key: LBracket
+  key: Period
 - function: FocusRadioWindow
   type: State
   key: SemiColon
 - function: FocusOOCWindow
   type: State
-  key: RBracket
+  key: LBracket
 - function: FocusAdminChatWindow
   type: State
-  key: BackSlash
+  key: RBracket
+- function: FocusDeadChatWindow
+  type: State
+  key: Backslash
+- function: FocusConsoleChatWindow
+  type: State
+  key: Slash
 - function: EditorLinePlace
   type: State
   key: MouseLeft

@@ -2,7 +2,6 @@ using System;
 using Content.Shared.Ghost;
 using Robust.Shared.GameObjects;
 
-#nullable enable
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]

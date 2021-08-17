@@ -4,11 +4,16 @@
   abstract: true
   components:
   - type: Drink
-    openSounds: bottleOpenSounds
+    openSounds:
+      collection: bottleOpenSounds
   - type: SolutionContainer
     maxVol: 100
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
   - type: DamageOnLand
@@ -23,8 +28,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
