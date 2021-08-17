@@ -1778,3 +1778,8 @@ Entries:
   - {message: Bedsheets are pickupable again, type: Fix}
   id: 317
   time: '2021-08-17T21:27:17.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Crayons/Crayonbox now have inhands, type: Add}
+  id: 318
+  time: '2021-08-17T22:28:59.0000000+00:00'
