@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Sound;
 using Content.Shared.Temperature;
+using Content.Server.Items;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -53,6 +54,19 @@ namespace Content.Server.Light.Components
                 if (_pointLightComponent != null)
                 {
                     _pointLightComponent.Enabled = _currentState == SharedBurningStates.Lit;
+                }
+
+                if (Owner.TryGetComponent(out ItemComponent? item))
+                {
+                    switch (_currentState)
+                    {
+                        case SharedBurningStates.Lit:
+                            item.EquippedPrefix = "lit";
+                            break;
+                        default:
+                            item.EquippedPrefix = "unlit";
+                            break;
+                    }
                 }
 
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
