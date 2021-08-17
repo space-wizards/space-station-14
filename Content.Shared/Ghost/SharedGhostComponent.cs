@@ -34,7 +34,6 @@ namespace Content.Shared.Ghost
         ///     Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
         /// </summary>
         // TODO MIRROR change this to use friend classes when thats merged
-        [DataField("canReturnToBody")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanReturnToBody
         {
@@ -71,8 +70,8 @@ namespace Content.Shared.Ghost
         public bool CanInteract() => CanGhostInteract;
         public bool CanUse() => CanGhostInteract;
         public bool CanThrow() => false;
-        public bool CanDrop() => false;
-        public bool CanPickup() => false;
+        public bool CanDrop() => CanGhostInteract;
+        public bool CanPickup() => CanGhostInteract;
         public bool CanEmote() => false;
         public bool CanAttack() => false;
     }
@@ -83,20 +82,12 @@ namespace Content.Shared.Ghost
         public bool CanReturnToBody { get; }
         public bool CanGhostInteract { get; }
 
-        public HashSet<string>? LocationWarps { get; }
-
-        public Dictionary<EntityUid, string>? PlayerWarps { get; }
-
         public GhostComponentState(
             bool canReturnToBody,
-            bool canGhostInteract,
-            HashSet<string>? locationWarps = null,
-            Dictionary<EntityUid, string>? playerWarps = null)
+            bool canGhostInteract)
         {
             CanReturnToBody = canReturnToBody;
             CanGhostInteract = canGhostInteract;
-            LocationWarps = locationWarps;
-            PlayerWarps = playerWarps;
         }
     }
 }
