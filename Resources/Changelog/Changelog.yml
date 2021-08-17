@@ -1783,3 +1783,8 @@ Entries:
   - {message: Crayons/Crayonbox now have inhands, type: Add}
   id: 318
   time: '2021-08-17T22:28:59.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cig and Match animations work again, type: Fix}
+  id: 319
+  time: '2021-08-17T23:26:35.0000000+00:00'
