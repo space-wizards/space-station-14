@@ -47,9 +47,12 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
-  - type: Item
+  - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
-
+    size: 20
+    Slots:
+    - back
+    
 - type: entity
   name: hatchet
   parent: BaseItem
