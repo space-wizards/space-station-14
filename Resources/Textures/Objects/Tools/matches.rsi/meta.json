@@ -37,15 +37,15 @@
     },
     {
       "name": "unlit-inhand-left",
-      "directions": "4"
+      "directions": 4
     },
     {
       "name": "unlit-inhand-right",
-      "directions": "4"
+      "directions": 4
     },
     {
       "name": "lit-inhand-left",
-      "directions": "4",
+      "directions": 4,
       "delays": [
         [
           0.2,
@@ -71,7 +71,7 @@
     },
     {
       "name": "lit-inhand-right",
-      "directions": "4",
+      "directions": 4,
       "delays": [
         [
           0.2,
