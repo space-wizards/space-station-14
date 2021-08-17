@@ -187,7 +187,12 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
-  - type: Pill
+  - type: Tag
+    tags:
+      - Pill
+  - type: Food
+    transferAmount: null
+    eatMessage: food-swallow
   - type: SolutionContainer
     maxVol: 50
     caps: None

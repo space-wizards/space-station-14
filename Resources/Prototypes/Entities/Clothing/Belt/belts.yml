@@ -236,9 +236,9 @@
         - Gauze
         - Ointment
         - CigPack
+        - Pill
       components:
         - Hypospray
-        - Pill
         - SurgeryTool
         - Radio
   - type: ItemCounter
@@ -253,7 +253,7 @@
           - Hypospray
       pill:
         whitelist:
-          components:
+          tags:
           - Pill
       bottle_spray:
         whitelist:

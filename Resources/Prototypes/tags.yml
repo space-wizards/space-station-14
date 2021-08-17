@@ -143,6 +143,9 @@
   id: Ore
 
 - type: Tag
+  id: Pill
+
+- type: Tag
   id: Pizza
 
 - type: Tag
