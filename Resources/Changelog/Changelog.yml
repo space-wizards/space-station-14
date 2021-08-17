@@ -1773,3 +1773,8 @@ Entries:
   - {message: Added foaming agent sound to prevent a crash., type: Fix}
   id: 316
   time: '2021-08-16T02:44:35.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Bedsheets are pickupable again, type: Fix}
+  id: 317
+  time: '2021-08-17T21:27:17.0000000+00:00'
