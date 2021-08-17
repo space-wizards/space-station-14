@@ -26,7 +26,7 @@
   id: CigarGold
   parent: Cigar
   name: premium Havanian cigar
-  description: "A cigar fit for only the best of the best."
+  description: A cigar fit for only the best of the best.
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar-gold.rsi
