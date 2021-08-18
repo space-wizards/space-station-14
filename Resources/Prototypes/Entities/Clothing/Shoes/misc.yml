@@ -33,6 +33,17 @@
 
 - type: entity
   parent: ClothingShoesBase
+  id: ClothingShoeSlippersDuck
+  name: ducky slippers
+  description: You wish these made quacking sounds as you walked.
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Misc/duck-slippers.rsi
+  - type: Clothing
+    sprite: Clothing/Shoes/Misc/duck-slippers.rsi
+
+- type: entity
+  parent: ClothingShoesBase
   id: ClothingShoesTourist
   name: tourist shoes
   description: These cheap sandals don't look very comfortable.
