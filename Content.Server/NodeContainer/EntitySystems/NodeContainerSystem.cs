@@ -69,7 +69,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             foreach (var node in container.Nodes.Values)
             {
                 if (node is not IRotatableNode rotatableNode) continue;
-                rotatableNode.RotateEvent(ev);
+                rotatableNode.RotateEvent(ref ev);
             }
         }
     }
