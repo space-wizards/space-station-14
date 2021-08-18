@@ -13,7 +13,10 @@
   - type: Radio
   - type: Sprite
     sprite: Objects/Devices/communication.rsi
+    layers:
+    - state: walkietalkie
+    - state: walkietalkie-on
     state: walkietalkie
-  - type: Icon
+  - type: Item
     sprite: Objects/Devices/communication.rsi
-    state: walkietalkie
+    HeldPrefix: walkietalkie
