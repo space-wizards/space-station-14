@@ -9,6 +9,7 @@ using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
@@ -16,12 +17,12 @@ namespace Content.Server.Light.EntitySystems
     public class MatchstickSystem : EntitySystem
     {
         private HashSet<MatchstickComponent> _litMatches = new();
-        private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency]
+        private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            _atmosphereSystem = Get<AtmosphereSystem>();
             SubscribeLocalEvent<MatchstickComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
