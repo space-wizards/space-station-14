@@ -13,6 +13,8 @@
     Slots:
     - back
     sprite: Clothing/Back/Backpacks/backpack.rsi
+    EquipSound:
+      path: /Audio/Items/jaws_pry.ogg
   - type: Storage
     capacity: 100
     storageSoundCollection:
