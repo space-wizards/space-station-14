@@ -98,12 +98,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (value)
                 {
                     TryEjectChamber();
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
                 else
                 {
                     TryFeedChamber();
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
 
                 _boltOpen = value;
@@ -223,7 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_chamberContainer.ContainedEntity == null && !BoltOpen)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner, AudioParams.Default.WithVolume(-5));
 
                 if (Owner.TryGetContainer(out var container))
                 {
@@ -235,7 +235,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundRack.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundRack.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -260,7 +260,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (BoltOpen)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner, AudioParams.Default.WithVolume(-5));
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-use-entity-bolt-closed"));
                 BoltOpen = false;
                 return true;
@@ -311,7 +311,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
                 _magazineContainer.Remove(magazine);
                 SendNetworkMessage(new MagazineAutoEjectMessage());
@@ -335,7 +335,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             _magazineContainer.Remove(mag);
-            SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
@@ -371,7 +371,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 if (_magazineContainer.ContainedEntity == null)
                 {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                     Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-success"));
                     _magazineContainer.Insert(eventArgs.Using);
                     Dirty();

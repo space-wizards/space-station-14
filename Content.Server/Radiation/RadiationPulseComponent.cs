@@ -93,7 +93,7 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner);
 
             Dirty();
         }

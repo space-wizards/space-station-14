@@ -190,7 +190,7 @@ namespace Content.Server.Fluids.Components
                 return true;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _spillSound.GetSound(), Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _spillSound.GetSound(), Owner);
             return true;
         }
 

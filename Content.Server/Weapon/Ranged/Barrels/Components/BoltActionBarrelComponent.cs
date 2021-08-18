@@ -75,12 +75,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (value)
                 {
                     TryEjectChamber();
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
                 else
                 {
                     TryFeedChamber();
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
 
                 _boltOpen = value;
@@ -219,7 +219,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -248,7 +248,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             if (_chamberContainer.ContainedEntity == null)
             {
                 _chamberContainer.Insert(ammo);
-                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 Dirty();
                 UpdateAppearance();
                 return true;
@@ -258,7 +258,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 _ammoContainer.Insert(ammo);
                 _spawnedAmmo.Push(ammo);
-                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 Dirty();
                 UpdateAppearance();
                 return true;
