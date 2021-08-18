@@ -3,6 +3,7 @@ using Content.Shared.Movement.Components;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Physics.Controllers
 {
@@ -26,10 +27,14 @@ namespace Content.Client.Physics.Controllers
 
             // We set joints to predicted given these can affect how our mob moves.
             // I would only recommend disabling this if you make pulling not use joints anymore (someday maybe?)
-            foreach (var joint in body.Joints)
+
+            if (player.TryGetComponent(out JointComponent? jointComponent))
             {
-                joint.BodyA.Predict = true;
-                joint.BodyB.Predict = true;
+                foreach (var joint in jointComponent.GetJoints)
+                {
+                    joint.BodyA.Predict = true;
+                    joint.BodyB.Predict = true;
+                }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit
