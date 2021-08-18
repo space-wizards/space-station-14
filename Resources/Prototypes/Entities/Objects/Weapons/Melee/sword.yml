@@ -64,7 +64,7 @@
   - type: MeleeWeapon
     damage: 25
   - type: Clothing
-    size: 15
+    size: 20
     sprite: Objects/Weapons/Melee/claymore.rsi
     Slots:
     - back
