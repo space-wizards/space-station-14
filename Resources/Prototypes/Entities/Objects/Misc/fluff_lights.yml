@@ -40,7 +40,7 @@
   name: banana lamp
   id: LampBanana
   parent: BaseLamp
-  description: A light emitting device, shaped like bannana.
+  description: A light emitting device, shaped like a banana.
   components:
   - type: Sprite
     layers:
@@ -60,7 +60,7 @@
   name: desk lamp
   id: LampGold
   parent: BaseLamp
-  description: A light emitting device, that would look great on a desk.
+  description: A light emitting device that would look great on a desk.
   components:
   - type: Sprite
     sprite: Objects/Misc/Lights/lampgreen.rsi
@@ -135,7 +135,7 @@
   description: A pole with powerful mounted lights on it. It's broken.
   components:
   - type: Sprite
-    sprite: Objects/Misc/lights.rsi
+    sprite: Objects/Misc/Lights/lights.rsi
     state: floodlight_broken
   - type: Anchorable
   - type: Damageable
