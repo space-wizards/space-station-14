@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: BarDrobe
   name: BarDrobe
-  description: A stylish vendor to dispense the most stylish bar clothing!
   spriteName: bardrobe
   startingInventory:
     ClothingHeadHatTophat : 2
