@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
@@ -93,7 +93,7 @@ namespace Content.Client.Changelog
                         hasRead = true;
 
                         var upArrow =
-                            _resourceCache.GetTexture("/Textures/Interface/Changelog/up_arrow.svg.192dpi.png");
+                            _resourceCache.GetTexture("/Textures/Interface/up_arrow.svg.192dpi.png");
 
                         var readDivider = new BoxContainer
                         {
