@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -14,8 +17,10 @@ namespace Content.Shared.Storage.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<ItemMapperComponent, ComponentInit>(InitLayers);
-            SubscribeLocalEvent<ItemMapperComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
-            SubscribeLocalEvent<ItemMapperComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+            SubscribeLocalEvent<ItemMapperComponent, EntInsertedIntoContainerMessage>(MapperEntityInserted);
+            SubscribeLocalEvent<ItemMapperComponent, EntRemovedFromContainerMessage>(MapperEntityRemoved);
+            SubscribeLocalEvent<ItemCounterComponent, EntInsertedIntoContainerMessage>(CounterEntityInserted);
+            SubscribeLocalEvent<ItemCounterComponent, EntRemovedFromContainerMessage>(CounterEntityRemoved);
         }
 
         private void InitLayers(EntityUid uid, ItemMapperComponent component, ComponentInit args)
@@ -27,28 +32,55 @@ namespace Content.Shared.Storage.EntitySystems
             }
         }
 
-        private void HandleEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
+        private void MapperEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
             if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
-                && TryGetContainer(args, itemMapper, out var containedLayers))
+                && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
-        private void HandleEntityInsert(EntityUid uid, ItemMapperComponent itemMapper,
+        private void MapperEntityInserted(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
             if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
-                && TryGetContainer(args, itemMapper, out var containedLayers))
+                && TryGetLayers(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
-        protected abstract bool TryGetContainer(ContainerModifiedMessage msg,
+        private void CounterEntityInserted(EntityUid uid, ItemCounterComponent itemCounter,
+            EntInsertedIntoContainerMessage args)
+        {
+            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetCount(args, itemCounter, out var count))
+            {
+                appearanceComponent.SetData(StackVisuals.Actual, count);
+                if (itemCounter.MaxAmount != null)
+                    appearanceComponent.SetData(StackVisuals.MaxCount, itemCounter.MaxAmount);
+            }
+        }
+
+        private void CounterEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
+            EntRemovedFromContainerMessage args)
+        {
+            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetCount(args, itemCounter, out var count))
+            {
+                appearanceComponent.SetData(StackVisuals.Actual, count);
+                if (itemCounter.MaxAmount != null)
+                    appearanceComponent.SetData(StackVisuals.MaxCount, itemCounter.MaxAmount);
+            }
+        }
+
+        protected abstract bool TryGetLayers(ContainerModifiedMessage msg,
             ItemMapperComponent itemMapper,
             out IReadOnlyList<string> containedLayers);
+
+        protected abstract bool TryGetCount(ContainerModifiedMessage msg,
+            ItemCounterComponent itemCounter, [NotNullWhen(true)] out int? count);
     }
 }
