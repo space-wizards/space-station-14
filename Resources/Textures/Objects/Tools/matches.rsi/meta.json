@@ -27,13 +27,16 @@
       "name": "matchbox"
     },
     {
-      "name": "matchbox_almostempty"
+      "name": "matchbox-open"
     },
     {
-      "name": "matchbox_almostfull"
+      "name": "matchbox1"
     },
     {
-      "name": "matchbox_e"
+      "name": "matchbox2"
+    },
+    {
+      "name": "matchbox3"
     },
     {
       "name": "unlit-inhand-left",

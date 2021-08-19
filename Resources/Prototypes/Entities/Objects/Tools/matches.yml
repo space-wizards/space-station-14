@@ -14,6 +14,9 @@
   id: Matchstick
   description: A simple match stick, used for lighting fine smokables.
   components:
+  - type: Tag
+    tags:
+    - Matchstick
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -38,6 +41,7 @@
         litIcon: match_lit
         burntIcon: match_burnt
 
+
 - type: entity
   name: match box
   parent: SmallboxItem
@@ -46,6 +50,7 @@
   components:
   - type: Matchbox
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: matchbox
@@ -53,3 +58,15 @@
     contents:
       - id: Matchstick
         amount: 6
+  - type: StorageCounter
+    countTag: Matchstick
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: matchbox-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - matchbox1
+          - matchbox2
+          - matchbox3
