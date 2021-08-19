@@ -7,6 +7,7 @@ using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Placeable;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -14,6 +15,7 @@ using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -22,6 +24,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -628,6 +631,40 @@ namespace Content.Server.Storage.Components
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
+        }
+
+        [Verb]
+        private sealed class ToggleOpenVerb : Verb<ServerStorageComponent>
+        {
+            public override bool AlternativeInteraction => true;
+
+            protected override void GetData(IEntity user, ServerStorageComponent component, VerbData data)
+            {
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
+                // Does this player currently have the storage UI open?
+                var session = user.GetComponent<ActorComponent>().PlayerSession;
+                if (component.SubscribedSessions.Contains(session))
+                {
+                    data.Text = Loc.GetString("toggle-open-verb-close");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+                } else
+                {
+                    data.Text = Loc.GetString("toggle-open-verb-open");
+                    data.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+                }
+            }
+
+            /// <inheritdoc />
+            protected override void Activate(IEntity user, ServerStorageComponent component)
+            {
+                // "Open" actually closes the UI if it is already open.
+                component.OpenStorageUI(user);
+            }
         }
     }
 }
