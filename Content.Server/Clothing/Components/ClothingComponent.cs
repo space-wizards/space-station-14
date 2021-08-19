@@ -97,7 +97,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        private bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        public bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {
@@ -107,7 +107,11 @@ namespace Content.Server.Clothing.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(user), EquipSound.GetSound(), user, AudioParams.Default);
+            if (EquipSound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), EquipSound.GetSound(), Owner, AudioParams.Default);
+            }
+
             return true;
         }
     }
