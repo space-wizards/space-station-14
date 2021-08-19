@@ -188,6 +188,8 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
+  - type: Item
+    sprite: Objects/Specific/Chemistry/pills.rsi
   - type: Tag
     tags:
       - Pill
