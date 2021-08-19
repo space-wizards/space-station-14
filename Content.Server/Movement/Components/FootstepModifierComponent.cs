@@ -1,3 +1,4 @@
+using Content.Shared.Audio;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -18,9 +19,12 @@ namespace Content.Server.Movement.Components
         [DataField("footstepSoundCollection", required: true)]
         public SoundSpecifier SoundCollection = default!;
 
+        [DataField("variation")]
+        public float Variation = default;
+
         public void PlayFootstep()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), SoundCollection.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(Variation).WithVolume(-2f));
         }
     }
 }
