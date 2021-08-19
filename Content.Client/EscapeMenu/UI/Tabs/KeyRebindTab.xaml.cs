@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.Input;
@@ -83,6 +83,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
             AddHeader("ui-options-header-interaction-basic");
             AddButton(EngineKeyFunctions.Use);
+            AddButton(ContentKeyFunctions.AltUse);
             AddButton(ContentKeyFunctions.WideAttack);
             AddButton(ContentKeyFunctions.ActivateItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);

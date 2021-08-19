@@ -70,6 +70,7 @@ ui-options-function-move-right = Move Right
 ui-options-function-walk = Walk
 
 ui-options-function-use = Use
+ui-options-function-alt-use = Alternative Use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
 ui-options-function-activate-item-in-world = Activate item in world
