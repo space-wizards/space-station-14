@@ -41,7 +41,6 @@
         litIcon: match_lit
         burntIcon: match_burnt
 
-
 - type: entity
   name: match box
   parent: SmallboxItem
