@@ -90,7 +90,7 @@ namespace Content.Server.Hands.Components
 
         protected override void HandlePickupAnimation(IEntity entity)
         {
-            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Coordinates.GetParent(Owner.EntityManager), entity.Transform.MapPosition);
+            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
 
             var finalPosition = Owner.Transform.Coordinates.Position;
 
