@@ -54,6 +54,9 @@
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: matchbox
+  - type: Item
+    sprite: Objects/Tools/matches.rsi
+    HeldPrefix: matchbox
   - type: StorageFill
     contents:
       - id: Matchstick
