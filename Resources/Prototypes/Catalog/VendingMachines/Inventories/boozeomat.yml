@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: BoozeOMatInventory
   name: Booze-O-Mat
-  description: A vending machine containing multiple drinks for bartending.
   spriteName: boozeomat
   startingInventory:
     DrinkGlass: 20 #Kept glasses at top for ease to differentiate from booze.
