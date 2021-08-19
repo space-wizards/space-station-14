@@ -109,7 +109,7 @@ namespace Content.Server.Clothing.Components
 
             if (EquipSound != null)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), EquipSound.GetSound(), Owner, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(Owner), EquipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }
 
             return true;
