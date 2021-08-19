@@ -84,21 +84,18 @@ namespace Content.Client.Items.Managers
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
                                     .OpenContextMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
             }
-            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld || args.Function == ContentKeyFunctions.AltUse)
             {
                 var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
 
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
 
-
-                var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
-
-                var coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
-
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                    coordinates, args.PointerLocation, item.Uid);
+                    item.Transform.Coordinates, args.PointerLocation, item.Uid);
+
+                //var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
+                //    firstEntity.Transform.Coordinates, args.PointerLocation, firstEntity.Uid);
 
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer?.Session;
