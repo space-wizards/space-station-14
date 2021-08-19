@@ -6,6 +6,7 @@ using Content.Client.Hands;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;

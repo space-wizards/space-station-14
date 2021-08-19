@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Storage.ItemCounter
+namespace Content.Shared.Storage.EntitySystems
 {
     [UsedImplicitly]
     public abstract class SharedItemCounterSystem : EntitySystem
@@ -12,12 +13,12 @@ namespace Content.Shared.Storage.ItemCounter
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<ItemCounterComponent, ComponentInit>(InitLayers);
-            SubscribeLocalEvent<ItemCounterComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
-            SubscribeLocalEvent<ItemCounterComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
+            SubscribeLocalEvent<ItemMapperComponent, ComponentInit>(InitLayers);
+            SubscribeLocalEvent<ItemMapperComponent, EntInsertedIntoContainerMessage>(HandleEntityInsert);
+            SubscribeLocalEvent<ItemMapperComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
         }
 
-        private void InitLayers(EntityUid uid, ItemCounterComponent component, ComponentInit args)
+        private void InitLayers(EntityUid uid, ItemMapperComponent component, ComponentInit args)
         {
             if (component.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent))
             {
@@ -26,28 +27,28 @@ namespace Content.Shared.Storage.ItemCounter
             }
         }
 
-        private void HandleEntityRemoved(EntityUid uid, ItemCounterComponent itemCounter,
+        private void HandleEntityRemoved(EntityUid uid, ItemMapperComponent itemMapper,
             EntRemovedFromContainerMessage args)
         {
-            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
-                && TryGetContainer(args, itemCounter, out var containedLayers))
+            if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetContainer(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
-        private void HandleEntityInsert(EntityUid uid, ItemCounterComponent itemCounter,
+        private void HandleEntityInsert(EntityUid uid, ItemMapperComponent itemMapper,
             EntInsertedIntoContainerMessage args)
         {
-            if (itemCounter.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
-                && TryGetContainer(args, itemCounter, out var containedLayers))
+            if (itemMapper.Owner.TryGetComponent(out SharedAppearanceComponent? appearanceComponent)
+                && TryGetContainer(args, itemMapper, out var containedLayers))
             {
                 appearanceComponent.SetData(StorageMapVisuals.LayerChanged, new ShowLayerData(containedLayers));
             }
         }
 
         protected abstract bool TryGetContainer(ContainerModifiedMessage msg,
-            ItemCounterComponent itemCounter,
+            ItemMapperComponent itemMapper,
             out IReadOnlyList<string> containedLayers);
     }
 }

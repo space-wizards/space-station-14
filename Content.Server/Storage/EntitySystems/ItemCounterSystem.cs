@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Storage.Components;
-using Content.Shared.Storage.ItemCounter;
+using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -11,14 +12,14 @@ namespace Content.Server.Storage.EntitySystems
     public class ItemCounterSystem : SharedItemCounterSystem
     {
         protected override bool TryGetContainer(ContainerModifiedMessage msg,
-            ItemCounterComponent itemCounter,
+            ItemMapperComponent itemMapper,
             out IReadOnlyList<string> showLayers)
         {
             if (msg.Container.Owner.TryGetComponent(out ServerStorageComponent? component))
             {
                 var containedLayers = component.StoredEntities ?? new List<IEntity>();
                 var list = new List<string>();
-                foreach (var mapLayerData in itemCounter.MapLayers.Values)
+                foreach (var mapLayerData in itemMapper.MapLayers.Values)
                 {
                     foreach (var entity in containedLayers)
                     {

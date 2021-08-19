@@ -214,7 +214,7 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       black_box:
         whitelist:
