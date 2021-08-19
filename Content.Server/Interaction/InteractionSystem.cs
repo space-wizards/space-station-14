@@ -21,6 +21,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Rotatable;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -56,6 +57,8 @@ namespace Content.Server.Interaction
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUseInteraction))
+                .Bind(ContentKeyFunctions.AltUse,
+                    new PointerInputCmdHandler(HandleAltUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -241,6 +244,20 @@ namespace Content.Server.Interaction
             return true;
         }
 
+        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
+                return true;
+            }
+
+            UserInteraction(userEntity, coords, uid, altInteract : true );
+
+            return true;
+        }
+
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -264,12 +281,29 @@ namespace Content.Server.Interaction
             return pull.TogglePull(userEntity);
         }
 
-        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid)
+        /// <summary>
+        ///     Resolves user interactions with objects.
+        /// </summary>
+        /// <remarks>
+        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity. 
+        /// </remarks>
+        /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
+        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
+        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
+        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false )
         {
             if (user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                DoAttack(user, coordinates, false, clickedUid);
-                return;
+                // alt-interact in combat mode results in normal non-combat interactions
+                // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
+                if (altInteract)
+                {
+                    altInteract = false;
+                } else
+                {
+                    DoAttack(user, coordinates, false, clickedUid);
+                    return;
+                }
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
@@ -313,13 +347,17 @@ namespace Content.Server.Interaction
             }
             else
             {
-                // We are close to the nearby object and the object isn't contained in our active hand
-                // InteractUsing/AfterInteract: We will either use the item on the nearby object
-                if (item != null)
+                // We are close to the nearby object.
+                if (item != null && item != target)
+                    // And the object isn't contained in our active hand
+                    // We will use the item on the nearby object via InteractUsing
                     await InteractUsing(user, item, target, coordinates);
-                // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
-                else
+                else if (item == null && !altInteract)
+                    // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target);
+                else if (altInteract)
+                    // Perform alternative interactions, using context menu verbs.
+                    AltInteract(user, target);
             }
         }
 
@@ -430,6 +468,41 @@ namespace Content.Server.Interaction
 
             // If we aren't directly interacting with the nearby object, lets see if our item has an after interact we can do
             await InteractDoAfter(user, used, target, clickLocation, true);
+        }
+
+        /// <summary>
+        ///     Alternative interactions on an entity. 
+        /// </summary>
+        /// <remarks>
+        ///     Uses the context menu verb list, and acts out the first verb marked as an alternative interaction. Note
+        ///     that this does not have any checks to see whether this interaction is valid, as these are all done in <see
+        ///     cref="UserInteraction(IEntity, EntityCoordinates, EntityUid, bool)"/>
+        /// </remarks>
+        public void AltInteract(IEntity user, IEntity target)
+        {
+            // Iterate through list of verbs that apply to target. We do not include global verbs here. If in future,
+            // alt click should default to a global verb, this needs to be changed.
+            foreach (var (component, verb) in VerbUtility.GetVerbs(target))
+            {
+                // Check that the verb marked as an alternative interaction?
+                if (!verb.AlternativeInteraction)
+                    continue;
+
+                // Can the verb be acted out?
+                if (!VerbUtility.VerbAccessChecks(user, target, verb))
+                    continue;
+
+                // Is the verb currently enabled?
+                var verbData = verb.GetData(user, component);
+                if (verbData.IsInvisible || verbData.IsDisabled)
+                    continue;
+
+                // Act out the verb. Note that, if there is more than one AlternativeInteraction verb, only the first
+                // one is activated. The priority is effectively determined by the order in which VerbUtility.GetVerbs()
+                // returns the verbs.
+                verb.Activate(user, component);
+                break;
+            }
         }
 
         /// <summary>
