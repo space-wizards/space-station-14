@@ -17,10 +17,11 @@
     arc: spear
   - type: DamageOtherOnHit
     amount: 15
-  - type: Item
+  - type: Clothing
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
-    prefix: inhand
+    Slots:
+    - back
   - type: Construction
     graph: spear
     node: spear

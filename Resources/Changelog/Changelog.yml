@@ -1768,3 +1768,35 @@ Entries:
   - {message: Fixes some tool sounds not playing., type: Fix}
   id: 315
   time: '2021-08-13T09:06:13.304552+00:00'
+- author: YggOne
+  changes:
+  - {message: Added foaming agent sound to prevent a crash., type: Fix}
+  id: 316
+  time: '2021-08-16T02:44:35.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Bedsheets are pickupable again, type: Fix}
+  id: 317
+  time: '2021-08-17T21:27:17.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Crayons/Crayonbox now have inhands, type: Add}
+  id: 318
+  time: '2021-08-17T22:28:59.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cig and Match animations work again, type: Fix}
+  id: 319
+  time: '2021-08-17T23:26:35.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: You can equip the scythe on your back now, type: Tweak}
+  - {message: Updated spade/scythe/hoe sprites, type: Tweak}
+  - {message: Plant clippers for hydroponics, type: Add}
+  id: 320
+  time: '2021-08-18T02:42:35.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
+  id: 321
+  time: '2021-08-18T02:42:50.0000000+00:00'

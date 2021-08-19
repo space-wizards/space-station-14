@@ -8,7 +8,13 @@
     - type: Sprite
       sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
       netsync: false
-      state: cabinet-filled-closed
+      layers:
+      - state: cabinet
+      - state: fireaxe
+        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+        visible: true
+      - state: glass
+        map: ["enum.ItemCabinetVisualLayers.Door"]
     - type: ItemCabinet
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
@@ -18,10 +24,8 @@
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
-          emptyState: cabinet-empty-open
-          fullState: cabinet-filled-open
-          closedState: cabinet-filled-closed
-          closedEmptyState: cabinet-empty-closed
+          closedState: glass
+          openState: glass-up
   placement:
     mode: SnapgridCenter
 
