@@ -58,7 +58,7 @@ namespace Content.Client.Storage.Visualizers
                             spriteComponent.LayerSetVisible(OpenIcon, false);
                             break;
                     }
-                    component.SetData(StackVisuals.Hide, bagState == SharedBagState.Close);
+
                 }
             }
         }
