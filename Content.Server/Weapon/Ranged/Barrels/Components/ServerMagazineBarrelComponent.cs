@@ -429,6 +429,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class EjectMagazineVerb : Verb<ServerMagazineBarrelComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))

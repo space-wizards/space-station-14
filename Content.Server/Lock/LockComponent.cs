@@ -26,6 +26,8 @@ namespace Content.Server.Storage.Components
         [Verb]
         private sealed class ToggleLockVerb : Verb<LockComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, LockComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
