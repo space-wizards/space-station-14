@@ -1800,3 +1800,8 @@ Entries:
   - {message: 'Can equip bat, fireaxe, spear and claymore on your back now', type: Tweak}
   id: 321
   time: '2021-08-18T02:42:50.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Adds seclite and duck related content, type: Add}
+  id: 322
+  time: '2021-08-19T23:23:49.0000000+00:00'
