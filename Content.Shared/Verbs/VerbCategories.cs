@@ -11,7 +11,7 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategoryData Rotate = ("Rotate", null);
         public static readonly VerbCategoryData Construction =
-            ("Construction", "/Textures/Interface/hammer.svg.192dpi.png");
+            ("Construction", "/Textures/Interface/hammer_scaled.svg.192dpi.png");
         public static readonly VerbCategoryData SetTransferAmount =
             ("Set Transfer Amount", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
     }

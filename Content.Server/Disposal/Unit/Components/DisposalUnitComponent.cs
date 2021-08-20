@@ -231,6 +231,7 @@ namespace Content.Server.Disposal.Unit.Components
 
                 data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                data.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
