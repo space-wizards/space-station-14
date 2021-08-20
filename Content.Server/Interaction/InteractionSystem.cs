@@ -292,18 +292,13 @@ namespace Content.Server.Interaction
         /// interaction. Having an item in the active hand also disables alternative interactions.</param>
         public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false )
         {
-            if (user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
+            if (!altInteract && user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                // alt-interact in combat mode results in normal non-combat interactions
-                // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
-                if (altInteract)
-                {
-                    altInteract = false;
-                } else
-                {
-                    DoAttack(user, coordinates, false, clickedUid);
-                    return;
-                }
+                
+                DoAttack(user, coordinates, false, clickedUid);
+                return;
+
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
@@ -348,21 +343,22 @@ namespace Content.Server.Interaction
             else
             {
                 // We are close to the nearby object.
-                if (item != null && item != target)
-                    // And the target isn't contained in our active hand. We will use the item in our hand on the nearby
-                    // object via InteractUsing
+                if (altInteract)
+                    // We are trying to use alternative interactions. Perform alternative interactions, using context
+                    // menu verbs.
+
+                    // Verbs can be triggered with an item in the hand, but currently there are no verbs that depend on
+                    // the currently held item. Maybe this if statement should be changed to
+                    // (altInteract && (item == null || item == target)).
+                    // Note that item == target will happen when alt-clicking the item currently in your hands.
+                    AltInteract(user, target);
+                else if (item != null && item != target)
+                    // We are performing a standard interaction with an item, and the target isn't the same as the item
+                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
                     await InteractUsing(user, item, target, coordinates);
-                else if (item == null && !altInteract)
+                else if (item == null)
                     // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target);
-                else if (altInteract)
-                    // We are trying to use alternative interactions. Verbs can be triggered with an item in the hand,
-                    // but currently there are no verbs that depend on the currently held item.
-                    // Maybe this if statement should be changed to (altInteract && (item == null || item == target)).
-                    // item == target will happen when alt-clicking the item currently in your hands.
-
-                    // Perform alternative interactions, using context menu verbs.
-                    AltInteract(user, target);
             }
         }
 
