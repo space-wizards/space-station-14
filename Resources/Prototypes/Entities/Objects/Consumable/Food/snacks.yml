@@ -100,7 +100,7 @@
   - type: Sprite
     state: popcorn
   - type: Item
-    color: blue
+    HeldPrefix: popcorn
   - type: Food
     trash: FoodPacketPopcornTrash
 
