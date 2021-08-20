@@ -5,6 +5,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Throwing
 {
+    /// <summary>
+    ///     Base class for all throw events.
+    /// </summary>
     public abstract class ThrowEvent : HandledEntityEventArgs
     {
         /// <summary>
@@ -30,6 +33,9 @@ namespace Content.Shared.Throwing
         }
     }
 
+    /// <summary>
+    ///     Raised directed on the target entity being hit by the thrown entity.
+    /// </summary>
     public class ThrowHitByEvent : ThrowEvent
     {
         public ThrowHitByEvent(IEntity? user, IEntity thrown, IEntity target) : base(user, thrown, target)
@@ -37,6 +43,9 @@ namespace Content.Shared.Throwing
         }
     }
 
+    /// <summary>
+    ///     Raised directed on the thrown entity that hits another.
+    /// </summary>
     public class ThrowDoHitEvent : ThrowEvent
     {
         public ThrowDoHitEvent(IEntity? user, IEntity thrown, IEntity target) : base(user, thrown, target)
