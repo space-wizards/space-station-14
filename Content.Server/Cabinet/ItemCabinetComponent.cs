@@ -75,8 +75,9 @@ namespace Content.Server.Cabinet
         [Verb]
         public sealed class ToggleItemCabinetVerb : Verb<ItemCabinetComponent>
         {
-            // Unlike lockers, you cannot open/close cabinets by clicking on them (this removes their item instead)
-            // So open/close is the alt-interact verb
+            // Unlike lockers, you cannot open/close cabinets by clicking on them, as this usually removes their item
+            // instead. So open/close is the alt-interact verb
+
             public override bool AlternativeInteraction => true;
 
             protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)

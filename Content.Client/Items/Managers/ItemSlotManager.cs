@@ -94,9 +94,6 @@ namespace Content.Client.Items.Managers
                 var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
                     item.Transform.Coordinates, args.PointerLocation, item.Uid);
 
-                //var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                //    firstEntity.Transform.Coordinates, args.PointerLocation, firstEntity.Uid);
-
                 // client side command handlers will always be sent the local player session.
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session == null)
