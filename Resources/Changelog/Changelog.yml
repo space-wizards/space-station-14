@@ -1805,3 +1805,8 @@ Entries:
   - {message: Adds seclite and duck related content, type: Add}
   id: 322
   time: '2021-08-19T23:23:49.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Missing vending machine descriptions found, type: Fix}
+  id: 323
+  time: '2021-08-20T05:23:02.0000000+00:00'
