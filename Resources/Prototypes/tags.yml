@@ -71,9 +71,6 @@
   id: ConveyorAssembly
 
 - type: Tag
-  id: Cola
-
-- type: Tag
   id: CombatKnife
 
 - type: Tag
