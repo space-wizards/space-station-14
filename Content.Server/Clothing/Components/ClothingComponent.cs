@@ -36,7 +36,7 @@ namespace Content.Server.Clothing.Components
         private int _heatResistance = 323;
 
         [DataField("EquipSound")]
-        public SoundSpecifier EquipSound { get; set; } = default!;
+        public SoundSpecifier? EquipSound { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
