@@ -52,6 +52,7 @@
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
     - type: FlashOnTrigger
+      repeating: true
     - type: TriggerOnProximity
       shape:
         !type:PhysShapeCircle

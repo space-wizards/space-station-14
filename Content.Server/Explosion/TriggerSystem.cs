@@ -1,4 +1,3 @@
-using System;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
@@ -6,9 +5,11 @@ using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using System;
 
 namespace Content.Server.Explosion
 {
@@ -30,11 +31,14 @@ namespace Content.Server.Explosion
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
             SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(Shitcode);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
@@ -42,6 +46,16 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
+        }
+
+        private void Shitcode(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
+        {
+            var entity = EntityManager.GetEntity(uid);
+            if(entity.TryGetComponent(out FlashOnTriggerComponent? flash))
+            {
+                flash.Flashed = false;
+            }
+            
         }
 
         #region Explosions
@@ -73,12 +87,16 @@ namespace Content.Server.Explosion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
-                {
-                    if (component.Flashed) return;
+        {
+            if (component.Repeating && component.LastFlash + TimeSpan.FromSeconds(component.Cooldown) < _gameTiming.CurTime)
+                component.Flashed = false;
 
-                    FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
-                    component.Flashed = true;
-                }
+            if (component.Flashed) return;
+            
+            FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
+            component.Flashed = true;
+            component.LastFlash = _gameTiming.CurTime;
+        }
         #endregion
 
         private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
@@ -98,11 +116,16 @@ namespace Content.Server.Explosion
         }
         private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
-            component.Owner.TryGetComponent(out PhysicsComponent? physics);
-            if (args.OurFixture.ID == component.ProximityFixture && component.Enabled)
-                Trigger(component.Owner);
+            var curTime = _gameTiming.CurTime;
+            if (args.OtherFixture.ID == component.ProximityFixture)
+            {
+                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime ^ component.LastTrigger == null)
+                {
+                    Trigger(component.Owner);
+                    component.LastTrigger = curTime;
+                }
+            }
         }
-
         public void Trigger(IEntity trigger, IEntity? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
