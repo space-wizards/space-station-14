@@ -1825,3 +1825,8 @@ Entries:
   - {message: Adds a 6pack of cola, type: Add}
   id: 326
   time: '2021-08-20T05:41:17.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: The keybinding to stop pulling an object now works., type: Fix}
+  id: 327
+  time: '2021-08-20T05:47:59.0000000+00:00'
