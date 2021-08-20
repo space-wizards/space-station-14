@@ -646,8 +646,15 @@ namespace Content.Server.Storage.Components
                     return;
                 }
 
+                // Get the session for the user
+                var session = user.GetComponentOrNull<ActorComponent>()?.PlayerSession;
+                if (session == null)
+                {
+                    data.Visibility = VerbVisibility.Invisible;
+                    return;
+                }
+
                 // Does this player currently have the storage UI open?
-                var session = user.GetComponent<ActorComponent>().PlayerSession;
                 if (component.SubscribedSessions.Contains(session))
                 {
                     data.Text = Loc.GetString("toggle-open-verb-close");
