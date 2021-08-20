@@ -24441,7 +24441,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2378
-  type: d20
+  type: d20Dice
   components:
   - pos: -23.834803,-5.3811545
     parent: 853
@@ -24449,7 +24449,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2379
-  type: d8
+  type: d8Dice
   components:
   - pos: -24.287928,-6.3967795
     parent: 853
