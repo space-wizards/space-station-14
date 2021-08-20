@@ -139,26 +139,32 @@ namespace Content.Shared.Damage.Components
         {
             return GetDamagePerType.GetValueOrDefault(type);
         }
+
         public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
             return GetDamagePerType.TryGetValue(type, out damage);
         }
+
         public int GetDamage(DamageGroupPrototype group)
         {
             return GetDamagePerApplicableGroup.GetValueOrDefault(group);
         }
+
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
             return GetDamagePerApplicableGroup.TryGetValue(group, out damage);
         }
+
         public bool IsApplicableDamageGroup(DamageGroupPrototype group)
         {
             return ApplicableDamageGroups.Contains(group);
         }
+
         public bool IsFullySupportedDamageGroup(DamageGroupPrototype group)
         {
             return FullySupportedDamageGroups.Contains(group);
         }
+
         public bool IsSupportedDamageType(DamageTypePrototype type)
         {
             return SupportedDamageTypes.Contains(type);

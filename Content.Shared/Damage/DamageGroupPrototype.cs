@@ -8,8 +8,13 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Shared.Damage
 {
     /// <summary>
-    /// A Group of <see cref="DamageTypePrototype"/>s .
+    ///     A Group of <see cref="DamageTypePrototype"/>s.
     /// </summary>
+    /// <remarks>
+    ///     These groups can be used to specify supported damage types of a <see
+    ///     cref="Container.DamageContainerPrototype"/>, or to change/get/set damage in a <see
+    ///     cref="Components.DamageableComponent"/>.
+    /// </remarks>
     [Prototype("damageGroup")]
     [Serializable, NetSerializable]
     public class DamageGroupPrototype : IPrototype, ISerializationHooks

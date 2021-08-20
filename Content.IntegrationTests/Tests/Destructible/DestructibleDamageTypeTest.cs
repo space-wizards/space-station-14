@@ -57,8 +57,6 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-
-                
                 var bluntDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Blunt");
                 var slashDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Slash");
 
