@@ -207,7 +207,7 @@ namespace Content.Server.Disposal.Unit.Components
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("self-insert-verb-get-data-text");
+                data.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
@@ -230,7 +230,7 @@ namespace Content.Server.Disposal.Unit.Components
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("flush-verb-get-data-text");
+                data.Text = Loc.GetString("disposal-flush-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
@@ -260,7 +260,7 @@ namespace Content.Server.Disposal.Unit.Components
                 else
                     data.Visibility = VerbVisibility.Invisible;
 
-                data.Text = Loc.GetString("eject-verb-get-data-text");
+                data.Text = Loc.GetString("disposal-eject-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
