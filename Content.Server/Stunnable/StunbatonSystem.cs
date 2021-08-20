@@ -31,7 +31,7 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<StunbatonComponent, MeleeInteractEvent>(OnMeleeInteract);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<StunbatonComponent, ThrowCollideEvent>(OnThrowCollide);
+            SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
             SubscribeLocalEvent<StunbatonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
@@ -81,7 +81,7 @@ namespace Content.Server.Stunnable
             }
         }
 
-        private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowCollideEvent args)
+        private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowDoHitEvent args)
         {
             if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
             if (!comp.Activated || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse)) return;

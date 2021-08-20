@@ -179,8 +179,6 @@ namespace Content.Client.Entry
             "StorageCounter",
             "SpaceVillainArcade",
             "Flammable",
-            "CreamPie",
-            "CreamPied",
             "Smoking",
             "Matchstick",
             "Matchbox",

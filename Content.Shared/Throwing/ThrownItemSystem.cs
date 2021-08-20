@@ -14,8 +14,6 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
-        private List<IThrowCollide> _throwCollide = new();
-
         private const string ThrowingFixture = "throw-fixture";
 
         public override void Initialize()
@@ -117,46 +115,13 @@ namespace Content.Shared.Throwing
         }
 
         /// <summary>
-        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
-        ///     on a thrown entity and the target entity it hit.
+        ///     Raises collision events on the thrown and target entities.
         /// </summary>
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
             // TODO: Just pass in the bodies directly
-            var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
-            RaiseLocalEvent(target.Owner.Uid, collideMsg);
-            if (collideMsg.Handled)
-            {
-                return;
-            }
-
-            var eventArgs = new ThrowCollideEventArgs(user, thrown.Owner, target.Owner);
-
-            foreach (var comp in target.Owner.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (target.Owner.Deleted) break;
-                collide.HitBy(eventArgs);
-            }
-
-            _throwCollide.Clear();
-
-            foreach (var comp in thrown.Owner.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (thrown.Owner.Deleted) break;
-                collide.DoHit(eventArgs);
-            }
-
-            _throwCollide.Clear();
+            RaiseLocalEvent(target.Owner.Uid, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
+            RaiseLocalEvent(thrown.Owner.Uid, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));
         }
     }
 }
