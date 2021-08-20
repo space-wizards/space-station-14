@@ -5584,7 +5584,7 @@ entities:
   - pos: -11.5,-6.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7183,7 +7183,7 @@ entities:
     pos: 5.5,-21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7205,7 +7205,7 @@ entities:
     pos: -23.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7218,7 +7218,7 @@ entities:
     pos: 24.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7251,7 +7251,7 @@ entities:
     pos: -2.5,30.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7264,7 +7264,7 @@ entities:
     pos: 9.5,30.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7329,7 +7329,7 @@ entities:
     pos: -37.5,-6.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7342,7 +7342,7 @@ entities:
     pos: -11.5,-11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7361,7 +7361,7 @@ entities:
     pos: -12.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7374,7 +7374,7 @@ entities:
     pos: 13.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7387,7 +7387,7 @@ entities:
     pos: 12.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7400,7 +7400,7 @@ entities:
     pos: 28.5,12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7413,7 +7413,7 @@ entities:
     pos: 43.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7426,7 +7426,7 @@ entities:
     pos: 44.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7439,7 +7439,7 @@ entities:
     pos: 23.5,0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7452,7 +7452,7 @@ entities:
     pos: 8.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7465,7 +7465,7 @@ entities:
     pos: 9.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7478,7 +7478,7 @@ entities:
     pos: -15.5,-17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7491,7 +7491,7 @@ entities:
     pos: -7.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7504,7 +7504,7 @@ entities:
     pos: 26.5,12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7517,7 +7517,7 @@ entities:
     pos: 23.5,1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7530,7 +7530,7 @@ entities:
     pos: -14.5,-17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7543,7 +7543,7 @@ entities:
     pos: -11.5,-10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7556,7 +7556,7 @@ entities:
     pos: -37.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7569,7 +7569,7 @@ entities:
     pos: -39.5,2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7582,7 +7582,7 @@ entities:
     pos: -34.5,10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7595,7 +7595,7 @@ entities:
     pos: 6.5,26.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7615,7 +7615,7 @@ entities:
   - pos: 39.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7649,7 +7649,7 @@ entities:
     pos: -14.5,1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7661,7 +7661,7 @@ entities:
   - pos: -19.5,10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7680,7 +7680,7 @@ entities:
   - pos: 23.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7693,7 +7693,7 @@ entities:
     pos: -12.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7706,7 +7706,7 @@ entities:
     pos: -13.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7719,7 +7719,7 @@ entities:
     pos: -14.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7738,7 +7738,7 @@ entities:
     pos: -11.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7751,7 +7751,7 @@ entities:
     pos: 21.5,-15.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7771,7 +7771,7 @@ entities:
     pos: 10.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7807,7 +7807,7 @@ entities:
     pos: 36.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7820,7 +7820,7 @@ entities:
     pos: 36.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7833,7 +7833,7 @@ entities:
     pos: 37.5,-1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7846,7 +7846,7 @@ entities:
     pos: 35.5,-1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7859,7 +7859,7 @@ entities:
     pos: 35.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7872,7 +7872,7 @@ entities:
     pos: -2.5,-24.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7903,7 +7903,7 @@ entities:
   - pos: -11.5,-12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -14976,7 +14976,7 @@ entities:
     pos: -19.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15018,7 +15018,7 @@ entities:
     pos: 24.5,-4.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15065,7 +15065,7 @@ entities:
   - pos: 22.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15085,7 +15085,7 @@ entities:
   - pos: 21.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15160,7 +15160,7 @@ entities:
     pos: 39.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15208,7 +15208,7 @@ entities:
     pos: -6.5,22.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15674,7 +15674,7 @@ entities:
     pos: 38.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15706,7 +15706,7 @@ entities:
     pos: 35.5,-0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15725,7 +15725,7 @@ entities:
     pos: 35.5,0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15820,7 +15820,7 @@ entities:
     pos: -27.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -18563,7 +18563,7 @@ entities:
   - pos: 38.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -21586,7 +21586,7 @@ entities:
     pos: -13.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -21875,7 +21875,7 @@ entities:
   - pos: -7.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -22798,7 +22798,7 @@ entities:
   - pos: 40.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -24713,7 +24713,7 @@ entities:
   - pos: -8.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -25241,7 +25241,7 @@ entities:
   - pos: 21.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -25499,7 +25499,7 @@ entities:
   - pos: 20.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -40704,7 +40704,7 @@ entities:
   - pos: 45.585052,4.6
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -41206,7 +41206,7 @@ entities:
   - pos: 38.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -42924,7 +42924,7 @@ entities:
     pos: -11.5,-3.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -42937,7 +42937,7 @@ entities:
     pos: -13.5,-3.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -47581,7 +47581,7 @@ entities:
   - pos: 39.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -47599,7 +47599,7 @@ entities:
   - pos: 22.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48804,7 +48804,7 @@ entities:
   - pos: -17.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48816,7 +48816,7 @@ entities:
   - pos: -17.5,-19.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48828,7 +48828,7 @@ entities:
   - pos: -17.5,-20.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -49635,7 +49635,7 @@ entities:
   - pos: -20.5,16.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -49873,7 +49873,7 @@ entities:
   - pos: -20.5,17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50118,7 +50118,7 @@ entities:
   - pos: 26.5,-22.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50197,7 +50197,7 @@ entities:
   - pos: -26.5,19.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50209,7 +50209,7 @@ entities:
   - pos: -26.5,18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50221,7 +50221,7 @@ entities:
   - pos: -26.5,17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50261,7 +50261,7 @@ entities:
   - pos: 24.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50273,7 +50273,7 @@ entities:
   - pos: 27.5,-20.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50581,7 +50581,7 @@ entities:
     pos: 19.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50594,7 +50594,7 @@ entities:
     pos: 18.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
