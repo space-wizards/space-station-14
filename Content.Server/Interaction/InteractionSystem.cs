@@ -349,13 +349,18 @@ namespace Content.Server.Interaction
             {
                 // We are close to the nearby object.
                 if (item != null && item != target)
-                    // And the object isn't contained in our active hand
-                    // We will use the item on the nearby object via InteractUsing
+                    // And the target isn't contained in our active hand. We will use the item in our hand on the nearby
+                    // object via InteractUsing
                     await InteractUsing(user, item, target, coordinates);
                 else if (item == null && !altInteract)
                     // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target);
                 else if (altInteract)
+                    // We are trying to use alternative interactions. Verbs can be triggered with an item in the hand,
+                    // but currently there are no verbs that depend on the currently held item.
+                    // Maybe this if statement should be changed to (altInteract && (item == null || item == target)).
+                    // item == target will happen when alt-clicking the item currently in your hands.
+
                     // Perform alternative interactions, using context menu verbs.
                     AltInteract(user, target);
             }
@@ -480,8 +485,11 @@ namespace Content.Server.Interaction
         /// </remarks>
         public void AltInteract(IEntity user, IEntity target)
         {
-            // Iterate through list of verbs that apply to target. We do not include global verbs here. If in future,
-            // alt click should default to a global verb, this needs to be changed.
+            // TODO VERB SYSTEM when ECS-ing verbs and re-writing VerbUtility.GetVerbs, maybe sort verbs by some
+            // priority property, such that which verbs appear first is more predictable?.
+
+            // Iterate through list of verbs that apply to target. We do not include global verbs here. If in the future
+            // alt click should also support global verbs, this needs to be changed.
             foreach (var (component, verb) in VerbUtility.GetVerbs(target))
             {
                 // Check that the verb marked as an alternative interaction?
