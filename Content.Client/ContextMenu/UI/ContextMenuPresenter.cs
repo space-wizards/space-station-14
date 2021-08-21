@@ -282,7 +282,7 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
-        public void HandleMoveEvent(MoveEvent ev)
+        public void HandleMoveEvent(ref MoveEvent ev)
         {
             if (_contextMenuView.Elements.Count == 0) return;
             var entity = ev.Sender;
