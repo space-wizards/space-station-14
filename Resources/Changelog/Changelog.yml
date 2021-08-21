@@ -1835,3 +1835,8 @@ Entries:
   - {message: Announcements now play announcement sound, type: Add}
   id: 328
   time: '2021-08-21T05:19:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pie cannon shooting errors instead of cream pies., type: Fix}
+  id: 329
+  time: '2021-08-21T07:18:23.0000000+00:00'
