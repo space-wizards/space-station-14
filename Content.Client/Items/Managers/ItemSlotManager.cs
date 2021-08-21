@@ -89,7 +89,7 @@ namespace Content.Client.Items.Managers
             {
                 _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: false));
             }
-            else if (args.Function == ContentKeyFunctions.AltUse)
+            else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
                 _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: true));
             }

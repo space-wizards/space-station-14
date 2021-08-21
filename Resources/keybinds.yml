@@ -124,15 +124,6 @@ binds:
   key: MouseLeft
   mod1: Shift
   canFocus: true
-- function: AltUse
-  type: State
-  key: MouseLeft
-  canFocus: true
-  mod1: Alt
-- function: AltUse # secondary binding
-  type: State
-  key: E
-  mod1: Alt
 - function: ExamineEntity
   type: State
   key: MouseLeft
@@ -141,6 +132,15 @@ binds:
 - function: ActivateItemInWorld
   type: State
   key: E
+- function: AltActivateItemInWorld
+  type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Alt
+- function: AltActivateItemInWorld # secondary binding
+  type: State
+  key: E
+  mod1: Alt
 - function: ThrowItemInHand
   type: State
   key: Q

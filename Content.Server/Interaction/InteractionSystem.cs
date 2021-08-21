@@ -58,7 +58,7 @@ namespace Content.Server.Interaction
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUseInteraction))
-                .Bind(ContentKeyFunctions.AltUse,
+                .Bind(ContentKeyFunctions.AltActivateItemInWorld,
                     new PointerInputCmdHandler(HandleAltUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
