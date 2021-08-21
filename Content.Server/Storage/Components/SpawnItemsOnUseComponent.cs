@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,7 +23,7 @@ namespace Content.Server.Storage.Components
         /// <summary>
         ///     A sound to play when the items are spawned. For example, gift boxes being unwrapped.
         /// </summary>
-        [DataField("sound")]
+        [DataField("sound", required: true)]
         public SoundSpecifier? Sound = null;
 
         /// <summary>

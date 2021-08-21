@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -16,7 +17,7 @@ namespace Content.Shared.Kitchen.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
-        protected string? SpikeSound = "/Audio/Effects/Fluids/splat.ogg";
+        protected SoundSpecifier SpikeSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {

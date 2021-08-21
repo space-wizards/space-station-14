@@ -90,6 +90,14 @@
       "name": "popcorn"
     },
     {
+      "name": "popcorn-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "popcorn-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "popcorn-trash"
     },
     {

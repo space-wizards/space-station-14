@@ -5,6 +5,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Cargo;
 using Content.Shared.Cargo.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -57,6 +58,9 @@ namespace Content.Server.Cargo.Components
 
         [DataField("requestOnly")]
         private bool _requestOnly = false;
+
+        [DataField("errorSound")]
+        private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
@@ -113,7 +117,7 @@ namespace Content.Server.Cargo.Components
                     if (!_cargoConsoleSystem.AddOrder(orders.Database.Id, msg.Requester, msg.Reason, msg.ProductId,
                         msg.Amount, _bankAccount.Id))
                     {
-                        SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                     }
                     break;
                 }
@@ -136,14 +140,14 @@ namespace Content.Server.Cargo.Components
                         break;
                     var capacity = _cargoConsoleSystem.GetCapacity(orders.Database.Id);
                     if (
-                        capacity.CurrentCapacity == capacity.MaxCapacity
+                        (capacity.CurrentCapacity == capacity.MaxCapacity
                         || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
                         || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
-                        || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
+                        || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
-                        SoundSystem.Play(Filter.Local(), "/Audio/Effects/error.ogg", Owner, AudioParams.Default);
+                        SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                         break;
                     }
                     UpdateUIState();

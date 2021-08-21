@@ -55,14 +55,21 @@ namespace Content.Client.Light.Visualizers
                 switch (state)
                 {
                     case ExpendableLightState.Lit:
+                    {
                         TryStopStream(expendableLight.PlayingStream);
-                        expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(), expendableLight.LoopedSound,
-                            expendableLight.Owner, SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
+                        if (expendableLight.LoopedSound != null)
+                        {
+                            expendableLight.PlayingStream = SoundSystem.Play(Filter.Local(),
+                                expendableLight.LoopedSound, expendableLight.Owner,
+                                SharedExpendableLightComponent.LoopedSoundParams.WithLoop(true));
+                        }
                         break;
-
+                    }
                     case ExpendableLightState.Dead:
+                    {
                         TryStopStream(expendableLight.PlayingStream);
                         break;
+                    }
                 }
             }
         }

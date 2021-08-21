@@ -7,7 +7,11 @@
 - type: entity
   abstract: true
   id: ClickTestBase
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -80,4 +84,3 @@
   - type: InteractionOutline
   - type: Sprite
     state: invis_base
-

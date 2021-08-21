@@ -120,7 +120,6 @@ namespace Content.Client.Entry
             "Flash",
             "DamageOnToolInteract",
             "TrashSpawner",
-            "Pill",
             "RCD",
             "RCDDeconstructWhitelist",
             "RCDAmmo",
