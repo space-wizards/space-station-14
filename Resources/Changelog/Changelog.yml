@@ -1840,3 +1840,16 @@ Entries:
   - {message: Fixes pie cannon shooting errors instead of cream pies., type: Fix}
   id: 329
   time: '2021-08-21T07:18:23.0000000+00:00'
+- author: ElectroSR
+  changes:
+  - {message: 'Alt+E, Alt+Z and Alt+Left-Mouse keybindings can trigger alternative
+      interactions on entities.', type: Add}
+  - {message: Some existing context-menu actions are now considered "alternative interactions".
+      For example ejecting IDs/beakers/magazines or locking & unlocking lockers can
+      be done via these new keybindings., type: Add}
+  - {message: More context menu icons and two new actions (open inventory & eject
+      items from disposal unit), type: Add}
+  - {message: Using 'E' to interact with items in your inventory or hands works again.,
+    type: Fix}
+  id: 330
+  time: '2021-08-21T17:20:18.0000000+00:00'
