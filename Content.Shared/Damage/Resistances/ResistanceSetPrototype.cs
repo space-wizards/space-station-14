@@ -1,10 +1,15 @@
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
 ﻿using System;
 =======
 ﻿#nullable enable
 using System;
 using System.CodeDom;
 >>>>>>> update damagecomponent across shared and server
+=======
+using System;
+using System.CodeDom;
+>>>>>>> Refactor damageablecomponent update (#4406)
 using System.Collections.Generic;
 <<<<<<< refs/remotes/origin/master
 =======
@@ -73,12 +78,11 @@ namespace Content.Shared.Damage.Resistances
 
         void ISerializationHooks.AfterDeserialization()
         {
-            foreach (var damageType in coefficients)
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach (var damageTypeID in coefficients.Keys)
             {
-                var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var resolvedDamageType = _prototypeManager.Index<DamageTypePrototype>(damageType.Key);
-                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageType.Key], flatReductions[damageType.Key]));
+                var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageTypeID);
+                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageTypeID], flatReductions[damageTypeID]));
             }
         }
     }

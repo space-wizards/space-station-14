@@ -13,6 +13,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
@@ -34,6 +36,7 @@ namespace Content.Server.Body.Respiratory
         private bool _isShivering;
         private bool _isSweating;
 
+<<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
 =======
         [DataField("damageType", required: true)]
@@ -44,6 +47,8 @@ namespace Content.Server.Body.Respiratory
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
+=======
+>>>>>>> Refactor damageablecomponent update (#4406)
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -99,6 +104,22 @@ namespace Content.Server.Body.Respiratory
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating { get; private set; }
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _damage = 1;
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _damageRecovery = 1;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Asphyxiation"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {
@@ -355,11 +376,15 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
+<<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
             damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
 =======
             damageable.ChangeDamage(damageable.GetDamageType(_damageType), _suffocationDamage, false);
 >>>>>>> update damagecomponent across shared and server:Content.Server/Metabolism/MetabolismComponent.cs
+=======
+            damageable.TryChangeDamage(DamageType, _damage, false);
+>>>>>>> Refactor damageablecomponent update (#4406)
         }
 
         private void StopSuffocation()
@@ -368,11 +393,15 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
+<<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
                 damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
 =======
                 damageable.ChangeDamage(damageable.GetDamageType(_damageType), -_suffocationDamageRecovery, false);
 >>>>>>> update damagecomponent across shared and server:Content.Server/Metabolism/MetabolismComponent.cs
+=======
+                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
+>>>>>>> Refactor damageablecomponent update (#4406)
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

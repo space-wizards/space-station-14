@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
@@ -51,11 +51,11 @@ namespace Content.IntegrationTests.Tests.Destructible
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
-                var BruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("Brute");
+                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
 
                 Assert.DoesNotThrow(() =>
                 {
-                    Assert.True(sDamageableComponent.ChangeDamage(BruteDamageGroup, 50, true));
+                    Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 50, true));
                 });
 
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));

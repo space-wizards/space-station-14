@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -8,6 +8,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Temperature.Components
 {
@@ -23,11 +25,14 @@ namespace Content.Server.Temperature.Components
         public override string Name => "Temperature";
 
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
 =======
         [DataField("coldDamageType",required: true)]
         private readonly string coldDamageType = default!;
         [DataField("hotDamageType",required: true)]
         private readonly string hotDamageType = default!;
+=======
+>>>>>>> Refactor damageablecomponent update (#4406)
         [DataField("heatDamageThreshold")]
         private float _heatDamageThreshold = default;
         [DataField("coldDamageThreshold")]
@@ -35,12 +40,15 @@ namespace Content.Server.Temperature.Components
         [DataField("tempDamageCoefficient")]
         private float _tempDamageCoefficient = 1;
         [DataField("currentTemperature")]
-        private float _currentTemperature = Atmospherics.T20C;
+        public float CurrentTemperature { get; set; } = Atmospherics.T20C;
         [DataField("specificHeat")]
         private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
+<<<<<<< refs/remotes/origin/master
 >>>>>>> update damagecomponent across shared and server
         [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
+=======
+>>>>>>> Refactor damageablecomponent update (#4406)
         [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
         [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
         [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;
@@ -57,8 +65,26 @@ namespace Content.Server.Temperature.Components
             }
         }
 
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("coldDamageType")]
+        private readonly string _coldDamageTypeID = "Cold";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype ColdDamageType = default!;
+        [DataField("hotDamageType")]
+        private readonly string _hotDamageTypeID = "Heat";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype HotDamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            ColdDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_coldDamageTypeID);
+            HotDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_hotDamageTypeID);
+        }
+
         public void Update()
         {
+<<<<<<< refs/remotes/origin/master
             var tempDamage = 0;
 <<<<<<< refs/remotes/origin/master
             DamageType? damageType = null;
@@ -75,6 +101,8 @@ namespace Content.Server.Temperature.Components
 =======
             DamageTypePrototype? damageType = null;
 >>>>>>> update damagecomponent across shared and server
+=======
+>>>>>>> Refactor damageablecomponent update (#4406)
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
@@ -127,18 +155,22 @@ namespace Content.Server.Temperature.Components
 
             if (CurrentTemperature >= _heatDamageThreshold)
             {
-                tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                damageType = component.GetDamageType(hotDamageType);
+                int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
+                component.TryChangeDamage(HotDamageType, tempDamage, false);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
-                tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                damageType = component.GetDamageType(coldDamageType);
+                int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
+                component.TryChangeDamage(ColdDamageType, tempDamage, false);
             }
+<<<<<<< refs/remotes/origin/master
 
             if (damageType is null) return;
             component.ChangeDamage(damageType, tempDamage, false);
 >>>>>>> update damagecomponent across shared and server
+=======
+            
+>>>>>>> Refactor damageablecomponent update (#4406)
         }
 
         /// <summary>

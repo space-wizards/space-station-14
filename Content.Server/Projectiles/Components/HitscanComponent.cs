@@ -12,6 +12,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -22,9 +23,9 @@ namespace Content.Server.Projectiles.Components
     public class HitscanComponent : Component
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Hitscan";
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
@@ -38,6 +39,7 @@ namespace Content.Server.Projectiles.Components
             set => _damage = value;
         }
         [DataField("damage")]
+<<<<<<< refs/remotes/origin/master
         private float _damage = 10f;
         public DamageType DamageType => _damageType;
         [DataField("damageType")]
@@ -53,6 +55,9 @@ namespace Content.Server.Projectiles.Components
 
         private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
 >>>>>>> update damagecomponent across shared and server
+=======
+        public float Damage { get; set; } = 10f;
+>>>>>>> Refactor damageablecomponent update (#4406)
 
         public float ColorModifier { get; set; } = 1.0f;
         [DataField("spriteName")]
@@ -69,16 +74,19 @@ namespace Content.Server.Projectiles.Components
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
 
-
-        public DamageTypePrototype DamageType => _damageType;
-
         public float MaxLength => 20.0f;
-        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         public float ColorModifier { get; set; } = 1.0f;
-        public float Damage
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Piercing";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
         {
-            get => _damage;
-            set => _damage = value;
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 >>>>>>> update damagecomponent across shared and server
 

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
@@ -14,6 +14,7 @@ using Robust.Shared.Players;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -22,6 +23,13 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+<<<<<<< refs/remotes/origin/master
+=======
+        // TODO DAMAGE UNITS When damage units support decimals, get rid of this.
+        // See also _accumulatedDamage in ThirstComponent and HealthChange.
+        private float _accumulatedDamage;
+
+>>>>>>> Refactor damageablecomponent update (#4406)
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -29,7 +37,11 @@ namespace Content.Server.Nutrition.Components
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
+<<<<<<< refs/remotes/origin/master
         [DataField("base_decay_rate")]
+=======
+        [DataField("baseDecayRate")]
+>>>>>>> Refactor damageablecomponent update (#4406)
         private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -59,11 +71,19 @@ namespace Content.Server.Nutrition.Components
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
+<<<<<<< refs/remotes/origin/master
             {HungerThreshold.Overfed, 600.0f},
             {HungerThreshold.Okay, 450.0f},
             {HungerThreshold.Peckish, 300.0f},
             {HungerThreshold.Starving, 150.0f},
             {HungerThreshold.Dead, 0.0f},
+=======
+            { HungerThreshold.Overfed, 600.0f },
+            { HungerThreshold.Okay, 450.0f },
+            { HungerThreshold.Peckish, 300.0f },
+            { HungerThreshold.Starving, 150.0f },
+            { HungerThreshold.Dead, 0.0f },
+>>>>>>> Refactor damageablecomponent update (#4406)
         };
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
@@ -72,6 +92,18 @@ namespace Content.Server.Nutrition.Components
             { HungerThreshold.Peckish, AlertType.Peckish },
             { HungerThreshold.Starving, AlertType.Starving },
         };
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         public void HungerThresholdEffect(bool force = false)
         {
@@ -177,6 +209,7 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentHungerThreshold != HungerThreshold.Dead)
                 return;
+            // --> Current Hunger is below dead threshold
 
             if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
                 return;
@@ -186,7 +219,18 @@ namespace Content.Server.Nutrition.Components
 
             if (!mobState.IsDead())
             {
+<<<<<<< refs/remotes/origin/master
                 damageable.ChangeDamage(DamageType.Blunt, 2, true);
+=======
+                // --> But they are not dead yet.
+                var damage = 2 * frametime;
+                _accumulatedDamage += damage - ((int) damage);
+                damageable.TryChangeDamage(DamageType, (int) damage);
+                if (_accumulatedDamage >= 1) {
+                    _accumulatedDamage -= 1;
+                    damageable.TryChangeDamage(DamageType, 1, true);
+                }
+>>>>>>> Refactor damageablecomponent update (#4406)
             }
         }
 

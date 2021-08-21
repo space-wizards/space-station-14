@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
@@ -46,9 +46,16 @@ namespace Content.Shared.Damage.Resistances
         /// <param name="amount">Incoming amount of damage.</param>
         public int CalculateDamage(DamageType damageType, int amount)
         {
+
+            // Do nothing if the damage type is not specified in resistance set.
+            if (!Resistances.TryGetValue(damageType, out var resistance))
+            {
+                return amount;
+            }
+
             if (amount > 0) // Only apply reduction if it's healing, not damage.
             {
-                amount -= Resistances[damageType].FlatReduction;
+                amount -= resistance.FlatReduction;
 
                 if (amount <= 0)
                 {
@@ -56,7 +63,7 @@ namespace Content.Shared.Damage.Resistances
                 }
             }
 
-            amount = (int) Math.Ceiling(amount * Resistances[damageType].Coefficient);
+            amount = (int) Math.Ceiling(amount * resistance.Coefficient);
 
             return amount;
         }

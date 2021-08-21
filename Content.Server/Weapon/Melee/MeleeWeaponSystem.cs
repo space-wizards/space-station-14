@@ -90,7 +90,7 @@ namespace Content.Server.Weapon.Melee
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
                     {
-                        damageableComponent.ChangeDamage(comp.DamageType != null ? damageableComponent.GetDamageType(comp.DamageType) : damageableComponent.GetDamageType("Blunt") , comp.Damage, false, owner);
+                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -159,7 +159,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
                     {
-                        damageComponent.ChangeDamage(damageComponent.GetDamageType(comp.DamageType), comp.Damage, false, owner);
+                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
                 }
             }

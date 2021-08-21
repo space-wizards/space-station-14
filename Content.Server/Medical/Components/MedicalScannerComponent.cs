@@ -99,8 +99,13 @@ namespace Content.Server.Medical.Components
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
+<<<<<<< refs/remotes/origin/master
                 new Dictionary<DamageClass, int>(),
                 new Dictionary<DamageType, int>(),
+=======
+                new Dictionary<string, int>(),
+                new Dictionary<string, int>(),
+>>>>>>> Refactor damageablecomponent update (#4406)
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -121,12 +126,18 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
+<<<<<<< refs/remotes/origin/master
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
+=======
+            // Get dictionaries of damage, by fully supported damage groups and types
+            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
+            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
+>>>>>>> Refactor damageablecomponent update (#4406)
 
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {
-                return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, true);
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, true);
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
@@ -134,7 +145,7 @@ namespace Content.Server.Medical.Components
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, classes, types, scanned);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, scanned);
         }
 
         private void UpdateUserInterface()
