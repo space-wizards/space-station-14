@@ -1830,3 +1830,8 @@ Entries:
   - {message: The keybinding to stop pulling an object now works., type: Fix}
   id: 327
   time: '2021-08-20T05:47:59.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Announcements now play announcement sound, type: Add}
+  id: 328
+  time: '2021-08-21T05:19:39.0000000+00:00'
