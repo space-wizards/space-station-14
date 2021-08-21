@@ -53,6 +53,7 @@ namespace Content.Server.Interaction
         public override void Initialize()
         {
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
+            SubscribeNetworkEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
@@ -104,6 +105,34 @@ namespace Content.Server.Interaction
             return true;
         }
         #endregion
+
+        /// <summary>
+        ///     Handles the event were a client uses an item in their inventory or in their hands, either by
+        ///     alt-clicking it or pressing 'E' while hovering over it.
+        /// </summary>
+        private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
+        {
+            if (!EntityManager.TryGetEntity(msg.ItemUid, out var item))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent inventory interaction with an invalid target item. Session={args.SenderSession}");
+                return;
+            }
+
+            // client sanitization
+            if (!ValidateClientInput(args.SenderSession, item.Transform.Coordinates, msg.ItemUid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
+                return;
+            }
+
+            if (msg.AltInteract)
+                // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
+                UserInteraction(userEntity, item.Transform.Coordinates, msg.ItemUid, msg.AltInteract);
+            else
+                // User used 'E'. We want to activate it, not simulate clicking on the item
+                InteractionActivate(userEntity, item);
+        }
 
         #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)

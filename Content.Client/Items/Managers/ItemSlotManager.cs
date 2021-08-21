@@ -7,6 +7,7 @@ using Content.Client.Verbs;
 using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -84,22 +85,13 @@ namespace Content.Client.Items.Managers
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
                                     .OpenContextMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
             }
-            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld || args.Function == ContentKeyFunctions.AltUse)
+            else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
-                var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
-
-                var func = args.Function;
-                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
-
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                    item.Transform.Coordinates, args.PointerLocation, item.Uid);
-
-                // client side command handlers will always be sent the local player session.
-                var session = _playerManager.LocalPlayer?.Session;
-                if (session == null)
-                    return false;
-
-                inputSys.HandleInputCommand(session, func, message);
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: false));
+            }
+            else if (args.Function == ContentKeyFunctions.AltUse)
+            {
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: true));
             }
             else
             {
