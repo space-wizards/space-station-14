@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.Atmos.Components;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
@@ -43,8 +42,9 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.SupportedTypes.Clear();
-                damageable.SupportedGroups.Clear();
+                damageable.SupportedDamageTypes.Clear();
+                damageable.FullySupportedDamageGroups.Clear();
+                damageable.ApplicableDamageGroups.Clear();
             }
 
             return true;
@@ -69,14 +69,19 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                if (old.SupportedTypes != null)
+                if (old.SupportedDamageTypes != null)
                 {
-                    damageable.SupportedTypes.UnionWith(old.SupportedTypes);
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
                 }
 
-                if (old.SupportedClasses != null)
+                if (old.SupportedDamageGroups != null)
                 {
-                    damageable.SupportedGroups.UnionWith(old.SupportedClasses);
+                    damageable.FullySupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
+                }
+
+                if (old.ApplicableDamageGroups != null)
+                {
+                    damageable.ApplicableDamageGroups.UnionWith(old.ApplicableDamageGroups);
                 }
             }
 
@@ -111,8 +116,9 @@ namespace Content.Server.Damage
 
                 if (entity.TryGetComponent(out IDamageableComponent? damageable))
                 {
-                    SupportedTypes = damageable.SupportedTypes.ToHashSet();
-                    SupportedClasses = damageable.SupportedGroups.ToHashSet();
+                    SupportedDamageTypes = damageable.SupportedDamageTypes.ToHashSet();
+                    SupportedDamageGroups = damageable.FullySupportedDamageGroups.ToHashSet();
+                    ApplicableDamageGroups = damageable.ApplicableDamageGroups.ToHashSet();
                 }
             }
 
@@ -120,9 +126,11 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public HashSet<DamageTypePrototype>? SupportedTypes { get; }
+            public HashSet<DamageTypePrototype>? SupportedDamageTypes { get; }
 
-            public HashSet<DamageGroupPrototype>? SupportedClasses { get; }
+            public HashSet<DamageGroupPrototype>? SupportedDamageGroups { get; }
+
+            public HashSet<DamageGroupPrototype>? ApplicableDamageGroups { get; }
         }
     }
 }

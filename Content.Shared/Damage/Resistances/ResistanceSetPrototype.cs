@@ -1,5 +1,5 @@
-using System.CodeDom;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -33,12 +33,11 @@ namespace Content.Shared.Damage.Resistances
 
         void ISerializationHooks.AfterDeserialization()
         {
-            foreach (var damageType in coefficients)
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach (var damageTypeID in coefficients.Keys)
             {
-                var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var resolvedDamageType = _prototypeManager.Index<DamageTypePrototype>(damageType.Key);
-                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageType.Key], flatReductions[damageType.Key]));
+                var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageTypeID);
+                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageTypeID], flatReductions[damageTypeID]));
             }
         }
     }

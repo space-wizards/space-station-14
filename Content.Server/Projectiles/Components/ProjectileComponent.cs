@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
 using Robust.Shared.GameObjects;
@@ -12,15 +12,12 @@ namespace Content.Server.Projectiles.Components
     [ComponentReference(typeof(SharedProjectileComponent))]
     public class ProjectileComponent : SharedProjectileComponent
     {
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
+        // While thats being done, also replace "damages" -> "damageTypes" For consistency.
         [DataField("damages")]
-		private Dictionary<DamageTypePrototype, int> _damageTypes = new();
-
-        [ViewVariables]
-        public Dictionary<DamageTypePrototype, int> Damages
-        {
-            get => _damageTypes;
-            set => _damageTypes = value;
-        }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<string, int> Damages { get; set; } = new();
 
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;

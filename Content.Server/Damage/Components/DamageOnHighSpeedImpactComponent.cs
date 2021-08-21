@@ -1,7 +1,10 @@
-﻿using System;
+using System;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
@@ -13,8 +16,6 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnHighSpeedImpact";
 
-        [DataField("damageType", required: true)]
-        public DamageTypePrototype DamageType { get; set; } = default!;
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]
@@ -33,5 +34,17 @@ namespace Content.Server.Damage.Components
         public float DamageCooldown { get; set; } = 2f;
 
         internal TimeSpan LastHit = TimeSpan.Zero;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
     }
 }

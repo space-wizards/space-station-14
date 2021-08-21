@@ -17,11 +17,14 @@ namespace Content.Server.Damage.Commands
     [AdminCommand(AdminFlags.Fun)]
     class HurtCommand : IConsoleCommand
     {
-        [Dependency]
-        private readonly IPrototypeManager _prototypeManager = default!;
         public string Command => "hurt";
         public string Description => "Ouch";
         public string Help => $"Usage: {Command} <type/?> <amount> (<entity uid/_>) (<ignoreResistances>)";
+
+        private readonly IPrototypeManager _prototypeManager = default!;
+        public HurtCommand() {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        }
 
         private string DamageTypes()
         {
@@ -96,25 +99,25 @@ namespace Content.Server.Damage.Commands
                 return false;
             }
 
-            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageClass))
+            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamageClasses.ContainsKey(damageClass))
+                    if (!damageable.ApplicableDamageGroups.Contains(damageGroup))
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage group {damageGroup}");
 
                         return;
                     }
 
-                    if (!damageable.ChangeDamage(damageClass, amount, ignoreResistances))
+                    if (!damageable.TryChangeDamage(damageGroup, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
                         return;
                     }
 
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -124,14 +127,14 @@ namespace Content.Server.Damage.Commands
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.DamageTypes.ContainsKey(damageType))
+                    if (!damageable.IsSupportedDamageType(damageType))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage type {damageType}");
 
                         return;
                     }
 
-                    if (!damageable.ChangeDamage(damageType, amount, ignoreResistances))
+                    if (!damageable.TryChangeDamage(damageType, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 

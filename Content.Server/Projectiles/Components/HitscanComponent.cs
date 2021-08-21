@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -21,9 +22,9 @@ namespace Content.Server.Projectiles.Components
     public class HitscanComponent : Component
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Hitscan";
+        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
@@ -31,12 +32,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
         [DataField("damage")]
-        private float _damage = 10f;
-
-        [DataField("damageType", required: true)]
-        private string _damageTypeID = default!;
-
-        private DamageTypePrototype _damageType => _prototypeManager.Index<DamageTypePrototype>(_damageTypeID);
+        public float Damage { get; set; } = 10f;
 
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
@@ -47,16 +43,19 @@ namespace Content.Server.Projectiles.Components
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
 
-
-        public DamageTypePrototype DamageType => _damageType;
-
         public float MaxLength => 20.0f;
-        public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
         public float ColorModifier { get; set; } = 1.0f;
-        public float Damage
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Piercing";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
         {
-            get => _damage;
-            set => _damage = value;
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)

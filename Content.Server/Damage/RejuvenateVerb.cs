@@ -59,7 +59,7 @@ namespace Content.Server.Damage
         {
             if (target.TryGetComponent(out IDamageableComponent? damage))
             {
-                damage.Heal();
+                damage.TrySetAllDamage(0);
             }
 
             if (target.TryGetComponent(out IMobStateComponent? mobState))

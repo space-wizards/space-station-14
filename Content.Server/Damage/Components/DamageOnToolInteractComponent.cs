@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
@@ -7,12 +7,16 @@ using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
     public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
+
         public override string Name => "DamageOnToolInteract";
 
         [DataField("damage")]
@@ -21,11 +25,22 @@ namespace Content.Server.Damage.Components
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
-        [DataField("weldingDamageType",required: true)]
-        private readonly DamageTypePrototype _weldingDamageType = default!;
-
-        [DataField("defaultDamageType",required: true)]
-        private readonly DamageTypePrototype _defaultDamageType = default!;
+        // TODO PROTOTYPE Replace these datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("weldingDamageType")]
+        private readonly string _weldingDamageTypeID = "Heat";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype WeldingDamageType = default!;
+        [DataField("defaultDamageType")]
+        private readonly string _defaultDamageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DefaultDamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            WeldingDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_weldingDamageTypeID);
+            DefaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
+        }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -53,10 +68,10 @@ namespace Content.Server.Damage.Components
             if (!eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
                 return false;
 
-            damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                    ? _weldingDamageType
-                    : _defaultDamageType,
-                Damage, false, eventArgs.User);
+            damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
+                    ? WeldingDamageType
+                    : DefaultDamageType,
+                Damage);
 
             return true;
         }

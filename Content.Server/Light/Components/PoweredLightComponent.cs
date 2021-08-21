@@ -19,6 +19,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -51,9 +52,6 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [DataField("damageType", required: true)]
-        private readonly DamageTypePrototype _damageType = default!;
-
         [ViewVariables] [DataField("on")]
         private bool _on = true;
 
@@ -70,6 +68,19 @@ namespace Content.Server.Light.Components
         public LightBulbType BulbType => _bulbType;
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
+        }
 
         [ViewVariables]
         public LightBulbComponent? LightBulb
@@ -120,7 +131,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.ChangeDamage(_damageType, 20, false, Owner);
+                damageableComponent.TryChangeDamage(DamageType, 20);
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
             }
 
@@ -241,13 +252,6 @@ namespace Content.Server.Light.Components
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
