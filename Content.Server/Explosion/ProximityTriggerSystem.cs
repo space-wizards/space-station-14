@@ -36,7 +36,8 @@ namespace Content.Server.Explosion
                 else
                 {
                     if (fixture == null)
-                        broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { Hard = false, ID = component.ProximityFixture });
+                        broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) {CollisionMask = 3, Hard = false, ID = component.ProximityFixture });
+                        
                 }
             }
         }

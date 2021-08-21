@@ -38,7 +38,6 @@ namespace Content.Server.Explosion
             base.Initialize();
             SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
             SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(HandleCollide);
-            SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(Shitcode);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
@@ -46,16 +45,6 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
-        }
-
-        private void Shitcode(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
-        {
-            var entity = EntityManager.GetEntity(uid);
-            if(entity.TryGetComponent(out FlashOnTriggerComponent? flash))
-            {
-                flash.Flashed = false;
-            }
-            
         }
 
         #region Explosions

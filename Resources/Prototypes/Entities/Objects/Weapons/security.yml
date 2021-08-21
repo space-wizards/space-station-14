@@ -53,6 +53,7 @@
   components:
     - type: FlashOnTrigger
       repeating: true
+      range: 3
     - type: TriggerOnProximity
       shape:
         !type:PhysShapeCircle
