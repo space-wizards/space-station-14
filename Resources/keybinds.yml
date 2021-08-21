@@ -125,6 +125,10 @@ binds:
   key: MouseLeft
   canFocus: true
   mod1: Alt
+- function: AltUse # secondary binding
+  type: State
+  key: E
+  mod1: Alt
 - function: ExamineEntity
   type: State
   key: MouseLeft
