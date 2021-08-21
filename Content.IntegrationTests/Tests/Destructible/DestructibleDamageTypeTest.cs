@@ -57,8 +57,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bluntDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Blunt");
-                var slashDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Slash");
+                var bluntDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestBlunt");
+                var slashDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestSlash");
 
                 // Raise blunt damage to 5
                 Assert.True(sDamageableComponent.TryChangeDamage(bluntDamageType, 5, true));

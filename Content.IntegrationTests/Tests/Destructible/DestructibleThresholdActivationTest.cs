@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bluntDamageType = sPrototypeManager.Index<DamageTypePrototype>("Blunt");
+                var bluntDamageType = sPrototypeManager.Index<DamageTypePrototype>("TestBlunt");
 
                 Assert.True(sDamageableComponent.TryChangeDamage(bluntDamageType, 10, true));
 

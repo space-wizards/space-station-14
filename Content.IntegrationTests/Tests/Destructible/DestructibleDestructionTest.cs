@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
-                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("Brute");
+                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
 
                 Assert.DoesNotThrow(() =>
                 {
