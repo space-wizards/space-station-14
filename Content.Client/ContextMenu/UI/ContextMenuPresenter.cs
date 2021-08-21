@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using System.Threading;
 using Content.Client.Examine;
@@ -121,7 +121,7 @@ namespace Content.Client.ContextMenu.UI
 
             if (firstEntity == null) return;
 
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -221,7 +221,7 @@ namespace Content.Client.ContextMenu.UI
                  return;
              }
 
-             if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.Point ||
+             if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
                  args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
              {
                  var inputSys = _systemManager.GetEntitySystem<InputSystem>();

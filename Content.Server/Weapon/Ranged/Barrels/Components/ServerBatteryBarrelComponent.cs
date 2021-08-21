@@ -290,6 +290,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)

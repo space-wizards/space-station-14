@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   version="1"
+   viewBox="0 0 32 32"
+   id="svg4"
+   sodipodi:docname="information.svg"
+   width="32"
+   height="32"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:export-filename="C:\Users\ElectroSR\Documents\GitHub\space-station-14\Resources\Textures\Interface\VerbIcons\information.svg.192dpi.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8">
+    <symbol
+       id="Information">
+      <title
+         id="title622">Information</title>
+      <circle
+         cx="36"
+         cy="36"
+         r="24"
+         style="fill:none;stroke-width:6"
+         id="circle624" />
+      <path
+         d="m 27,32 c 0,-5 1,-11 9,-11 4,0 8,3 8,7 0,4 -2,6 -4,7 -2,1 -4,2 -4,5 0,3 0,6 0,6"
+         style="fill:none;stroke-width:6"
+         id="path626" />
+      <rect
+         x="33"
+         y="48"
+         width="6"
+         height="6"
+         style="stroke:none"
+         id="rect628" />
+    </symbol>
+  </defs>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1271"
+     inkscape:window-height="1081"
+     id="namedview6"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="35.2"
+     inkscape:cx="13.508523"
+     inkscape:cy="14.701705"
+     inkscape:window-x="1119"
+     inkscape:window-y="319"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg4" />
+  <use
+     xlink:href="#Information"
+     style="fill:#ffffff;stroke:#ffffff;stroke-opacity:1"
+     id="use4000"
+     x="0"
+     y="0"
+     width="100%"
+     height="100%"
+     transform="matrix(0.48863637,0,0,0.48863637,-1.5909093,-1.5909093)"
+     inkscape:export-filename="C:\Users\ElectroSR\Documents\GitHub\space-station-14\Resources\Textures\Interface\VerbIcons\information.svg.192dpi.png"
+     inkscape:export-xdpi="192"
+     inkscape:export-ydpi="192" />
+</svg>
