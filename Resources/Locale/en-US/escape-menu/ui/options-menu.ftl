@@ -73,6 +73,7 @@ ui-options-function-use = Use
 ui-options-function-alt-use = Alternative Use
 ui-options-function-wide-attack = Wide attack
 ui-options-function-activate-item-in-hand = Activate item in hand
+ui-options-function-alt-activate-item-in-hand = Alternative activate item in hand
 ui-options-function-activate-item-in-world = Activate item in world
 ui-options-function-drop = Drop item
 ui-options-function-examine-entity = Examine

@@ -109,6 +109,10 @@ binds:
 - function: ActivateItemInHand
   type: State
   key: Z
+- function: AltActivateItemInHand
+  type: State
+  key: Z
+  mod1: Alt
 - function: OpenCharacterMenu
   type: State
   key: C

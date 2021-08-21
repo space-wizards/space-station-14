@@ -7,8 +7,9 @@ namespace Content.Shared.Input
     {
         public static readonly BoundKeyFunction WideAttack = "WideAttack";
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
-        public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
-        public static readonly BoundKeyFunction AltUse = "AltUse"; // Alternative use action (i.e., alt + click).
+        public static readonly BoundKeyFunction AltActivateItemInHand = "AltActivateItemInHand";
+        public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
+        public static readonly BoundKeyFunction AltUse = "AltUse";
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
         public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";

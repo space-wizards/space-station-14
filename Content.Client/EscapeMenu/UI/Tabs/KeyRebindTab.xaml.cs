@@ -86,6 +86,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             AddButton(ContentKeyFunctions.AltUse);
             AddButton(ContentKeyFunctions.WideAttack);
             AddButton(ContentKeyFunctions.ActivateItemInHand);
+            AddButton(ContentKeyFunctions.AltActivateItemInHand);
             AddButton(ContentKeyFunctions.ActivateItemInWorld);
             AddButton(ContentKeyFunctions.Drop);
             AddButton(ContentKeyFunctions.ExamineEntity);

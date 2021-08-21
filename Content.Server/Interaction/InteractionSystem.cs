@@ -576,11 +576,14 @@ namespace Content.Server.Interaction
         /// </summary>
         /// <param name="user"></param>
         /// <param name="used"></param>
-        public void TryUseInteraction(IEntity user, IEntity used)
+        public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
         {
             if (user != null && used != null && _actionBlockerSystem.CanUse(user))
             {
-                UseInteraction(user, used);
+                if (altInteract)
+                    AltInteract(user, used);
+                else
+                    UseInteraction(user, used);
             }
         }
 
