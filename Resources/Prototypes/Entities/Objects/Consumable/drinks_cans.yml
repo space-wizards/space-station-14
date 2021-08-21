@@ -32,6 +32,9 @@
   name: space cola
   description: A refreshing beverage.
   components:
+  - type: Tag
+    tags:
+    - Cola
   - type: SolutionContainer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
@@ -168,3 +171,38 @@
 
   - type: Item
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
+
+- type: entity
+  id: DrinkCanPack
+  parent: BaseItem
+  name: 6pack
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/6pack.rsi
+    layers:
+      - state: plastic-thingy
+  - type: Item
+    size: 6
+  - type: Storage
+    capacity: 30
+    whitelist:
+      tags:
+        - Cola
+  - type: StorageFill
+    contents:
+      - id: DrinkColaCan
+        amount: 6
+  - type: StorageCounter
+    countTag: Cola
+  - type: Appearance
+    visuals:
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - 6pack1
+          - 6pack2
+          - 6pack3
+          - 6pack4
+          - 6pack5
+          - 6pack6

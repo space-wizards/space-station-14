@@ -71,6 +71,9 @@
   id: ConveyorAssembly
 
 - type: Tag
+  id: Cola
+
+- type: Tag
   id: CombatKnife
 
 - type: Tag
@@ -131,6 +134,9 @@
   id: Machete
 
 - type: Tag
+  id: Matchstick
+
+- type: Tag
   id: MonkeyCube
 
 - type: Tag
@@ -141,6 +147,9 @@
 
 - type: Tag
   id: Ore
+
+- type: Tag
+  id: Pill
 
 - type: Tag
   id: Pizza

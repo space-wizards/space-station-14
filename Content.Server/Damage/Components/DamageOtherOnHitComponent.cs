@@ -1,28 +1,23 @@
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Content.Shared.Throwing;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Damage.Components
 {
+    [Friend(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
-    public class DamageOtherOnHitComponent : Component, IThrowCollide
+    public class DamageOtherOnHitComponent : Component
     {
         public override string Name => "DamageOtherOnHit";
 
         [DataField("damageType")]
-        private DamageType _damageType = DamageType.Blunt;
+        public DamageType DamageType { get; } = DamageType.Blunt;
+
         [DataField("amount")]
-        private int _amount = 1;
+        public int Amount { get; } = 1;
+
         [DataField("ignoreResistances")]
-        private bool _ignoreResistances;
-
-        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
-        {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
-        }
+        public bool IgnoreResistances { get; } = false;
     }
 }
