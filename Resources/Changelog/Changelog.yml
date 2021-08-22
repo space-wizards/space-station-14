@@ -1866,3 +1866,8 @@ Entries:
       for clarity., type: Tweak}
   id: 332
   time: '2021-08-22T15:50:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add security barriers to codebase, type: Add}
+  id: 333
+  time: '2021-08-22T16:32:24.0000000+00:00'
