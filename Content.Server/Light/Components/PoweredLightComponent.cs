@@ -1,18 +1,15 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.Ghost;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Signals;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
-using Content.Shared.Actions.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
@@ -32,22 +29,19 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
-        // time to blink light when ghost made boo nearby
-        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
-        private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
         [ComponentDependency]
         private readonly AppearanceComponent? _appearance;
 
         private TimeSpan _lastThunk;
-        private TimeSpan? _lastGhostBlink;
+        public TimeSpan? LastGhostBlink;
 
         [DataField("burnHandSound")]
         private SoundSpecifier _burnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
@@ -66,11 +60,11 @@ namespace Content.Server.Light.Components
         private bool _currentLit;
 
         [ViewVariables]
-        private bool _isBlinking;
+        public bool IsBlinking;
 
         [ViewVariables]
         [DataField("ignoreGhostsBoo")]
-        private bool _ignoreGhostsBoo;
+        public bool IgnoreGhostsBoo;
 
         [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
         public LightBulbType BulbType => _bulbType;
@@ -314,36 +308,6 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-        public void ToggleBlinkingLight(bool isNowBlinking)
-        {
-            if (_isBlinking == isNowBlinking)
-                return;
-
-            _isBlinking = isNowBlinking;
-            _appearance?.SetData(PoweredLightVisuals.Blinking, _isBlinking);
-        }
-
-        public bool AffectedByGhostBoo(InstantActionEventArgs args)
-        {
-            if (_ignoreGhostsBoo)
-                return false;
-
-            // check cooldown first to prevent abuse
-            var time = _gameTiming.CurTime;
-            if (_lastGhostBlink != null)
-            {
-                if (time <= _lastGhostBlink + ghostBlinkingCooldown)
-                    return false;
-            }
-            _lastGhostBlink = time;
-
-            ToggleBlinkingLight(true);
-            Owner.SpawnTimer(ghostBlinkingTime, () =>
-            {
-                ToggleBlinkingLight(false);
-            });
-
-            return true;
-        }
+ 
     }
 }
