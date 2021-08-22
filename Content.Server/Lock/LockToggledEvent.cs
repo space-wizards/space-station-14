@@ -2,7 +2,7 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Lock
 {
-    public class LockToggledEvent : HandledEntityEventArgs
+    public class LockToggledEvent : EntityEventArgs
     {
         public readonly bool Locked;
 
