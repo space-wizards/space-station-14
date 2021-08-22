@@ -158,11 +158,11 @@ namespace Content.Client.Storage
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-            var hasItemCounter = Owner.HasComponent<ItemCounterComponent>();
+           
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
-                if (hasItemCounter)
+                if (Owner.HasComponent<ItemCounterComponent>())
                 {
                     appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
                 }
