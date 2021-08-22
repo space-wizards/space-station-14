@@ -73,7 +73,7 @@ namespace Content.Server.Xenobiology
                     specimen.PopupMessageEveryone(Loc.GetString("specimen-humanlike-fed"));
                     EntityManager.QueueDeleteEntity(usedItem.Uid); //Delete the food
                     comp.SelectDiet(); //Set a new random diet
-                    comp.SpecimenGrow(); //Advance the growth state
+                    comp.GrowthState++;
                     if (comp.GrowthState >= 5)
                     {
                         specimen.TryRemoveFromContainer();

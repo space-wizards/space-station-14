@@ -4,7 +4,7 @@ using Robust.Client.GameObjects;
 using Content.Shared.Xenobiology;
 using static Content.Shared.Xenobiology.SharedXenoTubeComponent;
 
-namespace Content.Client.Cloning
+namespace Content.Client.Xenobiology
 {
     [UsedImplicitly]
     public class XenobioTubeVisualiser : AppearanceVisualizer

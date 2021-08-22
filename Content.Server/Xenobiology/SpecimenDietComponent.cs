@@ -53,22 +53,5 @@ namespace Content.Server.Xenobiology
                SelectedDiet = _random.Pick(DietPick);
             }
         }
-
-        //A placeholder function for advancing specimen growth
-        //Should only be used to increase size in the adult stage outside of the tube
-        public void SpecimenGrow() 
-        {
-            GrowthState++;
-        }
-
-
-
-
-
-
-
-
-
-
     }
 }

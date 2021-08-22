@@ -2,7 +2,7 @@
   name: Crude homunculus
   parent: CatMob_Content
   id: specimen_basic
-  description: I think it preffers to be called "Dmitriy"
+  description: You've seen worse internships
   components:
   - type: SpecimenDietComponent
     Diet:
