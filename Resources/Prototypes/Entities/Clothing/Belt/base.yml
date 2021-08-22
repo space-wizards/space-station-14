@@ -9,3 +9,5 @@
     Slots: [belt]
     size: 50
     QuickEquip: false
+    EquipSound:
+      path: /Audio/Items/belt_equip.ogg

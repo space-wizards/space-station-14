@@ -126,7 +126,7 @@
   id: RCDAmmo
   icon:
     sprite: Objects/Tools/rcd.rsi
-    state: rcd_ammo
+    state: ammo
   result: RCDAmmo
   completetime: 600
   materials:

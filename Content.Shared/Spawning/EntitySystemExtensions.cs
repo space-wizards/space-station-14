@@ -32,7 +32,7 @@ namespace Content.Shared.Spawning
             in Box2? box = null,
             SharedBroadphaseSystem? collision = null)
         {
-            var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered);
+            var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered).Translated(coordinates.Position);
             collision ??= EntitySystem.Get<SharedBroadphaseSystem>();
 
             foreach (var body in collision.GetCollidingEntities(coordinates.MapId, in boxOrDefault))

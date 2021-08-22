@@ -72,6 +72,8 @@
         prob: 1
       - id: ClothingOuterApronBotanist
         prob: 0.8
+      - id: HydroponicsToolClippers
+        prob: 0.5
       - id: ClothingBeltPlant
         prob: 1
       - id: TowercapSeeds
@@ -84,3 +86,7 @@
         prob: 0.8
       - id: TomatoSeeds
         prob: 1
+      - id: ClothingUniformOveralls
+        prob: 1
+      - id: ClothingHeadHatTrucker
+        prob: 0.1

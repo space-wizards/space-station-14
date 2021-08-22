@@ -115,6 +115,9 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    HeldPrefix: peel
   - type: Slippery
     intersectPercentage: 0.2
   - type: CollisionWake
@@ -142,6 +145,9 @@
   id: FoodCarrot
   description: It's good for the eyes!
   components:
+  - type: Tag
+    tags:
+    - Carrot
   - type: Food
   - type: SolutionContainer
     contents:
@@ -254,8 +260,9 @@
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleTomato:

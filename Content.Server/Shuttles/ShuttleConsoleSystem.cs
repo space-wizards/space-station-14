@@ -58,7 +58,7 @@ namespace Content.Server.Shuttles
         /// <summary>
         /// If pilot is moved then we'll stop them from piloting.
         /// </summary>
-        private void HandlePilotMove(EntityUid uid, PilotComponent component, MoveEvent args)
+        private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
             if (component.Console == null) return;
             RemovePilot(component);

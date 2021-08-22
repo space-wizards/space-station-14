@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -26,25 +27,26 @@ namespace Content.Server.Projectiles.Components
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
-        private TimeSpan _startTime;
-        private TimeSpan _deathTime;
 
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
         [DataField("damage")]
         public float Damage { get; set; } = 10f;
+		public float MaxLength => 20.0f;
 
+        private TimeSpan _startTime;
+        private TimeSpan _deathTime;
+
+        public float ColorModifier { get; set; } = 1.0f;
+		[DataField("spriteName")]
+        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
-        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
-        [DataField("spriteName")]
-        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+        private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
-        public float MaxLength => 20.0f;
-        public float ColorModifier { get; set; } = 1.0f;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
@@ -91,7 +93,7 @@ namespace Content.Server.Projectiles.Components
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
                 var coordinates = user.Transform.Coordinates.Offset(offset);
-                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

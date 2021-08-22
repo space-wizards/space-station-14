@@ -12,6 +12,7 @@ using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -20,6 +21,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Hands.Components
 {
@@ -30,6 +32,8 @@ namespace Content.Server.Hands.Components
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
+        [DataField("disarmedSound")] SoundSpecifier _disarmedSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         int IDisarmedAct.Priority => int.MaxValue; // We want this to be the last disarm act to run.
 
@@ -78,27 +82,23 @@ namespace Content.Server.Hands.Components
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
-        protected override void DoUse(IEntity heldEntity)
+        protected override void DoUse(IEntity heldEntity, bool altInteract = false)
         {
             _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity);
+                .TryUseInteraction(Owner, heldEntity, altInteract);
         }
 
         protected override void HandlePickupAnimation(IEntity entity)
         {
-            var pickupDirection = Owner.Transform.WorldPosition;
+            var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
 
-            var outermostEntity = entity;
-            while (outermostEntity.TryGetContainer(out var container)) //TODO: Use WorldPosition instead of this loop
-                outermostEntity = container.Owner;
+            var finalPosition = Owner.Transform.Coordinates.Position;
 
-            var initialPosition = outermostEntity.Transform.Coordinates;
-
-            if (pickupDirection == initialPosition.ToMapPos(Owner.EntityManager))
+            if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;
 
             Owner.EntityManager.EntityNetManager!.SendSystemNetworkMessage(
-                new PickupAnimationMessage(entity.Uid, pickupDirection, initialPosition));
+                new PickupAnimationMessage(entity.Uid, finalPosition, initialPosition));
         }
 
         #region Pull/Disarm
@@ -139,8 +139,7 @@ namespace Content.Server.Hands.Components
 
             if (source != null)
             {
-                SoundSystem.Play(Filter.Pvs(source), "/Audio/Effects/thudswoosh.ogg", source,
-                    AudioHelpers.WithVariation(0.025f));
+                SoundSystem.Play(Filter.Pvs(source), _disarmedSound.GetSound(), source, AudioHelpers.WithVariation(0.025f));
 
                 if (target != null)
                 {

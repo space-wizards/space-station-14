@@ -1,5 +1,6 @@
-﻿using Content.Shared.ActionBlocker;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -23,8 +24,8 @@ namespace Content.Server.Cabinet
         ///     Sound to be played when the cabinet door is opened.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("doorSound")]
-        public string? DoorSound { get; set; }
+        [DataField("doorSound", required: true)]
+        public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>
         ///     The prototype that should be spawned inside the cabinet when it is map initialized.
@@ -74,6 +75,11 @@ namespace Content.Server.Cabinet
         [Verb]
         public sealed class ToggleItemCabinetVerb : Verb<ItemCabinetComponent>
         {
+            // Unlike lockers, you cannot open/close cabinets by clicking on them, as this usually removes their item
+            // instead. So open/close is the alt-interact verb
+
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))

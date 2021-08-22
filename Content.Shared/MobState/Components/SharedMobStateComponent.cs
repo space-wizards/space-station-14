@@ -338,11 +338,6 @@ namespace Content.Shared.MobState.Components
             return CurrentState?.CanInteract() ?? true;
         }
 
-        bool IActionBlocker.CanMove()
-        {
-            return CurrentState?.CanMove() ?? true;
-        }
-
         bool IActionBlocker.CanUse()
         {
             return CurrentState?.CanUse() ?? true;

@@ -12,6 +12,7 @@ using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -51,6 +52,12 @@ namespace Content.Server.Weapon.Ranged
         [DataField("canHotspot")]
         private bool _canHotspot = true;
 
+        [DataField("clumsyWeaponHandlingSound")]
+        private SoundSpecifier _clumsyWeaponHandlingSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+
+        [DataField("clumsyWeaponShotSound")]
+        private SoundSpecifier _clumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+		
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // This also requires changing the dictionary type and modifying TryFire(), which uses it.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -153,7 +160,8 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
+            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            {
                 return;
             }
 
@@ -173,7 +181,6 @@ namespace Content.Server.Weapon.Ranged
 
             if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-
                 //Wound them
                 if (user.TryGetComponent(out IDamageableComponent? health))
                 {
@@ -189,13 +196,15 @@ namespace Content.Server.Weapon.Ranged
                     stun.Paralyze(3f);
                 }
 
-                // Apply salt to the wound
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
-                Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
-
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
+                // Apply salt to the wound ("Honk!")
+				SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
                     Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+					
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
                 Owner.Delete();

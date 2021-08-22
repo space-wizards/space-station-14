@@ -25,6 +25,9 @@
     - shape:
         !type:PhysShapeAabb
           bounds: "-1.5,-1.5,1.5,1.5"
+      mass: 500
+      mask:
+      - Impassable
       layer:
       - Opaque
       - Impassable

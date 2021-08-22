@@ -5,6 +5,7 @@ using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
+using Content.Client.UserInterface.Controls;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -38,6 +39,7 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
         public const string StyleClassContextMenuCount = "contextMenuCount";
+        public const string StyleClassStorageButton = "storageButton";
 
         public const string StyleClassSliderRed = "Red";
         public const string StyleClassSliderGreen = "Green";
@@ -138,6 +140,12 @@ namespace Content.Client.Stylesheets
             };
             hotbarBackground.SetPatchMargin(StyleBox.Margin.All, 2);
             hotbarBackground.SetExpandMargin(StyleBox.Margin.All, 4);
+
+            var buttonStorage = new StyleBoxTexture(BaseButton);
+            buttonStorage.SetPatchMargin(StyleBox.Margin.All, 10);
+            buttonStorage.SetPadding(StyleBox.Margin.All, 0);
+            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
+            buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
 
             var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
             var buttonRect = new StyleBoxTexture(BaseButton)
@@ -495,6 +503,26 @@ namespace Content.Client.Stylesheets
                     {
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
+
+                // Thin buttons (No padding nor vertical margin)
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDefault),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorHovered),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorPressed),
+
+                Element<EntityContainerButton>().Class(StyleClassStorageButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorDisabled),
 
                 // action slot hotbar buttons
                 new StyleRule(new SelectorElement(typeof(ActionSlot), null, null, new[] {ContainerButton.StylePseudoClassNormal}), new[]

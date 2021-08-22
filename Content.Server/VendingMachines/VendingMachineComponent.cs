@@ -10,6 +10,7 @@ using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -28,7 +29,7 @@ namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -37,7 +38,6 @@ namespace Content.Server.VendingMachines
         private TimeSpan _animationDuration = TimeSpan.Zero;
         [DataField("pack")]
         private string _packPrototypeId = string.Empty;
-        private string? _description;
         private string _spriteName = "";
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
@@ -45,10 +45,10 @@ namespace Content.Server.VendingMachines
 
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        private string _soundVend = "/Audio/Machines/machine_vend.ogg";
+        private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
+        private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
@@ -80,7 +80,6 @@ namespace Content.Server.VendingMachines
             }
 
             Owner.Name = packPrototype.Name;
-            _description = packPrototype.Description;
             _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
@@ -161,12 +160,6 @@ namespace Content.Server.VendingMachines
             }
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if(_description == null) { return; }
-            message.AddText(_description);
-        }
-
         private void TryEject(string id)
         {
             if (_ejecting || _broken)
@@ -201,7 +194,7 @@ namespace Content.Server.VendingMachines
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -220,7 +213,7 @@ namespace Content.Server.VendingMachines
 
         private void Deny()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);

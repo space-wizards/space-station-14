@@ -42,8 +42,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: Sprite
       sprite: Objects/Tools/flashlight.rsi
       layers:
-        - state: lantern_off
-        - state: HandheldLightOnOverlay
+        - state: flashlight
+        - state: flashlight-overlay
           shader: unshaded
           visible: false
     - type: Item

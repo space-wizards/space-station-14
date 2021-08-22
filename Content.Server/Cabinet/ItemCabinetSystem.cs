@@ -1,4 +1,4 @@
-﻿using Content.Server.Hands.Components;
+using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Audio;
 using Content.Shared.Cabinet;
@@ -36,7 +36,7 @@ namespace Content.Server.Cabinet
             comp.ItemContainer =
                 owner.EnsureContainer<ContainerSlot>("item_cabinet", out _);
 
-            if(comp.SpawnPrototype != null)
+            if (comp.SpawnPrototype != null)
                 comp.ItemContainer.Insert(EntityManager.SpawnEntity(comp.SpawnPrototype, owner.Transform.Coordinates));
 
             UpdateVisuals(comp);
@@ -146,8 +146,7 @@ namespace Content.Server.Cabinet
 
         private static void ClickLatchSound(ItemCabinetComponent comp)
         {
-            if (comp.DoorSound == null) return;
-            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DoorSound, comp.Owner, AudioHelpers.WithVariation(0.15f));
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.DoorSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.15f));
         }
     }
 

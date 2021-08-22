@@ -10,6 +10,7 @@ using Content.Shared.DragDrop;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -34,8 +35,6 @@ namespace Content.Server.Fluids.Components
 
         [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(10);
-        [DataField("spraySound")]
-        private string? _spraySound;
         [DataField("sprayVelocity")]
         private float _sprayVelocity = 1.5f;
         [DataField("sprayAliveTime")]
@@ -77,7 +76,11 @@ namespace Content.Server.Fluids.Components
             set => _sprayVelocity = value;
         }
 
-        public string? SpraySound => _spraySound;
+        [DataField("spraySound", required: true)]
+        public SoundSpecifier SpraySound { get; } = default!;
+
+        [DataField("safetySound")]
+        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 
         public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
 
@@ -173,11 +176,7 @@ namespace Content.Server.Fluids.Components
                 }
             }
 
-            //Play sound
-            if (!string.IsNullOrEmpty(_spraySound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _spraySound, Owner, AudioHelpers.WithVariation(0.125f));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), SpraySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
 
             _lastUseTime = curTime;
             _cooldownEnd = _lastUseTime + TimeSpan.FromSeconds(_cooldownTime);
@@ -204,6 +203,7 @@ namespace Content.Server.Fluids.Components
 
         private void ToggleSafety(IEntity user)
         {
+            SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
             SetSafety(user, !_safety);
         }
 

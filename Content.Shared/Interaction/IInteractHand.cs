@@ -35,7 +35,7 @@ namespace Content.Shared.Interaction
     ///     Raised directed on a target entity when it is interacted with by a user with an empty hand.
     /// </summary>
     [PublicAPI]
-    public class InteractHandEvent : HandledEntityEventArgs
+    public class InteractHandEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
     {
         /// <summary>
         ///     Entity that triggered the interaction.

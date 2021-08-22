@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -113,18 +114,19 @@ namespace Content.Server.Cuffs.Components
         }
 
         [DataField("startCuffSound")]
-        public string StartCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_start.ogg";
+        public SoundSpecifier StartCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_start.ogg");
 
-        [DataField("endCuffSound")] public string EndCuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_end.ogg";
+        [DataField("endCuffSound")]
+        public SoundSpecifier EndCuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_end.ogg");
 
         [DataField("startBreakoutSound")]
-        public string StartBreakoutSound { get; set; } = "/Audio/Items/Handcuffs/cuff_breakout_start.ogg";
+        public SoundSpecifier StartBreakoutSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_breakout_start.ogg");
 
         [DataField("startUncuffSound")]
-        public string StartUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_start.ogg";
+        public SoundSpecifier StartUncuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_start.ogg");
 
         [DataField("endUncuffSound")]
-        public string EndUncuffSound { get; set; } = "/Audio/Items/Handcuffs/cuff_takeoff_end.ogg";
+        public SoundSpecifier EndUncuffSound { get; set; } = new SoundPathSpecifier("/Audio/Items/Handcuffs/cuff_takeoff_end.ogg");
         [DataField("color")]
         public Color Color { get; set; } = Color.White;
 
@@ -183,8 +185,7 @@ namespace Content.Server.Cuffs.Components
             eventArgs.User.PopupMessage(Loc.GetString("handcuff-component-start-cuffing-target-message",("targetName", eventArgs.Target)));
             eventArgs.User.PopupMessage(eventArgs.Target, Loc.GetString("handcuff-component-start-cuffing-by-other-message",("otherName", eventArgs.User)));
 
-            if (StartCuffSound != null)
-                SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), StartCuffSound.GetSound(), Owner);
 
             TryUpdateCuff(eventArgs.User, eventArgs.Target, cuffed);
             return true;
@@ -221,8 +222,7 @@ namespace Content.Server.Cuffs.Components
             {
                 if (cuffs.TryAddNewCuffs(user, Owner))
                 {
-                    if (EndCuffSound != null)
-                        SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound, Owner);
+                    SoundSystem.Play(Filter.Pvs(Owner), EndCuffSound.GetSound(), Owner);
 
                     user.PopupMessage(Loc.GetString("handcuff-component-cuff-other-success-message",("otherName", target)));
                     target.PopupMessage(Loc.GetString("handcuff-component-cuff-by-other-success-message", ("otherName", user)));
