@@ -23,11 +23,11 @@ namespace Content.Server.Damage.Components
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
-        public DamageTypePrototype DamageType { get; } =  default!;
+        public DamageTypePrototype DamageType { get; set; } =  default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
     }
 }
