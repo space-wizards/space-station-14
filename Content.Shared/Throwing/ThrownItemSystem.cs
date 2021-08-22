@@ -15,8 +15,11 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
+<<<<<<< refs/remotes/origin/master
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
 
+=======
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         private const string ThrowingFixture = "throw-fixture";
 
         public override void Initialize()

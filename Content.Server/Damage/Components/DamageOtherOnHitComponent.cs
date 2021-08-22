@@ -29,26 +29,23 @@ namespace Content.Server.Damage.Components
 
         [DataField("ignoreResistances")]
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
         public bool IgnoreResistances { get; } = false;
 =======
         private bool _ignoreResistances;
+=======
+        public bool IgnoreResistances { get; } = false;
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
-        private DamageTypePrototype _damageType = default!;
+        public DamageTypePrototype DamageType { get; set; } =  default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
-
-        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
-        {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
-                return;
-            damageable.TryChangeDamage(_damageType, _amount, _ignoreResistances);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 >>>>>>> update damagecomponent across shared and server
     }

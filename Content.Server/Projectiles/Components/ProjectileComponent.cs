@@ -35,7 +35,11 @@ namespace Content.Server.Projectiles.Components
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
+<<<<<<< refs/remotes/origin/master
         [DataField("soundHit", required: true)] public SoundSpecifier? SoundHit = default!;
+=======
+        [DataField("soundHit", required: true)] public SoundSpecifier SoundHit = default!;
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies = null;
 
         public bool DamagedEntity;

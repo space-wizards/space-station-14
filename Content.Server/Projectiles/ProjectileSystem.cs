@@ -44,10 +44,14 @@ namespace Content.Server.Projectiles
             }
             else
             {
+<<<<<<< refs/remotes/origin/master
                 var soundHit = component.SoundHit?.GetSound();
 
                 if (!string.IsNullOrEmpty(soundHit))
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
+=======
+                SoundSystem.Play(playerFilter, component.SoundHit.GetSound(), coordinates);
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
             }
 
             if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))

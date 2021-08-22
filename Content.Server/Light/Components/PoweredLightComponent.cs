@@ -60,11 +60,16 @@ namespace Content.Server.Light.Components
         private bool _hasLampOnSpawn = true;
 
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
         [ViewVariables]
         [DataField("on")]
 =======
         [ViewVariables] [DataField("on")]
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        [ViewVariables]
+        [DataField("on")]
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         private bool _on = true;
 
         [ViewVariables]
@@ -149,8 +154,12 @@ namespace Content.Server.Light.Components
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
 =======
                 damageableComponent.TryChangeDamage(DamageType, 20);
+<<<<<<< refs/remotes/origin/master
                 SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
             }
 
             void Eject()

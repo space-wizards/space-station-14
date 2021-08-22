@@ -45,9 +45,15 @@ namespace Content.Server.Doors.Components
         private string? _boardPrototype;
 
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
         [DataField("tryOpenDoorSound")]
         private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 =======
+=======
+        [DataField("tryOpenDoorSound")]
+        private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]

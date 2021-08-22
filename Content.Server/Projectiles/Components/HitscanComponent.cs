@@ -27,8 +27,11 @@ namespace Content.Server.Projectiles.Components
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
+<<<<<<< refs/remotes/origin/master
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
+=======
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
 
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
@@ -57,10 +60,20 @@ namespace Content.Server.Projectiles.Components
 >>>>>>> update damagecomponent across shared and server
 =======
         public float Damage { get; set; } = 10f;
+<<<<<<< refs/remotes/origin/master
 >>>>>>> Refactor damageablecomponent update (#4406)
 
         public float ColorModifier { get; set; } = 1.0f;
         [DataField("spriteName")]
+=======
+		public float MaxLength => 20.0f;
+
+        private TimeSpan _startTime;
+        private TimeSpan _deathTime;
+
+        public float ColorModifier { get; set; } = 1.0f;
+		[DataField("spriteName")]
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
@@ -68,14 +81,16 @@ namespace Content.Server.Projectiles.Components
         private string? _impactFlash;
         [DataField("soundHitWall")]
 <<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 =======
         private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
+=======
+        private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
 
-        public float MaxLength => 20.0f;
-        public float ColorModifier { get; set; } = 1.0f;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
