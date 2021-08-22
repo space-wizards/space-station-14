@@ -10,4 +10,5 @@
     spellItem: FoodPieBananaCream
     castMessage: I NEED A PIE!
     cooldown: 15
-    castSound: /Audio/Items/bikehorn.ogg
+    castSound:
+      path: /Audio/Items/bikehorn.ogg

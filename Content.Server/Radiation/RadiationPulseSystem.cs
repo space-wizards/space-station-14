@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Radiation;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,8 +13,30 @@ namespace Content.Server.Radiation
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        private float _accumulator;
-        private const float RadiationCooldown = 1f;
+        public IEntity RadiationPulse(
+            EntityCoordinates coordinates,
+            float range,
+            int dps,
+            bool decay = true,
+            float minPulseLifespan = 0.8f,
+            float maxPulseLifespan = 2.5f,
+            SoundSpecifier sound = default!)
+        {
+            var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
+            var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
+
+            radiation.Range = range;
+            radiation.RadsPerSecond = dps;
+            radiation.Draw = false;
+            radiation.Decay = decay;
+            radiation.MinPulseLifespan = minPulseLifespan;
+            radiation.MaxPulseLifespan = maxPulseLifespan;
+            radiation.Sound = sound;
+
+            radiation.DoPulse();
+
+            return radiationEntity;
+        }
 
         public override void Update(float frameTime)
         {

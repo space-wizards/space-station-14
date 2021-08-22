@@ -12,7 +12,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
-    prefix: inhand
   - type: Tag
     tags:
     - CaptainSabre
@@ -23,6 +22,9 @@
   id: Katana
   description: Ancient craftwork made with not so ancient plasteel.
   components:
+  - type: Tag
+    tags:
+    - Katana
   - type: Sprite
     sprite: Objects/Weapons/Melee/katana.rsi
     state: icon
@@ -31,7 +33,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
-    prefix: inhand
 
 - type: entity
   name: machete
@@ -39,6 +40,9 @@
   id: Machete
   description: A large, vicious looking blade.
   components:
+  - type: Tag
+    tags:
+    - Machete
   - type: Sprite
     sprite: Objects/Weapons/Melee/machete.rsi
     state: icon
@@ -47,7 +51,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
-    prefix: inhand
 
 - type: entity
   name: claymore
@@ -60,7 +63,8 @@
     state: icon
   - type: MeleeWeapon
     damage: 25
-  - type: Item
-    size: 15
+  - type: Clothing
+    size: 20
     sprite: Objects/Weapons/Melee/claymore.rsi
-    prefix: inhand
+    Slots:
+    - back

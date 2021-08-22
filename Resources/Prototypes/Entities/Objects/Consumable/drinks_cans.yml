@@ -4,7 +4,8 @@
   abstract: true
   components:
   - type: Drink
-    openSounds: canOpenSounds
+    openSounds:
+      collection: canOpenSounds
     pressurized: true
   - type: SolutionContainer
     maxVol: 20

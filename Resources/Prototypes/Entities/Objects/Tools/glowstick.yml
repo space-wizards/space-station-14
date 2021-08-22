@@ -13,7 +13,8 @@
       iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+      litSound:
+        path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -74,7 +75,8 @@
       iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+      litSound:
+        path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -109,7 +111,8 @@
       iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+      litSound:
+        path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -144,7 +147,8 @@
       iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+      litSound:
+        path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:
@@ -179,7 +183,8 @@
       iconStateSpent: glowstick_unlit
       turnOnBehaviourID: turn_on
       fadeOutBehaviourID: fade_out
-      litSound: /Audio/Items/Handcuffs/rope_breakout.ogg
+      litSound:
+        path: /Audio/Items/Handcuffs/rope_breakout.ogg
     - type: Sprite
       sprite: Objects/Misc/glowstick.rsi
       layers:

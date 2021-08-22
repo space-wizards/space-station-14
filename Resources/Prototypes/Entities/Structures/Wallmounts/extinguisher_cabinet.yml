@@ -8,19 +8,24 @@
     - type: Sprite
       sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
       netsync: false
-      state: extinguisher_closed
+      layers:
+      - state: frame
+      - state: extinguisher
+        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+        visible: true
+      - state: closed
+        map: ["enum.ItemCabinetVisualLayers.Door"]
     - type: ItemCabinet
-      doorSound: /Audio/Machines/machine_switch.ogg
+      doorSound:
+        path: /Audio/Machines/machine_switch.ogg
       whitelist:
         components:
         - FireExtinguisher
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
-          emptyState: extinguisher_empty
-          fullState: extinguisher_full
-          closedState: extinguisher_closed
-          closedEmptyState: extinguisher_closed
+          openState: open
+          closedState: closed
   placement:
     mode: SnapgridCenter
 

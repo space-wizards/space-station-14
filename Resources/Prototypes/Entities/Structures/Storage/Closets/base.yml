@@ -16,7 +16,8 @@
       map: ["enum.StorageVisualLayers.Welded"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/bang.ogg
+    soundHit:
+      path: /Audio/Effects/bang.ogg
   - type: InteractionOutline
   - type: Physics
     fixtures:
@@ -46,7 +47,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

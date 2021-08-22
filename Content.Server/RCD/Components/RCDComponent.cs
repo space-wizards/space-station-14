@@ -9,6 +9,7 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -32,11 +33,17 @@ namespace Content.Server.RCD.Components
 
         public override string Name => "RCD";
         private RcdMode _mode = 0; //What mode are we on? Can be floors, walls, deconstruct.
-        private readonly RcdMode[] _modes = (RcdMode[])  Enum.GetValues(typeof(RcdMode));
+        private readonly RcdMode[] _modes = (RcdMode[]) Enum.GetValues(typeof(RcdMode));
         [ViewVariables(VVAccess.ReadWrite)] [DataField("maxAmmo")] public int MaxAmmo = 5;
         public int _ammo; //How much "ammo" we have left. You can refill this with RCD ammo.
         [ViewVariables(VVAccess.ReadWrite)] [DataField("delay")] private float _delay = 2f;
         private DoAfterSystem _doAfterSystem = default!;
+
+        [DataField("swapModeSound")]
+        private SoundSpecifier _swapModeSound = new SoundPathSpecifier("/Audio/Items/genhit.ogg");
+
+        [DataField("successSound")]
+        private SoundSpecifier _successSound = new SoundPathSpecifier("/Audio/Items/deconstruct.ogg");
 
         ///Enum to store the different mode states for clarity.
         private enum RcdMode
@@ -70,8 +77,8 @@ namespace Content.Server.RCD.Components
 
         public void SwapMode(UseEntityEventArgs eventArgs)
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/genhit.ogg", Owner);
-            int mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
+            SoundSystem.Play(Filter.Pvs(Owner), _swapModeSound.GetSound(), Owner);
+            var mode = (int) _mode; //Firstly, cast our RCDmode mode to an int (enums are backed by ints anyway by default)
             mode = (++mode) % _modes.Length; //Then, do a rollover on the value so it doesnt hit an invalid state
             _mode = (RcdMode) mode; //Finally, cast the newly acquired int mode to an RCDmode so we can use it.
             Owner.PopupMessage(eventArgs.User,
@@ -96,7 +103,7 @@ namespace Content.Server.RCD.Components
             }
         }
 
-        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs   eventArgs)
+        async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
             if (!eventArgs.ClickLocation.IsValid(Owner.EntityManager) || !eventArgs.ClickLocation.GetGridId(Owner.EntityManager).IsValid())
@@ -155,7 +162,7 @@ namespace Content.Server.RCD.Components
                     return true; //I don't know why this would happen, but sure I guess. Get out of here invalid state!
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/deconstruct.ogg", Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _successSound.GetSound(), Owner);
             _ammo--;
             return true;
         }

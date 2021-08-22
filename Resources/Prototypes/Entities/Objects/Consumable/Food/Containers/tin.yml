@@ -55,8 +55,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesOpen:
@@ -103,8 +104,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesMaintOpen:
@@ -151,8 +153,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinBeansOpen:
@@ -201,8 +204,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinMREOpen:
