@@ -1,4 +1,6 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Client.Disposal.Components;
+using Content.Client.Disposal.Systems;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
@@ -11,7 +13,7 @@ namespace Content.Client.Disposal.UI
     [UsedImplicitly]
     public class DisposalUnitBoundUserInterface : BoundUserInterface
     {
-        private DisposalUnitWindow? _window;
+        public DisposalUnitWindow? Window;
 
         public DisposalUnitBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -20,20 +22,22 @@ namespace Content.Client.Disposal.UI
         private void ButtonPressed(UiButton button)
         {
             SendMessage(new UiButtonPressedMessage(button));
+            // If we get client-side power stuff then we can predict the button presses but for now we won't as it stuffs
+            // the pressure lerp up.
         }
 
         protected override void Open()
         {
             base.Open();
 
-            _window = new DisposalUnitWindow();
+            Window = new DisposalUnitWindow();
 
-            _window.OpenCentered();
-            _window.OnClose += Close;
+            Window.OpenCentered();
+            Window.OnClose += Close;
 
-            _window.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);
-            _window.Engage.OnPressed += _ => ButtonPressed(UiButton.Engage);
-            _window.Power.OnPressed += _ => ButtonPressed(UiButton.Power);
+            Window.Eject.OnPressed += _ => ButtonPressed(UiButton.Eject);
+            Window.Engage.OnPressed += _ => ButtonPressed(UiButton.Engage);
+            Window.Power.OnPressed += _ => ButtonPressed(UiButton.Power);
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -45,7 +49,13 @@ namespace Content.Client.Disposal.UI
                 return;
             }
 
-            _window?.UpdateState(cast);
+            Window?.UpdateState(cast);
+
+            // Kinda icky but we just want client to handle its own lerping and not flood bandwidth for it.
+            if (!Owner.Owner.TryGetComponent(out DisposalUnitComponent? component)) return;
+
+            component.UiState = cast;
+            EntitySystem.Get<DisposalUnitSystem>().UpdateActive(component, true);
         }
 
         protected override void Dispose(bool disposing)
@@ -54,7 +64,7 @@ namespace Content.Client.Disposal.UI
 
             if (disposing)
             {
-                _window?.Dispose();
+                Window?.Dispose();
             }
         }
     }

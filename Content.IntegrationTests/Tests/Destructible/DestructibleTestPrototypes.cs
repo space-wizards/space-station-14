@@ -115,7 +115,8 @@ namespace Content.IntegrationTests.Tests.Destructible
         triggersOnce: false
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:
@@ -138,7 +139,8 @@ namespace Content.IntegrationTests.Tests.Destructible
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:

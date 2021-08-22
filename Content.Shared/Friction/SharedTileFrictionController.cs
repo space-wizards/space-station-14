@@ -7,35 +7,43 @@ using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Physics.Dynamics;
 
 
 namespace Content.Shared.Friction
 {
-    public sealed class SharedTileFrictionController : VirtualController
+    public abstract class SharedTileFrictionController : VirtualController
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
 
-        private SharedBroadphaseSystem _broadPhaseSystem = default!;
+        protected SharedMoverController Mover = default!;
 
         private float _stopSpeed;
-
         private float _frictionModifier;
 
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
 
-            _frictionModifier = _configManager.GetCVar(CCVars.TileFrictionModifier);
-            _configManager.OnValueChanged(CCVars.TileFrictionModifier, value => _frictionModifier = value);
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
 
-            _stopSpeed = _configManager.GetCVar(CCVars.StopSpeed);
-            _configManager.OnValueChanged(CCVars.StopSpeed, value => _stopSpeed = value);
+            configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
+            configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
+        }
+
+        private void SetStopSpeed(float value) => _stopSpeed = value;
+
+        private void SetFrictionModifier(float value) => _frictionModifier = value;
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+
+            configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
+            configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMap map, float frameTime)
@@ -47,7 +55,7 @@ namespace Content.Shared.Friction
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
-                    SharedMoverController.UseMobMovement(_broadPhaseSystem, body, _mapManager)) continue;
+                    Mover.UseMobMovement(body.Owner.Uid)) continue;
 
                 var surfaceFriction = GetTileFriction(body);
                 var bodyModifier = body.Owner.GetComponentOrNull<SharedTileFrictionModifier>()?.Modifier ?? 1.0f;

@@ -112,6 +112,7 @@ namespace Content.Server.Explosion
 
             Timer.Spawn(delay, () =>
             {
+                if (triggered.Deleted) return;
                 Trigger(triggered, user);
             });
         }

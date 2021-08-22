@@ -10,7 +10,7 @@ namespace Content.Client.Atmos.Visualizers
         protected override object LayerMap => Layers.Enabled;
         protected override Enum DataKey => OutletInjectorVisuals.Enabled;
 
-        enum Layers
+        enum Layers : byte
         {
             Enabled,
         }

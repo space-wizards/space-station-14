@@ -103,3 +103,16 @@
     visuals:
     - type: StorageVisualizer
       state: bio_jan
+
+# Maintenance closet
+- type: entity
+  id: ClosetMaintenance
+  name: maintenance closet 
+  parent: ClosetBase
+  description: It's a storage unit.
+  components:
+  - type: Appearance
+    visuals:
+    - type: StorageVisualizer
+      state_open: generic_open
+      state_closed: generic_door

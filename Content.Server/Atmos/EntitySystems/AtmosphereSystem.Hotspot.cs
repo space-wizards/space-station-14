@@ -1,11 +1,8 @@
-#nullable disable warnings
-#nullable enable annotations
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
 using Content.Shared.Maps;
-using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {

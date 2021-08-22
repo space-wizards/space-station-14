@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -46,7 +47,7 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [ViewVariables]
         [DataField("breakSound")]
-        private string? _breakSound = "/Audio/Items/snap.ogg";
+        private SoundSpecifier _breakSound = new SoundPathSpecifier("/Audio/Items/snap.ogg");
 
         public void AddType(UtensilType type)
         {
@@ -70,9 +71,9 @@ namespace Content.Server.Nutrition.Components
 
         internal void TryBreak(IEntity user)
         {
-            if (_breakSound != null && IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
+            if (IoCManager.Resolve<IRobustRandom>().Prob(_breakChance))
             {
-                SoundSystem.Play(Filter.Pvs(user), _breakSound, user, AudioParams.Default.WithVolume(-2f));
+                SoundSystem.Play(Filter.Pvs(user), _breakSound.GetSound(), user, AudioParams.Default.WithVolume(-2f));
                 Owner.Delete();
             }
         }

@@ -56,6 +56,19 @@ namespace Content.Shared.CCVar
             GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
 
         /// <summary>
+        ///     Whether a random position offset will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationOffset =
+            CVarDef.Create("game.station_offset", true);
+
+        /// <summary>
+        /// When the default blueprint is loaded what is the maximum amount it can be offset from 0,0.
+        /// Does nothing without <see cref="StationOffset"/> as true.
+        /// </summary>
+        public static readonly CVarDef<float> MaxStationOffset =
+            CVarDef.Create("game.maxstationoffset", 1000.0f);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool>

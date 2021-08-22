@@ -44,6 +44,7 @@ namespace Content.Server.Items
                 }
 
                 data.Text = Loc.GetString("pick-up-verb-get-data-text");
+                data.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ItemComponent component)

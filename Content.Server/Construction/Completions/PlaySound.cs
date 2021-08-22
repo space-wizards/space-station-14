@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Audio;
 using Content.Shared.Construction;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -13,21 +14,11 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class PlaySound : IGraphAction
     {
-        [DataField("soundCollection")] public string SoundCollection { get; private set; } = string.Empty;
-        [DataField("sound")] public string Sound { get; private set; } = string.Empty;
+        [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
-            var sound = GetSound();
-
-            if (string.IsNullOrEmpty(sound)) return;
-
-            SoundSystem.Play(Filter.Pvs(entity), sound, entity, AudioHelpers.WithVariation(0.125f));
-        }
-
-        private string GetSound()
-        {
-            return !string.IsNullOrEmpty(SoundCollection) ? AudioHelpers.GetRandomFileFromSoundCollection(SoundCollection) : Sound;
+            SoundSystem.Play(Filter.Pvs(entity), Sound.GetSound(), entity, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

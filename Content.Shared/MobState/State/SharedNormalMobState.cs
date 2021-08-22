@@ -27,11 +27,6 @@ namespace Content.Shared.MobState.State
             return true;
         }
 
-        public override bool CanMove()
-        {
-            return true;
-        }
-
         public override bool CanUse()
         {
             return true;

@@ -45,7 +45,7 @@ namespace Content.Server.Buckle
             }
         }
 
-        private void MoveEvent(EntityUid uid, BuckleComponent buckle, MoveEvent ev)
+        private void MoveEvent(EntityUid uid, BuckleComponent buckle, ref MoveEvent ev)
         {
             var strap = buckle.BuckledTo;
 
@@ -64,7 +64,7 @@ namespace Content.Server.Buckle
             buckle.TryUnbuckle(buckle.Owner, true);
         }
 
-        private void RotateEvent(EntityUid uid, StrapComponent strap, RotateEvent ev)
+        private void RotateEvent(EntityUid uid, StrapComponent strap, ref RotateEvent ev)
         {
             // On rotation of a strap, reattach all buckled entities.
             // This fixes buckle offsets and draw depths.

@@ -121,7 +121,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Rotates the <see cref="PipeDirection"/> when the entity is rotated, and re-calculates the <see cref="IPipeNet"/>.
         /// </summary>
-        void IRotatableNode.RotateEvent(RotateEvent ev)
+        void IRotatableNode.RotateEvent(ref RotateEvent ev)
         {
             if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
