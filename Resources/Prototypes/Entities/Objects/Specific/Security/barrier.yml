@@ -17,9 +17,10 @@
       layer:
       - Opaque
       - Impassable
-      - MobImpassable
       - VaultImpassable
       - SmallImpassable
+      mask:
+      - Impassable
       mass: 150
   - type: AccessReader
     access: [["Security"]]
