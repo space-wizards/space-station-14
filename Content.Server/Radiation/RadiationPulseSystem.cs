@@ -13,30 +13,8 @@ namespace Content.Server.Radiation
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        public IEntity RadiationPulse(
-            EntityCoordinates coordinates,
-            float range,
-            int dps,
-            bool decay = true,
-            float minPulseLifespan = 0.8f,
-            float maxPulseLifespan = 2.5f,
-            SoundSpecifier sound = default!)
-        {
-            var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
-            var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
-
-            radiation.Range = range;
-            radiation.RadsPerSecond = dps;
-            radiation.Draw = false;
-            radiation.Decay = decay;
-            radiation.MinPulseLifespan = minPulseLifespan;
-            radiation.MaxPulseLifespan = maxPulseLifespan;
-            radiation.Sound = sound;
-
-            radiation.DoPulse();
-
-            return radiationEntity;
-        }
+        private const float RadiationCooldown = 0.5f;
+        private float _accumulator;
 
         public override void Update(float frameTime)
         {
@@ -60,6 +38,8 @@ namespace Content.Server.Radiation
                         // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
                         if (entity.Deleted) continue;
 
+                        // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
+                        // so this ToArray doesn't really matter.
                         foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
                         {
                             radiation.RadiationAct(RadiationCooldown, comp);

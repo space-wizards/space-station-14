@@ -48,8 +48,9 @@ namespace Content.Server.Physics.Controllers
 
             if (pushVector == Vector2.Zero) return;
 
+            physics.LinearVelocity = Vector2.Zero;
             physics.BodyStatus = BodyStatus.InAir;
-            physics.ApplyLinearImpulse(pushVector.Normalized + (1f / singularity.Level) * physics.Mass);
+            physics.ApplyLinearImpulse(pushVector.Normalized + 1f / singularity.Level * physics.Mass);
             // TODO: Speedcap it probably?
         }
     }

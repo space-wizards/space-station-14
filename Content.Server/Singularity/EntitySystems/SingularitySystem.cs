@@ -1,6 +1,7 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Singularity;
+using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -98,14 +99,19 @@ namespace Content.Server.Singularity.EntitySystems
             return component.Level - 0.5f;
         }
 
+        private bool CanDestroy(SharedSingularityComponent component, IEntity entity)
+        {
+            return entity == component.Owner ||
+                   entity.HasComponent<IMapGridComponent>() ||
+                   entity.HasComponent<GhostComponent>() ||
+                   entity.HasComponent<ContainmentFieldComponent>() ||
+                   entity.HasComponent<ContainmentFieldGeneratorComponent>();
+        }
+
         private void HandleDestroy(ServerSingularityComponent component, IEntity entity)
         {
             // TODO: Need singuloimmune tag
-            if (entity == component.Owner ||
-                entity.HasComponent<IMapGridComponent>() ||
-                entity.HasComponent<GhostComponent>() ||
-                entity.HasComponent<ContainmentFieldComponent>() ||
-                entity.HasComponent<ContainmentFieldGeneratorComponent>()) return;
+            if (CanDestroy(component, entity)) return;
 
             // Singularity priority management / etc.
             if (entity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
@@ -141,6 +147,14 @@ namespace Content.Server.Singularity.EntitySystems
             }
         }
 
+        private bool CanPull(IEntity entity)
+        {
+            return !(entity.HasComponent<GhostComponent>() ||
+                   entity.HasComponent<IMapGridComponent>() ||
+                   entity.HasComponent<MapComponent>() ||
+                   entity.IsInContainer());
+        }
+
         private void PullEntities(ServerSingularityComponent component, Vector2 worldPos)
         {
             // TODO: When we split up dynamic and static trees we might be able to make items always on the broadphase
@@ -155,16 +169,13 @@ namespace Content.Server.Singularity.EntitySystems
                     !entity.TryGetComponent<PhysicsComponent>(out var collidableComponent) ||
                     collidableComponent.BodyType == BodyType.Static) continue;
 
-                if (entity.HasComponent<GhostComponent>() ||
-                    entity.HasComponent<IMapGridComponent>() ||
-                    entity.HasComponent<MapComponent>() ||
-                    entity.IsInContainer()) continue;
+                if (!CanPull(entity)) continue;
 
                 var vec = worldPos - entity.Transform.WorldPosition;
 
                 if (vec.Length < destroyRange - 0.01f) continue;
 
-                var speed = vec.Length * component.Level * 10 * collidableComponent.Mass / 10;
+                var speed = vec.Length * component.Level * collidableComponent.Mass;
 
                 // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
                 collidableComponent.ApplyLinearImpulse(vec.Normalized * speed);
