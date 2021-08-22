@@ -11,20 +11,21 @@
       shape:
         !type:PhysShapeCircle
           radius: 0.5
-      mass: 5
-      # Keep an eye on ParticlesProjectile when adjusting these
-      layer:
-      - Impassable
+      restitution: 0.9
       mask:
+      - AllMask
+      layer:
       - AllMask
   - type: Singularity
   - type: SingularityDistortion
   - type: RadiationPulse
     range: 15
     decay: false
+    dps: 1
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
+    netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1

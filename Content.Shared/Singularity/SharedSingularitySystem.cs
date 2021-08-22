@@ -4,11 +4,14 @@ using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Shared.Singularity
 {
     public abstract class SharedSingularitySystem : EntitySystem
     {
+        public const string DeleteFixture = "DeleteCircle";
+
         private float GetFalloff(int level)
         {
             return level switch
@@ -72,8 +75,7 @@ namespace Content.Shared.Singularity
             }
 
             if (physics != null &&
-                singularity.DeleteFixtureId != null &&
-                physics.GetFixture(singularity.DeleteFixtureId) is {Shape: PhysShapeCircle circle})
+                physics.GetFixture(DeleteFixture) is {Shape: PhysShapeCircle circle})
             {
                 circle.Radius = value - 0.5f;
             }
@@ -85,6 +87,25 @@ namespace Content.Shared.Singularity
             }
 
             singularity.Dirty();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<SharedSingularityComponent, PreventCollideEvent>(HandleFieldCollision);
+        }
+
+        private void HandleFieldCollision(EntityUid uid, SharedSingularityComponent component, PreventCollideEvent args)
+        {
+            var other = args.BodyB.Owner;
+
+            if ((!other.HasComponent<SharedContainmentFieldComponent>() &&
+                !other.HasComponent<SharedContainmentFieldGeneratorComponent>()) ||
+                component.Level >= 4)
+            {
+                args.Cancel();
+                return;
+            }
         }
     }
 }

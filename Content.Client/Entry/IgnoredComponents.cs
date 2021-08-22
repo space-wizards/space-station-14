@@ -207,8 +207,6 @@ namespace Content.Client.Entry
             "GasTank",
             "BreathMask",
             "RadiationCollector",
-            "ContainmentFieldGenerator",
-            "ContainmentField",
             "Emitter",
             "SingularityGenerator",
             "ParticleProjectile",

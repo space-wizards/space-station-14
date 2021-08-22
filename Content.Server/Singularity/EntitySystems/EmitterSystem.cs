@@ -168,6 +168,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void ShotTimerCallback(EmitterComponent component)
         {
+            if (component.Deleted) return;
+
             // Any power-off condition should result in the timer for this method being cancelled
             // and thus not firing
             DebugTools.Assert(component.IsPowered);

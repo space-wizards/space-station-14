@@ -3,6 +3,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Singularity.Visualizers
 {
@@ -33,8 +34,7 @@ namespace Content.Client.Singularity.Visualizers
                 return;
             }
 
-            sprite.LayerSetRSI(Layer, "Structures/Power/Generation/Singularity/singularity_" + level + ".rsi");
-            sprite.LayerSetState(Layer, "singularity_" + level);
+            sprite.LayerSetSprite(Layer, new SpriteSpecifier.Rsi(new ResourcePath("Structures/Power/Generation/Singularity/singularity_" + level + ".rsi"), "singularity_" + level));
         }
     }
 }

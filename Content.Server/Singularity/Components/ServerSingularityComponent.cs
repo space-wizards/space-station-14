@@ -62,6 +62,8 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        public float MoveAccumulator;
+
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.
         // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.
@@ -93,11 +95,6 @@ namespace Content.Server.Singularity.Components
             Timer.Spawn(5200, () => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), _singularitySound.GetSound(), Owner, audioParams));
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
-        }
-
-        public void Update(int seconds)
-        {
-            Energy -= EnergyDrain * seconds;
         }
 
         protected override void OnRemove()
