@@ -1,11 +1,9 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

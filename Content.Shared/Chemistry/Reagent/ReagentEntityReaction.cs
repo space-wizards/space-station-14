@@ -27,7 +27,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("ingestion")]
         public bool Ingestion { get; } = false;
 
-        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution.Solution? source)
+        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Components.Solution? source)
         {
             switch (method)
             {
@@ -50,6 +50,6 @@ namespace Content.Shared.Chemistry.Reagent
             React(entity, reagent, volume, source);
         }
 
-        protected abstract void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution.Solution? source);
+        protected abstract void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Components.Solution? source);
     }
 }

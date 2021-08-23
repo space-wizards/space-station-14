@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;

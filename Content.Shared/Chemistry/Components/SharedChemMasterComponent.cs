@@ -29,11 +29,11 @@ namespace Content.Shared.Chemistry.Components
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly IReadOnlyList<Solution.Solution.ReagentQuantity> ContainerReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> ContainerReagents;
             /// <summary>
             /// A list of the reagents and their amounts within the buffer, if applicable.
             /// </summary>
-            public readonly IReadOnlyList<Solution.Solution.ReagentQuantity> BufferReagents;
+            public readonly IReadOnlyList<Solution.ReagentQuantity> BufferReagents;
             public readonly string DispenserName;
 
             public readonly bool BufferModeTransfer;
@@ -41,7 +41,7 @@ namespace Content.Shared.Chemistry.Components
             public readonly ReagentUnit BufferCurrentVolume;
 
             public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                string dispenserName, IReadOnlyList<Solution.Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;

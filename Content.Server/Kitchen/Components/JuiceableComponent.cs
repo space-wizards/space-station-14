@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Solution;
+﻿using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;

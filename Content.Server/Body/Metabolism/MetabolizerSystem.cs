@@ -2,9 +2,9 @@
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

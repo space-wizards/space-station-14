@@ -1,14 +1,15 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Chemistry.EntitySystems
 {
     public partial class SolutionContainerSystem
     {
-        public void Refill(Solution.Solution solutionHolder, Solution.Solution solution)
+        public void Refill(Solution solutionHolder, Solution solution)
         {
             if (!solutionHolder.Owner.HasComponent<RefillableSolutionComponent>())
                 return;
@@ -16,7 +17,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             TryAddSolution(solutionHolder, solution);
         }
 
-        public void Inject(Solution.Solution solutionHolder, Solution.Solution solution)
+        public void Inject(Solution solutionHolder, Solution solution)
         {
             if (!solutionHolder.Owner.HasComponent<InjectableSolutionComponent>())
                 return;
@@ -24,22 +25,22 @@ namespace Content.Shared.Chemistry.EntitySystems
             TryAddSolution(solutionHolder, solution);
         }
 
-        public Solution.Solution Draw(Solution.Solution solutionHolder, ReagentUnit amount)
+        public Solution Draw(Solution solutionHolder, ReagentUnit amount)
         {
             if (!solutionHolder.Owner.HasComponent<DrawableSolutionComponent>())
             {
-                var newSolution = new Solution.Solution();
+                var newSolution = new Solution();
                 newSolution.Owner = solutionHolder.Owner;
             }
 
             return SplitSolution(solutionHolder, amount);
         }
 
-        public Solution.Solution Drain(Solution.Solution solutionHolder, ReagentUnit amount)
+        public Solution Drain(Solution solutionHolder, ReagentUnit amount)
         {
             if (!solutionHolder.Owner.HasComponent<DrainableSolutionComponent>())
             {
-                var newSolution = new Solution.Solution();
+                var newSolution = new Solution();
                 newSolution.Owner = solutionHolder.Owner;
             }
 
@@ -47,7 +48,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetInjectableSolution(IEntity owner,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (owner.TryGetComponent(out InjectableSolutionComponent? injectable) &&
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
@@ -60,14 +61,14 @@ namespace Content.Shared.Chemistry.EntitySystems
             return false;
         }
 
-        public Solution.Solution? GetInjectableSolution(IEntity ownerEntity)
+        public Solution? GetInjectableSolution(IEntity ownerEntity)
         {
             TryGetInjectableSolution(ownerEntity, out var solution);
             return solution;
         }
 
         public bool TryGetRefillableSolution(IEntity owner,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (owner.TryGetComponent(out RefillableSolutionComponent? refillable) &&
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
@@ -81,7 +82,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetDrainableSolution(IEntity owner,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (owner.TryGetComponent(out DrainableSolutionComponent? drainable) &&
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
@@ -96,7 +97,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetDrawableSolution(IEntity owner,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (owner.TryGetComponent(out DrawableSolutionComponent? drawable) &&
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
@@ -124,7 +125,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetFitsInDispenser(IEntity owner,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (owner.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
@@ -138,7 +139,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetDefaultSolution(IEntity? target,
-            [NotNullWhen(true)] out Solution.Solution? solution)
+            [NotNullWhen(true)] out Solution? solution)
         {
             if (target == null
                 || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr)

@@ -13,14 +13,14 @@ namespace Content.Shared.Chemistry
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume,
-            Solution.Solution? source)
+            Components.Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
         public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent,
-            ReagentUnit reactVolume, Solution.Solution? source)
+            ReagentUnit reactVolume, Components.Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

@@ -14,7 +14,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Solution
+namespace Content.Shared.Chemistry.Components
 {
     /// <summary>
     ///     A solution of reagents.

@@ -2,12 +2,12 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Solution.Components
+namespace Content.Shared.Chemistry.Components.SolutionManager
 {
     [RegisterComponent]
-    public class DrainableSolutionComponent : Component
+    public class InjectableSolutionComponent : Component
     {
-        public override string Name => "DrainableSolution";
+        public override string Name => "InjectableSolution";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("solution")]

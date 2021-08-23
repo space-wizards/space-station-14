@@ -2,7 +2,6 @@ using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
