@@ -1,8 +1,10 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Damage.Components;
 using Content.Shared.MobState;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -89,7 +91,7 @@ namespace Content.Server.Damage
 
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
-                creamPied.Wash();
+                EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
             }
         }
     }

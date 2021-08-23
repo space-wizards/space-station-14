@@ -162,6 +162,8 @@ namespace Content.Server.Power.Components
         [Verb]
         private sealed class EjectVerb : Verb<BaseCharger>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, BaseCharger component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))

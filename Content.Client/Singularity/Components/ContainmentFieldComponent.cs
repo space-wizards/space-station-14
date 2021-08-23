@@ -1,13 +1,16 @@
+using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 
 namespace Content.Client.Singularity.Components
 {
-    public class ContainmentFieldComponent : Component
+    [RegisterComponent]
+    [ComponentReference(typeof(SharedContainmentFieldComponent))]
+    public class ContainmentFieldComponent : SharedContainmentFieldComponent
     {
-        public override string Name => "ContainmentField";
-
+        // Jesus what is this code.
+        // Singulo cleanup WHEEENNN
         private SpriteComponent? _spriteComponent;
 
         protected override void Initialize()

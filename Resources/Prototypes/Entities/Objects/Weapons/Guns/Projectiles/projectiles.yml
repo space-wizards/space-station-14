@@ -299,16 +299,18 @@
   description: get creampied, honk!!
   abstract: true
   components:
-    - type: Projectile
-      deleteOnCollide: false # CreamPie component handles this.
-    - type: CreamPie
-    - type: ThrownItem
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Food/pie.rsi
-      state: icon
-    - type: SolutionContainer
-      contents:
-        reagents:
-          - ReagentId: Nutriment
-            Quantity: 8
+  - type: Projectile
+    deleteOnCollide: false # CreamPie component handles this.
+  - type: CreamPie
+  - type: ThrownItem
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    netsync: false
+    layers:
+    - state: tin
+    - state: plain
+  - type: SolutionContainer
+    contents:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 8
