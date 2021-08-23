@@ -11,8 +11,13 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents.Events
 {
-    public class MeteorSwarm : StationEvent
+    public sealed class MeteorSwarm : StationEvent
     {
+        [Dependency] private readonly IComponentManager _compManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
         public override string Name => "MeteorSwarm";
 
         public override int EarliestStart => 30;
@@ -76,19 +81,15 @@ namespace Content.Server.StationEvents.Events
             if (_cooldown > 0f) return;
 
             _waveCounter--;
-            var robustRandom = IoCManager.Resolve<IRobustRandom>();
 
-            _cooldown += (MaximumCooldown - MinimumCooldown) * robustRandom.NextFloat() + MinimumCooldown;
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var compManager = IoCManager.Resolve<IComponentManager>();
+            _cooldown += (MaximumCooldown - MinimumCooldown) * _robustRandom.NextFloat() + MinimumCooldown;
 
             Box2? playableArea = null;
             var mapId = EntitySystem.Get<GameTicker>().DefaultMap;
 
-            foreach (var grid in mapManager.GetAllGrids())
+            foreach (var grid in _mapManager.GetAllGrids())
             {
-                if (grid.ParentMapId != mapId || !compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
+                if (grid.ParentMapId != mapId || !_compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
                 playableArea ??= aabb;
                 playableArea = playableArea.Value.Union(aabb);
@@ -107,16 +108,16 @@ namespace Content.Server.StationEvents.Events
 
             for (var i = 0; i < MeteorsPerWave; i++)
             {
-                var angle = new Angle(robustRandom.NextFloat() * MathF.Tau);
-                var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * robustRandom.NextFloat() + minimumDistance, 0));
+                var angle = new Angle(_robustRandom.NextFloat() * MathF.Tau);
+                var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
-                var meteor = entityManager.SpawnEntity("MeteorLarge", spawnPosition);
-                var physics = compManager.GetComponent<PhysicsComponent>(meteor.Uid);
+                var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
+                var physics = _compManager.GetComponent<PhysicsComponent>(meteor.Uid);
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
                 physics.ApplyAngularImpulse(
                     // Get a random angular velocity.
-                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * robustRandom.NextFloat() +
+                    physics.Mass * ((MaxAngularVelocity - MinAngularVelocity) * _robustRandom.NextFloat() +
                                     MinAngularVelocity));
                 // TODO: God this disgusts me but projectile needs a refactor.
                 meteor.GetComponent<ProjectileComponent>().TimeLeft = 120f;
