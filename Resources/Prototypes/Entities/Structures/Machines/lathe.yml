@@ -164,6 +164,11 @@
       - CartridgeLRifleBase
       - CartridgeMagnumBase
       - FirelockElectronics
+      - MicroManipulatorStockPart
+      - ScanningModuleStockPart
+      - MicroLaserStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
       - DoorElectronics
       - APCElectronics
       - CloningPodMachineCircuitboard
