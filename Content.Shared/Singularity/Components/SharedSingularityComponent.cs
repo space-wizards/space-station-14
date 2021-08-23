@@ -12,8 +12,6 @@ namespace Content.Shared.Singularity.Components
     {
         public override string Name => "Singularity";
 
-        [DataField("deleteFixture")] public string? DeleteFixtureId { get; } = default;
-
         /// <summary>
         ///     Changed by <see cref="SharedSingularitySystem.ChangeSingularityLevel"/>
         /// </summary>

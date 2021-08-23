@@ -5,10 +5,11 @@
   description: It extinguishes fires.
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
-    - state: fire_extinguisher_closed
-      map: ["enum.SprayVisualLayers.Base"]
+        - state: fire_extinguisher_closed
+          map: [ "enum.SprayVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
@@ -43,9 +44,9 @@
       path: /Audio/Weapons/smash.ogg
   - type: Appearance
     visuals:
-    - type: SprayVisualizer
-      safety_on_state: fire_extinguisher_closed
-      safety_off_state: fire_extinguisher_open
+      - type: SprayVisualizer
+        safety_on_state: fire_extinguisher_closed
+        safety_off_state: fire_extinguisher_open
 
 - type: entity
   name: extinguisher spray
@@ -56,21 +57,21 @@
   - type: Sprite
     sprite: Effects/extinguisherSpray.rsi
     layers:
-    - state: extinguish
-      map: ["enum.VaporVisualLayers.Base"]
+      - state: extinguish
+        map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
     bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.25,-0.25,0.25,0.25"
+          bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
-      - Impassable
-      - MobImpassable
-      - SmallImpassable
+        - Impassable
+        - MobImpassable
+        - SmallImpassable
   - type: Appearance
     visuals:
-    - type: VaporVisualizer
-      animation_delay: 0.8
-      animation_state: extinguish
+      - type: VaporVisualizer
+        animation_delay: 0.8
+        animation_state: extinguish

@@ -1,11 +1,12 @@
+using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class ContainmentFieldComponent : Component
+    [ComponentReference(typeof(SharedContainmentFieldComponent))]
+    public class ContainmentFieldComponent : SharedContainmentFieldComponent
     {
-        public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
     }
 }

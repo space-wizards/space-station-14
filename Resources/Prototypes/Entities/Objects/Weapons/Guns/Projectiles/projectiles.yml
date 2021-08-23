@@ -304,9 +304,11 @@
   - type: CreamPie
   - type: ThrownItem
   - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
     netsync: false
-    sprite: Objects/Consumable/Food/pie.rsi
-    state: icon
+    layers:
+    - state: tin
+    - state: plain
   - type: SolutionContainer
     solutions:
       ammo:

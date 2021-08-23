@@ -39,7 +39,10 @@ namespace Content.Server.Projectiles
             }
             else
             {
-                SoundSystem.Play(playerFilter, component.SoundHit.GetSound(), coordinates);
+                var soundHit = component.SoundHit?.GetSound();
+
+                if (!string.IsNullOrEmpty(soundHit))
+                    SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
             if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))

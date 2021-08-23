@@ -79,6 +79,10 @@ namespace Content.Server.Fluids.Components
 
         [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
+		
+        [DataField("safetySound")]
+        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+
 
         public ReagentUnit CurrentVolume {
             get
@@ -205,6 +209,7 @@ namespace Content.Server.Fluids.Components
 
         private void ToggleSafety(IEntity user)
         {
+            SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
             SetSafety(user, !_safety);
         }
 

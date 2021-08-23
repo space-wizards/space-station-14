@@ -11,53 +11,39 @@ namespace Content.Server.Radiation
     [UsedImplicitly]
     public sealed class RadiationPulseSystem : EntitySystem
     {
-        private const string RadiationPrototype = "RadiationPulse";
+        [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        public IEntity RadiationPulse(
-            EntityCoordinates coordinates,
-            float range,
-            int dps,
-            bool decay = true,
-            float minPulseLifespan = 0.8f,
-            float maxPulseLifespan = 2.5f,
-            SoundSpecifier sound = default!)
-        {
-            var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
-            var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
-
-            radiation.Range = range;
-            radiation.RadsPerSecond = dps;
-            radiation.Draw = false;
-            radiation.Decay = decay;
-            radiation.MinPulseLifespan = minPulseLifespan;
-            radiation.MaxPulseLifespan = maxPulseLifespan;
-            radiation.Sound = sound;
-
-            radiation.DoPulse();
-
-            return radiationEntity;
-        }
+        private const float RadiationCooldown = 0.5f;
+        private float _accumulator;
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            var lookupSystem = IoCManager.Resolve<IEntityLookup>();
+            _accumulator += RadiationCooldown;
 
-            foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
+            while (_accumulator > RadiationCooldown)
             {
-                comp.Update(frameTime);
-                var ent = comp.Owner;
+                _accumulator -= RadiationCooldown;
 
-                if (ent.Deleted) continue;
-
-                foreach (var entity in lookupSystem.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range, true))
+                foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
                 {
-                    if (entity.Deleted) continue;
+                    comp.Update(frameTime);
+                    var ent = comp.Owner;
 
-                    foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
+                    if (ent.Deleted) continue;
+
+                    foreach (var entity in _lookup.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
                     {
-                        radiation.RadiationAct(frameTime, comp);
+                        // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
+                        if (entity.Deleted) continue;
+
+                        // Note: Radiation is liable for a refactor (stinky Sloth coding a basic version when he did StationEvents)
+                        // so this ToArray doesn't really matter.
+                        foreach (var radiation in entity.GetAllComponents<IRadiationAct>().ToArray())
+                        {
+                            radiation.RadiationAct(RadiationCooldown, comp);
+                        }
                     }
                 }
             }
