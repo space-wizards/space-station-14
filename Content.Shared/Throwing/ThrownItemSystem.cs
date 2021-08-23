@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
@@ -14,6 +15,8 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
+        [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
+
         private const string ThrowingFixture = "throw-fixture";
 
         public override void Initialize()
@@ -37,7 +40,7 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            Get<SharedBroadphaseSystem>().DestroyFixture(physicsComponent, fixture);
+            _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -52,7 +55,7 @@ namespace Content.Shared.Throwing
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            Get<SharedBroadphaseSystem>().CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
+            _broadphaseSystem.CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)

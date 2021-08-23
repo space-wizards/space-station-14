@@ -113,9 +113,10 @@ namespace Content.Server.Physics
 
         private void SetupPlayer(MapId mapId, IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
         {
+            if (mapId == MapId.Nullspace) return;
             var pauseManager = IoCManager.Resolve<IPauseManager>();
             pauseManager.SetMapPaused(mapId, false);
-            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -4.9f);
+            IoCManager.Resolve<IMapManager>().GetMapEntity(mapId).GetComponent<SharedPhysicsMapComponent>().Gravity = new Vector2(0, -4.9f);
 
             return;
         }
@@ -353,9 +354,7 @@ namespace Content.Server.Physics
             // Box2D has this as 800 which is jesus christo.
             // Wouldn't recommend higher than 100 in debug and higher than 300 on release unless
             // you really want a profile.
-            var count = 50;
-
-            EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0f, -9.8f);
+            var count = 200;
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             for (var i = 0; i < count; i++)
