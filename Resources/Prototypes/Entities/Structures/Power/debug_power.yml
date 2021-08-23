@@ -23,7 +23,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
@@ -64,7 +64,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
@@ -94,7 +94,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite
@@ -152,7 +152,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
   - type: SnapGrid
   - type: Sprite

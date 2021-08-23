@@ -17,7 +17,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.25,0.30,0.25"
+          bounds: "-0.25,-0.50,0.25,0.30"
       mass: 10
       mask:
       - Impassable
@@ -65,7 +65,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.20,0.30,0.20"
+          bounds: "-0.20,-0.45,0.20,0.30"
       mass: 10
       mask:
       - Impassable
@@ -134,7 +134,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.35,0.15,0.35"
+          bounds: "-0.35,-0.45,0.35,0.15"
       mass: 10
       mask:
       - Impassable
