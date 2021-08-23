@@ -13,10 +13,6 @@ namespace Content.Server.Light.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        // time to blink light when ghost made boo nearby
-        private static readonly TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
-        private static readonly TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
-
         public override void Initialize()
         {
             base.Initialize();
@@ -32,14 +28,14 @@ namespace Content.Server.Light.EntitySystems
             var time = _gameTiming.CurTime;
             if (light.LastGhostBlink != null)
             {
-                if (time <= light.LastGhostBlink + GhostBlinkingCooldown)
+                if (time <= light.LastGhostBlink + light.GhostBlinkingCooldown)
                     return;
             }
 
             light.LastGhostBlink = time;
 
             ToggleBlinkingLight(light, true);
-            light.Owner.SpawnTimer(GhostBlinkingTime, () =>
+            light.Owner.SpawnTimer(light.GhostBlinkingTime, () =>
             {
                 ToggleBlinkingLight(light, false);
             });

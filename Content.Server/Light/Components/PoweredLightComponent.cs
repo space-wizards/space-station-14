@@ -66,6 +66,15 @@ namespace Content.Server.Light.Components
         [DataField("ignoreGhostsBoo")]
         public bool IgnoreGhostsBoo;
 
+        [ViewVariables]
+        [DataField("ghostBlinkingTime")]
+        public TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
+
+        [ViewVariables]
+        [DataField("ghostBlinkingCooldown")]
+        public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
+
+
         [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
         public LightBulbType BulbType => _bulbType;
 
