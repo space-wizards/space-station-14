@@ -43,6 +43,11 @@ namespace Content.Server.Lock
             {
                 DoUnlock(lockComp, args);
             }
+            else
+            {
+                if (lockComp.LockOnClick)
+                    DoLock(lockComp, args);
+            }
         }
 
         private void OnExamined(EntityUid eUI, LockComponent lockComp, ExaminedEvent args)
@@ -73,6 +78,8 @@ namespace Content.Server.Lock
                 appearanceComp.SetData(StorageVisuals.Locked, true);
             }
 
+            RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(true));
+
             args.Handled = true;
         }
 
@@ -94,6 +101,8 @@ namespace Content.Server.Lock
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
             }
+
+            RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(false));
 
             // To stop EntityStorageComponent from opening right after the container gets unlocked
             args.Handled = true;

@@ -29,7 +29,7 @@ namespace Content.Server.VendingMachines
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -38,7 +38,6 @@ namespace Content.Server.VendingMachines
         private TimeSpan _animationDuration = TimeSpan.Zero;
         [DataField("pack")]
         private string _packPrototypeId = string.Empty;
-        private string? _description;
         private string _spriteName = "";
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
@@ -81,7 +80,6 @@ namespace Content.Server.VendingMachines
             }
 
             Owner.Name = packPrototype.Name;
-            _description = packPrototype.Description;
             _animationDuration = TimeSpan.FromSeconds(packPrototype.AnimationDuration);
             _spriteName = packPrototype.SpriteName;
             if (!string.IsNullOrEmpty(_spriteName))
@@ -160,12 +158,6 @@ namespace Content.Server.VendingMachines
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
                     break;
             }
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if(_description == null) { return; }
-            message.AddText(_description);
         }
 
         private void TryEject(string id)

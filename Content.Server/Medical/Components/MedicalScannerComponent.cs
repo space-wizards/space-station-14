@@ -228,6 +228,8 @@ namespace Content.Server.Medical.Components
         [Verb]
         public sealed class EjectVerb : Verb<MedicalScannerComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
@@ -238,6 +240,7 @@ namespace Content.Server.Medical.Components
 
                 data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
                 data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, MedicalScannerComponent component)

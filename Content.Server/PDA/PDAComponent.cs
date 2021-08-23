@@ -375,6 +375,8 @@ namespace Content.Server.PDA
         [Verb]
         public sealed class EjectIDVerb : Verb<PDAComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, PDAComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))

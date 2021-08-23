@@ -674,12 +674,12 @@ namespace Content.Shared.Hands.Components
             DoInteraction(activeHeldEntity, heldEntity);
         }
 
-        public void UseActiveHeldEntity()
+        public void UseActiveHeldEntity(bool altInteract = false)
         {
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            DoUse(heldEntity);
+            DoUse(heldEntity, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -783,7 +783,7 @@ namespace Content.Shared.Hands.Components
 
         protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
 
-        protected virtual void DoUse(IEntity heldEntity) { }
+        protected virtual void DoUse(IEntity heldEntity, bool altInteract = false) { }
 
         protected virtual void DoActivate(IEntity heldEntity) { }
 

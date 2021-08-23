@@ -426,6 +426,8 @@ namespace Content.Server.Chemistry.Components
         [Verb]
         public sealed class EjectBeakerVerb : Verb<ChemMasterComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
@@ -436,6 +438,7 @@ namespace Content.Server.Chemistry.Components
 
                 data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
                 data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ChemMasterComponent component)
