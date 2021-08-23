@@ -13,14 +13,17 @@ namespace Content.Client.Xenobiology
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) ;// return;
-            if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) ;// return;
-            if (!powered) sprite.LayerSetState(0, "tube-unpowered");
-            else if (powered)
+            component.Owner.TryGetComponent<ISpriteComponent>(out ISpriteComponent? spritecomp);
+            if (spritecomp != null)
             {
-                if (!occupied) sprite.LayerSetState(0, "tube-powered");
-                else if (occupied) sprite.LayerSetState(0, "tube-occupied");
+                if (!component.TryGetData(XenoTubeStatus.Powered, out bool powered)) ;// return;
+                if (!component.TryGetData(XenoTubeStatus.Occupied, out bool occupied)) ;// return;
+                if (!powered) spritecomp.LayerSetState(0, "tube-unpowered");
+                else if (powered)
+                {
+                    if (!occupied) spritecomp.LayerSetState(0, "tube-powered");
+                    else if (occupied) spritecomp.LayerSetState(0, "tube-occupied");
+                }
             }
         }
     }

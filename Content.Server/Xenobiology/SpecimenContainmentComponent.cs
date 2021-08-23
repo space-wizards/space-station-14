@@ -26,9 +26,9 @@ using Content.Server.Storage.Components;
 namespace Content.Server.Xenobiology
 {
     [RegisterComponent]
-    public class SpecimenContainmentComponent : SharedXenoTubeComponent, IDestroyAct
+    public class SpecimenContainmentComponent : SharedXenoTubeComponent
     {
-        public override string Name => "SpecimenContainmentComponent";
+        public override string Name => "SpecimenContainment";
 
         private readonly Vector2 _ejectOffset = new(0f, 0f);
 
@@ -110,11 +110,6 @@ namespace Content.Server.Xenobiology
             TubeContainer.Remove(containedEntity);
             
             UpdateAppearance();
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-
         }
 
         public void DebugCreateSpecimen()

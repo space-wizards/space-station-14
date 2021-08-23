@@ -26,7 +26,7 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
-  - type: SpecimenContainmentComponent
+  - type: SpecimenContainment
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
