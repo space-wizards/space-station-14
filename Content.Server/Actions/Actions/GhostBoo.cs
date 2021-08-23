@@ -17,16 +17,9 @@ namespace Content.Server.Actions.Actions
     [DataDefinition]
     public class GhostBoo : IInstantAction
     {
-        [Dependency] protected readonly IEntityManager EntityManager = default!;
-
         [DataField("radius")] private float _radius = 3;
         [DataField("cooldown")] private float _cooldown = 120;
         [DataField("maxTargets")] private int _maxTargets = 3;
-
-        public GhostBoo()
-        {
-            IoCManager.InjectDependencies(this);
-        }
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
@@ -39,7 +32,7 @@ namespace Content.Server.Actions.Actions
             foreach (var ent in ents)
             {
                 var ghostBoo = new GhostBooEvent();
-                EntityManager.EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
+                ent.EntityManager.EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
 
                 if (ghostBoo.Handled)
                     booCounter++;
