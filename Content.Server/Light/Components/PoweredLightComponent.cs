@@ -28,7 +28,7 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, IGhostBooAffected //todo paul ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>,
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, IGhostBooAffected
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
