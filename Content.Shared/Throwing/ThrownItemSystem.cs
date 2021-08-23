@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
@@ -76,6 +77,8 @@ namespace Content.Shared.Throwing
 
         private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
+            if (EntityManager.GetEntity(uid).IsInContainer()) return;
+
             LandComponent(thrownItem);
         }
 
