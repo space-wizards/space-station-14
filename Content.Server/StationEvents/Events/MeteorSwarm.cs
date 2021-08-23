@@ -75,6 +75,7 @@ namespace Content.Server.StationEvents.Events
             if (_waveCounter <= 0)
             {
                 EndAfter = float.MinValue;
+                return;
             }
             _cooldown -= frameTime;
 
@@ -91,8 +92,7 @@ namespace Content.Server.StationEvents.Events
             {
                 if (grid.ParentMapId != mapId || !_compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
-                playableArea ??= aabb;
-                playableArea = playableArea.Value.Union(aabb);
+                playableArea = playableArea?.Union(aabb) ?? aabb;
             }
 
             if (playableArea == null)
