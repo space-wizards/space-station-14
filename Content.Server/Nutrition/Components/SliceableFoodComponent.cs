@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
@@ -37,7 +37,8 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
 
-        [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ushort Count;
 
         protected override void Initialize()
         {
@@ -54,10 +55,12 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
+
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
             {
                 return false;
             }
+
             if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;

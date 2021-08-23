@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Tools.Components;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;

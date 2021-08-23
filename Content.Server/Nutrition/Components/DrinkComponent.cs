@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
@@ -31,6 +31,7 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public class DrinkComponent : Component, IUse, IAfterInteract, IExamine, ILand
     {
+        private const string SolutionName = "drink";
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -93,7 +94,7 @@ namespace Content.Server.Nutrition.Components
             UpdateAppearance();
             if (!EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner))
             {
-                EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "drink");
+                EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
             }
         }
 
@@ -101,15 +102,15 @@ namespace Content.Server.Nutrition.Components
         private void OpenedChanged()
         {
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSys.TryGetSolution(Owner, "drink", out _))
+            if (!solutionSys.TryGetSolution(Owner, SolutionName, out _))
             {
                 return;
             }
 
             if (Opened)
             {
-                solutionSys.AddRefillable(Owner, "drink");
-                solutionSys.AddDrainable(Owner, "drink");
+                solutionSys.AddRefillable(Owner, SolutionName);
+                solutionSys.AddDrainable(Owner, SolutionName);
             }
             else
             {

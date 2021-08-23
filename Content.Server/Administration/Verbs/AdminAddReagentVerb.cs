@@ -1,7 +1,7 @@
 using Content.Server.Administration.Managers;
 using Content.Server.EUI;
 using Content.Shared.Administration;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;

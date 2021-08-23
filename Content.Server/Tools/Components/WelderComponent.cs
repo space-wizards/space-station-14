@@ -8,7 +8,7 @@ using Content.Server.Explosion;
 using Content.Server.Items;
 using Content.Server.Notification;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;

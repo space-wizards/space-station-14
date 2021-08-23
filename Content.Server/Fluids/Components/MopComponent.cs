@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -67,14 +66,8 @@ namespace Content.Server.Fluids.Components
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
         /// </summary>
-        [ViewVariables] [DataField("speed")] private float _mopSpeed = 1;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            // Owner.EnsureComponentWarn(out SolutionContainerManager _);
-        }
+        [ViewVariables]
+        [DataField("speed")] private float _mopSpeed = 1;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

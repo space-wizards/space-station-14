@@ -1,9 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -23,42 +22,37 @@ namespace Content.Server.Fluids.Components
     public class BucketComponent : Component, IInteractUsing
     {
         public override string Name => "Bucket";
+        public const string SolutionName = "bucket";
 
         private List<EntityUid> _currentlyUsing = new();
 
         public ReagentUnit MaxVolume
         {
             get =>
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                     ? solution.MaxVolume
                     : ReagentUnit.Zero;
             set
             {
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bucket", out var solution)
+        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
         [DataField("sound")]
         private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
 
-        /// <inheritdoc />
-        protected override void Initialize()
-        {
-            base.Initialize();
-            // Owner.EnsureComponentWarn<SolutionContainerManager>();
-        }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionsSys.TryGetSolution(Owner, "bucket", out var contents) ||
+            if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
                 !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
                 mopComponent.Mopping)

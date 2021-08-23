@@ -1,5 +1,5 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;

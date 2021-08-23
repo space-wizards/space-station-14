@@ -7,11 +7,10 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
@@ -42,6 +41,7 @@ namespace Content.Server.Chemistry.Components
     public class ReagentDispenserComponent : SharedReagentDispenserComponent, IActivate, IInteractUsing
     {
         private static ReagentInventoryComparer _comparer = new();
+        public static string SolutionName = "reagent";
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -60,7 +60,7 @@ namespace Content.Server.Chemistry.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "reagent", out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }

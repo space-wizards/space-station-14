@@ -8,7 +8,7 @@ using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;

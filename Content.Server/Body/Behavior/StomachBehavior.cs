@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Networks;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;

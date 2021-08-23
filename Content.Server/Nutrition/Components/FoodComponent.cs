@@ -6,9 +6,8 @@ using Content.Server.Body.Behavior;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -29,6 +28,7 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
+        public static string SolutionName = "food";
 
         [ViewVariables]
         [DataField("useSound")]
@@ -98,7 +98,8 @@ namespace Content.Server.Nutrition.Components
 
         public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
+            var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionContainerSys.TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return false;
             }
@@ -160,13 +161,12 @@ namespace Content.Server.Nutrition.Components
             }
 
             var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
-            var split = EntitySystem.Get<SolutionContainerSystem>()
-                .SplitSolution(solution, transferAmount);
+            var split = solutionContainerSys.SplitSolution(solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution, split);
+                solutionContainerSys.TryAddSolution(solution, split);
                 trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
@@ -205,6 +205,8 @@ namespace Content.Server.Nutrition.Components
 
             return true;
         }
+
+
 
         private void DeleteAndSpawnTrash(IEntity user)
         {

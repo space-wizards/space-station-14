@@ -1,5 +1,5 @@
 ﻿using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            
+
             SubscribeLocalEvent<ReagentDispenserComponent, SolutionChangedEvent>(OnSolutionChange);
         }
 

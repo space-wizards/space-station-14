@@ -15162,7 +15162,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - sleepTime: 1114.4688
     type: Physics
 - uid: 1162
@@ -50264,7 +50264,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5079
@@ -50274,7 +50274,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5080

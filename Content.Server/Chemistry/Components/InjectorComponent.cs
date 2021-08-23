@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Circulatory;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
@@ -28,20 +28,23 @@ namespace Content.Server.Chemistry.Components
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
         /// </summary>
-        [ViewVariables] [DataField("injectOnly")]
+        [ViewVariables]
+        [DataField("injectOnly")]
         private bool _injectOnly;
 
         /// <summary>
         /// Amount to inject or draw on each usage. If the injector is inject only, it will
         /// attempt to inject it's entire contents upon use.
         /// </summary>
-        [ViewVariables] [DataField("transferAmount")]
+        [ViewVariables]
+        [DataField("transferAmount")]
         private ReagentUnit _transferAmount = ReagentUnit.New(5);
 
         /// <summary>
         /// Initial storage volume of the injector
         /// </summary>
-        [ViewVariables] [DataField("initialMaxVolume")]
+        [ViewVariables]
+        [DataField("initialMaxVolume")]
         private ReagentUnit _initialMaxVolume = ReagentUnit.New(15);
 
         private InjectorToggleMode _toggleState;

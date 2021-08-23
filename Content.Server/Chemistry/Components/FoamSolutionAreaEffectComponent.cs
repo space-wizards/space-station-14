@@ -2,6 +2,7 @@
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
@@ -16,7 +17,7 @@ namespace Content.Server.Chemistry.Components
     public class FoamSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "FoamSolutionAreaEffect";
-        public const string SolutionName = "foam";
+        public static string SolutionName = "foam";
 
         [DataField("foamedMetalPrototype")] private string? _foamedMetalPrototype;
 

@@ -5,6 +5,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Cooldown;
@@ -31,6 +32,7 @@ namespace Content.Server.Fluids.Components
     internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
     {
         public const float SprayDistance = 3f;
+        public const string SolutionName = "spray";
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -79,7 +81,7 @@ namespace Content.Server.Fluids.Components
 
         [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
-		
+
         [DataField("safetySound")]
         public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 
@@ -87,7 +89,7 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit CurrentVolume {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "spray", out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution?.CurrentVolume ?? ReagentUnit.Zero;
             }
         }
@@ -130,7 +132,7 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "spray", out var contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;

@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
@@ -25,21 +26,21 @@ namespace Content.Server.Extinguisher
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (eventArgs.Target == null || !eventArgs.CanReach)
             {
                 return false;
             }
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
-                && EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
-                && EntitySystem.Get<SolutionContainerSystem>().TryGetDefaultSolution(Owner, out var container))
+                && solutionContainerSystem.TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
+                &&solutionContainerSystem.TryGetDefaultSolution(Owner, out var container))
             {
-                var chemistrySystem = EntitySystem.Get<SolutionContainerSystem>();
                 var trans = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
-                    var drained = chemistrySystem.Drain(targetSolution, trans);
-                    chemistrySystem.TryAddSolution(container, drained);
+                    var drained = solutionContainerSystem.Drain(targetSolution, trans);
+                    solutionContainerSystem.TryAddSolution(container, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,

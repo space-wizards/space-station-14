@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Smoking;
 using Robust.Server.GameObjects;
@@ -14,11 +14,12 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
+        public const string SolutionName = "smoke";
 
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "smoke", out var solution))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 appearance.SetData(SmokeVisuals.Color, solution.Color);
             }
@@ -26,7 +27,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "smoke", out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))

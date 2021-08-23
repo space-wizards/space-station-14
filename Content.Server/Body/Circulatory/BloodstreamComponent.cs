@@ -4,7 +4,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;

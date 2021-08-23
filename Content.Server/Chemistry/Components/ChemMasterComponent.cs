@@ -6,8 +6,8 @@ using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Chemistry.Solution.Components;
@@ -176,8 +176,7 @@ namespace Content.Server.Chemistry.Components
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = _beakerContainer.ContainedEntity;
-            EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(beaker, SolutionName, out var beakerSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution);
             // TODO this is just a guess
             if (beaker == null || beakerSolution == null)
             {

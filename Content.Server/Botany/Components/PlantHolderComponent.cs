@@ -9,7 +9,7 @@ using Content.Server.Plants;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;

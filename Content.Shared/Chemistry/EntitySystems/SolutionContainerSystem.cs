@@ -15,10 +15,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using SolutionAlias = Content.Shared.Chemistry.Solution.Solution;
 
-
-namespace Content.Shared.Chemistry
+namespace Content.Shared.Chemistry.EntitySystems
 {
     /// <summary>
     /// This event alerts system that the solution was changed
@@ -37,7 +35,7 @@ namespace Content.Shared.Chemistry
     /// Part of Chemistry system deal with SolutionContainers
     /// </summary>
     [UsedImplicitly]
-    public class SolutionContainerSystem : EntitySystem
+    public partial class SolutionContainerSystem : EntitySystem
     {
         [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -78,7 +76,7 @@ namespace Content.Shared.Chemistry
             if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
             {
                 Logger.Error(
-                    $"{nameof(SolutionAlias)} could not find the prototype associated with {primaryReagent}.");
+                    $"{nameof(Solution.Solution)} could not find the prototype associated with {primaryReagent}.");
                 return;
             }
 
@@ -94,7 +92,7 @@ namespace Content.Shared.Chemistry
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
-        private void UpdateAppearance(SolutionAlias solution)
+        private void UpdateAppearance(Solution.Solution solution)
         {
             if (solution.Owner.Deleted
                 || !solution.Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
@@ -104,51 +102,13 @@ namespace Content.Shared.Chemistry
             solution.Owner.Dirty();
         }
 
-        public void Refill(SolutionAlias solutionHolder, SolutionAlias solution)
-        {
-            if (!solutionHolder.Owner.HasComponent<RefillableSolutionComponent>())
-                return;
-
-            TryAddSolution(solutionHolder, solution);
-        }
-
-        public void Inject(SolutionAlias solutionHolder, SolutionAlias solution)
-        {
-            if (!solutionHolder.Owner.HasComponent<InjectableSolutionComponent>())
-                return;
-
-            TryAddSolution(solutionHolder, solution);
-        }
-
-        public SolutionAlias Draw(SolutionAlias solutionHolder, ReagentUnit amount)
-        {
-            if (!solutionHolder.Owner.HasComponent<DrawableSolutionComponent>())
-            {
-                var newSolution = new SolutionAlias();
-                newSolution.Owner = solutionHolder.Owner;
-            }
-
-            return SplitSolution(solutionHolder, amount);
-        }
-
-        public SolutionAlias Drain(SolutionAlias solutionHolder, ReagentUnit amount)
-        {
-            if (!solutionHolder.Owner.HasComponent<DrainableSolutionComponent>())
-            {
-                var newSolution = new SolutionAlias();
-                newSolution.Owner = solutionHolder.Owner;
-            }
-
-            return SplitSolution(solutionHolder, amount);
-        }
-
         /// <summary>
         ///     Removes part of the solution in the container.
         /// </summary>
         /// <param name="solutionHolder"></param>
         /// <param name="quantity">the volume of solution to remove.</param>
         /// <returns>The solution that was removed.</returns>
-        public SolutionAlias SplitSolution(SolutionAlias solutionHolder, ReagentUnit quantity)
+        public Solution.Solution SplitSolution(Solution.Solution solutionHolder, ReagentUnit quantity)
         {
             var splitSol = solutionHolder.SplitSolution(quantity);
             splitSol.Owner = solutionHolder.Owner;
@@ -156,7 +116,7 @@ namespace Content.Shared.Chemistry
             return splitSol;
         }
 
-        private void UpdateChemicals(SolutionAlias solutionHolder, bool needsReactionsProcessing = false)
+        private void UpdateChemicals(Solution.Solution solutionHolder, bool needsReactionsProcessing = false)
         {
             // Process reactions
             if (needsReactionsProcessing && solutionHolder.CanReact)
@@ -169,7 +129,7 @@ namespace Content.Shared.Chemistry
             RaiseLocalEvent(solutionHolder.Owner.Uid, new SolutionChangedEvent(solutionHolder.Owner));
         }
 
-        public void RemoveAllSolution(SolutionAlias solutionHolder)
+        public void RemoveAllSolution(Solution.Solution solutionHolder)
         {
             if (solutionHolder.CurrentVolume == 0)
                 return;
@@ -197,7 +157,7 @@ namespace Content.Shared.Chemistry
         /// <param name="quantity">The amount of reagent to add.</param>
         /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
         /// <returns>If all the reagent could be added.</returns>
-        public bool TryAddReagent(SolutionAlias? solutionHolder, string reagentId, ReagentUnit quantity,
+        public bool TryAddReagent(Solution.Solution? solutionHolder, string reagentId, ReagentUnit quantity,
             out ReagentUnit acceptedQuantity)
         {
             if (solutionHolder == null)
@@ -222,7 +182,7 @@ namespace Content.Shared.Chemistry
         /// <param name="reagentId">The Id of the reagent to remove.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>If the reagent to remove was found in the container.</returns>
-        public bool TryRemoveReagent(SolutionAlias? container, string reagentId, ReagentUnit quantity)
+        public bool TryRemoveReagent(Solution.Solution? container, string reagentId, ReagentUnit quantity)
         {
             if (container == null || !container.ContainsReagent(reagentId))
                 return false;
@@ -238,7 +198,7 @@ namespace Content.Shared.Chemistry
         /// <param name="targetSolution">The container to which we try to add.</param>
         /// <param name="solution">The solution to try to add.</param>
         /// <returns>If the solution could be added.</returns>
-        public bool TryAddSolution(SolutionAlias? targetSolution, SolutionAlias solution)
+        public bool TryAddSolution(Solution.Solution? targetSolution, Solution.Solution solution)
         {
             if (targetSolution == null || !targetSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
                 return false;
@@ -248,80 +208,8 @@ namespace Content.Shared.Chemistry
             return true;
         }
 
-        public bool TryGetInjectableSolution(IEntity owner,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (owner.TryGetComponent(out InjectableSolutionComponent? injectable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(injectable.Solution, out solution))
-            {
-                return true;
-            }
-
-            solution = null;
-            return false;
-        }
-
-        public SolutionAlias? GetInjectableSolution(IEntity ownerEntity)
-        {
-            TryGetInjectableSolution(ownerEntity, out var solution);
-            return solution;
-        }
-
-        public bool TryGetRefillableSolution(IEntity owner,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (owner.TryGetComponent(out RefillableSolutionComponent? refillable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(refillable.Solution, out solution))
-            {
-                return true;
-            }
-
-            solution = null;
-            return false;
-        }
-
-        public bool TryGetDrainableSolution(IEntity owner,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (owner.TryGetComponent(out DrainableSolutionComponent? drainable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(drainable.Solution, out solution))
-            {
-                solution.Owner = owner;
-                return true;
-            }
-
-            solution = null;
-            return false;
-        }
-
-        public bool TryGetDrawableSolution(IEntity owner,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (owner.TryGetComponent(out DrawableSolutionComponent? drawable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(drawable.Solution, out solution))
-            {
-                solution.Owner = owner;
-                return true;
-            }
-
-            solution = null;
-            return false;
-        }
-
-        public ReagentUnit DrainAvailable(IEntity? owner)
-        {
-            if (owner == null || !TryGetDrainableSolution(owner, out var solution))
-                return ReagentUnit.Zero;
-
-            return solution.CurrentVolume;
-        }
-
         public bool TryGetSolution(IEntity? target, string name,
-            [NotNullWhen(true)] out SolutionAlias? solution)
+            [NotNullWhen(true)] out Solution.Solution? solution)
         {
             if (target == null || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
             {
@@ -332,41 +220,7 @@ namespace Content.Shared.Chemistry
             return solutionsMgr.Solutions.TryGetValue(name, out solution);
         }
 
-        public bool HasFitsInDispenser(IEntity owner)
-        {
-            return !owner.Deleted && owner.HasComponent<FitsInDispenserComponent>();
-        }
-
-        public bool TryGetFitsInDispenser(IEntity owner,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (owner.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
-            {
-                return true;
-            }
-
-            solution = null;
-            return false;
-        }
-
-        public bool TryGetDefaultSolution(IEntity? target,
-            [NotNullWhen(true)] out SolutionAlias? solution)
-        {
-            if (target == null
-                || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr)
-                || solutionsMgr.Solutions.Count != 1)
-            {
-                solution = null;
-                return false;
-            }
-
-            solution = solutionsMgr.Solutions.Values.ToArray()[0];
-            return true;
-        }
-
-        public SolutionAlias? EnsureSolution(IEntity owner, string name)
+        public Solution.Solution? EnsureSolution(IEntity owner, string name)
         {
             if (owner.Deleted || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
             {
@@ -376,7 +230,7 @@ namespace Content.Shared.Chemistry
 
             if (!solutionsMgr.Solutions.ContainsKey(name))
             {
-                var newSolution = new SolutionAlias();
+                var newSolution = new Solution.Solution();
                 newSolution.Owner = owner;
                 solutionsMgr.Solutions.Add(name, newSolution);
             }
@@ -389,49 +243,8 @@ namespace Content.Shared.Chemistry
             return !owner.Deleted && owner.HasComponent<SolutionContainerManagerComponent>();
         }
 
-        public void AddDrainable(IEntity owner, string name)
-        {
-            if (owner.Deleted)
-                return;
 
-            if (!owner.TryGetComponent(out DrainableSolutionComponent? component))
-            {
-                component = owner.AddComponent<DrainableSolutionComponent>();
-            }
-
-            component.Solution = name;
-        }
-        public void RemoveDrainable(IEntity owner)
-        {
-            if (owner.Deleted || !owner.HasComponent<DrainableSolutionComponent>())
-                return;
-
-            owner.RemoveComponent<DrainableSolutionComponent>();
-        }
-
-        public void AddRefillable(IEntity owner, string name)
-        {
-            if (owner.Deleted)
-                return;
-
-            if (!owner.TryGetComponent(out RefillableSolutionComponent? component))
-            {
-                component = owner.AddComponent<RefillableSolutionComponent>();
-            }
-
-            component.Solution = name;
-        }
-
-        public void RemoveRefillable(IEntity owner)
-        {
-            if (owner.Deleted || !owner.HasComponent<RefillableSolutionComponent>())
-                return;
-
-            owner.RemoveComponent<RefillableSolutionComponent>();
-        }
-
-
-        public IList<string> RemoveEachReagent(SolutionAlias solution, ReagentUnit quantity)
+        public IList<string> RemoveEachReagent(Solution.Solution solution, ReagentUnit quantity)
         {
             var removedReagent = new List<string>(solution.Contents.Count);
             if (quantity <= 0)
@@ -450,7 +263,7 @@ namespace Content.Shared.Chemistry
                 }
                 else
                 {
-                    solution.Contents[i] = new SolutionAlias.ReagentQuantity(reagentId, newQuantity);
+                    solution.Contents[i] = new Solution.Solution.ReagentQuantity(reagentId, newQuantity);
                     solution.TotalVolume -= quantity;
                 }
 
@@ -458,7 +271,7 @@ namespace Content.Shared.Chemistry
             return removedReagent;
         }
 
-        public void TryRemoveAllReagents(SolutionAlias solution, List<SolutionAlias.ReagentQuantity> removeReagents)
+        public void TryRemoveAllReagents(Solution.Solution solution, List<Solution.Solution.ReagentQuantity> removeReagents)
         {
             foreach (var reagent in removeReagents)
             {
@@ -469,7 +282,7 @@ namespace Content.Shared.Chemistry
 
     public static class SolutionContainerHelpers
     {
-        internal static SolutionContainerVisualState GetVisualState(this SolutionAlias component)
+        internal static SolutionContainerVisualState GetVisualState(this Solution.Solution component)
         {
             var filledVolumeFraction = component.CurrentVolume.Float() / component.MaxVolume.Float();
 

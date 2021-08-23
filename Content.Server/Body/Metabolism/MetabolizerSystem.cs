@@ -2,10 +2,9 @@
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -55,7 +54,7 @@ namespace Content.Server.Body.Metabolism
                 }
             }
             // TODO What goes here??
-            else if (Get<SolutionContainerSystem>().TryGetDefaultSolution(owner,  out var sol))
+            else if (solutionsSys.TryGetDefaultSolution(owner, out var sol))
             {
                 // if we have no mechanism/body but a solution container instead,
                 // we'll just use that to metabolize from
@@ -69,7 +68,7 @@ namespace Content.Server.Body.Metabolism
                 return;
             }
 
-            List<Solution.ReagentQuantity> removeReagents = new (5);
+            List<Solution.ReagentQuantity> removeReagents = new(5);
 
             // Run metabolism for each reagent, remove metabolized reagents
             foreach (var reagent in reagentList)
@@ -107,6 +106,7 @@ namespace Content.Server.Body.Metabolism
 
                 removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
             }
+
             solutionsSys.TryRemoveAllReagents(solution, removeReagents);
         }
     }
