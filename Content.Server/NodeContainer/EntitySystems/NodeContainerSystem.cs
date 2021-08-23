@@ -50,7 +50,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         private static void OnAnchorStateChanged(
             EntityUid uid,
             NodeContainerComponent component,
-            AnchorStateChangedEvent args)
+            ref AnchorStateChangedEvent args)
         {
             foreach (var node in component.Nodes.Values)
             {
@@ -59,7 +59,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             }
         }
 
-        private static void OnRotateEvent(EntityUid uid, NodeContainerComponent container, RotateEvent ev)
+        private static void OnRotateEvent(EntityUid uid, NodeContainerComponent container, ref RotateEvent ev)
         {
             if (ev.NewRotation == ev.OldRotation)
             {
@@ -69,7 +69,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             foreach (var node in container.Nodes.Values)
             {
                 if (node is not IRotatableNode rotatableNode) continue;
-                rotatableNode.RotateEvent(ev);
+                rotatableNode.RotateEvent(ref ev);
             }
         }
     }

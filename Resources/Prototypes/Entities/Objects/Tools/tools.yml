@@ -214,10 +214,13 @@
   id: RCDAmmo
   description: Ammo cartridge for an RCD.
   components:
-    - type: RCDAmmo
-    - type: Sprite
-      sprite: Objects/Tools/rcd.rsi
-      state: rcd_ammo
+  - type: RCDAmmo
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
+    HeldPrefix: ammo
 
 - type: entity
   name: shovel

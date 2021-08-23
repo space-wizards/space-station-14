@@ -10,6 +10,9 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
     state: ointment
+  - type: Item
+    sprite: Objects/Specific/Medical/medical.rsi
+    HeldPrefix: ointment
   - type: Healing
     heal:
       Heat: 10

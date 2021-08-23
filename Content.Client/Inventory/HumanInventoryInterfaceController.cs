@@ -207,10 +207,9 @@ namespace Content.Client.Inventory
                 return;
             if (!Owner.TryGetSlot(slot, out var item))
                 return;
-            if (_itemSlotManager.OnButtonPressed(args, item))
-                return;
 
-            base.HandleInventoryKeybind(args, slot);
+            if (!_itemSlotManager.OnButtonPressed(args, item))
+                base.HandleInventoryKeybind(args, slot);
         }
 
         private void ClearButton(ItemSlotButton button, Slots slot)

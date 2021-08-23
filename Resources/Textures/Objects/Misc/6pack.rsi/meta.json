@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432 and modified by Swept",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "6pack1"
+    },
+	  {
+      "name": "6pack2"
+    },
+    {
+      "name": "6pack3"
+    },
+    {
+      "name": "6pack4"
+    },
+    {
+      "name": "6pack5"
+    },
+    {
+      "name": "6pack6"
+    },
+    {
+      "name": "plastic-thingy"
+    }
+  ]
+}

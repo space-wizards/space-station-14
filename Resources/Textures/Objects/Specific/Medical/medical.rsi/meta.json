@@ -11,6 +11,14 @@
 			"name": "brutepack"
 		},
 		{
+			"name": "brutepack-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "brutepack-inhand-right",
+			"directions": 4
+		},
+		{
 			"name": "cast"
 		},
 		{
@@ -21,6 +29,14 @@
 		},
 		{
 			"name": "ointment"
+		},
+		{
+			"name": "ointment-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "ointment-inhand-right",
+			"directions": 4
 		}
 	]
 }

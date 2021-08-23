@@ -179,6 +179,8 @@ namespace Content.Server.PowerCell.Components
         [Verb]
         public sealed class EjectCellVerb : Verb<PowerCellSlotComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
             {
                 if (!component.ShowVerb || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
