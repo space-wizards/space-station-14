@@ -130,7 +130,7 @@
   - type: Destructible
     thresholds:
     - trigger:
-              !type:DamageTrigger
+        !type:DamageTrigger
         damage: 10
 
 # Pizza
