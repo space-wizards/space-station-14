@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.DoAfter;
 using Content.Server.Notification;
 using Content.Shared.ActionBlocker;
@@ -242,6 +242,8 @@ namespace Content.Server.Climbing.Components
         [Verb]
         private sealed class ClimbVerb : Verb<ClimbableComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
             {
                 if (!component.CanVault(user, component.Owner, out var _))

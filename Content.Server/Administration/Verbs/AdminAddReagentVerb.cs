@@ -43,6 +43,7 @@ namespace Content.Server.Administration.Verbs
             }
 
             data.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
+            data.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
             data.CategoryData = VerbCategories.Debug;
             data.Visibility = VerbVisibility.Invisible;
 

@@ -53,7 +53,8 @@ namespace Content.Shared.Friction
             foreach (var body in map.AwakeBodies)
             {
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
-                if (prediction && !body.Predict ||
+                if (body.Deleted ||
+                    prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
                     Mover.UseMobMovement(body.Owner.Uid)) continue;
 

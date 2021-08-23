@@ -7,6 +7,7 @@ using Content.Client.Verbs;
 using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
+using Content.Shared.Interaction;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -86,26 +87,11 @@ namespace Content.Client.Items.Managers
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
-                var inputSys = _entitySystemManager.GetEntitySystem<InputSystem>();
-
-                var func = args.Function;
-                var funcId = _inputManager.NetworkBindMap.KeyFunctionID(args.Function);
-
-
-                var mousePosWorld = _eyeManager.ScreenToMap(args.PointerLocation);
-
-                var coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(_mapManager, mousePosWorld);
-
-                var message = new FullInputCmdMessage(_gameTiming.CurTick, _gameTiming.TickFraction, funcId, BoundKeyState.Down,
-                    coordinates, args.PointerLocation, item.Uid);
-
-                // client side command handlers will always be sent the local player session.
-                var session = _playerManager.LocalPlayer?.Session;
-                if (session == null)
-                    return false;
-
-                inputSys.HandleInputCommand(session, func, message);
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: false));
+            }
+            else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
+            {
+                _entityManager.EntityNetManager?.SendSystemNetworkMessage(new InteractInventorySlotEvent(item.Uid, altInteract: true));
             }
             else
             {

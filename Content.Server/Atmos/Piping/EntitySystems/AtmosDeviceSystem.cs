@@ -98,7 +98,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             LeaveAtmosphere(component);
         }
 
-        private void OnDeviceAnchorChanged(EntityUid uid, AtmosDeviceComponent component, AnchorStateChangedEvent args)
+        private void OnDeviceAnchorChanged(EntityUid uid, AtmosDeviceComponent component, ref AnchorStateChangedEvent args)
         {
             // Do nothing if the component doesn't require being anchored to function.
             if (!component.RequireAnchored)
@@ -110,7 +110,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
                 LeaveAtmosphere(component);
         }
 
-        private void OnDeviceParentChanged(EntityUid uid, AtmosDeviceComponent component, EntParentChangedMessage args)
+        private void OnDeviceParentChanged(EntityUid uid, AtmosDeviceComponent component, ref EntParentChangedMessage args)
         {
             RejoinAtmosphere(component);
         }

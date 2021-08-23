@@ -1,7 +1,6 @@
 ﻿- type: vendingMachineInventory
   id: RobustSoftdrinksInventory
   name: Robust Softdrinks
-  description: A softdrink vendor provided by Robust Industries, LLC.
   animationDuration: 1.1
   spriteName: cola
   startingInventory:

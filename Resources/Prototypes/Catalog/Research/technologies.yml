@@ -244,6 +244,25 @@
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
 
+# Basic Parts Technology Tree
+
+- type: technology
+  name: "Basic Parts Technology"
+  id: BasicPartsTechnology
+  description: They aren't great, but at least they're something.
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_mani
+  requiredPoints: 3000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - CapacitorStockPart
+    - MatterBinStockPart
+    - MicroLaserStockPart
+    - MicroManipulatorStockPart
+    - ScanningModuleStockPart
+
 # Bluespace Theory Technology Tree
 
 # - type: technology

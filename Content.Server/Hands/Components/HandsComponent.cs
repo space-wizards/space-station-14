@@ -82,10 +82,10 @@ namespace Content.Server.Hands.Components
                 .TryInteractionActivate(Owner, heldEntity);
         }
 
-        protected override void DoUse(IEntity heldEntity)
+        protected override void DoUse(IEntity heldEntity, bool altInteract = false)
         {
             _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity);
+                .TryUseInteraction(Owner, heldEntity, altInteract);
         }
 
         protected override void HandlePickupAnimation(IEntity entity)

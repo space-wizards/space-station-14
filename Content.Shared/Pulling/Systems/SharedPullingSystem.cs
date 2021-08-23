@@ -62,7 +62,6 @@ namespace Content.Shared.Pulling
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
-                .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
                 .Register<SharedPullingSystem>();
         }
 
@@ -126,7 +125,7 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Add(component);
         }
 
-        private void PullerMoved(MoveEvent ev)
+        private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
             if (!TryGetPulled(ev.Sender, out var pulled))
@@ -192,28 +191,6 @@ namespace Content.Shared.Pulling
             pullable.TryMoveTo(coords.ToMap(EntityManager));
 
             return false;
-        }
-
-        private void HandleReleasePulledObject(ICommonSession? session)
-        {
-            var player = session?.AttachedEntity;
-
-            if (player == null)
-            {
-                return;
-            }
-
-            if (!TryGetPulled(player, out var pulled))
-            {
-                return;
-            }
-
-            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
-            {
-                return;
-            }
-
-            pullable.TryStopPull();
         }
 
         private void SetPuller(IEntity puller, IEntity pulled)

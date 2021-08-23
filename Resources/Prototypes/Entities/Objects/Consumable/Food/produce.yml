@@ -115,6 +115,9 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    HeldPrefix: peel
   - type: Slippery
     intersectPercentage: 0.2
   - type: CollisionWake

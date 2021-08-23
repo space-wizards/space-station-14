@@ -175,6 +175,7 @@ namespace Content.Server.StationEvents
                 if (type.IsAbstract) continue;
 
                 var stationEvent = (StationEvent) typeFactory.CreateInstance(type);
+                IoCManager.InjectDependencies(stationEvent);
                 _stationEvents.Add(stationEvent);
             }
 
