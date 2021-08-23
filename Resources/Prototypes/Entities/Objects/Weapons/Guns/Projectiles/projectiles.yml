@@ -311,7 +311,7 @@
     - state: plain
   - type: SolutionContainer
     solutions:
-      ammo:
+      food:
         reagents:
         - ReagentId: Nutriment
           Quantity: 8
