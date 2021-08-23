@@ -35,3 +35,6 @@
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    HeldPrefix: pen

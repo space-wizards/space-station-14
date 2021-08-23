@@ -39,4 +39,5 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg

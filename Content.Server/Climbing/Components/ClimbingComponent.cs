@@ -41,7 +41,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        protected override bool OwnerIsTransitioning
+        public override bool OwnerIsTransitioning
         {
             get => base.OwnerIsTransitioning;
             set

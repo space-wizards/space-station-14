@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Light;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -17,7 +18,7 @@ namespace Content.Client.Light.Visualizers
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
-        [DataField("blinkingSound")] private string? _blinkingSound;
+        [DataField("blinkingSound", required: true)] private SoundSpecifier _blinkingSound = default!;
 
         private bool _wasBlinking;
 
@@ -96,7 +97,7 @@ namespace Content.Client.Light.Visualizers
             var randomTime = random.NextFloat() *
                 (_maxBlinkingTime - _minBlinkingTime) + _minBlinkingTime;
 
-            var blinkingAnim =  new Animation()
+            var blinkingAnim = new Animation()
             {
                 Length = TimeSpan.FromSeconds(randomTime),
                 AnimationTracks =
@@ -122,18 +123,15 @@ namespace Content.Client.Light.Visualizers
                         }
                     }
                 }
-             };
+            };
 
-            if (_blinkingSound != null)
+            blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
             {
-                blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+                KeyFrames =
                 {
-                    KeyFrames =
-                        {
-                            new AnimationTrackPlaySound.KeyFrame(_blinkingSound, 0.5f)
-                        }
-                });
-            }
+                    new AnimationTrackPlaySound.KeyFrame(_blinkingSound.GetSound(), 0.5f)
+                }
+            });
 
             return blinkingAnim;
         }

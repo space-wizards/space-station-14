@@ -25,16 +25,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new MovementAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanMove())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 

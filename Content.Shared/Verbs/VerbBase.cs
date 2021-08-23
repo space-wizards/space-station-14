@@ -1,4 +1,4 @@
-﻿
+
 namespace Content.Shared.Verbs
 {
     public abstract class VerbBase
@@ -15,5 +15,10 @@ namespace Content.Shared.Verbs
         ///     OR the user can be the entity's container
         /// </summary>
         public virtual bool BlockedByContainers => true;
+
+        /// <summary>
+        ///     If true, this verb can be activated by alt-clicking on the entity.
+        /// </summary>
+        public virtual bool AlternativeInteraction => false;
     }
 }

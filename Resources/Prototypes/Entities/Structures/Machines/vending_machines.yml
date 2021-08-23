@@ -1,8 +1,8 @@
-﻿# Vending machine descriptions are stored in vendingMachineInventory YAML files.
 - type: entity
   id: VendingMachine
   parent: BaseMachinePowered
   name: vending machine
+  description: Just add capitalism!
   abstract: true
   components:
   - type: Sprite
@@ -132,7 +132,7 @@
   parent: VendingMachine
   id: VendingMachineCart
   name: PTech
-  description: Cartridges for PDAs.
+  description: PTech vending! Providing a ROBUST selection of PDA cartridges.
   components:
   - type: VendingMachine
     pack: PTechInventory
@@ -218,7 +218,7 @@
   parent: VendingMachine
   id: VendingMachineCoffee
   name: Solar's Best Hot Drinks
-  description: A vending machine which dispenses hot drinks.
+  description: Served boiling so it stays hot all shift!
   components:
   - type: VendingMachine
     pack: HotDrinksMachineInventory
@@ -312,6 +312,7 @@
   parent: VendingMachine
   id: VendingMachineDiscount
   name: Discount Dan's
+  description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   components:
   - type: VendingMachine
     pack: DiscountDansInventory
@@ -368,7 +369,7 @@
   parent: VendingMachine
   id: VendingMachineMedical
   name: NanoMed Plus
-  description: Medical drug dispenser.
+  description: It's a medical drug dispenser. Natural chemicals only!
   components:
   - type: VendingMachine
     pack: NanoMedPlusInventory
@@ -399,7 +400,7 @@
   parent: VendingMachine
   id: VendingMachineNutri
   name: NutriMax
-  description: A plant nutrients vendor.
+  description: A vending machine containing nutritional substances for plants and botanical tools.
   components:
   - type: VendingMachine
     pack: NutriMaxInventory
@@ -430,6 +431,7 @@
   parent: VendingMachine
   id: VendingMachineSec
   name: SecTech
+  description: A vending machine containing Security equipment. A label reads SECURITY PERSONNEL ONLY.
   components:
   - type: VendingMachine
     pack: SecTechInventory
@@ -459,6 +461,7 @@
   parent: VendingMachine
   id: VendingMachineSeeds
   name: MegaSeed Servitor
+  description: For when you need seeds fast. Hands down the best seed selection on the station!
   components:
   - type: VendingMachine
     pack: MegaSeedServitorInventory
@@ -488,6 +491,7 @@
   parent: VendingMachine
   id: VendingMachineSmartFridge
   name: SmartFridge
+  description: A refrigerated storage unit for storing medicine and chemicals.
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
@@ -515,6 +519,7 @@
   parent: VendingMachine
   id: VendingMachineSnack
   name: Getmore Chocolate Corp
+  description: A snack machine courtesy of the Getmore Chocolate Corporation, based out of Mars.
   components:
   - type: VendingMachine
     pack: GetmoreChocolateCorpInventory
@@ -544,6 +549,7 @@
   parent: VendingMachine
   id: VendingMachineSovietSoda
   name: BODA
+  description: An old vending machine containing sweet water.
   components:
   - type: VendingMachine
     pack: BodaInventory
@@ -573,6 +579,7 @@
   parent: VendingMachine
   id: VendingMachineTheater
   name: AutoDrobe
+  description: A vending machine containing costumes.
   components:
   - type: VendingMachine
     pack: AutoDrobeInventory
@@ -606,6 +613,7 @@
   parent: VendingMachine
   id: VendingMachineVendomat
   name: Vendomat
+  description: Only the finest robust equipment in space!
   components:
   - type: VendingMachine
     pack: VendomatInventory
@@ -636,6 +644,7 @@
   parent: VendingMachine
   id: VendingMachineWallMedical
   name: NanoMed
+  description: "It's a wall-mounted medical equipment dispenser. Natural chemicals only!"
   components:
   - type: VendingMachine
     pack: NanoMedInventory
@@ -663,6 +672,7 @@
   parent: VendingMachine
   id: VendingMachineYouTool
   name: YouTool
+  description: "A vending machine containing standard tools. A label reads: Tools for tools."
   components:
   - type: VendingMachine
     pack: YouToolInventory

@@ -4,8 +4,8 @@
   parent: BaseItem
   abstract: true
   components:
-    - type: Smoking
-      duration: 50
-    - type: Appearance
-      visuals:
-        - type: BurnStateVisualizer
+  - type: Smoking
+    duration: 50
+  - type: Appearance
+    visuals:
+      - type: BurnStateVisualizer

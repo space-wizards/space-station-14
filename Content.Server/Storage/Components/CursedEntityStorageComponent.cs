@@ -1,11 +1,13 @@
-using System.Linq;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
+using System.Linq;
 
 namespace Content.Server.Storage.Components
 {
@@ -15,9 +17,12 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     public class CursedEntityStorageComponent : EntityStorageComponent
     {
-         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override string Name => "CursedEntityStorage";
+
+        [DataField("cursedSound")] private SoundSpecifier _cursedSound = new SoundPathSpecifier("/Audio/Effects/teleport_departure.ogg");
+        [DataField("cursedLockerSound")] private SoundSpecifier _cursedLockerSound = new SoundPathSpecifier("/Audio/Effects/teleport_arrival.ogg");
 
         protected override void CloseStorage()
         {
@@ -37,7 +42,7 @@ namespace Content.Server.Storage.Components
 
             var locker = lockerEnt.GetComponent<EntityStorageComponent>();
 
-            if(locker.Open)
+            if (locker.Open)
                 locker.TryCloseStorage(Owner);
 
             foreach (var entity in Contents.ContainedEntities.ToArray())
@@ -46,8 +51,8 @@ namespace Content.Server.Storage.Components
                 locker.Insert(entity);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/teleport_departure.ogg", Owner, AudioHelpers.WithVariation(0.125f));
-            SoundSystem.Play(Filter.Pvs(lockerEnt), "/Audio/Effects/teleport_arrival.ogg", lockerEnt, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(Owner), _cursedSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(lockerEnt), _cursedLockerSound.GetSound(), lockerEnt, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

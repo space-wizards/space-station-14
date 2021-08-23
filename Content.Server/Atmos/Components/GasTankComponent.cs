@@ -15,6 +15,7 @@ using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -44,6 +45,8 @@ namespace Content.Server.Atmos.Components
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
+
+        [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -280,8 +283,7 @@ namespace Content.Server.Atmos.Components
                     if(environment != null)
                         atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
-                        AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     Owner.QueueDelete();
                     return;

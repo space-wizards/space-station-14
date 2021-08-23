@@ -50,6 +50,7 @@ namespace Content.Server.Hands
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ActivateItemInHand, InputCmdHandler.FromDelegate(HandleActivateItem))
+                .Bind(ContentKeyFunctions.AltActivateItemInHand, InputCmdHandler.FromDelegate(HandleAltActivateItem))
                 .Bind(ContentKeyFunctions.ThrowItemInHand, new PointerInputCmdHandler(HandleThrowItem))
                 .Bind(ContentKeyFunctions.SmartEquipBackpack, InputCmdHandler.FromDelegate(HandleSmartEquipBackpack))
                 .Bind(ContentKeyFunctions.SmartEquipBelt, InputCmdHandler.FromDelegate(HandleSmartEquipBelt))
@@ -218,6 +219,14 @@ namespace Content.Server.Hands
                 return;
 
             hands.UseActiveHeldEntity();
+        }
+
+        private void HandleAltActivateItem(ICommonSession? session)
+        {
+            if (!TryGetHandsComp(session, out var hands))
+                return;
+
+            hands.UseActiveHeldEntity(altInteract: true);
         }
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)

@@ -3,6 +3,7 @@
 - type: entity
   parent: BaseItem
   id: BasePlushie
+  abstract: true
   components:
   - type: EmitSoundOnUse
     sound:
@@ -109,6 +110,27 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BaseItem
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    QuickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    Slots:
+    - Helmet
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -478,9 +500,12 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/click.ogg
+    soundInsert:
+      path: /Audio/Weapons/drawbow2.ogg
 
 - type: entity
   parent: BaseItem
@@ -517,9 +542,12 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer

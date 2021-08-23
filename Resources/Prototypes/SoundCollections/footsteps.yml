@@ -68,6 +68,11 @@
   - /Audio/Effects/Footsteps/clownstep2.ogg
 
 - type: soundCollection
+  id: footstep_duck
+  files:
+  - /Audio/Items/Toys/quack.ogg
+
+- type: soundCollection
   id: footstep_heavy
   files:
   - /Audio/Effects/Footsteps/suitstep1.ogg

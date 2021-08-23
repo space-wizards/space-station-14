@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Sound;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -37,7 +38,7 @@ namespace Content.Shared.Chemistry.Reaction
         public IReadOnlyList<IReactionEffect> Effects => _effects;
 
         // TODO SERV3: Empty on the client, (de)serialize on the server with module manager is server module
-        [DataField("sound", serverOnly: true)] public string? Sound { get; private set; } = "/Audio/Effects/Chemistry/bubbles.ogg";
+        [DataField("sound", serverOnly: true)] public SoundSpecifier Sound { get; private set; } = new SoundPathSpecifier("/Audio/Effects/Chemistry/bubbles.ogg");
     }
 
     /// <summary>

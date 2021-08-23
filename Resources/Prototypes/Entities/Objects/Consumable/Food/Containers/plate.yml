@@ -27,8 +27,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateTrash:
@@ -66,8 +67,9 @@
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodPlateSmallTrash:

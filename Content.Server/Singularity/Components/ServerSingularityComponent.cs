@@ -1,5 +1,6 @@
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -7,6 +8,7 @@ using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -60,6 +62,8 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        public float MoveAccumulator;
+
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.
         // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.
@@ -67,6 +71,10 @@ namespace Content.Server.Singularity.Components
         public bool BeingDeletedByAnotherSingularity { get; set; }
 
         private IPlayingAudioStream? _playingSound;
+
+        [DataField("singularityFormingSound")] private SoundSpecifier _singularityFormingSound = new SoundPathSpecifier("/Audio/Effects/singularity_form.ogg");
+        [DataField("singularitySound")] private SoundSpecifier _singularitySound = new SoundPathSpecifier("/Audio/Effects/singularity.ogg");
+        [DataField("singularityCollapsingSound")] private SoundSpecifier _singularityCollapsingSound = new SoundPathSpecifier("/Audio/Effects/singularity_collapse.ogg");
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -83,21 +91,16 @@ namespace Content.Server.Singularity.Components
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
-            Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityFormingSound.GetSound(), Owner);
+            Timer.Spawn(5200, () => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), _singularitySound.GetSound(), Owner, audioParams));
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
-        }
-
-        public void Update(int seconds)
-        {
-            Energy -= EnergyDrain * seconds;
         }
 
         protected override void OnRemove()
         {
             _playingSound?.Stop();
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }
