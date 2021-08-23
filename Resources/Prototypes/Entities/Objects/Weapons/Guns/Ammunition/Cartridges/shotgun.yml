@@ -101,7 +101,7 @@
     projectilesFired: 1
     ammoSpread: 0
   - type: ChemicalAmmo
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       ammo:
         maxVol: 15

@@ -9,7 +9,7 @@
     state: hypo
   - type: Item
     sprite: Objects/Specific/Medical/hypospray.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       hypospray:
         maxVol: 30

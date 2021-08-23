@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -22,7 +22,7 @@
   id: FoodBreadSliceBase
   abstract: true
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 7

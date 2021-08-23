@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 30 # Room for extra condiments

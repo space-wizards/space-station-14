@@ -387,7 +387,7 @@
 # Eek! You can eat them alive for now until someone makes something that detects when
 # a mob is dead or something idk
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

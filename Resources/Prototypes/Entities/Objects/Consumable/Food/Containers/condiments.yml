@@ -12,7 +12,7 @@
   - type: Drink
     openSounds:
       collection: packetOpenSounds
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -32,7 +32,7 @@
   name: Astrotame
   description: The sweetness of a thousand sugars but none of the calories.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -59,7 +59,7 @@
   name: BBQ sauce
   description: Hand wipes not included.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -86,7 +86,7 @@
   name: corn oil
   description: Corn oil. A delicious oil used in cooking. Made from corn.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -113,7 +113,7 @@
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -140,7 +140,7 @@
   name: horseradish sauce
   description: A packet of smelly horseradish sauce.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -167,7 +167,7 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -194,7 +194,7 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -220,7 +220,7 @@
   name: black pepper
   description: Often used to flavor food or make people sneeze.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -246,7 +246,7 @@
   name: salt
   description: Salt. From space oceans, presumably.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -274,7 +274,7 @@
   name: soy sauce
   description: A salty soy-based flavoring.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -300,7 +300,7 @@
   name: sugar
   description: Tasty spacey sugar!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -331,7 +331,7 @@
   - type: Drink
     openSounds:
       collection: pop
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 30
@@ -353,7 +353,7 @@
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -376,7 +376,7 @@
   name: universal enzyme
   description: Used in cooking various dishes.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -399,7 +399,7 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -422,7 +422,7 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -445,7 +445,7 @@
   name: BBQ sauce
   description: Hand wipes not included.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -474,7 +474,7 @@
   - type: Drink
     openSounds:
       collection: pop
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15
@@ -496,7 +496,7 @@
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -519,7 +519,7 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -542,7 +542,7 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -565,7 +565,7 @@
   name: vinegar
   description: Used in cooking to enhance flavor.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

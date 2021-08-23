@@ -11,11 +11,12 @@ namespace Content.Shared.Chemistry.Solution.Components
     [RegisterComponent]
     [DataDefinition]
     [Friend(typeof(SolutionContainerSystem))]
-    public class SolutionContainerManager : Component
+    public class SolutionContainerManagerComponent : Component
     {
-        public override string Name => "SolutionContainer";
+        public override string Name => "SolutionContainerManager";
 
-        [ViewVariables] [DataField("solutions")]
+        [ViewVariables]
+        [DataField("solutions")]
         public readonly Dictionary<string, Solution> Solutions = new();
     }
 }

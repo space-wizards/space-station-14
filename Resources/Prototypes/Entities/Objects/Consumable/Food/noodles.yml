@@ -11,7 +11,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20

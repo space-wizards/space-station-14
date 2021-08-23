@@ -46,11 +46,11 @@ namespace Content.Shared.Chemistry
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SolutionContainerManager, ComponentInit>(InitSolution);
+            SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(InitSolution);
             SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
         }
 
-        private void InitSolution(EntityUid uid, SolutionContainerManager component, ComponentInit args)
+        private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
         {
             foreach (var keyValue in component.Solutions)
             {
@@ -63,7 +63,7 @@ namespace Content.Shared.Chemistry
         private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,
             ExaminedEvent args)
         {
-            if (!args.Examined.TryGetComponent(out SolutionContainerManager? solutionsManager)
+            if (!args.Examined.TryGetComponent(out SolutionContainerManagerComponent? solutionsManager)
                 || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
@@ -180,7 +180,7 @@ namespace Content.Shared.Chemistry
 
         public void RemoveAllSolution(IEntity owner)
         {
-            if (!owner.TryGetComponent(out SolutionContainerManager? solutionContainerManager))
+            if (!owner.TryGetComponent(out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -252,7 +252,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (owner.TryGetComponent(out InjectableSolutionComponent? injectable) &&
-                owner.TryGetComponent(out SolutionContainerManager? manager) &&
+                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
                 return true;
@@ -272,7 +272,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (owner.TryGetComponent(out RefillableSolutionComponent? refillable) &&
-                owner.TryGetComponent(out SolutionContainerManager? manager) &&
+                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(refillable.Solution, out solution))
             {
                 return true;
@@ -286,7 +286,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (owner.TryGetComponent(out DrainableSolutionComponent? drainable) &&
-                owner.TryGetComponent(out SolutionContainerManager? manager) &&
+                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
                 solution.Owner = owner;
@@ -301,7 +301,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (owner.TryGetComponent(out DrawableSolutionComponent? drawable) &&
-                owner.TryGetComponent(out SolutionContainerManager? manager) &&
+                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
                 solution.Owner = owner;
@@ -323,7 +323,7 @@ namespace Content.Shared.Chemistry
         public bool TryGetSolution(IEntity? target, string name,
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
-            if (target == null || target.Deleted || !target.TryGetComponent(out SolutionContainerManager? solutionsMgr))
+            if (target == null || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
             {
                 solution = null;
                 return false;
@@ -341,7 +341,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (owner.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
-                owner.TryGetComponent(out SolutionContainerManager? manager) &&
+                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
             {
                 return true;
@@ -355,7 +355,7 @@ namespace Content.Shared.Chemistry
             [NotNullWhen(true)] out SolutionAlias? solution)
         {
             if (target == null
-                || target.Deleted || !target.TryGetComponent(out SolutionContainerManager? solutionsMgr)
+                || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr)
                 || solutionsMgr.Solutions.Count != 1)
             {
                 solution = null;
@@ -368,7 +368,7 @@ namespace Content.Shared.Chemistry
 
         public SolutionAlias? EnsureSolution(IEntity owner, string name)
         {
-            if (owner.Deleted || !owner.TryGetComponent(out SolutionContainerManager? solutionsMgr))
+            if (owner.Deleted || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
             {
                 Logger.Warning($@"Entity (id:{owner.Uid}) is deleted or has no container manager");
                 return null;
@@ -386,7 +386,7 @@ namespace Content.Shared.Chemistry
 
         public bool HasSolution(IEntity owner)
         {
-            return !owner.Deleted && owner.HasComponent<SolutionContainerManager>();
+            return !owner.Deleted && owner.HasComponent<SolutionContainerManagerComponent>();
         }
 
         public void AddDrainable(IEntity owner, string name)

@@ -10,7 +10,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15
@@ -32,7 +32,7 @@
   components:
   - type: Food
     trash: FoodPlateSmall
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 5

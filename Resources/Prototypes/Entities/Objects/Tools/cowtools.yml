@@ -117,7 +117,7 @@
   - type: ItemCooldown
   - type: MeleeWeapon
   - type: ItemStatus
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       welder:
         maxVol: 50

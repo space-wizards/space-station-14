@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManager? contents)) return;
+            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
             foreach (var (_, value) in contents.Solutions)
             {
@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Update(float frameTime)
         {
             foreach (var (vaporComp, solution) in ComponentManager
-                .EntityQuery<VaporComponent, SolutionContainerManager>(true))
+                .EntityQuery<VaporComponent, SolutionContainerManagerComponent>(true))
             {
                 foreach (var (_, value) in solution.Solutions)
                 {

@@ -92,7 +92,7 @@
       - plasma
       - plasma_2
       - plasma_3
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       plasma:
         reagents:

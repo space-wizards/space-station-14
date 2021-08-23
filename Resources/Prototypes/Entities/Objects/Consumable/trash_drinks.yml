@@ -8,7 +8,7 @@
   components:
   - type: Sprite
     state: icon
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10

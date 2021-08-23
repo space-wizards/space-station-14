@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void HandleInit(EntityUid uid, SolutionInjectOnCollideComponent component, ComponentInit args)
         {
             component.Owner
-                .EnsureComponentWarn<SolutionContainerManager>($"{nameof(SolutionInjectOnCollideComponent)} requires a SolutionContainerManager on {component.Owner}!");
+                .EnsureComponentWarn<SolutionContainerManagerComponent>($"{nameof(SolutionInjectOnCollideComponent)} requires a SolutionContainerManager on {component.Owner}!");
         }
 
         private void HandleInjection(EntityUid uid, SolutionInjectOnCollideComponent component, StartCollideEvent args)

@@ -109,7 +109,7 @@ namespace Content.Server.Tools.Components
 
             _welderSystem = _entitySystemManager.GetEntitySystem<WelderSystem>();
 
-            Owner.EnsureComponent<SolutionContainerManager>();
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
             EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "welder");

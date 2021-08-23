@@ -17,7 +17,7 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 50
@@ -81,7 +81,7 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 100
@@ -101,7 +101,7 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 60
@@ -117,7 +117,7 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       beaker:
         maxVol: 300
@@ -136,7 +136,7 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       dropper:
         maxVol: 5
@@ -182,7 +182,7 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
     HeldPrefix: 0
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       injector:
         maxVol: 15
@@ -220,7 +220,7 @@
   - type: Food
     transferAmount: null
     eatMessage: food-swallow
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       pill:
         maxVol: 50

@@ -20,7 +20,7 @@
   - type: ItemStatus
   - type: RefillableSolution
     solution: welder
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       welder:
         reagents:
@@ -45,7 +45,7 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: RefillableSolution
     solution: welder
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       welder:
         reagents:
@@ -69,7 +69,7 @@
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
     solution: welder
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       welder:
         reagents:

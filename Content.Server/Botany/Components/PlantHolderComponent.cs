@@ -41,60 +41,83 @@ namespace Content.Server.Botany.Components
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
 
         public override string Name => "PlantHolder";
 
         [ViewVariables] private int _lastProduce;
+
         [ViewVariables(VVAccess.ReadWrite)] private int _missingGas;
+
         private readonly TimeSpan _cycleDelay = TimeSpan.FromSeconds(15f);
+
         [ViewVariables] private TimeSpan _lastCycle = TimeSpan.Zero;
+
         [ViewVariables(VVAccess.ReadWrite)] private bool _updateSpriteAfterUpdate;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("drawWarnings")]
         public bool DrawWarnings { get; private set; } = false;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float WaterLevel { get; private set; } = 100f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WaterLevel { get; private set; } = 100f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float NutritionLevel { get; private set; } = 100f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float NutritionLevel { get; private set; } = 100f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float PestLevel { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float PestLevel { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float WeedLevel { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WeedLevel { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float Toxins { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Toxins { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public int Age { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int Age { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public int SkipAging { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int SkipAging { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool Dead { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Dead { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool Harvest { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Harvest { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool Sampled { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Sampled { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public int YieldMod { get; set; } = 1;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int YieldMod { get; set; } = 1;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float MutationMod { get; set; } = 1f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float MutationMod { get; set; } = 1f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public float MutationLevel { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float MutationLevel { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float Health { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Health { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public float WeedCoefficient { get; set; } = 1f;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float WeedCoefficient { get; set; } = 1f;
 
-        [ViewVariables(VVAccess.ReadWrite)] public Seed? Seed { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Seed? Seed { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool ImproperHeat { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ImproperHeat { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool ImproperPressure { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ImproperPressure { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool ImproperLight { get; set; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ImproperLight { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] public bool ForceUpdate { get; set; }
-
-        [ComponentDependency] private readonly AppearanceComponent? _appearanceComponent = default!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool ForceUpdate { get; set; }
 
         public void WeedInvasion()
         {
@@ -518,7 +541,8 @@ namespace Content.Server.Botany.Components
 
         public void UpdateReagents()
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "soil", out var solution))
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionSystem.TryGetSolution(Owner, "soil", out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -532,7 +556,7 @@ namespace Content.Server.Botany.Components
             else
             {
                 var one = ReagentUnit.New(1);
-                foreach (var reagent in EntitySystem.Get<SolutionContainerSystem>().RemoveEachReagent(solution, one))
+                foreach (var reagent in solutionSystem.RemoveEachReagent(solution, one))
                 {
                     var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent);
                     reagentProto.ReactionPlant(Owner);
@@ -694,9 +718,9 @@ namespace Content.Server.Botany.Components
                 return true;
             }
 
-            if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetDrainableSolution(usingItem, out var solution)
-                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "soil", out var targetSolution))
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
+            if (solutionSystem.TryGetDrainableSolution(usingItem, out var solution)
+                && solutionSystem.TryGetSolution(Owner, "soil", out var targetSolution))
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;
@@ -710,7 +734,7 @@ namespace Content.Server.Botany.Components
                         AudioHelpers.WithVariation(0.125f));
                 }
 
-                var split = EntitySystem.Get<SolutionContainerSystem>().Drain(solution, amount);
+                var split = solutionSystem.Drain(solution, amount);
                 if (split.TotalVolume == 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",
@@ -723,7 +747,7 @@ namespace Content.Server.Botany.Components
                     ("owner", Owner),
                     ("amount", split.TotalVolume)));
 
-                EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetSolution, split);
+                solutionSystem.TryAddSolution(targetSolution, split);
 
                 ForceUpdateByExternalCause();
 
@@ -781,13 +805,10 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(usingItem, "", out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem, "", out var solution2))
                 {
                     // This deliberately discards overfill.
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution2,
-                        EntitySystem.Get<SolutionContainerSystem>()
-                            .SplitSolution(solution2, solution2.TotalVolume));
+                    solutionSystem.TryAddSolution(solution2, solutionSystem.SplitSolution(solution2, solution2.TotalVolume));
 
                     ForceUpdateByExternalCause();
                 }

@@ -13,7 +13,7 @@
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       fireExtinguisher:
         maxVol: 100

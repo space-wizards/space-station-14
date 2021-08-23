@@ -14,7 +14,7 @@
     state: bottle-1
   - type: Drink
     isOpen: true
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 30

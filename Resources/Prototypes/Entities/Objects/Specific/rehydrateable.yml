@@ -4,7 +4,7 @@
   name: monkey cube
   description: Just add water!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       cube:
         maxVol: 11 # needs room for water
@@ -48,7 +48,7 @@
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       plushie:
         maxVol: 11 # needs room for water

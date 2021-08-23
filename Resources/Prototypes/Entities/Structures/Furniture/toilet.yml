@@ -13,7 +13,7 @@
   - type: Toilet
   - type: SecretStash
     secretPartName: the toilet cistern
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       toilet:
         maxVol: 250
@@ -34,7 +34,7 @@
   parent: ToiletEmpty
   suffix: Dirty Water
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       toilet:
         reagents:

@@ -13,10 +13,13 @@ namespace Content.Server.Chemistry.Components
     {
         public override string Name => "Rehydratable";
 
-        [ViewVariables] [DataField("catalyst")]
+        [ViewVariables]
+        [DataField("catalyst")]
         internal string _catalystPrototype = "Water";
 
-        [ViewVariables] [DataField("target")] internal string? _targetPrototype = default!;
+        [ViewVariables]
+        [DataField("target")]
+        internal string? _targetPrototype = default!;
 
         internal bool _expanding;
     }

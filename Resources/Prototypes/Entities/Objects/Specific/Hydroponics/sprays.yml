@@ -11,7 +11,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: plantbgone
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 100
@@ -34,7 +34,7 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: weedspray
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 50
@@ -59,7 +59,7 @@
   components:
   - type: Sprite
     state: pestspray
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 50

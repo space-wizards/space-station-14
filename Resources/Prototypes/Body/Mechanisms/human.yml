@@ -11,7 +11,7 @@
     sprite: Mobs/Species/Human/organs.rsi
   - type: Mechanism
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       organ:
         reagents:
@@ -218,7 +218,7 @@
     - !type:StomachBehavior
       max_volume: 250
       digestionDelay: 20
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 250

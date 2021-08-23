@@ -33,7 +33,7 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       tank:
         maxVol: 1500

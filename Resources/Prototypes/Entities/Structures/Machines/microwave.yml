@@ -5,7 +5,7 @@
   description: It's magic.
   components:
   - type: Microwave
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       microwave:
         maxVol: 100

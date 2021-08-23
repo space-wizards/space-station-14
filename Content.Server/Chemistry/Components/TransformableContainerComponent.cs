@@ -36,7 +36,7 @@ namespace Content.Server.Chemistry.Components
         {
             base.Startup();
 
-            Owner.EnsureComponentWarn<SolutionContainerManager>();
+            Owner.EnsureComponentWarn<SolutionContainerManagerComponent>();
             Owner.EnsureComponentWarn<FitsInDispenserComponent>();
         }
     }

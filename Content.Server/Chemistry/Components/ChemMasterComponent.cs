@@ -38,18 +38,26 @@ namespace Content.Server.Chemistry.Components
     [ComponentReference(typeof(IInteractUsing))]
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
     {
-        [ViewVariables] private ContainerSlot _beakerContainer = default!;
-        [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
-        [ViewVariables] private bool _bufferModeTransfer = true;
+        [ViewVariables]
+        private ContainerSlot _beakerContainer = default!;
+
+        [ViewVariables]
+        private bool HasBeaker => _beakerContainer.ContainedEntity != null;
+
+        [ViewVariables]
+        private bool _bufferModeTransfer = true;
 
         [ViewVariables]
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
-        [ViewVariables] private readonly Solution BufferSolution = new();
+        [ViewVariables]
+        private readonly Solution BufferSolution = new();
 
-        [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
+        [ViewVariables]
+        private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
 
-        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        [DataField("clickSound")]
+        private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -169,7 +177,7 @@ namespace Content.Server.Chemistry.Components
         {
             var beaker = _beakerContainer.ContainedEntity;
             EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(beaker, "beaker", out var beakerSolution);
+                .TryGetSolution(beaker, SolutionName, out var beakerSolution);
             // TODO this is just a guess
             if (beaker == null || beakerSolution == null)
             {
@@ -223,8 +231,7 @@ namespace Content.Server.Chemistry.Components
             if (beaker is null)
                 return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(beaker, "beaker", out var beakerSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution))
                 return;
 
             if (isBuffer)

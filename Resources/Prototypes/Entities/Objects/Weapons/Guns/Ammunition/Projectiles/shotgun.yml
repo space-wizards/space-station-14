@@ -89,7 +89,7 @@
   - type: Projectile
     damages:
       Blunt: 1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       ammo:
         maxVol: 15

@@ -14,7 +14,7 @@
     state: cleaner
   - type: Item
     sprite: Objects/Specific/Janitorial/janitorial.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 100
@@ -37,7 +37,7 @@
   suffix: Filled
   parent: SprayBottle
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 100
@@ -52,7 +52,7 @@
   parent: SprayBottle
   suffix: ""
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       spray:
         maxVol: 100
@@ -67,7 +67,7 @@
   name: "vapor"
   abstract: true
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       vapor:
         maxVol: 50

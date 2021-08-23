@@ -44,7 +44,7 @@ namespace Content.Server.Nutrition.Components
             base.Initialize();
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
-            Owner.EnsureComponent<SolutionContainerManager>();
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
             EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "food");
         }
 

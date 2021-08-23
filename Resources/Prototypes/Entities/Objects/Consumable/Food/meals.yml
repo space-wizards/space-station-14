@@ -13,7 +13,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -101,7 +101,7 @@
   components:
   - type: Sprite
     state: mint
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 1

@@ -13,7 +13,7 @@
   - type: Occluder
   - type: SnapGrid
   - type: SmokeSolutionAreaEffect
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       smoke:
         maxVol: 600
@@ -47,7 +47,7 @@
       layer:
       - MobImpassable
   - type: FoamSolutionAreaEffect
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       foam:
         maxVol: 600

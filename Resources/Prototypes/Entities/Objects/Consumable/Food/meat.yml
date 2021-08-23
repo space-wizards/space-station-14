@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -43,7 +43,7 @@
     - Raw
   - type: Sprite
     state: plain
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -69,7 +69,7 @@
     spriteStates:
     - bacon
     - bacon2
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -87,7 +87,7 @@
     - Raw
   - type: Sprite
     state: bear
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -108,7 +108,7 @@
     - Raw
   - type: Sprite
     state: bird
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -129,7 +129,7 @@
     - Raw
   - type: Sprite
     state: bird
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -150,7 +150,7 @@
     - Raw
   - type: Sprite
     state: crab
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -168,7 +168,7 @@
     - Raw
   - type: Sprite
     state: goliath
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -186,7 +186,7 @@
     - Raw
   - type: Sprite
     state: lizard
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -216,7 +216,7 @@
     - Raw
   - type: Sprite
     state: rotten
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -234,7 +234,7 @@
     - Raw
   - type: Sprite
     state: spider
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -255,7 +255,7 @@
     - Raw
   - type: Sprite
     state: spiderleg
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -273,7 +273,7 @@
     - Raw
   - type: Sprite
     state: clump
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -291,7 +291,7 @@
     - Raw
   - type: Sprite
     state: xeno
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -370,7 +370,7 @@
     layers:
     - state: plate-meat
     - state: plain-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -401,7 +401,7 @@
     spriteStates:
     - bacon-cooked
     - bacon2-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -423,7 +423,7 @@
     layers:
     - state: plate-meat
     - state: product-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -448,7 +448,7 @@
     layers:
     - state: plate-meat
     - state: bird-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -473,7 +473,7 @@
     layers:
     - state: plate-meat
     - state: bird-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -501,7 +501,7 @@
     spriteStates:
     - chicken-fried
     - chicken2-fried
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -523,7 +523,7 @@
     layers:
     - state: plate-meat
     - state: crab-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -545,7 +545,7 @@
     layers:
     - state: plate-meat
     - state: goliath-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -567,7 +567,7 @@
     layers:
     - state: plate-meat
     - state: lizard-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -592,7 +592,7 @@
     layers:
     - state: plate-meat
     - state: spiderleg-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -610,7 +610,7 @@
     - Cooked
   - type: Sprite
     state: meatball-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -633,7 +633,7 @@
     - Cutlet
   - type: Sprite
     state: cutlet
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -655,7 +655,7 @@
     - state: cutlet
     - state: cutlet-alpha
       color: brown
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -675,7 +675,7 @@
   - type: Sprite
     state: cutlet
     color: white
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -695,7 +695,7 @@
   - type: Sprite
     state: cutlet
     color: white
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -718,7 +718,7 @@
       color: green
     - state: cutlet-alpha
       color: pink
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -741,7 +741,7 @@
       color: black
     - state: cutlet-alpha
       color: red
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -764,7 +764,7 @@
       color: black
     - state: cutlet-alpha
       color: green
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -796,7 +796,7 @@
     - Cutlet
   - type: Sprite
     state: salami-slice
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -817,7 +817,7 @@
     - Cutlet
   - type: Sprite
     state: cutlet-cooked
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -839,7 +839,7 @@
     - state: cutlet-cooked
     - state: cutlet-alpha
       color: brown
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -859,7 +859,7 @@
   - type: Sprite
     state: cutlet-cooked
     color: white
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -879,7 +879,7 @@
   - type: Sprite
     state: cutlet-cooked
     color: white
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -901,7 +901,7 @@
     layers:
     - state: cutlet-cooked
       color: green
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -924,7 +924,7 @@
       color: black
     - state: cutlet-alpha
       color: red
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -947,7 +947,7 @@
       color: black
     - state: cutlet-alpha
       color: green
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

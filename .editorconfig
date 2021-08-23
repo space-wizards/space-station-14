@@ -1,6 +1,6 @@
 ﻿root = true
 [*]
-
+max_line_length = off
 charset = utf-8
 
 # Indentation and spacing
@@ -115,6 +115,7 @@ csharp_new_line_before_finally = true
 csharp_new_line_before_members_in_object_initializers = false
 csharp_new_line_before_open_brace = all
 csharp_new_line_between_query_expression_clauses = true
+
 
 # Indentation preferences
 #csharp_indent_block_contents = true
@@ -334,6 +335,10 @@ dotnet_naming_symbols.type_parameters_symbols.applicable_kinds = type_parameter
 
 # ReSharper properties
 resharper_braces_for_ifelse = required_for_multiline
+## Attribute newline preferences
+resharper_place_type_attribute_on_same_line = false
+resharper_csharp_place_accessorholder_attribute_on_same_line = false
+resharper_csharp_place_field_attribute_on_same_line = false
 
 [*.{csproj,xml,yml,dll.config,msbuildproj,targets}]
 indent_size = 2

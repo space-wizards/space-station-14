@@ -40,7 +40,7 @@
     drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       soil:
         maxVol: 200

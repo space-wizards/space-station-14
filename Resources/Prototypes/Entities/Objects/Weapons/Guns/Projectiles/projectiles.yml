@@ -309,7 +309,7 @@
     layers:
     - state: tin
     - state: plain
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

@@ -17,7 +17,7 @@
     Slots:
     - Helmet
   - type: Bucket
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       bucket:
         maxVol: 500

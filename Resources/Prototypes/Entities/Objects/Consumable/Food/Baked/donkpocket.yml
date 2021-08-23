@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -39,7 +39,7 @@
   id: FoodDonkpocketWarm
   description: The heated food of choice for the seasoned traitor.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 10
@@ -53,7 +53,7 @@
   id: FoodDonkpocketDank
   description: The food of choice for the seasoned botanist.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -68,7 +68,7 @@
   id: FoodDonkpocketDankWarm
   description: The heated food of choice for the seasoned botanist.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -92,7 +92,7 @@
   id: FoodDonkpocketSpicyWarm
   description: The classic snack food, now maybe a bit too spicy.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -118,7 +118,7 @@
   id: FoodDonkpocketTeriyakiWarm
   description: An East Asian take on the classic stationside snack, now steamy and warm.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -133,7 +133,7 @@
   id: FoodDonkpocketPizza
   description: Delicious, cheesy and surprisingly filling.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -148,7 +148,7 @@
   id: FoodDonkpocketPizzaWarm
   description: Cheese filling really hits the spot when warm.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -163,7 +163,7 @@
   id: FoodDonkpocketHonk
   description: The award-winning donk-pocket that won the hearts of clowns and humans alike.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -180,7 +180,7 @@
   id: FoodDonkpocketHonkWarm
   description: The award-winning donk-pocket, now warm and toasty.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -195,7 +195,7 @@
   id: FoodDonkpocketBerry
   description: A relentlessly sweet donk-pocket first created for use in Operation Iraqi Freedom.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -210,7 +210,7 @@
   id: FoodDonkpocketBerryWarm
   description: A relentlessly sweet donk-pocket, now warm and delicious.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -227,7 +227,7 @@
   id: FoodDonkpocketGondola
   description: The choice to use real gondola meat in the recipe is controversial, to say the least.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -241,7 +241,7 @@
   parent: FoodDonkpocketGondola
   id: FoodDonkpocketGondolaWarm
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -256,7 +256,7 @@
   id: FoodDonkpocketDink
   description: An off-brand lizard donk-pocket, filled with pickled carrot and wrapped with seaweed. Best eaten cold, or even better, not eaten at all.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

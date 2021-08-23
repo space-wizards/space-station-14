@@ -15,6 +15,7 @@ namespace Content.Shared.Chemistry.Components
     public class SharedChemMasterComponent : Component
     {
         public override string Name => "ChemMaster";
+        public const string SolutionName = "beaker";
 
         [Serializable, NetSerializable]
         public class ChemMasterBoundUserInterfaceState : BoundUserInterfaceState

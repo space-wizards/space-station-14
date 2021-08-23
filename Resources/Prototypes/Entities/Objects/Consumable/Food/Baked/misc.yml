@@ -9,7 +9,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/misc.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 5
@@ -259,7 +259,7 @@
     layers:
       - state: tray
       - state: waffles
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -319,7 +319,7 @@
   components:
   - type: Sprite
     state: cannoli
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 15

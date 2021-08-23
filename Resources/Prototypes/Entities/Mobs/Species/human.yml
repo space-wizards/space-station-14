@@ -40,7 +40,7 @@
   - type: Hunger
   - type: Thirst
   # Organs
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       bloodstream:
         maxVol: 250

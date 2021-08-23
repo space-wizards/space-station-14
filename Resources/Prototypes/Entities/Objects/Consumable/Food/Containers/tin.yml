@@ -7,7 +7,7 @@
   name: tin
   description: A tin of something, sealed tight.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -76,7 +76,7 @@
   components:
   - type: Sprite
     state: peachtin-open
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -127,7 +127,7 @@
   components:
   - type: Sprite
     state: peachtinmaint-open
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -177,7 +177,7 @@
   components:
   - type: Sprite
     state: beans-open
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -229,7 +229,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
     state: tin-open
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

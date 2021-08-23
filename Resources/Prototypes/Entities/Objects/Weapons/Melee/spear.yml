@@ -27,7 +27,7 @@
     node: spear
   - type: ItemCooldown
   - type: MeleeChemicalInjector
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       melee:
         maxVol: 5

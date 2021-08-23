@@ -6,7 +6,7 @@
   - type: Drink
     openSounds:
       collection: bottleOpenSounds
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
@@ -51,7 +51,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
@@ -76,7 +76,7 @@
   name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 100
@@ -104,7 +104,7 @@
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
@@ -124,7 +124,7 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
@@ -149,7 +149,7 @@
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
@@ -221,7 +221,7 @@
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 80
@@ -238,7 +238,7 @@
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 80
@@ -255,7 +255,7 @@
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 80

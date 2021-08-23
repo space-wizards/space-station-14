@@ -32,9 +32,6 @@ namespace Content.Server.Chemistry.Components
         [DataField("InjectSound")]
         private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
 
-        [DataField("solution")]
-        private string Solution { get; set; } = "hypospray";
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -60,7 +57,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            solutionsSys.TryGetSolution(Owner, Solution, out var hypoSpraySolution);
+            solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
@@ -125,7 +122,7 @@ namespace Content.Server.Chemistry.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-            return solutionSys.TryGetSolution(Owner, Solution, out var solution)
+            return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
                 : new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
         }

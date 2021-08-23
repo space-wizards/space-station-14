@@ -136,7 +136,7 @@ namespace Content.Server.Body.Behavior
         {
             base.Startup();
 
-            Owner.EnsureComponentWarn(out SolutionContainerManager _);
+            Owner.EnsureComponentWarn(out SolutionContainerManagerComponent _);
             var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "stomach");
             if (solution != null)
             {

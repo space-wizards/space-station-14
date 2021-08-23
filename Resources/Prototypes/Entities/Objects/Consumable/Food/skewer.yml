@@ -10,7 +10,7 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -104,7 +104,7 @@
     layers:
       - state: skewer
       - state: skewer-rat1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -122,7 +122,7 @@
       - state: skewer
       - state: skewer-rat1
       - state: skewer-rat2
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

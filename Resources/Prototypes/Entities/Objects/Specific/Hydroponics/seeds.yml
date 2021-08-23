@@ -4,7 +4,7 @@
   abstract: true
   components:
     - type: Seed
-    - type: SolutionContainer
+    - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed

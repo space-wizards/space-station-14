@@ -3,7 +3,7 @@
   id: ProduceBase
   abstract: true
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
   - type: Sprite
     netsync: false
     state: produce
@@ -20,7 +20,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -37,7 +37,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -59,7 +59,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -76,7 +76,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
-  - type: SolutionContainer
+  - type: SolutionContainerManager
   - type: MeleeWeapon
   - type: Produce
     seed: towercap
@@ -90,7 +90,7 @@
   components:
   - type: Food
     trash: TrashBananaPeel
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -148,7 +148,7 @@
     tags:
     - Carrot
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -171,7 +171,7 @@
   description: When life gives you lemons, be grateful they aren't limes.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -194,7 +194,7 @@
   description: Mmm, tropical.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -220,7 +220,7 @@
   description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -238,7 +238,7 @@
   description: I say to-mah-to, you say tom-mae-to.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -294,7 +294,7 @@
   description: Maybe there's a chicken inside?
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -312,7 +312,7 @@
   description: It's a little piece of Eden.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -336,7 +336,7 @@
   components:
   - type: Food
     trash: FoodCornTrash
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -367,7 +367,7 @@
   description: Nothing to cry over.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -388,7 +388,7 @@
   description: Purple despite the name.
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -409,7 +409,7 @@
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -428,7 +428,7 @@
   abstract: true
   components:
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:

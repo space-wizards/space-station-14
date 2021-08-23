@@ -5,7 +5,7 @@
   components:
   - type: Food
     trash: FoodBowlBig
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         maxVol: 20
@@ -410,7 +410,7 @@
     layers:
     - state: bowl2
     - state: milo
-  - type: SolutionContainer
+  - type: SolutionContainerManager
 # Tastes like miso.
 
 - type: entity

@@ -11,7 +11,7 @@
   - type: Produce
     seed: cannabis
   - type: Food
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       food:
         reagents:
@@ -28,7 +28,7 @@
     stackType: LeavesCannabisDried
     max: 5
     count: 1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       leaves:
         reagents:
@@ -48,7 +48,7 @@
     stackType: GroundCannabis
     max: 5
     count: 1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       leaves:
         reagents:
@@ -83,7 +83,7 @@
     stackType: LeavesTobaccoDried
     max: 5
     count: 1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       leaves:
         reagents:
@@ -103,7 +103,7 @@
     stackType: GroundTobacco
     max: 5
     count: 1
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       leaves:
         reagents:

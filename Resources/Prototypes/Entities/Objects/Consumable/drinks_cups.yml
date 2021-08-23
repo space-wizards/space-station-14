@@ -5,7 +5,7 @@
   name: base cup
   abstract: true
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 10
@@ -147,7 +147,7 @@
   name: Coffee
   description: Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
@@ -163,7 +163,7 @@
   name: Teacup
   description: A plain white porcelain teacup.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
@@ -180,7 +180,7 @@
   name: Lean
   description: Bro Drake has such a cool fade bro Drake is the best bro c'mon bro.
   components:
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       drink:
         reagents:

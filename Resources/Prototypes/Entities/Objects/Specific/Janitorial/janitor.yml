@@ -12,7 +12,7 @@
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Mop
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       mop:
         maxVol: 10
@@ -32,7 +32,7 @@
     drawdepth: Objects
   - type: InteractionOutline
   - type: Bucket
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       bucket:
         maxVol: 500

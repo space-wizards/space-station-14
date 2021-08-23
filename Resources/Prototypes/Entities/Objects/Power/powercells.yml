@@ -15,7 +15,7 @@
   - type: PowerCell
   - type: Sprite
     netsync: false
-  - type: SolutionContainer
+  - type: SolutionContainerManager
     solutions:
       powerCell:
         maxVol: 5
