@@ -1,25 +1,7 @@
 - type: latheRecipe
-  id: MicroManipulatorStockPart
-  icon: Objects/Misc/stock_parts.rsi/micro_mani.png
-  result: MicroManipulatorStockPart
-  completetime: 250
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: ScanningModuleStockPart
-  icon: Objects/Misc/stock_parts.rsi/scan_module_static.png
-  result: ScanningModuleStockPart
-  completetime: 250
-  materials:
-    Steel: 50
-    Glass: 50
-
-- type: latheRecipe
-  id: MicroLaserStockPart
-  icon: Objects/Misc/stock_parts.rsi/micro_laser.png
-  result: MicroLaserStockPart
+  id: CapacitorStockPart
+  icon: Objects/Misc/stock_parts.rsi/capacitor.png
+  result: CapacitorStockPart
   completetime: 250
   materials:
     Steel: 50
@@ -35,9 +17,27 @@
     Glass: 50
 
 - type: latheRecipe
-  id: CapacitorStockPart
-  icon: Objects/Misc/stock_parts.rsi/capacitor.png
-  result: CapacitorStockPart
+  id: MicroLaserStockPart
+  icon: Objects/Misc/stock_parts.rsi/micro_laser.png
+  result: MicroLaserStockPart
+  completetime: 250
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: MicroManipulatorStockPart
+  icon: Objects/Misc/stock_parts.rsi/micro_mani.png
+  result: MicroManipulatorStockPart
+  completetime: 250
+  materials:
+    Steel: 50
+    Glass: 50
+
+- type: latheRecipe
+  id: ScanningModuleStockPart
+  icon: Objects/Misc/stock_parts.rsi/scan_module_static.png
+  result: ScanningModuleStockPart
   completetime: 250
   materials:
     Steel: 50
