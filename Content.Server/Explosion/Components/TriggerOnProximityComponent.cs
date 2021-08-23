@@ -23,7 +23,7 @@ namespace Content.Server.Explosion.Components
         {
             set
             {
-                EntitySystem.Get<ProximityTriggerSystem>().SetProximityFixture(Owner.Uid, this, value);
+                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value);
                 _enabled = value;
             }
             get => _enabled;

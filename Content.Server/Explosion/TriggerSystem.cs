@@ -2,10 +2,12 @@ using Content.Server.Explosion.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
+using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -45,6 +47,8 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
+
+            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(Enable);
         }
 
         #region Explosions
@@ -81,7 +85,7 @@ namespace Content.Server.Explosion
                 component.Flashed = false;
 
             if (component.Flashed) return;
-            
+
             FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
             component.Flashed = true;
             component.LastFlash = _gameTiming.CurTime;
@@ -108,7 +112,7 @@ namespace Content.Server.Explosion
             var curTime = _gameTiming.CurTime;
             if (args.OurFixture.ID == component.ProximityFixture)
             {
-                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime ^ component.LastTrigger == null)
+                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime)
                 {
                     Trigger(component.Owner);
                     component.LastTrigger = curTime;
@@ -134,6 +138,33 @@ namespace Content.Server.Explosion
                 if (triggered.Deleted) return;
                 Trigger(triggered, user);
             });
+        }
+
+        private void Enable(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
+        {
+            component.Enabled = true;
+        }
+        public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool remove)
+        {
+            var entity = EntityManager.GetEntity(uid);
+            var broadphase = Get<SharedBroadphaseSystem>();
+            entity.EnsureComponent<PhysicsComponent>();
+
+            if (entity.TryGetComponent(out PhysicsComponent? physics))
+            {
+                var fixture = physics.GetFixture(component.ProximityFixture);
+                if (!remove)
+                {
+                    if (fixture != null)
+                        broadphase.DestroyFixture(physics, fixture);
+                }
+                else
+                {
+                    if (fixture == null)
+                        broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.ProximityFixture });
+
+                }
+            }
         }
     }
 }

@@ -20,6 +20,6 @@ namespace Content.Server.Flash.Components
         [DataField("repeating")] internal bool Repeating = false;
         [DataField("cooldown")] internal int Cooldown = 4;
 
-        internal TimeSpan? LastFlash = null;
+        internal TimeSpan LastFlash = TimeSpan.Zero;
     }
 }
