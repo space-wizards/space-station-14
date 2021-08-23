@@ -255,11 +255,11 @@
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
+    - CapacitorStockPart
+    - MatterBinStockPart
+    - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
-    - MicroLaserStockPart
-    - MatterBinStockPart
-    - CapacitorStockPart
 
 # Bluespace Theory Technology Tree
 
