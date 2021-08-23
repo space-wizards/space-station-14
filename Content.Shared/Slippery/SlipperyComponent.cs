@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -22,7 +23,7 @@ namespace Content.Shared.Slippery
         private float _requiredSlipSpeed = 0.1f;
         private float _launchForwardsMultiplier = 1f;
         private bool _slippery = true;
-        private string _slipSound = "/Audio/Effects/slip.ogg";
+        private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
 
         /// <summary>
         ///     List of entities that are currently colliding with the entity.
@@ -39,7 +40,7 @@ namespace Content.Shared.Slippery
         /// </summary>
         [ViewVariables]
         [DataField("slipSound")]
-        public string SlipSound
+        public SoundSpecifier SlipSound
         {
             get => _slipSound;
             set
@@ -139,7 +140,7 @@ namespace Content.Shared.Slippery
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound, Slipped.ToArray());
+            return new SlipperyComponentState(ParalyzeTime, IntersectPercentage, RequiredSlipSpeed, LaunchForwardsMultiplier, Slippery, SlipSound.GetSound(), Slipped.ToArray());
         }
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
@@ -151,7 +152,7 @@ namespace Content.Shared.Slippery
             _paralyzeTime = state.ParalyzeTime;
             _requiredSlipSpeed = state.RequiredSlipSpeed;
             _launchForwardsMultiplier = state.LaunchForwardsMultiplier;
-            _slipSound = state.SlipSound;
+            _slipSound = new SoundPathSpecifier(state.SlipSound);
             Slipped.Clear();
 
             foreach (var slipped in state.Slipped)

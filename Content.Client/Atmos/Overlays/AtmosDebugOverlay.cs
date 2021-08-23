@@ -49,11 +49,9 @@ namespace Content.Client.Atmos.Overlays
                 if (!_atmosDebugOverlaySystem.HasData(mapGrid.Index))
                     continue;
 
-                var gridBounds = new Box2(mapGrid.WorldToLocal(worldBounds.BottomLeft), mapGrid.WorldToLocal(worldBounds.TopRight));
-
                 for (var pass = 0; pass < 2; pass++)
                 {
-                    foreach (var tile in mapGrid.GetTilesIntersecting(gridBounds))
+                    foreach (var tile in mapGrid.GetTilesIntersecting(worldBounds))
                     {
                         var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Index, tile.GridIndices);
                         if (dataMaybeNull != null)

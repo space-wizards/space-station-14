@@ -9,10 +9,7 @@ namespace Content.Server.Slippery
     {
         protected override void PlaySound(SlipperyComponent component)
         {
-            if (!string.IsNullOrEmpty(component.SlipSound))
-            {
-                SoundSystem.Play(Filter.Pvs(component.Owner), component.SlipSound, component.Owner, AudioHelpers.WithVariation(0.2f));
-            }
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.SlipSound.GetSound(), component.Owner, AudioHelpers.WithVariation(0.2f));
         }
     }
 }

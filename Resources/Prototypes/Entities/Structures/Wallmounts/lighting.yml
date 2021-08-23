@@ -66,7 +66,8 @@
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
-      blinkingSound: "/Audio/Machines/light_tube_on.ogg"
+      blinkingSound:
+        path: "/Audio/Machines/light_tube_on.ogg"
 
 - type: entity
   id: PoweredlightEmpty

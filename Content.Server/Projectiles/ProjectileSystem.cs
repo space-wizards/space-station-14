@@ -32,14 +32,17 @@ namespace Content.Server.Projectiles
             var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!otherEntity.Deleted &&
-                otherEntity.HasComponent<SharedBodyComponent>() && component.SoundHitSpecies != null)
+            if (!otherEntity.Deleted && component.SoundHitSpecies != null &&
+                otherEntity.HasComponent<SharedBodyComponent>())
             {
-                SoundSystem.Play(playerFilter, component.SoundHitSpecies, coordinates);
+                SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
-            else if (component.SoundHit != null)
+            else
             {
-                SoundSystem.Play(playerFilter, component.SoundHit, coordinates);
+                var soundHit = component.SoundHit?.GetSound();
+
+                if (!string.IsNullOrEmpty(soundHit))
+                    SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
             if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))

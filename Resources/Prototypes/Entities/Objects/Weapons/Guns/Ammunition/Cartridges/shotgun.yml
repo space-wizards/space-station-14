@@ -4,11 +4,15 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - ShotgunShell
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
     projectilesFired: 6
-    soundCollectionEject: ShellEject
+    soundCollectionEject:
+      collection: ShellEject
   - type: Sprite
     netsync: false
     noRot: false

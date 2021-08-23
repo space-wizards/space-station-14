@@ -317,6 +317,9 @@
   id: FoodBreadBaguette
   description: Bon appétit!
   components:
+  - type: Tag
+    tags:
+    - Baguette
   - type: Sprite
     state: baguette
 # Tastes like France.

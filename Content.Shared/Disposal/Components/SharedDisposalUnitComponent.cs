@@ -1,26 +1,27 @@
 using System;
-using Content.Shared.Body.Components;
+using System.Collections.Generic;
 using Content.Shared.DragDrop;
-using Content.Shared.Item;
-using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics;
+using Robust.Shared.GameStates;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Disposal.Components
 {
+    [NetworkedComponent]
     public abstract class SharedDisposalUnitComponent : Component, IDragDropOn
     {
         public override string Name => "DisposalUnit";
 
-        [ViewVariables]
-        public bool Anchored =>
-            !Owner.TryGetComponent(out IPhysBody? physics) ||
-            physics.BodyType == BodyType.Static;
+        // TODO: Could maybe turn the contact off instead far more cheaply as farseer (though not box2d) had support for it?
+        // Need to suss it out.
+        /// <summary>
+        /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
+        /// </summary>
+        public List<EntityUid> RecentlyEjected = new();
 
         [Serializable, NetSerializable]
-        public enum Visuals
+        public enum Visuals : byte
         {
             VisualState,
             Handle,
@@ -28,7 +29,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum VisualState
+        public enum VisualState : byte
         {
             UnAnchored,
             Anchored,
@@ -37,14 +38,14 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum HandleState
+        public enum HandleState : byte
         {
             Normal,
             Engaged
         }
 
         [Serializable, NetSerializable]
-        public enum LightState
+        public enum LightState : byte
         {
             Off,
             Charging,
@@ -53,7 +54,7 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum UiButton
+        public enum UiButton : byte
         {
             Eject,
             Engage,
@@ -61,15 +62,26 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum PressureState
+        public enum PressureState : byte
         {
             Ready,
             Pressurizing
         }
 
-        public virtual void Update(float frameTime)
+        public override ComponentState GetComponentState(ICommonSession player)
         {
-            return;
+            return new DisposalUnitComponentState(RecentlyEjected);
+        }
+
+        [Serializable, NetSerializable]
+        protected sealed class DisposalUnitComponentState : ComponentState
+        {
+            public List<EntityUid> RecentlyEjected;
+
+            public DisposalUnitComponentState(List<EntityUid> uids)
+            {
+                RecentlyEjected = uids;
+            }
         }
 
         [Serializable, NetSerializable]
@@ -77,16 +89,16 @@ namespace Content.Shared.Disposal.Components
         {
             public readonly string UnitName;
             public readonly string UnitState;
-            public readonly float Pressure;
+            public readonly TimeSpan FullPressureTime;
             public readonly bool Powered;
             public readonly bool Engaged;
 
-            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, float pressure, bool powered,
+            public DisposalUnitBoundUserInterfaceState(string unitName, string unitState, TimeSpan fullPressureTime, bool powered,
                 bool engaged)
             {
                 UnitName = unitName;
                 UnitState = unitState;
-                Pressure = pressure;
+                FullPressureTime = fullPressureTime;
                 Powered = powered;
                 Engaged = engaged;
             }
@@ -99,7 +111,7 @@ namespace Content.Shared.Disposal.Components
                        UnitState == other.UnitState &&
                        Powered == other.Powered &&
                        Engaged == other.Engaged &&
-                       Pressure.Equals(other.Pressure);
+                       FullPressureTime.Equals(other.FullPressureTime);
             }
         }
 
@@ -118,37 +130,15 @@ namespace Content.Shared.Disposal.Components
         }
 
         [Serializable, NetSerializable]
-        public enum DisposalUnitUiKey
+        public enum DisposalUnitUiKey : byte
         {
             Key
         }
 
-        public virtual bool CanInsert(IEntity entity)
-        {
-            if (!Anchored)
-                return false;
-
-            // TODO: Probably just need a disposable tag.
-            if (!entity.TryGetComponent(out SharedItemComponent? storable) &&
-                !entity.HasComponent<SharedBodyComponent>())
-            {
-                return false;
-            }
-
-
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                !physics.CanCollide && storable == null)
-            {
-                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
+        // TODO: Unfortunately these aren't really ECS yet so soontm
         public virtual bool CanDragDropOn(DragDropEvent eventArgs)
         {
-            return CanInsert(eventArgs.Dragged);
+            return EntitySystem.Get<SharedDisposalUnitSystem>().CanInsert(this, eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

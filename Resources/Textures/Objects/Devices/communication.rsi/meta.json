@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6",
+  "copyright": "Taken from cev-eris and modified by Swept at https://github.com/discordia-space/CEV-Eris/commit/efce5b6c3be75458ce238dcc01510e8f8a653ca6",
   "size": {
     "x": 32,
     "y": 32
@@ -34,10 +34,37 @@
       "name": "radio"
     },
     {
+      "name": "radio-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "radio-inhand-left",
+      "directions": 4
+    },
+    {
       "name": "walkietalkie"
     },
     {
-      "name": "walkietalkie-off"
+      "name": "walkietalkie-on"
+    },
+    {
+      "name": "walkietalkie-active"
+    },
+    {
+      "name": "walkietalkie-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "walkietalkie-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-walkietalkie-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "off-walkietalkie-inhand-left",
+      "directions": 4
     }
   ]
 }

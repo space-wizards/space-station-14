@@ -168,6 +168,8 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void ShotTimerCallback(EmitterComponent component)
         {
+            if (component.Deleted) return;
+
             // Any power-off condition should result in the timer for this method being cancelled
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
@@ -222,7 +224,7 @@ namespace Content.Server.Singularity.EntitySystems
             // TODO: Move to projectile's code.
             Timer.Spawn(3000, () => projectile.Delete());
 
-            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound, component.Owner,
+            SoundSystem.Play(Filter.Pvs(component.Owner), component.FireSound.GetSound(), component.Owner,
                 AudioHelpers.WithVariation(EmitterComponent.Variation).WithVolume(EmitterComponent.Volume).WithMaxDistance(EmitterComponent.Distance));
         }
 
