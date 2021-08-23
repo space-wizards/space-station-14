@@ -354,9 +354,7 @@ namespace Content.Server.Physics
             // Box2D has this as 800 which is jesus christo.
             // Wouldn't recommend higher than 100 in debug and higher than 300 on release unless
             // you really want a profile.
-            var count = 50;
-
-            EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0f, -9.8f);
+            var count = 200;
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             for (var i = 0; i < count; i++)
