@@ -26,7 +26,10 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnAirtightInit(EntityUid uid, AirtightComponent airtight, ComponentInit args)
         {
             if (airtight.FixAirBlockedDirectionInitialize)
-                OnAirtightRotated(uid, airtight, new RotateEvent(airtight.Owner, Angle.Zero, airtight.Owner.Transform.WorldRotation));
+            {
+                var rotateEvent = new RotateEvent(airtight.Owner, Angle.Zero, airtight.Owner.Transform.WorldRotation);
+                OnAirtightRotated(uid, airtight, ref rotateEvent);
+            }
 
             // Adding this component will immediately anchor the entity, because the atmos system
             // requires airtight entities to be anchored for performance.
@@ -51,7 +54,7 @@ namespace Content.Server.Atmos.EntitySystems
         {
         }
 
-        private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, AnchorStateChangedEvent args)
+        private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
             var gridId = airtight.Owner.Transform.GridID;
             var coords = airtight.Owner.Transform.Coordinates;
@@ -64,7 +67,7 @@ namespace Content.Server.Atmos.EntitySystems
             InvalidatePosition(gridId, tilePos);
         }
 
-        private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, RotateEvent ev)
+        private void OnAirtightRotated(EntityUid uid, AirtightComponent airtight, ref RotateEvent ev)
         {
             if (!airtight.RotateAirBlocked || airtight.InitialAirBlockedDirection == (int)AtmosDirection.Invalid)
                 return;

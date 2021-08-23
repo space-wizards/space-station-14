@@ -29,9 +29,8 @@ namespace Content.Server.Crayon
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        //TODO: useSound
-        [DataField("useSound", required: true)]
-        private SoundSpecifier _useSound = default!;
+        [DataField("useSound")]
+        private SoundSpecifier? _useSound = null;
 
         [ViewVariables]
         public Color Color { get; set; }
@@ -139,7 +138,8 @@ namespace Content.Server.Crayon
                 appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _useSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
+            if (_useSound != null)
+                SoundSystem.Play(Filter.Pvs(Owner), _useSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
 
             // Decrease "Ammo"
             Charges--;

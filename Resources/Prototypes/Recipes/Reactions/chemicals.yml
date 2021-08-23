@@ -113,6 +113,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
       prototypeId: Foam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: IronMetalFoam
@@ -136,6 +138,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: IronMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: AluminiumMetalFoam
@@ -159,6 +163,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: AluminiumMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: TableSalt
@@ -227,7 +233,7 @@
       amount: 1
   products:
     Fluorosurfactant: 5
-    
+
 - type: reaction
   id: Meth
   reactants:
@@ -241,7 +247,7 @@
      amount: 1
   products:
     Meth: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
-    
+
 - type: reaction
   id: Ephedrine
   reactants:

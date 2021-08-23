@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Shared.Audio;
@@ -44,8 +43,9 @@ namespace Content.Server.Tools.Components
         [DataField("speed")]
         public float SpeedModifier { get; set; } = 1;
 
-        [DataField("useSound", required: true)]
-        public SoundSpecifier UseSound { get; set; } = default!;
+        // Some tools don't play a sound on use.
+        [DataField("useSound")]
+        public SoundSpecifier? UseSound { get; set; }
 
         public void AddQuality(ToolQuality quality)
         {
@@ -96,6 +96,9 @@ namespace Content.Server.Tools.Components
 
         public void PlayUseSound(float volume = -5f)
         {
+            if (UseSound == null)
+                return;
+
             SoundSystem.Play(Filter.Pvs(Owner), UseSound.GetSound(), Owner, AudioHelpers.WithVariation(0.15f).WithVolume(volume));
         }
     }

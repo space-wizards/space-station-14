@@ -9,6 +9,8 @@
   - type: InteractionOutline
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
   - type: CollisionWake
   - type: TileFrictionModifier
     modifier: 0.5

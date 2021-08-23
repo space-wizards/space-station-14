@@ -289,7 +289,7 @@ namespace Content.Server.AI.Pathfinding
             _lastKnownPositions.Remove(entity);
         }
 
-        private void QueueMoveEvent(MoveEvent moveEvent)
+        private void QueueMoveEvent(ref MoveEvent moveEvent)
         {
             _moveUpdateQueue.Enqueue(moveEvent);
         }

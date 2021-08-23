@@ -1,6 +1,6 @@
 ﻿- type: stack
   id: Cable
-  name: cable
+  name: lv cable
   icon: "/Textures/Objects/Tools/cable-coils.rsi/coil-30.png"
   spawn: CableApcStack1
 

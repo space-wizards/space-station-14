@@ -27,7 +27,7 @@ namespace Content.Server.Projectiles.Components
 
         // Get that juicy FPS hit sound
         [DataField("soundHit", required: true)] public SoundSpecifier SoundHit = default!;
-        [DataField("soundHitSpecies", required: true)] public SoundSpecifier SoundHitSpecies = default!;
+        [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies = null;
 
         public bool DamagedEntity;
 

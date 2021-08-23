@@ -36,7 +36,8 @@
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
-        collection: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: monitorBroken
       - !type:DoActsBehavior

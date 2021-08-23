@@ -339,10 +339,11 @@ namespace Content.Client.HUD
             LC.SetMarginBottom(centerBottomContainer, -10f);
             RootControl.AddChild(centerBottomContainer);
 
-            HandsContainer = new Control
+            HandsContainer = new BoxContainer()
             {
                 VerticalAlignment = Control.VAlignment.Bottom,
-                HorizontalAlignment = Control.HAlignment.Center
+                HorizontalAlignment = Control.HAlignment.Center,
+                Orientation = LayoutOrientation.Vertical,
             };
             BottomRightInventoryQuickButtonContainer = new BoxContainer
             {

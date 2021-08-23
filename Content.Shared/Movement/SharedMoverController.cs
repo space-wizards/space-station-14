@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
+using Content.Shared.Friction;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Content.Shared.Pulling.Components;
@@ -9,7 +11,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Physics.Controllers;
 using Robust.Shared.Utility;
 
@@ -23,16 +24,39 @@ namespace Content.Shared.Movement
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
+        private ActionBlockerSystem _blocker = default!;
         private SharedBroadphaseSystem _broadPhaseSystem = default!;
 
         private bool _relativeMovement;
+
+        /// <summary>
+        /// Cache the mob movement calculation to re-use elsewhere.
+        /// </summary>
+        public Dictionary<EntityUid, bool> UsedMobMovement = new();
 
         public override void Initialize()
         {
             base.Initialize();
             _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+            _blocker = EntitySystem.Get<ActionBlockerSystem>();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
-            configManager.OnValueChanged(CCVars.RelativeMovement, value => _relativeMovement = value, true);
+            configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
+            UpdatesBefore.Add(typeof(SharedTileFrictionController));
+        }
+
+        private void SetRelativeMovement(bool value) => _relativeMovement = value;
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.UnsubValueChanged(CCVars.RelativeMovement, SetRelativeMovement);
+        }
+
+        public override void UpdateAfterSolve(bool prediction, float frameTime)
+        {
+            base.UpdateAfterSolve(prediction, frameTime);
+            UsedMobMovement.Clear();
         }
 
         /// <summary>
@@ -65,16 +89,18 @@ namespace Content.Shared.Movement
         protected void HandleMobMovement(IMoverComponent mover, PhysicsComponent physicsComponent,
             IMobMoverComponent mobMover)
         {
-            // TODO: Look at https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/CharacterControllers.html?highlight=controller as it has some adviceo n kinematic controllersx
-            if (!UseMobMovement(_broadPhaseSystem, physicsComponent, _mapManager))
+            DebugTools.Assert(!UsedMobMovement.ContainsKey(mover.Owner.Uid));
+
+            if (!UseMobMovement(physicsComponent))
             {
+                UsedMobMovement[mover.Owner.Uid] = false;
                 return;
             }
 
+            UsedMobMovement[mover.Owner.Uid] = true;
             var transform = mover.Owner.Transform;
+            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
-
-            var weightless = transform.Owner.IsWeightless(physicsComponent, mapManager: _mapManager);
 
             // Handle wall-pushes.
             if (weightless)
@@ -117,14 +143,16 @@ namespace Content.Shared.Movement
             physicsComponent.LinearVelocity = worldTotal;
         }
 
-        public static bool UseMobMovement(SharedBroadphaseSystem broadPhaseSystem, PhysicsComponent body, IMapManager mapManager)
+        public bool UseMobMovement(EntityUid uid)
         {
-            return (body.BodyStatus == BodyStatus.OnGround) &
+            return UsedMobMovement.TryGetValue(uid, out var used) && used;
+        }
+
+        protected bool UseMobMovement(PhysicsComponent body)
+        {
+            return body.BodyStatus == BodyStatus.OnGround &&
                    body.Owner.HasComponent<IMobStateComponent>() &&
-                   EntitySystem.Get<ActionBlockerSystem>().CanMove(body.Owner) &&
-                   (!body.Owner.IsWeightless(body, mapManager: mapManager) ||
-                    body.Owner.TryGetComponent(out SharedPlayerMobMoverComponent? mover) &&
-                    IsAroundCollider(broadPhaseSystem, body.Owner.Transform, mover, body));
+                   _blocker.CanMove(body.Owner);
         }
 
         /// <summary>

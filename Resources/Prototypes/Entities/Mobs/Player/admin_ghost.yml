@@ -5,6 +5,11 @@
   name: admin observer
   abstract: true
   components:
+  - type: Input
+    context: "aghost"
+  - type: Ghost
+    canInteract: true
+  - type: Hands
   - type: PlayerInputMover
   - type: Physics
     bodyType: Kinematic
@@ -17,3 +22,6 @@
       mask:
         - GhostImpassable
     status: InAir
+  - type: Body
+    template: AGhostTemplate
+    preset: HumanPreset

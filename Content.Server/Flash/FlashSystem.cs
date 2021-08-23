@@ -92,7 +92,7 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.Sound.GetSound(), comp.Owner.Transform.Coordinates, AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.Sound.GetSound(), comp.Owner, AudioParams.Default);
 
                 return true;
             }

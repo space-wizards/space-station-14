@@ -12,7 +12,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi
-    prefix: inhand
   - type: Tag
     tags:
     - CaptainSabre
@@ -34,7 +33,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/katana.rsi
-    prefix: inhand
 
 - type: entity
   name: machete
@@ -53,7 +51,6 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/machete.rsi
-    prefix: inhand
 
 - type: entity
   name: claymore
@@ -66,7 +63,8 @@
     state: icon
   - type: MeleeWeapon
     damage: 25
-  - type: Item
-    size: 15
+  - type: Clothing
+    size: 20
     sprite: Objects/Weapons/Melee/claymore.rsi
-    prefix: inhand
+    Slots:
+    - back

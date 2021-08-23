@@ -17,7 +17,8 @@
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
-        collection: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
     - trigger:
@@ -25,7 +26,8 @@
         damage: 10
       behaviors:
       - !type:PlaySoundBehavior
-        collection: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:

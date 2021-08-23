@@ -520,14 +520,10 @@ namespace Content.Server.Inventory.Components
                     var hands = Owner.GetComponent<HandsComponent>();
                     var activeHand = hands.ActiveHand;
                     var activeItem = hands.GetActiveHand;
-                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? clothing))
+                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ClothingComponent? clothing))
                     {
                         hands.TryDropNoInteraction();
-                        if (!Equip(msg.Inventoryslot, clothing, true, out var reason))
-                        {
-                            hands.PutInHand(clothing);
-                            Owner.PopupMessageCursor(reason);
-                        }
+                        clothing.TryEquip(this, msg.Inventoryslot, Owner);
                     }
 
                     break;

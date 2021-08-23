@@ -127,8 +127,6 @@ namespace Content.Server.Atmos.EntitySystems
             // This is the timer from GasTileOverlaySystem
             AccumulatedFrameTime -= _updateCooldown;
 
-            var currentTick = _gameTiming.CurTick;
-
             // Now we'll go through each player, then through each chunk in range of that player checking if the player is still in range
             // If they are, check if they need the new data to send (i.e. if there's an overlay for the gas).
             // Afterwards we reset all the chunk data for the next time we tick.

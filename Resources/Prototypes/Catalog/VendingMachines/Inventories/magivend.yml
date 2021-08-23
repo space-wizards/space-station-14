@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: MagiVendInventory
   name: MagiVend
-  description: A mystical vending machine containing magical garments and magic supplies.
   animationDuration: 1.5
   spriteName: magivend
   startingInventory:
