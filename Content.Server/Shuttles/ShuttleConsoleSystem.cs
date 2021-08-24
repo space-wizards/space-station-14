@@ -161,7 +161,7 @@ namespace Content.Server.Shuttles
 
         public void ClearPilots(ShuttleConsoleComponent component)
         {
-            while(component.SubscribedPilots.TryGetValue(0, out var pilot))
+            while (component.SubscribedPilots.TryGetValue(0, out var pilot))
             {
                 RemovePilot(pilot);
             }
