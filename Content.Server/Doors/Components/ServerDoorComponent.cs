@@ -44,6 +44,9 @@ namespace Content.Server.Doors.Components
         [DataField("board")]
         private string? _boardPrototype;
 
+        [DataField("tryOpenDoorSound")]
+        private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]

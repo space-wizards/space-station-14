@@ -35,8 +35,6 @@ namespace Content.Server.Temperature.Components
         [DataField("specificHeat")]
         private float _specificHeat = Atmospherics.MinimumHeatCapacity;
 
->>>>>>> update damagecomponent across shared and server
-        [ViewVariables] public float CurrentTemperature { get => _currentTemperature; set => _currentTemperature = value; }
         [ViewVariables] public float HeatDamageThreshold => _heatDamageThreshold;
         [ViewVariables] public float ColdDamageThreshold => _coldDamageThreshold;
         [ViewVariables] public float TempDamageCoefficient => _tempDamageCoefficient;

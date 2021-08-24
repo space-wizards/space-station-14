@@ -23,35 +23,30 @@ namespace Content.Server.Projectiles.Components
     public class HitscanComponent : Component
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
-        public override string Name => "Hitscan";
 
         public override string Name => "Hitscan";
         public CollisionGroup CollisionMask => (CollisionGroup) _collisionMask;
 
-        private TimeSpan _startTime;
-        private TimeSpan _deathTime;
 
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
         [DataField("damage")]
         public float Damage { get; set; } = 10f;
+		public float MaxLength => 20.0f;
 
+        private TimeSpan _startTime;
+        private TimeSpan _deathTime;
+
+        public float ColorModifier { get; set; } = 1.0f;
+		[DataField("spriteName")]
+        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
         [DataField("muzzleFlash")]
         private string? _muzzleFlash;
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
-<<<<<<< refs/remotes/origin/master
         private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
-=======
-        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
-        [DataField("spriteName")]
-        private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
 
-        public float MaxLength => 20.0f;
-        public float ColorModifier { get; set; } = 1.0f;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.

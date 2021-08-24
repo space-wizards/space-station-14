@@ -146,16 +146,6 @@ namespace Content.Shared.Damage.Container
                     }
                 }
             }
-=======
-                var DamageGroup= _prototypeManager.Index<DamageGroupPrototype>(supportedClassID);
-                _supportedDamageGroups.Add(DamageGroup);
-                foreach (var DamageType in DamageGroup.DamageTypes)
-                {
-                    _supportedDamageTypes.Add(DamageType);
-                }
-            }
-
->>>>>>> fix a few bugs
         }
     }
 }

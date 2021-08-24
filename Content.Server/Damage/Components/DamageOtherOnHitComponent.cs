@@ -14,31 +14,20 @@ namespace Content.Server.Damage.Components
         public override string Name => "DamageOtherOnHit";
 
         [DataField("amount")]
-        private int _amount = 1;
+        public int Amount { get; } = 1;
 
         [DataField("ignoreResistances")]
-<<<<<<< refs/remotes/origin/master
         public bool IgnoreResistances { get; } = false;
-=======
-        private bool _ignoreResistances;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
         private readonly string _damageTypeID = "Blunt";
-        private DamageTypePrototype _damageType = default!;
+        public DamageTypePrototype DamageType { get; set; } =  default!;
         protected override void Initialize()
         {
             base.Initialize();
-            _damageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
-
-        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
-        {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
-                return;
-            damageable.TryChangeDamage(_damageType, _amount, _ignoreResistances);
-        }
->>>>>>> update damagecomponent across shared and server
     }
 }

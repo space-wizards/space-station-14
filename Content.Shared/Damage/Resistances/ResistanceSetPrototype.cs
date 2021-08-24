@@ -39,18 +39,6 @@ namespace Content.Shared.Damage.Resistances
                 var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageTypeID);
                 Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageTypeID], flatReductions[damageTypeID]));
             }
-=======
-        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; private set; } = new();
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            foreach (var damageType in coefficients)
-            {
-                var _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-                var resolvedDamageType = _prototypeManager.Index<DamageTypePrototype>(damageType.Key);
-                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageType.Key], flatReductions[damageType.Key]));
-            }
         }
     }
 

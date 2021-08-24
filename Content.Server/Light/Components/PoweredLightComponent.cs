@@ -141,7 +141,7 @@ namespace Content.Server.Light.Components
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
                 damageableComponent.TryChangeDamage(DamageType, 20);
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
             void Eject()

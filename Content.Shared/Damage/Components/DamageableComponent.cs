@@ -42,9 +42,6 @@ namespace Content.Shared.Damage.Components
         public override string Name => "Damageable";
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
-        private IPrototypeManager _prototypeManager = default!;
-        private Dictionary<DamageTypePrototype, int> _damageList = new();
-
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         /// <summary>
@@ -95,12 +92,13 @@ namespace Content.Shared.Damage.Components
 
         public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
 
+        public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
+
 =======
 >>>>>>> update damagecomponent across shared and server
         protected override void Initialize()
         {
             base.Initialize();
-<<<<<<< refs/remotes/origin/master
 
             // TODO DAMAGE Serialize damage done and resistance changes
             var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
@@ -125,16 +123,6 @@ namespace Content.Shared.Damage.Components
             Resistances = new ResistanceSet(_prototypeManager.Index<ResistanceSetPrototype>(ResistanceSetId));
         }
 
-        public bool SupportsDamageClass(DamageGroupPrototype damageGroup)
-        {
-            return SupportedGroups.Contains(damageGroup);
-        }
-
-        public bool SupportsDamageType(DamageTypePrototype type)
-        {
-            return SupportedTypes.Contains(type);
-        }
-
         protected override void Startup()
         {
             base.Startup();
@@ -142,19 +130,6 @@ namespace Content.Shared.Damage.Components
             ForceHealthChangedEvent();
         }
 
-<<<<<<< refs/remotes/origin/master
-=======
-        public DamageTypePrototype GetDamageType(string ID)
-        {
-            return _prototypeManager.Index<DamageTypePrototype>(ID);
-        }
-
-        public DamageGroupPrototype GetDamageGroup(string ID)
-        {
-            return _prototypeManager.Index<DamageGroupPrototype>(ID);
-        }
-
->>>>>>> update damagecomponent across shared and server
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new DamageableComponentState(GetDamagePerTypeIDs);
@@ -290,7 +265,7 @@ namespace Content.Shared.Damage.Components
             current = _damageDict[type];
 
             var datum = new DamageChangeData(type, current, finalDamage);
-            var data = new List<DamageChangeData> { datum };
+            var data = new List<DamageChangeData> {datum};
 
             OnHealthChanged(data);
 
@@ -409,7 +384,7 @@ namespace Content.Shared.Damage.Components
 
             var delta = newValue - oldValue;
             var datum = new DamageChangeData(type, 0, delta);
-            var data = new List<DamageChangeData> { datum };
+            var data = new List<DamageChangeData> {datum};
 
             OnHealthChanged(data);
 
@@ -436,29 +411,6 @@ namespace Content.Shared.Damage.Components
             OnHealthChanged(args);
         }
 
-<<<<<<< refs/remotes/origin/master
-=======
-        private IReadOnlyDictionary<DamageGroupPrototype, int> damageListToDamageGroup(IReadOnlyDictionary<DamageTypePrototype, int> damagelist)
-        {
-            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
-            int damageGroupSumDamage = 0;
-            int damageTypeDamage = 0;
-            foreach (var damageGroup in SupportedGroups)
-            {
-                damageGroupSumDamage = 0;
-                foreach (var damageType in SupportedTypes)
-                {
-                    damageTypeDamage = 0;
-                    damagelist.TryGetValue(damageType, out damageTypeDamage);
-                    damageGroupSumDamage += damageTypeDamage;
-                }
-                damageGroupDict.Add(damageGroup, damageGroupSumDamage);
-            }
-
-            return damageGroupDict;
-        }
-
->>>>>>> Merge fixes
         protected virtual void OnHealthChanged(DamageChangedEventArgs e)
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, e);
@@ -471,7 +423,7 @@ namespace Content.Shared.Damage.Components
 
         public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
-            var totalDamage = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
+            var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
             foreach (var typeID in RadiationDamageTypeIDs)
             {
