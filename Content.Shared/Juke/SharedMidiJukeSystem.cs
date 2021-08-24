@@ -1,8 +1,10 @@
+using System;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Juke
 {
@@ -13,7 +15,7 @@ namespace Content.Shared.Juke
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedMidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
+            //SubscribeLocalEvent<SharedMidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
         }
 
         private void OnMidiJukeHandleState(EntityUid uid, SharedMidiJukeComponent component, ComponentHandleState args)
@@ -41,12 +43,15 @@ namespace Content.Shared.Juke
         }
     }
 
+    [Serializable, NetSerializable]
     public class MidiJukeMidiEventsMessage : EntityEventArgs
     {
         public MidiEvent[] MidiEvents;
+        public EntityUid EntityUid;
 
-        public MidiJukeMidiEventsMessage(MidiEvent[] midiEvents)
+        public MidiJukeMidiEventsMessage(EntityUid entityUid, MidiEvent[] midiEvents)
         {
+            EntityUid = entityUid;
             MidiEvents = midiEvents;
         }
     }

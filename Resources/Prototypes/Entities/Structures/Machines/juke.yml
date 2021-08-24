@@ -1,0 +1,18 @@
+- type: entity
+  name: basejuke
+  id: BaseJuke
+  parent: BaseStructureDynamic
+  abstract: true
+  components:
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Structures/Furniture/instruments.rsi
+
+- type: entity
+  name: midi juke
+  id: MidiJuke
+  parent: BaseJuke
+  components:
+    - type: MidiJuke
+    - type: Sprite
+      state: piano

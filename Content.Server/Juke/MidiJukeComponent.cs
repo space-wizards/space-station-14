@@ -22,6 +22,7 @@ namespace Content.Server.Juke
             {
                 _midiPlayer?.Dispose();
                 _midiPlayer = VirtualMidiPlayer.FromFile(value);
+                _midiPlayer?.Start();
                 if (_midiPlayer != null) _midiFileName = value;
             }
         }

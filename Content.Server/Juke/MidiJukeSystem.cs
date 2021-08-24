@@ -1,3 +1,4 @@
+using System;
 using Content.Shared.Interaction;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
@@ -11,23 +12,30 @@ namespace Content.Server.Juke
         public override void Initialize()
         {
             base.Initialize();
-
-            SubscribeLocalEvent<SharedMidiJukeComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<MidiJukeComponent, InteractHandEvent>(OnInteractHand);
         }
 
-        private void OnInteractHand(EntityUid uid, SharedMidiJukeComponent component, InteractHandEvent args)
+        private void OnInteractHand(EntityUid uid, MidiJukeComponent component, InteractHandEvent args)
         {
-            throw new System.NotImplementedException();
+            Console.WriteLine("touch");
+            if (!component.Playing)
+            {
+                var cast = (MidiJukeComponent) component;
+                cast.Playing = true;
+                cast.MidiFileName = "testmidi.mid";
+            }
         }
 
         public override void Update(float frameTime)
         {
             foreach (var component in ComponentManager.EntityQuery<MidiJukeComponent>(true))
             {
+                if (!component.Playing) continue;
                 var midiEvents = component.PlayTick();
-                if (midiEvents.Count == 0) return;
+                if (midiEvents.Count == 0) continue;
                 var uid = component.Owner.Uid;
-                RaiseLocalEvent(uid, new MidiJukeMidiEventsMessage(midiEvents.ToArray()), true); //todo: handle this clientside
+                Console.WriteLine($"Playing {midiEvents.Count} midiEvents.");
+                RaiseNetworkEvent(new MidiJukeMidiEventsMessage(uid, midiEvents.ToArray()));
             }
         }
     }
