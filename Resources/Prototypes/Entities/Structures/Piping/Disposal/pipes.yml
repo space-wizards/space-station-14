@@ -57,7 +57,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+          bounds: "-0.25,-0.5,0.25,0.5"
       layer: [ Underplating ]
 
 - type: entity
@@ -85,7 +85,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.5,0.25"
+            bounds: "-0.25,-0.5,0.25,0.5"
         layer: [ Underplating ]
 
 - type: entity
@@ -109,7 +109,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.5,-0.25,0.4,0.25"
+            bounds: "-0.25,-0.5,0.25,0.4"
         layer: [ Underplating ]
 
 - type: entity
@@ -143,7 +143,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.5,-0.5,0.5,0.25"
+            bounds: "-0.5,-0.5,0.25,0.5"
         layer: [ Underplating ]
 
 - type: entity
@@ -172,7 +172,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.5"
+          bounds: "-0.25,-0.5,0.5,0.5"
       layer: [ Underplating ]
 
 - type: entity
@@ -202,7 +202,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.25"
+          bounds: "-0.5,-0.5,0.25,0.5"
       layer: [ Underplating ]
 
 - type: entity
@@ -231,7 +231,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.5"
+          bounds: "-0.25,-0.5,0.5,0.5"
       layer: [ Underplating ]
 
 - type: entity
@@ -259,7 +259,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.25,0.5"
+          bounds: "-0.5,-0.5,0.5,0.25"
       layer: [ Underplating ]
 
 - type: entity
