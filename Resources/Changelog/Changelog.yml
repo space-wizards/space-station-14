@@ -1886,3 +1886,8 @@ Entries:
   - {message: Add meteor swarm event., type: Add}
   id: 336
   time: '2021-08-23T03:28:48.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fix grav gen losing power after only a bit, type: Fix}
+  id: 337
+  time: '2021-08-24T15:36:50.0000000+00:00'
