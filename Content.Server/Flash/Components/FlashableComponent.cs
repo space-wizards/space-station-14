@@ -26,7 +26,7 @@ namespace Content.Server.Flash.Components
             _duration = duration;
             Dirty();
         }
-
+            
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new FlashComponentState(_duration, _lastFlash);

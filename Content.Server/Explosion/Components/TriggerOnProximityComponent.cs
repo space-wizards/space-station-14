@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.Components
     public class TriggerOnProximityComponent : Component
     {
         public override string Name => "TriggerOnProximity";
-        public TimeSpan? LastTrigger = null;
+        public TimeSpan LastTrigger = TimeSpan.Zero;
         public string ProximityFixture { get; } = "proximity-fixture";
 
         [DataField("shape", required: true)]
@@ -30,7 +30,7 @@ namespace Content.Server.Explosion.Components
         }
 
         [DataField("cooldown", required: true)]
-        public int Cooldown { get; set; } = 4;
+        public int Cooldown { get; set; } = 2;
 
     }
 }

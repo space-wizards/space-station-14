@@ -47,8 +47,6 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
-
-            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(Enable);
         }
 
         #region Explosions
@@ -81,14 +79,14 @@ namespace Content.Server.Explosion
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
-            if (component.Repeating && component.LastFlash + TimeSpan.FromSeconds(component.Cooldown) < _gameTiming.CurTime)
-                component.Flashed = false;
+            bool repeatable = component.Repeating && component.LastFlash + TimeSpan.FromSeconds(component.Cooldown) < _gameTiming.CurTime;
 
-            if (component.Flashed) return;
-
-            FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
-            component.Flashed = true;
-            component.LastFlash = _gameTiming.CurTime;
+            if (!component.Flashed ^ repeatable)
+            {
+                FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
+                component.Flashed = true;
+                component.LastFlash = _gameTiming.CurTime;
+            }
         }
         #endregion
 
@@ -138,11 +136,6 @@ namespace Content.Server.Explosion
                 if (triggered.Deleted) return;
                 Trigger(triggered, user);
             });
-        }
-
-        private void Enable(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
-        {
-            component.Enabled = true;
         }
         public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool remove)
         {
