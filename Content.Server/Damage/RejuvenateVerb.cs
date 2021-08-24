@@ -61,7 +61,7 @@ namespace Content.Server.Damage
         {
             if (target.TryGetComponent(out IDamageableComponent? damage))
             {
-                damage.TrySetAllDamage(0);
+                damage.Heal();
             }
 
             if (target.TryGetComponent(out IMobStateComponent? mobState))

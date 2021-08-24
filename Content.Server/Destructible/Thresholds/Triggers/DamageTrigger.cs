@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -15,8 +15,8 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
         /// </summary>
-        [DataField("damage", required: true)]
-        public int Damage { get; set; } = default!;
+        [DataField("damage")]
+        public int Damage { get; set; }
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {

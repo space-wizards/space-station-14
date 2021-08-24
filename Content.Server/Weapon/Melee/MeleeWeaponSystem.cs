@@ -25,8 +25,6 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
-
-
         public override void Initialize()
         {
             base.Initialize();
@@ -90,7 +88,7 @@ namespace Content.Server.Weapon.Melee
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
                     {
-                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
+                        damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -159,7 +157,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
                     {
-                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
+                        damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
                     }
                 }
             }

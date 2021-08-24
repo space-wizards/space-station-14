@@ -20,7 +20,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -59,22 +58,8 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
-<<<<<<< refs/remotes/origin/master
         [ViewVariables]
         [DataField("on")]
-=======
-        [ViewVariables] [DataField("on")]
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-        [ViewVariables]
-        [DataField("on")]
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
-=======
-        [ViewVariables]
-        [DataField("on")]
->>>>>>> refactor-damageablecomponent
         private bool _on = true;
 
         [ViewVariables]
@@ -91,19 +76,6 @@ namespace Content.Server.Light.Components
         public LightBulbType BulbType => _bulbType;
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
-
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Heat";
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
-        }
 
         [ViewVariables]
         public LightBulbComponent? LightBulb
@@ -154,22 +126,8 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
-=======
-                damageableComponent.TryChangeDamage(DamageType, 20);
-<<<<<<< refs/remotes/origin/master
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
-=======
-                damageableComponent.TryChangeDamage(DamageType, 20);
-                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
->>>>>>> refactor-damageablecomponent
             }
 
             void Eject()
@@ -289,6 +247,13 @@ namespace Content.Server.Light.Components
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
+        }
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)

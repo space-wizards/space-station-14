@@ -17,15 +17,7 @@ namespace Content.Server.Damage
             if (!args.Target.TryGetComponent(out IDamageableComponent? damageable))
                 return;
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
             damageable.ChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances, args.User);
-=======
-            damageable.TryChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances);
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
-=======
-            damageable.TryChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances);
->>>>>>> refactor-damageablecomponent
         }
     }
 }

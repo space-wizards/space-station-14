@@ -1,11 +1,9 @@
-﻿#nullable enable
-using System;
-using Content.Server.GameObjects.EntitySystems;
+﻿using System;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
+namespace Content.Server.Destructible.Thresholds.Triggers
 {
     /// <summary>
     ///     A trigger that will activate when the amount of damage received
@@ -19,7 +17,7 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
         ///     The class to check the damage of.
         /// </summary>
         [DataField("class")]
-        public DamageGroupPrototype? Group { get; set; }
+        public DamageClass? Class { get; set; }
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
@@ -29,12 +27,12 @@ namespace Content.Server.GameObjects.Components.Destructible.Thresholds.Triggers
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-            if (Group == null)
+            if (Class == null)
             {
                 return false;
             }
 
-            return damageable.TryGetDamage(Group, out var damageReceived) &&
+            return damageable.TryGetDamage(Class.Value, out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }

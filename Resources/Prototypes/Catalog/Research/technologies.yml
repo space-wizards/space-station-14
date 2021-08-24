@@ -243,8 +243,6 @@
     - APCElectronics
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
 
 # Basic Parts Technology Tree
 
@@ -264,10 +262,6 @@
     - MicroLaserStockPart
     - MicroManipulatorStockPart
     - ScanningModuleStockPart
-=======
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
-=======
->>>>>>> refactor-damageablecomponent
 
 # Bluespace Theory Technology Tree
 

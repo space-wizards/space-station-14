@@ -16,24 +16,12 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
             public readonly Dictionary<DamageClass, int> DamageClasses;
             public readonly Dictionary<DamageType, int> DamageTypes;
-=======
-            public readonly Dictionary<string, int> DamagePerSupportedGroupID;
-            public readonly Dictionary<string, int> DamagePerTypeID;
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-            public readonly Dictionary<string, int> DamagePerSupportedGroupID;
-            public readonly Dictionary<string, int> DamagePerTypeID;
->>>>>>> refactor-damageablecomponent
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
                 Dictionary<DamageClass, int> damageClasses,
                 Dictionary<DamageType, int> damageTypes,
                 bool isScanned)
@@ -41,38 +29,12 @@ namespace Content.Shared.MedicalScanner
                 Entity = entity;
                 DamageClasses = damageClasses;
                 DamageTypes = damageTypes;
-=======
-                Dictionary<string, int> damagePerSupportedGroupID,
-                Dictionary<string, int> damagePerTypeID,
-                bool isScanned)
-            {
-                Entity = entity;
-                DamagePerSupportedGroupID = damagePerSupportedGroupID;
-                DamagePerTypeID = damagePerTypeID;
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-                Dictionary<string, int> damagePerSupportedGroupID,
-                Dictionary<string, int> damagePerTypeID,
-                bool isScanned)
-            {
-                Entity = entity;
-                DamagePerSupportedGroupID = damagePerSupportedGroupID;
-                DamagePerTypeID = damagePerTypeID;
->>>>>>> refactor-damageablecomponent
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
                 return DamageClasses.Count > 0 || DamageTypes.Count > 0;
-=======
-                return DamagePerSupportedGroupID.Count > 0 || DamagePerTypeID.Count > 0;
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-                return DamagePerSupportedGroupID.Count > 0 || DamagePerTypeID.Count > 0;
->>>>>>> refactor-damageablecomponent
             }
         }
 

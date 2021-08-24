@@ -188,15 +188,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 if (energyRatio < 1.0)
                 {
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
                     var newDamages = new Dictionary<DamageType, int>(projectileComponent.Damages.Count);
-=======
-                    var newDamages = new Dictionary<string, int>(projectileComponent.Damages.Count);
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-                    var newDamages = new Dictionary<string, int>(projectileComponent.Damages.Count);
->>>>>>> refactor-damageablecomponent
                     foreach (var (damageType, damage) in projectileComponent.Damages)
                     {
                         newDamages.Add(damageType, (int) (damage * energyRatio));

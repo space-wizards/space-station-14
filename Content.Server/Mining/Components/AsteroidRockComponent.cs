@@ -7,20 +7,9 @@ using Content.Shared.Mining;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
-=======
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
->>>>>>> refactor-damageablecomponent
 
 namespace Content.Server.Mining.Components
 {
@@ -32,25 +21,10 @@ namespace Content.Server.Mining.Components
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
-=======
-=======
->>>>>>> refactor-damageablecomponent
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt"!;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-
-<<<<<<< HEAD
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
->>>>>>> refactor-damageablecomponent
         protected override void Initialize()
         {
             base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));
@@ -63,15 +37,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
             Owner.GetComponent<IDamageableComponent>().ChangeDamage(DamageType.Blunt, meleeWeaponComponent.Damage, false, item);
-=======
-            Owner.GetComponent<IDamageableComponent>().TryChangeDamage(DamageType, meleeWeaponComponent.Damage);
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-            Owner.GetComponent<IDamageableComponent>().TryChangeDamage(DamageType, meleeWeaponComponent.Damage);
->>>>>>> refactor-damageablecomponent
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;

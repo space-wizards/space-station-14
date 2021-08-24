@@ -18,7 +18,7 @@ namespace Content.Server.Spawners.Components
         [DataField("job_id")]
         private string? _jobId;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [field: ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawn_type")]
         public SpawnPointType SpawnType { get; } = SpawnPointType.Unset;
 

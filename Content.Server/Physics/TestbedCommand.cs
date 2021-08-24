@@ -354,19 +354,7 @@ namespace Content.Server.Physics
             // Box2D has this as 800 which is jesus christo.
             // Wouldn't recommend higher than 100 in debug and higher than 300 on release unless
             // you really want a profile.
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
             var count = 200;
-=======
-            var count = 50;
-
-            EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0f, -9.8f);
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
-=======
-            var count = 50;
-
-            EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0f, -9.8f);
->>>>>>> refactor-damageablecomponent
             var mapManager = IoCManager.Resolve<IMapManager>();
 
             for (var i = 0; i < count; i++)

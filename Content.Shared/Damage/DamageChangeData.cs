@@ -2,14 +2,14 @@
 {
     /// <summary>
     ///     Data class with information on how the value of a
-    ///     single <see cref="DamageTypePrototype"/> has changed.
+    ///     single <see cref="DamageType"/> has changed.
     /// </summary>
     public struct DamageChangeData
     {
         /// <summary>
         ///     Type of damage that changed.
         /// </summary>
-        public DamageTypePrototype Type;
+        public DamageType Type;
 
         /// <summary>
         ///     The new current value for that damage.
@@ -21,7 +21,7 @@
         /// </summary>
         public int Delta;
 
-        public DamageChangeData(DamageTypePrototype type, int newValue, int delta)
+        public DamageChangeData(DamageType type, int newValue, int delta)
         {
             Type = type;
             NewValue = newValue;

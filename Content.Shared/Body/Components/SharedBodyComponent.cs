@@ -73,23 +73,6 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
-        /// <summary>
-        /// Amount of damage to deal when all vital organs are removed.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("vitalPartsRemovedDamage")]
-        public int VitalPartsRemovedDamage { get; set; } = 300!;
-
-        /// <summary>
-        /// Damage type to deal when all vital organs are removed.
-        /// </summary>
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [ViewVariables]
-        [DataField("vitalPartsRemovedDamageType")]
-        private string _vitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype VitalPartsRemovedDamageType = default!;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -98,7 +81,6 @@ namespace Content.Shared.Body.Components
             // TODO BODY Move to template or somewhere else
             if (TemplateId != null)
             {
-                VitalPartsRemovedDamageType = _prototypeManager.Index<DamageTypePrototype>(_vitalPartsRemovedDamageTypeID);
                 var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
                 foreach (var (id, partType) in template.Slots)
@@ -212,15 +194,7 @@ namespace Content.Shared.Body.Components
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
                     damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
-=======
-                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
->>>>>>> refactor-damageablecomponent
                 }
             }
 

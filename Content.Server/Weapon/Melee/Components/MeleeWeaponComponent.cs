@@ -4,8 +4,6 @@ using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Weapon.Melee.Components
 {
@@ -51,22 +49,14 @@ namespace Content.Server.Weapon.Melee.Components
         public int Damage { get; set; } = 5;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("damageType")]
+        public DamageType DamageType { get; set; } = DamageType.Blunt;
+
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clickAttackEffect")]
         public bool ClickAttackEffect { get; set; } = true;
 
         public TimeSpan LastAttackTime;
         public TimeSpan CooldownEnd;
-
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt";
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
     }
 }

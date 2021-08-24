@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
@@ -10,7 +9,6 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Commands
 {
@@ -21,24 +19,22 @@ namespace Content.Server.Damage.Commands
         public string Description => "Ouch";
         public string Help => $"Usage: {Command} <type/?> <amount> (<entity uid/_>) (<ignoreResistances>)";
 
-        private readonly IPrototypeManager _prototypeManager = default!;
-        public HurtCommand() {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-        }
-
         private string DamageTypes()
         {
             var msg = new StringBuilder();
-
-            foreach (var damageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+            foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
             {
-                msg.Append($"\n{damageGroup.ID}");
-                if (damageGroup.DamageTypes.Any())
+                msg.Append($"\n{dClass}");
+
+                var types = Enum.Parse<DamageClass>(dClass).ToTypes();
+
+                if (types.Count > 0)
                 {
                     msg.Append(": ");
-                    msg.AppendJoin('|', damageGroup.DamageTypes);
+                    msg.AppendJoin('|', types);
                 }
             }
+
             return $"Damage Types:{msg}";
         }
 
@@ -89,8 +85,6 @@ namespace Content.Server.Damage.Commands
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
-
-
             if (!int.TryParse(args[1], out var amount))
             {
                 shell.WriteLine($"{args[1]} is not a valid damage integer.");
@@ -99,50 +93,42 @@ namespace Content.Server.Damage.Commands
                 return false;
             }
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
             if (Enum.TryParse<DamageClass>(args[0], true, out var damageClass))
-=======
-            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
-            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
->>>>>>> refactor-damageablecomponent
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.ApplicableDamageGroups.Contains(damageGroup))
+                    if (!damageable.DamageClasses.ContainsKey(damageClass))
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage group {damageGroup}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
 
                         return;
                     }
 
-                    if (!damageable.TryChangeDamage(damageGroup, amount, ignoreResistances))
+                    if (!damageable.ChangeDamage(damageClass, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
                         return;
                     }
 
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
             }
             // Fall back to DamageType
-            else if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
+            else if (Enum.TryParse<DamageType>(args[0], true, out var damageType))
             {
                 func = (damageable, ignoreResistances) =>
                 {
-                    if (!damageable.IsSupportedDamageType(damageType))
+                    if (!damageable.DamageTypes.ContainsKey(damageType))
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage type {damageType}");
+                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageType}");
 
                         return;
                     }
 
-                    if (!damageable.TryChangeDamage(damageType, amount, ignoreResistances))
+                    if (!damageable.ChangeDamage(damageType, amount, ignoreResistances))
                     {
                         shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
 
@@ -150,10 +136,9 @@ namespace Content.Server.Damage.Commands
                     }
 
                     shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
-
                 };
-                return true;
 
+                return true;
             }
             else
             {

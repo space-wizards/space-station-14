@@ -13,35 +13,8 @@ namespace Content.Server.Radiation
     {
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
-<<<<<<< refs/remotes/origin/master
         private const float RadiationCooldown = 0.5f;
         private float _accumulator;
-=======
-        public IEntity RadiationPulse(
-            EntityCoordinates coordinates,
-            float range,
-            int dps,
-            bool decay = true,
-            float minPulseLifespan = 0.8f,
-            float maxPulseLifespan = 2.5f,
-            SoundSpecifier sound = default!)
-        {
-            var radiationEntity = EntityManager.SpawnEntity(RadiationPrototype, coordinates);
-            var radiation = radiationEntity.GetComponent<RadiationPulseComponent>();
-
-            radiation.Range = range;
-            radiation.RadsPerSecond = dps;
-            radiation.Draw = false;
-            radiation.Decay = decay;
-            radiation.MinPulseLifespan = minPulseLifespan;
-            radiation.MaxPulseLifespan = maxPulseLifespan;
-            radiation.Sound = sound;
-
-            radiation.DoPulse();
-
-            return radiationEntity;
-        }
->>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
 
         public override void Update(float frameTime)
         {

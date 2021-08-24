@@ -1,17 +1,15 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -20,27 +18,7 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-<<<<<<< HEAD
-<<<<<<< refs/remotes/origin/master
-<<<<<<< refs/remotes/origin/master
         [DataField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
-=======
-        [DataField("heal", required: true )]
-        public Dictionary<string, int> Heal { get; private set; } = new();
->>>>>>> update damagecomponent across shared and server
-=======
-=======
->>>>>>> refactor-damageablecomponent
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [DataField("heal", required: true )]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Dictionary<string, int> Heal = new();
-<<<<<<< HEAD
->>>>>>> Refactor damageablecomponent update (#4406)
-=======
->>>>>>> refactor-damageablecomponent
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -70,9 +48,9 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            foreach (var (damageTypeID, amount) in Heal)
+            foreach (var (type, amount) in Heal)
             {
-                damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
+                damageable.ChangeDamage(type, -amount, true);
             }
 
             return true;
