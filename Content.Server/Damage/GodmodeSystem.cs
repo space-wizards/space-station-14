@@ -1,9 +1,22 @@
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
 ﻿using System.Collections.Generic;
 using Content.Server.Atmos.Components;
+=======
+﻿#nullable enable
+using System.Collections.Generic;
+>>>>>>> Merge fixes
+=======
+using System.Collections.Generic;
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+using System.Collections.Generic;
+>>>>>>> refactor-damageablecomponent
 using System.Linq;
+using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Damage.Resistances;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -43,8 +56,9 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.SupportedTypes.Clear();
-                damageable.SupportedClasses.Clear();
+                damageable.SupportedDamageTypes.Clear();
+                damageable.FullySupportedDamageGroups.Clear();
+                damageable.ApplicableDamageGroups.Clear();
             }
 
             return true;
@@ -69,14 +83,33 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
-                if (old.SupportedTypes != null)
+                if (old.SupportedDamageTypes != null)
+<<<<<<< HEAD
                 {
-                    damageable.SupportedTypes.UnionWith(old.SupportedTypes);
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
                 }
 
-                if (old.SupportedClasses != null)
+                if (old.SupportedDamageGroups != null)
                 {
-                    damageable.SupportedClasses.UnionWith(old.SupportedClasses);
+                    damageable.FullySupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
+                }
+
+                if (old.ApplicableDamageGroups != null)
+                {
+=======
+                {
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
+                }
+
+                if (old.SupportedDamageGroups != null)
+                {
+                    damageable.FullySupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
+                }
+
+                if (old.ApplicableDamageGroups != null)
+                {
+>>>>>>> refactor-damageablecomponent
+                    damageable.ApplicableDamageGroups.UnionWith(old.ApplicableDamageGroups);
                 }
             }
 
@@ -111,8 +144,9 @@ namespace Content.Server.Damage
 
                 if (entity.TryGetComponent(out IDamageableComponent? damageable))
                 {
-                    SupportedTypes = damageable.SupportedTypes.ToHashSet();
-                    SupportedClasses = damageable.SupportedClasses.ToHashSet();
+                    SupportedDamageTypes = damageable.SupportedDamageTypes.ToHashSet();
+                    SupportedDamageGroups = damageable.FullySupportedDamageGroups.ToHashSet();
+                    ApplicableDamageGroups = damageable.ApplicableDamageGroups.ToHashSet();
                 }
             }
 
@@ -120,9 +154,11 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public HashSet<DamageType>? SupportedTypes { get; }
+            public HashSet<DamageTypePrototype>? SupportedDamageTypes { get; }
 
-            public HashSet<DamageClass>? SupportedClasses { get; }
+            public HashSet<DamageGroupPrototype>? SupportedDamageGroups { get; }
+
+            public HashSet<DamageGroupPrototype>? ApplicableDamageGroups { get; }
         }
     }
 }

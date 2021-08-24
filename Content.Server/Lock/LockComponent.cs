@@ -20,7 +20,13 @@ namespace Content.Server.Storage.Components
         public override string Name => "Lock";
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("locked")] public bool Locked { get; set; } = true;
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
         [ViewVariables(VVAccess.ReadWrite)] [DataField("lockOnClick")] public bool LockOnClick { get; set; } = false;
+=======
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+>>>>>>> refactor-damageablecomponent
         [ViewVariables(VVAccess.ReadWrite)] [DataField("unlockingSound")] public SoundSpecifier UnlockSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("lockingSound")] public SoundSpecifier LockSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/door_lock_off.ogg");
 

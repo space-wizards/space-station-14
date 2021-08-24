@@ -10,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -66,7 +67,17 @@ namespace Content.Server.GameTicking.Presets
                     if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
                         damageable.SetDamage(DamageType.Asphyxiation, 200, playerEntity);
+=======
+                        //cry deeply
+                        damageable.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                        //cry deeply
+                        damageable.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
+>>>>>>> refactor-damageablecomponent
                     }
                 }
             }

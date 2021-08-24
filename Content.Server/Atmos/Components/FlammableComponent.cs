@@ -20,6 +20,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Components
 {
@@ -42,6 +44,18 @@ namespace Content.Server.Atmos.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         public void Extinguish()
         {
@@ -92,7 +106,15 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
                     damageable.ChangeDamage(DamageClass.Burn, damage, false);
+=======
+                    damageable.TryChangeDamage(DamageType, damage, false);
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                    damageable.TryChangeDamage(DamageType, damage, false);
+>>>>>>> refactor-damageablecomponent
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));

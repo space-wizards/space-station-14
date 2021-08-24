@@ -1853,6 +1853,8 @@ Entries:
     type: Fix}
   id: 330
   time: '2021-08-21T17:20:18.0000000+00:00'
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
 - author: metalgearsloth
   changes:
   - {message: Singulo slightly less janky., type: Fix}
@@ -1886,3 +1888,7 @@ Entries:
   - {message: Add meteor swarm event., type: Add}
   id: 336
   time: '2021-08-23T03:28:48.0000000+00:00'
+=======
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+>>>>>>> refactor-damageablecomponent

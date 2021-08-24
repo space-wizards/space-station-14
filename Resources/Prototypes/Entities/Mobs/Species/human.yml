@@ -34,6 +34,7 @@
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
+    damageType: Blunt
   - type: DamageOnHighSpeedImpact
     soundHit: 
       path: /Audio/Effects/hit_kick.ogg
@@ -157,7 +158,9 @@
     fireSpread: true
     canResistFire: true
   - type: Temperature
+    heatDamageType: Heat
     heatDamageThreshold: 360
+    coldDamageType: Cold
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
@@ -168,7 +171,15 @@
     preset: HumanPreset
   - type: Damageable
     damageContainer: biologicalDamageContainer
+<<<<<<< refs/remotes/origin/master
   - type: Respirator
+<<<<<<< refs/remotes/origin/master
+=======
+  - type: Metabolism
+    damageType: Blunt
+>>>>>>> all thats left is bug/missing node hunting then verification.
+=======
+>>>>>>> Refactor damageablecomponent update (#4406)
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -191,7 +202,7 @@
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
-        type: Blunt
+        damageType: Blunt
         damage: 400
       behaviors:
       - !type:GibBehavior { }

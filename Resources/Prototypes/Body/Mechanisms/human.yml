@@ -121,64 +121,120 @@
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
     metabolisms:
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
+<<<<<<< refs/remotes/origin/master
+=======
+      Dylovene:
+        effects:
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: -1
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+>>>>>>> refactor-damageablecomponent
       Arithrazine:
         effects:
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: -1
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: 0.5
       Bicaridine:
         effects:
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: -2
       Dermaline:
         effects:
         - !type:HealthChange
-          damageClass: Burn
+          damageGroup: Burn
           healthChange: -3
       Dexalin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -1
       DexalinPlus:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -3
       Dylovene:
+<<<<<<< HEAD
         effects:
+<<<<<<< refs/remotes/origin/master
           - !type:HealthChange
             damageClass: Toxin
             healthChange: -1
       Ephedrine:
+=======
+>>>>>>> refactor-damageablecomponent
         effects:
           - !type:MovespeedModifier
             walkSpeedModifier: 1.2
             sprintSpeedModifier: 1.2
+=======
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: -1
+      Ephedrine:
+        effects:
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: 0.5
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+          - !type:MovespeedModifier
+            walkSpeedModifier: 1.2
+            sprintSpeedModifier: 1.2
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+          - !type:MovespeedModifier
+            walkSpeedModifier: 1.2
+            sprintSpeedModifier: 1.2
+>>>>>>> refactor-damageablecomponent
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 4
       Kelotane:
         effects:
           - !type:HealthChange
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
             damageClass: Burn
+=======
+            damageGroup: Burn
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+            damageGroup: Burn
+>>>>>>> refactor-damageablecomponent
             healthChange: -1
       Lexorin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 7
       Meth:
         effects:
           - !type:HealthChange
             healthChange: 2.5
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
             damageClass: Toxin
+=======
+            damageGroup: Toxin
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+            damageGroup: Toxin
+>>>>>>> refactor-damageablecomponent
           - !type:MovespeedModifier
             walkSpeedModifier: 1.3
             sprintSpeedModifier: 1.3
@@ -186,21 +242,40 @@
         effects:
         - !type:HealthChange
           healthChange: -2
-          damageClass: Burn
+          damageGroup: Burn
         - !type:HealthChange
           healthChange: -2
-          damageClass: Toxin
+          damageGroup: Toxin
         - !type:HealthChange
           healthChange: -2
-          damageClass: Airloss
+          damageGroup: Airloss
         - !type:HealthChange
           healthChange: -2
+<<<<<<< HEAD
+<<<<<<< refs/remotes/origin/master
           damageClass: Brute
       Synaptizine:
         effects:
           - !type:HealthChange
             damageClass: Toxin
             healthChange: 0.5
+=======
+          damageGroup: Brute
+<<<<<<< refs/remotes/origin/master
+>>>>>>> Refactor damageablecomponent update (#4406)
+=======
+=======
+          damageGroup: Brute
+>>>>>>> refactor-damageablecomponent
+      Synaptizine:
+        effects:
+          - !type:HealthChange
+            damageGroup: Toxin
+            healthChange: 0.5
+<<<<<<< HEAD
+>>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+>>>>>>> refactor-damageablecomponent
 
 - type: entity
   id: OrganHumanStomach
@@ -259,7 +334,7 @@
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
       JuiceWatermelon:
         effects:
@@ -304,7 +379,7 @@
         - !type:SatiateThirst
           hydrationFactor: 2
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
 
 - type: entity
