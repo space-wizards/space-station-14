@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -18,7 +20,12 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-        [DataField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [DataField("heal", required: true )]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<string, int> Heal = new();
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -48,9 +55,9 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            foreach (var (type, amount) in Heal)
+            foreach (var (damageTypeID, amount) in Heal)
             {
-                damageable.ChangeDamage(type, -amount, true);
+                damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), -amount, true);
             }
 
             return true;

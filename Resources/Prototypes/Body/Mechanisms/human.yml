@@ -124,36 +124,36 @@
       Arithrazine:
         effects:
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: -1
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: 0.5
       Bicaridine:
         effects:
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: -2
       Dermaline:
         effects:
         - !type:HealthChange
-          damageClass: Burn
+          damageGroup: Burn
           healthChange: -3
       Dexalin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -1
       DexalinPlus:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -3
       Dylovene:
         effects:
-          - !type:HealthChange
-            damageClass: Toxin
-            healthChange: -1
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: -1
       Ephedrine:
         effects:
           - !type:MovespeedModifier
@@ -162,23 +162,23 @@
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 4
       Kelotane:
         effects:
           - !type:HealthChange
-            damageClass: Burn
+            damageGroup: Burn
             healthChange: -1
       Lexorin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 7
       Meth:
         effects:
           - !type:HealthChange
             healthChange: 2.5
-            damageClass: Toxin
+            damageGroup: Toxin
           - !type:MovespeedModifier
             walkSpeedModifier: 1.3
             sprintSpeedModifier: 1.3
@@ -186,20 +186,20 @@
         effects:
         - !type:HealthChange
           healthChange: -2
-          damageClass: Burn
+          damageGroup: Burn
         - !type:HealthChange
           healthChange: -2
-          damageClass: Toxin
+          damageGroup: Toxin
         - !type:HealthChange
           healthChange: -2
-          damageClass: Airloss
+          damageGroup: Airloss
         - !type:HealthChange
           healthChange: -2
-          damageClass: Brute
+          damageGroup: Brute
       Synaptizine:
         effects:
           - !type:HealthChange
-            damageClass: Toxin
+            damageGroup: Toxin
             healthChange: 0.5
 
 - type: entity
@@ -259,7 +259,7 @@
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
       JuiceWatermelon:
         effects:
@@ -304,7 +304,7 @@
         - !type:SatiateThirst
           hydrationFactor: 2
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
 
 - type: entity

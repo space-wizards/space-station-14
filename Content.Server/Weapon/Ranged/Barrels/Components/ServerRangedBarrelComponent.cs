@@ -399,7 +399,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (!result.HitEntity.TryGetComponent(out IDamageableComponent? damageable))
                     return;
 
-                damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), false, Owner);
+                damageable.TryChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero));
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }

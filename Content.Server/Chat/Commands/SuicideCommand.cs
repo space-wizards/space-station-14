@@ -17,6 +17,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat.Commands
 {
@@ -34,21 +35,22 @@ namespace Content.Server.Chat.Commands
             var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
-                damageableComponent.SetDamage(kind switch
+                var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+                damageableComponent.TrySetDamage(kind switch
                     {
-                        SuicideKind.Blunt => DamageType.Blunt,
-                        SuicideKind.Slash => DamageType.Slash,
-                        SuicideKind.Piercing => DamageType.Piercing,
-                        SuicideKind.Heat => DamageType.Heat,
-                        SuicideKind.Shock => DamageType.Shock,
-                        SuicideKind.Cold => DamageType.Cold,
-                        SuicideKind.Poison => DamageType.Poison,
-                        SuicideKind.Radiation => DamageType.Radiation,
-                        SuicideKind.Asphyxiation => DamageType.Asphyxiation,
-                        SuicideKind.Bloodloss => DamageType.Bloodloss,
-                        _ => DamageType.Blunt
+                        SuicideKind.Blunt => prototypeManager.Index<DamageTypePrototype>("Blunt"),
+                        SuicideKind.Slash => prototypeManager.Index<DamageTypePrototype>("Slash"),
+                        SuicideKind.Piercing => prototypeManager.Index<DamageTypePrototype>("Piercing"),
+                        SuicideKind.Heat => prototypeManager.Index<DamageTypePrototype>("Heat"),
+                        SuicideKind.Shock => prototypeManager.Index<DamageTypePrototype>("Shock"),
+                        SuicideKind.Cold => prototypeManager.Index<DamageTypePrototype>("Cold"),
+                        SuicideKind.Poison => prototypeManager.Index<DamageTypePrototype>("Poison"),
+                        SuicideKind.Radiation => prototypeManager.Index<DamageTypePrototype>("Radiation"),
+                        SuicideKind.Asphyxiation => prototypeManager.Index<DamageTypePrototype>("Asphyxiation"),
+                        SuicideKind.Bloodloss => prototypeManager.Index<DamageTypePrototype>("Bloodloss"),
+                        _ => prototypeManager.Index<DamageTypePrototype>("Blunt")
                     },
-                200, source);
+                200);
             }
         }
 
@@ -117,7 +119,7 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.SetDamage(DamageType.Piercing, 200, owner);
+            dmgComponent.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Piercing"), 200);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.
