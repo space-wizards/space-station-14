@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Damage;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Commands
   id: DamageableDummy
   components:
   - type: Damageable
-    damagePrototype: biologicalDamageContainer
+    damageContainer: biologicalDamageContainer
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                damageable.ChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Brute"), 10000000, true);
+                damageable.TryChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

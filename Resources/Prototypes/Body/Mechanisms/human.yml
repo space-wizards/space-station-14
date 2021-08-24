@@ -121,48 +121,53 @@
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
     metabolisms:
+      Dylovene:
+        effects:
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: -1
       Arithrazine:
         effects:
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: -1
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: 0.5
       Bicaridine:
         effects:
         - !type:HealthChange
-          damageClass: Brute
+          damageGroup: Brute
           healthChange: -2
       Dermaline:
         effects:
         - !type:HealthChange
-          damageClass: Burn
+          damageGroup: Burn
           healthChange: -3
       Dexalin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -1
       DexalinPlus:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: -3
       Dylovene:
         effects:
-          - !type:HealthChange
-            damageClass: Toxin
-            healthChange: -1
-      Ephedrine:
+        - !type:HealthChange
+          damageGroup: Burn
+          healthChange: -1
+      Synaptizine:
         effects:
-          - !type:MovespeedModifier
-            walkSpeedModifier: 1.2
-            sprintSpeedModifier: 1.2
+        - !type:HealthChange
+          damageGroup: Toxin
+          healthChange: 0.5
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 4
       Kelotane:
         effects:
@@ -172,7 +177,7 @@
       Lexorin:
         effects:
         - !type:HealthChange
-          damageClass: Airloss
+          damageGroup: Airloss
           healthChange: 7
       Meth:
         effects:
@@ -186,21 +191,16 @@
         effects:
         - !type:HealthChange
           healthChange: -2
-          damageClass: Burn
+          damageGroup: Burn
         - !type:HealthChange
           healthChange: -2
-          damageClass: Toxin
+          damageGroup: Toxin
         - !type:HealthChange
           healthChange: -2
-          damageClass: Airloss
+          damageGroup: Airloss
         - !type:HealthChange
           healthChange: -2
-          damageClass: Brute
-      Synaptizine:
-        effects:
-          - !type:HealthChange
-            damageClass: Toxin
-            healthChange: 0.5
+          damageGroup: Brute
 
 - type: entity
   id: OrganHumanStomach
@@ -259,7 +259,7 @@
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
       JuiceWatermelon:
         effects:
@@ -304,7 +304,7 @@
         - !type:SatiateThirst
           hydrationFactor: 2
         - !type:HealthChange
-          damageClass: Toxin
+          damageGroup: Toxin
           healthChange: 1
 
 - type: entity

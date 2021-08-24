@@ -17,15 +17,21 @@
 - type: damageType
   id: Cold
 
+# Poison damage. Generally caused by various reagents being metabolised.
 - type: damageType
   id: Poison
 
 - type: damageType
   id: Radiation
 
+# Damage due to being unable to breathe.
+# Represents not enough oxygen (or equivalent) getting to the blood.
+# Usually healed automatically if entity can breathe
 - type: damageType
   id: Asphyxiation
 
+# Damage representing not having enough blood.
+# Represents there not enough blood to supply oxygen (or equivalent).
 - type: damageType
   id: Bloodloss
 
@@ -46,17 +52,24 @@
     - Shock
     - Cold
 
+# Airloss (sometimes called oxyloss)
+# Caused by asphyxiation or bloodloss.
+# Note that most medicine and damaging effects should probably modify either asphyxiation or
+# bloodloss, not this whole group, unless you have a wonder drug that affects both.
+- type: damageGroup
+  id: Airloss
+  damageTypes:
+    - Asphyxiation
+    - Bloodloss
+
+# As with airloss, most medicine and damage effects should probably modify either poison or radiation.
+# Though there are probably some radioactive poisons.
 - type: damageGroup
   id: Toxin
   damageTypes:
     - Poison
     - Radiation
 
-- type: damageGroup
-  id: Airloss
-  damageTypes:
-    - Asphyxiation
-    - Bloodloss
 
 - type: damageGroup
   id: Genetic
@@ -67,9 +80,10 @@
   id: allDamageContainer
   supportAll: true
 
+
 - type: damageContainer
   id: biologicalDamageContainer
-  supportedClasses:
+  supportedGroups:
     - Brute
     - Burn
     - Toxin
@@ -78,8 +92,6 @@
 
 - type: damageContainer
   id: metallicDamageContainer
-  supportedClasses:
+  supportedGroups:
     - Brute
     - Burn
-
-
