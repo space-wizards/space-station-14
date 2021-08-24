@@ -198,11 +198,15 @@ namespace Content.Server.GameTicking.Presets
                     if (entity.TryGetComponent(out IDamageableComponent? damageable))
                     {
                         //todo: what if they dont breathe lol
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                         damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
 =======
                         damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                        damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
+>>>>>>> refactor-damageablecomponent
                     }
                 }
                 else if (!mobState.IsDead())

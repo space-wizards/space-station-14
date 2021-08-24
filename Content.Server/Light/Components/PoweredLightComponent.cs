@@ -59,6 +59,7 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         [ViewVariables]
@@ -70,6 +71,10 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         [DataField("on")]
 >>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+        [ViewVariables]
+        [DataField("on")]
+>>>>>>> refactor-damageablecomponent
         private bool _on = true;
 
         [ViewVariables]
@@ -149,6 +154,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
@@ -160,6 +166,10 @@ namespace Content.Server.Light.Components
 =======
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
 >>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+                damageableComponent.TryChangeDamage(DamageType, 20);
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
+>>>>>>> refactor-damageablecomponent
             }
 
             void Eject()

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
 ﻿using System.Collections.Generic;
@@ -9,6 +10,9 @@ using System.Collections.Generic;
 =======
 using System.Collections.Generic;
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+using System.Collections.Generic;
+>>>>>>> refactor-damageablecomponent
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
@@ -80,6 +84,7 @@ namespace Content.Server.Damage
             if (entity.TryGetComponent(out IDamageableComponent? damageable))
             {
                 if (old.SupportedDamageTypes != null)
+<<<<<<< HEAD
                 {
                     damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
                 }
@@ -91,6 +96,19 @@ namespace Content.Server.Damage
 
                 if (old.ApplicableDamageGroups != null)
                 {
+=======
+                {
+                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
+                }
+
+                if (old.SupportedDamageGroups != null)
+                {
+                    damageable.FullySupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
+                }
+
+                if (old.ApplicableDamageGroups != null)
+                {
+>>>>>>> refactor-damageablecomponent
                     damageable.ApplicableDamageGroups.UnionWith(old.ApplicableDamageGroups);
                 }
             }

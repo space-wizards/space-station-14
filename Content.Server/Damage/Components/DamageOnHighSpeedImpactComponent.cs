@@ -17,11 +17,14 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnHighSpeedImpact";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         [DataField("damage")]
         public DamageType Damage { get; set; } = DamageType.Blunt;
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
         [DataField("baseDamage")]

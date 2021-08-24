@@ -20,6 +20,7 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         [DataField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
@@ -28,13 +29,18 @@ namespace Content.Server.Medical.Components
         public Dictionary<string, int> Heal { get; private set; } = new();
 >>>>>>> update damagecomponent across shared and server
 =======
+=======
+>>>>>>> refactor-damageablecomponent
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // This also requires changing the dictionary type, and removing a _prototypeManager.Index() call.
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [DataField("heal", required: true )]
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, int> Heal = new();
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

@@ -15,20 +15,12 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class DamageGroupTrigger : IThresholdTrigger
     {
-<<<<<<< refs/remotes/origin/master:Content.Server/Destructible/Thresholds/Triggers/DamageClassTrigger.cs
-        /// <summary>
-        ///     The class to check the damage of.
-        /// </summary>
-        [DataField("class")]
-        public DamageClass? Class { get; set; }
-=======
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // While you're at it, maybe also combine damageGroup and damage into a dictionary, and allow it to test a sum
         // of damage types?
         [DataField("damageGroup", required: true)]
         private string _damageGroupID { get; set; } = default!;
         public DamageGroupPrototype DamageGroup => IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(_damageGroupID);
->>>>>>> Refactor damageablecomponent update (#4406):Content.Server/Destructible/Thresholds/Triggers/DamageGroupTrigger.cs
 
         /// <summary>
         ///     The amount of damage at which this threshold will trigger.
@@ -38,20 +30,12 @@ namespace Content.Server.Destructible.Thresholds.Triggers
 
         public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
         {
-<<<<<<< refs/remotes/origin/master:Content.Server/Destructible/Thresholds/Triggers/DamageClassTrigger.cs
-            if (Class == null)
-=======
             if (DamageGroup == null)
->>>>>>> Refactor damageablecomponent update (#4406):Content.Server/Destructible/Thresholds/Triggers/DamageGroupTrigger.cs
             {
                 return false;
             }
 
-<<<<<<< refs/remotes/origin/master:Content.Server/Destructible/Thresholds/Triggers/DamageClassTrigger.cs
-            return damageable.TryGetDamage(Class.Value, out var damageReceived) &&
-=======
             return damageable.TryGetDamage(DamageGroup, out var damageReceived) &&
->>>>>>> Refactor damageablecomponent update (#4406):Content.Server/Destructible/Thresholds/Triggers/DamageGroupTrigger.cs
                    damageReceived >= Damage;
         }
     }

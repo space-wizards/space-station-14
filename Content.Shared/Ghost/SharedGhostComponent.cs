@@ -34,8 +34,11 @@ namespace Content.Shared.Ghost
         ///     Changed by <see cref="SharedGhostSystem.SetCanReturnToBody"/>
         /// </summary>
         // TODO MIRROR change this to use friend classes when thats merged
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 =======
+=======
+>>>>>>> refactor-damageablecomponent
         [DataField("canReturnToBody")]
 >>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
         [ViewVariables(VVAccess.ReadWrite)]

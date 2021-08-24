@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
 ﻿using System;
@@ -15,6 +16,12 @@ using System.Collections.Generic;
 =======
 using Robust.Shared.IoC;
 >>>>>>> Merge fixes
+=======
+using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using Robust.Shared.IoC;
+>>>>>>> refactor-damageablecomponent
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -30,16 +37,22 @@ namespace Content.Shared.Damage.Resistances
     public class ResistanceSetPrototype : IPrototype, ISerializationHooks
     {
         [ViewVariables]
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         [DataField("coefficients")]
 <<<<<<< refs/remotes/origin/master
         public Dictionary<DamageType, float> Coefficients { get; } = new();
+=======
+        [DataField("id", required: true)]
+        public string ID { get; } = default!;
+>>>>>>> refactor-damageablecomponent
 
         [ViewVariables]
-        [DataField("flatReductions")]
-        public Dictionary<DamageType, int> FlatReductions { get; } = new();
+        [DataField("coefficients", required: true)]
+        private Dictionary<string, float> coefficients { get; } = new();
 
         [ViewVariables]
+<<<<<<< HEAD
         public Dictionary<DamageType, ResistanceSetSettings> Resistances { get; private set; } = new();
 =======
         public Dictionary<string, float> Coefficients { get; } = new();
@@ -60,18 +73,21 @@ namespace Content.Shared.Damage.Resistances
 <<<<<<< refs/remotes/origin/master
         public Dictionary<DamageTypePrototype, int> FlatResistances { get; private set; } = new();
 >>>>>>> Merge fixes
+=======
+        [DataField("flatReductions", required: true)]
+        private Dictionary<string, int> flatReductions { get; } = new();
+>>>>>>> refactor-damageablecomponent
 
         [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
+        public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; private set; } = new();
 
         void ISerializationHooks.AfterDeserialization()
         {
-            Resistances = new Dictionary<DamageType, ResistanceSetSettings>();
-            foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach (var damageTypeID in coefficients.Keys)
             {
-                Resistances.Add(damageType,
-                    new ResistanceSetSettings(Coefficients[damageType], FlatReductions[damageType]));
+                var resolvedDamageType = prototypeManager.Index<DamageTypePrototype>(damageTypeID);
+                Resistances.Add(resolvedDamageType, new ResistanceSetSettings(coefficients[damageTypeID], flatReductions[damageTypeID]));
             }
 =======
         public Dictionary<DamageTypePrototype, ResistanceSetSettings> Resistances { get; private set; } = new();
@@ -100,7 +116,10 @@ namespace Content.Shared.Damage.Resistances
         {
             Coefficient = coefficient;
             FlatReduction = flatReduction;
+<<<<<<< HEAD
 >>>>>>> update damagecomponent across shared and server
+=======
+>>>>>>> refactor-damageablecomponent
         }
     }
 

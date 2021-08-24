@@ -44,6 +44,7 @@ namespace Content.Server.Doors.Components
         [DataField("board")]
         private string? _boardPrototype;
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         [DataField("tryOpenDoorSound")]
@@ -54,6 +55,11 @@ namespace Content.Server.Doors.Components
         private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
 >>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+        [DataField("tryOpenDoorSound")]
+        private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
+
+>>>>>>> refactor-damageablecomponent
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("damageType")]
@@ -65,7 +71,10 @@ namespace Content.Server.Doors.Components
             base.Initialize();
             DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
 
         public override DoorState State
         {
@@ -558,11 +567,15 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 damage.ChangeDamage(DamageType.Blunt, DoorCrushDamage, false, Owner);
 =======
                 damage.TryChangeDamage(DamageType, DoorCrushDamage);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                damage.TryChangeDamage(DamageType, DoorCrushDamage);
+>>>>>>> refactor-damageablecomponent
                 stun.Paralyze(DoorStunTime);
             }
 

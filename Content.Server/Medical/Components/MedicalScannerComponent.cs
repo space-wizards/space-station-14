@@ -99,6 +99,7 @@ namespace Content.Server.Medical.Components
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 new Dictionary<DamageClass, int>(),
                 new Dictionary<DamageType, int>(),
@@ -106,6 +107,10 @@ namespace Content.Server.Medical.Components
                 new Dictionary<string, int>(),
                 new Dictionary<string, int>(),
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                new Dictionary<string, int>(),
+                new Dictionary<string, int>(),
+>>>>>>> refactor-damageablecomponent
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -126,6 +131,7 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             var classes = new Dictionary<DamageClass, int>(damageable.DamageClasses);
             var types = new Dictionary<DamageType, int>(damageable.DamageTypes);
@@ -134,6 +140,11 @@ namespace Content.Server.Medical.Components
             var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
             var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            // Get dictionaries of damage, by fully supported damage groups and types
+            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
+            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
+>>>>>>> refactor-damageablecomponent
 
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {

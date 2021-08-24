@@ -55,11 +55,23 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 foreach (var (@class, classAmount) in state.DamageClasses)
-                {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-class-text", ("damageClass", @class), ("amount", classAmount))}");
+=======
+                // Show the total damage
+                var totalDamage = state.DamagePerTypeID.Values.Sum();
+                text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
+                // Keep track of how many damage types we have shown
+                HashSet<string> shownTypeIDs = new();
+
+                // First show just the total damage and type breakdown for each damge group that is fully supported by that entitygroup.
+                foreach (var (damageGroupID, damageAmount) in state.DamagePerSupportedGroupID)
+>>>>>>> refactor-damageablecomponent
+                {
+
+<<<<<<< HEAD
                     foreach (var type in @class.ToTypes())
 =======
                 // Show the total damage
@@ -73,6 +85,8 @@ namespace Content.Client.MedicalScanner.UI
                 foreach (var (damageGroupID, damageAmount) in state.DamagePerSupportedGroupID)
                 {
 
+=======
+>>>>>>> refactor-damageablecomponent
                     // Show total damage for the group
                     text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupID), ("amount", damageAmount))}");
 
@@ -81,7 +95,10 @@ namespace Content.Client.MedicalScanner.UI
                     // So use PrototypeManager.
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);
                     foreach (var type in group.DamageTypes)
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
                     {
                         if (state.DamagePerTypeID.TryGetValue(type.ID, out var typeAmount))
                         {

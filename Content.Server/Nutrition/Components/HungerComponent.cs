@@ -23,13 +23,19 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 =======
+=======
+>>>>>>> refactor-damageablecomponent
         // TODO DAMAGE UNITS When damage units support decimals, get rid of this.
         // See also _accumulatedDamage in ThirstComponent and HealthChange.
         private float _accumulatedDamage;
 
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -37,11 +43,15 @@ namespace Content.Server.Nutrition.Components
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         [DataField("base_decay_rate")]
 =======
         [DataField("baseDecayRate")]
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        [DataField("baseDecayRate")]
+>>>>>>> refactor-damageablecomponent
         private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -71,6 +81,7 @@ namespace Content.Server.Nutrition.Components
         public Dictionary<HungerThreshold, float> HungerThresholds => _hungerThresholds;
         private readonly Dictionary<HungerThreshold, float> _hungerThresholds = new()
         {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             {HungerThreshold.Overfed, 600.0f},
             {HungerThreshold.Okay, 450.0f},
@@ -78,12 +89,17 @@ namespace Content.Server.Nutrition.Components
             {HungerThreshold.Starving, 150.0f},
             {HungerThreshold.Dead, 0.0f},
 =======
+=======
+>>>>>>> refactor-damageablecomponent
             { HungerThreshold.Overfed, 600.0f },
             { HungerThreshold.Okay, 450.0f },
             { HungerThreshold.Peckish, 300.0f },
             { HungerThreshold.Starving, 150.0f },
             { HungerThreshold.Dead, 0.0f },
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         };
 
         public static readonly Dictionary<HungerThreshold, AlertType> HungerThresholdAlertTypes = new()
@@ -219,9 +235,12 @@ namespace Content.Server.Nutrition.Components
 
             if (!mobState.IsDead())
             {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 damageable.ChangeDamage(DamageType.Blunt, 2, true);
 =======
+=======
+>>>>>>> refactor-damageablecomponent
                 // --> But they are not dead yet.
                 var damage = 2 * frametime;
                 _accumulatedDamage += damage - ((int) damage);
@@ -230,7 +249,10 @@ namespace Content.Server.Nutrition.Components
                     _accumulatedDamage -= 1;
                     damageable.TryChangeDamage(DamageType, 1, true);
                 }
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
             }
         }
 

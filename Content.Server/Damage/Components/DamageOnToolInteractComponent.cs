@@ -25,8 +25,11 @@ namespace Content.Server.Damage.Components
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 =======
+=======
+>>>>>>> refactor-damageablecomponent
         // TODO PROTOTYPE Replace these datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
         [DataField("weldingDamageType")]
@@ -44,7 +47,10 @@ namespace Content.Server.Damage.Components
             DefaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
         }
 
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
@@ -68,24 +74,26 @@ namespace Content.Server.Damage.Components
 
         protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
         {
-            if (eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
-            {
-                damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                        ? DamageType.Heat
-                        : DamageType.Blunt,
-                    Damage, false, eventArgs.User);
+            if (!eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
+                return false;
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                 return true;
             }
 =======
+=======
+>>>>>>> refactor-damageablecomponent
             damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
                     ? WeldingDamageType
                     : DefaultDamageType,
                 Damage);
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
 
-            return false;
+            return true;
         }
     }
 }

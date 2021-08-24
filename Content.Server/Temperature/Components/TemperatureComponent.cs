@@ -24,6 +24,7 @@ namespace Content.Server.Temperature.Components
         /// <inheritdoc />
         public override string Name => "Temperature";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
 =======
@@ -33,6 +34,8 @@ namespace Content.Server.Temperature.Components
         private readonly string hotDamageType = default!;
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         [DataField("heatDamageThreshold")]
         private float _heatDamageThreshold = default;
         [DataField("coldDamageThreshold")]
@@ -84,6 +87,7 @@ namespace Content.Server.Temperature.Components
 
         public void Update()
         {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             var tempDamage = 0;
 <<<<<<< refs/remotes/origin/master
@@ -103,6 +107,8 @@ namespace Content.Server.Temperature.Components
 >>>>>>> update damagecomponent across shared and server
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? status))
             {
@@ -145,6 +151,7 @@ namespace Content.Server.Temperature.Components
                 }
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             if (!damageType.HasValue) return;
 
@@ -152,6 +159,9 @@ namespace Content.Server.Temperature.Components
             component.ChangeDamage(damageType.Value, tempDamage, false);
 =======
             if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
+=======
+            if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
+>>>>>>> refactor-damageablecomponent
 
             if (CurrentTemperature >= _heatDamageThreshold)
             {
@@ -163,6 +173,7 @@ namespace Content.Server.Temperature.Components
                 int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
                 component.TryChangeDamage(ColdDamageType, tempDamage, false);
             }
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 
             if (damageType is null) return;
@@ -171,6 +182,9 @@ namespace Content.Server.Temperature.Components
 =======
             
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            
+>>>>>>> refactor-damageablecomponent
         }
 
         /// <summary>

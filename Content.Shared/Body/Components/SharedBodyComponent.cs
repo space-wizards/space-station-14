@@ -212,11 +212,15 @@ namespace Content.Shared.Body.Components
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                     damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
 =======
                     damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
+>>>>>>> refactor-damageablecomponent
                 }
             }
 

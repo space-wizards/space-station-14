@@ -43,6 +43,7 @@ namespace Content.Shared.Damage.Components
         public override uint? NetID => ContentNetIDs.DAMAGEABLE;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+<<<<<<< HEAD
 
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
@@ -73,6 +74,16 @@ namespace Content.Shared.Damage.Components
         // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
 <<<<<<< refs/remotes/origin/master
         [ViewVariables] [DataField("damageContainer")] public string DamageContainerId { get; set; } = DefaultDamageContainer;
+=======
+
+        /// <summary>
+        ///     The main damage dictionary. All the damage information is stored in this dictionary with <see cref="DamageTypePrototype"/>  keys.
+        /// </summary>
+        private Dictionary<DamageTypePrototype, int> _damageDict = new();
+
+        [DataField("resistances")]
+        public string ResistanceSetId { get; set; } = "defaultResistances";
+>>>>>>> refactor-damageablecomponent
 
         [ViewVariables] public ResistanceSet Resistances { get; set; } = new();
 =======
@@ -82,18 +93,41 @@ namespace Content.Shared.Damage.Components
         public string DamageContainerId { get; set; } = DefaultDamageContainer;
 >>>>>>> fix a few bugs
 
-        // TODO DAMAGE Cache this
-        [ViewVariables] public int TotalDamage => _damageList.Values.Sum();
+        // TODO DAMAGE Use as default values, specify overrides in a separate property through yaml for better (de)serialization
+        [ViewVariables]
+        [DataField("damageContainer")]
+        public string DamageContainerId { get; set; } = "metallicDamageContainer";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         [ViewVariables] public IReadOnlyDictionary<DamageClass, int> DamageClasses => _damageList.ToClassDictionary();
+=======
+        // TODO DAMAGE Cache this
+        // When moving logic from damageableComponent --> Damage System, make damageSystem update these on damage change.
+        [ViewVariables] public int TotalDamage => _damageDict.Values.Sum();
+        [ViewVariables] public IReadOnlyDictionary<DamageTypePrototype, int> GetDamagePerType => _damageDict;
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerApplicableGroup => DamageTypeDictToDamageGroupDict(_damageDict, ApplicableDamageGroups);
+        [ViewVariables] public IReadOnlyDictionary<DamageGroupPrototype, int> GetDamagePerFullySupportedGroup => DamageTypeDictToDamageGroupDict(_damageDict, FullySupportedDamageGroups);
+>>>>>>> refactor-damageablecomponent
 
-        [ViewVariables] public IReadOnlyDictionary<DamageType, int> DamageTypes => _damageList;
+        // Whenever sending over network, also need a <string, int> dictionary
+        // TODO DAMAGE MAYBE Cache this?
+        public IReadOnlyDictionary<string, int> GetDamagePerApplicableGroupIDs => ConvertDictKeysToIDs(GetDamagePerApplicableGroup);
+        public IReadOnlyDictionary<string, int> GetDamagePerFullySupportedGroupIDs => ConvertDictKeysToIDs(GetDamagePerFullySupportedGroup);
+        public IReadOnlyDictionary<string, int> GetDamagePerTypeIDs => ConvertDictKeysToIDs(_damageDict);
 
-        [ViewVariables] public HashSet<DamageType> SupportedTypes { get; } = new();
+        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
+        // Also requires appropriate changes in OnExplosion() and RadiationAct()
+        [ViewVariables]
+        [DataField("radiationDamageTypes")]
+        public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
+        [ViewVariables]
+        [DataField("explosionDamageTypes")]
+        public List<string> ExplosionDamageTypeIDs { get; set; } = new() { "Piercing", "Heat" };
 
-        [ViewVariables] public HashSet<DamageClass> SupportedClasses { get; } = new();
+        public HashSet<DamageGroupPrototype> ApplicableDamageGroups { get; } = new();
 
+<<<<<<< HEAD
         public bool SupportsDamageClass(DamageClass @class)
         {
             return SupportedClasses.Contains(@class);
@@ -137,11 +171,11 @@ namespace Content.Shared.Damage.Components
             return SupportedGroups.Contains(damageGroup);
 >>>>>>> Merge fixes
         }
+=======
+        public HashSet<DamageGroupPrototype> FullySupportedDamageGroups { get; } = new();
+>>>>>>> refactor-damageablecomponent
 
-        public bool SupportsDamageType(DamageType type)
-        {
-            return SupportedTypes.Contains(type);
-        }
+        public HashSet<DamageTypePrototype> SupportedDamageTypes { get; } = new();
 
 =======
 >>>>>>> update damagecomponent across shared and server
@@ -151,12 +185,20 @@ namespace Content.Shared.Damage.Components
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
+=======
+>>>>>>> refactor-damageablecomponent
             // TODO DAMAGE Serialize damage done and resistance changes
-            var damagePrototype = prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
+            var damageContainerPrototype = _prototypeManager.Index<DamageContainerPrototype>(DamageContainerId);
 
+            ApplicableDamageGroups.Clear();
+            FullySupportedDamageGroups.Clear();
+            SupportedDamageTypes.Clear();
+
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             SupportedClasses.Clear();
             SupportedTypes.Clear();
@@ -196,6 +238,14 @@ namespace Content.Shared.Damage.Components
             SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
 >>>>>>> Refactor damageablecomponent update (#4406)
 
+=======
+            //Get Damage groups/types from the DamageContainerPrototype.
+            DamageContainerId = damageContainerPrototype.ID;
+            ApplicableDamageGroups.UnionWith(damageContainerPrototype.ApplicableDamageGroups);
+            FullySupportedDamageGroups.UnionWith(damageContainerPrototype.FullySupportedDamageGroups);
+            SupportedDamageTypes.UnionWith(damageContainerPrototype.SupportedDamageTypes);
+
+>>>>>>> refactor-damageablecomponent
             //initialize damage dictionary 0 damage
             _damageDict = new(SupportedDamageTypes.Count);
             foreach (var type in SupportedDamageTypes)
@@ -251,16 +301,17 @@ namespace Content.Shared.Damage.Components
             }
         }
 
-        public int GetDamage(DamageType type)
+        public int GetDamage(DamageTypePrototype type)
         {
             return GetDamagePerType.GetValueOrDefault(type);
         }
 
-        public bool TryGetDamage(DamageType type, out int damage)
+        public bool TryGetDamage(DamageTypePrototype type, out int damage)
         {
             return GetDamagePerType.TryGetValue(type, out damage);
         }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         public int GetDamage(DamageClass @class)
         {
@@ -274,18 +325,27 @@ namespace Content.Shared.Damage.Components
             return GetDamagePerApplicableGroup.GetValueOrDefault(group);
         }
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        public int GetDamage(DamageGroupPrototype group)
+        {
+            return GetDamagePerApplicableGroup.GetValueOrDefault(group);
+        }
+>>>>>>> refactor-damageablecomponent
 
         public bool TryGetDamage(DamageGroupPrototype group, out int damage)
         {
             return GetDamagePerApplicableGroup.TryGetValue(group, out damage);
         }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             foreach (var type in @class.ToTypes())
             {
                 damage += GetDamage(type);
             }
 =======
+=======
+>>>>>>> refactor-damageablecomponent
         public bool IsApplicableDamageGroup(DamageGroupPrototype group)
         {
             return ApplicableDamageGroups.Contains(group);
@@ -294,9 +354,18 @@ namespace Content.Shared.Damage.Components
         public bool IsFullySupportedDamageGroup(DamageGroupPrototype group)
         {
             return FullySupportedDamageGroups.Contains(group);
+<<<<<<< HEAD
+=======
+        }
+
+        public bool IsSupportedDamageType(DamageTypePrototype type)
+        {
+            return SupportedDamageTypes.Contains(type);
+>>>>>>> refactor-damageablecomponent
         }
 >>>>>>> Refactor damageablecomponent update (#4406)
 
+<<<<<<< HEAD
         public bool IsSupportedDamageType(DamageTypePrototype type)
         {
             return SupportedDamageTypes.Contains(type);
@@ -311,10 +380,16 @@ namespace Content.Shared.Damage.Components
         {
             if (!ApplicableDamageGroups.Contains(group))
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        public bool TrySetDamage(DamageGroupPrototype group, int newValue)
+        {
+            if (!ApplicableDamageGroups.Contains(group))
+>>>>>>> refactor-damageablecomponent
             {
                 return false;
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             damage = GetDamage(@class);
             return true;
@@ -343,6 +418,22 @@ namespace Content.Shared.Damage.Components
 
         public bool TrySetAllDamage(int newValue)
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            if (newValue < 0)
+            {
+                // invalid value
+                return false;
+            }
+
+            foreach (var type in group.DamageTypes)
+            {
+                TrySetDamage(type, newValue);
+            }
+            return true;
+        }
+
+        public bool TrySetAllDamage(int newValue)
+>>>>>>> refactor-damageablecomponent
         {
             if (newValue < 0)
             {
@@ -350,6 +441,7 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
             var damageClass = type.ToClass();
@@ -361,10 +453,14 @@ namespace Content.Shared.Damage.Components
 =======
             foreach (var type in SupportedDamageTypes)
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            foreach (var type in SupportedDamageTypes)
+>>>>>>> refactor-damageablecomponent
             {
                 TrySetDamage(type, newValue);
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             return false;
         }
@@ -375,6 +471,9 @@ namespace Content.Shared.Damage.Components
 =======
             return true;
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            return true;
+>>>>>>> refactor-damageablecomponent
         }
 
         public bool TryChangeDamage(DamageTypePrototype type, int amount, bool ignoreDamageResistances = false)
@@ -385,6 +484,7 @@ namespace Content.Shared.Damage.Components
                 return false;
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         public bool ChangeDamage(
             DamageType type,
@@ -397,6 +497,9 @@ namespace Content.Shared.Damage.Components
 =======
             if (amount == 0)
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            if (amount == 0)
+>>>>>>> refactor-damageablecomponent
             {
                 return false;
             }
@@ -437,6 +540,7 @@ namespace Content.Shared.Damage.Components
             return true;
         }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         public bool ChangeDamage(DamageClass @class, int amount, bool ignoreResistances,
             IEntity? source = null,
@@ -457,6 +561,11 @@ namespace Content.Shared.Damage.Components
         {
             var types = group.DamageTypes.ToArray();
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        public bool TryChangeDamage(DamageGroupPrototype group, int amount, bool ignoreDamageResistances = false)
+        {
+            var types = group.DamageTypes.ToArray();
+>>>>>>> refactor-damageablecomponent
 
             if (amount < 0)
             {
@@ -465,11 +574,19 @@ namespace Content.Shared.Damage.Components
 
                 // Get total group damage.
                 var damageToHeal = GetDamagePerApplicableGroup[group];
+<<<<<<< HEAD
 
                 // Is there any damage to even heal?
                 if (damageToHeal == 0)
                     return false;
 
+=======
+
+                // Is there any damage to even heal?
+                if (damageToHeal == 0)
+                    return false;
+
+>>>>>>> refactor-damageablecomponent
                 // If total healing is more than there is damage, just set to 0 and return.
                 if (damageToHeal <= availableHealing)
                 {
@@ -542,6 +659,7 @@ namespace Content.Shared.Damage.Components
             return false;
         }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         public bool SetDamage(DamageType type, int newValue, IEntity? source = null,  DamageChangeParams? extraParams = null)
@@ -551,6 +669,9 @@ namespace Content.Shared.Damage.Components
 =======
         public bool TrySetDamage(DamageTypePrototype type, int newValue)
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        public bool TrySetDamage(DamageTypePrototype type, int newValue)
+>>>>>>> refactor-damageablecomponent
         {
             if (!_damageDict.TryGetValue(type, out var oldValue))
             {
@@ -637,19 +758,25 @@ namespace Content.Shared.Damage.Components
             Dirty();
         }
 
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        public void RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
             var totalDamage = Math.Max((int)(frameTime * radiation.RadsPerSecond), 1);
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             ChangeDamage(DamageType.Radiation, totalDamage, false, radiation.Owner);
 =======
+=======
+>>>>>>> refactor-damageablecomponent
             foreach (var typeID in RadiationDamageTypeIDs)
             {
                 TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), totalDamage);
             }
             
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         }
 
         public void OnExplosion(ExplosionEventArgs eventArgs)
@@ -662,10 +789,13 @@ namespace Content.Shared.Damage.Components
                 _ => throw new ArgumentOutOfRangeException()
             };
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             ChangeDamage(DamageType.Piercing, damage, false);
             ChangeDamage(DamageType.Heat, damage, false);
 =======
+=======
+>>>>>>> refactor-damageablecomponent
             foreach (var typeID in ExplosionDamageTypeIDs)
             {
                 TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(typeID), damage);
@@ -689,7 +819,10 @@ namespace Content.Shared.Damage.Components
                 idDict.Add(entry.Key.ID, entry.Value);
             }
             return idDict;
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         }
 
         /// <summary>
@@ -730,6 +863,7 @@ namespace Content.Shared.Damage.Components
     [Serializable, NetSerializable]
     public class DamageableComponentState : ComponentState
     {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         public readonly Dictionary<DamageType, int> DamageList;
 
@@ -740,6 +874,12 @@ namespace Content.Shared.Damage.Components
         public DamageableComponentState(IReadOnlyDictionary<string, int> damageDict) 
 
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        public readonly IReadOnlyDictionary<string, int> DamageDict;
+
+        public DamageableComponentState(IReadOnlyDictionary<string, int> damageDict) 
+
+>>>>>>> refactor-damageablecomponent
         {
             DamageDict = damageDict;
         }

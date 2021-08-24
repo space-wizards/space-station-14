@@ -36,6 +36,7 @@ namespace Content.Server.Body.Respiratory
         private bool _isShivering;
         private bool _isSweating;
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
 =======
@@ -49,6 +50,8 @@ namespace Content.Server.Body.Respiratory
 
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -376,6 +379,7 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
             damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
@@ -385,6 +389,9 @@ namespace Content.Server.Body.Respiratory
 =======
             damageable.TryChangeDamage(DamageType, _damage, false);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            damageable.TryChangeDamage(DamageType, _damage, false);
+>>>>>>> refactor-damageablecomponent
         }
 
         private void StopSuffocation()
@@ -393,6 +400,7 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Body/Respiratory/RespiratorComponent.cs
                 damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
@@ -402,6 +410,9 @@ namespace Content.Server.Body.Respiratory
 =======
                 damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
+>>>>>>> refactor-damageablecomponent
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

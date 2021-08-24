@@ -14,12 +14,15 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOnLand";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
         [DataField("damageType")]
         private DamageType _damageType = DamageType.Blunt;
 
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         [DataField("amount")]
         [ViewVariables(VVAccess.ReadWrite)]
         private int _amount = 1;
@@ -35,6 +38,7 @@ namespace Content.Server.Damage.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageTypePrototype DamageType = default!;
         protected override void Initialize()
+<<<<<<< HEAD
         {
             base.Initialize();
             DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
@@ -51,6 +55,18 @@ namespace Content.Server.Damage.Components
                 return;
             damageable.TryChangeDamage(DamageType, _amount, _ignoreResistances);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
+
+        void ILand.Land(LandEventArgs eventArgs)
+        {
+            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
+                return;
+            damageable.TryChangeDamage(DamageType, _amount, _ignoreResistances);
+>>>>>>> refactor-damageablecomponent
         }
     }
 }

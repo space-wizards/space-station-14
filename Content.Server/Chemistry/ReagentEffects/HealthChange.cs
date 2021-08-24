@@ -47,6 +47,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         {
             if (solutionEntity.TryGetComponent(out IDamageableComponent? damageComponent))
             {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master:Content.Server/Chemistry/ReagentEffects/HealthChange.cs
@@ -66,6 +67,12 @@ namespace Content.Server.Chemistry.ReagentEffects
                 float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
                 _accumulatedDamage += decHealthChange;
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+                damageComponent.TryChangeDamage(DamageGroup, (int)AmountToChange, true);
+
+                float decHealthChange = (float) (AmountToChange - (int) AmountToChange);
+                _accumulatedDamage += decHealthChange;
+>>>>>>> refactor-damageablecomponent
 
                 if (_accumulatedDamage >= 1)
                 {

@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -7,7 +9,7 @@ namespace Content.Shared.Damage.Resistances
 {
     /// <summary>
     ///     Set of resistances used by damageable objects.
-    ///     Each <see cref="DamageType"/> has a multiplier and flat damage
+    ///     Each <see cref="DamageTypePrototype"/> has a multiplier and flat damage
     ///     reduction value.
     /// </summary>
     [Serializable, NetSerializable]
@@ -22,6 +24,7 @@ namespace Content.Shared.Damage.Resistances
 
         public ResistanceSet()
         {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             foreach (var damageType in (DamageType[]) Enum.GetValues(typeof(DamageType)))
             {
@@ -29,6 +32,8 @@ namespace Content.Shared.Damage.Resistances
             }
 =======
 >>>>>>> Merge fixes
+=======
+>>>>>>> refactor-damageablecomponent
         }
 
         public ResistanceSet(ResistanceSetPrototype data)
@@ -44,7 +49,7 @@ namespace Content.Shared.Damage.Resistances
         /// </summary>
         /// <param name="damageType">Type of damage.</param>
         /// <param name="amount">Incoming amount of damage.</param>
-        public int CalculateDamage(DamageType damageType, int amount)
+        public int CalculateDamage(DamageTypePrototype damageType, int amount)
         {
 
             // Do nothing if the damage type is not specified in resistance set.

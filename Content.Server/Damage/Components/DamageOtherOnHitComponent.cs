@@ -13,6 +13,7 @@ namespace Content.Server.Damage.Components
     {
         public override string Name => "DamageOtherOnHit";
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         [DataField("damageType")]
@@ -24,10 +25,13 @@ namespace Content.Server.Damage.Components
 
 =======
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
         [DataField("amount")]
         public int Amount { get; } = 1;
 
         [DataField("ignoreResistances")]
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
 <<<<<<< refs/remotes/origin/master
         public bool IgnoreResistances { get; } = false;
@@ -36,6 +40,9 @@ namespace Content.Server.Damage.Components
 =======
         public bool IgnoreResistances { get; } = false;
 >>>>>>> Bring refactor-damageablecomponent branch up-to-date with master (#4510)
+=======
+        public bool IgnoreResistances { get; } = false;
+>>>>>>> refactor-damageablecomponent
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.

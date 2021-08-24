@@ -38,6 +38,7 @@ namespace Content.Server.Chat.Commands
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
                 damageableComponent.TrySetDamage(kind switch
                     {
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
                         SuicideKind.Blunt => DamageType.Blunt,
                         SuicideKind.Slash => DamageType.Slash,
@@ -51,6 +52,8 @@ namespace Content.Server.Chat.Commands
                         SuicideKind.Bloodloss => DamageType.Bloodloss,
                         _ => DamageType.Blunt
 =======
+=======
+>>>>>>> refactor-damageablecomponent
                         SuicideKind.Blunt => prototypeManager.Index<DamageTypePrototype>("Blunt"),
                         SuicideKind.Slash => prototypeManager.Index<DamageTypePrototype>("Slash"),
                         SuicideKind.Piercing => prototypeManager.Index<DamageTypePrototype>("Piercing"),
@@ -62,7 +65,10 @@ namespace Content.Server.Chat.Commands
                         SuicideKind.Asphyxiation => prototypeManager.Index<DamageTypePrototype>("Asphyxiation"),
                         SuicideKind.Bloodloss => prototypeManager.Index<DamageTypePrototype>("Bloodloss"),
                         _ => prototypeManager.Index<DamageTypePrototype>("Blunt")
+<<<<<<< HEAD
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+>>>>>>> refactor-damageablecomponent
                     },
                 200);
             }
@@ -133,11 +139,15 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
+<<<<<<< HEAD
 <<<<<<< refs/remotes/origin/master
             dmgComponent.SetDamage(DamageType.Piercing, 200, owner);
 =======
             dmgComponent.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Piercing"), 200);
 >>>>>>> Refactor damageablecomponent update (#4406)
+=======
+            dmgComponent.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Piercing"), 200);
+>>>>>>> refactor-damageablecomponent
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.
