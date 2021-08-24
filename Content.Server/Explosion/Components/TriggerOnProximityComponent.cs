@@ -16,17 +16,19 @@ namespace Content.Server.Explosion.Components
         [DataField("shape", required: true)]
         public IPhysShape Shape { get; set; } = default!;
 
-        private bool _enabled;
+
         [DataField("enabled")]
+        public bool enabled;
+        
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled
         {
             set
             {
                 EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value);
-                _enabled = value;
+                enabled = value;
             }
-            get => _enabled;
+            get => enabled;
         }
 
         [DataField("cooldown", required: true)]

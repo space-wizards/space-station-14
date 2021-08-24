@@ -47,6 +47,12 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
+            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentInit>(CheckEnable);
+        }
+
+        private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
+        {
+            component.Enabled = component.enabled;
         }
 
         #region Explosions
@@ -141,21 +147,17 @@ namespace Content.Server.Explosion
         {
             var entity = EntityManager.GetEntity(uid);
             var broadphase = Get<SharedBroadphaseSystem>();
-            entity.EnsureComponent<PhysicsComponent>();
 
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 var fixture = physics.GetFixture(component.ProximityFixture);
-                if (!remove)
+                if (!remove && fixture != null)
                 {
-                    if (fixture != null)
-                        broadphase.DestroyFixture(physics, fixture);
+                    broadphase.DestroyFixture(physics, fixture);
                 }
                 else
                 {
-                    if (fixture == null)
-                        broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.ProximityFixture });
-
+                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.ProximityFixture });
                 }
             }
         }
