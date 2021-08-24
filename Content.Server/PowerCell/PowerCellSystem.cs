@@ -10,6 +10,8 @@ namespace Content.Server.PowerCell
     public class PowerCellSystem  : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -19,7 +21,8 @@ namespace Content.Server.PowerCell
 
         private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
         {
-            component.IsRigged =_solutionsSystem.TryGetSolution(args.Owner, "powerCell", out var solution)
+            component.IsRigged = _entityManager.TryGetEntity(args.Owner, out var solutionOwner)
+                                && _solutionsSystem.TryGetSolution(solutionOwner, "powerCell", out var solution)
                                 && solution.ContainsReagent("Plasma", out var plasma)
                                 && plasma >= 5;
         }

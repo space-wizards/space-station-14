@@ -15,12 +15,12 @@ namespace Content.Server.Chemistry.Components
 
         [ViewVariables]
         [DataField("catalyst")]
-        internal string _catalystPrototype = "Water";
+        internal string CatalystPrototype = "Water";
 
         [ViewVariables]
         [DataField("target")]
-        internal string? _targetPrototype = default!;
+        internal string? TargetPrototype = default!;
 
-        internal bool _expanding;
+        internal bool Expanding;
     }
 }

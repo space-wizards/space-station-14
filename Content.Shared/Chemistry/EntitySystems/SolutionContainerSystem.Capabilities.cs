@@ -11,7 +11,8 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         public void Refill(Solution solutionHolder, Solution solution)
         {
-            if (!solutionHolder.Owner.HasComponent<RefillableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+                || !solutionEntity.HasComponent<RefillableSolutionComponent>())
                 return;
 
             TryAddSolution(solutionHolder, solution);
@@ -19,32 +20,35 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void Inject(Solution solutionHolder, Solution solution)
         {
-            if (!solutionHolder.Owner.HasComponent<InjectableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+                || !solutionEntity.HasComponent<InjectableSolutionComponent>())
                 return;
 
             TryAddSolution(solutionHolder, solution);
         }
 
-        public Solution Draw(Solution solutionHolder, ReagentUnit amount)
+        public Solution Draw(Solution solution, ReagentUnit amount)
         {
-            if (!solutionHolder.Owner.HasComponent<DrawableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+                || !solutionEntity.HasComponent<DrawableSolutionComponent>())
             {
                 var newSolution = new Solution();
-                newSolution.Owner = solutionHolder.Owner;
+                newSolution.OwnerUid = solution.OwnerUid;
             }
 
-            return SplitSolution(solutionHolder, amount);
+            return SplitSolution(solution, amount);
         }
 
-        public Solution Drain(Solution solutionHolder, ReagentUnit amount)
+        public Solution Drain(Solution solution, ReagentUnit amount)
         {
-            if (!solutionHolder.Owner.HasComponent<DrainableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+                || !solutionEntity.HasComponent<DrainableSolutionComponent>())
             {
                 var newSolution = new Solution();
-                newSolution.Owner = solutionHolder.Owner;
+                newSolution.OwnerUid = solution.OwnerUid;
             }
 
-            return SplitSolution(solutionHolder, amount);
+            return SplitSolution(solution, amount);
         }
 
         public bool TryGetInjectableSolution(IEntity owner,
@@ -88,7 +92,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
-                solution.Owner = owner;
+                solution.OwnerUid = owner.Uid;
                 return true;
             }
 
@@ -103,7 +107,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
-                solution.Owner = owner;
+                solution.OwnerUid = owner.Uid;
                 return true;
             }
 
@@ -124,11 +128,12 @@ namespace Content.Shared.Chemistry.EntitySystems
             return !owner.Deleted && owner.HasComponent<FitsInDispenserComponent>();
         }
 
-        public bool TryGetFitsInDispenser(IEntity owner,
+        public bool TryGetFitsInDispenser(EntityUid owner,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (owner.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
+            if (_entityManager.TryGetEntity(owner, out var ownerEntity) &&
+                ownerEntity.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
+                ownerEntity.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
             {
                 return true;
@@ -136,6 +141,12 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             solution = null;
             return false;
+        }
+
+        public bool TryGetDefaultSolution(EntityUid target,
+            [NotNullWhen(true)] out Solution? solution)
+        {
+            return TryGetDefaultSolution(_entityManager.GetEntity(target), out solution);
         }
 
         public bool TryGetDefaultSolution(IEntity? target,

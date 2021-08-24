@@ -21,7 +21,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
+    public partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
@@ -41,47 +41,6 @@ namespace Content.Shared.Chemistry.Components
         ///     Constructs an empty solution (ex. an empty beaker).
         /// </summary>
         public Solution() { }
-
-        #region SolutionContainer Fields
-        /// <summary>
-        ///     If reactions will be checked for when adding reagents to the container.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("canReact")]
-        public bool CanReact { get; set; } = true;
-
-        /// <summary>
-        ///     Volume needed to fill this container.
-        /// </summary>
-        [ViewVariables]
-        public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-
-        public ReagentUnit RefillSpaceAvailable => EmptyVolume;
-        public ReagentUnit InjectSpaceAvailable => EmptyVolume;
-        public ReagentUnit DrawAvailable => CurrentVolume;
-        public ReagentUnit DrainAvailable => CurrentVolume;
-
-        /// <summary>
-        ///     Checks if a solution can fit into the container.
-        /// </summary>
-        /// <param name="solution">The solution that is trying to be added.</param>
-        /// <returns>If the solution can be fully added.</returns>
-        public bool CanAddSolution(Solution solution)
-        {
-            return solution.TotalVolume <= EmptyVolume;
-        }
-
-        [DataField("maxSpillRefill")] public ReagentUnit MaxSpillRefill { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxVol")]
-        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
-
-        [ViewVariables] public ReagentUnit CurrentVolume => TotalVolume;
-
-        [ViewVariables] public IEntity Owner { get; set; } = default!;
-
-        #endregion
 
         /// <summary>
         ///     Constructs a solution containing 100% of a reagent (ex. A beaker of pure water).

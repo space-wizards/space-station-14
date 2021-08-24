@@ -23,9 +23,9 @@ namespace Content.Shared.Chemistry.EntitySystems
     /// </summary>
     public class SolutionChangedEvent : EntityEventArgs
     {
-        public IEntity Owner { get; }
+        public EntityUid Owner { get; }
 
-        public SolutionChangedEvent(IEntity owner)
+        public SolutionChangedEvent(EntityUid owner)
         {
             Owner = owner;
         }
@@ -39,6 +39,7 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly EntityManager _entityManager = default!;
 
         public override void Initialize()
         {
@@ -53,7 +54,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                solutionHolder.Owner = component.Owner;
+                solutionHolder.OwnerUid = component.Owner.Uid;
                 UpdateAppearance(solutionHolder);
             }
         }
@@ -94,13 +95,14 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void UpdateAppearance(Components.Solution solution)
         {
-            if (solution.Owner.Deleted
-                || !solution.Owner.TryGetComponent<SharedAppearanceComponent>(out var appearance))
+            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+                || solutionEntity.Deleted
+                || !solutionEntity.TryGetComponent<SharedAppearanceComponent>(out var appearance))
                 return;
 
             var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
             appearance.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
-            solution.Owner.Dirty();
+            solutionEntity.Dirty();
         }
 
         /// <summary>
@@ -112,7 +114,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public Components.Solution SplitSolution(Components.Solution solutionHolder, ReagentUnit quantity)
         {
             var splitSol = solutionHolder.SplitSolution(quantity);
-            splitSol.Owner = solutionHolder.Owner;
+            splitSol.OwnerUid = solutionHolder.OwnerUid;
             UpdateChemicals(solutionHolder);
             return splitSol;
         }
@@ -123,11 +125,11 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (needsReactionsProcessing && solutionHolder.CanReact)
             {
                 _chemistrySystem
-                    .FullyReactSolution(solutionHolder, solutionHolder.Owner, solutionHolder.MaxVolume);
+                    .FullyReactSolution(solutionHolder, _entityManager.GetEntity(solutionHolder.OwnerUid), solutionHolder.MaxVolume);
             }
 
             UpdateAppearance(solutionHolder);
-            RaiseLocalEvent(solutionHolder.Owner.Uid, new SolutionChangedEvent(solutionHolder.Owner));
+            RaiseLocalEvent(solutionHolder.OwnerUid, new SolutionChangedEvent(solutionHolder.OwnerUid));
         }
 
         public void RemoveAllSolution(Components.Solution solutionHolder)
@@ -221,18 +223,23 @@ namespace Content.Shared.Chemistry.EntitySystems
             return solutionsMgr.Solutions.TryGetValue(name, out solution);
         }
 
-        public Components.Solution? EnsureSolution(IEntity owner, string name)
+        /// <summary>
+        /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
+        /// </summary>
+        /// <param name="owner">Entity to which to add solution</param>
+        /// <param name="name">name for the solution</param>
+        /// <returns>solution</returns>
+        public Components.Solution EnsureSolution(IEntity owner, string name)
         {
-            if (owner.Deleted || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
+            if (!owner.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
             {
-                Logger.Warning($@"Entity (id:{owner.Uid}) is deleted or has no container manager");
-                return null;
+                solutionsMgr = owner.AddComponent<SolutionContainerManagerComponent>();
             }
 
             if (!solutionsMgr.Solutions.ContainsKey(name))
             {
                 var newSolution = new Components.Solution();
-                newSolution.Owner = owner;
+                newSolution.OwnerUid = owner.Uid;
                 solutionsMgr.Solutions.Add(name, newSolution);
             }
             return solutionsMgr.Solutions[name];

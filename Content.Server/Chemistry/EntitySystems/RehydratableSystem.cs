@@ -27,7 +27,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
             }
 
-            if (solution.GetReagentQuantity(component._catalystPrototype) > ReagentUnit.Zero)
+            if (solution.GetReagentQuantity(component.CatalystPrototype) > ReagentUnit.Zero)
             {
                 Expand(component, component.Owner);
             }
@@ -36,21 +36,21 @@ namespace Content.Server.Chemistry.EntitySystems
         // Try not to make this public if you can help it.
         private void Expand(RehydratableComponent component, IEntity owner)
         {
-            if (component._expanding)
+            if (component.Expanding)
             {
                 return;
             }
 
-            component._expanding = true;
+            component.Expanding = true;
             owner.PopupMessageEveryone(Loc.GetString("rehydratable-component-expands-message", ("owner", owner)));
-            if (!string.IsNullOrEmpty(component._targetPrototype))
+            if (!string.IsNullOrEmpty(component.TargetPrototype))
             {
-                var ent = component.Owner.EntityManager.SpawnEntity(component._targetPrototype,
+                var ent = component.Owner.EntityManager.SpawnEntity(component.TargetPrototype,
                     owner.Transform.Coordinates);
                 ent.Transform.AttachToGridOrMap();
             }
 
-            owner.Delete();
+            owner.QueueDelete();
         }
     }
 }

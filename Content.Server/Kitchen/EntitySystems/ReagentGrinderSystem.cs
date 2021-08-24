@@ -68,7 +68,7 @@ namespace Content.Server.Kitchen.EntitySystems
             // First, check if user is trying to insert a beaker.
             // No promise it will be a beaker right now, but whatever.
             // Maybe this should whitelist "beaker" in the prototype id of heldEnt?
-            if (_solutionsSystem.TryGetFitsInDispenser(heldEnt, out var beaker))
+            if (_solutionsSystem.TryGetFitsInDispenser(heldEnt.Uid, out var beaker))
             {
                 component.BeakerContainer.Insert(heldEnt);
                 component.HeldBeaker = beaker;
@@ -264,7 +264,8 @@ namespace Content.Server.Kitchen.EntitySystems
             component.BeakerContainer.Remove(beaker);
 
             if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) ||
-                !component.HeldBeaker.Owner.TryGetComponent<ItemComponent>(out var item))
+                !_entityManager.TryGetEntity(component.HeldBeaker.OwnerUid, out var entityHeldBeaker) ||
+                !entityHeldBeaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             hands.PutInHandOrDrop(item);
 

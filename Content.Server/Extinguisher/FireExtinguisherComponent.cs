@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
@@ -34,7 +33,7 @@ namespace Content.Server.Extinguisher
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
                 && solutionContainerSystem.TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
-                &&solutionContainerSystem.TryGetDefaultSolution(Owner, out var container))
+                && solutionContainerSystem.TryGetDefaultSolution(Owner, out var container))
             {
                 var trans = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
                 if (trans > 0)

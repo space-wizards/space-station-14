@@ -51,14 +51,14 @@ namespace Content.Server.Chemistry.EntitySystems
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-
-                if (args.Owner.TryGetComponent(out SpriteComponent? sprite))
+                var ownerEntity = EntityManager.GetEntity(args.Owner);
+                if (ownerEntity.TryGetComponent(out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);
                 }
 
-                args.Owner.Name = proto.Name + " glass";
-                args.Owner.Description = proto.Description;
+                ownerEntity.Name = proto.Name + " glass";
+                ownerEntity.Description = proto.Description;
                 component.CurrentReagent = proto;
                 component.Transformed = true;
             }

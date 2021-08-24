@@ -90,7 +90,7 @@ namespace Content.Server.Chemistry.Components
             {
                 user.PopupMessage(user,
                     Loc.GetString("hypospray-component-transfer-already-full-message",
-                        ("owner", targetSolution.Owner)));
+                        ("owner", targetSolution.OwnerUid)));
                 return true;
             }
 

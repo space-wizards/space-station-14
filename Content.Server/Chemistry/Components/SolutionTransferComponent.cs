@@ -10,6 +10,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -144,7 +145,7 @@ namespace Content.Server.Chemistry.Components
                            && solutionsSys.TryGetRefillableSolution(Owner, out var ownerRefill)
                            && solutionsSys.TryGetDrainableSolution(eventArgs.Target, out var targetDrain))
             {
-                var transferred = DoTransfer(targetDrain, ownerRefill, tank.TransferAmount, eventArgs.User);
+                var transferred = DoTransfer(Owner,targetDrain, ownerRefill, tank.TransferAmount, eventArgs.User);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.RefillSpaceAvailable == 0;
@@ -161,7 +162,7 @@ namespace Content.Server.Chemistry.Components
             if (CanSend && solutionsSys.TryGetRefillableSolution(eventArgs.Target, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner, out var ownerDrain))
             {
-                var transferred = DoTransfer(ownerDrain, targetRefill, TransferAmount, eventArgs.User);
+                var transferred = DoTransfer(Owner, ownerDrain, targetRefill, TransferAmount, eventArgs.User);
 
                 if (transferred > 0)
                 {
@@ -178,23 +179,25 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <returns>The actual amount transferred.</returns>
-        private static ReagentUnit DoTransfer(
+        private static ReagentUnit DoTransfer(IEntity owner,
             Solution source,
             Solution target,
             ReagentUnit amount,
             IEntity user)
         {
+            var sourceEntity = owner.EntityManager.GetEntity(source.OwnerUid);
+            var tagetEntity = owner.EntityManager.GetEntity(target.OwnerUid);
             if (source.DrainAvailable == 0)
             {
-                source.Owner.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-empty", ("target", source.Owner)));
+                sourceEntity.PopupMessage(user,
+                    Loc.GetString("comp-solution-transfer-is-empty", ("target", sourceEntity)));
                 return ReagentUnit.Zero;
             }
 
             if (target.RefillSpaceAvailable == 0)
             {
-                target.Owner.PopupMessage(user,
-                    Loc.GetString("comp-solution-transfer-is-full", ("target", target.Owner)));
+                tagetEntity.PopupMessage(user,
+                    Loc.GetString("comp-solution-transfer-is-full", ("target", tagetEntity)));
                 return ReagentUnit.Zero;
             }
 

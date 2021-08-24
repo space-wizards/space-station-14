@@ -129,7 +129,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-transfer-message",
-                            ("owner", injectableSolution.Owner)));
+                            ("owner", injectableSolution.OwnerUid)));
                 }
             }
             else if (solutionsSys.TryGetDrawableSolution(targetEntity, out var drawableSolution))
@@ -142,7 +142,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-draw-message",
-                            ("owner", drawableSolution.Owner)));
+                            ("owner", drawableSolution.OwnerUid)));
                 }
             }
 
@@ -193,8 +193,8 @@ namespace Content.Server.Chemistry.Components
             }
 
             // TODO: Account for partial transfer.
-
-            removedSolution.DoEntityReaction(bloodstream.Owner, ReactionMethod.Injection);
+            var bloodsStreamEntity = Owner.EntityManager.GetEntity(bloodstream.OwnerUid);
+            removedSolution.DoEntityReaction(bloodsStreamEntity, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bloodstream, removedSolution);
 
@@ -221,15 +221,15 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("injector-component-target-already-full-message", ("target", targetSolution.Owner)));
+                    Loc.GetString("injector-component-target-already-full-message", ("target", targetSolution.OwnerUid)));
                 return;
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                .SplitSolution(solution, realTransferAmount);
+            var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solution, realTransferAmount);
+            var targetSolutionEntity = Owner.EntityManager.GetEntity(targetSolution.OwnerUid);
 
-            removedSolution.DoEntityReaction(targetSolution.Owner, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetSolutionEntity, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>()
                 .Inject(targetSolution, removedSolution);
@@ -237,7 +237,7 @@ namespace Content.Server.Chemistry.Components
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-transfer-success-message",
                     ("amount", removedSolution.TotalVolume),
-                    ("target", targetSolution.Owner)));
+                    ("target", targetSolution.OwnerUid)));
             Dirty();
             AfterInject();
         }
@@ -276,7 +276,7 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("injector-component-target-is-empty-message", ("target", targetSolution.Owner)));
+                    Loc.GetString("injector-component-target-is-empty-message", ("target", targetSolution.OwnerUid)));
                 return;
             }
 
@@ -292,7 +292,7 @@ namespace Content.Server.Chemistry.Components
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-draw-success-message",
                     ("amount", removedSolution.TotalVolume),
-                    ("target", targetSolution.Owner)));
+                    ("target", targetSolution.OwnerUid)));
             Dirty();
             AfterDraw();
         }
