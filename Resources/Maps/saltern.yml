@@ -486,7 +486,7 @@ entities:
     pos: 39.53893,-0.77325034
     parent: 853
     type: Transform
-  - useSound:
+  - useSound: !type:SoundPathSpecifier
       path: /Audio/Items/jaws_pry.ogg
     type: Tool
 - uid: 54
@@ -6788,6 +6788,11 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 708
   type: WallReinforced
   components:
@@ -12689,6 +12694,9 @@ entities:
       mass: 132
     bodyType: Dynamic
     type: Physics
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
 - uid: 854
   type: Catwalk
   components:
@@ -42732,7 +42740,8 @@ entities:
 - uid: 4178
   type: Poweredlight
   components:
-  - pos: 38.499187,9.874689
+  - rot: 3.141592653589793 rad
+    pos: 50.5,-1
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -43449,6 +43458,11 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 4271
   type: Table
   components:
@@ -50820,4 +50834,50 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 5150
+  type: CableHV
+  components:
+  - anchored: True
+    pos: 40.5,5.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5151
+  type: CableHV
+  components:
+  - anchored: True
+    pos: 42.5,5.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5152
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 38,9.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5153
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 45,9.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...
