@@ -76,6 +76,17 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.Loadout8);
             common.AddFunction(ContentKeyFunctions.Loadout9);
 
+            var aghost = contexts.New("aghost", "common");
+            aghost.AddFunction(EngineKeyFunctions.MoveUp);
+            aghost.AddFunction(EngineKeyFunctions.MoveDown);
+            aghost.AddFunction(EngineKeyFunctions.MoveLeft);
+            aghost.AddFunction(EngineKeyFunctions.MoveRight);
+            aghost.AddFunction(EngineKeyFunctions.Walk);
+            aghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
+            aghost.AddFunction(ContentKeyFunctions.SwapHands);
+            aghost.AddFunction(ContentKeyFunctions.Drop);
+            aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);

@@ -21,7 +21,8 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             ParticleAcceleratorPowerBoxComponent component,
             PowerConsumerReceivedChanged args)
         {
-            component.Master!.PowerBoxReceivedChanged(args);
+            if (component.Master != null)
+                component.Master.PowerBoxReceivedChanged(args);
         }
     }
 }
