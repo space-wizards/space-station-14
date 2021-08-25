@@ -1891,3 +1891,9 @@ Entries:
   - {message: Fix grav gen losing power after only a bit, type: Fix}
   id: 337
   time: '2021-08-24T15:36:50.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability for chairs to catch items thrown by people sitting
+      on them., type: Fix}
+  id: 338
+  time: '2021-08-25T10:35:37.0000000+00:00'
