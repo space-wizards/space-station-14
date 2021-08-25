@@ -1897,3 +1897,8 @@ Entries:
       on them., type: Fix}
   id: 338
   time: '2021-08-25T10:35:37.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
+  id: 339
+  time: '2021-08-25T11:45:33.0000000+00:00'
