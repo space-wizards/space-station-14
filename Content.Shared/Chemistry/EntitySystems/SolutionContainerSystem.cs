@@ -39,7 +39,7 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
