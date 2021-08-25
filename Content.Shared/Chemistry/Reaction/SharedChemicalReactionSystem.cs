@@ -14,7 +14,7 @@ namespace Content.Shared.Chemistry.Reaction
         private const int MaxReactionIterations = 20;
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {

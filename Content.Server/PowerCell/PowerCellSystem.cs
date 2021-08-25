@@ -10,7 +10,7 @@ namespace Content.Server.PowerCell
     public class PowerCellSystem  : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
