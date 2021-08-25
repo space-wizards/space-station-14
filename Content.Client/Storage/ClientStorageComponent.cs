@@ -170,6 +170,7 @@ namespace Content.Client.Storage
             if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
             {
                 SendNetworkMessage(new RemoveEntityMessage(entityUid));
+                buttonEventArgs.Event.Handle();
             }
             else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
             {
