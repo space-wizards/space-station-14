@@ -231,7 +231,7 @@ namespace Content.Shared.Damage
         ///     This is the complete information about the new damage state.  
         /// </summary>
         /// <remarks>
-        ///     Given that (very nearly) every component that cares about a change in the damage, needs to know the
+        ///     Given that nearly every component that cares about a change in the damage, needs to know the
         ///     current damage values, directly passing this information prevents a lot of duplicate
         ///     Owner.TryGetComponent() calls. One of the few exceptions is lightbulbs, which just care if ANY damage
         ///     was taken, not how much.

@@ -54,14 +54,11 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-
-                
                 var bluntDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestBlunt");
                 var slashDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestSlash");
 
                 var bluntDamage = new DamageData(bluntDamageType,5);
                 var slashDamage = new DamageData(slashDamageType,5);
-
 
                 // Raise blunt damage to 5
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage, true), false);
