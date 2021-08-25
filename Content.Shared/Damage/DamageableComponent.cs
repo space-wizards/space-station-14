@@ -112,6 +112,9 @@ namespace Content.Shared.Damage
             return new DamageableComponentState(DamagePerType, DamagePerGroup, TotalDamage, ResistanceSet);
         }
 
+        /// <summary>
+        ///     Takes in a state defined by <string,int> dictionaries that can be sent over the network and convert them into <prototype,int> dictionaries.
+        /// </summary>
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
@@ -154,6 +157,7 @@ namespace Content.Shared.Damage
             // matter here.
             if ( state.DamagePerTypeID.Count > DamagePerType.Count )
             {
+                // Add the missing types by resolving every type ID and trying to add it.
                 foreach (var (typeID, newValue) in state.DamagePerTypeID)
                 {
                     var type = _prototypeManager.Index<DamageTypePrototype>(typeID);
@@ -162,6 +166,7 @@ namespace Content.Shared.Damage
             }
             if (state.DamagePerGroupID.Count > DamagePerGroup.Count)
             {
+                // Add the missing groups by resolving every groups ID and trying to add it.
                 foreach (var (groupID, newValue) in state.DamagePerGroupID)
                 {
                     var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);

@@ -149,7 +149,7 @@ namespace Content.Tests.Shared
 
             //damage is initially   20 / 20 / 10 / 30
             //Each time we subtract -5 /  0 /  8 /  0.5
-            //then multiply by       1 / -2 /  3 /  1.05
+            //then multiply by       1 / -2 /  3 /  1.06
 
             // Apply once
             data = DamageData.ApplyResistanceSet(data, resistanceSet);
@@ -162,7 +162,7 @@ namespace Content.Tests.Shared
             data = DamageData.ApplyResistanceSet(data, resistanceSet);
             Assert.That(data.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Blunt")], Is.EqualTo(30));
             Assert.That(data.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Piercing")], Is.EqualTo(-40)); // resistances don't apply to healing
-            Assert.That(data.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Slash")], Is.EqualTo(0));  // Reduction reduced to 0.
+            Assert.That(data.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Slash")], Is.EqualTo(0));  // Reduction reduced to 0, not below.
             Assert.That(data.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Radiation")], Is.EqualTo(32));
         }
 

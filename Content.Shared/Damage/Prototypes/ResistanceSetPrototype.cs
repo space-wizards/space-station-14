@@ -22,6 +22,7 @@ namespace Content.Shared.Damage.Prototypes
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
+        // TODO PROTOTYPE REFERENCES replace these two data-fields with prototype references and remove  ISerializationHooks.AfterDeserialization().
         [DataField("coefficients")]
         private Dictionary<string, float> _coefficientIDs  = new();
 
