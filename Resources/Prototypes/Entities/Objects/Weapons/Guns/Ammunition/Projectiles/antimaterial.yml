@@ -1,9 +1,12 @@
 - type: entity
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   parent: BulletBaseHV
   id: BulletAntiMaterial
   name: bullet (.60 anti-material)
   components:
   - type: Projectile
-    damages:
-      Piercing: 70
+    damage:
+      types:
+        Piercing: 70

@@ -9,7 +9,7 @@ using Content.Shared.Body.Preset;
 using Content.Shared.Body.Slot;
 using Content.Shared.Body.Template;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
@@ -73,23 +73,6 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
-        /// <summary>
-        /// Amount of damage to deal when all vital organs are removed.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("vitalPartsRemovedDamage")]
-        public int VitalPartsRemovedDamage { get; set; } = 300!;
-
-        /// <summary>
-        /// Damage type to deal when all vital organs are removed.
-        /// </summary>
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [ViewVariables]
-        [DataField("vitalPartsRemovedDamageType")]
-        private string _vitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype VitalPartsRemovedDamageType = default!;
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -98,7 +81,6 @@ namespace Content.Shared.Body.Components
             // TODO BODY Move to template or somewhere else
             if (TemplateId != null)
             {
-                VitalPartsRemovedDamageType = _prototypeManager.Index<DamageTypePrototype>(_vitalPartsRemovedDamageTypeID);
                 var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
                 foreach (var (id, partType) in template.Slots)
@@ -208,11 +190,13 @@ namespace Content.Shared.Body.Components
             }
 
             // creadth: immediately kill entity if last vital part removed
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            if (Owner.TryGetComponent(out DamageableComponent? damageable))
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
+                    // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
+                    var damage = new DamageData(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
+                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damage), false);
                 }
             }
 
@@ -489,6 +473,7 @@ namespace Content.Shared.Body.Components
                 }
             }
         }
+
 
         private void OnBodyChanged()
         {

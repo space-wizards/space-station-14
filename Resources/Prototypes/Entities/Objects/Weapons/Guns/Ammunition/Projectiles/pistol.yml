@@ -2,48 +2,63 @@
   id: BulletPistol
   name: bullet (.35 auto)
   parent: BulletBase
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 24
+    damage:
+      types:
+        Piercing: 24
 
 - type: entity
   id: BulletPistolFlash
   name: bullet (.35 auto flash)
   parent: BulletBaseFlash
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 24
+    damage:
+      types:
+        Piercing: 24
 
 - type: entity
   id: BulletPistolHV
   name: bullet (.35 auto high-velocity)
   parent: BulletBaseHV
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 28
+    damage:
+      types:
+        Piercing: 28
 
 - type: entity
   id: BulletPistolPractice
   name: bullet (.35 auto practice)
   parent: BulletBasePractice
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 2
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   id: BulletPistolRubber
   name: bullet (.35 auto rubber)
   parent: BulletBaseRubber
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 3
+    damage:
+      types:
+        Blunt: 3

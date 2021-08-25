@@ -1,5 +1,5 @@
 using Content.Server.Damage.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 
@@ -14,10 +14,8 @@ namespace Content.Server.Damage
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
-            if (!args.Target.TryGetComponent(out IDamageableComponent? damageable))
-                return;
-
-            damageable.TryChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances);
+            // Get damage from component, and apply to the target.
+            RaiseLocalEvent(args.Target.Uid, new TryChangeDamageEvent(component.Damage, component.IgnoreResistances), false);
         }
     }
 }

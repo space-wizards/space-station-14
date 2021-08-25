@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
@@ -13,6 +14,7 @@ namespace Content.Shared.MobState.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<SharedMobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
+            SubscribeLocalEvent<SharedMobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<SharedMobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
         }
 
@@ -22,6 +24,11 @@ namespace Content.Shared.MobState.EntitySystems
                 args.Cancel();
         }
 
+        public static void UpdateState(EntityUid _, SharedMobStateComponent component, DamageChangedEvent args)
+        {
+            component.UpdateState(args.Damageable.TotalDamage);
+        }
+		
         private void OnMoveAttempt(EntityUid uid, SharedMobStateComponent component, MovementAttemptEvent args)
         {
             switch (component.CurrentState)

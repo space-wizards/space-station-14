@@ -4,8 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
-using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -17,7 +15,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.MobState.Components
 {
     /// <summary>
-    ///     When attached to an <see cref="IDamageableComponent"/>,
+    ///     When attached to an <see cref="DamageableComponent"/>,
     ///     this component will handle critical and death behaviors for mobs.
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
@@ -93,24 +91,6 @@ namespace Content.Shared.MobState.Components
             else
             {
                 UpdateState(state.CurrentThreshold.Value, true);
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case DamageChangedMessage msg:
-                    if (msg.Damageable.Owner != Owner)
-                    {
-                        break;
-                    }
-
-                    UpdateState(msg.Damageable.TotalDamage);
-
-                    break;
             }
         }
 

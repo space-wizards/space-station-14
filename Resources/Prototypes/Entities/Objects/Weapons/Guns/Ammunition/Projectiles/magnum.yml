@@ -2,48 +2,63 @@
   id: BulletMagnum
   name: bullet (.40 magnum)
   parent: BulletBase
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 32
+    damage:
+      types:
+        Piercing: 32
 
 - type: entity
   id: BulletMagnumFlash
   name: bullet (.40 magnum flash)
   parent: BulletBaseFlash
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 32
+    damage:
+      types:
+        Piercing: 32
 
 - type: entity
   id: BulletMagnumHV
   name: bullet (.40 magnum high-velocity)
   parent: BulletBaseHV
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 35
+    damage:
+      types:
+        Piercing: 35
 
 - type: entity
   id: BulletMagnumPractice
   name: bullet (.40 magnum practice)
   parent: BulletBasePractice
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 1
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   id: BulletMagnumRubber
   name: bullet (.40 magnum rubber)
   parent: BulletBaseRubber
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 3
+    damage:
+      types:
+        Blunt: 3

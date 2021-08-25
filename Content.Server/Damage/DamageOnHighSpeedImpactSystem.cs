@@ -1,7 +1,7 @@
 using Content.Server.Damage.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -27,7 +27,7 @@ namespace Content.Server.Damage
 
         private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out IDamageableComponent? damageable)) return;
+            if (!ComponentManager.HasComponent<DamageableComponent>(uid)) return;
 
             var otherBody = args.OtherFixture.Body.Owner;
             var speed = args.OurFixture.Body.LinearVelocity.Length;
@@ -41,12 +41,11 @@ namespace Content.Server.Damage
 
             component.LastHit = _gameTiming.CurTime;
 
-            var damage = (int) (component.BaseDamage * (speed / component.MinimumSpeed) * component.Factor);
-
             if (ComponentManager.TryGetComponent(uid, out StunnableComponent? stun) && _robustRandom.Prob(component.StunChance))
                 stun.Stun(component.StunSeconds);
 
-            damageable.TryChangeDamage(component.DamageType, damage);
+            var damageScale = (speed / component.MinimumSpeed) * component.Factor;
+            RaiseLocalEvent(uid, new TryChangeDamageEvent(component.Damage * damageScale));
         }
     }
 }

@@ -8,7 +8,6 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
@@ -116,14 +115,16 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent? damageable))
+            if (!body.TryGetComponent(out DamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
 
-            // Get dictionaries of damage, by fully supported damage groups and types
-            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
-            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
+            // Get dictionaries of damage, by type and groups.
+            // As we need to send this over the network we need prototype ID keys.
+            // Re-use function from DamageableComponent State:
+            var groups = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerGroup);
+            var types = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerType);
 
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {

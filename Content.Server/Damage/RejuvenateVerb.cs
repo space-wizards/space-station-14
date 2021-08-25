@@ -2,7 +2,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Verbs;
@@ -34,7 +34,7 @@ namespace Content.Server.Damage
 
             if (user.TryGetComponent<ActorComponent>(out var player))
             {
-                if (!target.HasComponent<IDamageableComponent>() && !target.HasComponent<HungerComponent>() &&
+                if (!target.HasComponent<DamageableComponent>() && !target.HasComponent<HungerComponent>() &&
                     !target.HasComponent<ThirstComponent>())
                 {
                     return;
@@ -59,10 +59,7 @@ namespace Content.Server.Damage
 
         public static void PerformRejuvenate(IEntity target)
         {
-            if (target.TryGetComponent(out IDamageableComponent? damage))
-            {
-                damage.TrySetAllDamage(0);
-            }
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(target.Uid, new SetAllDamageEvent(0), false);
 
             if (target.TryGetComponent(out IMobStateComponent? mobState))
             {

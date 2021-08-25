@@ -1,0 +1,291 @@
+using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Damage.Prototypes;
+using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Prototypes;
+
+namespace Content.Shared.Damage
+{
+    public class DamageableSystem : EntitySystem
+    {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<DamageableComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<DamageableComponent, TryChangeDamageEvent>(TryChangeDamage);
+            SubscribeLocalEvent<DamageableComponent, SetAllDamageEvent>(SetAllDamage);
+        }
+
+        /// <summary>
+        /// Initialize a damageable component
+        /// </summary>
+        private void OnInit(EntityUid uid, DamageableComponent component, ComponentInit _)
+        {
+            // Does the damageable component have a damage container prototype ID?
+            if (component.DamageContainerID == null)
+            {
+                // DamageContainerID is a required data field, but this can still happen when adding this component via
+                // ViewVariables. Until ViewVariables can modify dictionaries (set values, add & remove entries), this
+                // means you cannot get functional damage containers with ViewVariables
+                Logger.Warning("Null DamageContainerID, missing YAML datafield?");
+                return;
+            }
+
+            // Try resolve the damage container prototype
+            if (!_prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID, out var damageContainerPrototype)){
+                Logger.Warning("Unknown DamageContainerPrototype given to DamageableComponent");
+                return;
+            }
+
+            // initialize damage dictionary, using the types from the damage container prototype
+            component.DamagePerType = new(damageContainerPrototype.SupportedDamageTypes.Count);
+            foreach (var type in damageContainerPrototype.SupportedDamageTypes)
+            {
+                component.DamagePerType.Add(type, 0);
+            }
+
+            // Get resistance set, if any was specified.
+            if (component.ResistanceSetID != null)
+            {
+                _prototypeManager.TryIndex(component.ResistanceSetID, out component.ResistanceSet);
+            }
+
+            DamageChanged(uid, component, false);
+        }
+
+        /// <summary>
+        ///     If the damage in a DamageableComponent was changed, this function should be called.
+        /// </summary>
+        /// <remarks>
+        ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
+        ///     The damage changed event is used by other systems, such as damage thresholds.
+        /// </remarks>
+        public void DamageChanged(EntityUid uid, DamageableComponent component, bool damageIncreased)
+        {
+            component.TotalDamage = component.DamagePerType.Values.Sum();
+            component.DamagePerGroup = GetDamagePerGroup(component);
+            component.Dirty();
+            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageIncreased), false);
+        }
+
+        /// <summary>
+        ///     Applies damage to the component, using damage specified via a <see cref="DamageData"/> instance.
+        /// </summary>
+        /// <remarks>
+        ///     <see cref="DamageData"/> is effectively just a dictionary of damage types and damage values. This
+        ///     function just applies the container's resistances (unless otherwise specified) and then changes the
+        ///     stored damage data. Division of group damage into types is managed by <see cref="DamageData"/>.
+        /// </remarks>
+        /// <returns>
+        ///     Returns false if a no damage change occurred; true otherwise.
+        /// </returns>
+        public void TryChangeDamage(EntityUid uid, DamageableComponent component, TryChangeDamageEvent args)
+        {
+            if (args.Damage == null)
+            {
+                // This should never happen. Damage data should be a required data field. However, the YAML linter
+                // currently does not properly detect this. Logs are better than hard-crashes. Lets hope I didn't miss
+                // too many YAML files.
+                Logger.Error("Null DamageData. Probably because a required yaml field was not given.");
+                return;
+            }
+
+            //Check that damageData actually contains data:
+            if (args.Damage.DamageDict.Count() == 0)
+            {
+                // This can happen if AfterDeserialization hooks were not called, or if someone performed DamageData
+                // math-operations before calling the hooks. An example of this would be when someone uses an abstract
+                // entity, as these do not call deserialization hooks.
+                Logger.Warning("Empty DamageData dictionary passed to DamageableComponent. Was AfterDeserialization not called?");
+                return;
+            }
+
+            // Apply resistances
+            var damage = args.Damage;
+            if (!args.IgnoreResistances && component.ResistanceSet != null)
+            {
+                damage = DamageData.ApplyResistanceSet(damage, component.ResistanceSet);
+
+                // Has the resistance set removed all damage?
+                if (damage.TotalAbsoluteDamage() == 0) return;
+            }
+
+            // Deal/heal damage, while keeping track of whether the damage changed.
+            // Also track whether any damage was dealt, or whether it was all healing.
+            var damageIncreased = false;
+            foreach (var entry in damage.DamageDict)
+            {
+                if (entry.Value == 0) continue;
+
+                // This is where we actually apply damage, using the TryChangeDamage() function
+                args.DidDamageChange = TryChangeDamage(component, entry.Key, entry.Value) || args.DidDamageChange;
+
+                if (entry.Value > 0) damageIncreased = true; // At least some damage was dealt, not all was healing.
+            }
+
+            // If any damage change occurred, update the other data on the damageable component and re-sync
+            if (args.DidDamageChange)
+            {
+                DamageChanged(uid, component, damageIncreased);
+            }
+        }
+
+        /// <summary>
+        ///     Tries to change the specified <see cref="DamageTypePrototype"/>.
+        /// </summary>
+        /// <returns>
+        ///     False if the given type is not supported or no damage change occurred; true otherwise.
+        /// </returns>
+        public static bool TryChangeDamage(DamageableComponent component, DamageTypePrototype changeType, int changeAmount)
+        {
+            // Check if damage type is supported, and get the current value if it is.
+            if (!component.DamagePerType.TryGetValue(changeType, out var currentDamage))
+            {
+                return false;
+            }
+
+            // Are we healing below zero?
+            if (currentDamage + changeAmount < 0)
+            {
+                if (currentDamage == 0)
+                {
+                    // Damage type is supported, but there is nothing to do.
+                    return false;
+                }
+
+                // Cannot heal below zero
+                changeAmount = -currentDamage;
+            }
+
+            component.DamagePerType[changeType] = currentDamage + changeAmount;
+            return true;
+        }
+
+        /// <summary>
+        ///     Sets all damage types supported by a <see cref="DamageableComponent"/> to the specified value.
+        /// </summary>
+        /// <remakrs>
+        ///     Does nothing If the given damage value is negative.
+        /// </remakrs>
+        public void SetAllDamage(EntityUid uid, DamageableComponent component, SetAllDamageEvent args)
+        {
+            if (args.NewValue < 0)
+            {
+                // invalid value
+                return;
+            }
+
+            foreach (var type in component.DamagePerType.Keys)
+            {
+                component.DamagePerType[type] = args.NewValue;
+            }
+
+            // Setting damage does not count as 'dealing' damage, even if it is set to a larger value.
+            DamageChanged(uid, component, false);
+        }
+
+        /// <summary>
+        ///     Given a dictionary with <see cref="DamageTypePrototype"/> keys, convert it to a read-only dictionary
+        ///     with <see cref="DamageGroupPrototype"/> keys.
+        /// </summary>
+        /// <remarks>
+        ///     Returns a dictionary with damage group keys, with values calculated by adding up the values for each
+        ///     damage type in that group. If a damage type is associated with more than one supported damage group, it
+        ///     will contribute to the total of each group. If a group has no supported damage types, it is not in the
+        ///     resulting dictionary.
+        /// </remarks>
+        public Dictionary<DamageGroupPrototype, int> GetDamagePerGroup(DamageableComponent component)
+        {
+            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
+            foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+            {
+                var groupDamage = 0;
+                var groupIsSupported = false;
+
+                foreach (var type in group.DamageTypes)
+                {
+                    if (component.DamagePerType.TryGetValue(type, out var damage))
+                    {
+                        groupIsSupported = true;
+                        groupDamage += damage;
+                    }
+
+                }
+
+                // was at least one member of this group actually supported by the container?
+                if (groupIsSupported)
+                {
+                    damageGroupDict.Add(group, groupDamage);
+                }
+            }
+            return damageGroupDict;
+        }
+    }
+
+    public class DamageChangedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     This is the complete information about the new damage state.  
+        /// </summary>
+        /// <remarks>
+        ///     Given that (very nearly) every component that cares about a change in the damage, needs to know the
+        ///     current damage values, directly passing this information prevents a lot of duplicate
+        ///     Owner.TryGetComponent() calls. One of the few exceptions is lightbulbs, which just care if ANY damage
+        ///     was taken, not how much.
+        /// </remarks>
+        public DamageableComponent Damageable { get; }
+
+        /// <summary>
+        ///     Has any damage type increased? 
+        /// </summary>
+        /// <remarks>
+        ///     This can still be true even if the overall effect of the damage change was to reduce the total damage.
+        /// </remarks>
+        public bool TookDamage { get; }
+        public DamageChangedEvent(DamageableComponent damageable, bool tookDamage)
+        {
+            Damageable = damageable;
+            TookDamage = tookDamage;
+        }
+    }
+
+    /// <summary>
+    /// Event used to deal or heal damage on a damageable component. Handled by <see cref="DamageableSystem"/>
+    /// </summary>
+    public class TryChangeDamageEvent : EntityEventArgs
+    {
+        /// <summary>
+        /// Input. Damage that is added to the DamageableComponent
+        /// </summary>
+        public DamageData Damage { get; }
+
+        /// <summary>
+        /// Input. Whether to ignore resistances of the damageable component. Healing ignores resistances.
+        /// Defaults to false.
+        /// </summary>
+        public bool IgnoreResistances { get;  }
+
+        /// <summary>
+        /// Output. Did the damage actually change? Maybe it was all resisted, or you healed someone at full health.
+        /// </summary>
+        public bool DidDamageChange { get; set; } = false;
+
+        public TryChangeDamageEvent(DamageData damage, bool ignoreResistances = false)
+        {
+            Damage = damage;
+            IgnoreResistances = ignoreResistances;
+        }
+    }
+
+    public class SetAllDamageEvent : EntityEventArgs
+    {
+        public int NewValue { get; }
+        public SetAllDamageEvent(int newValue)
+        {
+            NewValue = newValue;
+        }
+    }
+}

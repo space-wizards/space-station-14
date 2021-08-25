@@ -5,7 +5,7 @@ using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
@@ -87,12 +87,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
-
-                    if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
-                    {
-                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
-
+                    RaiseLocalEvent(target.Uid, new TryChangeDamageEvent(comp.Damage), false);
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -133,7 +128,7 @@ namespace Content.Server.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == args.User)
                     continue;
 
-                if (ComponentManager.HasComponent<IDamageableComponent>(entity.Uid))
+                if (ComponentManager.HasComponent<DamageableComponent>(entity.Uid))
                 {
                     hitEntities.Add(entity);
                 }
@@ -157,10 +152,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
-                    {
-                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
+                    RaiseLocalEvent(entity.Uid, new TryChangeDamageEvent(comp.Damage), false);
                 }
             }
 

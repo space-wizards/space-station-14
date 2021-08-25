@@ -1,6 +1,5 @@
 using System.Text;
 using System.Collections.Generic;
-using Content.Shared.Damage;
 using System.Linq;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -10,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using static Content.Shared.MedicalScanner.SharedMedicalScannerComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Client.MedicalScanner.UI
 {
@@ -62,14 +62,14 @@ namespace Content.Client.MedicalScanner.UI
                 // Keep track of how many damage types we have shown
                 HashSet<string> shownTypeIDs = new();
 
-                // First show just the total damage and type breakdown for each damge group that is fully supported by that entitygroup.
-                foreach (var (damageGroupID, damageAmount) in state.DamagePerSupportedGroupID)
+                // Then show the total damage and type breakdown for each damage group.
+                foreach (var (damageGroupID, damageAmount) in state.DamagePerGroupID)
                 {
 
                     // Show total damage for the group
                     text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupID), ("amount", damageAmount))}");
 
-                    // Then show the damage for each type in that group.
+                    // Show the damage for each type in that group.
                     // currently state has a dictionary mapping groupsIDs to damage, and typeIDs to damage, but does not know how types and groups are related.
                     // So use PrototypeManager.
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);

@@ -1,23 +1,18 @@
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
-using Content.Shared.Damage;
 
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -50,16 +45,11 @@ namespace Content.Server.Projectiles
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
-            if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))
+            if (!otherEntity.Deleted)
             {
-                EntityManager.TryGetEntity(component.Shooter, out var shooter);
-
-                foreach (var (damageTypeID, amount) in component.Damages)
-                {
-                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), amount);
-                }
-
-                component.DamagedEntity = true;
+                var damageEvent = new TryChangeDamageEvent(component.Damage, false);
+                RaiseLocalEvent(otherEntity.Uid, damageEvent);
+                component.DamagedEntity = component.DamagedEntity || damageEvent.DidDamageChange;
             }
 
             // Damaging it can delete it

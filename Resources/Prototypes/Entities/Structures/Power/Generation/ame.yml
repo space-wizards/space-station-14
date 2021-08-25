@@ -25,7 +25,8 @@
       - MobImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -109,7 +110,8 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

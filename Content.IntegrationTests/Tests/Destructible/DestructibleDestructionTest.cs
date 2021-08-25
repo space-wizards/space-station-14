@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,11 +20,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         {
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
-                ExtraPrototypes = Prototypes,
-                ContentBeforeIoC = () =>
-                {
-                    IoCManager.Resolve<IComponentFactory>().RegisterClass<TestThresholdListenerComponent>();
-                }
+                ExtraPrototypes = Prototypes
             });
 
             await server.WaitIdleAsync();
@@ -32,35 +28,37 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
             IEntity sDestructibleEntity = null;
-            IDamageableComponent sDamageableComponent = null;
-            TestThresholdListenerComponent sThresholdListenerComponent = null;
+            DamageableComponent sDamageableComponent = null;
+            DestructibleThresholdListenerSystem sTestThresholdListenerSystem = null;
 
-            await server.WaitPost(() =>
+            await server.WaitPost((System.Action)(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
                 sMapManager.CreateMap(mapId);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
-                sDamageableComponent = sDestructibleEntity.GetComponent<IDamageableComponent>();
-                sThresholdListenerComponent = sDestructibleEntity.GetComponent<TestThresholdListenerComponent>();
-            });
+                sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
+                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<DestructibleThresholdListenerSystem>();
+            }));
 
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
+                DamageData bruteDamage = new(bruteDamageGroup,50);
 
                 Assert.DoesNotThrow(() =>
                 {
-                    Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 50, true));
+                    sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bruteDamage, true), false);
                 });
 
-                Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
+                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
 
-                var threshold = sThresholdListenerComponent.ThresholdsReached[0].Threshold;
+                var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
 
                 Assert.That(threshold.Triggered, Is.True);
                 Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));

@@ -27,21 +27,6 @@ namespace Content.IntegrationTests.Tests.Destructible
 - type: damageType
   id: TestCold
 
-- type: damageType
-  id: TestPoison
-
-- type: damageType
-  id: TestRadiation
-
-- type: damageType
-  id: TestAsphyxiation
-
-- type: damageType
-  id: TestBloodloss
-
-- type: damageType
-  id: TestCellular
-
 - type: damageGroup
   id: TestBrute
   damageTypes:
@@ -56,42 +41,9 @@ namespace Content.IntegrationTests.Tests.Destructible
     - TestShock
     - TestCold
 
-- type: damageGroup
-  id: TestAirloss
-  damageTypes:
-    - TestAsphyxiation
-    - TestBloodloss
-
-- type: damageGroup
-  id: TestToxin
-  damageTypes:
-    - TestPoison
-    - TestRadiation
-
-- type: damageGroup
-  id: TestGenetic
-  damageTypes:
-    - TestCellular
-
 - type: damageContainer
-  id: TestAllDamageContainer
+  id: TestContainer
   supportAll: true
-
-
-- type: damageContainer
-  id: TestBiologicalDamageContainer
-  supportedGroups:
-    - TestBrute
-    - TestBurn
-    - TestToxin
-    - TestAirloss
-    - TestGenetic
-
-- type: damageContainer
-  id: TestMetallicDamageContainer
-  supportedGroups:
-    - TestBrute
-    - TestBurn
 
 - type: entity
   id: {SpawnedEntityId}
@@ -102,8 +54,8 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleEntityId}
   components:
   - type: Damageable
-    damageContainer: TestMetallicDamageContainer
-  - type: Destructible
+    damageContainer: TestContainer
+  - type: TestDestructible
     thresholds:
     - trigger:
         !type:DamageTrigger
@@ -124,15 +76,14 @@ namespace Content.IntegrationTests.Tests.Destructible
             max: 1
       - !type:DoActsBehavior
         acts: [""Breakage""]
-  - type: TestThresholdListener
 
 - type: entity
   id: {DestructibleDestructionEntityId}
   name: {DestructibleDestructionEntityId}
   components:
   - type: Damageable
-    damageContainer: TestMetallicDamageContainer
-  - type: Destructible
+    damageContainer: TestContainer
+  - type: TestDestructible
     thresholds:
     - trigger:
         !type:DamageTrigger
@@ -148,15 +99,14 @@ namespace Content.IntegrationTests.Tests.Destructible
             max: 1
       - !type:DoActsBehavior # This must come last as it destroys the entity.
         acts: [""Destruction""]
-  - type: TestThresholdListener
 
 - type: entity
   id: {DestructibleDamageTypeEntityId}
   name: {DestructibleDamageTypeEntityId}
   components:
   - type: Damageable
-    damageContainer: TestMetallicDamageContainer
-  - type: Destructible
+    damageContainer: TestContainer
+  - type: TestDestructible
     thresholds:
     - trigger:
         !type:AndTrigger
@@ -167,15 +117,14 @@ namespace Content.IntegrationTests.Tests.Destructible
         - !type:DamageTypeTrigger
           damageType: TestSlash
           damage: 10
-  - type: TestThresholdListener
 
 - type: entity
   id: {DestructibleDamageGroupEntityId}
   name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
-    damageContainer: TestMetallicDamageContainer
-  - type: Destructible
+    damageContainer: TestContainer
+  - type: TestDestructible
     thresholds:
     - trigger:
         !type:AndTrigger
@@ -185,7 +134,6 @@ namespace Content.IntegrationTests.Tests.Destructible
           damage: 10
         - !type:DamageGroupTrigger
           damageGroup: TestBurn
-          damage: 10
-  - type: TestThresholdListener";
+          damage: 10";
     }
 }

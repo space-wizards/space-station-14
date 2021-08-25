@@ -5,7 +5,7 @@ using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -36,13 +36,13 @@ namespace Content.Server.Damage.Commands
                 if (damageGroup.DamageTypes.Any())
                 {
                     msg.Append(": ");
-                    msg.AppendJoin('|', damageGroup.DamageTypes);
+                    msg.AppendJoin('|', damageGroup.TypeIDs);
                 }
             }
             return $"Damage Types:{msg}";
         }
 
-        private delegate void Damage(IDamageableComponent damageable, bool ignoreResistances);
+        private delegate void Damage(IEntity entity, bool ignoreResistances);
 
         private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
             [NotNullWhen(true)] out IEntity? entity)
@@ -101,23 +101,19 @@ namespace Content.Server.Damage.Commands
 
             if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
             {
-                func = (damageable, ignoreResistances) =>
+                func = (entity, ignoreResistances) =>
                 {
-                    if (!damageable.ApplicableDamageGroups.Contains(damageGroup))
+                    var damageEvent = new TryChangeDamageEvent(new DamageData(damageGroup, amount), ignoreResistances);
+                    entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
+
+                    if (!damageEvent.DidDamageChange)
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage group {damageGroup}");
+                        shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} received no damage.");
 
                         return;
                     }
 
-                    if (!damageable.TryChangeDamage(damageGroup, amount, ignoreResistances))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
-
-                        return;
-                    }
-
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
@@ -125,23 +121,19 @@ namespace Content.Server.Damage.Commands
             // Fall back to DamageType
             else if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
             {
-                func = (damageable, ignoreResistances) =>
+                func = (entity, ignoreResistances) =>
                 {
-                    if (!damageable.IsSupportedDamageType(damageType))
+                    var damageEvent = new TryChangeDamageEvent(new DamageData(damageType, amount), ignoreResistances);
+                    entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
+
+                    if (!damageEvent.DidDamageChange)
                     {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage type {damageType}");
+                        shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} received no damage.");
 
                         return;
                     }
 
-                    if (!damageable.TryChangeDamage(damageType, amount, ignoreResistances))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
-
-                        return;
-                    }
-
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
                 };
                 return true;
@@ -218,13 +210,13 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!entity.TryGetComponent(out IDamageableComponent? damageable))
+            if (!entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(IDamageableComponent)}.");
+                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 
-            damageFunc(damageable, ignoreResistances);
+            damageFunc(entity, ignoreResistances);
         }
     }
 }

@@ -5,15 +5,14 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Damage
+namespace Content.Shared.Damage.Prototypes
 {
     /// <summary>
     ///     A Group of <see cref="DamageTypePrototype"/>s.
     /// </summary>
     /// <remarks>
-    ///     These groups can be used to specify supported damage types of a <see
-    ///     cref="Container.DamageContainerPrototype"/>, or to change/get/set damage in a <see
-    ///     cref="Components.DamageableComponent"/>.
+    ///     These groups can be used to specify supported damage types of a <see cref="DamageContainerPrototype"/>, or
+    ///     to change/get/set damage in a <see cref="DamageableComponent"/>.
     /// </remarks>
     [Prototype("damageGroup")]
     [Serializable, NetSerializable]

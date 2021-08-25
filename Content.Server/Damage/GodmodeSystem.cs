@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -40,11 +39,9 @@ namespace Content.Server.Damage
                 moved.Enabled = false;
             }
 
-            if (entity.TryGetComponent(out IDamageableComponent? damageable))
+            if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                damageable.SupportedDamageTypes.Clear();
-                damageable.FullySupportedDamageGroups.Clear();
-                damageable.ApplicableDamageGroups.Clear();
+                damageable.DamagePerType = new();
             }
 
             return true;
@@ -67,21 +64,11 @@ namespace Content.Server.Damage
                 moved.Enabled = old.MovedByPressure;
             }
 
-            if (entity.TryGetComponent(out IDamageableComponent? damageable))
+            if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                if (old.SupportedDamageTypes != null)
+                if (old.DamagePerType != null)
                 {
-                    damageable.SupportedDamageTypes.UnionWith(old.SupportedDamageTypes);
-                }
-
-                if (old.SupportedDamageGroups != null)
-                {
-                    damageable.FullySupportedDamageGroups.UnionWith(old.SupportedDamageGroups);
-                }
-
-                if (old.ApplicableDamageGroups != null)
-                {
-                    damageable.ApplicableDamageGroups.UnionWith(old.ApplicableDamageGroups);
+                    damageable.DamagePerType = old.DamagePerType;
                 }
             }
 
@@ -114,11 +101,9 @@ namespace Content.Server.Damage
                 Entity = entity;
                 MovedByPressure = entity.IsMovedByPressure();
 
-                if (entity.TryGetComponent(out IDamageableComponent? damageable))
+                if (entity.TryGetComponent(out DamageableComponent? damageable))
                 {
-                    SupportedDamageTypes = damageable.SupportedDamageTypes.ToHashSet();
-                    SupportedDamageGroups = damageable.FullySupportedDamageGroups.ToHashSet();
-                    ApplicableDamageGroups = damageable.ApplicableDamageGroups.ToHashSet();
+                    DamagePerType = damageable.DamagePerType;
                 }
             }
 
@@ -126,11 +111,7 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public HashSet<DamageTypePrototype>? SupportedDamageTypes { get; }
-
-            public HashSet<DamageGroupPrototype>? SupportedDamageGroups { get; }
-
-            public HashSet<DamageGroupPrototype>? ApplicableDamageGroups { get; }
+            public Dictionary<DamageTypePrototype, int>? DamagePerType { get; }
         }
     }
 }

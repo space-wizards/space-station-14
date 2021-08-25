@@ -16,7 +16,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
             }
 
             // Just went with max health
-            return meleeWeaponComponent.Damage / 300.0f;
+            return meleeWeaponComponent.Damage.TotalDamage / 300.0f;
         }
     }
 }

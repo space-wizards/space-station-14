@@ -1,4 +1,5 @@
-# Silver: Todo break out into damage_type,damage_class, damage_container yml files when we support loading prototypes by priority.
+# TODO PROTOTYPE PRIORITY break this out into damage_type, damage_groups, resistance_sets, and damage_containers yaml files when loading prototypes by priority is supported.
+
 - type: damageType
   id: Blunt
 
@@ -70,19 +71,48 @@
     - Poison
     - Radiation
 
-
 - type: damageGroup
   id: Genetic
   damageTypes:
     - Cellular
 
+- type: resistanceSet
+  id: Metallic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+  flatReductions:
+    Blunt: 5
+
+- type: resistanceSet
+  id: Inflatable
+  coefficients:
+    Blunt: 0.5
+    Piercing: 2.0
+    Heat: 0.5
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+
+- type: resistanceSet
+  id: Glass
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 0.5
+    Heat: 0
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+    
 - type: damageContainer
-  id: allDamageContainer
+  id: AllDamage
   supportAll: true
 
-
 - type: damageContainer
-  id: biologicalDamageContainer
+  id: Biological
   supportedGroups:
     - Brute
     - Burn
@@ -91,7 +121,10 @@
     - Genetic
 
 - type: damageContainer
-  id: metallicDamageContainer
+  id: Inorganic
   supportedGroups:
     - Brute
-    - Burn
+  supportedTypes:
+    - Heat
+    - Shock
+

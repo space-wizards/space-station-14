@@ -2,48 +2,63 @@
   id: BulletClRifle
   name: bullet (.25 caseless)
   parent: BulletBase
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 27
+    damage:
+      types:
+        Piercing: 27
 
 - type: entity
   id: BulletClRifleFlash
   name: bullet (.25 caseless flash)
   parent: BulletBaseFlash
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 27
+    damage:
+      types:
+        Piercing: 27
 
 - type: entity
   id: BulletClRifleHV
   name: bullet (.25 caseless high-velocity)
   parent: BulletBaseHV
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 32
+    damage:
+      types:
+        Piercing: 32
 
 - type: entity
   id: BulletClRiflePractice
   name: bullet (.25 caseless practice)
   parent: BulletBasePractice
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 2
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   id: BulletClRifleRubber
   name: bullet (.25 caseless rubber)
   parent: BulletBaseRubber
-  abstract: true
+# TODO ABSTRACT / HIDDEN
+# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
+#  abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 3
+    damage:
+      types:
+        Blunt: 3

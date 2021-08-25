@@ -15,7 +15,6 @@ using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.PDA;
@@ -28,6 +27,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -194,11 +194,13 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamageableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
+                    // TODO BODY SYSTEM KILL
+                    var damage = new DamageData(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    var damageEvent = new TryChangeDamageEvent(damage);
+                    _entityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
+                    if (!damageEvent.DidDamageChange)
                     {
-                        //todo: what if they dont breathe lol
-                        damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
+                        Logger.Warning("People don't die if they are killed. (OnGhostAttempt, Asphyxiation failed to kill)");
                     }
                 }
                 else if (!mobState.IsDead())

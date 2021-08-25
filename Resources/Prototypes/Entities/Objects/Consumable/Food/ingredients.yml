@@ -49,10 +49,15 @@
       - ReagentId: Flour
         Quantity: 50
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -85,10 +90,15 @@
       - ReagentId: Flour
         Quantity: 20
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

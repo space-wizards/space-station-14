@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
@@ -68,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Body
   - type: MobState
   - type: Damageable
-    damagePrototype: biologicalDamageContainer
+    damageContainer: Biological
 
 - type: entity
   name: WrenchDummy

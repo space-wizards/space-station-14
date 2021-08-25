@@ -38,7 +38,8 @@
     supply: 1500
   - type: SnapGrid
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -77,7 +78,8 @@
     state: solar_assembly
   - type: SnapGrid
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -121,7 +123,8 @@
     state: solar_tracker
   - type: SnapGrid
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
