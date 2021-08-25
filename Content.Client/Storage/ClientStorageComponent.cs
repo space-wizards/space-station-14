@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Client.Animations;
 using Content.Client.Items.Components;
 using Content.Client.Hands;
+using Content.Client.Items.Managers;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
 using Content.Shared.Storage;
@@ -13,6 +14,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -29,6 +31,8 @@ namespace Content.Client.Storage
     [RegisterComponent]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+
         private List<IEntity> _storedEntities = new();
         private int StorageSizeUsed;
         private int StorageCapacityMax;
@@ -161,9 +165,16 @@ namespace Content.Client.Storage
         /// Function for clicking one of the stored entity buttons in the UI, tells server to remove that entity
         /// </summary>
         /// <param name="entityUid"></param>
-        private void Interact(EntityUid entityUid)
+        private void Interact(BaseButton.ButtonEventArgs buttonEventArgs, EntityUid entityUid)
         {
-            SendNetworkMessage(new RemoveEntityMessage(entityUid));
+            if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
+            {
+                SendNetworkMessage(new RemoveEntityMessage(entityUid));
+            }
+            else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+            {
+                _itemSlotManager.OnButtonPressed(buttonEventArgs.Event, entity);
+            }
         }
 
         public override bool Remove(IEntity entity)
@@ -180,7 +191,7 @@ namespace Content.Client.Storage
         /// <summary>
         /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
         /// </summary>
-        private void GenerateButton(EntityUid entityUid, Control button)
+        private void GenerateButton(EntityUid entityUid, EntityContainerButton button)
         {
             if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
                 return;
@@ -214,6 +225,8 @@ namespace Content.Client.Storage
                     }
                 }
             });
+
+            button.EnableAllKeybinds = true;
         }
 
         /// <summary>
