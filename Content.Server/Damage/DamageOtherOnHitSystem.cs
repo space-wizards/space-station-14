@@ -17,7 +17,7 @@ namespace Content.Server.Damage
             if (!args.Target.TryGetComponent(out IDamageableComponent? damageable))
                 return;
 
-            damageable.ChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances, args.User);
+            damageable.TryChangeDamage(component.DamageType, component.Amount, component.IgnoreResistances);
         }
     }
 }

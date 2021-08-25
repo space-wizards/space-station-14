@@ -26,6 +26,7 @@ namespace Content.Server.Weapon.Melee
     {
         [Dependency] private IGameTiming _gameTiming = default!;
         [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -89,7 +90,7 @@ namespace Content.Server.Weapon.Melee
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
                     {
-                        damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -158,7 +159,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
                     {
-                        damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
                 }
             }

@@ -14,7 +14,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45, -0.15, 0.45, 0.35"
+          bounds: "-0.15,-0.45,0.35,0.45"
       layer: [ Passable ]
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
@@ -131,7 +131,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "0, 0, 0.25, 0.1"
+          bounds: "0,0,0.1,0.25"
       layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
