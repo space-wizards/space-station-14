@@ -106,13 +106,6 @@ namespace Content.Server.Damage.Commands
                     var damageEvent = new TryChangeDamageEvent(new DamageData(damageGroup, amount), ignoreResistances);
                     entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
 
-                    if (!damageEvent.DidDamageChange)
-                    {
-                        shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} received no damage.");
-
-                        return;
-                    }
-
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
@@ -125,13 +118,6 @@ namespace Content.Server.Damage.Commands
                 {
                     var damageEvent = new TryChangeDamageEvent(new DamageData(damageType, amount), ignoreResistances);
                     entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
-
-                    if (!damageEvent.DidDamageChange)
-                    {
-                        shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} received no damage.");
-
-                        return;
-                    }
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 

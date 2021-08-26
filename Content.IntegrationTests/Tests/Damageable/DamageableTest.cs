@@ -74,6 +74,13 @@ namespace Content.IntegrationTests.Tests.Damageable
     damageContainer: testDamageContainer
 ";
 
+        // public bool & function to determine whether dealing damage resulted in actual damage change
+        public bool DamageChanged = false;
+        public void DamageChangedListener(EntityUid _, DamageableComponent comp, DamageChangedEvent args)
+        {
+            DamageChanged = true;
+        }
+
         [Test]
         public async Task TestDamageableComponents()
         {
@@ -87,6 +94,8 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+
+            sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
 
             IEntity sDamageableEntity = null;
             DamageableComponent sDamageableComponent = null;
@@ -145,6 +154,8 @@ namespace Content.IntegrationTests.Tests.Damageable
                 DamageData damageData = new(group3, damageToDeal);
 
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(damageData, true));
+                Assert.That(DamageChanged);
+                DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
                 Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(damageToDeal));
                 foreach (var type in types)
@@ -155,6 +166,8 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 // Heal
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(-damageData));
+                Assert.That(DamageChanged);
+                DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
                 Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(0));
                 foreach (var type in types)
@@ -168,6 +181,8 @@ namespace Content.IntegrationTests.Tests.Damageable
                 damageToDeal = types.Count() * 5 - 1;
                 damageData = new(group3, damageToDeal);
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(damageData, true));
+                Assert.That(DamageChanged);
+                DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
                 Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(damageToDeal));
                 // integer rounding. In this case, first member gets 1 less than others.
@@ -177,6 +192,8 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 // Heal
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(-damageData));
+                Assert.That(DamageChanged);
+                DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
                 Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(0));
                 foreach (var type in types)
@@ -190,7 +207,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 damageData = new DamageData(group1, 10) + new DamageData(type2b, 10);
                 TryChangeDamageEvent damageEvent = new(damageData, true);
                 sEntityManager.EventBus.RaiseLocalEvent(uid, damageEvent);
-                Assert.That(damageEvent.DidDamageChange, Is.False);
+                Assert.That(DamageChanged, Is.False);
                 Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1, out groupDamage), Is.False);
                 Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type1, out typeDamage), Is.False);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
@@ -212,13 +229,14 @@ namespace Content.IntegrationTests.Tests.Damageable
                 // Test Over-Healing
                 damageEvent = new TryChangeDamageEvent(new DamageData(group3, -100));
                 sEntityManager.EventBus.RaiseLocalEvent(uid, damageEvent);
-                Assert.That(damageEvent.DidDamageChange);
+                Assert.That(DamageChanged);
+                DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test that if no health change occurred, returns false
                 damageEvent = new TryChangeDamageEvent(new DamageData(group3, -100));
                 sEntityManager.EventBus.RaiseLocalEvent(uid, damageEvent);
-                Assert.That(damageEvent.DidDamageChange, Is.False);
+                Assert.That(DamageChanged, Is.False);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
             });
         }

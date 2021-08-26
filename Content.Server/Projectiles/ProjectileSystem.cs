@@ -49,7 +49,9 @@ namespace Content.Server.Projectiles
             {
                 var damageEvent = new TryChangeDamageEvent(component.Damage, false);
                 RaiseLocalEvent(otherEntity.Uid, damageEvent);
-                component.DamagedEntity = component.DamagedEntity || damageEvent.DidDamageChange;
+                component.DamagedEntity = true;
+                // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
+                // by resistance sets.
             }
 
             // Damaging it can delete it

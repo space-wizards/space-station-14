@@ -20,7 +20,7 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        /// Initialize a damageable component
+        ///     Initialize a damageable component
         /// </summary>
         private void OnInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
@@ -29,7 +29,7 @@ namespace Content.Shared.Damage
             {
                 // DamageContainerID is a required data field, but this can still happen when adding this component via
                 // ViewVariables. Until ViewVariables can modify dictionaries (set values, add & remove entries), this
-                // means you cannot get functional damage containers with ViewVariables
+                // means you cannot create new functional damageable components using ViewVariables
                 Logger.Warning("Null DamageContainerID, missing YAML datafield?");
                 return;
             }
@@ -116,18 +116,21 @@ namespace Content.Shared.Damage
             // Deal/heal damage, while keeping track of whether the damage changed.
             // Also track whether any damage was dealt, or whether it was all healing.
             var damageIncreased = false;
+            var damageChanged = false;
             foreach (var entry in damage.DamageDict)
             {
                 if (entry.Value == 0) continue;
 
                 // This is where we actually apply damage, using the TryChangeDamage() function
-                args.DidDamageChange = TryChangeDamage(component, entry.Key, entry.Value) || args.DidDamageChange;
+                if (!TryChangeDamage(component, entry.Key, entry.Value))
+                    continue;
 
-                if (entry.Value > 0) damageIncreased = true; // At least some damage was dealt, not all was healing.
+                damageChanged = true;
+                if (entry.Value > 0) damageIncreased = true; 
             }
 
             // If any damage change occurred, update the other data on the damageable component and re-sync
-            if (args.DidDamageChange)
+            if (damageChanged)
             {
                 DamageChanged(uid, component, damageIncreased);
             }
@@ -228,7 +231,7 @@ namespace Content.Shared.Damage
     public class DamageChangedEvent : EntityEventArgs
     {
         /// <summary>
-        ///     This is the complete information about the new damage state.  
+        ///     This is the component whose damage .  
         /// </summary>
         /// <remarks>
         ///     Given that nearly every component that cares about a change in the damage, needs to know the
@@ -236,7 +239,7 @@ namespace Content.Shared.Damage
         ///     Owner.TryGetComponent() calls. One of the few exceptions is lightbulbs, which just care if ANY damage
         ///     was taken, not how much.
         /// </remarks>
-        public DamageableComponent Damageable { get; }
+        public readonly DamageableComponent Damageable;
 
         /// <summary>
         ///     Has any damage type increased? 
@@ -244,7 +247,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     This can still be true even if the overall effect of the damage change was to reduce the total damage.
         /// </remarks>
-        public bool TookDamage { get; }
+        public readonly bool TookDamage;
         public DamageChangedEvent(DamageableComponent damageable, bool tookDamage)
         {
             Damageable = damageable;
@@ -253,25 +256,20 @@ namespace Content.Shared.Damage
     }
 
     /// <summary>
-    /// Event used to deal or heal damage on a damageable component. Handled by <see cref="DamageableSystem"/>
+    ///     Event used to deal or heal damage on a damageable component. Handled by <see cref="DamageableSystem"/>
     /// </summary>
     public class TryChangeDamageEvent : EntityEventArgs
     {
         /// <summary>
-        /// Input. Damage that is added to the DamageableComponent
+        ///     Damage that is added to the DamageableComponent
         /// </summary>
-        public DamageData Damage { get; }
+        public readonly DamageData Damage;
 
         /// <summary>
-        /// Input. Whether to ignore resistances of the damageable component. Healing ignores resistances.
-        /// Defaults to false.
+        ///     Whether to ignore resistances of the damageable component. Healing ignores resistances. Defaults
+        ///     to false.
         /// </summary>
-        public bool IgnoreResistances { get;  }
-
-        /// <summary>
-        /// Output. Did the damage actually change? Maybe it was all resisted, or you healed someone at full health.
-        /// </summary>
-        public bool DidDamageChange { get; set; } = false;
+        public readonly bool IgnoreResistances;
 
         public TryChangeDamageEvent(DamageData damage, bool ignoreResistances = false)
         {

@@ -197,11 +197,7 @@ namespace Content.Server.GameTicking.Presets
                     // TODO BODY SYSTEM KILL
                     var damage = new DamageData(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
                     var damageEvent = new TryChangeDamageEvent(damage);
-                    _entityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
-                    if (!damageEvent.DidDamageChange)
-                    {
-                        Logger.Warning("People don't die if they are killed. (OnGhostAttempt, Asphyxiation failed to kill)");
-                    }
+                    _entityManager.EventBus.RaiseLocalEvent(entity.Uid, ref damageEvent, false);
                 }
                 else if (!mobState.IsDead())
                 {
