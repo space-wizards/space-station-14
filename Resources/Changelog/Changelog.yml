@@ -1902,3 +1902,8 @@ Entries:
   - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
   id: 339
   time: '2021-08-25T11:45:33.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix admin events UI tab, type: Fix}
+  id: 340
+  time: '2021-08-26T09:45:06.0000000+00:00'
