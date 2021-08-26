@@ -224,6 +224,8 @@ namespace Content.Server.AI.Pathfinding
 
         private void HandleTileUpdate(TileRef tile)
         {
+            if (!_mapManager.GridExists(tile.GridIndex)) return;
+
             var node = GetNode(tile);
             node.UpdateTile(tile);
         }
@@ -289,7 +291,7 @@ namespace Content.Server.AI.Pathfinding
             _lastKnownPositions.Remove(entity);
         }
 
-        private void QueueMoveEvent(MoveEvent moveEvent)
+        private void QueueMoveEvent(ref MoveEvent moveEvent)
         {
             _moveUpdateQueue.Enqueue(moveEvent);
         }

@@ -137,7 +137,7 @@ namespace Content.Server.Construction.Components
                 TargetPathfinding.Dequeue();
 
             // If we went the wrong way, we stop pathfinding.
-            if (Edge != null && TargetNextEdge != Edge)
+            if (Edge != null && TargetNextEdge != Edge && EdgeStep >= Edge.Steps.Count)
             {
                 ClearTarget();
                 return;

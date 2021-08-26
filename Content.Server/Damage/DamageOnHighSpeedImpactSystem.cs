@@ -46,7 +46,7 @@ namespace Content.Server.Damage
             if (ComponentManager.TryGetComponent(uid, out StunnableComponent? stun) && _robustRandom.Prob(component.StunChance))
                 stun.Stun(component.StunSeconds);
 
-            damageable.ChangeDamage(component.Damage, damage, false, args.OtherFixture.Body.Owner);
+            damageable.TryChangeDamage(component.DamageType, damage);
         }
     }
 }

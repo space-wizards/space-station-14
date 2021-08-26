@@ -73,6 +73,23 @@ namespace Content.Shared.Body.Components
 
         public SharedBodyPartComponent? CenterPart => CenterSlot?.Part;
 
+        /// <summary>
+        /// Amount of damage to deal when all vital organs are removed.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("vitalPartsRemovedDamage")]
+        public int VitalPartsRemovedDamage { get; set; } = 300!;
+
+        /// <summary>
+        /// Damage type to deal when all vital organs are removed.
+        /// </summary>
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        [ViewVariables]
+        [DataField("vitalPartsRemovedDamageType")]
+        private string _vitalPartsRemovedDamageTypeID { get; set; } = "Bloodloss"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype VitalPartsRemovedDamageType = default!;
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -81,6 +98,7 @@ namespace Content.Shared.Body.Components
             // TODO BODY Move to template or somewhere else
             if (TemplateId != null)
             {
+                VitalPartsRemovedDamageType = _prototypeManager.Index<DamageTypePrototype>(_vitalPartsRemovedDamageTypeID);
                 var template = _prototypeManager.Index<BodyTemplatePrototype>(TemplateId);
 
                 foreach (var (id, partType) in template.Slots)
@@ -94,8 +112,6 @@ namespace Content.Shared.Body.Components
                     SlotIds[slotId].SetConnectionsInternal(connections);
                 }
             }
-
-            CalculateSpeed();
         }
 
         protected override void OnRemove()
@@ -196,7 +212,7 @@ namespace Content.Shared.Body.Components
             {
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
-                    damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
+                    damageable.TryChangeDamage(VitalPartsRemovedDamageType, VitalPartsRemovedDamage, true); // TODO BODY KILL
                 }
             }
 
@@ -474,51 +490,8 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        private void CalculateSpeed()
-        {
-            if (!Owner.TryGetComponent(out MovementSpeedModifierComponent? playerMover))
-            {
-                return;
-            }
-
-            var legs = GetPartsWithProperty<LegComponent>().ToArray();
-            float speedSum = 0;
-
-            foreach (var leg in legs)
-            {
-                var footDistance = DistanceToNearestFoot(leg.part);
-
-                if (Math.Abs(footDistance - float.MinValue) <= 0.001f)
-                {
-                    continue;
-                }
-
-                speedSum += leg.property.Speed * (1 + (float) Math.Log(footDistance, 1024.0));
-            }
-
-            if (speedSum <= 0.001f)
-            {
-                playerMover.BaseWalkSpeed = 0.8f;
-                playerMover.BaseSprintSpeed = 2.0f;
-            }
-            else
-            {
-                // Extra legs stack diminishingly.
-                playerMover.BaseWalkSpeed =
-                    speedSum / (legs.Length - (float) Math.Log(legs.Length, 4.0));
-
-                playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
-            }
-        }
-
         private void OnBodyChanged()
         {
-            // Calculate move speed based on this body.
-            if (Owner.HasComponent<MovementSpeedModifierComponent>())
-            {
-                CalculateSpeed();
-            }
-
             Dirty();
         }
 

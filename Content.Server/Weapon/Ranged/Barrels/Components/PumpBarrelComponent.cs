@@ -190,7 +190,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -216,7 +216,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _spawnedAmmo.Push(eventArgs.Using);
                 Dirty();
                 UpdateAppearance();
-                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 return true;
             }
 
