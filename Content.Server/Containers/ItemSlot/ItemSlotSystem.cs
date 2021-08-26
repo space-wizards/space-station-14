@@ -2,9 +2,11 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.Containers.ItemSlot
 {
@@ -52,7 +54,7 @@ namespace Content.Server.Containers.ItemSlot
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
             {
-                slot.Owner.PopupMessage(eventArgs.User, Loc.GetString("item-slot-try-insert-pen-no-hands"));
+                slot.Owner.PopupMessage(eventArgs.User, Loc.GetString("item-slot-try-insert-no-hands"));
                 return true;
             }
 
@@ -73,9 +75,10 @@ namespace Content.Server.Containers.ItemSlot
                 hands.PutInHand(swap.GetComponent<ItemComponent>());
             }
 
-            // Insert Pen
+            // Insert item
             slot.ContainerSlot.Insert(item);
             RaiseLocalEvent(new ItemSlotChanged(slot, item));
+            SoundSystem.Play(Filter.Pvs(slot.Owner), slot.InsertSound.GetSound(), slot.Owner);
 
             return true;
         }
@@ -93,6 +96,7 @@ namespace Content.Server.Containers.ItemSlot
             hands.PutInHandOrDrop(itemComponent);
 
             RaiseLocalEvent(new ItemSlotChanged(slot, null));
+            SoundSystem.Play(Filter.Pvs(slot.Owner), slot.EjectSound.GetSound(), slot.Owner);
         }
     }
 }

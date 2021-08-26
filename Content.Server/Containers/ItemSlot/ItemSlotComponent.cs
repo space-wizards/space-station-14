@@ -19,7 +19,7 @@ namespace Content.Server.Containers.ItemSlot
         [ViewVariables] [DataField("item")] public string? StartingItem;
         [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist = null;
         [ViewVariables] [DataField("insertSound")] public SoundSpecifier InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
-        [ViewVariables] [DataField("ejectSound")] public SoundSpecifier EjectIdSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
+        [ViewVariables] [DataField("ejectSound")] public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
         [ViewVariables] [DataField("verbTextID")] public string? CustomVerbTextID;
 
         [ViewVariables] public ContainerSlot ContainerSlot = default!;
