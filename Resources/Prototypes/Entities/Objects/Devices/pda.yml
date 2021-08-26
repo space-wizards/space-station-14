@@ -28,6 +28,8 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+  - type: PenSlot
+    pen: "Pen"
 
 - type: entity
   parent: BasePDA
