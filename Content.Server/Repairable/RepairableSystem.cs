@@ -4,12 +4,15 @@ using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Repairable
 {
     public class ReairableSystem : EntitySystem
     {
+        [Dependency] DamageableSystem _damageableSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<RepairableComponent, InteractUsingEvent>(Repair);
@@ -30,7 +33,7 @@ namespace Content.Server.Repairable
                 return;
 
             // Repair all damage
-            RaiseLocalEvent(uid, new SetAllDamageEvent(0), false);
+            _damageableSystem.SetAllDamage(damageable, 0);
 
             component.Owner.PopupMessage(args.User,
                 Loc.GetString("comp-repairable-repair",

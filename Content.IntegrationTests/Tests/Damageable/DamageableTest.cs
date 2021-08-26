@@ -94,11 +94,13 @@ namespace Content.IntegrationTests.Tests.Damageable
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
+            var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
 
             sEntityManager.EventBus.SubscribeLocalEvent<DamageableComponent, DamageChangedEvent>(DamageChangedListener);
 
             IEntity sDamageableEntity = null;
             DamageableComponent sDamageableComponent = null;
+            DamageableSystem sDamageableSystem = null;
 
             DamageGroupPrototype group1 = default!;
             DamageGroupPrototype group2 = default!;
@@ -121,6 +123,7 @@ namespace Content.IntegrationTests.Tests.Damageable
 
                 sDamageableEntity = sEntityManager.SpawnEntity("TestDamageableEntityId", coordinates);
                 sDamageableComponent = sDamageableEntity.GetComponent<DamageableComponent>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
 
                 group1 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup1");
                 group2 = sPrototypeManager.Index<DamageGroupPrototype>("TestGroup2");
@@ -213,9 +216,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test SetAll function
-                sEntityManager.EventBus.RaiseLocalEvent(uid, new SetAllDamageEvent(10));
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 10);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(10 * sDamageableComponent.DamagePerType.Count()));
-                sEntityManager.EventBus.RaiseLocalEvent(uid, new SetAllDamageEvent(0));
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test 'wasted' healing

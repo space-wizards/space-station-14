@@ -16,7 +16,6 @@ namespace Content.Shared.Damage
         {
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<DamageableComponent, TryChangeDamageEvent>(TryChangeDamage);
-            SubscribeLocalEvent<DamageableComponent, SetAllDamageEvent>(SetAllDamage);
         }
 
         /// <summary>
@@ -173,9 +172,9 @@ namespace Content.Shared.Damage
         /// <remakrs>
         ///     Does nothing If the given damage value is negative.
         /// </remakrs>
-        public void SetAllDamage(EntityUid uid, DamageableComponent component, SetAllDamageEvent args)
+        public void SetAllDamage(DamageableComponent component, int newValue)
         {
-            if (args.NewValue < 0)
+            if (newValue < 0)
             {
                 // invalid value
                 return;
@@ -183,11 +182,11 @@ namespace Content.Shared.Damage
 
             foreach (var type in component.DamagePerType.Keys)
             {
-                component.DamagePerType[type] = args.NewValue;
+                component.DamagePerType[type] = newValue;
             }
 
-            // Setting damage does not count as 'dealing' damage, even if it is set to a larger value.
-            DamageChanged(uid, component, false);
+            // Setting damage does not count as 'dealing' damage, even if it is set to a larger value. Hence damageIncreased: false
+            DamageChanged(component.Owner.Uid, component, damageIncreased: false);
         }
 
         /// <summary>
@@ -275,15 +274,6 @@ namespace Content.Shared.Damage
         {
             Damage = damage;
             IgnoreResistances = ignoreResistances;
-        }
-    }
-
-    public class SetAllDamageEvent : EntityEventArgs
-    {
-        public int NewValue { get; }
-        public SetAllDamageEvent(int newValue)
-        {
-            NewValue = newValue;
         }
     }
 }

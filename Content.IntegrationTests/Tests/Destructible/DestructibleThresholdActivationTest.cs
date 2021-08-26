@@ -39,6 +39,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             DamageableComponent sDamageableComponent = null;
             TestDestructibleComponent sTestDestructibleComponent = null;
             DestructibleThresholdListenerSystem sTestThresholdListenerSystem = null;
+            DamageableSystem sDamageableSystem = null;
 
             await server.WaitPost((System.Action)(() =>
             {
@@ -50,6 +51,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestDestructibleComponent = sDestructibleEntity.GetComponent<TestDestructibleComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<DestructibleThresholdListenerSystem>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             }));
 
             await server.WaitRunTicks(5);
@@ -119,7 +121,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Set damage to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new SetAllDamageEvent(0), false);
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Damage for 100, up to 100
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage*10, true), false);
@@ -178,7 +180,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal all damage
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new SetAllDamageEvent(0), false);
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Damage up to 50
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage*5, true), false);
@@ -229,7 +231,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal the entity completely
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new SetAllDamageEvent(0), false);
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Check that the entity has 0 damage
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));

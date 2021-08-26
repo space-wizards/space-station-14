@@ -34,6 +34,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             IEntity sDestructibleEntity = null;
             DamageableComponent sDamageableComponent = null;
             DestructibleThresholdListenerSystem sTestThresholdListenerSystem = null;
+            DamageableSystem sDamageableSystem = null;
 
             await server.WaitPost((System.Action)(() =>
             {
@@ -44,6 +45,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<DestructibleThresholdListenerSystem>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             }));
 
             await server.WaitRunTicks(5);
@@ -124,7 +126,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal both classes of damage to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new SetAllDamageEvent(0), false);
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
@@ -162,7 +164,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal brute and burn back to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new SetAllDamageEvent(0), false);
+                sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // No new thresholds reached from healing
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

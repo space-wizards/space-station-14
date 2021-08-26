@@ -59,7 +59,10 @@ namespace Content.Server.Damage
 
         public static void PerformRejuvenate(IEntity target)
         {
-            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(target.Uid, new SetAllDamageEvent(0), false);
+            if (target.TryGetComponent(out DamageableComponent? damageable))
+            {
+                EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
+            }
 
             if (target.TryGetComponent(out IMobStateComponent? mobState))
             {
