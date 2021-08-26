@@ -2,7 +2,6 @@
 ### UI
 
 comp-pda-ui-try-insert-id-card-no-hands = You have no hands.
-comp-pda-ui-try-insert-pen-no-hands = You have no hands.
 
 # For the PDA screen
 comp-pda-ui = ID: [color=white]{$Owner}[/color], [color=yellow]{$JobTitle}[/color]
@@ -29,9 +28,6 @@ comp-pda-ui-toggle-flashlight-button = Toggle Flashlight
 
 # EjectIDVerb
 eject-id-verb-get-data-text = Eject ID
-
-# EjectPenVerb
-eject-pen-verb-get-data-text = Eject Pen
 
 # ToggleFlashlightVerb
 toggle-flashlight-verb-get-data-text = Toggle flashlight
