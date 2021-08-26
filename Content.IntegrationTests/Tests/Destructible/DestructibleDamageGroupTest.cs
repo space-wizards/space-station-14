@@ -33,7 +33,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             IEntity sDestructibleEntity = null;
             DamageableComponent sDamageableComponent = null;
-            DestructibleThresholdListenerSystem sTestThresholdListenerSystem = null;
+            TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
 
             await server.WaitPost((System.Action)(() =>
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
-                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<DestructibleThresholdListenerSystem>();
+                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             }));
 

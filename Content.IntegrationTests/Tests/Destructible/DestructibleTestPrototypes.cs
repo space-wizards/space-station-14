@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   components:
   - type: Damageable
     damageContainer: TestContainer
-  - type: TestDestructible
+  - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
@@ -83,7 +83,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   components:
   - type: Damageable
     damageContainer: TestContainer
-  - type: TestDestructible
+  - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
@@ -106,7 +106,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   components:
   - type: Damageable
     damageContainer: TestContainer
-  - type: TestDestructible
+  - type: Destructible
     thresholds:
     - trigger:
         !type:AndTrigger
@@ -124,7 +124,7 @@ namespace Content.IntegrationTests.Tests.Destructible
   components:
   - type: Damageable
     damageContainer: TestContainer
-  - type: TestDestructible
+  - type: Destructible
     thresholds:
     - trigger:
         !type:AndTrigger

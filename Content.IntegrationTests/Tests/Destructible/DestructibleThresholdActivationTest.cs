@@ -16,7 +16,7 @@ using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototy
 namespace Content.IntegrationTests.Tests.Destructible
 {
     [TestFixture]
-    [TestOf(typeof(TestDestructibleComponent))]
+    [TestOf(typeof(DestructibleComponent))]
     [TestOf(typeof(Threshold))]
     public class DestructibleThresholdActivationTest : ContentIntegrationTest
     {
@@ -37,8 +37,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             IEntity sDestructibleEntity = null; ;
             DamageableComponent sDamageableComponent = null;
-            TestDestructibleComponent sTestDestructibleComponent = null;
-            DestructibleThresholdListenerSystem sTestThresholdListenerSystem = null;
+            DestructibleComponent sDestructibleComponent = null;
+            TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
 
             await server.WaitPost((System.Action)(() =>
@@ -49,8 +49,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
-                sTestDestructibleComponent = sDestructibleEntity.GetComponent<TestDestructibleComponent>();
-                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<DestructibleThresholdListenerSystem>();
+                sDestructibleComponent = sDestructibleEntity.GetComponent<DestructibleComponent>();
+                sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             }));
 
@@ -237,7 +237,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Set both thresholds to only trigger once
-                foreach (var destructibleThreshold in sTestDestructibleComponent.Thresholds)
+                foreach (var destructibleThreshold in sDestructibleComponent.Thresholds)
                 {
                     Assert.NotNull(destructibleThreshold.Trigger);
                     destructibleThreshold.TriggersOnce = true;
@@ -253,7 +253,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
 
                 // Set both thresholds to trigger multiple times
-                foreach (var destructibleThreshold in sTestDestructibleComponent.Thresholds)
+                foreach (var destructibleThreshold in sDestructibleComponent.Thresholds)
                 {
                     Assert.NotNull(destructibleThreshold.Trigger);
                     destructibleThreshold.TriggersOnce = false;
