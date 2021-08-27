@@ -25,7 +25,7 @@ namespace Content.Client.Window
             }
         }
 
-        private static void HandleAnchorChanged(EntityUid uid, WindowComponent component, AnchorStateChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, WindowComponent component, ref AnchorStateChangedEvent args)
         {
             component.AnchorStateChanged();
         }

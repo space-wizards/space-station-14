@@ -20,7 +20,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
        - Impassable
@@ -61,7 +61,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
         mass: 25
         mask:
           - Impassable
@@ -99,7 +99,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
        - Impassable

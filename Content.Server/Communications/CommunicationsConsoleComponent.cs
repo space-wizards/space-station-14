@@ -10,8 +10,10 @@ using Content.Shared.Communications;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
@@ -113,6 +115,8 @@ namespace Content.Server.Communications
                     {
                         author = $"{id.FullName} ({CultureInfo.CurrentCulture.TextInfo.ToTitleCase(id.JobTitle ?? string.Empty)})".Trim();
                     }
+
+                    SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/announce.ogg", AudioParams.Default.WithVolume(-2f));
 
                     message += $"\nSent by {author}";
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console");

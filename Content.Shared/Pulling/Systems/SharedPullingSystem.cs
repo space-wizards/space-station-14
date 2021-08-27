@@ -125,7 +125,7 @@ namespace Content.Shared.Pulling
             _stoppedMoving.Add(component);
         }
 
-        private void PullerMoved(MoveEvent ev)
+        private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
             if (!TryGetPulled(ev.Sender, out var pulled))

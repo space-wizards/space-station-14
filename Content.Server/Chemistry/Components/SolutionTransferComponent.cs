@@ -282,6 +282,8 @@ namespace Content.Server.Chemistry.Components
         [Verb]
         public sealed class CustomTransferVerb : Verb<SolutionTransferComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)

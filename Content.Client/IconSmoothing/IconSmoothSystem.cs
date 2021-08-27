@@ -91,7 +91,7 @@ namespace Content.Client.IconSmoothing
             }
         }
 
-        private static void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, AnchorStateChangedEvent args)
+        private static void HandleAnchorChanged(EntityUid uid, IconSmoothComponent component, ref AnchorStateChangedEvent args)
         {
             component.AnchorStateChanged();
         }

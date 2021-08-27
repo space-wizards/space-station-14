@@ -19,7 +19,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 {
                     comp.OnUpdate(_accumulatedFrameTime);
                 }
-                _accumulatedFrameTime -= 1;
+                _accumulatedFrameTime = 0;
             }
         }
     }

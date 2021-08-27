@@ -1830,3 +1830,80 @@ Entries:
   - {message: The keybinding to stop pulling an object now works., type: Fix}
   id: 327
   time: '2021-08-20T05:47:59.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Announcements now play announcement sound, type: Add}
+  id: 328
+  time: '2021-08-21T05:19:39.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pie cannon shooting errors instead of cream pies., type: Fix}
+  id: 329
+  time: '2021-08-21T07:18:23.0000000+00:00'
+- author: ElectroSR
+  changes:
+  - {message: 'Alt+E, Alt+Z and Alt+Left-Mouse keybindings can trigger alternative
+      interactions on entities.', type: Add}
+  - {message: Some existing context-menu actions are now considered "alternative interactions".
+      For example ejecting IDs/beakers/magazines or locking & unlocking lockers can
+      be done via these new keybindings., type: Add}
+  - {message: More context menu icons and two new actions (open inventory & eject
+      items from disposal unit), type: Add}
+  - {message: Using 'E' to interact with items in your inventory or hands works again.,
+    type: Fix}
+  id: 330
+  time: '2021-08-21T17:20:18.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Singulo slightly less janky., type: Fix}
+  id: 331
+  time: '2021-08-22T14:54:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Particle Accelerator construction won't cause an error when finishing
+      the power box., type: Fix}
+  - {message: Cables are now called lv cables when referred to in a construction step
+      for clarity., type: Tweak}
+  id: 332
+  time: '2021-08-22T15:50:44.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Add security barriers to codebase, type: Add}
+  id: 333
+  time: '2021-08-22T16:32:24.0000000+00:00'
+- author: SweptWasTaken
+  changes:
+  - {message: Admin ghosts can interact with stuff, type: Add}
+  id: 334
+  time: '2021-08-23T03:14:52.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added basic parts technology, type: Add}
+  id: 335
+  time: '2021-08-23T03:28:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add meteor swarm event., type: Add}
+  id: 336
+  time: '2021-08-23T03:28:48.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fix grav gen losing power after only a bit, type: Fix}
+  id: 337
+  time: '2021-08-24T15:36:50.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability for chairs to catch items thrown by people sitting
+      on them., type: Fix}
+  id: 338
+  time: '2021-08-25T10:35:37.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
+  id: 339
+  time: '2021-08-25T11:45:33.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix admin events UI tab, type: Fix}
+  id: 340
+  time: '2021-08-26T09:45:06.0000000+00:00'
