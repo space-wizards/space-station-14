@@ -26,17 +26,18 @@ namespace Content.Client.Conveyor.Visualizers
                 return;
             }
 
-            appearance.TryGetData(ConveyorVisuals.State, out ConveyorState state);
-
-            var texture = state switch
+            if (appearance.TryGetData(ConveyorVisuals.State, out ConveyorState state))
             {
-                ConveyorState.Off => _stateStopped,
-                ConveyorState.Forward => _stateRunning,
-                ConveyorState.Reversed => _stateReversed,
-                _ => throw new ArgumentOutOfRangeException()
-            };
+                var texture = state switch
+                {
+                    ConveyorState.Off => _stateStopped,
+                    ConveyorState.Forward => _stateRunning,
+                    ConveyorState.Reversed => _stateReversed,
+                    _ => throw new ArgumentOutOfRangeException()
+                };
 
-            sprite.LayerSetState(0, texture);
+                sprite.LayerSetState(0, texture);
+            }
         }
 
         public override void InitializeEntity(IEntity entity)

@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
+using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Conveyor
 {
@@ -29,6 +30,12 @@ namespace Content.Server.Conveyor
             SubscribeLocalEvent<ConveyorComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<ConveyorComponent, LinkAttemptEvent>(OnLinkAttempt);
             SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnStartCollide);
+        }
+
+        private void OnStartCollide(EntityUid uid, ConveyorComponent component, StartCollideEvent args)
+        {
+            component.Intersecting.Add(args.OtherFixture.Body.Owner);
         }
 
         private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
@@ -128,10 +135,22 @@ namespace Content.Server.Conveyor
             return new Angle(component.Owner.Transform.LocalRotation.Theta + radians + adjustment);
         }
 
-        public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(Component comp)
+        public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
-            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, true))
+            var toRemove = new List<IEntity>();
+            foreach (var entity in comp.Intersecting)
             {
+                if (!IoCManager.Resolve<IEntityLookup>().IsIntersecting(comp.Owner, entity))
+                {
+                    toRemove.Add(entity);
+                    continue;
+                }
+
+                if (entity.Deleted)
+                {
+                    continue;
+                }
+
                 if (entity == comp.Owner)
                 {
                     continue;
@@ -154,6 +173,11 @@ namespace Content.Server.Conveyor
                 }
 
                 yield return (entity, physics);
+            }
+
+            foreach (var entity in toRemove)
+            {
+                comp.Intersecting.Remove(entity);
             }
         }
     }
