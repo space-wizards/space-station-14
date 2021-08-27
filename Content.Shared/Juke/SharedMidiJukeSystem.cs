@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
@@ -24,35 +23,57 @@ namespace Content.Shared.Juke
         }
     }
 
-    public enum MidiJukePlaybackState
+    [Serializable, NetSerializable]
+    public class MidiJukePlayEvent : EntityEventArgs
     {
-        Play,
-        Pause,
-        Stop
-    }
-
-    public class MidiJukePlaybackStateMessage : EntityEventArgs
-    {
-        public MidiJukePlaybackState OldState { get; }
-        public MidiJukePlaybackState NewState { get; }
-
-        public MidiJukePlaybackStateMessage(MidiJukePlaybackState oldState, MidiJukePlaybackState newState)
+        public EntityUid EntityUid;
+        public MidiJukePlayEvent(EntityUid entityUid)
         {
-            OldState = oldState;
-            NewState = newState;
+            EntityUid = entityUid;
         }
     }
 
     [Serializable, NetSerializable]
-    public class MidiJukeMidiEventsMessage : EntityEventArgs
+    public class MidiJukePauseEvent : EntityEventArgs
+    {
+        public EntityUid EntityUid;
+        public MidiJukePauseEvent(EntityUid entityUid)
+        {
+            EntityUid = entityUid;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeStopEvent : EntityEventArgs
+    {
+        public EntityUid EntityUid;
+        public MidiJukeStopEvent(EntityUid entityUid)
+        {
+            EntityUid = entityUid;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeMidiEventsEvent : EntityEventArgs
     {
         public MidiEvent[] MidiEvents;
         public EntityUid EntityUid;
 
-        public MidiJukeMidiEventsMessage(EntityUid entityUid, MidiEvent[] midiEvents)
+        public MidiJukeMidiEventsEvent(EntityUid entityUid, MidiEvent[] midiEvents)
         {
             EntityUid = entityUid;
             MidiEvents = midiEvents;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukePlaybackFinishedEvent : EntityEventArgs
+    {
+        public EntityUid EntityUid;
+
+        public MidiJukePlaybackFinishedEvent(EntityUid entityUid)
+        {
+            EntityUid = entityUid;
         }
     }
 }

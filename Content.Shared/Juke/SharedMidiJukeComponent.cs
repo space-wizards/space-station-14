@@ -13,7 +13,16 @@ namespace Content.Shared.Juke
         /// <summary>
         /// Whether the juke is currently playing a song.
         /// </summary>
-        public bool Playing { get; set; }
+        public MidiJukePlaybackStatus PlaybackStatus { get; set; } = MidiJukePlaybackStatus.Stop;
+
+        public bool Playing => PlaybackStatus == MidiJukePlaybackStatus.Play;
+    }
+
+    public enum MidiJukePlaybackStatus
+    {
+        Play,
+        Pause,
+        Stop
     }
 
     [Serializable, NetSerializable]
