@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                DamageData damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000);
+                DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000);
                 entityManager.EventBus.RaiseLocalEvent(human.Uid, new TryChangeDamageEvent(damage, true), false);
 
                 // Check that it is dead

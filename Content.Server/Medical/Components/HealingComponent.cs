@@ -18,7 +18,7 @@ namespace Content.Server.Medical.Components
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {

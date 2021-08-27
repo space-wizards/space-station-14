@@ -21,11 +21,11 @@ namespace Content.Server.Damage.Components
 
         [DataField("weldingDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData WeldingDamage = default!;
+        public DamageSpecifier WeldingDamage = default!;
 
         [DataField("defaultDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData DefaultDamage = default!;
+        public DamageSpecifier DefaultDamage = default!;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {

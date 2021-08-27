@@ -91,11 +91,11 @@ namespace Content.Server.Body.Respiratory
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         [DataField("damageRecovery", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData DamageRecovery = default!;
+        public DamageSpecifier DamageRecovery = default!;
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {

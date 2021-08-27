@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
 
-            await server.WaitPost((System.Action)(() =>
+            await server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleComponent = sDestructibleEntity.GetComponent<DestructibleComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
-            }));
+            });
 
             await server.WaitRunTicks(5);
 
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitAssertion(() =>
             {
-                var bluntDamage = new DamageData(sPrototypeManager.Index<DamageTypePrototype>("TestBlunt"), 10);
+                var bluntDamage = new DamageSpecifier(sPrototypeManager.Index<DamageTypePrototype>("TestBlunt"), 10);
 
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage, true), false);
 

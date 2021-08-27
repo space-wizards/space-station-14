@@ -195,7 +195,7 @@ namespace Content.Server.GameTicking.Presets
                 if (mobState.IsCritical())
                 {
                     // TODO BODY SYSTEM KILL
-                    var damage = new DamageData(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
                     var damageEvent = new TryChangeDamageEvent(damage);
                     _entityManager.EventBus.RaiseLocalEvent(entity.Uid, ref damageEvent, false);
                 }

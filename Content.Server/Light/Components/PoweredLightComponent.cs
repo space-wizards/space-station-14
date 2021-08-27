@@ -77,7 +77,7 @@ namespace Content.Server.Light.Components
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         protected override void Initialize()
         {

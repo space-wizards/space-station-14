@@ -37,7 +37,7 @@ namespace Content.Server.Chat.Commands
             {
                 // TODO SUICIDE ..heh.. anyway, someone should fix this mess.
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                DamageData damage = new(kind switch
+                DamageSpecifier damage = new(kind switch
                     {
                         SuicideKind.Blunt => prototypeManager.Index<DamageTypePrototype>("Blunt"),
                         SuicideKind.Slash => prototypeManager.Index<DamageTypePrototype>("Slash"),
@@ -120,7 +120,7 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
-            DamageData damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Bloodloss"), 200);
+            DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Bloodloss"), 200);
             IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(owner.Uid, new TryChangeDamageEvent(damage, true), false);
 
             // Prevent the player from returning to the body.

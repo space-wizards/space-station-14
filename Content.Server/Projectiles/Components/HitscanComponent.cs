@@ -31,13 +31,13 @@ namespace Content.Server.Projectiles.Components
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         public float MaxLength => 20.0f;
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
-        public float ColorModifier { get; set; } = 1.0f;
 
+        public float ColorModifier { get; set; } = 1.0f;
         [DataField("spriteName")]
         private string _spriteName = "Objects/Weapons/Guns/Projectiles/laser.png";
         [DataField("muzzleFlash")]

@@ -22,7 +22,7 @@ namespace Content.Shared.Damage
     ///     Supports basic math operations to modify damage.
     /// </remarks>
     [DataDefinition]
-    public class DamageData : ISerializationHooks
+    public class DamageSpecifier : ISerializationHooks
     {
         [DataField("types")]
         private Dictionary<string,int>? _damageTypeIdDictionary;
@@ -31,7 +31,7 @@ namespace Content.Shared.Damage
         private Dictionary<string, int>? _damageGroupIdDictionary;
 
         /// <summary>
-        ///     Main DamageData dictionary. Most DamageData functions exist to somehow modifying this.
+        ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<DamageTypePrototype, int> DamageDict = new();
@@ -47,12 +47,12 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Constructor that just results in an empty dictionary.
         /// </summary>
-        public DamageData() {}
+        public DamageSpecifier() {}
 
         /// <summary>
         ///     Constructor that takes a damage type prototype and a single damage value.
         /// </summary>
-        public DamageData(DamageTypePrototype type, int value)
+        public DamageSpecifier(DamageTypePrototype type, int value)
         {
             AddDamageType(type, value);
         }
@@ -60,26 +60,26 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Constructor that takes a dictionary of damage types.
         /// </summary>
-        public DamageData(Dictionary<DamageTypePrototype, int> dict)
+        public DamageSpecifier(Dictionary<DamageTypePrototype, int> dict)
         {
             // Just copy this dictionary
             DamageDict = new(dict);
         }
 
         /// <summary>
-        ///     Constructor that takes another DamageData instance and copies it.
+        ///     Constructor that takes another DamageSpecifier instance and copies it.
         /// </summary>
-        public DamageData(DamageData data)
+        public DamageSpecifier(DamageSpecifier damageSpec)
         {
             // Just copy the data
-            DamageDict = new(data.DamageDict);
+            DamageDict = new(damageSpec.DamageDict);
         }
 
         /// <summary>
         ///     Constructor that takes a damage group prototype and a single damage value. The group is split into
         ///     types, and the damage is distributed between them.
         /// </summary>
-        public DamageData(DamageGroupPrototype group, int value)
+        public DamageSpecifier(DamageGroupPrototype group, int value)
         {
             AddDamageGroup(group, value);
         }
@@ -88,7 +88,7 @@ namespace Content.Shared.Damage
         ///     Constructor that takes a damage group prototype dictionary. Each group is split into
         ///     types, and has it's damage distributed between those types.
         /// </summary>
-        public DamageData(Dictionary<DamageGroupPrototype, int> dict)
+        public DamageSpecifier(Dictionary<DamageGroupPrototype, int> dict)
         {
             foreach (var entry in dict)
             {
@@ -126,7 +126,7 @@ namespace Content.Shared.Damage
             {   // Something has gone wrong. Not just the values are zero, but the actual dictionary is empty.
                 // This may happen if in a yaml someone gave something a damage data field, but didn't specify either a
                 // type or group dictionary (both of which are null-able).
-                Logger.Warning("Empty DamageData dictionary. Bad YAML file?");
+                Logger.Warning("Empty DamageSpecifier dictionary. Bad YAML file?");
             }
         }
 
@@ -165,16 +165,15 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
         /// </remarks>
-        public static DamageData ApplyResistanceSet(DamageData data, ResistanceSetPrototype resistanceSet)
+        public static DamageSpecifier ApplyResistanceSet(DamageSpecifier damageSpec, ResistanceSetPrototype resistanceSet)
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
             // duller as you hit walls. Neat, but not intended. And confusing, when you realize your fists don't work no
             // more cause they're just bloody stumps.
-            DamageData newData = new(data);
+            DamageSpecifier newDamage = new(damageSpec);
 
-            foreach (var entry in newData.DamageDict)
+            foreach (var entry in newDamage.DamageDict)
             {
-                // resistances only applies to damage
                 if (entry.Value <= 0) continue;
 
                 float newValue = entry.Value;
@@ -185,7 +184,7 @@ namespace Content.Shared.Damage
                     if (newValue <= 0)
                     {
                         // flat reductions cannot heal you
-                        newData.DamageDict[entry.Key] = 0;
+                        newDamage.DamageDict[entry.Key] = 0;
                         continue;
                     }
                 }
@@ -196,9 +195,9 @@ namespace Content.Shared.Damage
                     newValue = MathF.Round(newValue*coefficient, MidpointRounding.AwayFromZero);
                 }
 
-                newData.DamageDict[entry.Key] = (int) newValue;
+                newDamage.DamageDict[entry.Key] = (int) newValue;
             }
-            return newData;
+            return newDamage;
         }
 
         /// <summary>
@@ -217,69 +216,69 @@ namespace Content.Shared.Damage
         }
 
         #region Operators
-        public static DamageData operator *(DamageData data, int factor)
+        public static DamageSpecifier operator *(DamageSpecifier damageSpec, int factor)
         {
-            DamageData newData = new();
-            foreach (var entry in data.DamageDict)
+            DamageSpecifier newDamage = new();
+            foreach (var entry in damageSpec.DamageDict)
             {
-                newData.AddDamageType(entry.Key, entry.Value * factor);
+                newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
             }
-            return newData;
+            return newDamage;
         }
 
-        public static DamageData operator *(DamageData data, float factor)
+        public static DamageSpecifier operator *(DamageSpecifier damageSpec, float factor)
         {
-            DamageData newData = new();
-            foreach (var entry in data.DamageDict)
+            DamageSpecifier newDamage = new();
+            foreach (var entry in damageSpec.DamageDict)
             {
-                newData.AddDamageType(entry.Key, (int) MathF.Round(entry.Value * factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value * factor, MidpointRounding.AwayFromZero));
             }
-            return newData;
+            return newDamage;
         }
 
-        public static DamageData operator /(DamageData data, int factor)
+        public static DamageSpecifier operator /(DamageSpecifier damageSpec, int factor)
         {
-            DamageData newData = new();
-            foreach (var entry in data.DamageDict)
+            DamageSpecifier newDamage = new();
+            foreach (var entry in damageSpec.DamageDict)
             {
-                newData.AddDamageType(entry.Key, (int) MathF.Round(entry.Value /  (float) factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value /  (float) factor, MidpointRounding.AwayFromZero));
             }
-            return newData;
+            return newDamage;
         }
 
-        public static DamageData operator /(DamageData data, float factor)
+        public static DamageSpecifier operator /(DamageSpecifier damageSpec, float factor)
         {
-            DamageData newData = new();
+            DamageSpecifier newDamage = new();
 
-            foreach (var entry in data.DamageDict)
+            foreach (var entry in damageSpec.DamageDict)
             {
-                newData.AddDamageType(entry.Key, (int) MathF.Round(entry.Value / factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value / factor, MidpointRounding.AwayFromZero));
             }
-            return newData;
+            return newDamage;
         }
 
-        public static DamageData operator +(DamageData dataA, DamageData dataB)
+        public static DamageSpecifier operator +(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)
         {
             // Copy existing dictionary from dataA
-            DamageData newData = new(dataA.DamageDict);
+            DamageSpecifier newDamage = new(damageSpecA.DamageDict);
 
             // Then just add types in B
-            foreach (var entry in dataB.DamageDict)
+            foreach (var entry in damageSpecB.DamageDict)
             {
-                newData.AddDamageType(entry.Key, entry.Value);
+                newDamage.AddDamageType(entry.Key, entry.Value);
             }
-            return newData;
+            return newDamage;
         }
 
-        public static DamageData operator -(DamageData dataA, DamageData dataB) => dataA + -dataB;
+        public static DamageSpecifier operator -(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB) => damageSpecA + -damageSpecB;
 
-        public static DamageData operator +(DamageData data) => data;
+        public static DamageSpecifier operator +(DamageSpecifier damageSpec) => damageSpec;
 
-        public static DamageData operator -(DamageData data) => data * -1;
+        public static DamageSpecifier operator -(DamageSpecifier damageSpec) => damageSpec * -1;
 
-        public static DamageData operator *(float factor, DamageData data) => data * factor;
+        public static DamageSpecifier operator *(float factor, DamageSpecifier damageSpec) => damageSpec * factor;
 
-        public static DamageData operator *(int factor, DamageData data) => data * factor;
+        public static DamageSpecifier operator *(int factor, DamageSpecifier damageSpec) => damageSpec * factor;
     }
     #endregion
 }

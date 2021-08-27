@@ -36,7 +36,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
             DamageableSystem sDamageableSystem = null;
 
-            await server.WaitPost((System.Action)(() =>
+            await server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
-            }));
+            });
 
             await server.WaitRunTicks(5);
 
@@ -60,8 +60,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBurn");
 
-                DamageData bruteDamage = new(bruteDamageGroup,5);
-                DamageData burnDamage = new(burnDamageGroup,5);
+                DamageSpecifier bruteDamage = new(bruteDamageGroup,5);
+                DamageSpecifier burnDamage = new(burnDamageGroup,5);
 
                 // Raise brute damage to 5
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bruteDamage, true), false);

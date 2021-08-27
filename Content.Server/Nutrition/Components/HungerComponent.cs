@@ -76,7 +76,7 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         public void HungerThresholdEffect(bool force = false)
         {

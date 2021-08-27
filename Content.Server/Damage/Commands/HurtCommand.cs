@@ -103,7 +103,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damageEvent = new TryChangeDamageEvent(new DamageData(damageGroup, amount), ignoreResistances);
+                    var damageEvent = new TryChangeDamageEvent(new DamageSpecifier(damageGroup, amount), ignoreResistances);
                     entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
@@ -116,7 +116,7 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damageEvent = new TryChangeDamageEvent(new DamageData(damageType, amount), ignoreResistances);
+                    var damageEvent = new TryChangeDamageEvent(new DamageSpecifier(damageType, amount), ignoreResistances);
                     entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");

@@ -15,7 +15,7 @@ namespace Content.Server.Projectiles.Components
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;

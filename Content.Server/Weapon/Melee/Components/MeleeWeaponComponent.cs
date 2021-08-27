@@ -53,6 +53,6 @@ namespace Content.Server.Weapon.Melee.Components
 
         [DataField("damage", required:true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
     }
 }

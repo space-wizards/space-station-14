@@ -28,7 +28,7 @@ namespace Content.Shared.Damage
             {
                 // DamageContainerID is a required data field, but this can still happen when adding this component via
                 // ViewVariables. Until ViewVariables can modify dictionaries (set values, add & remove entries), this
-                // means you cannot create new functional damageable components using ViewVariables
+                // means you cannot create new functional damageable components using ViewVariables.
                 Logger.Warning("Null DamageContainerID, missing YAML datafield?");
                 return;
             }
@@ -71,12 +71,12 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        ///     Applies damage to the component, using damage specified via a <see cref="DamageData"/> instance.
+        ///     Applies damage to the component, using damage specified via a <see cref="DamageSpecifier"/> instance.
         /// </summary>
         /// <remarks>
-        ///     <see cref="DamageData"/> is effectively just a dictionary of damage types and damage values. This
+        ///     <see cref="DamageSpecifier"/> is effectively just a dictionary of damage types and damage values. This
         ///     function just applies the container's resistances (unless otherwise specified) and then changes the
-        ///     stored damage data. Division of group damage into types is managed by <see cref="DamageData"/>.
+        ///     stored damage data. Division of group damage into types is managed by <see cref="DamageSpecifier"/>.
         /// </remarks>
         /// <returns>
         ///     Returns false if a no damage change occurred; true otherwise.
@@ -88,17 +88,17 @@ namespace Content.Shared.Damage
                 // This should never happen. Damage data should be a required data field. However, the YAML linter
                 // currently does not properly detect this. Logs are better than hard-crashes. Lets hope I didn't miss
                 // too many YAML files.
-                Logger.Error("Null DamageData. Probably because a required yaml field was not given.");
+                Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
                 return;
             }
 
-            //Check that damageData actually contains data:
+            //Check that the DamageSpecifier actually contains data:
             if (args.Damage.DamageDict.Count() == 0)
             {
-                // This can happen if AfterDeserialization hooks were not called, or if someone performed DamageData
+                // This can happen if AfterDeserialization hooks were not called, or if someone performed
                 // math-operations before calling the hooks. An example of this would be when someone uses an abstract
                 // entity, as these do not call deserialization hooks.
-                Logger.Warning("Empty DamageData dictionary passed to DamageableComponent. Was AfterDeserialization not called?");
+                Logger.Warning("Empty DamageSpecifier passed to DamageableComponent. Was AfterDeserialization not called?");
                 return;
             }
 
@@ -106,7 +106,7 @@ namespace Content.Shared.Damage
             var damage = args.Damage;
             if (!args.IgnoreResistances && component.ResistanceSet != null)
             {
-                damage = DamageData.ApplyResistanceSet(damage, component.ResistanceSet);
+                damage = DamageSpecifier.ApplyResistanceSet(damage, component.ResistanceSet);
 
                 // Has the resistance set removed all damage?
                 if (damage.TotalAbsoluteDamage() == 0) return;
@@ -214,7 +214,6 @@ namespace Content.Shared.Damage
                         groupIsSupported = true;
                         groupDamage += damage;
                     }
-
                 }
 
                 // was at least one member of this group actually supported by the container?
@@ -246,11 +245,11 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     This can still be true even if the overall effect of the damage change was to reduce the total damage.
         /// </remarks>
-        public readonly bool TookDamage;
-        public DamageChangedEvent(DamageableComponent damageable, bool tookDamage)
+        public readonly bool DamageIncreased;
+        public DamageChangedEvent(DamageableComponent damageable, bool damageIncreased)
         {
             Damageable = damageable;
-            TookDamage = tookDamage;
+            DamageIncreased = damageIncreased;
         }
     }
 
@@ -262,7 +261,7 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Damage that is added to the DamageableComponent
         /// </summary>
-        public readonly DamageData Damage;
+        public readonly DamageSpecifier Damage;
 
         /// <summary>
         ///     Whether to ignore resistances of the damageable component. Healing ignores resistances. Defaults
@@ -270,7 +269,7 @@ namespace Content.Shared.Damage
         /// </summary>
         public readonly bool IgnoreResistances;
 
-        public TryChangeDamageEvent(DamageData damage, bool ignoreResistances = false)
+        public TryChangeDamageEvent(DamageSpecifier damage, bool ignoreResistances = false)
         {
             Damage = damage;
             IgnoreResistances = ignoreResistances;

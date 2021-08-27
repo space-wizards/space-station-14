@@ -195,7 +195,7 @@ namespace Content.Shared.Body.Components
                 if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
                 {
                     // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                    var damage = new DamageData(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
                     Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damage), false);
                 }
             }

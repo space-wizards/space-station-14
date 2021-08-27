@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
-            await server.WaitPost((System.Action)(() =>
+            await server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -43,7 +43,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageTypeEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
-            }));
+            });
 
             await server.WaitRunTicks(5);
 
@@ -57,8 +57,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var bluntDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestBlunt");
                 var slashDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("TestSlash");
 
-                var bluntDamage = new DamageData(bluntDamageType,5);
-                var slashDamage = new DamageData(slashDamageType,5);
+                var bluntDamage = new DamageSpecifier(bluntDamageType,5);
+                var slashDamage = new DamageSpecifier(slashDamageType,5);
 
                 // Raise blunt damage to 5
                 sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage, true), false);

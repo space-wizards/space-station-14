@@ -16,6 +16,4 @@ namespace Content.Server.Window
             component.UpdateVisuals(args.Damageable.TotalDamage);
         }
     }
-
-
 }

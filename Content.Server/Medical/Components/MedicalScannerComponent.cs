@@ -122,7 +122,7 @@ namespace Content.Server.Medical.Components
 
             // Get dictionaries of damage, by type and groups.
             // As we need to send this over the network we need prototype ID keys.
-            // Re-use function from DamageableComponent State:
+            // Re-use function from DamageableComponentState:
             var groups = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerGroup);
             var types = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerType);
 

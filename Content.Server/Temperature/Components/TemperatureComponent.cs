@@ -52,11 +52,11 @@ namespace Content.Server.Temperature.Components
 
         [DataField("coldDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData ColdDamage = default!;
+        public DamageSpecifier ColdDamage = default!;
 
         [DataField("heatDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData HeatDamage = default!;
+        public DamageSpecifier HeatDamage = default!;
 
         public void Update()
         {

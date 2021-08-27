@@ -19,7 +19,7 @@ namespace Content.Server.Light.Systems
         /// </summary>
         public static void MaybeDestroyBulb(EntityUid _, PoweredLightComponent component, DamageChangedEvent args)
         {
-            if (args.TookDamage)
+            if (args.DamageIncreased)
             {
                 // Eventually, this logic should all be done by this (or some other) system.
                 component.TryDestroyBulb();

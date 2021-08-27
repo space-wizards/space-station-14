@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
 
-            await server.WaitPost((System.Action)(() =>
+            await server.WaitPost(() =>
             {
                 var mapId = new MapId(1);
                 var coordinates = new MapCoordinates(0, 0, mapId);
@@ -43,13 +43,13 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDestructionEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
-            }));
+            });
 
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
-                DamageData bruteDamage = new(bruteDamageGroup,50);
+                DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
 
                 Assert.DoesNotThrow(() =>
                 {

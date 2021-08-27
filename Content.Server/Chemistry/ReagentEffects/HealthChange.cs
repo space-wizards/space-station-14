@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReagentEffects
         /// Damage to apply when 1u of reagent is consumed.
         /// </summary>
         [DataField("damage", required: true)]
-        public DamageData Damage = default!;
+        public DamageSpecifier Damage = default!;
 
         /// <summary>
         ///     Changes damage if a DamageableComponent can be found.

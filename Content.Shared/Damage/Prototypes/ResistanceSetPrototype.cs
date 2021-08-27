@@ -9,9 +9,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Damage.Prototypes
 {
     /// <summary>
-    ///     Prototype of damage resistance sets. Can be applied to <see cref="DamageData"/> using <see
-    ///     cref="DamageData.ApplyResistanceSet(ResistanceSetPrototype)"/>. This can be done several times as the
-    ///     <see cref="DamageData"/> is passed to it's final target. By default the receiving <see cref="DamageableComponent"/>, will
+    ///     Prototype of damage resistance sets. Can be applied to <see cref="DamageSpecifier"/> using <see
+    ///     cref="DamageSpecifier.ApplyResistanceSet(ResistanceSetPrototype)"/>. This can be done several times as the
+    ///     <see cref="DamageSpecifier"/> is passed to it's final target. By default the receiving <see cref="DamageableComponent"/>, will
     ///     also apply it's own <see cref="ResistanceSetPrototype"/>.
     /// </summary>
     [Prototype("resistanceSet")]
@@ -28,7 +28,6 @@ namespace Content.Shared.Damage.Prototypes
 
         [DataField("flatReductions")]
         private Dictionary<string, float> _flatReductionIDs = new();
-
 
         /// <summary>
         ///     Value subtracted from damage, before multiplying by coefficient.
@@ -65,7 +64,7 @@ namespace Content.Shared.Damage.Prototypes
                 }
             }
 
-            // Resolve flat reduction
+            // Resolve flat reductions
             foreach (var damageTypeID in _flatReductionIDs.Keys)
             {
                 if (prototypeManager.TryIndex<DamageTypePrototype>(damageTypeID, out var damageType))

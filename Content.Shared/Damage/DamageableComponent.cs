@@ -17,13 +17,11 @@ namespace Content.Shared.Damage
     // TODO FRIENDS It wouldn't hurt to make friends with the damage system.
 
     /// <summary>
-    ///     Component that allows attached entities to take damage.
+    ///     Component that allows entities to take damage.
     /// </summary>
     /// <remarks>
     ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. DamageContainers
-    ///     are effectively a dictionary of damage types and damage numbers, along with functions to modify them. Damage
-    ///     groups are collections of damage types. This basic version never dies (thus can take an
-    ///     indefinite amount of damage).
+    ///     may also have resistances to certain damage types, defined via a <see cref="ResistanceSetPrototype"/>.
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
@@ -47,7 +45,7 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     The main damage dictionary. All the damage information is stored in this dictionary using <see cref="DamageTypePrototype"/> keys.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public Dictionary<DamageTypePrototype, int> DamagePerType = new();
+        [ViewVariables] public Dictionary<DamageTypePrototype, int> DamagePerType = new();
 
         /// <summary>
         ///     Damage, indexed by <see cref="DamageGroupPrototype"/> keys.
@@ -63,34 +61,32 @@ namespace Content.Shared.Damage
         /// </summary>
         [ViewVariables] public int TotalDamage;
 
-        // TODO PROTOTYPE Replace these datafield variables with prototype references, once they are supported.
-        // Also requires appropriate changes in OnExplosion() and RadiationAct(). Really these shouldn't be here.
-        // Calculate damage in some system somewhere, pass damage onto body, then have body pass onto containers.
+        // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
         [ViewVariables]
         [DataField("radiationDamageTypes")]
-        public List<string> RadiationDamageTypeIDs { get; set; } = new() {"Radiation"};
+        public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
         [ViewVariables]
         [DataField("explosionDamageTypes")]
-        public List<string> ExplosionDamageTypeIDs { get; set; } = new() { "Piercing", "Heat" };
+        public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
 
         // TODO RADIATION Remove this.
         void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
         {
-            var damage = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
+            var damageValue = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
 
             // Radiation should really just be a damage group instead of a list of types.
-            DamageData data = new();
+            DamageSpecifier damageSpec = new();
             foreach (var typeID in RadiationDamageTypeIDs)
             {
-                data = data + new DamageData(_prototypeManager.Index<DamageTypePrototype>(typeID), damage);
+                damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(typeID), damageValue);
             }
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(data), false);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damageSpec), false);
         }
 
         // TODO EXPLOSION Remove this.
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
         {
-            var damage = eventArgs.Severity switch
+            var damageValue = eventArgs.Severity switch
             {
                 ExplosionSeverity.Light => 20,
                 ExplosionSeverity.Heavy => 60,
@@ -99,12 +95,12 @@ namespace Content.Shared.Damage
             };
 
             // Explosion should really just be a damage group instead of a list of types.
-            DamageData data = new();
+            DamageSpecifier damageSpec = new();
             foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                data = data + new DamageData(_prototypeManager.Index<DamageTypePrototype>(typeID), damage);
+                damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(typeID), damageValue);
             }
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(data), false);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damageSpec), false);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

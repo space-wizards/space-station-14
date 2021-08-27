@@ -55,7 +55,7 @@ namespace Content.Server.Weapon.Ranged
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyDamage")]
-        public DamageData? ClumsyDamage;
+        public DamageSpecifier? ClumsyDamage;
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;

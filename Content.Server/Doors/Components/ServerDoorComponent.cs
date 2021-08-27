@@ -43,7 +43,7 @@ namespace Content.Server.Doors.Components
 
         [DataField("crushDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageData CrushDamage = default!;
+        public DamageSpecifier CrushDamage = default!;
 
         public override DoorState State
         {
