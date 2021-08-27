@@ -1,9 +1,13 @@
 using System;
+using Content.Server.UserInterface;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
 using Robust.Server.Audio.Midi;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 
 namespace Content.Server.Juke
@@ -14,12 +18,59 @@ namespace Content.Server.Juke
         public override void Initialize()
         {
             base.Initialize();
+            SubscribeLocalEvent<MidiJukeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<MidiJukeComponent, InteractHandEvent>(OnInteractHand);
+        }
+
+        private void OnStartup(EntityUid uid, MidiJukeComponent component, ComponentStartup args)
+        {
+            //TODO: this is apparently bad and will need to be rewritten once BoundUserInterface becomes ECS friendlier
+            var ui = component.Owner.GetUIOrNull(MidiJukeUiKey.Key);
+            if (ui != null)
+            {
+                ui.OnReceiveMessage += msg => OnMidiJukeUiMessage(uid, component, msg);
+            }
+            OpenMidiFile(component, "testmidi.mid"); //TODO: remove this placeholder
+        }
+
+        private void DirtyUI(EntityUid uid)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out MidiJukeComponent midiJuke)
+                || !ComponentManager.TryGetComponent(uid, out ServerUserInterfaceComponent userInterfaceComponent)
+                || !userInterfaceComponent.TryGetBoundUserInterface(MidiJukeUiKey.Key, out var ui))
+                return;
+
+            ui.SetState(new MidiJukeBoundUserInterfaceState(midiJuke.PlaybackStatus));
+        }
+
+        private void OnMidiJukeUiMessage(EntityUid uid, MidiJukeComponent component, ServerBoundUserInterfaceMessage msg)
+        {
+            var entity = msg.Session.AttachedEntity;
+            if (entity == null
+                || !Get<ActionBlockerSystem>().CanInteract(entity)
+                || !Get<ActionBlockerSystem>().CanUse(entity))
+                return;
+
+            switch (msg.Message)
+            {
+                case MidiJukePlayMessage:
+                    Play(component);
+                    break;
+                case MidiJukePauseMessage:
+                    Pause(component);
+                    break;
+                case MidiJukeStopMessage:
+                    Stop(component);
+                    break;
+                case MidiJukeLoopMessage:
+                    Logger.Debug("MidiJukeLoop"); //TODO: implement
+                    break;
+            }
         }
 
         private void OnInteractHand(EntityUid uid, MidiJukeComponent component, InteractHandEvent args)
         {
-            if (!component.Playing)
+            /*if (!component.Playing)
             {
                 if (component.PlaybackStatus == MidiJukePlaybackStatus.Stop)
                     OpenMidiFile(component, "testmidi.mid");
@@ -28,14 +79,17 @@ namespace Content.Server.Juke
             else
             {
                 Pause(component);
-            }
+            }*/
+            if (!args.User.TryGetComponent(out ActorComponent? actor)) return;
+            component.Owner.GetUIOrNull(MidiJukeUiKey.Key)?.Open(actor.PlayerSession);
+            args.Handled = true;
         }
 
         public override void Update(float frameTime)
         {
             foreach (var component in ComponentManager.EntityQuery<MidiJukeComponent>(true))
             {
-                if (!component.Playing) continue;
+                if (!component.Playing || component.MidiPlayer == null) continue;
                 var midiEvents = component.MidiPlayer?.TickClockAndPopEventBuffer();
                 if (midiEvents == null) continue;
                 var uid = component.Owner.Uid;
@@ -61,7 +115,7 @@ namespace Content.Server.Juke
 
         private void OnPlaybackFinished(MidiJukeComponent component)
         {
-            component.MidiPlayer?.Dispose();
+            component.MidiPlayer?.MoveToStart();
             RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
         }
 

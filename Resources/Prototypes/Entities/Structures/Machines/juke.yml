@@ -16,3 +16,7 @@
     - type: MidiJuke
     - type: Sprite
       state: piano
+    - type: UserInterface
+      interfaces:
+        - key: enum.MidiJukeUiKey.Key
+          type: MidiJukeBoundUserInterface

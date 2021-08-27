@@ -1,4 +1,4 @@
-<SS14Window xmlns="https://spacestation14.io">
+<SS14Window xmlns="https://spacestation14.io" MinSize="400 300">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="PlayButton" ToggleMode="True" Text="Play" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
