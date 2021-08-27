@@ -485,6 +485,7 @@ namespace Content.Server.PDA
         }
 
 
+        // TODO: replace me with dynamic verbs
         [Verb]
         public sealed class EjectPenVerb : Verb<PDAComponent>
         {
@@ -498,7 +499,7 @@ namespace Content.Server.PDA
                 if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
                     return;
 
-                if (!slots.Slots.TryGetValue("pda_pen_slot", out ItemSlot? slot))
+                if (!slots.Slots.TryGetValue("pda_pen_slot", out var slot))
                     return;
 
                 var item = slot.ContainerSlot.ContainedEntity;

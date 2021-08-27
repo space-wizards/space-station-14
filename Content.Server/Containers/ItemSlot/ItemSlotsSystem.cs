@@ -30,7 +30,6 @@ namespace Content.Server.Containers.ItemSlots
 
                 slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, slotName);
             }
-
         }
 
         private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
@@ -52,44 +51,52 @@ namespace Content.Server.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            args.Handled = TryInsertContent(itemSlots, args);
+            args.Handled = TryInsertContent(itemSlots, args.Used, args.User);
         }
 
-        private bool TryInsertContent(ItemSlotsComponent itemSlots, InteractUsingEvent eventArgs)
+        /// <summary>
+        ///     Tries to insert item in any fiting item slot
+        /// </summary>
+        /// <returns>False if failed to insert item</returns>
+        public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, IEntity user)
         {
-            var item = eventArgs.Used;
             foreach (var pair in itemSlots.Slots)
             {
                 var slotName = pair.Key;
                 var slot = pair.Value;
 
+                // check if item allowed in whitelist
                 if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
                     continue;
 
+                // check if slot is empty
                 if (slot.ContainerSlot.Contains(item))
                     continue;
 
-                if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
+                if (!user.TryGetComponent(out IHandsComponent? hands))
                 {
-                    itemSlots.Owner.PopupMessage(eventArgs.User, Loc.GetString("item-slot-try-insert-no-hands"));
+                    itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
                     return true;
                 }
 
+                // get item inside container
                 IEntity? swap = null;
                 if (slot.ContainerSlot.ContainedEntity != null)
-                    swap = slot.ContainerSlot.ContainedEntities[0];
+                    swap = slot.ContainerSlot.ContainedEntity;
 
+                // return if user can't drop active item in hand
                 if (!hands.Drop(item))
                     return true;
 
+                // swap item in hand and item in slot
                 if (swap != null)
                     hands.PutInHand(swap.GetComponent<ItemComponent>());
 
-                // Insert item
+                // insert item
                 slot.ContainerSlot.Insert(item);
                 RaiseLocalEvent(new ItemSlotChanged(itemSlots, slotName, slot));
 
-                // Play sound
+                // play sound
                 if (slot.InsertSound != null)
                     SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.InsertSound.GetSound(), itemSlots.Owner);
 
@@ -99,9 +106,12 @@ namespace Content.Server.Containers.ItemSlots
             return false;
         }
 
+        /// <summary>
+        ///     Try to eject item from slot to users hands
+        /// </summary>
         public void TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity user)
         {
-            if (!itemSlots.Slots.TryGetValue(slotName, out ItemSlot? slot))
+            if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return;
 
             if (slot.ContainerSlot.ContainedEntity == null)

@@ -11,6 +11,10 @@ using System.Collections.Generic;
 
 namespace Content.Server.Containers.ItemSlots
 {
+    /// <summary>
+    ///     Used for entities that can hold items in different slots
+    ///     Allows basic insert/eject interaction
+    /// </summary>
     [RegisterComponent]
     public class ItemSlotsComponent : Component
     {
@@ -23,7 +27,7 @@ namespace Content.Server.Containers.ItemSlots
     [DataDefinition]
     public class ItemSlot
     {
-        [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist = null;
+        [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist;
         [ViewVariables] [DataField("insertSound")] public SoundSpecifier? InsertSound;
         [ViewVariables] [DataField("ejectSound")] public SoundSpecifier? EjectSound;
 

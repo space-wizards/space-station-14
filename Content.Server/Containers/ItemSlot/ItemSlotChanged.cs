@@ -2,6 +2,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Containers.ItemSlots
 {
+    /// <summary>
+    ///     Item was placed in or removed from one of the slots in <see cref="ItemSlotsComponent"/> 
+    /// </summary>
     public class ItemSlotChanged : EntityEventArgs
     {
         public ItemSlotsComponent SlotsComponent;
