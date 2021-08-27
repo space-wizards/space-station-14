@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
@@ -110,7 +111,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
             //Make sure we have the attacking entity
-            if (eventArgs.Target == null || !solutionsSys.HasSolution(Owner))
+            if (eventArgs.Target == null || !Owner.HasComponent<SolutionContainerManagerComponent>())
             {
                 return false;
             }

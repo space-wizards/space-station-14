@@ -18,6 +18,6 @@ namespace Content.Shared.Chemistry.Components.SolutionManager
 
         [ViewVariables]
         [DataField("solutions")]
-        public readonly Dictionary<string, Chemistry.Components.Solution> Solutions = new();
+        public readonly Dictionary<string, Solution> Solutions = new();
     }
 }

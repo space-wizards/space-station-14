@@ -141,9 +141,10 @@ namespace Content.Shared.Chemistry.EntitySystems
             UpdateChemicals(solutionHolder);
         }
 
-        public void RemoveAllSolution(IEntity owner)
+        public void RemoveAllSolution(EntityUid uid)
         {
-            if (!owner.TryGetComponent(out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!_entityManager.TryGetEntity(uid, out var owner)
+                || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -245,12 +246,6 @@ namespace Content.Shared.Chemistry.EntitySystems
             return solutionsMgr.Solutions[name];
         }
 
-
-        public bool HasSolution(IEntity owner)
-        {
-            return !owner.Deleted && owner.HasComponent<SolutionContainerManagerComponent>();
-        }
-
         public string[] RemoveEachReagent(Solution solution, ReagentUnit quantity)
         {
             var removedReagent = new string[solution.Contents.Count];
@@ -285,6 +280,21 @@ namespace Content.Shared.Chemistry.EntitySystems
             {
                 solution.RemoveReagent(reagent.ReagentId, reagent.Quantity);
             }
+        }
+
+        public ReagentUnit GetReagentQuantity(EntityUid ownerUid, string reagentId)
+        {
+            var reagentQuantity = ReagentUnit.New(0);
+            if (_entityManager.TryGetEntity(ownerUid, out var owner)
+                && owner.TryGetComponent(out SolutionContainerManagerComponent? managerComponent))
+            {
+                foreach (var solution in managerComponent.Solutions.Values)
+                {
+                    reagentQuantity += solution.GetReagentQuantity(reagentId);
+                }
+            }
+
+            return reagentQuantity;
         }
     }
 

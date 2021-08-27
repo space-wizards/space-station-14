@@ -92,10 +92,7 @@ namespace Content.Server.Nutrition.Components
             Opened = _defaultToOpened;
             // TODO move into drinkSystem
             UpdateAppearance();
-            if (!EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner))
-            {
-                EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
-            }
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
         }
 
 
@@ -109,13 +106,15 @@ namespace Content.Server.Nutrition.Components
 
             if (Opened)
             {
-                solutionSys.AddRefillable(Owner, SolutionName);
-                solutionSys.AddDrainable(Owner, SolutionName);
+                var refillable = Owner.EnsureComponent<RefillableSolutionComponent>();
+                refillable.Solution = SolutionName;
+                var drainable = Owner.EnsureComponent<DrainableSolutionComponent>();
+                drainable.Solution = SolutionName;
             }
             else
             {
-                solutionSys.RemoveRefillable(Owner);
-                solutionSys.RemoveDrainable(Owner);
+                Owner.RemoveComponent<RefillableSolutionComponent>();
+                Owner.RemoveComponent<DrainableSolutionComponent>();
             }
         }
 
@@ -123,7 +122,7 @@ namespace Content.Server.Nutrition.Components
         public void UpdateAppearance()
         {
             if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner))
+                !Owner.HasComponent<SolutionContainerManagerComponent>())
             {
                 return;
             }
@@ -143,7 +142,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().HasSolution(Owner) ||
+            if (!Owner.HasComponent<SolutionContainerManagerComponent>() ||
                 EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner) <= 0)
             {
                 args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", Owner)));

@@ -22,12 +22,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
         {
-            if (!_solutionsSystem.TryGetDefaultSolution(args.Owner, out var solution))
-            {
-                return;
-            }
-
-            if (solution.GetReagentQuantity(component.CatalystPrototype) > ReagentUnit.Zero)
+            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > ReagentUnit.Zero)
             {
                 Expand(component, component.Owner);
             }

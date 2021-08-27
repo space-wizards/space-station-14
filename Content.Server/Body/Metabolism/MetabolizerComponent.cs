@@ -25,11 +25,11 @@ namespace Content.Server.Body.Metabolism
         public float UpdateFrequency = 1.0f;
 
         /// <summary>
-        ///     Whether this metabolizer should attempt to metabolize chemicals in its parent bodies' bloodstream,
+        ///     From which solution will this metabolizer attempt to metabolize chemicals in its parent bodies' bloodstream,
         ///     as opposed to a solution container on the metabolizing entity itself.
         /// </summary>
-        [DataField("takeFromBloodstream")]
-        public bool TakeFromBloodstream = true;
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "bloodstream";
 
         /// <summary>
         ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.

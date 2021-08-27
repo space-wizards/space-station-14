@@ -40,26 +40,18 @@ namespace Content.Server.Body.Metabolism
             var solutionsSys = Get<SolutionContainerSystem>();
 
             // if this field is passed we should try and take from the bloodstream over anything else
-            if (comp.TakeFromBloodstream && owner.TryGetComponent<SharedMechanismComponent>(out var mech))
+            if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
             {
                 body = mech.Body;
                 if (body != null)
                 {
                     if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && solutionsSys.TryGetSolution(body.Owner, "bloodstream", out solution)
+                        && solutionsSys.TryGetSolution(body.Owner, comp.SolutionName, out solution)
                         && solution.CurrentVolume >= ReagentUnit.Zero)
                     {
                         reagentList = solution.Contents;
                     }
                 }
-            }
-            // TODO What goes here??
-            else if (solutionsSys.TryGetDefaultSolution(owner, out var sol))
-            {
-                // if we have no mechanism/body but a solution container instead,
-                // we'll just use that to metabolize from
-                solution = sol;
-                reagentList = solution.Contents;
             }
 
             if (solution == null || reagentList.Count == 0)

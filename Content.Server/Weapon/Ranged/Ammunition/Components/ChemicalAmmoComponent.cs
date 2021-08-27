@@ -4,6 +4,7 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
@@ -11,6 +12,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public class ChemicalAmmoComponent : Component
     {
         public override string Name => "ChemicalAmmo";
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "ammo";
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -25,7 +29,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void TransferSolution(BarrelFiredMessage barrelFired)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "ammo", out var ammoSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var ammoSolution))
                 return;
 
             var projectiles = barrelFired.FiredProjectiles;
@@ -34,9 +38,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             var projectileSolutionContainers = new List<Solution>();
             foreach (var projectile in projectiles)
             {
-                // if (projectile.TryGetComponent<SolutionHolder>(out var projectileSolutionContainer))
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetDefaultSolution(Owner, out var projectileSolutionContainer))
+                    .TryGetSolution(projectile, "ammo", out var projectileSolutionContainer))
                 {
                     projectileSolutionContainers.Add(projectileSolutionContainer);
                 }

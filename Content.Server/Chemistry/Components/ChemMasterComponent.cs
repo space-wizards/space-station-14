@@ -410,7 +410,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var activeHandEntity = hands.GetActiveHand.Owner;
-            if (EntitySystem.Get<SolutionContainerSystem>().HasSolution(activeHandEntity))
+            if (activeHandEntity.HasComponent<SolutionContainerManagerComponent>())
             {
                 if (HasBeaker)
                 {

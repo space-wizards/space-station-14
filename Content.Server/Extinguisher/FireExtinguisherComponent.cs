@@ -17,6 +17,7 @@ namespace Content.Server.Extinguisher
     public class FireExtinguisherComponent : Component, IAfterInteract
     {
         public override string Name => "FireExtinguisher";
+        private const string SolutionName = "fireExtinguisher";
 
         [DataField("refillSound")] SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
@@ -31,14 +32,14 @@ namespace Content.Server.Extinguisher
                 return false;
             }
 
-            if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
+            if (eventArgs.Target.HasComponent<ReagentTankComponent>()
                 && solutionContainerSystem.TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
-                && solutionContainerSystem.TryGetDefaultSolution(Owner, out var container))
+                && solutionContainerSystem.TryGetSolution(Owner, SolutionName, out var container))
             {
-                var trans = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
-                if (trans > 0)
+                var transfer = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
+                if (transfer > 0)
                 {
-                    var drained = solutionContainerSystem.Drain(targetSolution, trans);
+                    var drained = solutionContainerSystem.Drain(targetSolution, transfer);
                     solutionContainerSystem.TryAddSolution(container, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);

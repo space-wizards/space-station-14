@@ -39,7 +39,7 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid);
             var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "produce");
             if (solutionContainer == null)
             {

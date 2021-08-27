@@ -83,6 +83,12 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
+        /// <summary>
+        /// Solution that will react
+        /// </summary>
+        [DataField("solution")]
+        public string? SolutionName { get; set; }
+
         protected AreaReactionEffect()
         {
             IoCManager.InjectDependencies(this);
@@ -90,7 +96,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public void React(IEntity solutionEntity, double intensity)
         {
-            if (! EntitySystem.Get<SolutionContainerSystem>().TryGetDefaultSolution(solutionEntity, out var contents))
+            if (SolutionName == null || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(solutionEntity, SolutionName, out var contents))
                 return;
 
             var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, contents.MaxVolume);

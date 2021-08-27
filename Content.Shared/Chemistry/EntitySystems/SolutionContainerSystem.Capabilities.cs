@@ -65,12 +65,6 @@ namespace Content.Shared.Chemistry.EntitySystems
             return false;
         }
 
-        public Solution? GetInjectableSolution(IEntity ownerEntity)
-        {
-            TryGetInjectableSolution(ownerEntity, out var solution);
-            return solution;
-        }
-
         public bool TryGetRefillableSolution(IEntity owner,
             [NotNullWhen(true)] out Solution? solution)
         {
@@ -143,12 +137,6 @@ namespace Content.Shared.Chemistry.EntitySystems
             return false;
         }
 
-        public bool TryGetDefaultSolution(EntityUid target,
-            [NotNullWhen(true)] out Solution? solution)
-        {
-            return TryGetDefaultSolution(_entityManager.GetEntity(target), out solution);
-        }
-
         public bool TryGetDefaultSolution(IEntity? target,
             [NotNullWhen(true)] out Solution? solution)
         {
@@ -162,48 +150,6 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             solution = solutionsMgr.Solutions.Values.ToArray()[0];
             return true;
-        }
-
-        public void AddDrainable(IEntity owner, string name)
-        {
-            if (owner.Deleted)
-                return;
-
-            if (!owner.TryGetComponent(out DrainableSolutionComponent? component))
-            {
-                component = owner.AddComponent<DrainableSolutionComponent>();
-            }
-
-            component.Solution = name;
-        }
-
-        public void RemoveDrainable(IEntity owner)
-        {
-            if (owner.Deleted || !owner.HasComponent<DrainableSolutionComponent>())
-                return;
-
-            owner.RemoveComponent<DrainableSolutionComponent>();
-        }
-
-        public void AddRefillable(IEntity owner, string name)
-        {
-            if (owner.Deleted)
-                return;
-
-            if (!owner.TryGetComponent(out RefillableSolutionComponent? component))
-            {
-                component = owner.AddComponent<RefillableSolutionComponent>();
-            }
-
-            component.Solution = name;
-        }
-
-        public void RemoveRefillable(IEntity owner)
-        {
-            if (owner.Deleted || !owner.HasComponent<RefillableSolutionComponent>())
-                return;
-
-            owner.RemoveComponent<RefillableSolutionComponent>();
         }
     }
 }

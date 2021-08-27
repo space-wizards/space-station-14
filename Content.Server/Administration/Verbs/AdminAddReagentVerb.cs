@@ -33,7 +33,7 @@ namespace Content.Server.Administration.Verbs
         {
             // ISolutionInteractionsComponent doesn't exactly have an interface for "admin tries to refill this", so...
             // Still have a path for SolutionContainerComponent in case it doesn't allow direct refilling.
-            if (!(EntitySystem.Get<SolutionContainerSystem>().HasSolution(target)
+            if (!(target.HasComponent<SolutionContainerManagerComponent>()
                   && target.HasComponent<InjectableSolutionComponent>()))
             {
                 data.Visibility = VerbVisibility.Invisible;

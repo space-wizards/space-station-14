@@ -1,4 +1,5 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
@@ -6,6 +7,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -13,6 +15,9 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = default!;
 
         /// <summary>
         ///     Transfers solution from the held container to the floor.
@@ -39,7 +44,7 @@ namespace Content.Server.Fluids.Components
             protected override void Activate(IEntity user, SpillableComponent component)
             {
                 var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-                if (solutionsSys.HasSolution(component.Owner))
+                if (component.Owner.HasComponent<SolutionContainerManagerComponent>())
                 {
                     if (solutionsSys.TryGetDrainableSolution(component.Owner, out var solutionComponent))
                     {
@@ -67,7 +72,7 @@ namespace Content.Server.Fluids.Components
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if (!eventArgs.Intentional
-                && EntitySystem.Get<SolutionContainerSystem>().TryGetDefaultSolution(Owner, out var solutionComponent))
+                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionComponent))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
                     .Drain(solutionComponent, solutionComponent.DrainAvailable)

@@ -4,6 +4,7 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
@@ -131,11 +132,11 @@ namespace Content.Server.Chemistry.Components
             if (!eventArgs.InRangeUnobstructed() || eventArgs.Target == null)
                 return false;
 
-            if (!solutionsSys.HasSolution(Owner))
+            if (!Owner.HasComponent<SolutionContainerManagerComponent>())
                 return false;
 
             var target = eventArgs.Target;
-            if (!solutionsSys.HasSolution(target))
+            if (!target.HasComponent<SolutionContainerManagerComponent>())
             {
                 return false;
             }
