@@ -1,5 +1,6 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
@@ -104,6 +105,19 @@ namespace Content.Server.Containers.ItemSlots
             }
 
             return false;
+        }
+
+
+        public IEntity? GetItemInSlot(ItemSlotsComponent itemSlots, string slotName, IEntity user)
+        {
+            if (!Get<ActionBlockerSystem>().CanInteract(user))
+                return null;
+
+            if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
+                return null;
+
+            var item = slot.ContainerSlot.ContainedEntity;
+            return item;
         }
 
         /// <summary>

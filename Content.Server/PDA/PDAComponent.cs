@@ -493,16 +493,10 @@ namespace Content.Server.PDA
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    return;
-
                 if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
                     return;
 
-                if (!slots.Slots.TryGetValue("pda_pen_slot", out var slot))
-                    return;
-
-                var item = slot.ContainerSlot.ContainedEntity;
+                var item = EntitySystem.Get<ItemSlotsSystem>().GetItemInSlot(slots, "pda_pen_slot", user);
                 if (item == null)
                     return;
 
