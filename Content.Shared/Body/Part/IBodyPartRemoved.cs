@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Shared.Body.Components;
 
 namespace Content.Shared.Body.Part
 {

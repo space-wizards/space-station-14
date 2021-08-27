@@ -116,12 +116,14 @@ namespace Content.Server.Nutrition.Components
 
             var trueTarget = target ?? user;
 
+            // TODO MIRROR events
             if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 return false;
             }
 
+            // holy mother of overengineered batman
             var utensils = utensilUsed != null
                 ? new List<UtensilComponent> { utensilUsed }
                 : null;

@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Body.Behavior;
 using Content.Shared.Body.Part;
-using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Slot;
 using Content.Shared.Body.Template;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
-using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -467,35 +464,14 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        /// <returns>A list of parts with that property.</returns>
-        public IEnumerable<(SharedBodyPartComponent part, IBodyPartProperty property)> GetPartsWithProperty(Type type)
-        {
-            foreach (var slot in SlotIds.Values)
-            {
-                if (slot.Part != null && slot.Part.TryGetProperty(type, out var property))
-                {
-                    yield return (slot.Part, property);
-                }
-            }
-        }
-
-        public IEnumerable<(SharedBodyPartComponent part, T property)> GetPartsWithProperty<T>() where T : class, IBodyPartProperty
-        {
-            foreach (var part in SlotParts.Keys)
-            {
-                if (part.TryGetProperty<T>(out var property))
-                {
-                    yield return (part, property);
-                }
-            }
-        }
-
         private void OnBodyChanged()
         {
             Dirty();
         }
 
-        public float DistanceToNearestFoot(SharedBodyPartComponent source)
+        // lol feet code
+
+        /*public float DistanceToNearestFoot(SharedBodyPartComponent source)
         {
             if (source.PartType == BodyPartType.Foot &&
                 source.TryGetProperty<ExtensionComponent>(out var extension))
@@ -551,7 +527,7 @@ namespace Content.Shared.Body.Components
             }
 
             return float.MinValue;
-        }
+        }*/
 
         // TODO BODY optimize this
         public BodyPartSlot SlotAt(int index)
@@ -617,62 +593,6 @@ namespace Content.Shared.Body.Components
                 if (gibParts)
                     part.Gib();
             }
-        }
-
-        public bool TryGetMechanismBehaviors([NotNullWhen(true)] out List<SharedMechanismBehavior>? behaviors)
-        {
-            behaviors = GetMechanismBehaviors().ToList();
-
-            if (behaviors.Count == 0)
-            {
-                behaviors = null;
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool HasMechanismBehavior<T>() where T : SharedMechanismBehavior
-        {
-            return Parts.Any(p => p.Key.HasMechanismBehavior<T>());
-        }
-
-        // TODO cache these 2 methods jesus
-        public IEnumerable<SharedMechanismBehavior> GetMechanismBehaviors()
-        {
-            foreach (var (part, _) in Parts)
-            foreach (var mechanism in part.Mechanisms)
-            foreach (var behavior in mechanism.Behaviors.Values)
-            {
-                yield return behavior;
-            }
-        }
-
-        public IEnumerable<T> GetMechanismBehaviors<T>() where T : SharedMechanismBehavior
-        {
-            foreach (var (part, _) in Parts)
-            foreach (var mechanism in part.Mechanisms)
-            foreach (var behavior in mechanism.Behaviors.Values)
-            {
-                if (behavior is T tBehavior)
-                {
-                    yield return tBehavior;
-                }
-            }
-        }
-
-        public bool TryGetMechanismBehaviors<T>([NotNullWhen(true)] out List<T>? behaviors)
-            where T : SharedMechanismBehavior
-        {
-            behaviors = GetMechanismBehaviors<T>().ToList();
-
-            if (behaviors.Count == 0)
-            {
-                behaviors = null;
-                return false;
-            }
-
-            return true;
         }
     }
 

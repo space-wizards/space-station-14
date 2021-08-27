@@ -2,7 +2,7 @@ using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body.Components;
 using Content.Server.Body.Respiratory;
 using Content.Server.Notification;
 using Content.Shared.Atmos;
@@ -83,6 +83,7 @@ namespace Content.Server.Body.Behavior
                 return;
             }
 
+            // TODO MIRROR raise event for bloodstream to catch
             var to = bloodstream.Air;
 
             EntitySystem.Get<AtmosphereSystem>().Merge(to, mixture);
@@ -91,6 +92,8 @@ namespace Content.Server.Body.Behavior
 
         public override void Update(float frameTime)
         {
+            // TODO MIRROR instead of explicitly checking for critical, just make lung behavior not run if the heart
+            // isn't pumping blood, and have the heart stop pumping when you die (?)
             if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
             {
                 return;

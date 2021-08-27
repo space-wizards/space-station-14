@@ -185,9 +185,10 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!target.TryGetComponent(out SharedBodyComponent? body) ||
-                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
+            // TODO MIRROR events
+            if (!target.TryGetComponent(out SharedBodyComponent? body))
             {
+
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
                 return false;
             }
