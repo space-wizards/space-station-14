@@ -34,7 +34,11 @@
         item: "Pen"
         whitelist:
           tags:
-            - Write      
+            - Write
+      pda_id_slot:
+        whitelist:
+          components:
+            - IdCard               
 
 - type: entity
   parent: BasePDA

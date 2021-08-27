@@ -133,7 +133,7 @@ namespace Content.Server.Sandbox
                 {
                     if (pda.ContainedID == null)
                     {
-                        pda.InsertIdCard(CreateFreshId().GetComponent<IdCardComponent>());
+                        //pda.InsertIdCard(CreateFreshId().GetComponent<IdCardComponent>());
                     }
                     else
                     {

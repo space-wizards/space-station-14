@@ -33,13 +33,10 @@ namespace Content.Server.PDA
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : SharedPDAComponent, IInteractUsing, IActivate, IUse, IAccess, IMapInit
+    public class PDAComponent : SharedPDAComponent, IActivate, IUse, IAccess, IMapInit
     {
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-
-        [ViewVariables] private ContainerSlot _idSlot = default!;
-
 
         [ViewVariables] private bool _lightOn;
 
@@ -49,7 +46,7 @@ namespace Content.Server.PDA
         [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
-        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
+        [ViewVariables] public bool IdSlotEmpty => false;
 
 
         private UplinkAccount? _syndicateUplinkAccount;
@@ -72,7 +69,6 @@ namespace Content.Server.PDA
         protected override void Initialize()
         {
             base.Initialize();
-            _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
 
             if (UserInterface != null)
             {
@@ -88,7 +84,7 @@ namespace Content.Server.PDA
             {
                 var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
                 var idCardComponent = idCard.GetComponent<IdCardComponent>();
-                _idSlot.Insert(idCardComponent.Owner);
+                //_idSlot.Insert(idCardComponent.Owner);
                 ContainedID = idCardComponent;
             }
         }
@@ -110,7 +106,8 @@ namespace Content.Server.PDA
 
                 case PDAEjectIDMessage _:
                 {
-                    HandleIDEjection(message.Session.AttachedEntity!);
+                    // TODO: fix id slot
+                    //HandleIDEjection(message.Session.AttachedEntity!);
                     break;
                 }
 
@@ -181,53 +178,6 @@ namespace Content.Server.PDA
             }
         }
 
-        private bool TryInsertIdCard(InteractUsingEventArgs eventArgs, IdCardComponent idCardComponent)
-        {
-            var item = eventArgs.Using;
-            if (_idSlot.Contains(item))
-                return false;
-
-            if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("comp-pda-ui-try-insert-id-card-no-hands"));
-                return true;
-            }
-
-            IEntity? swap = null;
-            if (!IdSlotEmpty)
-            {
-                // Swap
-                swap = _idSlot.ContainedEntities[0];
-            }
-
-            if (!hands.Drop(item))
-            {
-                return true;
-            }
-
-            if (swap != null)
-            {
-                hands.PutInHand(swap.GetComponent<ItemComponent>());
-            }
-
-            InsertIdCard(idCardComponent);
-
-            UpdatePDAUserInterface();
-            return true;
-        }
-
-        async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
-        {
-            var item = eventArgs.Using;
-
-            if (item.TryGetComponent<IdCardComponent>(out var idCardComponent))
-            {
-                return TryInsertIdCard(eventArgs, idCardComponent);
-            }
-
-            return false;
-        }
-
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
@@ -255,13 +205,6 @@ namespace Content.Server.PDA
         {
             OwnerName = name;
             UpdatePDAUserInterface();
-        }
-
-        public void InsertIdCard(IdCardComponent card)
-        {
-            _idSlot.Insert(card.Owner);
-            ContainedID = card;
-            SoundSystem.Play(Filter.Pvs(Owner), _insertIdSound.GetSound(), Owner);
         }
 
         /// <summary>
@@ -292,49 +235,6 @@ namespace Content.Server.PDA
             light.Enabled = _lightOn;
             SoundSystem.Play(Filter.Pvs(Owner), _toggleFlashlightSound.GetSound(), Owner);
             UpdatePDAUserInterface();
-        }
-
-        private void HandleIDEjection(IEntity pdaUser)
-        {
-            if (ContainedID == null)
-            {
-                return;
-            }
-
-            var cardEntity = ContainedID.Owner;
-            _idSlot.Remove(cardEntity);
-
-            var hands = pdaUser.GetComponent<HandsComponent>();
-            var cardItemComponent = cardEntity.GetComponent<ItemComponent>();
-            hands.PutInHandOrDrop(cardItemComponent);
-            ContainedID = null;
-
-            SoundSystem.Play(Filter.Pvs(Owner), _ejectIdSound.GetSound(), Owner);
-            UpdatePDAUserInterface();
-        }
-
-        [Verb]
-        public sealed class EjectIDVerb : Verb<PDAComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-id-verb-get-data-text");
-                data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, PDAComponent component)
-            {
-                component.HandleIDEjection(user);
-            }
         }
 
         [Verb]
@@ -485,7 +385,7 @@ namespace Content.Server.PDA
         }
 
 
-        // TODO: replace me with dynamic verbs
+        // TODO: replace me with dynamic verbs for ItemSlotsSystem
         [Verb]
         public sealed class EjectPenVerb : Verb<PDAComponent>
         {
@@ -511,6 +411,37 @@ namespace Content.Server.PDA
                     return;
 
                 EntitySystem.Get<ItemSlotsSystem>().TryEjectContent(slots, "pda_pen_slot", user);
+            }
+        }
+
+        // TODO: replace me with dynamic verbs for ItemSlotsSystem
+        [Verb]
+        public sealed class EjectIDVerb : Verb<PDAComponent>
+        {
+            public override bool AlternativeInteraction => true;
+
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                    return;
+
+                var item = EntitySystem.Get<ItemSlotsSystem>().GetItemInSlot(slots, "pda_id_slot", user);
+                if (item == null)
+                    return;
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("eject-item-verb-text-default", ("item", item.Name));
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            }
+
+            protected override void Activate(IEntity user, PDAComponent component)
+            {
+                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                    return;
+
+                EntitySystem.Get<ItemSlotsSystem>().TryEjectContent(slots, "pda_id_slot", user);
             }
         }
     }
