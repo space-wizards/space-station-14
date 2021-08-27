@@ -62,7 +62,7 @@ namespace Content.Shared.Stacks
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
         }
 
-        private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ComponentHandleState args)
+        private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not StackComponentState cast)
                 return;
