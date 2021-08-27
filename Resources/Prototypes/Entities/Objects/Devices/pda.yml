@@ -28,12 +28,13 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-  - type: ItemSlot
-    slotName: "pda_pen_slot"
-    item: "Pen"
-    whitelist:
-      tags:
-        - Write      
+  - type: ItemSlots
+    slots:
+      pda_pen_slot:
+        item: "Pen"
+        whitelist:
+          tags:
+            - Write      
 
 - type: entity
   parent: BasePDA

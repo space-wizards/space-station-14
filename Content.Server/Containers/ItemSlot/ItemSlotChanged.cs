@@ -1,16 +1,18 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Containers.ItemSlot
+namespace Content.Server.Containers.ItemSlots
 {
     public class ItemSlotChanged : EntityEventArgs
     {
-        public ItemSlotComponent Slot;
-        public IEntity? Item;
+        public ItemSlotsComponent SlotsComponent;
+        public string Name;
+        public ItemSlot Slot;
 
-        public ItemSlotChanged(ItemSlotComponent slot, IEntity? item)
+        public ItemSlotChanged(ItemSlotsComponent slotsComponent, string name, ItemSlot slot)
         {
+            SlotsComponent = slotsComponent;
+            Name = name;
             Slot = slot;
-            Item = item;
         }
     }
 }

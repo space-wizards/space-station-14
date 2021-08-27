@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Access.Components;
+using Content.Server.Containers.ItemSlots;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.PDA.Managers;
@@ -481,6 +482,41 @@ namespace Content.Server.PDA
 
             public int Count => _pdaComponent.GetContainedAccess()?.Count ?? 0;
             public bool IsReadOnly => true;
+        }
+
+
+        [Verb]
+        public sealed class EjectPenVerb : Verb<PDAComponent>
+        {
+            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                    return;
+
+                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                    return;
+
+                if (!slots.Slots.TryGetValue("pda_pen_slot", out ItemSlot? slot))
+                    return;
+
+                var item = slot.ContainerSlot.ContainedEntity;
+                if (item == null)
+                    return;
+
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = Loc.GetString("eject-item-verb-text-default", ("item", item.Name));
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            }
+
+            protected override void Activate(IEntity user, PDAComponent component)
+            {
+                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                    return;
+
+                EntitySystem.Get<ItemSlotsSystem>().TryEjectContent(slots, "pda_pen_slot", user);
+            }
         }
     }
 }
