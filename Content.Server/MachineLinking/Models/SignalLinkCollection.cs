@@ -63,19 +63,20 @@ namespace Content.Server.MachineLinking.Models
             SignalLink? theLink = null;
             foreach (var link in _transmitterDict[transmitterComponent])
             {
-                if(link.Transmitterport.Name == transmitterPort && link.Receiverport.Name == receiverPort &&
+                if (link.Transmitterport.Name == transmitterPort && link.Receiverport.Name == receiverPort &&
                     link.ReceiverComponent == receiverComponent)
                 {
                     theLink = link;
                     break;
                 }
             }
-            if(theLink == null) return false;
+
+            if (theLink == null) return false;
 
             _transmitterDict[transmitterComponent].Remove(theLink);
-            if(_transmitterDict[transmitterComponent].Count == 0) _transmitterDict.Remove(transmitterComponent);
+            if (_transmitterDict[transmitterComponent].Count == 0) _transmitterDict.Remove(transmitterComponent);
             _receiverDict[receiverComponent].Remove(theLink);
-            if(_receiverDict[receiverComponent].Count == 0) _receiverDict.Remove(receiverComponent);
+            if (_receiverDict[receiverComponent].Count == 0) _receiverDict.Remove(receiverComponent);
             return true;
         }
 
@@ -87,7 +88,7 @@ namespace Content.Server.MachineLinking.Models
 
         public void RemoveLinks(SignalTransmitterComponent component)
         {
-            if(!_transmitterDict.ContainsKey(component))
+            if (!_transmitterDict.ContainsKey(component))
             {
                 return;
             }
@@ -95,8 +96,7 @@ namespace Content.Server.MachineLinking.Models
             foreach (var link in _transmitterDict[component])
             {
                 _receiverDict[link.ReceiverComponent].Remove(link);
-                if(_receiverDict[link.ReceiverComponent].Count == 0)
-                    _receiverDict.Remove(link.ReceiverComponent);
+                if (_receiverDict[link.ReceiverComponent].Count == 0) _receiverDict.Remove(link.ReceiverComponent);
             }
 
             _transmitterDict.Remove(component);
@@ -104,7 +104,7 @@ namespace Content.Server.MachineLinking.Models
 
         public void RemoveLinks(SignalReceiverComponent component)
         {
-            if(!_receiverDict.ContainsKey(component))
+            if (!_receiverDict.ContainsKey(component))
             {
                 return;
             }
@@ -119,12 +119,11 @@ namespace Content.Server.MachineLinking.Models
 
         public IEnumerable<SignalLink> GetLinks(SignalTransmitterComponent component, string port)
         {
-            if(!_transmitterDict.ContainsKey(component))
-                yield break;
+            if (!_transmitterDict.ContainsKey(component)) yield break;
 
             foreach (var link in _transmitterDict[component])
             {
-                if(link.Transmitterport.Name != port) continue;
+                if (link.Transmitterport.Name != port) continue;
                 yield return link;
             }
         }
