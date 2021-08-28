@@ -22,9 +22,7 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
-
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
-
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
         }
 
@@ -72,10 +70,15 @@ namespace Content.Server.PDA
                     pda.ContainedID = null;
                 else
                     pda.ContainedID = idCard;
-
-                UpdatePDAAppearance(pda);
-                UpdatePDAUserInterface(pda);
             }
+            else if (args.SlotName == PDAComponent.PenSlotName)
+            {
+                var item = args.Slot.ContainerSlot.ContainedEntity;
+                pda.PenInserted = item != null;
+            }
+
+            UpdatePDAAppearance(pda);
+            UpdatePDAUserInterface(pda);
         }
 
         private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
@@ -98,9 +101,7 @@ namespace Content.Server.PDA
         private void UpdatePDAAppearance(PDAComponent pda)
         {
             if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
-            }
         }
 
         private void UpdatePDAUserInterface(PDAComponent pda)
@@ -113,7 +114,7 @@ namespace Content.Server.PDA
             };
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.SetState(new PDAUpdateState(false, false, ownerInfo));
+            ui?.SetState(new PDAUpdateState(false, pda.PenInserted, ownerInfo));
         }
 
         private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)

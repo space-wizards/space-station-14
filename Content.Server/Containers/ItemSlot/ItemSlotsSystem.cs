@@ -38,14 +38,19 @@ namespace Content.Server.Containers.ItemSlots
 
         private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
         {
-            foreach (var slot in itemSlots.Slots.Values)
+            foreach (var pair in itemSlots.Slots)
             {
+                var slot = pair.Value;
+                var slotName = pair.Key;
+
                 if (!string.IsNullOrEmpty(slot.StartingItem))
                 {
                     var entManager = itemSlots.Owner.EntityManager;
 
                     var item = entManager.SpawnEntity(slot.StartingItem, itemSlots.Owner.Transform.Coordinates);
                     slot.ContainerSlot.Insert(item);
+
+                    RaiseLocalEvent(uid, new ItemSlotChanged(itemSlots, slotName, slot));
                 }
             }
         }

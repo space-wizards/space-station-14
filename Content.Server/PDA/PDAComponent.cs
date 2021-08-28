@@ -24,6 +24,7 @@ namespace Content.Server.PDA
         [ViewVariables] [DataField("idCard")] public string? StartingIdCard;
 
         [ViewVariables] public IdCardComponent? ContainedID;
+        [ViewVariables] public bool PenInserted;
 
         [ViewVariables] public string? OwnerName;
 
