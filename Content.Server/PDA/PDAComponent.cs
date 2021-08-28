@@ -34,19 +34,18 @@ namespace Content.Server.PDA
     [ComponentReference(typeof(IAccess))]
     public class PDAComponent : SharedPDAComponent, IAccess
     {
+        public const string IDSlotName = "pda_id_slot";
+        public const string PenSlotName = "pda_pen_slot";
+
+        [ViewVariables] [DataField("idCard")] public string? StartingIdCard;
+
+        [ViewVariables] public IdCardComponent? ContainedID;
+        [ViewVariables] public string? OwnerName;
+
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
 
         [ViewVariables] private bool _lightOn;
 
-        [ViewVariables] [DataField("idCard")] public string? StartingIdCard;
-
-
-        public const string IDSlotName = "pda_id_slot";
-
-        [ViewVariables] public string? OwnerName { get; private set; }
-
-        [ViewVariables] public IdCardComponent? ContainedID;
-        [ViewVariables] public bool IdSlotEmpty => false;
 
 
         private UplinkAccount? _syndicateUplinkAccount;
@@ -64,37 +63,6 @@ namespace Content.Server.PDA
             _accessSet = new PdaAccessSet(this);
         }
 
-        private void UpdatePDAUserInterface()
-        {
-            var ownerInfo = new PDAIdInfoText
-            {
-                ActualOwnerName = OwnerName,
-                IdOwner = ContainedID?.FullName,
-                JobTitle = ContainedID?.JobTitle
-            };
-
-            //Do we have an account? If so provide the info.
-            if (_syndicateUplinkAccount != null)
-            {
-                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
-                    _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings.Values.ToArray();
-                // TODO: fix pen slot
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, false, ownerInfo, accData, listings));
-            }
-            else
-            {
-                // TODO: fix pen slot
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, false, ownerInfo));
-            }
-        }
-
-        public void SetPDAOwner(string name)
-        {
-            OwnerName = name;
-            UpdatePDAUserInterface();
-        }
-
         /// <summary>
         /// Initialize the PDA's syndicate uplink account.
         /// </summary>
@@ -106,10 +74,10 @@ namespace Content.Server.PDA
 
             _syndicateUplinkAccount.BalanceChanged += account =>
             {
-                UpdatePDAUserInterface();
+                //UpdatePDAUserInterface();
             };
 
-            UpdatePDAUserInterface();
+            //UpdatePDAUserInterface();
         }
 
         private void ToggleLight()
@@ -122,7 +90,7 @@ namespace Content.Server.PDA
             _lightOn = !_lightOn;
             light.Enabled = _lightOn;
             SoundSystem.Play(Filter.Pvs(Owner), _toggleFlashlightSound.GetSound(), Owner);
-            UpdatePDAUserInterface();
+            //UpdatePDAUserInterface();
         }
 
         [Verb]

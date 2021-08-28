@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
@@ -124,7 +124,7 @@ namespace Content.Server.GameTicking.Presets
                 var pda = pdaItem.Owner;
 
                 var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.IdSlotEmpty)
+                if (pdaComponent.ContainedID == null)
                 {
                     continue;
                 }

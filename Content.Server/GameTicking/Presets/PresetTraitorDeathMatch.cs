@@ -108,7 +108,7 @@ namespace Content.Server.GameTicking.Presets
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
                 // The PDA needs to be marked with the correct owner.
-                pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
+                _entityManager.EventBus.RaiseLocalEvent(newPDA.Uid, new TrySetPDAOwner(mind.OwnedEntity.Name));
                 newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
             }
 

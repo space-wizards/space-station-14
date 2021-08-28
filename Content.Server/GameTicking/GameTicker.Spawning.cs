@@ -230,7 +230,7 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EventBus.RaiseLocalEvent(itemEntity.Uid, new TrySetPDAOwner(characterName));
         }
         #endregion
 

@@ -130,7 +130,7 @@ namespace Content.Server.GameTicking.Presets
                 var pda = pdaItem.Owner;
 
                 var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.IdSlotEmpty)
+                if (pdaComponent.ContainedID == null)
                 {
                     Logger.ErrorS("preset","PDA had no id for picked traitor");
                     continue;
