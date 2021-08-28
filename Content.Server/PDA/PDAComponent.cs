@@ -44,7 +44,7 @@ namespace Content.Server.PDA
 
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
 
-        [ViewVariables] private bool _lightOn;
+
 
 
 
@@ -55,8 +55,6 @@ namespace Content.Server.PDA
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
         [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
-
-        [DataField("toggleFlashlightSound")] private SoundSpecifier _toggleFlashlightSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
 
         public PDAComponent()
         {
@@ -78,40 +76,6 @@ namespace Content.Server.PDA
             };
 
             //UpdatePDAUserInterface();
-        }
-
-        private void ToggleLight()
-        {
-            if (!Owner.TryGetComponent(out PointLightComponent? light))
-            {
-                return;
-            }
-
-            _lightOn = !_lightOn;
-            light.Enabled = _lightOn;
-            SoundSystem.Play(Filter.Pvs(Owner), _toggleFlashlightSound.GetSound(), Owner);
-            //UpdatePDAUserInterface();
-        }
-
-        [Verb]
-        public sealed class ToggleFlashlightVerb : Verb<PDAComponent>
-        {
-            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, PDAComponent component)
-            {
-                component.ToggleLight();
-            }
         }
 
         public ISet<string>? GetContainedAccess()

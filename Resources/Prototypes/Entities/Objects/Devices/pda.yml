@@ -21,6 +21,7 @@
     Slots:
     - idcard
     - Belt
+  - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
     radius: 1.4
