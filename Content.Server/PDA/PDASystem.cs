@@ -24,7 +24,9 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
+            SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
+
 
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
@@ -81,6 +83,11 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
+        private void OnLightToggle(EntityUid uid, PDAComponent pda, LightToggleEvent args)
+        {
+            pda.FlashlightOn = args.IsOn;
+        }
+
         private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
         {
             pda.OwnerName = args.OwnerName;
@@ -114,7 +121,7 @@ namespace Content.Server.PDA
             };
 
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.SetState(new PDAUpdateState(false, pda.PenInserted, ownerInfo));
+            ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenInserted, ownerInfo));
         }
 
         private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)

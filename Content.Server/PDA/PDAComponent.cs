@@ -25,6 +25,7 @@ namespace Content.Server.PDA
 
         [ViewVariables] public IdCardComponent? ContainedID;
         [ViewVariables] public bool PenInserted;
+        [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables] public string? OwnerName;
 
