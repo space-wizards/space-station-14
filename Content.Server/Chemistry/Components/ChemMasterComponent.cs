@@ -243,11 +243,11 @@ namespace Content.Server.Chemistry.Components
                             amount == ReagentUnit
                                 .New(-1)) //amount is ReagentUnit.New(-1) when the client sends a message requesting to remove all solution from the container
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.EmptyVolume);
+                            actualAmount = ReagentUnit.Min(reagent.Quantity, beakerSolution.AvailableVolume);
                         }
                         else
                         {
-                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount, beakerSolution.EmptyVolume);
+                            actualAmount = ReagentUnit.Min(reagent.Quantity, amount, beakerSolution.AvailableVolume);
                         }
 
 

@@ -132,7 +132,7 @@ namespace Content.Server.Fluids.Components
                 {
                     EntitySystem.Get<SolutionContainerSystem>().Refill(solutionContainerComponent,
                         solution.SplitSolution(ReagentUnit.Min(
-                            solutionContainerComponent.RefillSpaceAvailable,
+                            solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))
                     );
                 }

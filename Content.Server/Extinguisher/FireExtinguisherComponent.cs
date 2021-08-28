@@ -36,7 +36,7 @@ namespace Content.Server.Extinguisher
                 && solutionContainerSystem.TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
                 && solutionContainerSystem.TryGetSolution(Owner, SolutionName, out var container))
             {
-                var transfer = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
+                var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)
                 {
                     var drained = solutionContainerSystem.Drain(targetSolution, transfer);

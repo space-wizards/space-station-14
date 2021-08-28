@@ -263,7 +263,7 @@ namespace Content.Server.Kitchen.Components
                 }
 
                 //Get transfer amount. May be smaller than _transferAmount if not enough room
-                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.EmptyVolume);
+                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.AvailableVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
                     Owner.PopupMessage(eventArgs.User,

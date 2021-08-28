@@ -34,7 +34,7 @@ namespace Content.Server.Body.Circulatory
         ///     Empty volume of internal solution
         /// </summary>
         [ViewVariables]
-        public ReagentUnit EmptyVolume => _internalSolution?.EmptyVolume ?? ReagentUnit.Zero;
+        public ReagentUnit EmptyVolume => _internalSolution?.AvailableVolume ?? ReagentUnit.Zero;
 
         [ViewVariables]
         public GasMixture Air { get; set; } = new(6)

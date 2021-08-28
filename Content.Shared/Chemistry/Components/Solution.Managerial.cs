@@ -19,10 +19,8 @@ namespace Content.Shared.Chemistry.Components
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
-        public ReagentUnit EmptyVolume => MaxVolume - CurrentVolume;
-
-        public ReagentUnit RefillSpaceAvailable => EmptyVolume;
-        public ReagentUnit InjectSpaceAvailable => EmptyVolume;
+        public ReagentUnit AvailableVolume => MaxVolume - CurrentVolume;
+        
         public ReagentUnit DrawAvailable => CurrentVolume;
         public ReagentUnit DrainAvailable => CurrentVolume;
 
@@ -33,7 +31,7 @@ namespace Content.Shared.Chemistry.Components
         /// <returns>If the solution can be fully added.</returns>
         public bool CanAddSolution(Solution solution)
         {
-            return solution.TotalVolume <= EmptyVolume;
+            return solution.TotalVolume <= AvailableVolume;
         }
 
         [DataField("maxSpillRefill")]

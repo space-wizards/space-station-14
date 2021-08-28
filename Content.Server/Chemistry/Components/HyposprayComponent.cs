@@ -84,7 +84,7 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution!.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution!.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {

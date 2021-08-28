@@ -313,7 +313,7 @@ namespace Content.Server.Tools.Components
                     return true;
                 }
 
-                var trans = ReagentUnit.Min(WelderSolution.EmptyVolume, targetSolution.DrainAvailable);
+                var trans = ReagentUnit.Min(WelderSolution.AvailableVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
                     var drained = EntitySystem.Get<SolutionContainerSystem>().Drain(targetSolution, trans);

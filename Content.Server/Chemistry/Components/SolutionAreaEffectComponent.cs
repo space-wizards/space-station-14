@@ -162,7 +162,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             var addSolution =
-                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.EmptyVolume));
+                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solutionArea, addSolution);
 

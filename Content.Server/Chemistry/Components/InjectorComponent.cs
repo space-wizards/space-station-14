@@ -217,7 +217,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.InjectSpaceAvailable);
+            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
@@ -257,7 +257,7 @@ namespace Content.Server.Chemistry.Components
         {
             // Automatically set syringe to inject after completely filling it.
             if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "injector", out var solution)
-                && solution.EmptyVolume == 0)
+                && solution.AvailableVolume == 0)
             {
                 ToggleState = InjectorToggleMode.Inject;
             }
@@ -266,7 +266,7 @@ namespace Content.Server.Chemistry.Components
         private void TryDraw(Solution targetSolution, IEntity user)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "injector", out var solution)
-            || solution.EmptyVolume == 0)
+            || solution.AvailableVolume == 0)
             {
                 return;
             }

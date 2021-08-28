@@ -170,7 +170,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 return false;
             }
 
-            acceptedQuantity = solutionHolder.EmptyVolume > quantity ? quantity : solutionHolder.EmptyVolume;
+            acceptedQuantity = solutionHolder.AvailableVolume > quantity ? quantity : solutionHolder.AvailableVolume;
             solutionHolder.AddReagent(reagentId, acceptedQuantity);
 
             if (acceptedQuantity > 0)

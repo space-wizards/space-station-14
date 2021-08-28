@@ -149,7 +149,7 @@ namespace Content.Server.Chemistry.Components
                 var transferred = DoTransfer(Owner,targetDrain, ownerRefill, tank.TransferAmount, eventArgs.User);
                 if (transferred > 0)
                 {
-                    var toTheBrim = ownerRefill.RefillSpaceAvailable == 0;
+                    var toTheBrim = ownerRefill.AvailableVolume == 0;
                     var msg = toTheBrim
                         ? "comp-solution-transfer-fill-fully"
                         : "comp-solution-transfer-fill-normal";
@@ -195,7 +195,7 @@ namespace Content.Server.Chemistry.Components
                 return ReagentUnit.Zero;
             }
 
-            if (target.RefillSpaceAvailable == 0)
+            if (target.AvailableVolume == 0)
             {
                 tagetEntity.PopupMessage(user,
                     Loc.GetString("comp-solution-transfer-is-full", ("target", tagetEntity)));
@@ -203,7 +203,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var actualAmount =
-                ReagentUnit.Min(amount, ReagentUnit.Min(source.DrainAvailable, target.RefillSpaceAvailable));
+                ReagentUnit.Min(amount, ReagentUnit.Min(source.DrainAvailable, target.AvailableVolume));
 
             var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(source, actualAmount);
             EntitySystem.Get<SolutionContainerSystem>().Refill(target, solution);
