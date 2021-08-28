@@ -222,14 +222,14 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var pda in _entityManager.ComponentManager.EntityQuery<PDAComponent>())
+            foreach (var uplink in _entityManager.ComponentManager.EntityQuery<UplinkComponent>())
             {
-                var uplink = pda.SyndicateUplinkAccount;
-                if (uplink != null && _allOriginalNames.ContainsKey(uplink))
+                var uplinkAcc = uplink.SyndicateUplinkAccount;
+                if (uplinkAcc != null && _allOriginalNames.ContainsKey(uplinkAcc))
                 {
                     lines.Add(Loc.GetString("traitor-death-match-end-round-description-entry",
-                                            ("originalName", _allOriginalNames[uplink]),
-                                            ("tcBalance", uplink.Balance)));
+                                            ("originalName", _allOriginalNames[uplinkAcc]),
+                                            ("tcBalance", uplinkAcc.Balance)));
                 }
             }
             return string.Join('\n', lines);
