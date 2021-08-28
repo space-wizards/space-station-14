@@ -31,7 +31,15 @@ namespace Content.Shared.Tabletop
         /// <param name="table">The table entity to check.</param>
         protected static bool CanSeeTable(IEntity playerEntity, IEntity? table)
         {
-            if (table == null) return false;
+            if (table?.Transform.Parent?.Owner is not { } parent)
+            {
+                return false;
+            }
+
+            if (!parent.HasComponent<MapComponent>() && !parent.HasComponent<IMapGridComponent>())
+            {
+                return false;
+            }
 
             var alive = playerEntity.TryGetComponent<SharedMobStateComponent>(out var mob) && mob.IsAlive();
             var inRange = playerEntity.InRangeUnobstructed(table);
