@@ -9,9 +9,7 @@ using Content.Shared.Access;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -145,7 +143,7 @@ namespace Content.Server.Access.Components
             }
         }
 
-        private void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
+        public void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
         {
             var isId = hands.GetActiveHand?.Owner.HasComponent<IdCardComponent>();
             if (isId != true)

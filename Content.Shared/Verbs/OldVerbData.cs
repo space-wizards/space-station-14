@@ -103,7 +103,7 @@ namespace Content.Shared.Verbs
         public SpriteSpecifier? Icon;
 
         /// <summary>
-        ///     Name of the category this button is under.
+        ///     Name of the category this button is under. Used to group verbs in the context menu.
         /// </summary>
         public string Category = string.Empty;
 

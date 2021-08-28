@@ -90,7 +90,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, VerbCategory.GUI);
+            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
             RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
             foreach (var verb in verbAssembly.Verbs)
@@ -126,7 +126,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, VerbCategory.GUI);
+            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
             RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
             var data = new List<VerbsResponseMessage.NetVerbData>();
@@ -142,13 +142,22 @@ namespace Content.Server.Verbs
         }
     }
 
-    public enum VerbCategory
+    /// <summary>
+    ///     The types of interactions to include when assembling a list of verbs. If null, assembles all verbs
+    /// </summary>
+    /// <remarks>
+    ///     Primary verbs are those that should be triggered when using left-click, 'Z', or 'E' to interact with
+    ///     entities. Secondary verbs are for alternative interactions that can be triggered by using the 'alt'
+    ///     modifier. Tertiary interactions are global interactions like "examine" or "Debug". Activation verbs are a
+    ///     subset of primary interactions that do not try to use the contents of the hand, e.g., to open up a PDA UI
+    ///     without picking up the PDA.
+    /// </remarks>
+    public enum InteractionType
     {
-        GUI, // Right click context menu. Assembles ALL verbs. Icons and text localizations should only be processed for this category. 
-        PrimaryInteraction, // left click, E , Z etc
-        SecondaryInteraction, // alt + left click, E, Z etc. basically alternative interactions
-        Activate // 'Activate-in-world/hand' differs from 'interact' in that it never tries to use the held item on the target.
-                 // E.g., activating your backpack open it, while the primary interaction, with an empty hand, would be to pick it up.
+        Primary,
+        Secondary,
+        Tertiary,
+        Activation
     }
 
     public class AssembleVerbsEvent : EntityEventArgs
@@ -157,6 +166,11 @@ namespace Content.Server.Verbs
         ///     Event output. List of verbs that can be executed.
         /// </summary>
         public List<Verb> Verbs = new();
+
+        /// <summary>
+        ///     What kind of verbs to assemble. If this is null, includes all verbs.
+        /// </summary>
+        public InteractionType? Interaction; 
 
         /// <summary>
         ///     Constant for determining whether the target verb is 'In Range' for physical interactions.
@@ -169,24 +183,46 @@ namespace Content.Server.Verbs
         public bool InRange;
 
         /// <summary>
-        ///     What type of verbs to assemble. If looking specifically for alt-click interactions, don't bother
-        ///     assembling other verbs.
+        ///     The entity being targeted for the verb.
         /// </summary>
-        public VerbCategory Category;
+        public IEntity Target;
 
         /// <summary>
-        ///     The hand being used to interact. Null if the user has no hands, or cannot interact as specified by ActionBlockerSystem.CanInteract().
+        ///     The entity that will be "performing" the verb.
         /// </summary>
-        public HandsComponent? Hands;
+        public IEntity User;
 
         /// <summary>
         ///     The entity currently being held by the active hand.
         /// </summary>
+        /// <remarks>
+        ///     If this is null, but the user has a HandsComponent, the hand is probably empty.
+        /// </remarks>
         public IEntity? Using;
 
-        public AssembleVerbsEvent(IEntity user, IEntity target, VerbCategory category)
+        /// <summary>
+        ///     The User's hand component.
+        /// </summary>
+        public HandsComponent? Hands;
+
+        /// <summary>
+        ///     Whether or not to load icons and string localizations in preparation for displaying in a GUI.
+        /// </summary>
+        public bool PrepareGUI;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="user">The user that will perform the verb.</param>
+        /// <param name="target">The target entity.</param>
+        /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
+        /// <param name="interaction">The type of interactions to include as verbs.</param>
+        public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false, InteractionType? interaction = null)
         {
-            Category = category;
+            Interaction = interaction;
+            User = user;
+            Target = target;
+            PrepareGUI = prepareGUI;
 
             // Here we check if physical interactions are permitted. First, does the user have hands?
             if (!user.TryGetComponent<HandsComponent>(out var hands))

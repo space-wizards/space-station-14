@@ -15,38 +15,66 @@ namespace Content.Server.Access
 
         private void HandleVerbAssembly(EntityUid uid, IdCardConsoleComponent component, AssembleVerbsEvent args)
         {
-            // We Only have physical interactions verbs
+            // This system only defines physical interaction verbs
             if (args.Hands == null)
                 return;
 
-            // Currently, no left click or activate verbs
-            if (args.Category == VerbCategory.PrimaryInteraction || args.Category == VerbCategory.Activate)
-                return;
-
-            if (!component.PrivilegedIDEmpty)
+            // Primary interactions verbs try to insert IDs
+            if ((args.Interaction == null || args.Interaction == InteractionType.Primary) &&
+                args.Using != null &&
+                args.Using.HasComponent<IdCardComponent>())
             {
-                var verb = new Verb("EjectPrivilegedID", () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands));
-
-                if (args.Category == VerbCategory.GUI)
+                // Can we insert a privileged ID? 
+                if (component.PrivilegedIDEmpty)
                 {
-                    verb.LocText = "access-eject-privileged-id-verb-get-data-text";
-                    verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                    var verb = new Verb("InsertPrivilegedID", () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands));
+                    if (args.PrepareGUI)
+                    {
+                        verb.LocText = "access-insert-privileged-id-verb-get-data-text";
+                        verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                    }
+                    args.Verbs.Add(verb);
                 }
 
-                args.Verbs.Add(verb);
+                // Can we insert a target ID?
+                if (component.TargetIDEmpty)
+                {
+                    var verb = new Verb("InsertTargetID", () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands));
+                    if (args.PrepareGUI)
+                    {
+                        verb.LocText = "access-insert-target-id-verb-get-data-text";
+                        verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                    }
+                    args.Verbs.Add(verb);
+                }
             }
 
-            if (!component.TargetIDEmpty)
+            // Secondary interactions verbs try to eject IDs
+            if ((args.Interaction == null || args.Interaction == InteractionType.Secondary))
             {
-                var verb = new Verb("EjectPrivilegedID", () => component.PutIdInHand(component.TargetIdContainer, args.Hands));
-
-                if (args.Category == VerbCategory.GUI)
+                // Can we eject a privileged ID? 
+                if (!component.PrivilegedIDEmpty)
                 {
-                    verb.LocText = "access-eject-target-id-verb-get-data-text";
-                    verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                    var verb = new Verb("EjectPrivilegedID", () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands));
+                    if (args.PrepareGUI)
+                    {
+                        verb.LocText = "access-eject-privileged-id-verb-get-data-text";
+                        verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                    }
+                    args.Verbs.Add(verb);
                 }
 
-                args.Verbs.Add(verb);
+                // Can we eject a target ID?
+                if (!component.TargetIDEmpty)
+                {
+                    var verb = new Verb("EjectTargetID", () => component.PutIdInHand(component.TargetIdContainer, args.Hands));
+                    if (args.PrepareGUI)
+                    {
+                        verb.LocText = "access-eject-target-id-verb-get-data-text";
+                        verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                    }
+                    args.Verbs.Add(verb);
+                }
             }
         }
     }
