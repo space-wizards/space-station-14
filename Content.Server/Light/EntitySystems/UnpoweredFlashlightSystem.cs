@@ -1,8 +1,10 @@
 using Content.Server.Light.Components;
+using Content.Server.Light.Events;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Player;
+using System;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -11,6 +13,13 @@ namespace Content.Server.Light.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<UnpoweredFlashlightComponent, TryToggleLightEvent>(OnToggleLight);
+        }
+
+        private void OnToggleLight(EntityUid uid, UnpoweredFlashlightComponent component, TryToggleLightEvent args)
+        {
+            ToggleLight(component);
         }
 
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)

@@ -1,30 +1,16 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
 using Content.Server.PDA.Managers;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
-using Content.Shared.Sound;
-using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -43,10 +29,6 @@ namespace Content.Server.PDA
         [ViewVariables] public string? OwnerName;
 
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
-
-
-
-
 
         private UplinkAccount? _syndicateUplinkAccount;
 

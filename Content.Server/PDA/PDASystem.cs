@@ -1,5 +1,6 @@
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
+using Content.Server.Light.Events;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
@@ -24,7 +25,6 @@ namespace Content.Server.PDA
 
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
-
         }
 
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -89,7 +89,6 @@ namespace Content.Server.PDA
         {
             if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                //appearance.SetData(PDAVisuals.FlashlightLit, _lightOn);
                 appearance.SetData(PDAVisuals.IDCardInserted, pda.ContainedID != null);
             }
         }
@@ -121,6 +120,17 @@ namespace Content.Server.PDA
 
         private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)
         {
+            switch (msg.Message)
+            {
+                case PDARequestUpdateInterfaceMessage _:
+                    UpdatePDAUserInterface(component);
+                    break;
+                case PDAToggleFlashlightMessage _:
+                    RaiseLocalEvent(component.Owner.Uid, new TryToggleLightEvent());
+                    break;
+            }
+
+
             /*switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
