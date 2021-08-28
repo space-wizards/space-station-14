@@ -58,3 +58,10 @@
         type: WiresBoundUserInterface
   - type: Computer
     board: BlockGameArcadeComputerCircuitboard
+  - type: Appearance
+    visuals:
+    - type: ComputerVisualizer
+      screen: blockgame
+      key: ""
+      body: arcade
+      bodyBroken: arcade
