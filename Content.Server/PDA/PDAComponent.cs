@@ -2,14 +2,10 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
-using Content.Server.PDA.Managers;
-using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.PDA;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -26,10 +22,11 @@ namespace Content.Server.PDA
         [ViewVariables] [DataField("idCard")] public string? StartingIdCard;
 
         [ViewVariables] public IdCardComponent? ContainedID;
+
         [ViewVariables] public string? OwnerName;
 
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
-
+        // TODO: Move me to ECS after Access refactoring
+        #region Acces Logic
         [ViewVariables] private readonly PdaAccessSet _accessSet;
 
         public PDAComponent()
@@ -50,8 +47,10 @@ namespace Content.Server.PDA
         {
             throw new NotSupportedException("PDA access list is read-only.");
         }
+        #endregion
 
         // TODO: replace me with dynamic verbs for ItemSlotsSystem
+        #region Verbs
         [Verb]
         public sealed class EjectPenVerb : Verb<PDAComponent>
         {
@@ -65,7 +64,7 @@ namespace Content.Server.PDA
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return;
 
-                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, "pda_pen_slot");
+                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, PenSlotName);
                 if (item == null)
                     return;
 
@@ -76,14 +75,12 @@ namespace Content.Server.PDA
 
             protected override void Activate(IEntity user, PDAComponent component)
             {
-                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
-                    return;
-
-                EntitySystem.Get<ItemSlotsSystem>().TryEjectContent(slots, "pda_pen_slot", user);
+                var entityManager = component.Owner.EntityManager;
+                entityManager.EventBus.RaiseLocalEvent(component.Owner.Uid,
+                    new EjectItemAttempt(PenSlotName, user));
             }
         }
 
-        // TODO: replace me with dynamic verbs for ItemSlotsSystem
         [Verb]
         public sealed class EjectIDVerb : Verb<PDAComponent>
         {
@@ -99,7 +96,7 @@ namespace Content.Server.PDA
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return;
 
-                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, "pda_id_slot");
+                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, IDSlotName);
                 if (item == null)
                     return;
 
@@ -110,11 +107,11 @@ namespace Content.Server.PDA
 
             protected override void Activate(IEntity user, PDAComponent component)
             {
-                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
-                    return;
-
-                EntitySystem.Get<ItemSlotsSystem>().TryEjectContent(slots, "pda_id_slot", user);
+                var entityManager = component.Owner.EntityManager;
+                entityManager.EventBus.RaiseLocalEvent(component.Owner.Uid,
+                    new EjectItemAttempt(IDSlotName, user));
             }
         }
+        #endregion
     }
 }

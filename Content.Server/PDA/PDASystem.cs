@@ -1,6 +1,7 @@
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
 using Content.Server.Light.Events;
+using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
@@ -19,27 +20,29 @@ namespace Content.Server.PDA
             base.Initialize();
             SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PDAComponent, MapInitEvent>(OnMapInit);
-
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
 
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
+
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
         }
 
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
-            if (pda.UserInterface != null)
-                pda.UserInterface.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
+            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
+            if (ui != null)
+                ui.OnReceiveMessage += (msg) => OnUIMessage(pda, msg);
 
             UpdatePDAAppearance(pda);
         }
 
         private void OnMapInit(EntityUid uid, PDAComponent pda, MapInitEvent args)
         {
+            // try to place ID inside item slot
             if (!string.IsNullOrEmpty(pda.StartingIdCard))
             {
-                // if pda prototype doesn't have slot, ID will drop down on ground 
+                // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = _entityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
                 RaiseLocalEvent(uid, new PlaceItemAttempt(PDAComponent.IDSlotName, idCard));
             }
@@ -49,24 +52,14 @@ namespace Content.Server.PDA
         {
             if (args.Handled)
                 return;
-
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
-                return;
-
-            pda.UserInterface?.Toggle(actor.PlayerSession);
-            args.Handled = true;
+            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnActivateInWorld(EntityUid uid, PDAComponent pda, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
-
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
-                return;
-
-            pda.UserInterface?.Toggle(actor.PlayerSession);
-            args.Handled = true;
+            args.Handled = OpenUI(pda, args.User);
         }
 
         private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChanged args)
@@ -85,6 +78,17 @@ namespace Content.Server.PDA
             }
         }
 
+        private bool OpenUI(PDAComponent pda, IEntity user)
+        {
+            if (!user.TryGetComponent(out ActorComponent? actor))
+                return false;
+
+            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
+            ui?.Toggle(actor.PlayerSession);
+
+            return true;
+        }
+
         private void UpdatePDAAppearance(PDAComponent pda)
         {
             if (pda.Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -95,27 +99,15 @@ namespace Content.Server.PDA
 
         private void UpdatePDAUserInterface(PDAComponent pda)
         {
-            /*var ownerInfo = new PDAIdInfoText
+            var ownerInfo = new PDAIdInfoText
             {
-                ActualOwnerName = OwnerName,
-                IdOwner = ContainedID?.FullName,
-                JobTitle = ContainedID?.JobTitle
+                ActualOwnerName = pda.OwnerName,
+                IdOwner = pda.ContainedID?.FullName,
+                JobTitle = pda.ContainedID?.JobTitle
             };
 
-            //Do we have an account? If so provide the info.
-            if (_syndicateUplinkAccount != null)
-            {
-                var accData = new UplinkAccountData(_syndicateUplinkAccount.AccountHolder,
-                    _syndicateUplinkAccount.Balance);
-                var listings = _uplinkManager.FetchListings.Values.ToArray();
-                // TODO: fix pen slot
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, false, ownerInfo, accData, listings));
-            }
-            else
-            {
-                // TODO: fix pen slot
-                UserInterface?.SetState(new PDAUpdateState(_lightOn, false, ownerInfo));
-            }*/
+            var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
+            ui?.SetState(new PDAUpdateState(false, false, ownerInfo));
         }
 
         private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)
@@ -141,32 +133,6 @@ namespace Content.Server.PDA
                         break;
                     }
             }
-
-
-            /*switch (msg.Message)
-            {
-                case PDAUplinkBuyListingMessage buyMsg:
-                    {
-                        var player = message.Session.AttachedEntity;
-                        if (player == null) break;
-
-                        if (!_uplinkManager.TryPurchaseItem(_syndicateUplinkAccount, buyMsg.ItemId,
-                            player.Transform.Coordinates, out var entity))
-                        {
-                            SendNetworkMessage(new PDAUplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
-                            break;
-                        }
-
-                        if (!player.TryGetComponent(out HandsComponent? hands) ||
-                            !entity.TryGetComponent(out ItemComponent? item))
-                            break;
-
-                        hands.PutInHandOrDrop(item);
-
-                        SendNetworkMessage(new PDAUplinkBuySuccessMessage(), message.Session.ConnectedClient);
-                        break;
-                    }
-            }*/
         }
 
         private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
