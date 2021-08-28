@@ -2,6 +2,8 @@ using Content.Client.Juke.UI;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Log;
 
 namespace Content.Client.Juke.UI
 {
@@ -30,7 +32,8 @@ namespace Content.Client.Juke.UI
             _window.PlayButtonPressed += OnPlayButtonPressed;
             _window.PauseButtonPressed += OnPauseButtonPressed;
             _window.StopButtonPressed += OnStopButtonPressed;
-            _window.LoopButtonPressed += OnLoopButtonPressed;
+            _window.LoopButtonToggled += OnLoopButtonToggled;
+
         }
 
         private void OnPlayButtonPressed()
@@ -48,9 +51,18 @@ namespace Content.Client.Juke.UI
             SendMessage(new MidiJukeStopMessage());
         }
 
-        private void OnLoopButtonPressed()
+        private void OnLoopButtonToggled(bool status)
         {
-            SendMessage(new MidiJukeLoopMessage());
+            SendMessage(new MidiJukeLoopMessage(status));
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+            if (_window == null || state is not MidiJukeBoundUserInterfaceState cast) return;
+
+            _window.SetPlaybackStatus(cast.PlaybackStatus);
+            _window.SetLoop(cast.Loop);
         }
 
         protected override void Dispose(bool disposing)

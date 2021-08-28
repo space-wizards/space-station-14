@@ -46,11 +46,13 @@ namespace Content.Shared.Juke
     public class MidiJukeBoundUserInterfaceState : BoundUserInterfaceState
     {
         public MidiJukePlaybackStatus PlaybackStatus { get; }
+        public bool Loop { get; }
         //TODO: song title, timestamp?
 
-        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus)
+        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus, bool loop)
         {
             PlaybackStatus = playbackStatus;
+            Loop = loop;
         }
     }
 
@@ -72,5 +74,11 @@ namespace Content.Shared.Juke
     [Serializable, NetSerializable]
     public class MidiJukeLoopMessage : BoundUserInterfaceMessage
     {
+        public bool Loop { get; }
+
+        public MidiJukeLoopMessage(bool loop)
+        {
+            Loop = loop;
+        }
     }
 }

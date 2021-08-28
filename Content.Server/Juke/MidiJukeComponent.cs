@@ -15,5 +15,6 @@ namespace Content.Server.Juke
     {
         public VirtualMidiPlayer? MidiPlayer;
         public string MidiFileName = string.Empty;
+        public bool Loop;
     }
 }

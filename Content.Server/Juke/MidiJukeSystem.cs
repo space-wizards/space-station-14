@@ -40,7 +40,7 @@ namespace Content.Server.Juke
                 || !userInterfaceComponent.TryGetBoundUserInterface(MidiJukeUiKey.Key, out var ui))
                 return;
 
-            ui.SetState(new MidiJukeBoundUserInterfaceState(midiJuke.PlaybackStatus));
+            ui.SetState(new MidiJukeBoundUserInterfaceState(midiJuke.PlaybackStatus, midiJuke.Loop));
         }
 
         private void OnMidiJukeUiMessage(EntityUid uid, MidiJukeComponent component, ServerBoundUserInterfaceMessage msg)
@@ -62,10 +62,12 @@ namespace Content.Server.Juke
                 case MidiJukeStopMessage:
                     Stop(component);
                     break;
-                case MidiJukeLoopMessage:
-                    Logger.Debug("MidiJukeLoop"); //TODO: implement
+                case MidiJukeLoopMessage loopMsg:
+                    SetLoop(component, loopMsg.Loop);
                     break;
             }
+
+            DirtyUI(component.Owner.Uid);
         }
 
         private void OnInteractHand(EntityUid uid, MidiJukeComponent component, InteractHandEvent args)
@@ -110,13 +112,16 @@ namespace Content.Server.Juke
             {
                 component.MidiFileName = filename;
                 component.MidiPlayer.Finished += (sender, eventArgs) => OnPlaybackFinished(component); //LOW KEY WORRIED ABOUT THE MEMORY SAFETY OF THIS
+                component.MidiPlayer.Loop = component.Loop;
             }
         }
 
         private void OnPlaybackFinished(MidiJukeComponent component)
         {
             component.MidiPlayer?.MoveToStart();
+            component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
             RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            DirtyUI(component.Owner.Uid);
         }
 
         /// <summary>
@@ -154,7 +159,7 @@ namespace Content.Server.Juke
         /// <param name="component"></param>
         private void Stop(MidiJukeComponent component)
         {
-            if (component.Playing && component.MidiPlayer != null)
+            if (component.MidiPlayer != null)
             {
                 component.MidiPlayer.Stop();
                 component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
@@ -162,6 +167,17 @@ namespace Content.Server.Juke
                 RaiseNetworkEvent(new MidiJukeStopEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
                 component.MidiPlayer.MoveToStart();
             }
+        }
+
+        private void SetLoop(MidiJukeComponent component, bool loop)
+        {
+            component.Loop = loop;
+            if (component.MidiPlayer != null)
+            {
+                component.MidiPlayer.Loop = loop;
+            }
+            Logger.Debug($"Setting loop to {loop}");
+            DirtyUI(component.Owner.Uid);
         }
     }
 }

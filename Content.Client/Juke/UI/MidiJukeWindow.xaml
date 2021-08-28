@@ -3,7 +3,7 @@
         <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="PlayButton" ToggleMode="True" Text="Play" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="PauseButton" ToggleMode="True" Text="Pause" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-            <Button Name="StopButton" ToggleMode="True" Text="Stop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="StopButton" ToggleMode="False" Text="Stop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
         </BoxContainer>
     </BoxContainer>
