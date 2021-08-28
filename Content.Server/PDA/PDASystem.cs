@@ -128,36 +128,23 @@ namespace Content.Server.PDA
                 case PDAToggleFlashlightMessage _:
                     RaiseLocalEvent(component.Owner.Uid, new TryToggleLightEvent());
                     break;
+                case PDAEjectIDMessage _:
+                    {
+                        var ejectAttempt = new EjectItemAttempt(PDAComponent.IDSlotName, msg.Session.AttachedEntity);
+                        RaiseLocalEvent(component.Owner.Uid, ejectAttempt);
+                        break;
+                    }
+                case PDAEjectPenMessage _:
+                    {
+                        var ejectAttempt = new EjectItemAttempt(PDAComponent.PenSlotName, msg.Session.AttachedEntity);
+                        RaiseLocalEvent(component.Owner.Uid, ejectAttempt);
+                        break;
+                    }
             }
 
 
             /*switch (msg.Message)
             {
-                case PDARequestUpdateInterfaceMessage _:
-                    {
-                        UpdatePDAUserInterface(component);
-                        break;
-                    }
-                case PDAToggleFlashlightMessage _:
-                    {
-                        ToggleLight();
-                        break;
-                    }
-
-                case PDAEjectIDMessage _:
-                    {
-                        // TODO: fix id slot
-                        //HandleIDEjection(message.Session.AttachedEntity!);
-                        break;
-                    }
-
-                case PDAEjectPenMessage _:
-                    {
-                        // TODO: fix pen slot
-                        //HandlePenEjection(message.Session.AttachedEntity!);
-                        break;
-                    }
-
                 case PDAUplinkBuyListingMessage buyMsg:
                     {
                         var player = message.Session.AttachedEntity;

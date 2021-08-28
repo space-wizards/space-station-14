@@ -22,6 +22,7 @@ namespace Content.Server.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
 
             SubscribeLocalEvent<ItemSlotsComponent, PlaceItemAttempt>(OnPlaceItem);
+            SubscribeLocalEvent<ItemSlotsComponent, EjectItemAttempt>(OnEjectItem);
         }
 
         private void OnComponentInit(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
@@ -73,6 +74,11 @@ namespace Content.Server.Containers.ItemSlots
 
             slot.ContainerSlot.Insert(args.Item);
             RaiseLocalEvent(uid, new ItemSlotChanged(slots, args.SlotName, slot));
+        }
+
+        private void OnEjectItem(EntityUid uid, ItemSlotsComponent component, EjectItemAttempt args)
+        {
+            TryEjectContent(component, args.SlotName, args.User);
         }
 
         /// <summary>
@@ -140,7 +146,7 @@ namespace Content.Server.Containers.ItemSlots
         /// <summary>
         ///     Try to eject item from slot to users hands
         /// </summary>
-        public void TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity user)
+        public void TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity? user)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return;
@@ -151,9 +157,12 @@ namespace Content.Server.Containers.ItemSlots
             var item = slot.ContainerSlot.ContainedEntities[0];
             slot.ContainerSlot.Remove(item);
 
-            var hands = user.GetComponent<HandsComponent>();
-            var itemComponent = item.GetComponent<ItemComponent>();
-            hands.PutInHandOrDrop(itemComponent);
+            if (user != null)
+            {
+                var hands = user.GetComponent<HandsComponent>();
+                var itemComponent = item.GetComponent<ItemComponent>();
+                hands.PutInHandOrDrop(itemComponent);
+            }
 
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);

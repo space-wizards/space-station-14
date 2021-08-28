@@ -33,4 +33,20 @@ namespace Content.Server.Containers.ItemSlots
             Item = item;
         }
     }
+
+    /// <summary>
+    ///     Try to eject item from slot to users hand.
+    ///     If no users provided or user can't take item, it will drop item.
+    /// </summary>
+    public class EjectItemAttempt : CancellableEntityEventArgs
+    {
+        public string SlotName;
+        public IEntity? User;
+
+        public EjectItemAttempt(string slotName, IEntity? user = null)
+        {
+            SlotName = slotName;
+            User = user;
+        }
+    }
 }
