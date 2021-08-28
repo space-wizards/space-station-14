@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
+using System.Linq;
 using System.Threading;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Resources;
@@ -49,7 +49,7 @@ namespace Content.Client.Verbs
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<VerbSystemMessages.VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<VerbsResponseMessage>(FillEntityPopup);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             _contextMenuPresenter = new ContextMenuPresenter(this);
@@ -109,7 +109,7 @@ namespace Content.Client.Verbs
             if (!entity.Uid.IsClientSide())
             {
                 _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
-                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsEvent(_currentEntity));
+                RaiseNetworkEvent(new RequestVerbsEvent(_currentEntity));
             }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
@@ -121,7 +121,7 @@ namespace Content.Client.Verbs
             OpenContextMenu(entity, _userInterfaceManager.MousePositionScaled);
         }
 
-        private void FillEntityPopup(VerbSystemMessages.VerbsResponseMessage msg)
+        private void FillEntityPopup(VerbsResponseMessage msg)
         {
             if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
             {
@@ -129,175 +129,45 @@ namespace Content.Client.Verbs
             }
 
             DebugTools.AssertNotNull(_currentVerbListRoot);
-
-            var buttons = new Dictionary<string, List<ListedVerbData>>();
-            var groupIcons = new Dictionary<string, SpriteSpecifier>();
-
             var vBox = _currentVerbListRoot!.List;
             vBox.DisposeAllChildren();
 
-            // Local variable so that scope capture ensures this is the correct value.
-            var curEntity = _currentEntity;
-
-            foreach (var data in msg.Verbs)
-            {
-                var list = buttons.GetOrNew(data.Category);
-
-                if (data.CategoryIcon != null && !groupIcons.ContainsKey(data.Category))
-                {
-                    groupIcons.Add(data.Category, data.CategoryIcon);
-                }
-
-                list.Add(new ListedVerbData(data.Text, data.IsDisabled, data.Key, entity.ToString()!, () =>
-                {
-                    RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
-                    CloseAllMenus();
-                }, data.Icon));
-            }
-
-            var user = GetUserEntity();
-            //Get verbs, component dependent.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
-            {
-                if (!VerbUtility.VerbAccessChecks(user, entity, verb))
-                {
-                    continue;
-                }
-
-                var verbData = verb.GetData(user, component);
-
-                if (verbData.IsInvisible)
-                    continue;
-
-                var list = buttons.GetOrNew(verbData.Category);
-
-                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
-                {
-                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
-                }
-
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, verb.ToString()!, entity.ToString()!,
-                    () => verb.Activate(user, component), verbData.Icon));
-            }
-
-            //Get global verbs. Visible for all entities regardless of their components.
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (!VerbUtility.VerbAccessChecks(user, entity, globalVerb))
-                {
-                    continue;
-                }
-
-                var verbData = globalVerb.GetData(user, entity);
-
-                if (verbData.IsInvisible)
-                    continue;
-
-                var list = buttons.GetOrNew(verbData.Category);
-
-                if (verbData.CategoryIcon != null && !groupIcons.ContainsKey(verbData.Category))
-                {
-                    groupIcons.Add(verbData.Category, verbData.CategoryIcon);
-                }
-
-                list.Add(new ListedVerbData(verbData.Text, verbData.IsDisabled, globalVerb.ToString()!,
-                    entity.ToString()!,
-                    () => globalVerb.Activate(user, entity), verbData.Icon));
-            }
-
-            if (buttons.Count > 0)
-            {
-                var first = true;
-                foreach (var (category, verbs) in buttons)
-                {
-                    if (string.IsNullOrEmpty(category))
-                        continue;
-
-                    if (!first)
-                    {
-                        vBox.AddChild(new PanelContainer
-                        {
-                            MinSize = (0, 2),
-                            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
-                        });
-                    }
-
-                    first = false;
-
-                    groupIcons.TryGetValue(category, out var icon);
-
-                    vBox.AddChild(CreateCategoryButton(category, verbs, icon));
-                }
-
-                if (buttons.ContainsKey(""))
-                {
-                    buttons[""].Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
-
-                    foreach (var verb in buttons[""])
-                    {
-                        if (!first)
-                        {
-                            vBox.AddChild(new PanelContainer
-                            {
-                                MinSize = (0, 2),
-                                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
-                            });
-                        }
-
-                        first = false;
-
-                        vBox.AddChild(CreateVerbButton(verb));
-                    }
-                }
-            }
-            else
+            if (msg.Verbs.Length == 0)
             {
                 var panel = new PanelContainer();
                 panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 vBox.AddChild(panel);
-            }
-        }
-
-        private VerbButton CreateVerbButton(ListedVerbData data)
-        {
-            var button = new VerbButton
-            {
-                Text = Loc.GetString(data.Text),
-                Disabled = data.Disabled
-            };
-
-            if (data.Icon != null)
-            {
-                button.Icon = data.Icon.Frame0();
+                return;
             }
 
-            if (!data.Disabled)
+            HashSet<string> verbCategories = new();
+            var first = true;
+            foreach (var verbData in msg.Verbs)
             {
-                button.OnPressed += _ =>
+                if (!first)
                 {
-                    CloseAllMenus();
-                    try
+                    vBox.AddChild(new PanelContainer
                     {
-                        data.Action.Invoke();
-                    }
-                    catch (Exception e)
-                    {
-                        Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", data.VerbName, data.OwnerName, e);
-                    }
-                };
+                        MinSize = (0, 2),
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
+                    });
+                }
+                first = false;
+
+                // Does this verb not belong to a category?
+                if (string.IsNullOrEmpty(verbData.Category))
+                {
+                    vBox.AddChild(new VerbButton(this, verbData, entity));
+                }
+                // Else, does this verb belong to a NEW verb category that hasn't already been added?
+                else if(verbCategories.Add(verbData.Category))
+                {
+                    // Create new verb group button
+                    vBox.AddChild(
+                        new VerbCategoryButton(this, verbData.Category, verbData.CategoryIcon, msg.Verbs, entity)
+                        );
+                }
             }
-
-            return button;
-        }
-
-        private Control CreateCategoryButton(string text, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
-        {
-            verbButtons.Sort((a, b) => string.Compare(a.Text, b.Text, StringComparison.CurrentCulture));
-
-            return new VerbGroupButton(this, verbButtons, icon)
-            {
-                Text = Loc.GetString(text),
-            };
         }
 
         public void CloseVerbMenu()
@@ -320,11 +190,6 @@ namespace Content.Client.Verbs
             _currentGroupList = null;
         }
 
-        private IEntity GetUserEntity()
-        {
-            return _playerManager.LocalPlayer!.ControlledEntity!;
-        }
-
         private sealed class VerbPopup : Popup
         {
             public BoxContainer List { get; }
@@ -344,7 +209,7 @@ namespace Content.Client.Verbs
 
         private sealed class VerbButton : BaseButton
         {
-            private readonly Label _label;
+            private readonly RichTextLabel _label;
             private readonly TextureRect _icon;
 
             public Texture? Icon
@@ -353,13 +218,7 @@ namespace Content.Client.Verbs
                 set => _icon.Texture = value;
             }
 
-            public string? Text
-            {
-                get => _label.Text;
-                set => _label.Text = value;
-            }
-
-            public VerbButton()
+            public VerbButton(VerbSystem system, Verb verbData, IEntity owner)
             {
                 AddChild(new BoxContainer
                 {
@@ -372,11 +231,35 @@ namespace Content.Client.Verbs
                             Stretch = TextureRect.StretchMode.KeepCentered,
                             TextureScale = (0.5f, 0.5f)
                         }),
-                        (_label = new Label()),
+                        (_label = new RichTextLabel()),
                         // Padding
                         new Control {MinSize = (8, 0)}
                     }
                 });
+
+                _label.SetMessage(FormattedMessage.FromMarkupPermissive(verbData.Text));
+                Disabled = verbData.IsDisabled;
+
+                if (verbData.Icon != null)
+                {
+                    Icon = verbData.Icon.Frame0();
+                }
+
+                if (!verbData.IsDisabled)
+                {
+                    OnPressed += _ =>
+                    {
+                        system.CloseAllMenus();
+                        try
+                        {
+                            system.RaiseNetworkEvent(new UseVerbMessage(owner.Uid, verbData.Key));
+                        }
+                        catch (Exception e)
+                        {
+                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verbData.Key, owner.ToString(), e);
+                        }
+                    };
+                }
             }
 
             protected override void Draw(DrawingHandleScreen handle)
@@ -390,7 +273,7 @@ namespace Content.Client.Verbs
             }
         }
 
-        private sealed class VerbGroupButton : Control
+        private sealed class VerbCategoryButton : Control
         {
             private static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
@@ -401,7 +284,9 @@ namespace Content.Client.Verbs
 
             private CancellationTokenSource? _openCancel;
 
-            public List<ListedVerbData> VerbButtons { get; }
+            private readonly IEntity _owner;
+
+            private readonly IEnumerable<Verb> _verbs;
 
             public string? Text
             {
@@ -415,10 +300,12 @@ namespace Content.Client.Verbs
                 set => _icon.Texture = value;
             }
 
-            public VerbGroupButton(VerbSystem system, List<ListedVerbData> verbButtons, SpriteSpecifier? icon)
+            public VerbCategoryButton(VerbSystem system, string category, SpriteSpecifier? icon, Verb[] verbs, IEntity owner)
             {
                 _system = system;
-                VerbButtons = verbButtons;
+                _owner = owner;
+                Text = category;
+                _verbs = verbs.Where(verb => verb.Category == category);
 
                 MouseFilter = MouseFilterMode.Stop;
 
@@ -484,7 +371,7 @@ namespace Content.Client.Verbs
                     var popup = _system._currentGroupList = new VerbPopup();
 
                     var first = true;
-                    foreach (var verb in VerbButtons)
+                    foreach (var verb in _verbs)
                     {
                         if (!first)
                         {
@@ -497,7 +384,7 @@ namespace Content.Client.Verbs
 
                         first = false;
 
-                        popup.List.AddChild(_system.CreateVerbButton(verb));
+                        popup.List.AddChild(new VerbButton(_system, verb, _owner));
                     }
 
                     UserInterfaceManager.ModalRoot.AddChild(popup);
@@ -511,27 +398,6 @@ namespace Content.Client.Verbs
 
                 _openCancel?.Cancel();
                 _openCancel = null;
-            }
-        }
-
-        private sealed class ListedVerbData
-        {
-            public string Text { get; }
-            public bool Disabled { get; }
-            public string VerbName { get; }
-            public string OwnerName { get; }
-            public SpriteSpecifier? Icon { get; }
-            public Action Action { get; }
-
-            public ListedVerbData(string text, bool disabled, string verbName, string ownerName,
-                Action action, SpriteSpecifier? icon)
-            {
-                Text = text;
-                Disabled = disabled;
-                VerbName = verbName;
-                OwnerName = ownerName;
-                Action = action;
-                Icon = icon;
             }
         }
     }

@@ -1,7 +1,9 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+using System;
 
 namespace Content.Shared.Verbs
 {
@@ -70,9 +72,10 @@ namespace Content.Shared.Verbs
     /// <summary>
     ///     Using delegate to store information about verb execution.
     /// </summary>
-    public delegate void RaiseVerb();
+    public delegate void VerbExecution();
 
-    public class Verb
+    [Serializable, NetSerializable]
+    public class Verb : IComparable
     {
         /// <summary>
         ///     Performs the verbs associated action.
@@ -80,7 +83,8 @@ namespace Content.Shared.Verbs
         /// <remarks>
         ///     This is probably either some function in the system assembling this verb, or a lambda function that raises some event.
         /// </remarks>
-        public RaiseVerb Execute;
+        [NonSerialized]
+        public VerbExecution Execution;
 
         /// <summary>
         ///     The key that is used to refer to a specific verb for execution.
@@ -107,6 +111,11 @@ namespace Content.Shared.Verbs
         /// </summary>
         public string Category = string.Empty;
 
+        /// <remarks>
+        ///     Convenience property to run localization on verb category.
+        /// </remarks>
+        public string LocCategory { set => Category = Loc.GetString(value); }
+
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
@@ -118,6 +127,15 @@ namespace Content.Shared.Verbs
         public bool IsDisabled;
 
         /// <summary>
+        ///     Determines the priority of the verb. This affects both how the verb is displayed in the context menu
+        ///     GUI, and which verb is actually executed when left/alt clicking.
+        /// </summary>
+        /// <remarks>
+        ///     Bigger is higher priority (appears first, gets executed preferentially).
+        /// </remarks>
+        public int Priority;
+
+        /// <summary>
         ///     Convenience property to set <see cref="Icon"/> to a raw texture path.
         /// </summary>
         public string IconTexture
@@ -125,10 +143,31 @@ namespace Content.Shared.Verbs
             set => Icon = new SpriteSpecifier.Texture(new ResourcePath(value));
         }
 
-        public Verb(string key,  RaiseVerb execute )
+        public Verb(string key, VerbExecution execution )
         {
-            Execute = execute;
+            Execution = execution;
             Key = key;
+        }
+
+        /// <summary>
+        ///     Allow verbs to be compared to each other for sorting. Sorting is based on the Priority variable, with alphabetical sorting as fall-back.
+        /// </summary>
+        public int CompareTo(object? obj)
+        {
+            if (obj is not Verb otherVerb)
+                return -1;
+
+            // Sort first by priority
+            if (Priority != otherVerb.Priority)
+                return otherVerb.Priority - Priority;
+
+            // Then try use alphabetical verb categories. This puts uncategorized verbs first.
+            // TODO VERBS maybe make categories appear first, which is the pre-ECS behavior?
+            if (Category != otherVerb.Category)
+                return string.Compare(Category, otherVerb.Category, StringComparison.CurrentCulture);
+
+            // Finally, use verb text as tie-breaker
+            return string.Compare(Text,otherVerb.Text, StringComparison.CurrentCulture);
         }
     }
 }

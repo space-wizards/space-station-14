@@ -33,6 +33,7 @@ namespace Content.Server.Access
                         verb.LocText = "access-insert-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
+                    verb.Priority = 1;
                     args.Verbs.Add(verb);
                 }
 
@@ -45,6 +46,7 @@ namespace Content.Server.Access
                         verb.LocText = "access-insert-target-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
+                    verb.Priority = 1;
                     args.Verbs.Add(verb);
                 }
             }
@@ -61,6 +63,7 @@ namespace Content.Server.Access
                         verb.LocText = "access-eject-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
+                    verb.Priority = -1;
                     args.Verbs.Add(verb);
                 }
 
@@ -74,6 +77,7 @@ namespace Content.Server.Access
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
                     args.Verbs.Add(verb);
+                    verb.Priority = -1;
                 }
             }
         }

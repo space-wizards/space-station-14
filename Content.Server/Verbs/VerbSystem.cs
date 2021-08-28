@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Reflection;
 using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
@@ -10,8 +9,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-
-using static Content.Shared.Verbs.VerbSystemMessages;
 
 namespace Content.Server.Verbs
 {
@@ -97,7 +94,7 @@ namespace Content.Server.Verbs
             {
                 if (verb.Key == use.VerbKey)
                 {
-                    verb.Execute();
+                    verb.Execution();
                     break;
                 }
             }
@@ -129,15 +126,16 @@ namespace Content.Server.Verbs
             var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
             RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
-            var data = new List<VerbsResponseMessage.NetVerbData>();
+            var verbs = new List<Verb>();
+            verbs.Sort();
 
             foreach (var verb in verbAssembly.Verbs)
             {
                 // TODO: These keys being giant strings is inefficient as hell.
-                data.Add(new VerbsResponseMessage.NetVerbData(verb));
+                verbs.Add(verb);
             }
 
-            var response = new VerbsResponseMessage(data.ToArray(), req.EntityUid);
+            var response = new VerbsResponseMessage(verbs.ToArray(), req.EntityUid);
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }
