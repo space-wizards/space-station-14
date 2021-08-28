@@ -1,5 +1,6 @@
 using Content.Server.Light.Components;
 using Content.Server.Light.Events;
+using Content.Shared.Light;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -29,6 +30,10 @@ namespace Content.Server.Light.EntitySystems
 
             flashlight.LightOn = !flashlight.LightOn;
             light.Enabled = flashlight.LightOn;
+
+            if (flashlight.Owner.TryGetComponent(out AppearanceComponent? appearance))
+                appearance.SetData(UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
+
             SoundSystem.Play(Filter.Pvs(light.Owner), flashlight.ToggleSound.GetSound(), flashlight.Owner);
         }
 
