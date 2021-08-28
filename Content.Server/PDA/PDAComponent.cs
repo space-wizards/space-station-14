@@ -28,36 +28,13 @@ namespace Content.Server.PDA
         [ViewVariables] public IdCardComponent? ContainedID;
         [ViewVariables] public string? OwnerName;
 
-        [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
-
-        private UplinkAccount? _syndicateUplinkAccount;
-
-        [ViewVariables] public UplinkAccount? SyndicateUplinkAccount => _syndicateUplinkAccount;
+        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
 
         [ViewVariables] private readonly PdaAccessSet _accessSet;
-
-        [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
 
         public PDAComponent()
         {
             _accessSet = new PdaAccessSet(this);
-        }
-
-        /// <summary>
-        /// Initialize the PDA's syndicate uplink account.
-        /// </summary>
-        /// <param name="acc"></param>
-        public void InitUplinkAccount(UplinkAccount acc)
-        {
-            _syndicateUplinkAccount = acc;
-            _uplinkManager.AddNewAccount(_syndicateUplinkAccount);
-
-            _syndicateUplinkAccount.BalanceChanged += account =>
-            {
-                //UpdatePDAUserInterface();
-            };
-
-            //UpdatePDAUserInterface();
         }
 
         public ISet<string>? GetContainedAccess()

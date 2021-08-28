@@ -7,6 +7,8 @@ using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Events;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
@@ -31,6 +33,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] protected readonly IEntityManager EntityManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }
@@ -122,15 +125,8 @@ namespace Content.Server.GameTicking.Presets
                 }
 
                 var pda = pdaItem.Owner;
-
-                var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.ContainedID == null)
-                {
-                    continue;
-                }
-
-                pdaComponent.InitUplinkAccount(uplinkAccount);
-
+                pda.AddComponent<UplinkComponent>();
+                EntityManager.EventBus.RaiseLocalEvent(pda.Uid, new TryInitUplinkEvent(uplinkAccount));
             }
 
             foreach (var player in list)

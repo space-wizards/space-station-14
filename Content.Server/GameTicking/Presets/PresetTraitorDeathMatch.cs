@@ -28,6 +28,8 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Events;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -103,8 +105,8 @@ namespace Content.Server.GameTicking.Presets
 
                 // Like normal traitors, they need access to a traitor account.
                 var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-                var pdaComponent = newPDA.GetComponent<PDAComponent>();
-                pdaComponent.InitUplinkAccount(uplinkAccount);
+                newPDA.AddComponent<UplinkComponent>();
+                _entityManager.EventBus.RaiseLocalEvent(newPDA.Uid, new TryInitUplinkEvent(uplinkAccount));
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
                 // The PDA needs to be marked with the correct owner.
