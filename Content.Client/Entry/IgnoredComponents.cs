@@ -225,7 +225,6 @@ namespace Content.Client.Entry
             "DebugEquip",
             "InnateActions",
             "ReagentGrinder",
-            "Grindable",
             "Extractable",
             "WelderRefinable",
             "ConveyorAssembly",

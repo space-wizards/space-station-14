@@ -27,8 +27,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         [DataField("reagents")]
         public List<ReagentQuantity> Contents = new(2);
-
-
+        
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>

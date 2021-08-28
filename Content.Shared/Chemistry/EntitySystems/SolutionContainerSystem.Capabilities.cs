@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
@@ -9,22 +8,22 @@ namespace Content.Shared.Chemistry.EntitySystems
 {
     public partial class SolutionContainerSystem
     {
-        public void Refill(Solution solutionHolder, Solution solution)
+        public void Refill(Solution targetSolution, Solution addedSolution)
         {
-            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
-                || !solutionEntity.HasComponent<RefillableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+                || !targetEntity.HasComponent<RefillableSolutionComponent>())
                 return;
 
-            TryAddSolution(solutionHolder, solution);
+            TryAddSolution(targetSolution, addedSolution);
         }
 
-        public void Inject(Solution solutionHolder, Solution solution)
+        public void Inject(Solution targetSolution, Solution addedSolution)
         {
-            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
-                || !solutionEntity.HasComponent<InjectableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+                || !targetEntity.HasComponent<InjectableSolutionComponent>())
                 return;
 
-            TryAddSolution(solutionHolder, solution);
+            TryAddSolution(targetSolution, addedSolution);
         }
 
         public Solution Draw(Solution solution, ReagentUnit amount)
@@ -39,16 +38,16 @@ namespace Content.Shared.Chemistry.EntitySystems
             return SplitSolution(solution, amount);
         }
 
-        public Solution Drain(Solution solution, ReagentUnit amount)
+        public Solution Drain(Solution targetSolution, ReagentUnit amount)
         {
-            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
-                || !solutionEntity.HasComponent<DrainableSolutionComponent>())
+            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+                || !targetEntity.HasComponent<DrainableSolutionComponent>())
             {
                 var newSolution = new Solution();
-                newSolution.OwnerUid = solution.OwnerUid;
+                newSolution.OwnerUid = targetSolution.OwnerUid;
             }
 
-            return SplitSolution(solution, amount);
+            return SplitSolution(targetSolution, amount);
         }
 
         public bool TryGetInjectableSolution(IEntity owner,
@@ -135,21 +134,6 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             solution = null;
             return false;
-        }
-
-        public bool TryGetDefaultSolution(IEntity? target,
-            [NotNullWhen(true)] out Solution? solution)
-        {
-            if (target == null
-                || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr)
-                || solutionsMgr.Solutions.Count != 1)
-            {
-                solution = null;
-                return false;
-            }
-
-            solution = solutionsMgr.Solutions.Values.ToArray()[0];
-            return true;
         }
     }
 }

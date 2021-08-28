@@ -13,7 +13,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -86,7 +85,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if (!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out ExtractableComponent? juice))
+            if (!heldEnt.TryGetComponent(out ExtractableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -228,7 +227,6 @@ namespace Content.Server.Kitchen.EntitySystems
                     foreach (var entity in comp.Chamber.ContainedEntities)
                     {
                         if (!canJuice && entity.HasComponent<ExtractableComponent>()) canJuice = true;
-                        if (!canGrind && entity.HasTag("Grindable")) canGrind = true;
                         if (canJuice && canGrind) break;
                     }
                 }
@@ -307,8 +305,9 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.HasTag("Grindable")) continue;
-                            if (!_solutionsSystem.TryGetDefaultSolution(item, out var solution)) continue;
+                            if (!item.TryGetComponent(out ExtractableComponent? extract) 
+                                || extract.GrindableSolution == null 
+                                || !_solutionsSystem.TryGetSolution(item, extract.GrindableSolution, out var solution)) continue;
 
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             RaiseLocalEvent(item.Uid, juiceEvent, false);

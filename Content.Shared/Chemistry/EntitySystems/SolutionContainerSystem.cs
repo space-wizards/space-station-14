@@ -55,6 +55,10 @@ namespace Content.Shared.Chemistry.EntitySystems
             {
                 var solutionHolder = keyValue.Value;
                 solutionHolder.OwnerUid = component.Owner.Uid;
+                if (solutionHolder.MaxVolume == ReagentUnit.Zero && solutionHolder.TotalVolume > solutionHolder.MaxVolume)
+                {
+                    solutionHolder.MaxVolume = solutionHolder.TotalVolume;
+                }
                 UpdateAppearance(solutionHolder);
             }
         }
