@@ -3,14 +3,13 @@
   parent: BaseItem
   abstract: true
   components:
-  - type: Tag
-    tags:
-    - Grindable
   - type: Sprite
     netsync: false
     sprite: Mobs/Species/Human/organs.rsi
   - type: Mechanism
   - type: Food
+  - type: Extractable
+    extractableSolution: extractableSolution
   - type: SolutionContainerManager
     solutions:
       organ:

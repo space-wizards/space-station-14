@@ -226,7 +226,7 @@ namespace Content.Client.Entry
             "InnateActions",
             "ReagentGrinder",
             "Grindable",
-            "Juiceable",
+            "Extractable",
             "WelderRefinable",
             "ConveyorAssembly",
             "TwoWayLever",

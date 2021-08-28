@@ -8,9 +8,8 @@
     netsync: false
     state: produce
   - type: Produce
-  - type: Tag
-    tags:
-    - Grindable
+  - type: Extractable
+    extractableSolution: food
 
 - type: entity
   name: wheat bushel
@@ -45,7 +44,7 @@
           Quantity: 10
   - type: Produce
     seed: oat
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: MilkOat
@@ -100,7 +99,7 @@
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
     seed: banana
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceBanana
@@ -158,7 +157,7 @@
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
     seed: carrots
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceCarrot
@@ -181,7 +180,7 @@
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
     seed: lemon
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceLime
@@ -204,7 +203,7 @@
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
     seed: pineapple
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuicePineapple
@@ -248,7 +247,7 @@
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
     seed: tomato
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceTomato
@@ -322,7 +321,7 @@
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
     seed: apple
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceApple
@@ -437,9 +436,8 @@
   - type: Sprite
     netsync: false
     state: slice
-  - type: Tag
-    tags:
-    - Grindable
+  - type: Extractable
+    extractableSolution: food
 
 - type: entity
   name: pineapple slice
@@ -449,7 +447,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuicePineapple

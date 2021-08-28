@@ -43,10 +43,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 EnqueueUiUpdate(component));
             SubscribeLocalEvent<ReagentGrinderComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ReagentGrinderComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<StackComponent, JuiceableScalingEvent>(JuiceableScaling);
+            SubscribeLocalEvent<StackComponent, ExtractableScalingEvent>(ExtractableScaling);
         }
 
-        private void JuiceableScaling(EntityUid uid, StackComponent component, JuiceableScalingEvent args)
+        private void ExtractableScaling(EntityUid uid, StackComponent component, ExtractableScalingEvent args)
         {
             args.Scalar *= component.Count; // multiply scalar by amount of items in stack
         }
@@ -86,7 +86,7 @@ namespace Content.Server.Kitchen.EntitySystems
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if (!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
+            if (!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out ExtractableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -227,7 +227,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var entity in comp.Chamber.ContainedEntities)
                     {
-                        if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
+                        if (!canJuice && entity.HasComponent<ExtractableComponent>()) canJuice = true;
                         if (!canGrind && entity.HasTag("Grindable")) canGrind = true;
                         if (canJuice && canGrind) break;
                     }
@@ -310,7 +310,7 @@ namespace Content.Server.Kitchen.EntitySystems
                             if (!item.HasTag("Grindable")) continue;
                             if (!_solutionsSystem.TryGetDefaultSolution(item, out var solution)) continue;
 
-                            var juiceEvent = new JuiceableScalingEvent(); // default of scalar is always 1.0
+                            var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             RaiseLocalEvent(item.Uid, juiceEvent, false);
                             if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
@@ -332,18 +332,18 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
-                            var juiceEvent = new JuiceableScalingEvent(); // default of scalar is always 1.0
+                            if (!item.TryGetComponent<ExtractableComponent>(out var juiceMe)) continue;
+                            var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (item.HasComponent<StackComponent>())
                             {
-                                RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent);
+                                RaiseLocalEvent<ExtractableScalingEvent>(item.Uid, juiceEvent);
                             }
 
                             if (component.HeldBeaker.CurrentVolume +
-                                juiceMe.JuiceResultSolution.TotalVolume * juiceEvent.Scalar >
+                                juiceMe.ResultSolution.TotalVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
-                            juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(component.HeldBeaker, juiceMe.JuiceResultSolution);
+                            juiceMe.ResultSolution.ScaleSolution(juiceEvent.Scalar);
+                            _solutionsSystem.TryAddSolution(component.HeldBeaker, juiceMe.ResultSolution);
                             item.Delete();
                         }
 
