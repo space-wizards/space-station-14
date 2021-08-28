@@ -20,6 +20,8 @@ namespace Content.Server.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
+
+            SubscribeLocalEvent<ItemSlotsComponent, PlaceItemAttempt>(OnPlaceItem);
         }
 
         private void OnComponentInit(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
@@ -53,6 +55,24 @@ namespace Content.Server.Containers.ItemSlots
                 return;
 
             args.Handled = TryInsertContent(itemSlots, args.Used, args.User);
+        }
+
+        private void OnPlaceItem(EntityUid uid, ItemSlotsComponent slots, PlaceItemAttempt args)
+        {
+            if (!slots.Slots.TryGetValue(args.SlotName, out var slot))
+            {
+                args.Cancel();
+                return;
+            }
+
+            if (slot.ContainerSlot.ContainedEntity != null)
+            {
+                args.Cancel();
+                return;
+            }
+
+            slot.ContainerSlot.Insert(args.Item);
+            RaiseLocalEvent(uid, new ItemSlotChanged(slots, args.SlotName, slot));
         }
 
         /// <summary>
@@ -95,7 +115,7 @@ namespace Content.Server.Containers.ItemSlots
 
                 // insert item
                 slot.ContainerSlot.Insert(item);
-                RaiseLocalEvent(new ItemSlotChanged(itemSlots, slotName, slot));
+                RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
 
                 // play sound
                 if (slot.InsertSound != null)
@@ -108,11 +128,8 @@ namespace Content.Server.Containers.ItemSlots
         }
 
 
-        public IEntity? GetItemInSlot(ItemSlotsComponent itemSlots, string slotName, IEntity user)
+        public IEntity? PeekItemInSlot(ItemSlotsComponent itemSlots, string slotName)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
-                return null;
-
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return null;
 
@@ -138,10 +155,10 @@ namespace Content.Server.Containers.ItemSlots
             var itemComponent = item.GetComponent<ItemComponent>();
             hands.PutInHandOrDrop(itemComponent);
 
-            RaiseLocalEvent(new ItemSlotChanged(itemSlots, slotName, slot));
-
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);
+
+            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
         }
     }
 }

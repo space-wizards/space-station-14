@@ -38,7 +38,8 @@
       pda_id_slot:
         whitelist:
           components:
-            - IdCard               
+            - IdCard
+  - type: PDA
 
 - type: entity
   parent: BasePDA
