@@ -15,7 +15,7 @@ namespace Content.Shared.Verbs
 
         // TODO: This is a quick hack. Verb objects should absolutely be cached properly.
         // This works for now though.
-        public static IEnumerable<(IComponent, Verb)> GetVerbs(IEntity entity)
+        public static IEnumerable<(IComponent, OldVerb)> GetVerbs(IEntity entity)
         {
             var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
 
@@ -24,12 +24,12 @@ namespace Content.Shared.Verbs
                 var type = component.GetType();
                 foreach (var nestedType in type.GetAllNestedTypes())
                 {
-                    if (!typeof(Verb).IsAssignableFrom(nestedType) || nestedType.IsAbstract)
+                    if (!typeof(OldVerb).IsAssignableFrom(nestedType) || nestedType.IsAbstract)
                     {
                         continue;
                     }
 
-                    var verb = typeFactory.CreateInstance<Verb>(nestedType);
+                    var verb = typeFactory.CreateInstance<OldVerb>(nestedType);
                     yield return (component, verb);
                 }
             }

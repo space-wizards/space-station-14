@@ -223,7 +223,7 @@ namespace Content.Server.Body.Part
         [Verb]
         public class AttachBodyPartVerb : Verb<BodyPartComponent>
         {
-            protected override void GetData(IEntity user, BodyPartComponent component, VerbData data)
+            protected override void GetData(IEntity user, BodyPartComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 

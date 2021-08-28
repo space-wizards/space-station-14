@@ -22,7 +22,7 @@ namespace Content.Server.Fluids.Components
         [Verb]
         private sealed class SpillTargetVerb : Verb<SpillableComponent>
         {
-            protected override void GetData(IEntity user, SpillableComponent component, VerbData data)
+            protected override void GetData(IEntity user, SpillableComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     !component.Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent) ||

@@ -122,7 +122,7 @@ namespace Content.Server.Clothing.Components
         [UsedImplicitly]
         public sealed class ToggleMagbootsVerb : Verb<MagbootsComponent>
         {
-            protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
+            protected override void GetData(IEntity user, MagbootsComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

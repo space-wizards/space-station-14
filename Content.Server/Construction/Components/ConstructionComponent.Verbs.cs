@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Components
         [Verb]
         public sealed class DeconstructibleVerb : Verb<ConstructionComponent>
         {
-            protected override void GetData(IEntity user, ConstructionComponent component, VerbData data)
+            protected override void GetData(IEntity user, ConstructionComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

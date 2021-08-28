@@ -109,7 +109,7 @@ namespace Content.Client.Verbs
             if (!entity.Uid.IsClientSide())
             {
                 _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
-                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsMessage(_currentEntity));
+                RaiseNetworkEvent(new VerbSystemMessages.RequestVerbsEvent(_currentEntity));
             }
 
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
@@ -148,7 +148,7 @@ namespace Content.Client.Verbs
                     groupIcons.Add(data.Category, data.CategoryIcon);
                 }
 
-                list.Add(new ListedVerbData(data.Text, !data.Available, data.Key, entity.ToString()!, () =>
+                list.Add(new ListedVerbData(data.Text, data.IsDisabled, data.Key, entity.ToString()!, () =>
                 {
                     RaiseNetworkEvent(new VerbSystemMessages.UseVerbMessage(curEntity, data.Key));
                     CloseAllMenus();

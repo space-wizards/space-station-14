@@ -329,7 +329,7 @@ namespace Content.Server.Atmos.Components
         {
             public override bool RequireInteractionRange => true;
 
-            protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
+            protected override void GetData(IEntity user, GasTankComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
                 if (!user.HasComponent<ActorComponent>())

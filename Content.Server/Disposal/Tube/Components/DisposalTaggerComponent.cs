@@ -155,7 +155,7 @@ namespace Content.Server.Disposal.Tube.Components
         [Verb]
         public sealed class ConfigureVerb : Verb<DisposalTaggerComponent>
         {
-            protected override void GetData(IEntity user, DisposalTaggerComponent component, VerbData data)
+            protected override void GetData(IEntity user, DisposalTaggerComponent component, OldVerbData data)
             {
 
                 var groupController = IoCManager.Resolve<IConGroupController>();

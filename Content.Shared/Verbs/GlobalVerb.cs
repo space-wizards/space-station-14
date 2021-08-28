@@ -24,7 +24,7 @@ namespace Content.Shared.Verbs
         /// <param name="target">The entity this verb is being evaluated for.</param>
         /// <param name="data">The data that must be filled in.</param>
         /// <returns>The text string that is shown in the right click menu for this verb.</returns>
-        public abstract void GetData(IEntity user, IEntity target, VerbData data);
+        public abstract void GetData(IEntity user, IEntity target, OldVerbData data);
 
         /// <summary>
         ///     Invoked when this verb is activated from the right click menu.
@@ -33,9 +33,9 @@ namespace Content.Shared.Verbs
         /// <param name="target">The entity that is being acted upon.</param>
         public abstract void Activate(IEntity user, IEntity target);
 
-        public VerbData GetData(IEntity user, IEntity target)
+        public OldVerbData GetData(IEntity user, IEntity target)
         {
-            var data = new VerbData();
+            var data = new OldVerbData();
             GetData(user, target, data);
             return data;
         }

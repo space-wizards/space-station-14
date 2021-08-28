@@ -30,7 +30,7 @@ namespace Content.Server.Administration.Verbs
             euiMgr.OpenEui(new AdminAddReagentEui(target), player);
         }
 
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             // ISolutionInteractionsComponent doesn't exactly have an interface for "admin tries to refill this", so...
             // Still have a path for SolutionContainerComponent in case it doesn't allow direct refilling.

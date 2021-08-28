@@ -195,7 +195,7 @@ namespace Content.Server.Disposal.Tube.Components
         [Verb]
         public sealed class ConfigureVerb : Verb<DisposalRouterComponent>
         {
-            protected override void GetData(IEntity user, DisposalRouterComponent component, VerbData data)
+            protected override void GetData(IEntity user, DisposalRouterComponent component, OldVerbData data)
             {
                 var session = user.PlayerSession();
                 var groupController = IoCManager.Resolve<IConGroupController>();

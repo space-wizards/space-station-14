@@ -161,7 +161,7 @@ namespace Content.Server.Morgue.Components
         [Verb]
         private sealed class CremateVerb : Verb<CrematoriumEntityStorageComponent>
         {
-            protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, VerbData data)
+            protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Cooking || component.Open)
                 {

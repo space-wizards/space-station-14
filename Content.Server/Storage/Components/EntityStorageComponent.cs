@@ -453,7 +453,7 @@ namespace Content.Server.Storage.Components
         [Verb]
         private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
         {
-            protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
+            protected override void GetData(IEntity user, EntityStorageComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -471,7 +471,7 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
+        protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, OldVerbData data)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                 component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored

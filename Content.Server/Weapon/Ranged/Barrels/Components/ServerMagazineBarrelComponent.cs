@@ -431,7 +431,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -461,7 +461,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class OpenBoltVerb : Verb<ServerMagazineBarrelComponent>
         {
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -482,7 +482,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class CloseBoltVerb : Verb<ServerMagazineBarrelComponent>
         {
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

@@ -13,7 +13,7 @@ namespace Content.Server.Administration.Verbs
         public override bool RequireInteractionRange => false;
         public override bool BlockedByContainers => false;
 
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             data.Visibility = VerbVisibility.Invisible;
 

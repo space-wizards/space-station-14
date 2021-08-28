@@ -638,7 +638,7 @@ namespace Content.Server.Storage.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, ServerStorageComponent component, VerbData data)
+            protected override void GetData(IEntity user, ServerStorageComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

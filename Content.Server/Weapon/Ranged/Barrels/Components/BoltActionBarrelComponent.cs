@@ -338,7 +338,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class OpenBoltVerb : Verb<BoltActionBarrelComponent>
         {
-            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, BoltActionBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -359,7 +359,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class CloseBoltVerb : Verb<BoltActionBarrelComponent>
         {
-            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, BoltActionBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

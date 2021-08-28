@@ -273,7 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         private sealed class SpinRevolverVerb : Verb<RevolverBarrelComponent>
         {
-            protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
+            protected override void GetData(IEntity user, RevolverBarrelComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

@@ -428,7 +428,7 @@ namespace Content.Server.Chemistry.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
+            protected override void GetData(IEntity user, ChemMasterComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

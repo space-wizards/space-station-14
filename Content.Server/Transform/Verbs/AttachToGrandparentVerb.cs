@@ -11,7 +11,7 @@ namespace Content.Server.Transform.Verbs
     [GlobalVerb]
     public class AttachToGrandparentVerb : GlobalVerb
     {
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             data.Visibility = VerbVisibility.Invisible;
 

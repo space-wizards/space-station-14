@@ -15,7 +15,7 @@ namespace Content.Server.Pointing
     {
         public override bool RequireInteractionRange => false;
 
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             data.Visibility = VerbVisibility.Invisible;
             data.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";

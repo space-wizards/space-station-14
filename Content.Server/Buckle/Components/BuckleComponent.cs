@@ -435,7 +435,7 @@ namespace Content.Server.Buckle.Components
         [Verb]
         private sealed class BuckleVerb : Verb<BuckleComponent>
         {
-            protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
+            protected override void GetData(IEntity user, BuckleComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.Buckled)
                 {

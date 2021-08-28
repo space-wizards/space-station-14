@@ -201,7 +201,7 @@ namespace Content.Server.Chemistry.Components
         [Verb]
         public sealed class MinimumTransferVerb : Verb<SolutionTransferComponent>
         {
-            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            protected override void GetData(IEntity user, SolutionTransferComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
                 {
@@ -226,7 +226,7 @@ namespace Content.Server.Chemistry.Components
         [Verb]
         public sealed class DefaultTransferVerb : Verb<SolutionTransferComponent>
         {
-            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            protected override void GetData(IEntity user, SolutionTransferComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
                 {
@@ -258,7 +258,7 @@ namespace Content.Server.Chemistry.Components
         [Verb]
         public sealed class MaximumTransferVerb : Verb<SolutionTransferComponent>
         {
-            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            protected override void GetData(IEntity user, SolutionTransferComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
                 {
@@ -284,7 +284,7 @@ namespace Content.Server.Chemistry.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, SolutionTransferComponent component, VerbData data)
+            protected override void GetData(IEntity user, SolutionTransferComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.CanChangeTransferAmount)
                 {

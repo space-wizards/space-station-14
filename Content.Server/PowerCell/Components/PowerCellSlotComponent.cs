@@ -181,7 +181,7 @@ namespace Content.Server.PowerCell.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
+            protected override void GetData(IEntity user, PowerCellSlotComponent component, OldVerbData data)
             {
                 if (!component.ShowVerb || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

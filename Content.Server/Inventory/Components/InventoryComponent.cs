@@ -656,7 +656,7 @@ namespace Content.Server.Inventory.Components
             public override bool RequireInteractionRange => false;
             public override bool BlockedByContainers => false;
 
-            protected override void GetData(IEntity user, InventoryComponent component, VerbData data)
+            protected override void GetData(IEntity user, InventoryComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
                 if (!CanCommand(user))

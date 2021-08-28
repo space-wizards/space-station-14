@@ -281,7 +281,7 @@ namespace Content.Server.Disposal.Tube.Components
         [Verb]
         private sealed class TubeDirectionsVerb : Verb<IDisposalTubeComponent>
         {
-            protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
+            protected override void GetData(IEntity user, IDisposalTubeComponent component, OldVerbData data)
             {
                 data.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 data.CategoryData = VerbCategories.Debug;

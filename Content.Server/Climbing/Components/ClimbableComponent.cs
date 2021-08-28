@@ -244,7 +244,7 @@ namespace Content.Server.Climbing.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
+            protected override void GetData(IEntity user, ClimbableComponent component, OldVerbData data)
             {
                 if (!component.CanVault(user, component.Owner, out var _))
                 {

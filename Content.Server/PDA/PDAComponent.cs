@@ -377,7 +377,7 @@ namespace Content.Server.PDA
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -399,7 +399,7 @@ namespace Content.Server.PDA
         [Verb]
         public sealed class EjectPenVerb : Verb<PDAComponent>
         {
-            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -421,7 +421,7 @@ namespace Content.Server.PDA
         [Verb]
         public sealed class ToggleFlashlightVerb : Verb<PDAComponent>
         {
-            protected override void GetData(IEntity user, PDAComponent component, VerbData data)
+            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

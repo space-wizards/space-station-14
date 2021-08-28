@@ -103,7 +103,7 @@ namespace Content.Server.Morgue.Components
         [Verb]
         private sealed class RemoveLabelVerb : Verb<BodyBagEntityStorageComponent>
         {
-            protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
+            protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
                 {

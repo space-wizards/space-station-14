@@ -54,7 +54,7 @@ namespace Content.Server.Cabinet
         [Verb]
         public sealed class EjectItemFromCabinetVerb : Verb<ItemCabinetComponent>
         {
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
+            protected override void GetData(IEntity user, ItemCabinetComponent component, OldVerbData data)
             {
                 if (component.ItemContainer.ContainedEntity == null || !component.Opened || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     data.Visibility = VerbVisibility.Invisible;
@@ -80,7 +80,7 @@ namespace Content.Server.Cabinet
 
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
+            protected override void GetData(IEntity user, ItemCabinetComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     data.Visibility = VerbVisibility.Invisible;

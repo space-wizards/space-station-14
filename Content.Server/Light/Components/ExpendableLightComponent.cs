@@ -177,7 +177,7 @@ namespace Content.Server.Light.Components
         [Verb]
         public sealed class ActivateVerb : Verb<ExpendableLightComponent>
         {
-            protected override void GetData(IEntity user, ExpendableLightComponent component, VerbData data)
+            protected override void GetData(IEntity user, ExpendableLightComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

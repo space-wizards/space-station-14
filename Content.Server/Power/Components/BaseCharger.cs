@@ -117,7 +117,7 @@ namespace Content.Server.Power.Components
         [Verb]
         private sealed class InsertVerb : Verb<BaseCharger>
         {
-            protected override void GetData(IEntity user, BaseCharger component, VerbData data)
+            protected override void GetData(IEntity user, BaseCharger component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -164,7 +164,7 @@ namespace Content.Server.Power.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, BaseCharger component, VerbData data)
+            protected override void GetData(IEntity user, BaseCharger component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

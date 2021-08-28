@@ -248,7 +248,7 @@ namespace Content.Server.Light.Components
         [Verb]
         public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
         {
-            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
+            protected override void GetData(IEntity user, HandheldLightComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

@@ -31,7 +31,7 @@ namespace Content.Server.Rotation.Components
         [Verb]
         public sealed class RotateVerb : Verb<RotatableComponent>
         {
-            protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
+            protected override void GetData(IEntity user, RotatableComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {
@@ -53,7 +53,7 @@ namespace Content.Server.Rotation.Components
         [Verb]
         public sealed class RotateCounterVerb : Verb<RotatableComponent>
         {
-            protected override void GetData(IEntity user, RotatableComponent component, VerbData data)
+            protected override void GetData(IEntity user, RotatableComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static))
                 {

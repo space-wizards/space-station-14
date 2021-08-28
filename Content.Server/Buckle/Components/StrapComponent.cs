@@ -176,7 +176,7 @@ namespace Content.Server.Buckle.Components
         [Verb]
         private sealed class StrapVerb : Verb<StrapComponent>
         {
-            protected override void GetData(IEntity user, StrapComponent component, VerbData data)
+            protected override void GetData(IEntity user, StrapComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 

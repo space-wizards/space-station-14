@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Reflection;
+using Content.Server.Hands.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+
 using static Content.Shared.Verbs.VerbSystemMessages;
 
 namespace Content.Server.Verbs
@@ -24,7 +28,7 @@ namespace Content.Server.Verbs
             IoCManager.InjectDependencies(this);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<RequestVerbsMessage>(RequestVerbs);
+            SubscribeNetworkEvent<RequestVerbsEvent>(RequestVerbs);
             SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -72,11 +76,6 @@ namespace Content.Server.Verbs
 
         private void UseVerb(UseVerbMessage use, EntitySessionEventArgs eventArgs)
         {
-            if (!EntityManager.TryGetEntity(use.EntityUid, out var entity))
-            {
-                return;
-            }
-
             var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
 
@@ -86,44 +85,29 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+            if (!EntityManager.TryGetEntity(use.EntityUid, out var targetEntity))
             {
-                if ($"{component.GetType()}:{verb.GetType()}" != use.VerbKey)
-                {
-                    continue;
-                }
-
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
-                {
-                    break;
-                }
-
-                verb.Activate(userEntity, component);
-                break;
+                return;
             }
 
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (globalVerb.GetType().ToString() != use.VerbKey)
-                {
-                    continue;
-                }
+            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, VerbCategory.GUI);
+            RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
+            foreach (var verb in verbAssembly.Verbs)
+            {
+                if (verb.Key == use.VerbKey)
                 {
+                    verb.Execute();
                     break;
                 }
-
-                globalVerb.Activate(userEntity, entity);
-                break;
             }
         }
 
-        private void RequestVerbs(RequestVerbsMessage req, EntitySessionEventArgs eventArgs)
+        private void RequestVerbs(RequestVerbsEvent req, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(req.EntityUid, out var entity))
+            if (!EntityManager.TryGetEntity(req.EntityUid, out var targetEntity))
             {
                 Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;
@@ -137,45 +121,92 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (!TryGetContextEntities(userEntity, entity.Transform.MapPosition, out var entities, true) || !entities.Contains(entity))
+            if (!TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true) || !entities.Contains(targetEntity))
             {
                 return;
             }
 
+            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, VerbCategory.GUI);
+            RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
+
             var data = new List<VerbsResponseMessage.NetVerbData>();
-            //Get verbs, component dependent.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(entity))
+
+            foreach (var verb in verbAssembly.Verbs)
             {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, verb))
-                {
-                    continue;
-                }
-
-                var verbData = verb.GetData(userEntity, component);
-                if (verbData.IsInvisible)
-                    continue;
-
                 // TODO: These keys being giant strings is inefficient as hell.
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, $"{component.GetType()}:{verb.GetType()}"));
-            }
-
-            //Get global verbs. Visible for all entities regardless of their components.
-            foreach (var globalVerb in VerbUtility.GetGlobalVerbs(Assembly.GetExecutingAssembly()))
-            {
-                if (!VerbUtility.VerbAccessChecks(userEntity, entity, globalVerb))
-                {
-                    continue;
-                }
-
-                var verbData = globalVerb.GetData(userEntity, entity);
-                if (verbData.IsInvisible)
-                    continue;
-
-                data.Add(new VerbsResponseMessage.NetVerbData(verbData, globalVerb.GetType().ToString()));
+                data.Add(new VerbsResponseMessage.NetVerbData(verb));
             }
 
             var response = new VerbsResponseMessage(data.ToArray(), req.EntityUid);
             RaiseNetworkEvent(response, player.ConnectedClient);
+        }
+    }
+
+    public enum VerbCategory
+    {
+        GUI, // Right click context menu. Assembles ALL verbs. Icons and text localizations should only be processed for this category. 
+        PrimaryInteraction, // left click, E , Z etc
+        SecondaryInteraction, // alt + left click, E, Z etc. basically alternative interactions
+        Activate // 'Activate-in-world/hand' differs from 'interact' in that it never tries to use the held item on the target.
+                 // E.g., activating your backpack open it, while the primary interaction, with an empty hand, would be to pick it up.
+    }
+
+    public class AssembleVerbsEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     Event output. List of verbs that can be executed.
+        /// </summary>
+        public List<Verb> Verbs = new();
+
+        /// <summary>
+        ///     Constant for determining whether the target verb is 'In Range' for physical interactions.
+        /// </summary>
+        public const float InteractionRangeSquared = 4;
+
+        /// <summary>
+        ///     Is the user in range of the target for physical interactions?
+        /// </summary>
+        public bool InRange;
+
+        /// <summary>
+        ///     What type of verbs to assemble. If looking specifically for alt-click interactions, don't bother
+        ///     assembling other verbs.
+        /// </summary>
+        public VerbCategory Category;
+
+        /// <summary>
+        ///     The hand being used to interact. Null if the user has no hands, or cannot interact as specified by ActionBlockerSystem.CanInteract().
+        /// </summary>
+        public HandsComponent? Hands;
+
+        /// <summary>
+        ///     The entity currently being held by the active hand.
+        /// </summary>
+        public IEntity? Using;
+
+        public AssembleVerbsEvent(IEntity user, IEntity target, VerbCategory category)
+        {
+            Category = category;
+
+            // Here we check if physical interactions are permitted. First, does the user have hands?
+            if (!user.TryGetComponent<HandsComponent>(out var hands))
+                return;
+
+            // Are physical interactions blocked somehow?
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                return;
+
+            // Can the user physically access the target?
+            if (!user.IsInSameOrParentContainer(target))
+                return;
+
+            // Physical interactions are allowed.
+            Hands = hands;
+            Hands.TryGetActiveHeldEntity(out Using);
+
+            // Are they in range? Some verbs may not require this.
+            var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition).LengthSquared;
+            InRange = distanceSquared <= InteractionRangeSquared;
         }
     }
 }

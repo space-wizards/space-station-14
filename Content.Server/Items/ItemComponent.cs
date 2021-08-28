@@ -33,7 +33,7 @@ namespace Content.Server.Items
         [Verb]
         public sealed class PickUpVerb : Verb<ItemComponent>
         {
-            protected override void GetData(IEntity user, ItemComponent component, VerbData data)
+            protected override void GetData(IEntity user, ItemComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     component.Owner.IsInContainer() ||

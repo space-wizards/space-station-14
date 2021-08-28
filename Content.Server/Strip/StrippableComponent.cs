@@ -435,7 +435,7 @@ namespace Content.Server.Strip
         [Verb]
         private sealed class StripVerb : Verb<StrippableComponent>
         {
-            protected override void GetData(IEntity user, StrippableComponent component, VerbData data)
+            protected override void GetData(IEntity user, StrippableComponent component, OldVerbData data)
             {
                 if (!component.CanBeStripped(user))
                 {

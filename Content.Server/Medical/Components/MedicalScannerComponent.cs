@@ -208,7 +208,7 @@ namespace Content.Server.Medical.Components
         [Verb]
         public sealed class EnterVerb : Verb<MedicalScannerComponent>
         {
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
@@ -231,7 +231,7 @@ namespace Content.Server.Medical.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, MedicalScannerComponent component, VerbData data)
+            protected override void GetData(IEntity user, MedicalScannerComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

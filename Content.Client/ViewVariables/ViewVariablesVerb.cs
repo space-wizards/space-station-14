@@ -15,7 +15,7 @@ namespace Content.Client.ViewVariables
         public override bool RequireInteractionRange => false;
         public override bool BlockedByContainers => false;
 
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             var groupController = IoCManager.Resolve<IClientConGroupController>();
             if (!groupController.CanViewVar())

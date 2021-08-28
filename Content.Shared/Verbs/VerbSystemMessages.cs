@@ -8,11 +8,11 @@ namespace Content.Shared.Verbs
     public static class VerbSystemMessages
     {
         [Serializable, NetSerializable]
-        public class RequestVerbsMessage : EntityEventArgs
+        public class RequestVerbsEvent : EntityEventArgs
         {
             public readonly EntityUid EntityUid;
 
-            public RequestVerbsMessage(EntityUid entityUid)
+            public RequestVerbsEvent(EntityUid entityUid)
             {
                 EntityUid = entityUid;
             }
@@ -38,16 +38,16 @@ namespace Content.Shared.Verbs
                 public readonly string Category;
                 public readonly SpriteSpecifier? Icon;
                 public readonly SpriteSpecifier? CategoryIcon;
-                public readonly bool Available;
+                public readonly bool IsDisabled;
 
-                public NetVerbData(VerbData data, string key)
+                public NetVerbData(Verb verb)
                 {
-                    Text = data.Text;
-                    Key = key;
-                    Category = data.Category;
-                    CategoryIcon = data.CategoryIcon;
-                    Icon = data.Icon;
-                    Available = data.Visibility == VerbVisibility.Visible;
+                    Text = verb.Text;
+                    Key = verb.Key;
+                    Category = verb.Category;
+                    CategoryIcon = verb.CategoryIcon;
+                    Icon = verb.Icon;
+                    IsDisabled = verb.IsDisabled;
                 }
             }
         }

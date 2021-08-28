@@ -320,7 +320,7 @@ namespace Content.Server.Cuffs.Components
         [Verb]
         private sealed class UncuffVerb : Verb<CuffableComponent>
         {
-            protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
+            protected override void GetData(IEntity user, CuffableComponent component, OldVerbData data)
             {
                 if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
                 {

@@ -220,7 +220,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [Verb]
         private sealed class DumpVerb : Verb<AmmoBoxComponent>
         {
-            protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
+            protected override void GetData(IEntity user, AmmoBoxComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

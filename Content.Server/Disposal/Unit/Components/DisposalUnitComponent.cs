@@ -196,7 +196,7 @@ namespace Content.Server.Disposal.Unit.Components
         [Verb]
         private sealed class SelfInsertVerb : Verb<DisposalUnitComponent>
         {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            protected override void GetData(IEntity user, DisposalUnitComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 
@@ -219,7 +219,7 @@ namespace Content.Server.Disposal.Unit.Components
         [Verb]
         private sealed class FlushVerb : Verb<DisposalUnitComponent>
         {
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            protected override void GetData(IEntity user, DisposalUnitComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 
@@ -245,7 +245,7 @@ namespace Content.Server.Disposal.Unit.Components
         {
             public override bool AlternativeInteraction => true;
 
-            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            protected override void GetData(IEntity user, DisposalUnitComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 

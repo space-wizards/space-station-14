@@ -23,7 +23,7 @@ namespace Content.Server.Damage
         public override bool RequireInteractionRange => false;
         public override bool BlockedByContainers => false;
 
-        public override void GetData(IEntity user, IEntity target, VerbData data)
+        public override void GetData(IEntity user, IEntity target, OldVerbData data)
         {
             data.Text = Loc.GetString("rejuvenate-verb-get-data-text");
             data.CategoryData = VerbCategories.Debug;

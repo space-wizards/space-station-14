@@ -41,7 +41,7 @@ namespace Content.Server.Rotation.Components
         [Verb]
         private sealed class FlippableVerb : Verb<FlippableComponent>
         {
-            protected override void GetData(IEntity user, FlippableComponent component, VerbData data)
+            protected override void GetData(IEntity user, FlippableComponent component, OldVerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {

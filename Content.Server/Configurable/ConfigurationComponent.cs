@@ -134,7 +134,7 @@ namespace Content.Server.Configurable
         [Verb]
         public sealed class ConfigureVerb : Verb<ConfigurationComponent>
         {
-            protected override void GetData(IEntity user, ConfigurationComponent component, VerbData data)
+            protected override void GetData(IEntity user, ConfigurationComponent component, OldVerbData data)
             {
                 var session = user.PlayerSession();
                 var groupController = IoCManager.Resolve<IConGroupController>();

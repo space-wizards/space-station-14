@@ -15,7 +15,7 @@ namespace Content.Server.Pulling
         [Verb]
         public class PullingVerb : Verb<PullableComponent>
         {
-            protected override void GetData(IEntity user, PullableComponent component, VerbData data)
+            protected override void GetData(IEntity user, PullableComponent component, OldVerbData data)
             {
                 data.Visibility = VerbVisibility.Invisible;
 
