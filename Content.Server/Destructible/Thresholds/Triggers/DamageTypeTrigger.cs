@@ -4,6 +4,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.IoC;
 using Content.Shared.Damage.Prototypes;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
@@ -13,12 +14,16 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public class DamageTypeTrigger : IThresholdTrigger
+    public class DamageTypeTrigger : IThresholdTrigger, ISerializationHooks
     {
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         [DataField("damageType", required:true)]
-        public string _damageTypeID { get; set; } = default!;
-        public DamageTypePrototype DamageType => IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        private string _damageTypeID { get; set; } = default!;
+        public DamageTypePrototype DamageType = default!;
+        void ISerializationHooks.AfterDeserialization()
+        {
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         [DataField("damage", required: true)]
         public int Damage { get; set; } = default!;
