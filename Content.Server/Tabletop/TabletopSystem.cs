@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -122,17 +121,17 @@ namespace Content.Server.Tabletop
 
             draggableComponent.DraggingPlayer = msg.DraggingPlayer;
 
-            if (!draggedEntity.TryGetComponent<SpriteComponent>(out var spriteComponent)) return;
+            if (!draggedEntity.TryGetComponent<AppearanceComponent>(out var appearance)) return;
 
             if (draggableComponent.DraggingPlayer != null)
             {
-                spriteComponent.Scale = new Vector2(1.25f, 1.25f);
-                spriteComponent.DrawDepth = (int) DrawDepth.Items + 1;
+                appearance.SetData(TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f));
+                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1);
             }
             else
             {
-                spriteComponent.Scale = Vector2.One;
-                spriteComponent.DrawDepth = (int) DrawDepth.Items;
+                appearance.SetData(TabletopItemVisuals.Scale, Vector2.One);
+                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items);
             }
         }
 

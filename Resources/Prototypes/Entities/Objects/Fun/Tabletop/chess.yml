@@ -31,6 +31,9 @@
   - type: TabletopDraggable
   - type: Sprite
     noRot: true
+  - type: Appearance
+    visuals:
+    - type: TabletopItemVisualizer
 
 # White pieces
 - type: entity

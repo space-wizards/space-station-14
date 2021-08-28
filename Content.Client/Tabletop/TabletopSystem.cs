@@ -215,10 +215,10 @@ namespace Content.Client.Tabletop
         {
             RaiseNetworkEvent(new TabletopDraggingPlayerChangedEvent(draggedEntity.Uid, _playerManager.LocalPlayer?.UserId));
 
-            if (draggedEntity.TryGetComponent<SpriteComponent>(out var spriteComponent))
+            if (draggedEntity.TryGetComponent<AppearanceComponent>(out var appearance))
             {
-                spriteComponent.Scale = new Vector2(1.25f, 1.25f);
-                spriteComponent.DrawDepth = (int) DrawDepth.Items + 1;
+                appearance.SetData(TabletopItemVisuals.Scale, new Vector2(1.25f, 1.25f));
+                appearance.SetData(TabletopItemVisuals.DrawDepth, (int) DrawDepth.Items + 1);
             }
 
             _draggedEntity = draggedEntity;
