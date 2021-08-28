@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -6,12 +7,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
 {
-    [NetworkedComponent()]
-    public class SharedPDAComponent : Component
-    {
-        public override string Name => "PDA";
-    }
-
     [Serializable, NetSerializable]
     public sealed class PDAToggleFlashlightMessage : BoundUserInterfaceMessage
     {
@@ -86,16 +81,6 @@ namespace Content.Shared.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDAUplinkBuySuccessMessage : ComponentMessage
-    {
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class PDAUplinkInsufficientFundsMessage : ComponentMessage
-    {
-    }
-
-    [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage
     {
         public PDARequestUpdateInterfaceMessage()
@@ -125,73 +110,4 @@ namespace Content.Shared.PDA
         Key
     }
 
-    public class UplinkAccount
-    {
-        public event Action<UplinkAccount>? BalanceChanged;
-        public EntityUid AccountHolder;
-        private int _balance;
-        [ViewVariables]
-        public int Balance => _balance;
-
-        public UplinkAccount(EntityUid uid, int startingBalance)
-        {
-            AccountHolder = uid;
-            _balance = startingBalance;
-        }
-
-        public bool ModifyAccountBalance(int newBalance)
-        {
-            if (newBalance < 0)
-            {
-                return false;
-            }
-            _balance = newBalance;
-            BalanceChanged?.Invoke(this);
-            return true;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class UplinkAccountData
-    {
-        public EntityUid DataAccountHolder;
-        public int DataBalance;
-
-        public UplinkAccountData(EntityUid dataAccountHolder, int dataBalance)
-        {
-            DataAccountHolder = dataAccountHolder;
-            DataBalance = dataBalance;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
-    {
-        public string ItemId;
-        public int Price;
-        public UplinkCategory Category;
-        public string Description;
-        public string ListingName;
-
-        public UplinkListingData(string listingName,string itemId,
-            int price, UplinkCategory category,
-            string description)
-        {
-            ListingName = listingName;
-            Price = price;
-            Category = category;
-            Description = description;
-            ItemId = itemId;
-        }
-
-        public bool Equals(UplinkListingData? other)
-        {
-            if (other == null)
-            {
-                return false;
-            }
-
-            return ItemId == other.ItemId;
-        }
-    }
 }

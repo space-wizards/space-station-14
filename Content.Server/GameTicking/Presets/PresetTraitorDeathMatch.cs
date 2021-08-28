@@ -30,6 +30,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.Traitor.Uplink.Events;
+using Content.Shared.Traitor.Uplink;
 
 namespace Content.Server.GameTicking.Presets
 {

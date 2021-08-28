@@ -1,4 +1,4 @@
-using Content.Shared.PDA;
+using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 

@@ -1,4 +1,4 @@
-using Content.Shared.PDA;
+using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Traitor.Uplink.Events

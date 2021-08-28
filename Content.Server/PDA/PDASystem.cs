@@ -78,6 +78,12 @@ namespace Content.Server.PDA
             }
         }
 
+        private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
+        {
+            pda.OwnerName = args.OwnerName;
+            UpdatePDAUserInterface(pda);
+        }
+
         private bool OpenUI(PDAComponent pda, IEntity user)
         {
             if (!user.TryGetComponent(out ActorComponent? actor))
@@ -133,12 +139,6 @@ namespace Content.Server.PDA
                         break;
                     }
             }
-        }
-
-        private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
-        {
-            pda.OwnerName = args.OwnerName;
-            UpdatePDAUserInterface(pda);
         }
     }
 }

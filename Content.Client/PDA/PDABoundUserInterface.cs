@@ -2,6 +2,7 @@ using System;
 using Content.Client.Examine;
 using Content.Client.Message;
 using Content.Shared.PDA;
+using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;

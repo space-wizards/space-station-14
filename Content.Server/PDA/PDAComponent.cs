@@ -14,8 +14,10 @@ namespace Content.Server.PDA
 {
     [RegisterComponent]
     [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : SharedPDAComponent, IAccess
+    public class PDAComponent : Component, IAccess
     {
+        public override string Name => "PDA";
+
         public const string IDSlotName = "pda_id_slot";
         public const string PenSlotName = "pda_pen_slot";
 

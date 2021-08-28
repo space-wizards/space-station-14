@@ -14,6 +14,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Roles;
+using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
