@@ -62,7 +62,7 @@ namespace Content.Client.Hands
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
 
-            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.PickupDirection);
+            ReusableAnimations.AnimateEntityPickup(entity, msg.InitialPosition, msg.FinalPosition);
         }
 
         public HandsGuiState GetGuiState()
@@ -128,6 +128,7 @@ namespace Content.Client.Hands
         {
             component.Gui = new HandsGui(component, this);
             _gameHud.HandsContainer.AddChild(component.Gui);
+            component.Gui.SetPositionFirst();
         }
 
         private static void HandlePlayerDetached(EntityUid uid, HandsComponent component, PlayerDetachedEvent args)

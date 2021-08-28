@@ -26,7 +26,10 @@
     state: conveyor_started_cw
     drawdepth: FloorObjects
   - type: SignalReceiver
-    maxTransmitters: 1
+    inputs:
+      - name: state
+        type: Content.Shared.MachineLinking.TwoWayLeverSignal
+        maxConnections: 1
   - type: ApcPowerReceiver
   - type: Conveyor
   - type: Appearance
@@ -69,6 +72,10 @@
       sprite: Structures/conveyor.rsi
       state: switch-off
     - type: TwoWayLever
+    - type: SignalTransmitter
+      outputs:
+        - name: state
+          type: Content.Shared.MachineLinking.TwoWayLeverSignal
     - type: Appearance
       visuals:
         - type: TwoWayLeverVisualizer

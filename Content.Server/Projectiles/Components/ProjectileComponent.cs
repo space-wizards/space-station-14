@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Damage;
 using Content.Shared.Projectiles;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,21 +13,19 @@ namespace Content.Server.Projectiles.Components
     [ComponentReference(typeof(SharedProjectileComponent))]
     public class ProjectileComponent : SharedProjectileComponent
     {
-        [DataField("damages")] private Dictionary<DamageType, int> _damages = new();
-
-        [ViewVariables]
-        public Dictionary<DamageType, int> Damages
-        {
-            get => _damages;
-            set => _damages = value;
-        }
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
+        // While thats being done, also replace "damages" -> "damageTypes" For consistency.
+        [DataField("damages")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Dictionary<string, int> Damages { get; set; } = new();
 
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;
 
         // Get that juicy FPS hit sound
-        [DataField("soundHit")] public string? SoundHit = default;
-        [DataField("soundHitSpecies")] public string? SoundHitSpecies = default;
+        [DataField("soundHit", required: true)] public SoundSpecifier? SoundHit = default!;
+        [DataField("soundHitSpecies")] public SoundSpecifier? SoundHitSpecies = null;
 
         public bool DamagedEntity;
 

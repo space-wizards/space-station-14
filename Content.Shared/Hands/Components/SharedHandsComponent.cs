@@ -437,7 +437,7 @@ namespace Content.Shared.Hands.Components
 
             DoDroppedInteraction(heldEntity, intentionalDrop);
 
-            heldEntity.Transform.Coordinates = GetFinalDropCoordinates(targetDropLocation);
+            heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
         }
@@ -445,29 +445,25 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
         /// </summary>
-        private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords)
+        private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
             var origin = Owner.Transform.MapPosition;
-            var other = targetCoords.ToMap(Owner.EntityManager);
+            var target = targetCoords.ToMap(Owner.EntityManager);
 
-            var dropVector = other.Position - origin.Position;
-            var requestedDropDistance = (dropVector.Length);
+            var dropVector = target.Position - origin.Position;
+            var requestedDropDistance = dropVector.Length;
 
             if (dropVector.Length > SharedInteractionSystem.InteractionRange)
             {
                 dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
-                other = new MapCoordinates(origin.Position + dropVector, other.MapId);
+                target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, ignoredEnt: Owner);
 
-            var diff = requestedDropDistance - dropLength;
-
-            // If we come up short then offset the drop location.
-            if (diff > 0)
-                return targetCoords.Offset(-dropVector.Normalized * diff);
-
-            return targetCoords;
+            if (dropLength < requestedDropDistance)
+                return origin.Position + dropVector.Normalized * dropLength;
+            return target.Position;
         }
 
         /// <summary>
@@ -674,12 +670,12 @@ namespace Content.Shared.Hands.Components
             DoInteraction(activeHeldEntity, heldEntity);
         }
 
-        public void UseActiveHeldEntity()
+        public void UseActiveHeldEntity(bool altInteract = false)
         {
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            DoUse(heldEntity);
+            DoUse(heldEntity, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -783,7 +779,7 @@ namespace Content.Shared.Hands.Components
 
         protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
 
-        protected virtual void DoUse(IEntity heldEntity) { }
+        protected virtual void DoUse(IEntity heldEntity, bool altInteract = false) { }
 
         protected virtual void DoActivate(IEntity heldEntity) { }
 
@@ -923,13 +919,13 @@ namespace Content.Shared.Hands.Components
     public class PickupAnimationMessage : EntityEventArgs
     {
         public EntityUid EntityUid { get; }
-        public MapCoordinates InitialPosition { get; }
-        public Vector2 PickupDirection { get; }
+        public EntityCoordinates InitialPosition { get; }
+        public Vector2 FinalPosition { get; }
 
-        public PickupAnimationMessage(EntityUid entityUid, Vector2 pickupDirection, MapCoordinates initialPosition)
+        public PickupAnimationMessage(EntityUid entityUid, Vector2 finalPosition, EntityCoordinates initialPosition)
         {
             EntityUid = entityUid;
-            PickupDirection = pickupDirection;
+            FinalPosition = finalPosition;
             InitialPosition = initialPosition;
         }
     }

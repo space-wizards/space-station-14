@@ -20,7 +20,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
        - Impassable
@@ -36,8 +36,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: MorgueTray
   - type: Appearance
     visuals:
@@ -59,7 +61,7 @@
     fixtures:
       - shape:
           !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
         mass: 25
         mask:
           - Impassable
@@ -97,7 +99,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.5, 0.5, 0.5"
+          bounds: "-0.5,-0.5,0.5,0.5"
       mass: 25
       mask:
        - Impassable
@@ -113,8 +115,10 @@
     CanWeldShut: false
     IsCollidableWhenOpen: true
     Capacity: 1
-    closeSound: /Audio/Items/deconstruct.ogg
-    openSound: /Audio/Items/deconstruct.ogg
+    closeSound:
+      path: /Audio/Items/deconstruct.ogg
+    openSound:
+      path: /Audio/Items/deconstruct.ogg
     trayPrototype: CrematoriumTray
     doSoulBeep: false
   - type: Appearance

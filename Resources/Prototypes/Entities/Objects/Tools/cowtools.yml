@@ -15,7 +15,8 @@
     - type: Tool
       qualities:
         - Cutting
-      useSound: /Audio/Items/wirecutter.ogg
+      useSound:
+        path: /Audio/Items/wirecutter.ogg
       speed: 0.05
     - type: Item
       sprite: Objects/Tools/Cowtools/haycutters.rsi
@@ -55,7 +56,8 @@
     - type: Tool
       qualities:
         - Anchoring
-      useSound: /Audio/Items/ratchet.ogg
+      useSound:
+        path: /Audio/Items/ratchet.ogg
       speed: 0.05
 
 - type: entity
@@ -74,7 +76,8 @@
     - type: Tool
       qualities:
         - Prying
-      useSound: /Audio/Items/crowbar.ogg
+      useSound:
+        path: /Audio/Items/crowbar.ogg
       speed: 0.05
     - type: TilePrying
 

@@ -39,11 +39,6 @@ namespace Content.Shared.MobState.State
             return true;
         }
 
-        public virtual bool CanMove()
-        {
-            return true;
-        }
-
         public virtual bool CanUse()
         {
             return true;

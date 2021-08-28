@@ -9,13 +9,6 @@ namespace Content.Server.MachineLinking.Components
         public override string Name => "SignalLinker";
 
         [ViewVariables]
-        public SignalTransmitterComponent? Link { get; set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Link = null;
-        }
+        public (SignalTransmitterComponent transmitter, string port)? Port;
     }
 }

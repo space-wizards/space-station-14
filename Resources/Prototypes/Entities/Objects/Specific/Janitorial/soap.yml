@@ -4,6 +4,9 @@
   parent: BaseItem
   description: A cheap bar of soap. Doesn't smell.
   components:
+  - type: Tag
+    tags:
+    - Soap
   - type: Sprite
     sprite: Objects/Specific/Janitorial/soap.rsi
     state: soap
@@ -19,14 +22,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
+        bounds: "-0.4,-0.3,0.4,0.3"
       id: "slips"
       hard: false
       layer:
       - SmallImpassable
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
+        bounds: "-0.4,-0.3,0.4,0.3"
       mass: 5
       mask:
       - SmallImpassable

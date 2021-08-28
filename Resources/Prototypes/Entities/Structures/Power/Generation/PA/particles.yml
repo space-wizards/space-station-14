@@ -11,7 +11,8 @@
         shader: unshaded
     - type: Projectile
       deleteOnCollide: false
-      soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+      soundHit:
+        path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
       damages:
         Radiation: 10
     - type: Physics

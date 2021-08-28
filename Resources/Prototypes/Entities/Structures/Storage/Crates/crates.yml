@@ -538,7 +538,8 @@
         damage: 15
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+          path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           MaterialWoodPlank1:
@@ -551,7 +552,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4, -0.4, 0.29, 0.4"
+          bounds: "-0.4,-0.4,0.4,0.29"
       mass: 75
       mask:
       - Impassable

@@ -23,13 +23,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.25,0.4,0.25"
+          bounds: "-0.25,-0.4,0.25,0.4"
       mass: 30
       mask:
-      - SmallImpassable
+      - Impassable
       layer:
       - Opaque
-      - Impassable
+      - SmallImpassable
+      - VaultImpassable
       - MobImpassable
   - type: Destructible
     thresholds:
@@ -40,7 +41,8 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:
@@ -57,7 +59,8 @@
       overlay_full: dispover-full
       overlay_engaged: dispover-handle
       state_flush: disposal-flush
-      flush_sound: /Audio/Machines/disposalflush.ogg
+      flush_sound:
+        path: /Audio/Machines/disposalflush.ogg
       flush_time: 2
   - type: UserInterface
     interfaces:
@@ -75,20 +78,3 @@
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
-
-# - type: entity
-#   parent: DisposalUnitBase
-#   id: DisposalMailingUnit
-#   name: disposal mailing unit
-#   components:
-#   - type: Configuration
-#     keys:
-#     - Tag
-#   - type: DisposalMailingUnit
-#     flushTime: 2
-#   - type: UserInterface
-#     interfaces:
-#     - key: enum.DisposalMailingUnitUiKey.Key
-#       type: DisposalMailingUnitBoundUserInterface
-#     - key: enum.ConfigurationUiKey.Key
-#       type: ConfigurationBoundUserInterface

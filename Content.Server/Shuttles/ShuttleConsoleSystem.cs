@@ -9,6 +9,7 @@ using Content.Shared.Shuttles;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles
 {
@@ -58,7 +59,7 @@ namespace Content.Server.Shuttles
         /// <summary>
         /// If pilot is moved then we'll stop them from piloting.
         /// </summary>
-        private void HandlePilotMove(EntityUid uid, PilotComponent component, MoveEvent args)
+        private void HandlePilotMove(EntityUid uid, PilotComponent component, ref MoveEvent args)
         {
             if (component.Console == null) return;
             RemovePilot(component);
@@ -89,7 +90,7 @@ namespace Content.Server.Shuttles
             {
                 RemovePilot(pilotComponent);
 
-                if (console != component)
+                if (console == component)
                 {
                     return;
                 }
@@ -160,7 +161,7 @@ namespace Content.Server.Shuttles
 
         public void ClearPilots(ShuttleConsoleComponent component)
         {
-            foreach (var pilot in component.SubscribedPilots)
+            while (component.SubscribedPilots.TryGetValue(0, out var pilot))
             {
                 RemovePilot(pilot);
             }

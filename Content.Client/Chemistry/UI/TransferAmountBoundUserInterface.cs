@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -24,7 +24,7 @@ namespace Content.Client.Chemistry.UI
                     _window.Close();
                 }
             };
-
+            _window.OnClose += Close;
             _window.OpenCentered();
         }
 

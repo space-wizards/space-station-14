@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Climbing.Components;
+using Content.Shared.Climbing;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -8,7 +9,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Climbing
 {
     [UsedImplicitly]
-    internal sealed class ClimbSystem : EntitySystem
+    internal sealed class ClimbSystem : SharedClimbSystem
     {
         private readonly HashSet<ClimbingComponent> _activeClimbers = new();
 

@@ -7,12 +7,17 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
+using Content.Shared.Damage;
 
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -32,23 +37,26 @@ namespace Content.Server.Projectiles
             var coordinates = args.OtherFixture.Body.Owner.Transform.Coordinates;
             var playerFilter = Filter.Pvs(coordinates);
 
-            if (!otherEntity.Deleted &&
-                otherEntity.HasComponent<SharedBodyComponent>() && component.SoundHitSpecies != null)
+            if (!otherEntity.Deleted && component.SoundHitSpecies != null &&
+                otherEntity.HasComponent<SharedBodyComponent>())
             {
-                SoundSystem.Play(playerFilter, component.SoundHitSpecies, coordinates);
+                SoundSystem.Play(playerFilter, component.SoundHitSpecies.GetSound(), coordinates);
             }
-            else if (component.SoundHit != null)
+            else
             {
-                SoundSystem.Play(playerFilter, component.SoundHit, coordinates);
+                var soundHit = component.SoundHit?.GetSound();
+
+                if (!string.IsNullOrEmpty(soundHit))
+                    SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
             if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))
             {
                 EntityManager.TryGetEntity(component.Shooter, out var shooter);
 
-                foreach (var (damageType, amount) in component.Damages)
+                foreach (var (damageTypeID, amount) in component.Damages)
                 {
-                    damage.ChangeDamage(damageType, amount, false, shooter);
+                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), amount);
                 }
 
                 component.DamagedEntity = true;

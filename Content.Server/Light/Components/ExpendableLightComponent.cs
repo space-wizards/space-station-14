@@ -100,10 +100,8 @@ namespace Content.Server.Light.Components
                 switch (CurrentState)
                 {
                     case ExpendableLightState.Lit:
-                        if (LitSound != string.Empty)
-                        {
-                            SoundSystem.Play(Filter.Pvs(Owner), LitSound, Owner);
-                        }
+                    {
+                        SoundSystem.Play(Filter.Pvs(Owner), LitSound.GetSound(), Owner);
 
                         if (IconStateLit != string.Empty)
                         {
@@ -113,22 +111,21 @@ namespace Content.Server.Light.Components
 
                         sprite.LayerSetVisible(1, true);
                         break;
-
+                    }
                     case ExpendableLightState.Fading:
+                    {
                         break;
-
+                    }
                     default:
                     case ExpendableLightState.Dead:
-
-                        if (DieSound != string.Empty)
-                        {
-                            SoundSystem.Play(Filter.Pvs(Owner), DieSound, Owner);
-                        }
+                    {
+                        if (DieSound != null) SoundSystem.Play(Filter.Pvs(Owner), DieSound.GetSound(), Owner);
 
                         sprite.LayerSetState(0, IconStateSpent);
                         sprite.LayerSetShader(0, "shaded");
                         sprite.LayerSetVisible(1, false);
                         break;
+                    }
                 }
             }
 
