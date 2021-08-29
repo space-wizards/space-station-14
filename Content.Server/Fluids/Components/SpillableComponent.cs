@@ -7,7 +7,6 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -15,9 +14,7 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
-
-        [DataField("solution")]
-        public string SolutionName { get; set; } = default!;
+        private const string SolutionName = "puddle";
 
         /// <summary>
         ///     Transfers solution from the held container to the floor.
