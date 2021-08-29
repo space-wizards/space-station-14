@@ -9,6 +9,7 @@ using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
@@ -31,6 +32,7 @@ namespace Content.Client.Verbs
     public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs>? ToggleContextMenu;
         public event EventHandler<bool>? ToggleContainerVisibility;
@@ -39,6 +41,7 @@ namespace Content.Client.Verbs
         private VerbPopup? _currentVerbListRoot;
         private VerbPopup? _currentGroupList;
         private EntityUid _currentEntity;
+        private List<Verb>? _currentVerbs;
 
         // TODO: Move presenter out of the system
         // TODO: Separate the rest of the UI from the logic
@@ -47,7 +50,7 @@ namespace Content.Client.Verbs
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<VerbsResponseMessage>(FillEntityPopup);
+            SubscribeNetworkEvent<VerbsResponseMessage>(HandleVerbResponse);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             _contextMenuPresenter = new ContextMenuPresenter(this);
@@ -104,14 +107,25 @@ namespace Content.Client.Verbs
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
             _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
 
+            // Add text informing user that the verb list may be incomplete.
             if (!entity.Uid.IsClientSide())
             {
                 _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
-                RaiseNetworkEvent(new RequestServerVerbsEvent(_currentEntity));
             }
 
+            // Get verb lists from client-side / shared systems
+            var user = _playerManager.LocalPlayer!.ControlledEntity!;
+            AssembleVerbsEvent assembleVerbs = new(user, entity, prepareGUI: true);
+            RaiseLocalEvent(assembleVerbs);
+            _currentVerbs = assembleVerbs.Verbs;
+
+            // Show the menu
+            FillVerbMenu();
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             _currentVerbListRoot.Open(box);
+
+            //ask server for remaining verbs
+            RaiseNetworkEvent(new RequestServerVerbsEvent(_currentEntity));
         }
 
         public void OnContextButtonPressed(IEntity entity)
@@ -119,27 +133,56 @@ namespace Content.Client.Verbs
             OpenContextMenu(entity, _userInterfaceManager.MousePositionScaled);
         }
 
-        private void FillEntityPopup(VerbsResponseMessage msg)
+        private void HandleVerbResponse(VerbsResponseMessage msg)
         {
-            if (_currentEntity != msg.Entity || !EntityManager.TryGetEntity(_currentEntity, out var entity))
+            if (_currentEntity != msg.Entity)
             {
                 return;
             }
 
-            DebugTools.AssertNotNull(_currentVerbListRoot);
+            if (_currentVerbs == null)
+            {
+                _currentVerbs = msg.Verbs;
+            }
+            else
+            {
+                // Merge message verbs with client side verb list
+                foreach (var verb in msg.Verbs)
+                {
+                    _currentVerbs.Add(verb);
+                }
+            }
+
+            // Clear currently shown verbs
             var vBox = _currentVerbListRoot!.List;
             vBox.DisposeAllChildren();
-            if (msg.Verbs.Count() == 0)
+
+            // Show verbs, if there are any to show
+            if (_currentVerbs.Count() > 0)
+            {
+                FillVerbMenu();
+            }
+            else
             {
                 var panel = new PanelContainer();
                 panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 vBox.AddChild(panel);
-                return;
             }
+        }
+
+        private void FillVerbMenu()
+        {
+            if (!EntityManager.TryGetEntity(_currentEntity, out var entity) || _currentVerbs == null)
+                return;
+
+            _currentVerbs.Sort();
+
+            DebugTools.AssertNotNull(_currentVerbListRoot);
+            var vBox = _currentVerbListRoot!.List;
 
             HashSet<string> verbCategories = new();
             var first = true;
-            foreach (var (key, verb) in msg.Verbs)
+            foreach (var verb in _currentVerbs)
             {
                 if (!first)
                 {
@@ -154,14 +197,14 @@ namespace Content.Client.Verbs
                 // Does this verb not belong to a category?
                 if (string.IsNullOrEmpty(verb.Category))
                 {
-                    vBox.AddChild(new VerbButton(this, key, verb, entity));
+                    vBox.AddChild(new VerbButton(this, verb, entity));
                 }
                 // Else, does this verb belong to a NEW verb category that hasn't already been added?
-                else if(verbCategories.Add(verb.Category))
+                else if (verbCategories.Add(verb.Category))
                 {
                     // Create new verb group button
                     vBox.AddChild(
-                        new VerbCategoryButton(this, verb.Category, verb.CategoryIcon, msg.Verbs, entity)
+                        new VerbCategoryButton(this, verb.Category, verb.CategoryIcon, _currentVerbs, entity)
                         );
                 }
             }
@@ -172,6 +215,7 @@ namespace Content.Client.Verbs
             _currentVerbListRoot?.Dispose();
             _currentVerbListRoot = null;
             _currentEntity = EntityUid.Invalid;
+            _currentVerbs = null;
         }
 
         private void CloseAllMenus()
@@ -208,7 +252,6 @@ namespace Content.Client.Verbs
         {
             private readonly RichTextLabel _label;
             private readonly TextureRect _icon;
-            private readonly string _key;
 
             public Texture? Icon
             {
@@ -216,7 +259,7 @@ namespace Content.Client.Verbs
                 set => _icon.Texture = value;
             }
 
-            public VerbButton(VerbSystem system, string key, Verb verbData, IEntity owner)
+            public VerbButton(VerbSystem system, Verb verb, IEntity owner)
             {
                 AddChild(new BoxContainer
                 {
@@ -235,27 +278,36 @@ namespace Content.Client.Verbs
                     }
                 });
 
-                _key = key;
-                _label.SetMessage(FormattedMessage.FromMarkupPermissive(verbData.Text));
-                Disabled = verbData.IsDisabled;
+                _label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+                Disabled = verb.IsDisabled;
 
-                if (verbData.Icon != null)
+                if (verb.Icon != null)
                 {
-                    Icon = verbData.Icon.Frame0();
+                    Icon = verb.Icon.Frame0();
                 }
 
-                if (!verbData.IsDisabled)
+                if (!verb.IsDisabled)
                 {
                     OnPressed += _ =>
                     {
                         system.CloseAllMenus();
                         try
                         {
-                            system.RaiseNetworkEvent(new UseVerbMessage(owner.Uid, _key));
+                            if (verb.Act != null)
+                            {
+                                // verb was defined client-side (e.g., examine)
+                                // May still end up raising network events.
+                                verb.Act();
+                            }
+                            else
+                            {
+                                // Verb was defined server-side.
+                                system.RaiseNetworkEvent(new UseVerbMessage(owner.Uid, verb.Key));
+                            }
                         }
                         catch (Exception e)
                         {
-                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", _key, owner.ToString(), e);
+                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb.Key, owner.ToString(), e);
                         }
                     };
                 }
@@ -285,7 +337,7 @@ namespace Content.Client.Verbs
 
             private readonly IEntity _owner;
 
-            private readonly IEnumerable<KeyValuePair<string, Verb>> _verbs;
+            private readonly IEnumerable<Verb> _verbs;
 
             public string? Text
             {
@@ -299,12 +351,12 @@ namespace Content.Client.Verbs
                 set => _icon.Texture = value;
             }
 
-            public VerbCategoryButton(VerbSystem system, string category, SpriteSpecifier? icon, IReadOnlyDictionary<string, Verb> verbs, IEntity owner)
+            public VerbCategoryButton(VerbSystem system, string category, SpriteSpecifier? icon, List<Verb> verbs, IEntity owner)
             {
                 _system = system;
                 _owner = owner;
                 Text = category;
-                _verbs = verbs.Where(verb => verb.Value.Category == category);
+                _verbs = verbs.Where(verb => verb.Category == category);
 
                 MouseFilter = MouseFilterMode.Stop;
 
@@ -370,7 +422,7 @@ namespace Content.Client.Verbs
                     var popup = _system._currentGroupList = new VerbPopup();
 
                     var first = true;
-                    foreach (var (key, verb) in _verbs)
+                    foreach (var verb in _verbs)
                     {
                         if (!first)
                         {
@@ -383,7 +435,7 @@ namespace Content.Client.Verbs
 
                         first = false;
 
-                        popup.List.AddChild(new VerbButton(_system, key, verb, _owner));
+                        popup.List.AddChild(new VerbButton(_system, verb, _owner));
                     }
 
                     UserInterfaceManager.ModalRoot.AddChild(popup);

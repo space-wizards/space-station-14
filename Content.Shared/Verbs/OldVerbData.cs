@@ -86,6 +86,11 @@ namespace Content.Shared.Verbs
         /// </summary>
         public string Text = string.Empty;
 
+        /// <summary>
+        ///     The key used to identify the verb when communicating over the network.
+        /// </summary>
+        public string Key;
+
         /// <remarks>
         ///     Convenience property to run localization on verb text.
         /// </remarks>
@@ -131,6 +136,11 @@ namespace Content.Shared.Verbs
         public string IconTexture
         {
             set => Icon = new SpriteSpecifier.Texture(new ResourcePath(value));
+        }
+
+        public Verb(string key)
+        {
+            Key = key;
         }
 
         /// <summary>

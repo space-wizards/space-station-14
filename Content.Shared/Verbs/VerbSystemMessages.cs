@@ -22,10 +22,10 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public class VerbsResponseMessage : EntityEventArgs
     {
-        public readonly Dictionary<string, Verb> Verbs;
+        public readonly List<Verb> Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseMessage(Dictionary<string, Verb> verbs, EntityUid entity)
+        public VerbsResponseMessage(List<Verb> verbs, EntityUid entity)
         {
             Verbs = verbs;
             Entity = entity;
@@ -50,7 +50,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Event output. List of verbs that can be executed.
         /// </summary>
-        public Dictionary<string, Verb> Verbs = new();
+        public List<Verb> Verbs = new();
 
         /// <summary>
         ///     What kind of verbs to assemble. If this is null, includes all verbs.

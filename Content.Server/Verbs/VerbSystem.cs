@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
@@ -85,13 +86,17 @@ namespace Content.Server.Verbs
             }
 
             // Generate the list of verbs
-            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
-            RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
+            var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
+            RaiseLocalEvent(targetEntity.Uid, verbEvent, false);
 
-            // Run the applicable verb
-            if (verbAssembly.Verbs.TryGetValue(use.VerbKey, out var verb))
+            // Find the verb that matches the key specified by the message. Maybe verbs should have been a dictionary
+            // instead of a list. But then you can't use Verbs.Sort(), and other logic becomes messier.
+            var requestedVerb = verbEvent.Verbs.FirstOrDefault(verb => verb.Key == use.VerbKey);
+
+            // execute the verb
+            if (requestedVerb != null)
             {
-                verb.Act?.Invoke();
+                requestedVerb.Act?.Invoke();
             }
             else
             {
@@ -123,10 +128,10 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
-            RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
+            var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
+            RaiseLocalEvent(targetEntity.Uid, verbEvent, false);
 
-            var response = new VerbsResponseMessage(verbAssembly.Verbs, req.EntityUid);
+            var response = new VerbsResponseMessage(verbEvent.Verbs, req.EntityUid);
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }
