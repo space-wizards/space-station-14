@@ -59,4 +59,22 @@ namespace Content.Shared.Verbs
             return true;
         }
     }
+
+    /// <summary>
+    ///     The types of interactions to include when assembling a list of verbs. If null, assembles all verbs
+    /// </summary>
+    /// <remarks>
+    ///     Primary verbs are those that should be triggered when using left-click, 'Z', or 'E' to interact with
+    ///     entities. Secondary verbs are for alternative interactions that can be triggered by using the 'alt'
+    ///     modifier. Tertiary interactions are global interactions like "examine" or "Debug". Activation verbs are a
+    ///     subset of primary interactions that do not try to use the contents of the hand, e.g., to open up a PDA UI
+    ///     without picking up the PDA.
+    /// </remarks>
+    public enum InteractionType
+    {
+        Primary,
+        Secondary,
+        Tertiary,
+        Activation
+    }
 }

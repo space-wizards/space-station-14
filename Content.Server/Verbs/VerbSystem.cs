@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.Hands.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
-using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -25,7 +22,7 @@ namespace Content.Server.Verbs
             IoCManager.InjectDependencies(this);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<RequestVerbsEvent>(RequestVerbs);
+            SubscribeNetworkEvent<RequestServerVerbsEvent>(RequestVerbs);
             SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -87,20 +84,23 @@ namespace Content.Server.Verbs
                 return;
             }
 
+            // Generate the list of verbs
             var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
             RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
-            foreach (var verb in verbAssembly.Verbs)
+            // Run the applicable verb
+            if (verbAssembly.Verbs.TryGetValue(use.VerbKey, out var verb))
             {
-                if (verb.Key == use.VerbKey)
-                {
-                    verb.Execution();
-                    break;
-                }
+                verb.Act?.Invoke();
+            }
+            else
+            {
+                Logger.Warning($"{nameof(UseVerb)} called by player {session} with an invalid verb key: {use.VerbKey}");
+                return;
             }
         }
 
-        private void RequestVerbs(RequestVerbsEvent req, EntitySessionEventArgs eventArgs)
+        private void RequestVerbs(RequestServerVerbsEvent req, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
@@ -126,121 +126,8 @@ namespace Content.Server.Verbs
             var verbAssembly = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
             RaiseLocalEvent(targetEntity.Uid, verbAssembly, false);
 
-            var verbs = new List<Verb>();
-            verbs.Sort();
-
-            foreach (var verb in verbAssembly.Verbs)
-            {
-                // TODO: These keys being giant strings is inefficient as hell.
-                verbs.Add(verb);
-            }
-
-            var response = new VerbsResponseMessage(verbs.ToArray(), req.EntityUid);
+            var response = new VerbsResponseMessage(verbAssembly.Verbs, req.EntityUid);
             RaiseNetworkEvent(response, player.ConnectedClient);
-        }
-    }
-
-    /// <summary>
-    ///     The types of interactions to include when assembling a list of verbs. If null, assembles all verbs
-    /// </summary>
-    /// <remarks>
-    ///     Primary verbs are those that should be triggered when using left-click, 'Z', or 'E' to interact with
-    ///     entities. Secondary verbs are for alternative interactions that can be triggered by using the 'alt'
-    ///     modifier. Tertiary interactions are global interactions like "examine" or "Debug". Activation verbs are a
-    ///     subset of primary interactions that do not try to use the contents of the hand, e.g., to open up a PDA UI
-    ///     without picking up the PDA.
-    /// </remarks>
-    public enum InteractionType
-    {
-        Primary,
-        Secondary,
-        Tertiary,
-        Activation
-    }
-
-    public class AssembleVerbsEvent : EntityEventArgs
-    {
-        /// <summary>
-        ///     Event output. List of verbs that can be executed.
-        /// </summary>
-        public List<Verb> Verbs = new();
-
-        /// <summary>
-        ///     What kind of verbs to assemble. If this is null, includes all verbs.
-        /// </summary>
-        public InteractionType? Interaction; 
-
-        /// <summary>
-        ///     Constant for determining whether the target verb is 'In Range' for physical interactions.
-        /// </summary>
-        public const float InteractionRangeSquared = 4;
-
-        /// <summary>
-        ///     Is the user in range of the target for physical interactions?
-        /// </summary>
-        public bool InRange;
-
-        /// <summary>
-        ///     The entity being targeted for the verb.
-        /// </summary>
-        public IEntity Target;
-
-        /// <summary>
-        ///     The entity that will be "performing" the verb.
-        /// </summary>
-        public IEntity User;
-
-        /// <summary>
-        ///     The entity currently being held by the active hand.
-        /// </summary>
-        /// <remarks>
-        ///     If this is null, but the user has a HandsComponent, the hand is probably empty.
-        /// </remarks>
-        public IEntity? Using;
-
-        /// <summary>
-        ///     The User's hand component.
-        /// </summary>
-        public HandsComponent? Hands;
-
-        /// <summary>
-        ///     Whether or not to load icons and string localizations in preparation for displaying in a GUI.
-        /// </summary>
-        public bool PrepareGUI;
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="user">The user that will perform the verb.</param>
-        /// <param name="target">The target entity.</param>
-        /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
-        /// <param name="interaction">The type of interactions to include as verbs.</param>
-        public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false, InteractionType? interaction = null)
-        {
-            Interaction = interaction;
-            User = user;
-            Target = target;
-            PrepareGUI = prepareGUI;
-
-            // Here we check if physical interactions are permitted. First, does the user have hands?
-            if (!user.TryGetComponent<HandsComponent>(out var hands))
-                return;
-
-            // Are physical interactions blocked somehow?
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                return;
-
-            // Can the user physically access the target?
-            if (!user.IsInSameOrParentContainer(target))
-                return;
-
-            // Physical interactions are allowed.
-            Hands = hands;
-            Hands.TryGetActiveHeldEntity(out Using);
-
-            // Are they in range? Some verbs may not require this.
-            var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition).LengthSquared;
-            InRange = distanceSquared <= InteractionRangeSquared;
         }
     }
 }

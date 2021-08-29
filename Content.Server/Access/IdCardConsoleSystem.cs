@@ -27,27 +27,29 @@ namespace Content.Server.Access
                 // Can we insert a privileged ID? 
                 if (component.PrivilegedIDEmpty)
                 {
-                    var verb = new Verb("InsertPrivilegedID", () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands));
+                    Verb verb = new();
+                    verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
                         verb.LocText = "access-insert-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
                     verb.Priority = 1;
-                    args.Verbs.Add(verb);
+                    args.Verbs.Add("IDConsole:InsertPrivilegedID", verb);
                 }
 
                 // Can we insert a target ID?
                 if (component.TargetIDEmpty)
                 {
-                    var verb = new Verb("InsertTargetID", () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands));
+                    Verb verb = new();
+                    verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
                         verb.LocText = "access-insert-target-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
                     verb.Priority = 1;
-                    args.Verbs.Add(verb);
+                    args.Verbs.Add("IDConsole:InsertTargetID", verb);
                 }
             }
 
@@ -57,26 +59,28 @@ namespace Content.Server.Access
                 // Can we eject a privileged ID? 
                 if (!component.PrivilegedIDEmpty)
                 {
-                    var verb = new Verb("EjectPrivilegedID", () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands));
+                    Verb verb = new();
+                    verb.Act = () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
                         verb.LocText = "access-eject-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
                     verb.Priority = -1;
-                    args.Verbs.Add(verb);
+                    args.Verbs.Add("IDConsole:EjectPrivilegedID", verb);
                 }
 
                 // Can we eject a target ID?
                 if (!component.TargetIDEmpty)
                 {
-                    var verb = new Verb("EjectTargetID", () => component.PutIdInHand(component.TargetIdContainer, args.Hands));
+                    Verb verb = new();
+                    verb.Act = () => component.PutIdInHand(component.TargetIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
                         verb.LocText = "access-eject-target-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
-                    args.Verbs.Add(verb);
+                    args.Verbs.Add("IDConsole:EjectTargetID", verb);
                     verb.Priority = -1;
                 }
             }

@@ -8,6 +8,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Access;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
@@ -127,7 +128,7 @@ namespace Content.Server.Access.Components
         /// </summary>
         private void HandleId(IEntity user, ContainerSlot container)
         {
-            if (!user.TryGetComponent(out IHandsComponent? hands))
+            if (!user.TryGetComponent(out SharedHandsComponent? hands))
             {
                 Owner.PopupMessage(user, Loc.GetString("access-id-card-console-component-no-hands-error"));
                 return;
@@ -143,20 +144,15 @@ namespace Content.Server.Access.Components
             }
         }
 
-        public void InsertIdFromHand(IEntity user, ContainerSlot container, IHandsComponent hands)
+        public void InsertIdFromHand(IEntity user, ContainerSlot container, SharedHandsComponent hands)
         {
-            var isId = hands.GetActiveHand?.Owner.HasComponent<IdCardComponent>();
-            if (isId != true)
-            {
+            if (!hands.TryGetActiveHeldEntity(out var heldEntity))
                 return;
-            }
 
-            if (hands.ActiveHand == null)
-            {
+            if (!heldEntity.HasComponent<IdCardComponent>())
                 return;
-            }
 
-            if (!hands.TryPutHandIntoContainer(hands.ActiveHand, container))
+            if (!hands.TryPutHandIntoContainer(hands.ActiveHand!, container))
             {
                 Owner.PopupMessage(user, Loc.GetString("access-id-card-console-component-cannot-let-go-error"));
                 return;
@@ -164,7 +160,7 @@ namespace Content.Server.Access.Components
             UpdateUserInterface();
         }
 
-        public void PutIdInHand(ContainerSlot container, IHandsComponent hands)
+        public void PutIdInHand(ContainerSlot container, SharedHandsComponent hands)
         {
             var idEntity = container.ContainedEntity;
             if (idEntity == null || !container.Remove(idEntity))
@@ -173,7 +169,7 @@ namespace Content.Server.Access.Components
             }
             UpdateUserInterface();
 
-            hands.PutInHand(idEntity.GetComponent<ItemComponent>());
+            hands.TryPutInActiveHandOrAny(idEntity);
         }
 
         private void UpdateUserInterface()
@@ -232,7 +228,7 @@ namespace Content.Server.Access.Components
                 return false;
             }
 
-            if (!item.HasComponent<IdCardComponent>() || !user.TryGetComponent(out IHandsComponent? hand))
+            if (!item.HasComponent<IdCardComponent>() || !user.TryGetComponent(out SharedHandsComponent? hand))
             {
                 return false;
             }

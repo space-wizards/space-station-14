@@ -69,27 +69,17 @@ namespace Content.Shared.Verbs
         }
     }
 
-    /// <summary>
-    ///     Using delegate to store information about verb execution.
-    /// </summary>
-    public delegate void VerbExecution();
-
     [Serializable, NetSerializable]
     public class Verb : IComparable
     {
         /// <summary>
-        ///     Performs the verbs associated action.
+        ///     This action "acts" out the verb.
         /// </summary>
         /// <remarks>
         ///     This is probably either some function in the system assembling this verb, or a lambda function that raises some event.
         /// </remarks>
         [NonSerialized]
-        public VerbExecution Execution;
-
-        /// <summary>
-        ///     The key that is used to refer to a specific verb for execution.
-        /// </summary>
-        public string Key;
+        public Action? Act;
 
         /// <summary>
         ///     The text that the user sees on the verb button.
@@ -141,12 +131,6 @@ namespace Content.Shared.Verbs
         public string IconTexture
         {
             set => Icon = new SpriteSpecifier.Texture(new ResourcePath(value));
-        }
-
-        public Verb(string key, VerbExecution execution )
-        {
-            Execution = execution;
-            Key = key;
         }
 
         /// <summary>
