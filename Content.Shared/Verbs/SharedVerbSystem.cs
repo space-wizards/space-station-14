@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -61,20 +62,31 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     The types of interactions to include when assembling a list of verbs. If null, assembles all verbs
+    ///     The types of interactions to include when assembling a list of verbs.
     /// </summary>
-    /// <remarks>
-    ///     Primary verbs are those that should be triggered when using left-click, 'Z', or 'E' to interact with
-    ///     entities. Secondary verbs are for alternative interactions that can be triggered by using the 'alt'
-    ///     modifier. Tertiary interactions are global interactions like "examine" or "Debug". Activation verbs are a
-    ///     subset of primary interactions that do not try to use the contents of the hand, e.g., to open up a PDA UI
-    ///     without picking up the PDA.
-    /// </remarks>
-    public enum InteractionType
+    /// <remarks> <list type="bullet"> <item>
+    ///     <term>Interact verbs</term>
+    ///     <description>are those that involve using the hands or the currently held item on some other entity. These
+    ///     may be triggered by using left-mouse or 'Z'.</description>
+    /// </item> <item>
+    ///    <term>Activate verbs</term>
+    ///    <description>are those that activate an item in the world. E.g., opening a door or a GUI. These are
+    ///    independent of the currently held items and can always be triggered using 'E', but left-mouse or 'Z' may also trigger
+    ///    these.</description>
+    /// </item> <item>
+    ///     <term>Alternative verbs</term>
+    ///     <description>are those that can be triggered by using the 'alt' modifier (alt +
+    ///     left-mouse/E/Z).</description>
+    /// </item> <item>
+    ///     <term>Other verbs</term>
+    ///     <description>are global interactions like "examine", "pull", or "debug".</description>
+    /// </item>  </list> </remarks>
+    [Flags]
+    public enum VerbTypes : short
     {
-        Primary,
-        Secondary,
-        Tertiary,
-        Activation
+        Interact = 1, //   Z/left-mouse or context menu
+        Activate = 2, // E/Z/left-mouse or context menu
+        Alternative = 4, // alt + E/Z/left-mouse or context menu
+        Other = 8 // context menu only
     }
 }

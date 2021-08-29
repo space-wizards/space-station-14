@@ -53,9 +53,9 @@ namespace Content.Shared.Verbs
         public List<Verb> Verbs = new();
 
         /// <summary>
-        ///     What kind of verbs to assemble. If this is null, includes all verbs.
+        ///     What kind of verbs to assemble. Defaults to all verb types
         /// </summary>
-        public InteractionType? Interaction;
+        public VerbTypes Types;
 
         /// <summary>
         ///     Constant for determining whether the target verb is 'In Range' for physical interactions.
@@ -101,13 +101,14 @@ namespace Content.Shared.Verbs
         /// <param name="user">The user that will perform the verb.</param>
         /// <param name="target">The target entity.</param>
         /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
-        /// <param name="interaction">The type of interactions to include as verbs.</param>
-        public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false, InteractionType? interaction = null)
+        /// <param name="types">The types of interactions to include as verbs.</param>
+        public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false,
+            VerbTypes types = VerbTypes.Activate | VerbTypes.Interact | VerbTypes.Alternative | VerbTypes.Other)
         {
-            Interaction = interaction;
             User = user;
             Target = target;
             PrepareGUI = prepareGUI;
+            Types = types;
 
             // Here we check if physical interactions are permitted. First, does the user have hands?
             if (!user.TryGetComponent<SharedHandsComponent>(out var hands))

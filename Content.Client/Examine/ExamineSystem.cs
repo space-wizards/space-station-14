@@ -90,7 +90,7 @@ namespace Content.Client.Examine
 
         private void HandleVerbAssembly(AssembleVerbsEvent args)
         {
-            if (! (args.Interaction == null || args.Interaction == InteractionType.Tertiary))
+            if (!args.Types.HasFlag(VerbTypes.Other))
                 return;
 
             Verb verb = new("examine");

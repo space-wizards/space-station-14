@@ -19,8 +19,8 @@ namespace Content.Server.Access
             if (args.Hands == null)
                 return;
 
-            // Primary interactions verbs try to insert IDs
-            if ((args.Interaction == null || args.Interaction == InteractionType.Primary) &&
+            // If we are looking for interactions verbs, and we are holding an ID card, add an insert ID verb
+            if (args.Types.HasFlag(VerbTypes.Interact) &&
                 args.Using != null &&
                 args.Using.HasComponent<IdCardComponent>())
             {
@@ -34,7 +34,6 @@ namespace Content.Server.Access
                         verb.LocText = "access-insert-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
-                    verb.Priority = 1;
                     args.Verbs.Add(verb);
                 }
 
@@ -48,13 +47,12 @@ namespace Content.Server.Access
                         verb.LocText = "access-insert-target-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                     }
-                    verb.Priority = 1;
                     args.Verbs.Add(verb);
                 }
             }
 
-            // Secondary interactions verbs try to eject IDs
-            if ((args.Interaction == null || args.Interaction == InteractionType.Secondary))
+            // If we are looking for alternative verbs, maybe we can eject IDs?
+            if (args.Types.HasFlag(VerbTypes.Alternative))
             {
                 // Can we eject a privileged ID? 
                 if (!component.PrivilegedIDEmpty)
@@ -66,7 +64,6 @@ namespace Content.Server.Access
                         verb.LocText = "access-eject-privileged-id-verb-get-data-text";
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
-                    verb.Priority = -1;
                     args.Verbs.Add(verb);
                 }
 
@@ -81,7 +78,6 @@ namespace Content.Server.Access
                         verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
                     }
                     args.Verbs.Add(verb);
-                    verb.Priority = -1;
                 }
             }
         }
