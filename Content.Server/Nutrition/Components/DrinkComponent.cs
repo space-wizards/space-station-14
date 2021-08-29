@@ -20,7 +20,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
@@ -31,9 +30,10 @@ namespace Content.Server.Nutrition.Components
     [RegisterComponent]
     public class DrinkComponent : Component, IUse, IAfterInteract, IExamine, ILand
     {
-        private const string SolutionName = "drink";
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "drink";
 
         public override string Name => "Drink";
 
@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("isOpen")]
-        private bool _defaultToOpened;
+        internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(5);
@@ -84,17 +84,6 @@ namespace Content.Server.Nutrition.Components
         private bool _pressurized = default;
         [DataField("burstSound")]
         private SoundSpecifier _burstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Opened = _defaultToOpened;
-            // TODO move into drinkSystem
-            UpdateAppearance();
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
-        }
-
 
         private void OpenedChanged()
         {
