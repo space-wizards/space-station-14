@@ -67,7 +67,7 @@ namespace Content.Server.PDA
             // check if ID slot changed
             if (args.SlotName == PDAComponent.IDSlotName)
             {
-                var item = args.Slot.ContainerSlot.ContainedEntity;
+                var item = args.ContainedItem;
                 if (item == null || !item.TryGetComponent(out IdCardComponent? idCard))
                     pda.ContainedID = null;
                 else
@@ -75,7 +75,7 @@ namespace Content.Server.PDA
             }
             else if (args.SlotName == PDAComponent.PenSlotName)
             {
-                var item = args.Slot.ContainerSlot.ContainedEntity;
+                var item = args.ContainedItem;
                 pda.PenInserted = item != null;
             }
 
