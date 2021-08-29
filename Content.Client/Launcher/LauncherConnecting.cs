@@ -52,15 +52,29 @@ namespace Content.Client.Launcher
 
             _userInterfaceManager.StateRoot.AddChild(_control);
 
-            _clientNetManager.ConnectFailed += (_, args) =>
-            {
-                ConnectFailReason = args.Reason;
-                CurrentPage = Page.ConnectFailed;
-            };
-
-            _clientNetManager.ClientConnectStateChanged += state => ConnectionStateChanged?.Invoke(state);
+            _clientNetManager.ConnectFailed += OnConnectFailed;
+            _clientNetManager.ClientConnectStateChanged += OnConnectStateChanged;
 
             CurrentPage = Page.Connecting;
+        }
+
+        public override void Shutdown()
+        {
+            _control?.Dispose();
+
+            _clientNetManager.ConnectFailed -= OnConnectFailed;
+            _clientNetManager.ClientConnectStateChanged -= OnConnectStateChanged;
+        }
+
+        private void OnConnectFailed(object? _, NetConnectFailArgs args)
+        {
+            ConnectFailReason = args.Reason;
+            CurrentPage = Page.ConnectFailed;
+        }
+
+        private void OnConnectStateChanged(ClientConnectionState state)
+        {
+            ConnectionStateChanged?.Invoke(state);
         }
 
         public void RetryConnect()
@@ -75,11 +89,6 @@ namespace Content.Client.Launcher
         public void Exit()
         {
             _gameController.Shutdown("Exit button pressed");
-        }
-
-        public override void Shutdown()
-        {
-            _control?.Dispose();
         }
 
         public void SetDisconnected()
