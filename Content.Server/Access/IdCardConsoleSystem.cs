@@ -1,7 +1,7 @@
 using Content.Server.Access.Components;
-using Content.Server.Verbs;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Access
 {
@@ -15,11 +15,11 @@ namespace Content.Server.Access
 
         private void HandleVerbAssembly(EntityUid uid, IdCardConsoleComponent component, AssembleVerbsEvent args)
         {
-            // This system only defines physical interaction verbs
             if (args.Hands == null)
+                // No non-physical interactions here.
                 return;
 
-            // If we are looking for interactions verbs, and we are holding an ID card, add an insert ID verb
+            // If we are looking for interactions verbs, and we are holding an ID card, try add insert verbs
             if (args.Types.HasFlag(VerbTypes.Interact) &&
                 args.Using != null &&
                 args.Using.HasComponent<IdCardComponent>())
@@ -31,8 +31,8 @@ namespace Content.Server.Access
                     verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
-                        verb.LocText = "access-insert-privileged-id-verb-get-data-text";
-                        verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                        verb.Category = VerbCategories.Insert;
+                        verb.Text = Loc.GetString("id-card-console-privileged-id");
                     }
                     args.Verbs.Add(verb);
                 }
@@ -44,8 +44,8 @@ namespace Content.Server.Access
                     verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
-                        verb.LocText = "access-insert-target-id-verb-get-data-text";
-                        verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                        verb.Category = VerbCategories.Insert;
+                        verb.Text = Loc.GetString("id-card-console-target-id");
                     }
                     args.Verbs.Add(verb);
                 }
@@ -61,8 +61,8 @@ namespace Content.Server.Access
                     verb.Act = () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
-                        verb.LocText = "access-eject-privileged-id-verb-get-data-text";
-                        verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                        verb.Category = VerbCategories.Eject;
+                        verb.Text = Loc.GetString("id-card-console-privileged-id");
                     }
                     args.Verbs.Add(verb);
                 }
@@ -74,8 +74,10 @@ namespace Content.Server.Access
                     verb.Act = () => component.PutIdInHand(component.TargetIdContainer, args.Hands);
                     if (args.PrepareGUI)
                     {
-                        verb.LocText = "access-eject-target-id-verb-get-data-text";
-                        verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                        verb.Category = VerbCategories.Eject;
+                        verb.Text = Loc.GetString("id-card-console-target-id");
+
+                        verb.Priority = -20;
                     }
                     args.Verbs.Add(verb);
                 }

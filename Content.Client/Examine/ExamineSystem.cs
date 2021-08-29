@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -97,7 +98,7 @@ namespace Content.Client.Examine
             verb.Act = () => DoExamine(args.Target) ;
             if (args.PrepareGUI)
             {
-                verb.LocText = "examine-verb-name";
+                verb.Text = Loc.GetString("examine-verb-name");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
             }
             args.Verbs.Add(verb);

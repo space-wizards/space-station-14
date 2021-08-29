@@ -1,18 +1,57 @@
 
+using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
+using System;
+
 namespace Content.Shared.Verbs
 {
     /// <summary>
-    ///     Standard verb categories.
+    /// Contains combined name and icon information for a verb category.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class VerbCategoryData
+    {
+        public readonly string Text;
+
+        public readonly SpriteSpecifier? Icon;
+
+        /// <summary>
+        ///     If true, and this verb is the lone member of a verb category, it displays this verb in the context menu,
+        ///     instead the category with the category name prepended to the verb text.
+        /// </summary>
+        /// <remarks>
+        ///     For example, the ID console has two id slots. So you may have two verbs in the "Eject" category, with
+        ///     individual verbs with text "Privileged ID" and "Target ID". If this option is set to true, and only the target ID
+        ///     is present, this verb category will instead become a single verb with the text "Eject Target ID".
+        ///     The verb icon will default to the verb category icon, if it isn't null;
+        /// </remarks>
+        public readonly bool Contractible;
+
+        public VerbCategoryData(string text, string? icon, bool contractible = false)
+        {
+            Text = Loc.GetString(text);
+            Contractible = contractible;
+            Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
+        }
+    }
+
+    /// <summary>
+    ///     Standard verb categories used across multiple systems.
     /// </summary>
     public static class VerbCategories
     {
         public static readonly VerbCategoryData Debug =
-            ("Debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
+            new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
+        public static readonly VerbCategoryData Eject =
+            new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png", true);
+        public static readonly VerbCategoryData Insert =
+            new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png", true);
 
-        public static readonly VerbCategoryData Rotate = ("Rotate", null);
+        public static readonly VerbCategoryData Rotate = new("Rotate", null);
         public static readonly VerbCategoryData Construction =
-            ("Construction", "/Textures/Interface/hammer_scaled.svg.192dpi.png");
+            new("Construction", "/Textures/Interface/hammer_scaled.svg.192dpi.png");
         public static readonly VerbCategoryData SetTransferAmount =
-            ("Set Transfer Amount", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
+            new("Set Transfer Amount", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
     }
 }

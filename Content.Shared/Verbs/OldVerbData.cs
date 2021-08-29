@@ -1,6 +1,5 @@
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 using System;
@@ -55,7 +54,7 @@ namespace Content.Shared.Verbs
         {
             set
             {
-                Category = value.Name;
+                Category = value.Text;
                 CategoryIcon = value.Icon;
             }
         }
@@ -91,11 +90,6 @@ namespace Content.Shared.Verbs
         /// </summary>
         public string Key;
 
-        /// <remarks>
-        ///     Convenience property to run localization on verb text.
-        /// </remarks>
-        public string LocText { set => Text = Loc.GetString(value); }
-
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
@@ -104,17 +98,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.
         /// </summary>
-        public string Category = string.Empty;
-
-        /// <remarks>
-        ///     Convenience property to run localization on verb category.
-        /// </remarks>
-        public string LocCategory { set => Category = Loc.GetString(value); }
-
-        /// <summary>
-        ///     Sprite of the icon that the user sees on the verb button.
-        /// </summary>
-        public SpriteSpecifier? CategoryIcon;
+        public VerbCategoryData? Category;
 
         /// <summary>
         ///     Whether this verb is visible, but, disabled (greyed out).
@@ -155,10 +139,11 @@ namespace Content.Shared.Verbs
             if (Priority != otherVerb.Priority)
                 return otherVerb.Priority - Priority;
 
-            // Then try use alphabetical verb categories. This puts uncategorized verbs first.
-            // TODO VERBS maybe make categories appear first, which is the pre-ECS behavior?
-            if (Category != otherVerb.Category)
-                return string.Compare(Category, otherVerb.Category, StringComparison.CurrentCulture);
+            // Then try use alphabetical verb categories. Uncategorized verbs always appear first.
+            if (Category?.Text != otherVerb.Category?.Text)
+            {
+                return string.Compare(Category?.Text, otherVerb.Category?.Text, StringComparison.CurrentCulture);
+            }
 
             // Finally, use verb text as tie-breaker
             return string.Compare(Text,otherVerb.Text, StringComparison.CurrentCulture);

@@ -170,6 +170,9 @@ namespace Content.Client.Verbs
             }
         }
 
+        /// <summary>
+        ///     Iterates over the current verbs list and creates GUI buttons.
+        /// </summary>
         private void FillVerbMenu()
         {
             if (!EntityManager.TryGetEntity(_currentEntity, out var entity) || _currentVerbs == null)
@@ -180,8 +183,9 @@ namespace Content.Client.Verbs
             DebugTools.AssertNotNull(_currentVerbListRoot);
             var vBox = _currentVerbListRoot!.List;
 
-            HashSet<string> verbCategories = new();
+            HashSet<string> categories = new();
             var first = true;
+
             foreach (var verb in _currentVerbs)
             {
                 if (!first)
@@ -194,18 +198,31 @@ namespace Content.Client.Verbs
                 }
                 first = false;
 
-                // Does this verb not belong to a category?
-                if (string.IsNullOrEmpty(verb.Category))
+                if (verb.Category == null)
                 {
+                    // Lone verb. just create a button for it
                     vBox.AddChild(new VerbButton(this, verb, entity));
                 }
-                // Else, does this verb belong to a NEW verb category that hasn't already been added?
-                else if (verbCategories.Add(verb.Category))
+                else if (categories.Add(verb.Category.Text))
                 {
-                    // Create new verb group button
-                    vBox.AddChild(
-                        new VerbCategoryButton(this, verb.Category, verb.CategoryIcon, _currentVerbs, entity)
-                        );
+                    // This verb belong to a category that was not yet listed in the categories HashSet.
+
+                    // Get the actual verbs in this category
+                    var categoryVerbs = _currentVerbs.Where(v => v.Category?.Text == verb.Category.Text);
+
+                    if (categoryVerbs.Count() > 1 || !verb.Category.Contractible)
+                    {
+                        // Create a new verb category button,
+                        vBox.AddChild(
+                            new VerbCategoryButton(this, verb.Category, categoryVerbs, entity));
+                    }
+                    else
+                    {
+                        // This category only contains a single verb, and the verb is flagged as collapsible. Add a single modified verb instead.
+                        verb.Text = verb.Category.Text + " " + verb.Text;
+                        verb.Icon = verb.Category.Icon;
+                        vBox.AddChild(new VerbButton(this, verb, entity));
+                    }
                 }
             }
         }
@@ -250,43 +267,54 @@ namespace Content.Client.Verbs
 
         private sealed class VerbButton : BaseButton
         {
-            private readonly RichTextLabel _label;
-            private readonly TextureRect _icon;
-
-            public Texture? Icon
+            public VerbButton(VerbSystem system, Verb verb, IEntity owner, bool drawIcons = true)
             {
-                get => _icon.Texture;
-                set => _icon.Texture = value;
-            }
+                Disabled = verb.IsDisabled;
 
-            public VerbButton(VerbSystem system, Verb verb, IEntity owner)
-            {
-                AddChild(new BoxContainer
+                RichTextLabel label = new RichTextLabel();
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+
+                if (drawIcons)
                 {
-                    Orientation = LayoutOrientation.Horizontal,
-                    Children =
+                    TextureRect icon = new()
                     {
-                        (_icon = new TextureRect
-                        {
-                            MinSize = (32, 32),
-                            Stretch = TextureRect.StretchMode.KeepCentered,
-                            TextureScale = (0.5f, 0.5f)
-                        }),
-                        (_label = new RichTextLabel()),
+                        MinSize = (32, 32),
+                        Stretch = TextureRect.StretchMode.KeepCentered,
+                        TextureScale = (0.5f, 0.5f)
+                    };
+
+                    if (verb.Icon != null)
+                    {
+                        icon.Texture = verb.Icon.Frame0();
+                    }
+
+                    AddChild(new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Horizontal,
+                        Children =
+                    {
+                        icon,
+                        label,
                         // Padding
                         new Control {MinSize = (8, 0)}
                     }
-                });
-
-                _label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
-                Disabled = verb.IsDisabled;
-
-                if (verb.Icon != null)
+                    });
+                }
+                else
                 {
-                    Icon = verb.Icon.Frame0();
+                    AddChild(new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Horizontal,
+                        Children =
+                    {
+                        label,
+                        // Padding
+                        new Control {MinSize = (8, 0)}
+                    }
+                    });
                 }
 
-                if (!verb.IsDisabled)
+                if (!Disabled)
                 {
                     OnPressed += _ =>
                     {
@@ -330,7 +358,7 @@ namespace Content.Client.Verbs
 
             private readonly VerbSystem _system;
 
-            private readonly Label _label;
+            private readonly RichTextLabel _label;
             private readonly TextureRect _icon;
 
             private CancellationTokenSource? _openCancel;
@@ -339,24 +367,36 @@ namespace Content.Client.Verbs
 
             private readonly IEnumerable<Verb> _verbs;
 
-            public string? Text
-            {
-                get => _label.Text;
-                set => _label.Text = value;
-            }
-
             public Texture? Icon
             {
                 get => _icon.Texture;
                 set => _icon.Texture = value;
             }
 
-            public VerbCategoryButton(VerbSystem system, string category, SpriteSpecifier? icon, List<Verb> verbs, IEntity owner)
+            /// <summary>
+            ///     Whether or not the leave space to draw verb icons when showing the verbs in the group.
+            /// </summary>
+            /// <remarks>
+            ///     If no verbs in this group have icons, default to hiding them. Alternative would be to leave blank
+            ///     space, or duplicate the Category icon repeatedly.
+            /// </remarks>
+            public bool DrawVerbIcons;
+
+            public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, IEntity owner)
             {
                 _system = system;
                 _owner = owner;
-                Text = category;
-                _verbs = verbs.Where(verb => verb.Category == category);
+                _verbs = verbs;
+
+                // Do any verbs have icons
+                foreach (var verb in verbs)
+                {
+                    if (verb.Icon != null)
+                    {
+                        DrawVerbIcons = true;
+                        break;
+                    }
+                }
 
                 MouseFilter = MouseFilterMode.Stop;
 
@@ -372,7 +412,7 @@ namespace Content.Client.Verbs
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
-                        (_label = new Label
+                        (_label = new RichTextLabel
                         {
                             SizeFlagsHorizontal = SizeFlags.FillExpand
                         }),
@@ -390,9 +430,11 @@ namespace Content.Client.Verbs
                     }
                 });
 
-                if (icon != null)
+                _label.SetMessage(FormattedMessage.FromMarkupPermissive(category.Text));
+
+                if (category.Icon!= null)
                 {
-                    _icon.Texture = icon.Frame0();
+                    _icon.Texture = category.Icon.Frame0();
                 }
             }
 
@@ -435,7 +477,7 @@ namespace Content.Client.Verbs
 
                         first = false;
 
-                        popup.List.AddChild(new VerbButton(_system, verb, _owner));
+                        popup.List.AddChild(new VerbButton(_system, verb, _owner, DrawVerbIcons));
                     }
 
                     UserInterfaceManager.ModalRoot.AddChild(popup);
