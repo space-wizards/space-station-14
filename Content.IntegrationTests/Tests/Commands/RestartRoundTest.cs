@@ -20,7 +20,13 @@ namespace Content.IntegrationTests.Tests.Commands
         [TestCase(false)]
         public async Task RestartRoundAfterStart(bool lobbyEnabled)
         {
-            var (_, server) = await StartConnectedServerClientPair();
+            var (_, server) = await StartConnectedServerClientPair(serverOptions: new ServerContentIntegrationOption
+            {
+                CVarOverrides =
+                {
+                    [CCVars.GameMap.Name] = "Maps/saltern.yml"
+                }
+            });
 
             await server.WaitIdleAsync();
 

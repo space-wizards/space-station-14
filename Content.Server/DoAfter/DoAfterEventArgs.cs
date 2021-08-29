@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
@@ -80,6 +79,36 @@ namespace Content.Server.DoAfter
         ///     Additional conditions that need to be met. Return false to cancel.
         /// </summary>
         public Func<bool>? ExtraCheck { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public EntityEventArgs? UserCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public EntityEventArgs? UserFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public EntityEventArgs? TargetCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public EntityEventArgs? TargetFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is cancelled.
+        /// </summary>
+        public object? BroadcastCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is finished successfully.
+        /// </summary>
+        public object? BroadcastFinishedEvent { get; set; }
 
         public DoAfterEventArgs(
             IEntity user,

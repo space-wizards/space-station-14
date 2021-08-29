@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage.Components;
@@ -37,7 +36,7 @@ namespace Content.Server.Repairable
                 {
                     if (!await welder.UseTool(eventArgs.User, Owner, _doAfterDelay, ToolQuality.Welding, _fuelCost))
                         return false;
-                    damageable.Heal();
+                    damageable.TrySetAllDamage(0);
 
                     Owner.PopupMessage(eventArgs.User,
                         Loc.GetString("comp-repairable-repair",

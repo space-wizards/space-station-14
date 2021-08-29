@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
@@ -13,8 +12,7 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             base.OnReaction(reaction, owner, unitReactions);
 
-            if (reaction.Sound != null)
-                SoundSystem.Play(Filter.Pvs(owner), reaction.Sound, owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(owner), reaction.Sound.GetSound(), owner);
         }
     }
 }

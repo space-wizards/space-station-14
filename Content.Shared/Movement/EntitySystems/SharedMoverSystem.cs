@@ -1,4 +1,3 @@
-#nullable enable
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
@@ -62,6 +61,9 @@ namespace Content.Shared.Movement.EntitySystems
                 {
                     var relayEntityMoveMessage = new RelayMovementEntityMessage(owner);
                     owner.Transform.Parent!.Owner.SendMessage(owner.Transform, relayEntityMoveMessage);
+
+                    var relayMoveEvent = new RelayMovementEntityEvent(owner);
+                    owner.EntityManager.EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
                 }
             }
 

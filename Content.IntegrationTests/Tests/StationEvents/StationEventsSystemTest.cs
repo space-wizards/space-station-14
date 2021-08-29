@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.StationEvents;
+using Content.Shared.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
                     Assert.That(stationEvent.Occurrences > 0);
                 }
 
-                stationEventsSystem.Reset();
+                stationEventsSystem.Reset(new RoundRestartCleanupEvent());
 
                 foreach (var stationEvent in stationEventsSystem.StationEvents)
                 {

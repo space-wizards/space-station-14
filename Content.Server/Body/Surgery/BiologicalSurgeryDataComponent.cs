@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -68,7 +67,7 @@ namespace Content.Server.Body.Surgery
                 BreakOnTargetMove = true
             };
 
-            return await doAfterSystem.DoAfter(args) == DoAfterStatus.Finished;
+            return await doAfterSystem.WaitDoAfter(args) == DoAfterStatus.Finished;
         }
 
         private bool HasIncisionNotClamped()

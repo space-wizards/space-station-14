@@ -1,7 +1,8 @@
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,7 +13,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     [UsedImplicitly]
     public class GasVolumePumpSystem : EntitySystem
     {
-        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
@@ -55,12 +57,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             // Some of the gas from the mixture leaks when overclocked.
             if (pump.Overclocked)
             {
-                var tile = args.Atmosphere.GetTile(pump.Owner.Transform.Coordinates);
+                var tile = _atmosphereSystem.GetTileMixture(pump.Owner.Transform.Coordinates, true);
 
                 if (tile != null)
                 {
                     var leaked = removed.RemoveRatio(pump.LeakRatio);
-                    tile.AssumeAir(leaked);
+                    _atmosphereSystem.Merge(tile, leaked);
                 }
             }
 

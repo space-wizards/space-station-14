@@ -1,8 +1,7 @@
-#nullable enable
 using System;
-using Content.Server.Battery.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
+using Content.Server.Power.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
@@ -94,7 +93,7 @@ namespace Content.Server.PowerCell.Components
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100}:F0")));
+                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100:F0}")));
             }
         }
 

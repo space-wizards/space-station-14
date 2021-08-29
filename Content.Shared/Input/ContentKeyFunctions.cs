@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.Input;
 
 namespace Content.Shared.Input
@@ -8,7 +7,9 @@ namespace Content.Shared.Input
     {
         public static readonly BoundKeyFunction WideAttack = "WideAttack";
         public static readonly BoundKeyFunction ActivateItemInHand = "ActivateItemInHand";
-        public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld"; // default action on world entity
+        public static readonly BoundKeyFunction AltActivateItemInHand = "AltActivateItemInHand";
+        public static readonly BoundKeyFunction ActivateItemInWorld = "ActivateItemInWorld";
+        public static readonly BoundKeyFunction AltActivateItemInWorld = "AltActivateItemInWorld";
         public static readonly BoundKeyFunction Drop = "Drop";
         public static readonly BoundKeyFunction ExamineEntity = "ExamineEntity";
         public static readonly BoundKeyFunction FocusChat = "FocusChatInputWindow";
@@ -16,6 +17,8 @@ namespace Content.Shared.Input
         public static readonly BoundKeyFunction FocusRadio = "FocusRadioWindow";
         public static readonly BoundKeyFunction FocusOOC = "FocusOOCWindow";
         public static readonly BoundKeyFunction FocusAdminChat = "FocusAdminChatWindow";
+        public static readonly BoundKeyFunction FocusDeadChat = "FocusDeadChatWindow";
+        public static readonly BoundKeyFunction FocusConsoleChat = "FocusConsoleChatWindow";
         public static readonly BoundKeyFunction CycleChatChannelForward = "CycleChatChannelForward";
         public static readonly BoundKeyFunction CycleChatChannelBackward = "CycleChatChannelBackward";
         public static readonly BoundKeyFunction OpenCharacterMenu = "OpenCharacterMenu";

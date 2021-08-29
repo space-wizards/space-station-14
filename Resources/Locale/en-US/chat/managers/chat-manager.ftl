@@ -13,7 +13,7 @@ chat-manager-sender-announcement-wrap-message = {$sender} Announcement:
 chat-manager-entity-say-wrap-message = {$entityName} says: "{"{0}"}"
 chat-manager-entity-me-wrap-message = {$entityName} {"{0}"}
 chat-manager-send-ooc-wrap-message = OOC: {$playerName}: {"{0}"}
-chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {"{0}"}:
+chat-manager-send-ooc-patron-wrap-message = OOC: [color={$patronColor}]{$playerName}[/color]: {"{0}"}
 chat-manager-send-dead-chat-wrap-message = {$deadChannelName}: {$playerName}: {"{0}"}
 chat-manager-send-admin-dead-chat-wrap-message = {$adminChannelName}:({$userName}): {"{0}"}
 chat-manager-send-admin-chat-wrap-message = {$adminChannelName}: {$playerName}: {"{0}"}

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +13,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -47,11 +47,14 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables] private ContainerSlot _beakerContainer = default!;
         [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
+        [DataField("clickSound")]
+        private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
         [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
         [UsedImplicitly] [ViewVariables] private SolutionContainerComponent? Solution => _beakerContainer.ContainedEntity?.GetComponent<SolutionContainerComponent>();
 
-        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables] private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ReagentDispenserUiKey.Key);
 
@@ -359,12 +362,14 @@ namespace Content.Server.Chemistry.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         [Verb]
         public sealed class EjectBeakerVerb : Verb<ReagentDispenserComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ReagentDispenserComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
@@ -375,6 +380,7 @@ namespace Content.Server.Chemistry.Components
 
                 data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
                 data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, ReagentDispenserComponent component)

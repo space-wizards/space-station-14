@@ -1,4 +1,3 @@
-#nullable enable
 
 namespace Content.Shared.Verbs
 {
@@ -11,6 +10,9 @@ namespace Content.Shared.Verbs
             ("Debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
 
         public static readonly VerbCategoryData Rotate = ("Rotate", null);
-        public static readonly VerbCategoryData Construction = ("Construction", null);
+        public static readonly VerbCategoryData Construction =
+            ("Construction", "/Textures/Interface/hammer_scaled.svg.192dpi.png");
+        public static readonly VerbCategoryData SetTransferAmount =
+            ("Set Transfer Amount", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
     }
 }

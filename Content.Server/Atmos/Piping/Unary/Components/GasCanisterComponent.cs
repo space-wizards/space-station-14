@@ -23,12 +23,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gasMixture")]
-        public GasMixture InitialMixture { get; } = new();
+        public GasMixture Air { get; } = new();
 
         /// <summary>
-        ///     Stores the last pressure the tank had, for appearance-updating purposes.
+        ///     Last recorded pressure, for appearance-updating purposes.
         /// </summary>
-        [ViewVariables]
         public float LastPressure { get; set; } = 0f;
 
         /// <summary>

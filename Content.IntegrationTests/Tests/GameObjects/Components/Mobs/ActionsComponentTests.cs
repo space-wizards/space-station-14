@@ -42,8 +42,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: Sprite
       sprite: Objects/Tools/flashlight.rsi
       layers:
-        - state: lantern_off
-        - state: HandheldLightOnOverlay
+        - state: flashlight
+        - state: flashlight-overlay
           shader: unshaded
           visible: false
     - type: Item
@@ -52,7 +52,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: PointLight
       enabled: false
       radius: 3
-    - type: LoopingSound
     - type: Appearance
       visuals:
         - type: FlashLightVisualizer

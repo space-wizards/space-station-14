@@ -55,8 +55,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesOpen:
@@ -78,7 +79,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -104,8 +104,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesMaintOpen:
@@ -127,7 +128,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinPeachesMaintTrash
 
@@ -153,8 +153,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinBeansOpen:
@@ -176,7 +177,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -204,8 +204,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinMREOpen:
@@ -227,7 +228,6 @@
       reagents:
       - ReagentId: Nutriment
         Quantity: 15
-  - type: LoopingSound
   - type: Food
     trash: FoodTinMRETrash
 

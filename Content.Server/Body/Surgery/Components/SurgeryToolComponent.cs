@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,8 +9,6 @@ using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -31,7 +28,6 @@ namespace Content.Server.Body.Surgery.Components
     public class SurgeryToolComponent : Component, ISurgeon, IAfterInteract
     {
         public override string Name => "SurgeryTool";
-        public override uint? NetID => ContentNetIDs.SURGERY;
 
         private readonly Dictionary<int, object> _optionsCache = new();
 

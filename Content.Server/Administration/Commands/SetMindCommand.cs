@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;

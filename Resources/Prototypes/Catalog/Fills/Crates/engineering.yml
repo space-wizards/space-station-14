@@ -51,7 +51,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         amount: 3
 
 - type: entity
@@ -61,7 +61,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MVWireStack
+      - id: CableMVStack
         amount: 3
 
 - type: entity
@@ -71,7 +71,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: HVWireStack
+      - id: CableHVStack
         amount: 3
 
 - type: entity
@@ -81,9 +81,9 @@
   components:
   - type: StorageFill
     contents:
-      - id: HVWireStack
+      - id: CableHVStack
         amount: 2
-      - id: MVWireStack
+      - id: CableMVStack
         amount: 2
-      - id: ApcExtensionCableStack
+      - id: CableApcStack
         amount: 2

@@ -1,13 +1,16 @@
+using System;
 using System.Linq;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interaction
 {
@@ -17,6 +20,8 @@ namespace Content.Shared.Interaction
     [UsedImplicitly]
     public class SharedInteractionSystem : EntitySystem
     {
+        [Dependency] private readonly SharedBroadphaseSystem _sharedBroadphaseSystem = default!;
+
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
@@ -46,7 +51,7 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
             var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return dir.Length;
             return (rayResults[0].HitPos - origin.Position).Length;
@@ -122,7 +127,7 @@ namespace Content.Shared.Interaction
             predicate ??= _ => false;
 
             var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = Get<SharedBroadPhaseSystem>().IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0) return true;
 
@@ -333,6 +338,29 @@ namespace Content.Shared.Interaction
             }
 
             return inRange;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when a player attempts to activate an item in an inventory slot or hand slot
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class InteractInventorySlotEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that was interacted with.
+        /// </summary>
+        public EntityUid ItemUid { get; }
+
+        /// <summary>
+        ///     Whether the interaction used the alt-modifier to trigger alternative interactions.
+        /// </summary>
+        public bool AltInteract { get; }
+
+        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
+        {
+            ItemUid = itemUid;
+            AltInteract = altInteract;
         }
     }
 }

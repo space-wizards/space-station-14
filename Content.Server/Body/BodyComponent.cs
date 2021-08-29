@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
 using Content.Server.Mind.Components;
@@ -9,6 +8,7 @@ using Content.Shared.Body.Slot;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,6 +16,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Body
 {
@@ -25,6 +26,8 @@ namespace Content.Server.Body
     public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
     {
         private Container _partContainer = default!;
+
+        [DataField("gibSound")] private SoundSpecifier _gibSound = new SoundCollectionSpecifier("gib");
 
         protected override bool CanAddPart(string slotId, SharedBodyPartComponent part)
         {
@@ -101,8 +104,7 @@ namespace Content.Server.Body
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
-                    AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))
             {

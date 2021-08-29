@@ -6,6 +6,7 @@ traitor-death-match-redemption-component-interact-using-no-pda-message = GIVEN P
 traitor-death-match-redemption-component-interact-using-no-pda-owner-message ="GIVEN PDA HAS NO OWNER (0064)"
 traitor-death-match-redemption-component-interact-using-pda-different-user-message = "GIVEN PDA OWNED BY USER (0070)"
 traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message = "NO USER PDA IN IDCARD POCKET (0083)"
+traitor-death-match-redemption-component-interact-using-tampering-detected = "TAMPERING DETECTED (0101)"
 traitor-death-match-redemption-component-interact-using-user-no-uplink-account-message = "USER PDA HAS NO UPLINK ACCOUNT (0102)"
 traitor-death-match-redemption-component-interact-using-victim-no-uplink-account-message = "USER PDA HAS NO UPLINK ACCOUNT (0108)"
 traitor-death-match-redemption-component-interact-using-success-message = The machine plays a happy little tune, and displays: "SUCCESS: {$tcAmount} TC TRANSFERRED"

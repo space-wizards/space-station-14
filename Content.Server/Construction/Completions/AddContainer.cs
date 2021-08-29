@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;

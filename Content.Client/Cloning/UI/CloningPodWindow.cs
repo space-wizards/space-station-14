@@ -9,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using static Content.Shared.Cloning.SharedCloningPodComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Cloning.UI
 {
@@ -16,7 +17,7 @@ namespace Content.Client.Cloning.UI
     {
         private Dictionary<int, string?> _scanManager;
 
-        private readonly VBoxContainer _scanList;
+        private readonly BoxContainer _scanList;
         public readonly Button CloneButton;
         public readonly Button EjectButton;
         private CloningScanButton? _selectedButton;
@@ -35,8 +36,9 @@ namespace Content.Client.Cloning.UI
 
             Title = Loc.GetString("cloning-pod-window-title");
 
-            Contents.AddChild(new VBoxContainer
+            Contents.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -45,11 +47,15 @@ namespace Content.Client.Cloning.UI
                         VerticalExpand = true,
                         Children =
                         {
-                            (_scanList = new VBoxContainer())
+                            (_scanList = new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Vertical
+                            })
                         }
                     },
-                    new VBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Children =
                         {
                             (CloneButton = new Button
@@ -74,8 +80,9 @@ namespace Content.Client.Cloning.UI
                     {
                         Text = Loc.GetString("cloning-pod-eject-body-button")
                     }),
-                    new HBoxContainer
+                    new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Horizontal,
                         Children =
                         {
                             new Label()
@@ -219,8 +226,9 @@ namespace Content.Client.Cloning.UI
                     ToggleMode = true,
                 });
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         (EntityTextureRect = new TextureRect

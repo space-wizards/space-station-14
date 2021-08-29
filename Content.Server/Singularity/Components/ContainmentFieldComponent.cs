@@ -1,25 +1,12 @@
-#nullable enable
+using Content.Shared.Singularity.Components;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
-    public class ContainmentFieldComponent : Component, IStartCollide
+    [ComponentReference(typeof(SharedContainmentFieldComponent))]
+    public class ContainmentFieldComponent : SharedContainmentFieldComponent
     {
-        public override string Name => "ContainmentField";
         public ContainmentFieldConnection? Parent;
-
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (Parent == null)
-            {
-                Owner.QueueDelete();
-                return;
-            }
-
-            Parent.TryRepell(Owner, otherFixture.Body.Owner);
-        }
     }
 }

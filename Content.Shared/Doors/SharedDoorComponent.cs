@@ -1,8 +1,7 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
@@ -12,16 +11,19 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Doors
 {
+    [NetworkedComponent()]
     public abstract class SharedDoorComponent : Component
     {
         public override string Name => "Door";
-        public override uint? NetID => ContentNetIDs.DOOR;
 
         [ComponentDependency]
         protected readonly SharedAppearanceComponent? AppearanceComponent = null;
 
         [ComponentDependency]
         protected readonly IPhysBody? PhysicsComponent = null;
+
+        [Dependency]
+        protected readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables]
         private DoorState _state = DoorState.Closed;
@@ -167,7 +169,7 @@ namespace Content.Shared.Doors
         public readonly List<EntityUid> CurrentlyCrushing;
         public readonly TimeSpan CurTime;
 
-        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, List<EntityUid> currentlyCrushing, TimeSpan curTime) : base(ContentNetIDs.DOOR)
+        public DoorComponentState(SharedDoorComponent.DoorState doorState, TimeSpan? startTime, List<EntityUid> currentlyCrushing, TimeSpan curTime)
         {
             DoorState = doorState;
             StartTime = startTime;

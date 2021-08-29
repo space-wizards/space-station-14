@@ -11,17 +11,7 @@ namespace Content.Server.Destructible
     public class DestructibleSystem : EntitySystem
     {
         [Dependency] public readonly IRobustRandom Random = default!;
-
-        public AudioSystem AudioSystem { get; private set; } = default!;
-
-        public ActSystem ActSystem { get; private set; } = default!;
-
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            AudioSystem = Get<AudioSystem>();
-            ActSystem = Get<ActSystem>();
-        }
+        [Dependency] public readonly AudioSystem AudioSystem = default!;
+        [Dependency] public readonly ActSystem ActSystem = default!;
     }
 }

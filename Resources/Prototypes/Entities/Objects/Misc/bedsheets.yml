@@ -16,7 +16,6 @@
     QuickEquip: true
     Slots:
     - neck
-  - type: SnapGrid
 
 - type: entity
   id: BedsheetBlack

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.MachineLinking
@@ -14,7 +13,7 @@ namespace Content.Shared.MachineLinking
     public enum TwoWayLeverSignal : byte
     {
         Middle,
-        Left,
-        Right
+        Right,
+        Left
     }
 }

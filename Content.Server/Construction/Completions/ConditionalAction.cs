@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;

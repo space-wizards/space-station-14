@@ -5,6 +5,9 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
+  - type: Tag
+    tags:
+    - Spray
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -15,13 +18,13 @@
     maxVol: 100
     caps: Refillable, Drainable
   - type: SolutionTransfer
-    transferAmount: 5.0
   - type: Spillable
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
     sprayVelocity: 2
-    spraySound: /Audio/Effects/spray2.ogg
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
 
 - type: entity
   name: spray bottle
@@ -29,12 +32,12 @@
   suffix: Filled
   parent: SprayBottle
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
-        reagents:
-          - ReagentId: Water
-            Quantity: 100
+  - type: SolutionContainer
+    maxVol: 100
+    contents:
+      reagents:
+        - ReagentId: Water
+          Quantity: 100
 
 - type: entity
   name: space cleaner
@@ -43,12 +46,12 @@
   parent: SprayBottle
   suffix: ""
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
-        reagents:
-          - ReagentId: SpaceCleaner
-            Quantity: 100
+  - type: SolutionContainer
+    maxVol: 100
+    contents:
+      reagents:
+        - ReagentId: SpaceCleaner
+          Quantity: 100
 
 # Vapor
 
@@ -57,7 +60,6 @@
   name: "vapor"
   abstract: true
   components:
-  - type: SnapGrid
   - type: SolutionContainer
     maxVol: 50
   - type: Vapor
@@ -69,7 +71,7 @@
       - state: chempuff
         map: [ "enum.VaporVisualLayers.Base" ]
   - type: Physics
-    bodyType: KinematicController
+    bodyType: Dynamic
     fixtures:
     - shape:
         !type:PhysShapeAabb

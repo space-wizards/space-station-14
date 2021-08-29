@@ -4,13 +4,13 @@
   id: BaseDice
   components:
   - type: Dice
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/dice.rsi
+    noRot: true # If their sprites rotate, the number becomes even more illegible than usual.
 
 - type: entity
   parent: BaseDice
-  id: d100
+  id: d100Dice
   name: d100
   description: A die with one hundred sides! Probably not fairly weighted...
   components:
@@ -22,7 +22,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d20
+  id: d20Dice
   name: d20
   description: A die with twenty sides. The preferred die to throw at the GM.
   components:
@@ -33,7 +33,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d12
+  id: d12Dice
   name: d12
   description: A die with twelve sides. There's an air of neglect about it.
   components:
@@ -44,7 +44,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d10
+  id: d10Dice
   name: d10
   description: A die with ten sides. Useful for percentages.
   components:
@@ -55,7 +55,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d8
+  id: d8Dice
   name: d8
   description: A die with eight sides. It feels... lucky.
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d6
+  id: d6Dice
   name: d6
   description: A die with six sides. Basic and serviceable.
   components:
@@ -77,7 +77,7 @@
 
 - type: entity
   parent: BaseDice
-  id: d4
+  id: d4Dice
   name: d4
   description: A die with four sides. The nerd's caltrop.
   components:

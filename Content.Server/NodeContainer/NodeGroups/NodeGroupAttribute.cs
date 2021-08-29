@@ -1,5 +1,5 @@
-#nullable enable
 using System;
+using JetBrains.Annotations;
 
 namespace Content.Server.NodeContainer.NodeGroups
 {
@@ -9,6 +9,7 @@ namespace Content.Server.NodeContainer.NodeGroups
     ///     have the same type of <see cref="INodeGroup"/>. Used by <see cref="INodeGroupFactory"/>.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
+    [MeansImplicitUse]
     public class NodeGroupAttribute : Attribute
     {
         public NodeGroupID[] NodeGroupIDs { get; }

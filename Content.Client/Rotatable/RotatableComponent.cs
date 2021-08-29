@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Rotatable;
 using Robust.Shared.GameObjects;
 

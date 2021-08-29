@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Maps;
+﻿using Content.Shared.Maps;
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -17,7 +16,7 @@ namespace Content.Shared.Construction.Conditions
         {
             var lowWall = false;
 
-            foreach (var entity in location.GetEntitiesInTile(true))
+            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
                     lowWall = true;

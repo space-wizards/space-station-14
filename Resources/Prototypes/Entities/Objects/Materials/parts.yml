@@ -46,6 +46,9 @@
   name: metal rod
   suffix: Single
   components:
+  - type: Tag
+    tags:
+    - RodMetal1
   - type: Sprite
     state: rods
   - type: Stack

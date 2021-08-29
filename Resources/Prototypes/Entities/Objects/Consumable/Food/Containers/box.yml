@@ -8,7 +8,7 @@
 - type: entity
   parent: BaseItem
   id: FoodBoxDonut
-  name: donutbox
+  name: donut box
   description: Mmm, Donuts.
   components:
   - type: Sprite
@@ -17,6 +17,9 @@
     state: box
   - type: Storage
     capacity: 6
+    whitelist:
+      tags:
+      - Donut
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 6
@@ -48,7 +51,7 @@
 - type: entity
   parent: BaseItem
   id: FoodContainerEgg
-  name: eggbox
+  name: egg carton
   description: Don't drop 'em!
   components:
   - type: Sprite
@@ -57,6 +60,9 @@
     state: box-closed
   - type: Storage
     capacity: 12
+    whitelist:
+      tags:
+      - Egg
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
     size: 12
@@ -86,7 +92,6 @@
           - box11
           - box12
   # Someday...
-  # - type: LoopingSound
   # - type: DamageOnLand
   #   amount: 5
   # - type: DamageOtherOnHit
@@ -98,8 +103,8 @@
   #       !type:DamageTrigger
   #       damage: 10
   #     behaviors:
-  #     - !type:PlaySoundCollectionBehavior
-  #       soundCollection: desecration
+  #     - !type:PlaySoundBehavior
+  #       collection: desecration
   #     - !type:SpawnEntitiesBehavior
   #       spawn:
   #         EggBoxBroken:
@@ -114,6 +119,7 @@
 - type: entity
   parent: FoodContainerEgg
   id: EggBoxBroken
+  suffix: Broken
   components:
   - type: StorageFill
     contents:
@@ -261,6 +267,9 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
     state: box
   - type: Storage
+    whitelist:
+      tags:
+      - DonkPocket
     capacity: 6
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
@@ -356,4 +365,20 @@
   - type: StorageFill
     contents:
       - id: FoodDonkpocketHonk
+        amount: 6
+
+- type: entity
+  parent: FoodBoxDonkpocket
+  id: FoodBoxDonkpocketDink
+  name: box of dink-pockets
+  description: Net Zero carbohydrates! No need for heating!
+  components:
+  - type: Sprite
+    state: dink-box
+  - type: Item
+    sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
+    color: green
+  - type: StorageFill
+    contents:
+      - id: FoodDonkpocketDink
         amount: 6

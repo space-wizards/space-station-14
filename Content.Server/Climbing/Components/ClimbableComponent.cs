@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.DoAfter;
 using Content.Server.Notification;
 using Content.Shared.ActionBlocker;
@@ -157,7 +157,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && entityToMove.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
@@ -204,7 +204,7 @@ namespace Content.Server.Climbing.Components
                 BreakOnStun = true
             };
 
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterEventArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterEventArgs);
 
             if (result != DoAfterStatus.Cancelled && user.TryGetComponent(out PhysicsComponent? body) && body.Fixtures.Count >= 1)
             {
@@ -242,6 +242,8 @@ namespace Content.Server.Climbing.Components
         [Verb]
         private sealed class ClimbVerb : Verb<ClimbableComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
             {
                 if (!component.CanVault(user, component.Owner, out var _))

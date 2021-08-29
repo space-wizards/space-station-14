@@ -1,8 +1,7 @@
-﻿#nullable enable
 using System;
 using System.Collections.Generic;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -11,10 +10,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Crayon
 {
+    [NetworkedComponent()]
     public class SharedCrayonComponent : Component
     {
         public override string Name => "Crayon";
-        public override uint? NetID => ContentNetIDs.CRAYONS;
 
         public string SelectedState { get; set; } = string.Empty;
 
@@ -54,7 +53,7 @@ namespace Content.Shared.Crayon
         public readonly int Charges;
         public readonly int Capacity;
 
-        public CrayonComponentState(string color, string state, int charges, int capacity) : base(ContentNetIDs.CRAYONS)
+        public CrayonComponentState(string color, string state, int charges, int capacity)
         {
             Color = color;
             State = state;

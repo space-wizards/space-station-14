@@ -9,7 +9,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
     netsync: false
-  - type: LoopingSound
   - type: SolutionContainer
     maxVol: 20
     contents:
@@ -318,6 +317,9 @@
   id: FoodBreadBaguette
   description: Bon appétit!
   components:
+  - type: Tag
+    tags:
+    - Baguette
   - type: Sprite
     state: baguette
 # Tastes like France.

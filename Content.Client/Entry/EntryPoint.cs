@@ -81,7 +81,6 @@ namespace Content.Client.Entry
             factory.RegisterClass<SharedCargoConsoleComponent>();
             factory.RegisterClass<SharedReagentDispenserComponent>();
             factory.RegisterClass<SharedChemMasterComponent>();
-            factory.RegisterClass<SharedMicrowaveComponent>();
             factory.RegisterClass<SharedGravityGeneratorComponent>();
             factory.RegisterClass<SharedAMEControllerComponent>();
 
@@ -105,6 +104,7 @@ namespace Content.Client.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             IoCManager.Resolve<IClientAdminManager>().Initialize();
             IoCManager.Resolve<IParallaxManager>().LoadParallax();
