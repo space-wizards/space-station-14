@@ -27,6 +27,7 @@ namespace Content.Server.Containers.ItemSlots
 
         private void OnComponentInit(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
         {
+            // create container for each slot 
             foreach (var pair in itemSlots.Slots)
             {
                 var slotName = pair.Key;
@@ -43,6 +44,11 @@ namespace Content.Server.Containers.ItemSlots
                 var slot = pair.Value;
                 var slotName = pair.Key;
 
+                // Check if someone already put item inside container
+                if (slot.ContainerSlot.ContainedEntity != null)
+                    continue;
+
+                // Try to spawn item inside each slot
                 if (!string.IsNullOrEmpty(slot.StartingItem))
                 {
                     var entManager = itemSlots.Owner.EntityManager;
@@ -65,29 +71,20 @@ namespace Content.Server.Containers.ItemSlots
 
         private void OnPlaceItem(EntityUid uid, ItemSlotsComponent slots, PlaceItemAttempt args)
         {
-            if (!slots.Slots.TryGetValue(args.SlotName, out var slot))
-            {
+            var wasInserted = TryInsertContent(slots, args.Item, args.SlotName);
+            if (!wasInserted)
                 args.Cancel();
-                return;
-            }
-
-            if (slot.ContainerSlot.ContainedEntity != null)
-            {
-                args.Cancel();
-                return;
-            }
-
-            slot.ContainerSlot.Insert(args.Item);
-            RaiseLocalEvent(uid, new ItemSlotChanged(slots, args.SlotName, slot));
         }
 
         private void OnEjectItem(EntityUid uid, ItemSlotsComponent component, EjectItemAttempt args)
         {
-            TryEjectContent(component, args.SlotName, args.User);
+            var wasEjected = TryEjectContent(component, args.SlotName, args.User);
+            if (!wasEjected)
+                args.Cancel();
         }
 
         /// <summary>
-        ///     Tries to insert item in any fiting item slot
+        ///     Tries to insert item in any fiting item slot from users hand
         /// </summary>
         /// <returns>False if failed to insert item</returns>
         public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, IEntity user)
@@ -138,7 +135,31 @@ namespace Content.Server.Containers.ItemSlots
             return false;
         }
 
+        /// <summary>
+        ///     Tries to insert item in known slot. Doesn't interact with user
+        /// </summary>
+        /// <returns>False if failed to insert item</returns>
+        public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, string slotName)
+        {
+            if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
+                return false;
 
+            if (slot.ContainerSlot.ContainedEntity != null)
+                return false;
+
+            // check if item allowed in whitelist
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
+                return false;
+
+            slot.ContainerSlot.Insert(item);
+            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+            return true;
+        }
+
+        /// <summary>
+        ///     Check if slot has some content in it (without ejecting item)
+        /// </summary>
+        /// <returns>Null if doesn't have any content</returns>
         public IEntity? PeekItemInSlot(ItemSlotsComponent itemSlots, string slotName)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
@@ -151,13 +172,13 @@ namespace Content.Server.Containers.ItemSlots
         /// <summary>
         ///     Try to eject item from slot to users hands
         /// </summary>
-        public void TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity? user)
+        public bool TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity? user)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
-                return;
+                return false;
 
             if (slot.ContainerSlot.ContainedEntity == null)
-                return;
+                return false;
 
             var item = slot.ContainerSlot.ContainedEntities[0];
             slot.ContainerSlot.Remove(item);
@@ -173,6 +194,7 @@ namespace Content.Server.Containers.ItemSlots
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);
 
             RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+            return true;
         }
     }
 }
