@@ -226,8 +226,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var entity in comp.Chamber.ContainedEntities)
                     {
-                        if (!canJuice && entity.HasComponent<ExtractableComponent>()) canJuice = true;
-                        if (canJuice && canGrind) break;
+                        if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
+                        
+                        canJuice = component.GrindableSolution == null;
+                        canGrind = component.GrindableSolution != null;
                     }
                 }
 
