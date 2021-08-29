@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -47,12 +48,16 @@ namespace Content.Shared.Juke
     {
         public MidiJukePlaybackStatus PlaybackStatus { get; }
         public bool Loop { get; }
-        //TODO: song title, timestamp?
+        public IEnumerable<string> Songs { get; }
+        public string CurrentSong { get; }
+        //TODO: timestamp?
 
-        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus, bool loop)
+        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus, bool loop, IEnumerable<string> songs, string currentSong)
         {
             PlaybackStatus = playbackStatus;
             Loop = loop;
+            Songs = songs;
+            CurrentSong = currentSong;
         }
     }
 
@@ -72,6 +77,11 @@ namespace Content.Shared.Juke
     }
 
     [Serializable, NetSerializable]
+    public class MidiJukeSkipMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
     public class MidiJukeLoopMessage : BoundUserInterfaceMessage
     {
         public bool Loop { get; }
@@ -79,6 +89,17 @@ namespace Content.Shared.Juke
         public MidiJukeLoopMessage(bool loop)
         {
             Loop = loop;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeSongSelectMessage : BoundUserInterfaceMessage
+    {
+        public string Song { get; }
+
+        public MidiJukeSongSelectMessage(string song)
+        {
+            Song = song;
         }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
@@ -6,31 +6,48 @@ using Content.Shared.Juke;
 using JetBrains.Annotations;
 using Robust.Server.Audio.Midi;
 using Robust.Server.GameObjects;
+using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Juke
 {
     [UsedImplicitly]
     public class MidiJukeSystem : SharedMidiJukeSystem
     {
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+
+        private readonly List<string> _midiFiles = new();
+        private const string MidiPath = "data/midis/"; //trailing slash es muchos importante
+
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<MidiJukeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<MidiJukeComponent, InteractHandEvent>(OnInteractHand);
+
+            //TODO: "what you want is [IWritableDirProvider.cs], use UserData in [IResourceManager.cs]"
+            foreach (var file in System.IO.Directory.GetFiles(MidiPath, "*.mid"))
+            {
+                var fileName = System.IO.Path.GetFileName(file);
+                _midiFiles.Add(fileName);
+            }
         }
 
-        private void OnStartup(EntityUid uid, MidiJukeComponent component, ComponentStartup args)
+        private void OnStartup(EntityUid uid, MidiJukeComponent midiJuke, ComponentStartup args)
         {
             //TODO: this is apparently bad and will need to be rewritten once BoundUserInterface becomes ECS friendlier
-            var ui = component.Owner.GetUIOrNull(MidiJukeUiKey.Key);
+            var ui = midiJuke.Owner.GetUIOrNull(MidiJukeUiKey.Key);
             if (ui != null)
             {
-                ui.OnReceiveMessage += msg => OnMidiJukeUiMessage(uid, component, msg);
+                ui.OnReceiveMessage += msg => OnMidiJukeUiMessage(uid, midiJuke, msg);
+                ui.SetState(GetState(midiJuke));
             }
-            OpenMidiFile(component, "testmidi.mid"); //TODO: remove this placeholder
+            //OpenMidiFile(component, "testmidi.mid"); //TODO: remove this placeholder
         }
 
         private void DirtyUI(EntityUid uid)
@@ -40,7 +57,13 @@ namespace Content.Server.Juke
                 || !userInterfaceComponent.TryGetBoundUserInterface(MidiJukeUiKey.Key, out var ui))
                 return;
 
-            ui.SetState(new MidiJukeBoundUserInterfaceState(midiJuke.PlaybackStatus, midiJuke.Loop));
+            ui.SetState(GetState(midiJuke));
+        }
+
+        private MidiJukeBoundUserInterfaceState GetState(MidiJukeComponent component)
+        {
+            return new MidiJukeBoundUserInterfaceState(component.PlaybackStatus, component.Loop, _midiFiles,
+                System.IO.Path.GetFileName(component.MidiFileName));
         }
 
         private void OnMidiJukeUiMessage(EntityUid uid, MidiJukeComponent component, ServerBoundUserInterfaceMessage msg)
@@ -62,8 +85,16 @@ namespace Content.Server.Juke
                 case MidiJukeStopMessage:
                     Stop(component);
                     break;
+                case MidiJukeSkipMessage:
+                    ShuffleSong(component);
+                    break;
                 case MidiJukeLoopMessage loopMsg:
                     SetLoop(component, loopMsg.Loop);
+                    break;
+                case MidiJukeSongSelectMessage songMsg:
+                    Stop(component);
+                    OpenMidiFile(component, MidiPath + songMsg.Song);
+                    Play(component);
                     break;
             }
 
@@ -72,16 +103,6 @@ namespace Content.Server.Juke
 
         private void OnInteractHand(EntityUid uid, MidiJukeComponent component, InteractHandEvent args)
         {
-            /*if (!component.Playing)
-            {
-                if (component.PlaybackStatus == MidiJukePlaybackStatus.Stop)
-                    OpenMidiFile(component, "testmidi.mid");
-                Play(component);
-            }
-            else
-            {
-                Pause(component);
-            }*/
             if (!args.User.TryGetComponent(out ActorComponent? actor)) return;
             component.Owner.GetUIOrNull(MidiJukeUiKey.Key)?.Open(actor.PlayerSession);
             args.Handled = true;
@@ -118,9 +139,11 @@ namespace Content.Server.Juke
 
         private void OnPlaybackFinished(MidiJukeComponent component)
         {
-            component.MidiPlayer?.MoveToStart();
-            component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
-            RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            // component.MidiPlayer?.MoveToStart();
+            // component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
+            // RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            Logger.Debug("Playback finished, shuffling song.");
+            ShuffleSong(component);
             DirtyUI(component.Owner.Uid);
         }
 
@@ -169,6 +192,25 @@ namespace Content.Server.Juke
             }
         }
 
+        private void ShuffleSong(MidiJukeComponent component)
+        {
+            if (component.MidiPlayer != null)
+            {
+                component.MidiPlayer.Dispose();
+                component.MidiPlayer = null;
+            }
+
+            component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
+            var nextSong = _robustRandom.Pick(_midiFiles);
+            OpenMidiFile(component, MidiPath + nextSong);
+            RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            if (component.MidiPlayer == null)
+            {
+                return;
+            }
+            Play(component);
+        }
+
         private void SetLoop(MidiJukeComponent component, bool loop)
         {
             component.Loop = loop;
@@ -176,8 +218,6 @@ namespace Content.Server.Juke
             {
                 component.MidiPlayer.Loop = loop;
             }
-            Logger.Debug($"Setting loop to {loop}");
-            DirtyUI(component.Owner.Uid);
         }
     }
 }

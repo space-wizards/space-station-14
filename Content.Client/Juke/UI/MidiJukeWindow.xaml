@@ -1,10 +1,12 @@
 <SS14Window xmlns="https://spacestation14.io" MinSize="400 300">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
-        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="False">
             <Button Name="PlayButton" ToggleMode="True" Text="Play" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="PauseButton" ToggleMode="True" Text="Pause" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="StopButton" ToggleMode="False" Text="Stop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="SkipButton" ToggleMode="False" Text="Skip" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
         </BoxContainer>
+        <ItemList Name="MidiList" SelectMode="Single" VerticalExpand="True"/>
     </BoxContainer>
 </SS14Window>

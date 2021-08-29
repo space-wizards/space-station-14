@@ -32,8 +32,16 @@ namespace Content.Client.Juke.UI
             _window.PlayButtonPressed += OnPlayButtonPressed;
             _window.PauseButtonPressed += OnPauseButtonPressed;
             _window.StopButtonPressed += OnStopButtonPressed;
+            _window.SkipButtonPressed += OnSkipButtonPressed;
             _window.LoopButtonToggled += OnLoopButtonToggled;
 
+            _window.ItemSelected += OnItemSelected;
+
+        }
+
+        private void OnItemSelected(string filename)
+        {
+            SendMessage(new MidiJukeSongSelectMessage(filename));
         }
 
         private void OnPlayButtonPressed()
@@ -51,6 +59,11 @@ namespace Content.Client.Juke.UI
             SendMessage(new MidiJukeStopMessage());
         }
 
+        private void OnSkipButtonPressed()
+        {
+            SendMessage(new MidiJukeSkipMessage());
+        }
+
         private void OnLoopButtonToggled(bool status)
         {
             SendMessage(new MidiJukeLoopMessage(status));
@@ -63,6 +76,8 @@ namespace Content.Client.Juke.UI
 
             _window.SetPlaybackStatus(cast.PlaybackStatus);
             _window.SetLoop(cast.Loop);
+            _window.PopulateList(cast.Songs);
+            //_window.SetSelectedSong(cast.CurrentSong);
         }
 
         protected override void Dispose(bool disposing)
