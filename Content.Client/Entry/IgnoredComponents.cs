@@ -274,6 +274,10 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
+            "ItemSlots",
+            "UnpoweredFlashlight",
+            "Uplink",
+            "PDA",
             "SpawnItemsOnUse"
         };
     }
