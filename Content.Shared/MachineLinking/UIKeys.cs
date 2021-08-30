@@ -4,16 +4,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.MachineLinking
 {
     [Serializable, NetSerializable]
-    public enum TwoWayLeverVisuals : byte
+    public enum SignalTransmitterUiKey
     {
-        State
+        Key
     }
 
     [Serializable, NetSerializable]
-    public enum TwoWayLeverSignal : byte
+    public enum SignalReceiverUiKey
     {
-        Middle,
-        Right,
-        Left
+        Key
     }
 }
