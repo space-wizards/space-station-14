@@ -12,26 +12,14 @@ namespace Content.Shared.PDA
         public bool FlashlightEnabled;
         public bool HasPen;
         public PDAIdInfoText PDAOwnerInfo;
-        public UplinkAccountData Account = default!;
-        public UplinkListingData[] Listings = default!;
+        public bool Uplink;
 
-        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo)
+        public PDAUpdateState(bool flashlightEnabled, bool hasPen, PDAIdInfoText pDAOwnerInfo, bool uplink = false)
         {
-            FlashlightEnabled = isFlashlightOn;
+            FlashlightEnabled = flashlightEnabled;
             HasPen = hasPen;
-            PDAOwnerInfo = ownerInfo;
-        }
-
-        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData)
-            : this(isFlashlightOn, hasPen, ownerInfo)
-        {
-            Account = accountData;
-        }
-
-        public PDAUpdateState(bool isFlashlightOn, bool hasPen, PDAIdInfoText ownerInfo, UplinkAccountData accountData, UplinkListingData[] listings)
-            : this(isFlashlightOn, hasPen, ownerInfo, accountData)
-        {
-            Listings = listings;
+            PDAOwnerInfo = pDAOwnerInfo;
+            Uplink = uplink;
         }
     }
 
