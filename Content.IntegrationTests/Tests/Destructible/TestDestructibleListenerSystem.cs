@@ -13,14 +13,14 @@ namespace Content.IntegrationTests.Tests.Destructible
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DestructibleComponent, DestructibleThresholdReachedEvent>(AddThresholdsToList);
+            SubscribeLocalEvent<DestructibleComponent, DamageThresholdReached>(AddThresholdsToList);
         }
 
-        public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, DestructibleThresholdReachedEvent args)
+        public void AddThresholdsToList(EntityUid _, DestructibleComponent comp, DamageThresholdReached args)
         {
             ThresholdsReached.Add(args);
         }
 
-        public List<DestructibleThresholdReachedEvent> ThresholdsReached = new();
+        public List<DamageThresholdReached> ThresholdsReached = new();
     }
 }

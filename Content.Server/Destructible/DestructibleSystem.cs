@@ -19,19 +19,19 @@ namespace Content.Server.Destructible
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(CheckAndExectuteThresholds);
+            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(Exectute);
         }
 
         /// <summary>
-        /// Check if any thresholds were reached. if they were, execute them.
+        ///     Check if any thresholds were reached. if they were, execute them.
         /// </summary>
-        public void CheckAndExectuteThresholds(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
+        public void Exectute(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
         {
             foreach (var threshold in component.Thresholds)
             {
                 if (threshold.Reached(args.Damageable, this))
                 {
-                    RaiseLocalEvent(uid, new DestructibleThresholdReachedEvent(component, threshold));
+                    RaiseLocalEvent(uid, new DamageThresholdReached(component, threshold));
 
                     threshold.Execute(component.Owner, this);
                 }
@@ -39,19 +39,17 @@ namespace Content.Server.Destructible
         }
     }
 
+    // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.
     /// <summary>
-    ///     Event raised when a threshold is reached.
+    ///     Event raised when a <see cref="DamageThreshold"/> is reached.
     /// </summary>
-    /// <remarks>
-    ///     Currently only used for Destructible integration tests.
-    /// </remarks>
-    public class DestructibleThresholdReachedEvent : EntityEventArgs
+    public class DamageThresholdReached : EntityEventArgs
     {
         public readonly DestructibleComponent Parent;
 
-        public readonly Threshold Threshold;
+        public readonly DamageThreshold Threshold;
 
-        public DestructibleThresholdReachedEvent(DestructibleComponent parent, Threshold threshold)
+        public DamageThresholdReached(DestructibleComponent parent, DamageThreshold threshold)
         {
             Parent = parent;
             Threshold = threshold;

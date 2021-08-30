@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 {
     [TestFixture]
     [TestOf(typeof(DestructibleComponent))]
-    [TestOf(typeof(Threshold))]
+    [TestOf(typeof(DamageThreshold))]
     public class DestructibleThresholdActivationTest : ContentIntegrationTest
     {
         [Test]

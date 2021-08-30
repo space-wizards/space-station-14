@@ -18,7 +18,7 @@ namespace Content.Server.Destructible
 
         [ViewVariables]
         [DataField("thresholds")]
-        public List<Threshold> Thresholds = new();
+        public List<DamageThreshold> Thresholds = new();
 
     }
 }
