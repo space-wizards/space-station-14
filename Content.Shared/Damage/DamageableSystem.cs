@@ -23,33 +23,46 @@ namespace Content.Shared.Damage
         /// </summary>
         private void OnInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
-            // Does the damageable component have a damage container prototype ID?
-            if (component.DamageContainerID == null)
-            {
-                // DamageContainerID is a required data field, but this can still happen when adding this component via
-                // ViewVariables. Until ViewVariables can modify dictionaries (set values, add & remove entries), this
-                // means you cannot create new functional damageable components using ViewVariables.
-                Logger.Warning("Null DamageContainerID, missing YAML datafield?");
-                return;
-            }
-
-            // Try resolve the damage container prototype
-            if (!_prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID, out var damageContainerPrototype)){
-                Logger.Warning("Unknown DamageContainerPrototype given to DamageableComponent");
-                return;
-            }
-
-            // initialize damage dictionary, using the types from the damage container prototype
-            component.DamagePerType = new(damageContainerPrototype.SupportedDamageTypes.Count);
-            foreach (var type in damageContainerPrototype.SupportedDamageTypes)
-            {
-                component.DamagePerType.Add(type, 0);
-            }
-
             // Get resistance set, if any was specified.
             if (component.ResistanceSetID != null)
             {
                 _prototypeManager.TryIndex(component.ResistanceSetID, out component.ResistanceSet);
+            }
+
+            // Note that component.DamageContainerID may be null despite being a required data field. In particular,
+            // this can happen when adding this component via ViewVariables.
+
+            if (component.DamageContainerID == null ||
+                !_prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID, out var damageContainerPrototype) ||
+                damageContainerPrototype.SupportAll )
+            {
+                // Either the container should support all damage types, or no valid DamageContainerID was given (for
+                // which we default to support all). Add every single damage type to our component:
+                foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
+                {
+                    component.DamagePerType.Add(type.ID, 0);
+                }
+
+                DamageChanged(uid, component, false);
+                return;
+            }
+
+            // A valid damage container ID was provided. Initialize damage dictionary, using the types from the damage
+            // container prototype
+            component.DamagePerType = new(damageContainerPrototype.SupportedTypes.Count);
+            foreach (var type in damageContainerPrototype.SupportedTypes)
+            {
+                component.DamagePerType.Add(type, 0);
+            }
+
+            // Then also add the supported damage groups
+            foreach (var groupID in damageContainerPrototype.SupportedGroups)
+            {
+                var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
+                foreach (var type in group.DamageTypes)
+                {
+                    component.DamagePerType.TryAdd(type, 0);
+                }
             }
 
             DamageChanged(uid, component, false);
@@ -141,10 +154,10 @@ namespace Content.Shared.Damage
         /// <returns>
         ///     False if the given type is not supported or no damage change occurred; true otherwise.
         /// </returns>
-        public static bool TryChangeDamage(DamageableComponent component, DamageTypePrototype changeType, int changeAmount)
+        public static bool TryChangeDamage(DamageableComponent component, string damageType, int changeAmount)
         {
             // Check if damage type is supported, and get the current value if it is.
-            if (!component.DamagePerType.TryGetValue(changeType, out var currentDamage))
+            if (!component.DamagePerType.TryGetValue(damageType, out var currentDamage))
             {
                 return false;
             }
@@ -162,7 +175,7 @@ namespace Content.Shared.Damage
                 changeAmount = -currentDamage;
             }
 
-            component.DamagePerType[changeType] = currentDamage + changeAmount;
+            component.DamagePerType[damageType] = currentDamage + changeAmount;
             return true;
         }
 
@@ -190,8 +203,8 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        ///     Given a dictionary with <see cref="DamageTypePrototype"/> keys, convert it to a read-only dictionary
-        ///     with <see cref="DamageGroupPrototype"/> keys.
+        ///     Given a dictionary with <see cref="DamageTypePrototype.ID"/> keys, convert it to a read-only dictionary
+        ///     with <see cref="DamageGroupPrototype.ID"/> keys.
         /// </summary>
         /// <remarks>
         ///     Returns a dictionary with damage group keys, with values calculated by adding up the values for each
@@ -199,9 +212,9 @@ namespace Content.Shared.Damage
         ///     will contribute to the total of each group. If a group has no supported damage types, it is not in the
         ///     resulting dictionary.
         /// </remarks>
-        public Dictionary<DamageGroupPrototype, int> GetDamagePerGroup(DamageableComponent component)
+        public Dictionary<string, int> GetDamagePerGroup(DamageableComponent component)
         {
-            var damageGroupDict = new Dictionary<DamageGroupPrototype, int>();
+            var damageGroupDict = new Dictionary<string, int>();
             foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
             {
                 var groupDamage = 0;
@@ -219,7 +232,7 @@ namespace Content.Shared.Damage
                 // was at least one member of this group actually supported by the container?
                 if (groupIsSupported)
                 {
-                    damageGroupDict.Add(group, groupDamage);
+                    damageGroupDict.Add(group.ID, groupDamage);
                 }
             }
             return damageGroupDict;

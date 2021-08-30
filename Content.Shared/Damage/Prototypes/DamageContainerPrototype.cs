@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage.Prototypes
@@ -18,10 +18,8 @@ namespace Content.Shared.Damage.Prototypes
     /// </remarks>
     [Prototype("damageContainer")]
     [Serializable, NetSerializable]
-    public class DamageContainerPrototype : IPrototype, ISerializationHooks
+    public class DamageContainerPrototype : IPrototype
     {
-        private IPrototypeManager _prototypeManager = default!;
-
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
@@ -30,48 +28,19 @@ namespace Content.Shared.Damage.Prototypes
         ///     Determines whether this DamageContainerPrototype will support ALL damage types and groups. If true, ignore
         ///     all other options.
         /// </summary>
-        [DataField("supportAll")] private bool _supportAll;
-
-        [DataField("supportedGroups")] private HashSet<string> _supportedDamageGroupIDs = new();
-        [DataField("supportedTypes")] private HashSet<string> _supportedDamageTypeIDs = new();
-
-        private HashSet<DamageTypePrototype> _supportedDamageTypes = new();
+        [DataField("supportAll")] public bool SupportAll;
 
         /// <summary>
-        ///     Collection of damage types supported by this container.
+        ///     List of damage groups that are supported by this container.
         /// </summary>
-        [ViewVariables] public IReadOnlyCollection<DamageTypePrototype> SupportedDamageTypes => _supportedDamageTypes;
+        [DataField("supportedGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageGroupPrototype>))]
+        public List<string> SupportedGroups = new();
 
-        void ISerializationHooks.AfterDeserialization()
-        {
-            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            if (_supportAll)
-            {
-                foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
-                {
-                    _supportedDamageTypes.Add(type);
-                }
-                return;
-            }
-
-            // Add fully supported damage groups
-            foreach (var groupID in _supportedDamageGroupIDs)
-            {
-                var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
-                foreach (var type in group.DamageTypes)
-                {
-                    _supportedDamageTypes.Add(type);
-                }
-            }
-
-            // Add individual damage types, that are either not part of a group, or whose groups are (possibly) not fully supported
-            foreach (var supportedTypeID in _supportedDamageTypeIDs)
-            {
-                var type = _prototypeManager.Index<DamageTypePrototype>(supportedTypeID);
-                _supportedDamageTypes.Add(type);
-            }
-
-        }
+        /// <summary>
+        ///     Partial List of damage types supported by this container. Note that members of the damage groups listed
+        ///     in <see cref="SupportedGroups"/> are also supported, but they are not included in this list.
+        /// </summary>
+        [DataField("supportedTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
+        public List<string> SupportedTypes = new();
     }
 }

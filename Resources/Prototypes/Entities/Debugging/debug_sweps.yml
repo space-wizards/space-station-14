@@ -44,9 +44,7 @@
   id: BulletDebug
   name: bang, ded bullet
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   suffix: DEBUG
   components:
   - type: Tag

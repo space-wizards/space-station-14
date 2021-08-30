@@ -1,9 +1,7 @@
 - type: entity
   name: red laser
   id: RedLaser
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Hitscan
     damage:
@@ -16,9 +14,7 @@
 - type: entity
   name: red heavy laser
   id: RedHeavyLaser
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Hitscan
     spriteName: Objects/Weapons/Guns/Projectiles/heavy_laser.png
@@ -31,9 +27,7 @@
 - type: entity
   name: x-ray laser
   id: XrayLaser
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Hitscan
     spriteName: Objects/Weapons/Guns/Projectiles/xray.png

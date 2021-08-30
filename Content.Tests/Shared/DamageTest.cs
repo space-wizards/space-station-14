@@ -60,72 +60,72 @@ namespace Content.Tests.Shared
             // Check that it properly split up the groups into types
             int damage;
             Assert.That(damageSpec.TotalDamage, Is.EqualTo(8));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(1));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Radiation"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(3));
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
             Assert.That(damageSpec.TotalDamage, Is.EqualTo(16));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(4));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(4));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Radiation"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(6));
 
             // check that float multiplication works
             damageSpec = damageSpec * 2.2f;
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(9));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(9));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(4));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Radiation"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(13));
             Assert.That(damageSpec.TotalDamage, Is.EqualTo(9 + 9 + 4 + 13));
 
             // check that integer division works
             damageSpec = damageSpec / 2;
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(5));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(5));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Radiation"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(7));
 
             // check that float division works
             damageSpec = damageSpec / 2.4f;
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(2));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(1));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Radiation"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(3));
 
             // Lets also test the constructor with damage types and damage groups works properly.
             damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 4);
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Blunt"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(1));
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(2)); // integer rounding. Piercing is defined as last group member in yaml.
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Slash"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
             Assert.That(damage, Is.EqualTo(1));
 
             damageSpec = new(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 4);
-            Assert.That(damageSpec.DamageDict.TryGetValue(_prototypeManager.Index<DamageTypePrototype>("Piercing"), out damage));
+            Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
             Assert.That(damage, Is.EqualTo(4));
         }
 
@@ -137,15 +137,11 @@ namespace Content.Tests.Shared
             DamageSpecifier damageSpec = 10 * new DamageSpecifier(_damageSpec);
 
             // Create a resistance set
-            ResistanceSetPrototype resistanceSet = new();
-            foreach (var damageTypeID in _resistanceCoefficientDict.Keys)
+            ResistanceSetPrototype resistanceSet = new()
             {
-                resistanceSet.Coefficients.Add(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), _resistanceCoefficientDict[damageTypeID]);
-            }
-            foreach (var damageTypeID in _resistanceReductionDict.Keys)
-            {
-                resistanceSet.FlatReduction.Add(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), _resistanceReductionDict[damageTypeID]);
-            }
+                Coefficients = _resistanceCoefficientDict,
+                FlatReduction = _resistanceReductionDict
+            };
 
             //damage is initially   20 / 20 / 10 / 30
             //Each time we subtract -5 /  0 /  8 /  0.5
@@ -153,17 +149,17 @@ namespace Content.Tests.Shared
 
             // Apply once
             damageSpec = DamageSpecifier.ApplyResistanceSet(damageSpec, resistanceSet);
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Blunt")], Is.EqualTo(25));
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Piercing")], Is.EqualTo(-40)); // became healing
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Slash")], Is.EqualTo(6));
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Radiation")], Is.EqualTo(31)); // would be 32 w/o fraction adjustment
+            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(25));
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // became healing
+            Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(6));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(31)); // would be 32 w/o fraction adjustment
 
             // And again, checking for some other behavior
             damageSpec = DamageSpecifier.ApplyResistanceSet(damageSpec, resistanceSet);
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Blunt")], Is.EqualTo(30));
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Piercing")], Is.EqualTo(-40)); // resistances don't apply to healing
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Slash")], Is.EqualTo(0));  // Reduction reduced to 0, not below.
-            Assert.That(damageSpec.DamageDict[_prototypeManager.Index<DamageTypePrototype>("Radiation")], Is.EqualTo(32));
+            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(30));
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // resistances don't apply to healing
+            Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(0));  // Reduction reduced to 0, not below.
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(32));
         }
 
         // Default damage Yaml

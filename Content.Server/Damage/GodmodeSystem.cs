@@ -111,7 +111,7 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public Dictionary<DamageTypePrototype, int>? DamagePerType { get; }
+            public Dictionary<string, int>? DamagePerType { get; }
         }
     }
 }

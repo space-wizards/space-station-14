@@ -36,7 +36,7 @@ namespace Content.Server.Damage.Commands
                 if (damageGroup.DamageTypes.Any())
                 {
                     msg.Append(": ");
-                    msg.AppendJoin('|', damageGroup.TypeIDs);
+                    msg.AppendJoin('|', damageGroup.DamageTypes);
                 }
             }
             return $"Damage Types:{msg}";

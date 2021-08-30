@@ -2,9 +2,7 @@
   id: BulletPistol
   name: bullet (.35 auto)
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -15,9 +13,7 @@
   id: BulletPistolFlash
   name: bullet (.35 auto flash)
   parent: BulletBaseFlash
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -28,9 +24,7 @@
   id: BulletPistolHV
   name: bullet (.35 auto high-velocity)
   parent: BulletBaseHV
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -41,9 +35,7 @@
   id: BulletPistolPractice
   name: bullet (.35 auto practice)
   parent: BulletBasePractice
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -54,9 +46,7 @@
   id: BulletPistolRubber
   name: bullet (.35 auto rubber)
   parent: BulletBaseRubber
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:

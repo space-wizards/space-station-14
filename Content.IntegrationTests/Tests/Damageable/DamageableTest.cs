@@ -144,12 +144,12 @@ namespace Content.IntegrationTests.Tests.Damageable
                 var uid = sDamageableEntity.Uid;
 
                 // Check that the correct types are supported.
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type1), Is.False);
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type2a), Is.True);
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type2b), Is.False);
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3a), Is.True);
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3b), Is.True);
-                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3c), Is.True);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type1.ID), Is.False);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type2a.ID), Is.True);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type2b.ID), Is.False);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3a.ID), Is.True);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3b.ID), Is.True);
+                Assert.That(sDamageableComponent.DamagePerType.ContainsKey(type3c.ID), Is.True);
 
                 // Check that damage is evenly distributed over a group if its a nice multiple
                 var types = group3.DamageTypes;
@@ -160,7 +160,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(damageToDeal));
+                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
                 foreach (var type in types)
                 {
                     Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type, out typeDamage));
@@ -172,7 +172,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(0));
+                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(0));
                 foreach (var type in types)
                 {
                     Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type, out typeDamage));
@@ -187,18 +187,18 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
-                Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(damageToDeal));
+                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
                 // integer rounding. In this case, first member gets 1 less than others.
-                Assert.That(sDamageableComponent.DamagePerType[type3a], Is.EqualTo(damageToDeal / types.Count())); 
-                Assert.That(sDamageableComponent.DamagePerType[type3b], Is.EqualTo(1 + damageToDeal / types.Count()));
-                Assert.That(sDamageableComponent.DamagePerType[type3c], Is.EqualTo(1 + damageToDeal / types.Count())); 
+                Assert.That(sDamageableComponent.DamagePerType[type3a.ID], Is.EqualTo(damageToDeal / types.Count())); 
+                Assert.That(sDamageableComponent.DamagePerType[type3b.ID], Is.EqualTo(1 + damageToDeal / types.Count()));
+                Assert.That(sDamageableComponent.DamagePerType[type3c.ID], Is.EqualTo(1 + damageToDeal / types.Count())); 
 
                 // Heal
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(-damage));
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
-                Assert.That(sDamageableComponent.DamagePerGroup[group3], Is.EqualTo(0));
+                Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(0));
                 foreach (var type in types)
                 {
                     Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type, out typeDamage));
@@ -211,8 +211,8 @@ namespace Content.IntegrationTests.Tests.Damageable
                 TryChangeDamageEvent damageEvent = new(damage, true);
                 sEntityManager.EventBus.RaiseLocalEvent(uid, damageEvent);
                 Assert.That(DamageChanged, Is.False);
-                Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1, out groupDamage), Is.False);
-                Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type1, out typeDamage), Is.False);
+                Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1.ID, out groupDamage), Is.False);
+                Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type1.ID, out typeDamage), Is.False);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test SetAll function
@@ -225,9 +225,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(new DamageSpecifier(type3a, 5), true));
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(new DamageSpecifier(type3b, 7), true));
                 sEntityManager.EventBus.RaiseLocalEvent(uid, new TryChangeDamageEvent(new DamageSpecifier(group3, -11), true));
-                Assert.That(sDamageableComponent.DamagePerType[type3a], Is.EqualTo(2));
-                Assert.That(sDamageableComponent.DamagePerType[type3b], Is.EqualTo(3));
-                Assert.That(sDamageableComponent.DamagePerType[type3c], Is.EqualTo(0));
+                Assert.That(sDamageableComponent.DamagePerType[type3a.ID], Is.EqualTo(2));
+                Assert.That(sDamageableComponent.DamagePerType[type3b.ID], Is.EqualTo(3));
+                Assert.That(sDamageableComponent.DamagePerType[type3c.ID], Is.EqualTo(0));
 
                 // Test Over-Healing
                 damageEvent = new TryChangeDamageEvent(new DamageSpecifier(group3, -100));

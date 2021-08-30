@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Radiation;
@@ -10,12 +11,12 @@ using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Damage
 {
-    // TODO FRIENDS It wouldn't hurt to make friends with the damage system.
-
     /// <summary>
     ///     Component that allows entities to take damage.
     /// </summary>
@@ -25,36 +26,34 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
-    public class DamageableComponent : Component, IRadiationAct, ISerializationHooks, IExAct
+    public class DamageableComponent : Component, IRadiationAct, IExAct
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Damageable";
 
-        // TODO PROTOTYPE REFERENCES
-        [DataField("damageContainer", required : true)]
+        [DataField("damageContainer", required : true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
         public readonly string DamageContainerID = default!;
 
-        // TODO PROTOTYPE REFERENCES
-        [DataField("resistanceSet")]
+        [DataField("resistanceSet", customTypeSerializer: typeof(PrototypeIdSerializer<ResistanceSetPrototype>))]
         public string? ResistanceSetID;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ResistanceSetPrototype? ResistanceSet;
 
         /// <summary>
-        ///     The main damage dictionary. All the damage information is stored in this dictionary using <see cref="DamageTypePrototype"/> keys.
+        ///     The main damage dictionary. All the damage information is stored in this dictionary using <see cref="DamageTypePrototype"/> IDs as keys.
         /// </summary>
-        [ViewVariables] public Dictionary<DamageTypePrototype, int> DamagePerType = new();
+        [ViewVariables] public Dictionary<string, int> DamagePerType = new();
 
         /// <summary>
-        ///     Damage, indexed by <see cref="DamageGroupPrototype"/> keys.
+        ///     Damage, indexed by <see cref="DamageGroupPrototype"/> ID keys.
         /// </summary>
         /// <remarks>
         ///     Groups which have no members that are supported by this component will not be present in this
         ///     dictionary.
         /// </remarks>
-        [ViewVariables] public Dictionary<DamageGroupPrototype, int> DamagePerGroup = new();
+        [ViewVariables] public Dictionary<string, int> DamagePerGroup = new();
 
         /// <summary>
         ///     The sum of all damages in the DamageableComponent.
@@ -63,10 +62,10 @@ namespace Content.Shared.Damage
 
         // Really these shouldn't be here. OnExplosion() and RadiationAct() should be handled elsewhere.
         [ViewVariables]
-        [DataField("radiationDamageTypes")]
+        [DataField("radiationDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
         [ViewVariables]
-        [DataField("explosionDamageTypes")]
+        [DataField("explosionDamageTypes", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
         public List<string> ExplosionDamageTypeIDs = new() { "Piercing", "Heat" };
 
         // TODO RADIATION Remove this.
@@ -75,12 +74,14 @@ namespace Content.Shared.Damage
             var damageValue = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
 
             // Radiation should really just be a damage group instead of a list of types.
-            DamageSpecifier damageSpec = new();
-            foreach (var typeID in RadiationDamageTypeIDs)
+            DamageSpecifier damage = new();
+            foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(typeID), damageValue);
+                damage.DamageDict.Add(typeID, damageValue);
             }
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damageSpec), false);
+
+            var damageEvent = new TryChangeDamageEvent(damage);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, damageEvent, false);
         }
 
         // TODO EXPLOSION Remove this.
@@ -95,12 +96,14 @@ namespace Content.Shared.Damage
             };
 
             // Explosion should really just be a damage group instead of a list of types.
-            DamageSpecifier damageSpec = new();
+            DamageSpecifier damage = new();
             foreach (var typeID in ExplosionDamageTypeIDs)
             {
-                damageSpec += new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(typeID), damageValue);
+                damage.DamageDict.Add(typeID, damageValue);
             }
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damageSpec), false);
+
+            var damageEvent = new TryChangeDamageEvent(damage);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, damageEvent, false);
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -120,61 +123,16 @@ namespace Content.Shared.Damage
                 return;
             }
 
-            TotalDamage = state.TotalDamage;
-
-            // Update damage type dictionary
-            foreach (var type in DamagePerType.Keys)
-            {
-                if (state.DamagePerTypeID.TryGetValue(type.ID, out var newValue))
-                {
-                    DamagePerType[type] = newValue;
-                }
-                else
-                {
-                    DamagePerType.Remove(type);
-                }
-            }
-
-            // Update damage group dictionary
-            foreach (var group in DamagePerGroup.Keys)
-            {
-                if (state.DamagePerGroupID.TryGetValue(group.ID, out var newValue))
-                {
-                    DamagePerGroup[group] = newValue;
-                }
-                else
-                {
-                    DamagePerGroup.Remove(group);
-                }
-            }
-
-            // If the new state supports more types than before, we need to add them. There is probably a more elegant
-            // way of doing this, but this scenario really shouldn't come up often, so the inefficiency shouldn't really
-            // matter here.
-            if ( state.DamagePerTypeID.Count > DamagePerType.Count )
-            {
-                // Add the missing types by resolving every type ID and trying to add it.
-                foreach (var (typeID, newValue) in state.DamagePerTypeID)
-                {
-                    var type = _prototypeManager.Index<DamageTypePrototype>(typeID);
-                    DamagePerType.TryAdd(type, newValue);
-                }
-            }
-            if (state.DamagePerGroupID.Count > DamagePerGroup.Count)
-            {
-                // Add the missing groups by resolving every groups ID and trying to add it.
-                foreach (var (groupID, newValue) in state.DamagePerGroupID)
-                {
-                    var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
-                    DamagePerGroup.TryAdd(group, newValue);
-                }
-            }
+            // Update damage values
+            DamagePerType = state.DamagePerType;
+            DamagePerGroup = state.DamagePerGroup;
+            TotalDamage = DamagePerType.Values.Sum();
 
             // Do we need to update ResistanceSet?
             if (state.ResistanceSetID != ResistanceSet?.ID)
             {
-                ResistanceSet = state.ResistanceSetID == null ? null : _prototypeManager.Index<ResistanceSetPrototype>(state.ResistanceSetID);
                 ResistanceSetID = state.ResistanceSetID;
+                ResistanceSet = state.ResistanceSetID == null ? null : _prototypeManager.Index<ResistanceSetPrototype>(state.ResistanceSetID);
             }
         }
     }
@@ -182,45 +140,24 @@ namespace Content.Shared.Damage
     [Serializable, NetSerializable]
     public class DamageableComponentState : ComponentState
     {
-        public readonly IReadOnlyDictionary<string, int> DamagePerTypeID;
-        public readonly IReadOnlyDictionary<string, int> DamagePerGroupID;
-        public readonly int TotalDamage;
+        public readonly Dictionary<string, int> DamagePerType;
+        public readonly Dictionary<string, int> DamagePerGroup;
         public readonly string? ResistanceSetID;
 
         public DamageableComponentState(
-            IReadOnlyDictionary<DamageTypePrototype, int> damagePerType,
-            IReadOnlyDictionary<DamageGroupPrototype, int>  damagePerGroup,
+            Dictionary<string, int> damagePerType,
+            Dictionary<string, int>  damagePerGroup,
             int totalDamage,
             ResistanceSetPrototype? resistanceSet) 
         {
             // Convert prototypes to IDs for sending over the network.
-            DamagePerTypeID = ConvertDictKeysToIDs(damagePerType);
-            DamagePerGroupID = ConvertDictKeysToIDs(damagePerGroup);
-            TotalDamage = totalDamage;
+            DamagePerType = damagePerType;
+            DamagePerGroup = damagePerGroup;
 
             if (resistanceSet != null)
             {
                 ResistanceSetID = resistanceSet.ID;
             }
-        }
-
-        /// <summary>
-        ///     Take a dictionary with <see cref="IPrototype"/> keys and return a dictionary using <see cref="IPrototype.ID"/> as keys
-        ///     instead.
-        /// </summary>
-        /// <remarks>
-        ///     Useful when sending damage type and group prototypes dictionaries over the network.
-        /// </remarks>
-        public static IReadOnlyDictionary<string, int>
-            ConvertDictKeysToIDs<TPrototype>(IReadOnlyDictionary<TPrototype, int> prototypeDict)
-            where TPrototype : IPrototype
-        {
-            Dictionary<string, int> idDict = new(prototypeDict.Count);
-            foreach (var entry in prototypeDict)
-            {
-                idDict.Add(entry.Key.ID, entry.Value);
-            }
-            return idDict;
         }
     }
 }

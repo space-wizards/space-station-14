@@ -1,9 +1,8 @@
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
@@ -22,19 +21,26 @@ namespace Content.Shared.Damage
     ///     Supports basic math operations to modify damage.
     /// </remarks>
     [DataDefinition]
-    public class DamageSpecifier : ISerializationHooks
+    public class DamageSpecifier
     {
-        [DataField("types")]
-        private Dictionary<string,int>? _damageTypeIdDictionary;
+        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, DamageTypePrototype>))]
+        private readonly Dictionary<string,int>? _damageTypeDictionary;
 
-        [DataField("groups")]
-        private Dictionary<string, int>? _damageGroupIdDictionary;
+        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, DamageGroupPrototype>))]
+        private readonly Dictionary<string, int>? _damageGroupDictionary;
 
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public Dictionary<DamageTypePrototype, int> DamageDict = new();
+        public Dictionary<string, int> DamageDict
+        {
+            // Cannot use ISerializationHooks.AfterDeserialization(). So instead using this to index damage
+            // prototypes after deserialization only when actually needed.
+            get => GetCombinedDamageDictionary();
+            set => _damageDict = value;
+        }
+        private Dictionary<string, int>? _damageDict;
 
         /// <summary>
         ///     Total damage. Note that this being zero does not mean this damage has no effect. Healing in one type may
@@ -43,120 +49,83 @@ namespace Content.Shared.Damage
         /// </summary>
         public int TotalDamage => DamageDict.Values.Sum();
 
-        #region Constructors
+        #region constructors
         /// <summary>
         ///     Constructor that just results in an empty dictionary.
         /// </summary>
-        public DamageSpecifier() {}
-
-        /// <summary>
-        ///     Constructor that takes a damage type prototype and a single damage value.
-        /// </summary>
-        public DamageSpecifier(DamageTypePrototype type, int value)
-        {
-            AddDamageType(type, value);
-        }
-
-        /// <summary>
-        ///     Constructor that takes a dictionary of damage types.
-        /// </summary>
-        public DamageSpecifier(Dictionary<DamageTypePrototype, int> dict)
-        {
-            // Just copy this dictionary
-            DamageDict = new(dict);
-        }
+        public DamageSpecifier() { }
 
         /// <summary>
         ///     Constructor that takes another DamageSpecifier instance and copies it.
         /// </summary>
         public DamageSpecifier(DamageSpecifier damageSpec)
         {
-            // Just copy the data
             DamageDict = new(damageSpec.DamageDict);
         }
 
         /// <summary>
-        ///     Constructor that takes a damage group prototype and a single damage value. The group is split into
-        ///     types, and the damage is distributed between them.
+        ///     Constructor that takes a single damage type prototype and a damage value.
+        /// </summary>
+        public DamageSpecifier(DamageTypePrototype type, int value)
+        {
+            DamageDict = new() { { type.ID, value } };
+        }
+
+        /// <summary>
+        ///     Constructor that takes a single damage group prototype and a damage value. The value is divided between members of the damage group.
         /// </summary>
         public DamageSpecifier(DamageGroupPrototype group, int value)
         {
-            AddDamageGroup(group, value);
+            _damageGroupDictionary = new() { { group.ID, value } };
         }
+        #endregion constructors
 
         /// <summary>
-        ///     Constructor that takes a damage group prototype dictionary. Each group is split into
-        ///     types, and has it's damage distributed between those types.
+        ///     Combines the damage group and type datafield dictionaries into a single damage dictionary.
         /// </summary>
-        public DamageSpecifier(Dictionary<DamageGroupPrototype, int> dict)
+        public Dictionary<string, int> GetCombinedDamageDictionary()
         {
-            foreach (var entry in dict)
+            if (_damageDict != null && _damageDict.Count > 0)
             {
-                AddDamageGroup(entry.Key, entry.Value);
+                return _damageDict;
             }
-        }
-        #endregion
 
-        /// <summary>
-        ///     Resolve datafield prototype ID strings
-        /// </summary>
-        void ISerializationHooks.AfterDeserialization()
-        {
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-
-            // use prototypeManager to resolve any damage types
-            if (_damageTypeIdDictionary != null)
+            // Add all the damage types by just copying the type dictionary (if it is not null).
+            if (_damageTypeDictionary != null)
             {
-                foreach (var entry in _damageTypeIdDictionary)
+                _damageDict = new(_damageTypeDictionary);
+            }
+            else
+            {
+                _damageDict = new();
+            }
+
+            // Then resolve any damage groups and add them
+            if (_damageGroupDictionary != null)
+            {
+                foreach (var entry in _damageGroupDictionary)
                 {
-                    AddDamageType(prototypeManager.Index<DamageTypePrototype>(entry.Key), entry.Value);
+                    var damageGroup = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(entry.Key);
+
+                    // Simply distribute evenly (except for rounding).
+                    // We do this by reducing remaining the # of types and damage every loop.
+                    var remainingTypes = damageGroup.DamageTypes.Count;
+                    var remainingDamage = entry.Value;
+                    foreach (var damageType in damageGroup.DamageTypes)
+                    {
+                        var damage = remainingDamage / remainingTypes;
+                        if (!_damageDict.TryAdd(damageType, damage))
+                        {
+                            // Key already exists, add values
+                            _damageDict[damageType] += damage;
+                        }
+                        remainingDamage -= damage;
+                        remainingTypes -= 1;
+                    }
                 }
             }
 
-            // use prototypeManager to resolve any damage groups
-            if (_damageGroupIdDictionary != null)
-            {
-                foreach (var entry in _damageGroupIdDictionary)
-                {
-                    AddDamageGroup(prototypeManager.Index<DamageGroupPrototype>(entry.Key), entry.Value);
-                }
-            }
-
-            if (DamageDict.Count == 0)
-            {   // Something has gone wrong. Not just the values are zero, but the actual dictionary is empty.
-                // This may happen if in a yaml someone gave something a damage data field, but didn't specify either a
-                // type or group dictionary (both of which are null-able).
-                Logger.Warning("Empty DamageSpecifier dictionary. Bad YAML file?");
-            }
-        }
-
-        /// <summary>
-        ///     Variation of the normal dictionary Add function. If a key already exists, add the damage values
-        ///     together.
-        /// </summary>
-        public void AddDamageType(DamageTypePrototype damageType, int damage)
-        {
-            if (!DamageDict.TryAdd(damageType, damage))
-            {
-                DamageDict[damageType] += damage;
-            }
-        }
-
-        /// <summary>
-        ///     Split a damage group and add its types
-        /// </summary>
-        private void AddDamageGroup(DamageGroupPrototype damageGroup, int damageToDistribute)
-        {
-            var totalTypes = damageGroup.DamageTypes.Count;
-
-            // Simply distribute evenly (except for rounding).
-            // We do this by reducing remaining the # of types and damage every loop.
-            foreach (var damageType in damageGroup.DamageTypes)
-            {
-                AddDamageType(damageType, damageToDistribute/totalTypes);
-                damageToDistribute -= damageToDistribute / totalTypes;
-                totalTypes -= 1;
-            }
+            return _damageDict;
         }
 
         /// <summary>
@@ -260,12 +229,16 @@ namespace Content.Shared.Damage
         public static DamageSpecifier operator +(DamageSpecifier damageSpecA, DamageSpecifier damageSpecB)
         {
             // Copy existing dictionary from dataA
-            DamageSpecifier newDamage = new(damageSpecA.DamageDict);
+            DamageSpecifier newDamage = new(damageSpecA);
 
             // Then just add types in B
             foreach (var entry in damageSpecB.DamageDict)
             {
-                newDamage.AddDamageType(entry.Key, entry.Value);
+                if (!newDamage.DamageDict.TryAdd(entry.Key, entry.Value))
+                {
+                    // Key already exists, add values
+                    newDamage.DamageDict[entry.Key] += entry.Value;
+                }
             }
             return newDamage;
         }
@@ -282,4 +255,3 @@ namespace Content.Shared.Damage
     }
     #endregion
 }
-

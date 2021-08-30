@@ -2,9 +2,7 @@
   id: BulletClRifle
   name: bullet (.25 caseless)
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -15,9 +13,7 @@
   id: BulletClRifleFlash
   name: bullet (.25 caseless flash)
   parent: BulletBaseFlash
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -28,9 +24,7 @@
   id: BulletClRifleHV
   name: bullet (.25 caseless high-velocity)
   parent: BulletBaseHV
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -41,9 +35,7 @@
   id: BulletClRiflePractice
   name: bullet (.25 caseless practice)
   parent: BulletBasePractice
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -54,9 +46,7 @@
   id: BulletClRifleRubber
   name: bullet (.25 caseless rubber)
   parent: BulletBaseRubber
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:

@@ -2,9 +2,7 @@
   id: BulletSRifle
   name: bullet (0.20 rifle)
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -15,9 +13,7 @@
   id: BulletSRifleFlash
   name: bullet (0.20 rifle flash)
   parent: BulletBaseFlash
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -28,9 +24,7 @@
   id: BulletSRifleHV
   name: bullet (0.20 rifle high-velocity)
   parent: BulletBaseHV
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -41,9 +35,7 @@
   id: BulletSRiflePractice
   name: bullet (0.20 rifle practice)
   parent: BulletBasePractice
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -54,9 +46,7 @@
   id: BulletSRifleRubber
   name: bullet (0.20 rifle rubber)
   parent: BulletBaseRubber
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:

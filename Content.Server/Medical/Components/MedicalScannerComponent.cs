@@ -98,8 +98,7 @@ namespace Content.Server.Medical.Components
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
-                new Dictionary<string, int>(),
-                new Dictionary<string, int>(),
+                null,
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -120,15 +119,9 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            // Get dictionaries of damage, by type and groups.
-            // As we need to send this over the network we need prototype ID keys.
-            // Re-use function from DamageableComponentState:
-            var groups = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerGroup);
-            var types = DamageableComponentState.ConvertDictKeysToIDs(damageable.DamagePerType);
-
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {
-                return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, true);
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, true);
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
@@ -136,7 +129,7 @@ namespace Content.Server.Medical.Components
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, scanned);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, scanned);
         }
 
         private void UpdateUserInterface()

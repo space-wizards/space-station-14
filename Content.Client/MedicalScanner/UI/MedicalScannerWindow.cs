@@ -56,14 +56,14 @@ namespace Content.Client.MedicalScanner.UI
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
                 // Show the total damage
-                var totalDamage = state.DamagePerTypeID.Values.Sum();
+                var totalDamage = state.DamagePerType.Values.Sum();
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
                 // Keep track of how many damage types we have shown
-                HashSet<string> shownTypeIDs = new();
+                HashSet<string> shownTypes = new();
 
                 // Then show the total damage and type breakdown for each damage group.
-                foreach (var (damageGroupID, damageAmount) in state.DamagePerGroupID)
+                foreach (var (damageGroupID, damageAmount) in state.DamagePerGroup)
                 {
 
                     // Show total damage for the group
@@ -75,37 +75,20 @@ namespace Content.Client.MedicalScanner.UI
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);
                     foreach (var type in group.DamageTypes)
                     {
-                        if (state.DamagePerTypeID.TryGetValue(type.ID, out var typeAmount))
+                        if (state.DamagePerType.TryGetValue(type, out var typeAmount))
                         {
                             // If damage types are allowed to belong to more than one damage group, they may appear twice here. Mark them as duplicate.
-                            if (!shownTypeIDs.Contains(type.ID))
+                            if (!shownTypes.Contains(type))
                             {
-                                shownTypeIDs.Add(type.ID);
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type.ID), ("amount", typeAmount))}");
+                                shownTypes.Add(type);
+                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", type), ("amount", typeAmount))}");
                             }
                             else {
-                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-duplicate-text", ("damageType", type.ID), ("amount", typeAmount))}");
+                                text.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-duplicate-text", ("damageType", type), ("amount", typeAmount))}");
                             }
                         }
                     }
                     text.Append('\n');
-                }
-
-                // Then, lets also list any damageType that was not fully Supported by the entity's damageContainer
-                var textAppendix = new StringBuilder();
-                int totalMiscDamage = 0;
-                // Iterate over ids that have not been printed.
-                foreach (var damageTypeID in state.DamagePerTypeID.Keys.Where(typeID => !shownTypeIDs.Contains(typeID)))
-                {
-                     //This damage type was not yet added to the text.
-                     textAppendix.Append($"\n- {Loc.GetString("medical-scanner-window-damage-type-text", ("damageType", damageTypeID), ("amount", state.DamagePerTypeID[damageTypeID]))}");
-                     totalMiscDamage += state.DamagePerTypeID[damageTypeID];
-                }
-
-                // Is there any information to show? Did any damage types not belong to a group?
-                if (textAppendix.Length > 0) {
-                    text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", "Miscellaneous"), ("amount", totalMiscDamage))}");
-                    text.Append(textAppendix);
                 }
 
                 _diagnostics.Text = text.ToString();

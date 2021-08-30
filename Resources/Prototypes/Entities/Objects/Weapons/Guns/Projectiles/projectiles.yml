@@ -3,9 +3,7 @@
   id: BulletBase
   name: bulletbase
   description: If you can see this you're probably dead!
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Clickable
   - type: Sprite
@@ -37,9 +35,7 @@
   id: BulletBaseFlash
   name: base bullet flash
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -70,9 +66,7 @@
   id: BulletBasePractice
   name: base bullet practice
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -83,9 +77,7 @@
   id: BulletBaseRubber
   name: base bullet rubber
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     damage:
@@ -102,9 +94,7 @@
   name : taser bolt
   id: BulletTaser
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     directional: false
@@ -141,9 +131,7 @@
   name: emitter bolt
   id: EmitterBolt
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     color: "#ffff33"
@@ -175,9 +163,7 @@
   id: BulletRocket
   name: rocket
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -205,9 +191,7 @@
   id: BulletGrenadeBaton
   name: baton grenade
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -228,9 +212,7 @@
   id: BulletGrenadeBlast
   name: blast grenade
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -254,9 +236,7 @@
   id: BulletGrenadeFlash
   name: flash grenade
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -282,9 +262,7 @@
   id: BulletGrenadeFrag
   name: frag grenade
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -308,9 +286,7 @@
   id: BulletFoam
   name: foam dart
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -328,9 +304,7 @@
   id: BulletCap
   name: cap bullet
   parent: BulletBase
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Sprite
     netsync: false
@@ -347,9 +321,7 @@
   name: cream pie
   parent: BulletBase
   description: get creampied, honk!!
-# TODO ABSTRACT / HIDDEN
-# allow these entities to be hidden from the spawn menu, but still call AfterDeserialization hooks.
-#  abstract: true
+  abstract: true
   components:
   - type: Projectile
     deleteOnCollide: false # CreamPie component handles this.

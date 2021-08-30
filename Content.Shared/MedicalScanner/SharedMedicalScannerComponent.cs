@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Body.Components;
+using Content.Shared.Damage;
 using Content.Shared.DragDrop;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -15,25 +16,24 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly IReadOnlyDictionary<string, int> DamagePerGroupID;
-            public readonly IReadOnlyDictionary<string, int> DamagePerTypeID;
+            public readonly IReadOnlyDictionary<string, int> DamagePerGroup;
+            public readonly IReadOnlyDictionary<string, int> DamagePerType;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                IReadOnlyDictionary<string, int> damagePerGroupID,
-                IReadOnlyDictionary<string, int> damagePerTypeID,
+                DamageableComponent? damageable,
                 bool isScanned)
             {
                 Entity = entity;
-                DamagePerGroupID = damagePerGroupID;
-                DamagePerTypeID = damagePerTypeID;
+                DamagePerGroup = damageable?.DamagePerGroup ?? new();
+                DamagePerType = damageable?.DamagePerType ?? new();
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamagePerTypeID.Count > 0;
+                return DamagePerType.Count > 0;
             }
         }
 
