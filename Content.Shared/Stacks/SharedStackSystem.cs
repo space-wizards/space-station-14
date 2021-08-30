@@ -60,7 +60,24 @@ namespace Content.Shared.Stacks
             if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
-            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
+        }
+
+        /// <summary>
+        ///     Try to use an amount of items on this stack. Returns whether this succeeded.
+        /// </summary>
+        public bool Use(EntityUid uid, SharedStackComponent stack, int amount)
+        {
+            // Check if we have enough things in the stack for this...
+            if (stack.Count < amount)
+            {
+                // Not enough things in the stack, return false.
+                return false;
+            }
+
+            // We do have enough things in the stack, so remove them and change.
+            SetCount(uid, stack, stack.Count - amount);
+            return true;
         }
 
         private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
