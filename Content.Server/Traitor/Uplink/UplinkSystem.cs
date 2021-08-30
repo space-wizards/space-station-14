@@ -10,7 +10,7 @@ namespace Content.Server.Traitor.Uplink.Systems
 {
     public class UplinkSystem : EntitySystem
     {
-        [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
+        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public override void Initialize()
         {
@@ -24,6 +24,9 @@ namespace Content.Server.Traitor.Uplink.Systems
             var acc = args.Account;
             uplink.SyndicateUplinkAccount = acc;
             _uplinkManager.AddNewAccount(acc);
+
+
+            RaiseLocalEvent(uid, new UplinkInitEvent(uplink));
 
             /*_syndicateUplinkAccount.BalanceChanged += account =>
             {

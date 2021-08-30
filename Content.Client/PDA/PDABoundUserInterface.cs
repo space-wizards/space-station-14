@@ -89,6 +89,8 @@ namespace Content.Client.PDA
 
                     _menu.EjectIDButton.Visible = msg.PDAOwnerInfo.IdOwner != null || msg.PDAOwnerInfo.JobTitle != null;
                     _menu.EjectPenButton.Visible = msg.HasPen;
+                    _menu.ActivateUplinkButton.Visible = msg.HasUplink;
+
                     break;
                 }
             }
@@ -114,6 +116,8 @@ namespace Content.Client.PDA
             public Button FlashLightToggleButton { get; }
             public Button EjectIDButton { get; }
             public Button EjectPenButton { get; }
+
+            public Button ActivateUplinkButton { get; }
 
             public readonly TabContainer MasterTabContainer;
 
@@ -149,6 +153,12 @@ namespace Content.Client.PDA
                 EjectPenButton = new Button
                 {
                     Text = Loc.GetString("comp-pda-ui-eject-pen-button"),
+                    HorizontalAlignment = HAlignment.Center,
+                    VerticalAlignment = VAlignment.Center
+                };
+                ActivateUplinkButton = new Button
+                {
+                    Text = Loc.GetString("pda-bound-user-interface-uplink-tab-title"),
                     HorizontalAlignment = HAlignment.Center,
                     VerticalAlignment = VAlignment.Center
                 };
@@ -189,7 +199,8 @@ namespace Content.Client.PDA
                     {
                         PDAOwnerLabel,
                         IDInfoContainer,
-                        FlashLightToggleButton
+                        FlashLightToggleButton,
+                        ActivateUplinkButton
                     }
                 };
 

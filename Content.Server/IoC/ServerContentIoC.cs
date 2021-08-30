@@ -49,7 +49,7 @@ namespace Content.Server.IoC
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<ActionManager, ActionManager>();
-            IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
+            IoCManager.Register<IUplinkManager,UplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();

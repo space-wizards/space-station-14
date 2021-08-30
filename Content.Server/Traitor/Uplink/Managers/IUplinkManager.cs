@@ -7,7 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.PDA.Managers
 {
-    public interface IPDAUplinkManager
+    public interface IUplinkManager
     {
         public IReadOnlyDictionary<string, UplinkListingData> FetchListings { get; }
 

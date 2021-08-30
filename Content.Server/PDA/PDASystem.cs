@@ -1,13 +1,14 @@
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
 using Content.Server.Light.Events;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using System;
 
 namespace Content.Server.PDA
 {
@@ -25,6 +26,12 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
+            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
+        }
+
+        private void OnUplinkInit(EntityUid uid, PDAComponent component, UplinkInitEvent args)
+        {
+            UpdatePDAUserInterface(component);
         }
 
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -119,8 +126,10 @@ namespace Content.Server.PDA
                 JobTitle = pda.ContainedID?.JobTitle
             };
 
+            var hasUplink = pda.Owner.HasComponent<UplinkComponent>();
+
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);
-            ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenInserted, ownerInfo));
+            ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenInserted, ownerInfo, hasUplink));
         }
 
         private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)

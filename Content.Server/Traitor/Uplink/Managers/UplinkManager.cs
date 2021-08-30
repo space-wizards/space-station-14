@@ -10,7 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.PDA.Managers
 {
-    public class PDAUplinkManager : IPDAUplinkManager
+    public class UplinkManager : IUplinkManager
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
