@@ -41,10 +41,10 @@ namespace Content.Server.Traitor.Uplink.Commands
                 shell.WriteLine(Loc.GetString("Selected player doesn't controll any entity"));
                 return;
             }
-            var player = session.AttachedEntity;
+            var user = session.AttachedEntity;
 
             // Get target item
-            IEntity uplinkEntity;
+            IEntity? uplinkEntity = null;
             if (args.Length >= 2)
             {
                 if (!int.TryParse(args[1], out var itemID))
@@ -63,24 +63,29 @@ namespace Content.Server.Traitor.Uplink.Commands
 
                 uplinkEntity = entityManager.GetEntity(eUid);
             }
-            else
-            {
-                // TODO: check players inventory and find PDA
-                return;
-            }
 
             // Get TC count
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
-            // Try to create new account
-            // TODO: check if account already exist
+            // Get account
             var uplinkManager = IoCManager.Resolve<IUplinkManager>();
-            var uplinkAccount = new UplinkAccount(player.Uid, tcCount);
-            uplinkManager.AddNewAccount(uplinkAccount);
+            if (!uplinkManager.TryGetAccount(user.Uid, out UplinkAccount? uplinkAccount))
+            {
+                uplinkAccount = new UplinkAccount(user.Uid, tcCount);
+                if (!uplinkManager.AddNewAccount(uplinkAccount))
+                {
+                    shell.WriteLine(Loc.GetString("Can't create new uplink account"));
+                    return;
+                }
+            }
 
-            var uplink = uplinkEntity.AddComponent<UplinkComponent>();
-            uplink.UplinkAccount = uplinkAccount;
+            // Finally add uplink
+            if (!UplinkExtensions.AddUplink(user, uplinkAccount!, uplinkEntity))
+            {
+                shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
+                return;
+            }
         }
     }
 }

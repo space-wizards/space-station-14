@@ -17,6 +17,8 @@ namespace Content.Server.PDA.Managers
 
         public bool ChangeBalance(UplinkAccount acc, int amt);
 
+        public bool TryGetAccount(EntityUid owner, out UplinkAccount? acc);
+
         public bool TryPurchaseItem(
             UplinkAccount? acc,
             string itemId,
