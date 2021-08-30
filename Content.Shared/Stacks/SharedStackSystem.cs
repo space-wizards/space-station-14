@@ -13,6 +13,7 @@ namespace Content.Shared.Stacks
         {
             base.Initialize();
 
+            SubscribeLocalEvent<SharedStackComponent, ComponentGetState>(OnStackGetState);
             SubscribeLocalEvent<SharedStackComponent, ComponentHandleState>(OnStackHandleState);
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
@@ -60,6 +61,11 @@ namespace Content.Shared.Stacks
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
             RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+        }
+
+        private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
+        {
+            args.State = new StackComponentState(component.Count, component.MaxCount);
         }
 
         private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ref ComponentHandleState args)
