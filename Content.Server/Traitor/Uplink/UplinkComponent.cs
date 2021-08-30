@@ -9,6 +9,6 @@ namespace Content.Server.Traitor.Uplink.Components
     {
         public override string Name => "Uplink";
 
-        [ViewVariables] public UplinkAccount? SyndicateUplinkAccount;
+        [ViewVariables] public UplinkAccount? UplinkAccount;
     }
 }

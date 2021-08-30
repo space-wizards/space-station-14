@@ -1,8 +1,8 @@
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
 using Content.Server.Light.Events;
+using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Events;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
@@ -26,12 +26,9 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
-        }
 
-        private void OnUplinkInit(EntityUid uid, PDAComponent component, UplinkInitEvent args)
-        {
-            UpdatePDAUserInterface(component);
+            SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
+            SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
         }
 
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
@@ -92,11 +89,22 @@ namespace Content.Server.PDA
         private void OnLightToggle(EntityUid uid, PDAComponent pda, LightToggleEvent args)
         {
             pda.FlashlightOn = args.IsOn;
+            UpdatePDAUserInterface(pda);
         }
 
         private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
         {
             pda.OwnerName = args.OwnerName;
+            UpdatePDAUserInterface(pda);
+        }
+
+        private void OnUplinkInit(EntityUid uid, PDAComponent pda, UplinkInitEvent args)
+        {
+            UpdatePDAUserInterface(pda);
+        }
+
+        private void OnUplinkRemoved(EntityUid uid, PDAComponent pda, UplinkRemovedEvent args)
+        {
             UpdatePDAUserInterface(pda);
         }
 

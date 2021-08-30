@@ -79,8 +79,8 @@ namespace Content.Server.TraitorDeathMatch.Components
 
             // We have finally determined both PDA components. FINALLY.
 
-            var userAccount = userUplink.SyndicateUplinkAccount;
-            var victimAccount = victimUplink.SyndicateUplinkAccount;
+            var userAccount = userUplink.UplinkAccount;
+            var victimAccount = victimUplink.UplinkAccount;
 
             if (userAccount == null)
             {

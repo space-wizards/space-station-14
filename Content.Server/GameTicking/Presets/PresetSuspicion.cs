@@ -3,16 +3,13 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.PDA;
+using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Events;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.Roles;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
@@ -35,6 +32,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] protected readonly IEntityManager EntityManager = default!;
+        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }
@@ -119,6 +117,8 @@ namespace Content.Server.GameTicking.Presets
                 var uplinkAccount =
                     new UplinkAccount(mind.OwnedEntity!.Uid,
                         TraitorStartingBalance);
+                _uplinkManager.AddNewAccount(uplinkAccount);
+
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
                 if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
                 {
@@ -126,8 +126,8 @@ namespace Content.Server.GameTicking.Presets
                 }
 
                 var pda = pdaItem.Owner;
-                pda.AddComponent<UplinkComponent>();
-                EntityManager.EventBus.RaiseLocalEvent(pda.Uid, new TryInitUplinkEvent(uplinkAccount));
+                var uplink = pda.AddComponent<UplinkComponent>();
+                uplink.UplinkAccount = uplinkAccount;
             }
 
             foreach (var player in list)

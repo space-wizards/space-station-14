@@ -7,15 +7,13 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
+using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Events;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -38,6 +36,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] protected readonly IEntityManager EntityManager = default!;
+        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public override string ModeTitle => Loc.GetString("traitor-title");
 
@@ -124,6 +123,8 @@ namespace Content.Server.GameTicking.Presets
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
                 var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
+                _uplinkManager.AddNewAccount(uplinkAccount);
+
                 var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
                 if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
                 {
@@ -144,8 +145,8 @@ namespace Content.Server.GameTicking.Presets
 
                 mind.AddRole(traitorRole);
                 _traitors.Add(traitorRole);
-                pda.AddComponent<UplinkComponent>();
-                EntityManager.EventBus.RaiseLocalEvent(pda.Uid, new TryInitUplinkEvent(uplinkAccount));
+                var uplink = pda.AddComponent<UplinkComponent>();
+                uplink.UplinkAccount = uplinkAccount;
             }
 
             var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;

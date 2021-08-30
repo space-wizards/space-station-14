@@ -2,15 +2,19 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Traitor.Uplink.Events
+namespace Content.Server.Traitor.Uplink
 {
     public class UplinkInitEvent : EntityEventArgs
     {
-        public UplinkComponent uplink;
+        public UplinkComponent Uplink;
 
         public UplinkInitEvent(UplinkComponent uplink)
         {
-            this.uplink = uplink;
+            Uplink = uplink;
         }
+    }
+
+    public class UplinkRemovedEvent : EntityEventArgs
+    {
     }
 }

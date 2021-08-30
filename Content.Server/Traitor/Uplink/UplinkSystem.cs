@@ -1,10 +1,7 @@
 using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Events;
-using Content.Shared.PDA;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using System;
 
 namespace Content.Server.Traitor.Uplink.Systems
 {
@@ -16,37 +13,18 @@ namespace Content.Server.Traitor.Uplink.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<UplinkComponent, TryInitUplinkEvent>(InitUplinkAccount);
+            SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
         }
 
-        private void InitUplinkAccount(EntityUid uid, UplinkComponent uplink, TryInitUplinkEvent args)
+        private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
-            var acc = args.Account;
-            uplink.SyndicateUplinkAccount = acc;
-            _uplinkManager.AddNewAccount(acc);
-
-
-            RaiseLocalEvent(uid, new UplinkInitEvent(uplink));
-
-            /*_syndicateUplinkAccount.BalanceChanged += account =>
-            {
-                //UpdatePDAUserInterface();
-            };*/
-
-
+            RaiseLocalEvent(uid, new UplinkInitEvent(component));
         }
 
-        /*public void InitUplinkAccount(UplinkAccount acc)
+        private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
-            syndicateUplinkAccount = acc;
-            _uplinkManager.AddNewAccount(_syndicateUplinkAccount);
-
-            _syndicateUplinkAccount.BalanceChanged += account =>
-            {
-                //UpdatePDAUserInterface();
-            };
-
-            //UpdatePDAUserInterface();
-    }*/
+            RaiseLocalEvent(uid, new UplinkRemovedEvent());
+        }
     }
 }
