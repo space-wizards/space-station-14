@@ -86,7 +86,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 yield return near;
             }
