@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace Content.Server.PDA
 {
-    public sealed class PdaAccessSet : ISet<string>
+    public sealed class PDAAccessSet : ISet<string>
     {
         private readonly PDAComponent _pdaComponent;
         private static readonly HashSet<string> EmptySet = new();
 
-        public PdaAccessSet(PDAComponent pdaComponent)
+        public PDAAccessSet(PDAComponent pdaComponent)
         {
             _pdaComponent = pdaComponent;
         }

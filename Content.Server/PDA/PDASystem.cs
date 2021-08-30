@@ -27,7 +27,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
         }
 
-
         private void OnComponentInit(EntityUid uid, PDAComponent pda, ComponentInit args)
         {
             var ui = pda.Owner.GetUIOrNull(PDAUiKey.Key);

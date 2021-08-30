@@ -31,11 +31,11 @@ namespace Content.Server.PDA
 
         // TODO: Move me to ECS after Access refactoring
         #region Acces Logic
-        [ViewVariables] private readonly PdaAccessSet _accessSet;
+        [ViewVariables] private readonly PDAAccessSet _accessSet;
 
         public PDAComponent()
         {
-            _accessSet = new PdaAccessSet(this);
+            _accessSet = new PDAAccessSet(this);
         }
 
         public ISet<string>? GetContainedAccess()
