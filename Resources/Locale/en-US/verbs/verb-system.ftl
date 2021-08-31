@@ -12,3 +12,5 @@ verb-categories-eject = Eject
 verb-categories-insert = Insert
 verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
+verb-categories-close = Close
+verb-categories-open = Open

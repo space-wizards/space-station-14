@@ -2,9 +2,11 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Audio;
 using Content.Shared.Cabinet;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -28,6 +30,68 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, TryEjectItemCabinetEvent>(OnTryEjectItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
+
+            SubscribeLocalEvent<ItemCabinetComponent, AssembleVerbsEvent>(AddCabinetVerbs);
+        }
+
+        private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, AssembleVerbsEvent args)
+        {
+            if (!args.Types.HasFlag(VerbTypes.Interact))
+                return;
+
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            // add Eject item verb
+            if (component.Opened && component.ItemContainer.ContainedEntity != null)
+            {
+                Verb verb = new("ItemCabined:eject");
+
+                verb.Act = () =>
+                {
+                    TakeItem(component, args.Hands, component.ItemContainer.ContainedEntity, args.User);
+                    UpdateVisuals(component);
+                };
+                if (args.PrepareGUI)
+                {
+                    verb.Category = VerbCategories.Eject;
+                }
+                // eject takes priority over open/close
+                verb.Priority = 1;
+                args.Verbs.Add(verb);
+            }
+
+            // add Insert item verb, if a valid item is held
+            if (component.Opened &&
+                args.Using != null &&
+                (component.Whitelist?.IsValid(args.Using) ?? true) &&
+                component.ItemContainer.CanInsert(args.Using))
+            {
+                Verb verb = new("ItemCabined:insert");
+
+                verb.Act = () =>
+                {
+                    args.Hands.TryPutEntityIntoContainer(args.Using, component.ItemContainer);
+                    UpdateVisuals(component);
+                };
+
+                if (args.PrepareGUI)
+                {
+                    verb.Category = VerbCategories.Insert;
+                }
+                // insert takes priority over open/close
+                verb.Priority = 1;
+                args.Verbs.Add(verb);
+            }
+
+            // Toggle open verb
+            Verb toggleVerb = new("ItemCabined:toggle");
+            toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
+            if (args.PrepareGUI)
+            {
+                toggleVerb.Category = component.Opened ? VerbCategories.Close : VerbCategories.Open;
+            }
+            args.Verbs.Add(toggleVerb);
         }
 
         private void OnMapInitialize(EntityUid uid, ItemCabinetComponent comp, MapInitEvent args)
@@ -84,7 +148,7 @@ namespace Content.Server.Cabinet
         /// <summary>
         ///     Toggles the ItemCabinet's state.
         /// </summary>
-        private void OnToggleItemCabinet(EntityUid uid, ItemCabinetComponent comp, ToggleItemCabinetEvent args)
+        private void OnToggleItemCabinet(EntityUid uid, ItemCabinetComponent comp, ToggleItemCabinetEvent? args = null)
         {
             comp.Opened = !comp.Opened;
             ClickLatchSound(comp);
@@ -116,23 +180,34 @@ namespace Content.Server.Cabinet
         {
             if (comp.ItemContainer.ContainedEntity == null || args.Cancelled)
                 return;
-            if (args.User.TryGetComponent(out HandsComponent? hands))
+            if (args.User.TryGetComponent(out SharedHandsComponent? hands))
             {
-
-                if (comp.ItemContainer.ContainedEntity.TryGetComponent<ItemComponent>(out var item))
-                {
-                    comp.Owner.PopupMessage(args.User,
-                        Loc.GetString("comp-item-cabinet-successfully-taken",
-                            ("item", comp.ItemContainer.ContainedEntity),
-                            ("cabinet", comp.Owner)));
-                    hands.PutInHandOrDrop(item);
-                }
+                // Put into hands
+                TakeItem(comp, hands, comp.ItemContainer.ContainedEntity, args.User);
             }
             else if (comp.ItemContainer.Remove(comp.ItemContainer.ContainedEntity))
             {
                 comp.ItemContainer.ContainedEntity.Transform.Coordinates = args.User.Transform.Coordinates;
             }
             UpdateVisuals(comp);
+        }
+
+        /// <summary>
+        ///     Tries to eject the ItemCabinet's item, either into the user's hands. Used by both <see
+        ///     cref="OnTryEjectItemCabinet"/> and the eject verbs.
+        /// </summary>
+        private static void TakeItem(ItemCabinetComponent comp, SharedHandsComponent hands, IEntity containedEntity, IEntity user)
+        {
+            if (containedEntity.HasComponent<ItemComponent>())
+            {
+                if (!hands.TryPutInActiveHandOrAny(containedEntity))
+                    containedEntity.Transform.Coordinates = hands.Owner.Transform.Coordinates;
+
+                comp.Owner.PopupMessage(user,
+                    Loc.GetString("comp-item-cabinet-successfully-taken",
+                        ("item", containedEntity),
+                        ("cabinet", comp.Owner)));
+            }
         }
 
         private static void UpdateVisuals(ItemCabinetComponent comp)

@@ -51,6 +51,10 @@ namespace Content.Shared.Verbs
             new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png", true);
         public static readonly VerbCategoryData Unbuckle =
             new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png", true);
+        public static readonly VerbCategoryData Open =
+            new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png", true);
+        public static readonly VerbCategoryData Close =
+            new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
 
         public static readonly VerbCategoryData Rotate = new("Rotate", null);
         public static readonly VerbCategoryData Construction =
