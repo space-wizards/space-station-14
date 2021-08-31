@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
@@ -75,7 +76,9 @@ namespace Content.Shared.Throwing
 
         private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
-            if (EntityManager.GetEntity(uid).IsInContainer()) return;
+            // Unfortunately we can't check for hands containers as they have specific names.
+            if (EntityManager.GetEntity(uid).TryGetContainerMan(out var manager) &&
+                manager.Owner.HasComponent<SharedHandsComponent>()) return;
 
             LandComponent(thrownItem);
         }
