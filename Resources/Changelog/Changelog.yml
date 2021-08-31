@@ -1916,3 +1916,8 @@ Entries:
   changes: []
   id: 342
   time: '2021-08-31T08:33:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrown items no longer land if they're caught., type: Tweak}
+  id: 343
+  time: '2021-08-31T12:46:11.0000000+00:00'
