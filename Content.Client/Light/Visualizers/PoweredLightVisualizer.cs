@@ -18,7 +18,7 @@ namespace Content.Client.Light.Visualizers
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
-        [DataField("blinkingSound", required: true)] private SoundSpecifier _blinkingSound = default!;
+        [DataField("blinkingSound")] private SoundSpecifier? _blinkingSound = default;
 
         private bool _wasBlinking;
 
@@ -125,13 +125,16 @@ namespace Content.Client.Light.Visualizers
                 }
             };
 
-            blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+            if (_blinkingSound != null)
             {
-                KeyFrames =
+                blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+                {
+                    KeyFrames =
                 {
                     new AnimationTrackPlaySound.KeyFrame(_blinkingSound.GetSound(), 0.5f)
                 }
-            });
+                });
+            }
 
             return blinkingAnim;
         }
