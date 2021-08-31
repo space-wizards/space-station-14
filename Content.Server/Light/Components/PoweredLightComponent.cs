@@ -260,13 +260,15 @@ namespace Content.Server.Light.Components
             }
         }
 
-        private void SetLight(bool value, Color color = default)
+        private void SetLight(bool value, Color? color = null)
         {
             _currentLit = value;
 
             if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
             pointLight.Enabled = value;
-            pointLight.Color = color;
+
+            if (color != null)
+                pointLight.Color = color.Value;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
