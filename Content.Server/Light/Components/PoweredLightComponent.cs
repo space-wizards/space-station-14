@@ -17,6 +17,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -89,7 +90,7 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
             DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
+            _lightBulbContainer = Owner.EnsureContainer<ContainerSlot>("light_bulb");
         }
 
         [ViewVariables]
@@ -236,10 +237,9 @@ namespace Content.Server.Light.Components
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && _on)
                     {
-                        _currentLit = true;
+                        SetLight(true, LightBulb.Color);
                         powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
-                        _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
@@ -249,19 +249,30 @@ namespace Content.Server.Light.Components
                     }
                     else
                     {
-                        _currentLit = false;
+                        SetLight(false);
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    _currentLit = false;
+                    SetLight(false);
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    _currentLit = false;
+                    SetLight(false);
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
+        }
+
+        private void SetLight(bool value, Color? color = null)
+        {
+            _currentLit = value;
+
+            if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
+            pointLight.Enabled = value;
+
+            if (color != null)
+                pointLight.Color = color.Value;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
