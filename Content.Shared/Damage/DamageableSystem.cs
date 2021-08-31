@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
@@ -14,14 +15,16 @@ namespace Content.Shared.Damage
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<DamageableComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
             SubscribeLocalEvent<DamageableComponent, TryChangeDamageEvent>(TryChangeDamage);
+            SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
+            SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         }
 
         /// <summary>
         ///     Initialize a damageable component
         /// </summary>
-        private void OnInit(EntityUid uid, DamageableComponent component, ComponentInit _)
+        private void DamageableInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
             // Get resistance set, if any was specified.
             if (component.ResistanceSetID != null)
@@ -236,6 +239,31 @@ namespace Content.Shared.Damage
                 }
             }
             return damageGroupDict;
+        }
+
+        private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
+        {
+            args.State = new DamageableComponentState(component.DamagePerType, component.DamagePerGroup, component.ResistanceSet);
+        }
+
+        private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not DamageableComponentState state)
+            {
+                return;
+            }
+
+            // Update damage values
+            component.DamagePerType = state.DamagePerType;
+            component.DamagePerGroup = state.DamagePerGroup;
+            component.TotalDamage = component.DamagePerType.Values.Sum();
+
+            // Do we need to update ResistanceSet?
+            if (state.ResistanceSetID != component.ResistanceSet?.ID)
+            {
+                component.ResistanceSetID = state.ResistanceSetID;
+                component.ResistanceSet = state.ResistanceSetID == null ? null : _prototypeManager.Index<ResistanceSetPrototype>(state.ResistanceSetID);
+            }
         }
     }
 

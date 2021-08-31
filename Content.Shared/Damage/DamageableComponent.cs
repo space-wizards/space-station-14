@@ -1,14 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.IoC;
-using Robust.Shared.Players;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -28,8 +24,6 @@ namespace Content.Shared.Damage
     [NetworkedComponent()]
     public class DamageableComponent : Component, IRadiationAct, IExAct
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         public override string Name => "Damageable";
 
         [DataField("damageContainer", required : true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
@@ -105,36 +99,6 @@ namespace Content.Shared.Damage
             var damageEvent = new TryChangeDamageEvent(damage);
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, damageEvent, false);
         }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new DamageableComponentState(DamagePerType, DamagePerGroup, TotalDamage, ResistanceSet);
-        }
-
-        /// <summary>
-        ///     Takes in a state defined by <string,int> dictionaries that can be sent over the network and convert them into <prototype,int> dictionaries.
-        /// </summary>
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
-
-            if (curState is not DamageableComponentState state)
-            {
-                return;
-            }
-
-            // Update damage values
-            DamagePerType = state.DamagePerType;
-            DamagePerGroup = state.DamagePerGroup;
-            TotalDamage = DamagePerType.Values.Sum();
-
-            // Do we need to update ResistanceSet?
-            if (state.ResistanceSetID != ResistanceSet?.ID)
-            {
-                ResistanceSetID = state.ResistanceSetID;
-                ResistanceSet = state.ResistanceSetID == null ? null : _prototypeManager.Index<ResistanceSetPrototype>(state.ResistanceSetID);
-            }
-        }
     }
 
     [Serializable, NetSerializable]
@@ -147,7 +111,6 @@ namespace Content.Shared.Damage
         public DamageableComponentState(
             Dictionary<string, int> damagePerType,
             Dictionary<string, int>  damagePerGroup,
-            int totalDamage,
             ResistanceSetPrototype? resistanceSet) 
         {
             // Convert prototypes to IDs for sending over the network.
