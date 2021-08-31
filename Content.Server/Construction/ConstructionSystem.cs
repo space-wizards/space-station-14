@@ -14,9 +14,9 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -50,6 +50,7 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+            SubscribeLocalEvent<ConstructionComponent, AssembleVerbsEvent>(AddConstructionVerbs);
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
@@ -469,6 +470,43 @@ namespace Content.Server.Construction
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
             Cleanup();
+        }
+
+
+        private void AddConstructionVerbs(EntityUid uid, ConstructionComponent component, AssembleVerbsEvent args)
+        {
+            // Only accessible via context menu.
+            if (!args.Types.HasFlag(VerbTypes.Other))
+                return;
+
+            // Needs to be able to interact to construct
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
+                component.Node?.Name == component.DeconstructionNodeIdentifier)
+                return;
+
+            Verb verb = new("Construction");
+            verb.Category = VerbCategories.Construction;
+            verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
+
+            verb.Act = () =>
+                {
+                    component.SetNewTarget(component.DeconstructionNodeIdentifier);
+                    if (component.Target == null)
+                    {
+                        // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
+                        component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
+                    }
+                    else
+                    {
+                        component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
+                    }
+                };
+
+            args.Verbs.Add(verb);
         }
     }
 }
