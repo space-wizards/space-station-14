@@ -93,6 +93,9 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Whether or not to load icons and string localizations in preparation for displaying in a GUI.
         /// </summary>
+        /// <remarks>
+        ///     Avoids sending unnecessary data over the network.
+        /// </remarks>
         public bool PrepareGUI;
 
         /// <summary>

@@ -1,7 +1,10 @@
 using Content.Server.Atmos.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -12,6 +15,35 @@ namespace Content.Server.Atmos.EntitySystems
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<GasTankComponent, AssembleVerbsEvent>(AddOpenUIVerb);
+        }
+
+        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, AssembleVerbsEvent args)
+        {
+            if (!args.InRange || args.Hands == null)
+                return;
+
+            if (!args.Types.HasFlag(VerbTypes.Activate))
+                return;
+
+            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+                return;
+
+            Verb verb = new("GasTank:OpenUI");
+            verb.Act = () => component.OpenInterface(actor.PlayerSession);
+
+            if (args.PrepareGUI)
+            {
+                verb.Text = Loc.GetString("control-verb-open-control-panel-text");
+                // TODO VERBS add "open UI" icon?
+            }
+
+            args.Verbs.Add(verb);
+        }
 
         public override void Update(float frameTime)
         {
