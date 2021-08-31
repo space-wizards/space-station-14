@@ -53,7 +53,7 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled) return;
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.HasComponent<IHandsComponent>())
             {
                 component.Owner.PopupMessage(args.User,
                     Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
@@ -263,8 +263,7 @@ namespace Content.Server.Kitchen.EntitySystems
             component.BeakerContainer.Remove(beaker);
 
             if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) ||
-                !EntityManager.TryGetEntity(component.HeldBeaker.OwnerUid, out var entityHeldBeaker) ||
-                !entityHeldBeaker.TryGetComponent<ItemComponent>(out var item))
+                !beaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             hands.PutInHandOrDrop(item);
 
@@ -296,6 +295,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var bui = component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key);
             bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage(program));
+            var beakerEntity = component.BeakerContainer.ContainedEntity;
             switch (program)
             {
                 case SharedReagentGrinderComponent.GrinderProgram.Grind:
@@ -315,8 +315,8 @@ namespace Content.Server.Kitchen.EntitySystems
                             if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
                             solution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(component.HeldBeaker, solution);
-                            _solutionsSystem.RemoveAllSolution(solution);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, solution);
+                            _solutionsSystem.RemoveAllSolution(beakerEntity.Uid, solution);
                             item.Delete();
                         }
 
@@ -336,14 +336,14 @@ namespace Content.Server.Kitchen.EntitySystems
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (item.HasComponent<StackComponent>())
                             {
-                                RaiseLocalEvent<ExtractableScalingEvent>(item.Uid, juiceEvent);
+                                RaiseLocalEvent(item.Uid, juiceEvent);
                             }
 
                             if (component.HeldBeaker.CurrentVolume +
                                 juiceMe.ResultSolution.TotalVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
                             juiceMe.ResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(component.HeldBeaker, juiceMe.ResultSolution);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.ResultSolution);
                             item.Delete();
                         }
 

@@ -12,9 +12,10 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     public class ChemicalAmmoComponent : Component
     {
         public override string Name => "ChemicalAmmo";
+        public const string DefaultSolutionName = "ammo";
 
         [DataField("solution")]
-        public string SolutionName { get; set; } = "ammo";
+        public string SolutionName { get; set; } = DefaultSolutionName;
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
@@ -35,13 +36,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             var projectiles = barrelFired.FiredProjectiles;
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
 
-            var projectileSolutionContainers = new List<Solution>();
+            var projectileSolutionContainers = new List<(EntityUid, Solution)>();
             foreach (var projectile in projectiles)
             {
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(projectile, "ammo", out var projectileSolutionContainer))
+                    .TryGetSolution(projectile, SolutionName, out var projectileSolutionContainer))
                 {
-                    projectileSolutionContainers.Add(projectileSolutionContainer);
+                    projectileSolutionContainers.Add((projectile.Uid, projectileSolutionContainer));
                 }
             }
 
@@ -50,13 +51,13 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
             var solutionPerProjectile = ammoSolution.CurrentVolume * (1 / projectileSolutionContainers.Count);
 
-            foreach (var projectileSolutionContainer in projectileSolutionContainers)
+            foreach (var (projectileUid, projectileSolution) in projectileSolutionContainers)
             {
-                var solutionToTransfer = solutionContainerSystem.SplitSolution(ammoSolution, solutionPerProjectile);
-                solutionContainerSystem.TryAddSolution(projectileSolutionContainer, solutionToTransfer);
+                var solutionToTransfer = solutionContainerSystem.SplitSolution(Owner.Uid, ammoSolution, solutionPerProjectile);
+                solutionContainerSystem.TryAddSolution(projectileUid, projectileSolution, solutionToTransfer);
             }
 
-            solutionContainerSystem.RemoveAllSolution(ammoSolution);
+            solutionContainerSystem.RemoveAllSolution(Owner.Uid, ammoSolution);
         }
     }
 }

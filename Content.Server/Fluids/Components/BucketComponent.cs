@@ -106,8 +106,8 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var solution = solutionsSys.SplitSolution(contents, transferAmount);
-            if (!solutionsSys.TryAddSolution(mopContents, solution))
+            var solution = solutionsSys.SplitSolution(Owner.Uid, contents, transferAmount);
+            if (!solutionsSys.TryAddSolution(mopComponent.Owner.Uid, mopContents, solution))
             {
                 return false;
             }

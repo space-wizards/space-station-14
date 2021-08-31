@@ -719,11 +719,13 @@ namespace Content.Server.Botany.Components
             }
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (solutionSystem.TryGetDrainableSolution(usingItem, out var solution)
+            if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
                 && solutionSystem.TryGetSolution(Owner, "soil", out var targetSolution))
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;
+                var targetEntity = Owner.Uid;
+                var solutionEntity = usingItem.Uid;
 
                 if (usingItem.TryGetComponent(out SprayComponent? spray))
                 {
@@ -734,7 +736,7 @@ namespace Content.Server.Botany.Components
                         AudioHelpers.WithVariation(0.125f));
                 }
 
-                var split = solutionSystem.Drain(solution, amount);
+                var split = solutionSystem.Drain(solutionEntity, solution, amount);
                 if (split.TotalVolume == 0)
                 {
                     user.PopupMessageCursor(Loc.GetString("plant-holder-component-empty-message",
@@ -747,7 +749,7 @@ namespace Content.Server.Botany.Components
                     ("owner", Owner),
                     ("amount", split.TotalVolume)));
 
-                solutionSystem.TryAddSolution(targetSolution, split);
+                solutionSystem.TryAddSolution(targetEntity, targetSolution, split);
 
                 ForceUpdateByExternalCause();
 
@@ -805,10 +807,11 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem, "", out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem, ProduceComponent.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
-                    solutionSystem.TryAddSolution(solution2, solutionSystem.SplitSolution(solution2, solution2.TotalVolume));
+                    solutionSystem.TryAddSolution(usingItem.Uid, solution2,
+                        solutionSystem.SplitSolution(usingItem.Uid, solution2, solution2.TotalVolume));
 
                     ForceUpdateByExternalCause();
                 }

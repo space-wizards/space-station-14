@@ -280,7 +280,7 @@ namespace Content.Server.Chemistry.Components
                     .TryGetSolution(_beakerContainer.ContainedEntity, "beaker", out var solution))
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(_beakerContainer.ContainedEntity!.Uid, solution);
 
             UpdateUserInterface();
         }
@@ -293,11 +293,12 @@ namespace Content.Server.Chemistry.Components
         {
             if (!HasBeaker) return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>()
+            if (_beakerContainer.ContainedEntity == null
+                || !EntitySystem.Get<SolutionContainerSystem>()
                 .TryGetSolution(_beakerContainer.ContainedEntity, "beaker", out var solution)) return;
 
             EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+                .TryAddReagent(_beakerContainer.ContainedEntity.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }

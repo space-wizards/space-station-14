@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnSolutionChange(EntityUid uid, TransformableContainerComponent component,
             SolutionChangedEvent args)
         {
-            if (!_solutionsSystem.TryGetFitsInDispenser(args.Owner, out var solution))
+            if (!_solutionsSystem.TryGetFitsInDispenser(uid, out var solution))
                 return;
             //Transform container into initial state when emptied
             if (component.CurrentReagent != null && solution.Contents.Count == 0)
@@ -51,7 +51,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 var spriteSpec =
                     new SpriteSpecifier.Rsi(
                         new ResourcePath("Objects/Consumable/Drinks/" + proto.SpriteReplacementPath), "icon");
-                var ownerEntity = EntityManager.GetEntity(args.Owner);
+                var ownerEntity = EntityManager.GetEntity(uid);
                 if (ownerEntity.TryGetComponent(out SpriteComponent? sprite))
                 {
                     sprite?.LayerSetSprite(0, spriteSpec);

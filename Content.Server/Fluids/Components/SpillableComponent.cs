@@ -26,7 +26,7 @@ namespace Content.Server.Fluids.Components
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
                     !EntitySystem.Get<SolutionContainerSystem>()
-                            .TryGetDrainableSolution(component.Owner, out var solutionComponent))
+                            .TryGetDrainableSolution(component.Owner.Uid, out var solutionComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -43,7 +43,7 @@ namespace Content.Server.Fluids.Components
                 var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
                 if (component.Owner.HasComponent<SolutionContainerManagerComponent>())
                 {
-                    if (solutionsSys.TryGetDrainableSolution(component.Owner, out var solutionComponent))
+                    if (solutionsSys.TryGetDrainableSolution(component.Owner.Uid, out var solutionComponent))
                     {
                         if (solutionComponent.DrainAvailable <= 0)
                         {
@@ -53,7 +53,7 @@ namespace Content.Server.Fluids.Components
 
                         // Need this as when we split the component's owner may be deleted
                         EntitySystem.Get<SolutionContainerSystem>()
-                            .Drain(solutionComponent, (solutionComponent.DrainAvailable))
+                            .Drain(component.Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
                             .SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
                     }
                     else
@@ -72,7 +72,7 @@ namespace Content.Server.Fluids.Components
                 && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionComponent))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(solutionComponent, solutionComponent.DrainAvailable)
+                    .Drain(Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
                     .SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }
         }

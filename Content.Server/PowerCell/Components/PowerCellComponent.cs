@@ -24,6 +24,7 @@ namespace Content.Server.PowerCell.Components
     public class PowerCellComponent : BatteryComponent, IExamine
     {
         public override string Name => "PowerCell";
+        public const string SolutionName = "powerCell";
 
         [ViewVariables] public PowerCellSize CellSize => _cellSize;
         [DataField("cellSize")]

@@ -174,7 +174,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner, out var interactions) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner.Uid, out var interactions) ||
                 interactions.DrainAvailable <= 0)
             {
                 if (!forced)
@@ -201,7 +201,7 @@ namespace Content.Server.Nutrition.Components
 
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             var transferAmount = ReagentUnit.Min(TransferAmount, interactions.DrainAvailable);
-            var drain = solutionContainerSystem.Drain(interactions, transferAmount);
+            var drain = solutionContainerSystem.Drain(Owner.Uid, interactions, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 
             // All stomach are full or can't handle whatever solution we have.
@@ -209,14 +209,14 @@ namespace Content.Server.Nutrition.Components
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough", ("owner", Owner)));
 
-                if (Owner.EntityManager.TryGetEntity(interactions.OwnerUid, out var interactionEntity)
+                if (Owner.EntityManager.TryGetEntity(Owner.Uid, out var interactionEntity)
                     && !interactionEntity.HasComponent<RefillableSolutionComponent>())
                 {
                     drain.SpillAt(target, "PuddleSmear");
                     return false;
                 }
 
-                solutionContainerSystem.Refill(interactions, drain);
+                solutionContainerSystem.Refill(Owner.Uid, interactions, drain);
                 return false;
             }
 
@@ -239,12 +239,12 @@ namespace Content.Server.Nutrition.Components
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner, out var interactions))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner.Uid, out var interactions))
             {
                 Opened = true;
 
                 var solution = EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(interactions, interactions.DrainAvailable);
+                    .Drain(Owner.Uid, interactions, interactions.DrainAvailable);
                 solution.SpillAt(Owner, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(Owner), _burstSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4));

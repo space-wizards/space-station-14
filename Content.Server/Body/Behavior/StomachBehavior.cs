@@ -74,7 +74,7 @@ namespace Content.Server.Body.Behavior
                         }
 
                         EntitySystem.Get<SolutionContainerSystem>()
-                            .TryRemoveReagent(solution, delta.ReagentId, quantity);
+                            .TryRemoveReagent(Owner.Uid, solution, delta.ReagentId, quantity);
                         transferSolution.AddReagent(delta.ReagentId, quantity);
                     }
 
@@ -166,7 +166,7 @@ namespace Content.Server.Body.Behavior
             }
 
             // Add solution to _stomachContents
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(StomachSolution, solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, StomachSolution, solution);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {

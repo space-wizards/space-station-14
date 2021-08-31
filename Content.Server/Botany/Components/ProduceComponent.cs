@@ -16,6 +16,7 @@ namespace Content.Server.Botany.Components
     public class ProduceComponent : Component, ISerializationHooks
     {
         public override string Name => "Produce";
+        public const string SolutionName = "produce";
 
         [DataField("seed")] private string? _seedName;
 
@@ -40,7 +41,7 @@ namespace Content.Server.Botany.Components
             }
 
             EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid);
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "produce");
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
             if (solutionContainer == null)
             {
                 Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");

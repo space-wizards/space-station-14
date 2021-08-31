@@ -8,53 +8,47 @@ namespace Content.Shared.Chemistry.EntitySystems
 {
     public partial class SolutionContainerSystem
     {
-        public void Refill(Solution targetSolution, Solution addedSolution)
+        public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
         {
-            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
-                || !targetEntity.HasComponent<RefillableSolutionComponent>())
+            if (!ComponentManager.HasComponent<RefillableSolutionComponent>(targetUid))
                 return;
 
-            TryAddSolution(targetSolution, addedSolution);
+            TryAddSolution(targetUid, targetSolution, addedSolution);
         }
 
-        public void Inject(Solution targetSolution, Solution addedSolution)
+        public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
         {
-            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
-                || !targetEntity.HasComponent<InjectableSolutionComponent>())
+            if (!ComponentManager.HasComponent<InjectableSolutionComponent>(targetUid))
                 return;
 
-            TryAddSolution(targetSolution, addedSolution);
+            TryAddSolution(targetUid, targetSolution, addedSolution);
         }
 
-        public Solution Draw(Solution solution, ReagentUnit amount)
+        public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount)
         {
-            if (!EntityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
-                || !solutionEntity.HasComponent<DrawableSolutionComponent>())
+            if (!ComponentManager.HasComponent<DrawableSolutionComponent>(targetUid))
             {
-                var newSolution = new Solution();
-                newSolution.OwnerUid = solution.OwnerUid;
+                return new Solution();
             }
 
-            return SplitSolution(solution, amount);
+            return SplitSolution(targetUid, solution, amount);
         }
 
-        public Solution Drain(Solution targetSolution, ReagentUnit amount)
+        public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount)
         {
-            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
-                || !targetEntity.HasComponent<DrainableSolutionComponent>())
+            if (!ComponentManager.HasComponent<DrainableSolutionComponent>(targetUid))
             {
-                var newSolution = new Solution();
-                newSolution.OwnerUid = targetSolution.OwnerUid;
+                return new Solution();
             }
 
-            return SplitSolution(targetSolution, amount);
+            return SplitSolution(targetUid, targetSolution, amount);
         }
 
-        public bool TryGetInjectableSolution(IEntity owner,
+        public bool TryGetInjectableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (owner.TryGetComponent(out InjectableSolutionComponent? injectable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
+            if (ComponentManager.TryGetComponent(targetUid, out InjectableSolutionComponent? injectable) &&
+                ComponentManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
                 return true;
@@ -64,11 +58,11 @@ namespace Content.Shared.Chemistry.EntitySystems
             return false;
         }
 
-        public bool TryGetRefillableSolution(IEntity owner,
+        public bool TryGetRefillableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (owner.TryGetComponent(out RefillableSolutionComponent? refillable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
+            if (ComponentManager.TryGetComponent(targetUid, out RefillableSolutionComponent? refillable) &&
+                ComponentManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(refillable.Solution, out solution))
             {
                 return true;
@@ -78,14 +72,13 @@ namespace Content.Shared.Chemistry.EntitySystems
             return false;
         }
 
-        public bool TryGetDrainableSolution(IEntity owner,
+        public bool TryGetDrainableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (owner.TryGetComponent(out DrainableSolutionComponent? drainable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(drainable.Solution, out solution))
+            if (ComponentManager.TryGetComponent(targetUid,out DrainableSolutionComponent? drainable) &&
+                 ComponentManager.TryGetComponent(targetUid,out SolutionContainerManagerComponent? manager) &&
+                  manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
-                solution.OwnerUid = owner.Uid;
                 return true;
             }
 
@@ -100,7 +93,6 @@ namespace Content.Shared.Chemistry.EntitySystems
                 owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
-                solution.OwnerUid = owner.Uid;
                 return true;
             }
 
@@ -110,7 +102,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public ReagentUnit DrainAvailable(IEntity? owner)
         {
-            if (owner == null || !TryGetDrainableSolution(owner, out var solution))
+            if (owner == null || !TryGetDrainableSolution(owner.Uid, out var solution))
                 return ReagentUnit.Zero;
 
             return solution.CurrentVolume;

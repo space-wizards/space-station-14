@@ -24,7 +24,7 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
                 || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
             if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(solutionContainer, reagent.ID, volume, out var accepted))
+                .TryAddReagent(entity.Uid, solutionContainer, reagent.ID, volume, out var accepted))
                 source?.RemoveReagent(reagent.ID, accepted);
         }
     }

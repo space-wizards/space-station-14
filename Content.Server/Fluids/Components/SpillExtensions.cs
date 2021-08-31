@@ -128,9 +128,9 @@ namespace Content.Server.Fluids.Components
             foreach (var spillEntity in spillEntities)
             {
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetRefillableSolution(spillEntity, out var solutionContainerComponent))
+                    .TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
                 {
-                    EntitySystem.Get<SolutionContainerSystem>().Refill(solutionContainerComponent,
+                    EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity.Uid, solutionContainerComponent,
                         solution.SplitSolution(ReagentUnit.Min(
                             solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))

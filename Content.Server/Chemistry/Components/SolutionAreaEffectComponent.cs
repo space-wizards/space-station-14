@@ -21,6 +21,8 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     public abstract class SolutionAreaEffectComponent : Component
     {
+        public const string SolutionName = "solutionArea";
+
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
         public int Amount { get; set; }
@@ -158,13 +160,13 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "solutionArea", out var solutionArea))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
                 solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solutionArea, addSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solutionArea, addSolution);
 
             UpdateVisuals();
         }

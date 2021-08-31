@@ -105,7 +105,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _solutionContainerSystem.TryRemoveReagent(contents, reagentQuantity.ReagentId,
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner.Uid, contents, reagentQuantity.ReagentId,
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
                 }
             }

@@ -20,7 +20,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [ViewVariables]
         public ReagentUnit AvailableVolume => MaxVolume - CurrentVolume;
-        
+
         public ReagentUnit DrawAvailable => CurrentVolume;
         public ReagentUnit DrainAvailable => CurrentVolume;
 
@@ -44,7 +44,7 @@ namespace Content.Shared.Chemistry.Components
         [ViewVariables]
         public ReagentUnit CurrentVolume => TotalVolume;
 
-        [ViewVariables]
-        public EntityUid OwnerUid { get; set; }
+        // [ViewVariables]
+        // public EntityUid OwnerUid { get; set; }
     }
 }

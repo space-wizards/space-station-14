@@ -20,10 +20,9 @@ namespace Content.Server.PowerCell
 
         private void OnSolutionChange(EntityUid uid, PowerCellComponent component, SolutionChangedEvent args)
         {
-            component.IsRigged = EntityManager.TryGetEntity(args.Owner, out var solutionOwner)
-                                && _solutionsSystem.TryGetSolution(solutionOwner, "powerCell", out var solution)
-                                && solution.ContainsReagent("Plasma", out var plasma)
-                                && plasma >= 5;
+            component.IsRigged =  _solutionsSystem.TryGetSolution(uid, PowerCellComponent.SolutionName, out var solution)
+                                   && solution.ContainsReagent("Plasma", out var plasma)
+                                   && plasma >= 5;
         }
     }
 }

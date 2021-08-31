@@ -252,7 +252,7 @@ namespace Content.Server.Kitchen.Components
             if (itemEntity.TryGetComponent<SolutionTransferComponent>(out var attackPourable))
             {
                 var solutionsSystem = EntitySystem.Get<SolutionContainerSystem>();
-                if (!solutionsSystem.TryGetDrainableSolution(itemEntity, out var attackSolution))
+                if (!solutionsSystem.TryGetDrainableSolution(itemEntity.Uid, out var attackSolution))
                 {
                     return false;
                 }
@@ -273,8 +273,8 @@ namespace Content.Server.Kitchen.Components
 
                 //Move units from attackSolution to targetSolution
                 var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(attackSolution, realTransferAmount);
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution, removedSolution))
+                    .Drain(itemEntity.Uid, attackSolution, realTransferAmount);
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solution, removedSolution))
                 {
                     return false;
                 }
@@ -390,7 +390,7 @@ namespace Content.Server.Kitchen.Components
         {
             if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
-                EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(solution);
+                EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid, solution);
             }
         }
 
@@ -399,7 +399,7 @@ namespace Content.Server.Kitchen.Components
             if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
+                    .TryRemoveReagent(Owner.Uid, solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
             }
         }
 
@@ -431,6 +431,7 @@ namespace Content.Server.Kitchen.Components
 
         private void SubtractContents(FoodRecipePrototype recipe)
         {
+            var solutionUid = Owner.Uid;
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return;
@@ -439,7 +440,7 @@ namespace Content.Server.Kitchen.Components
             foreach (var recipeReagent in recipe.IngredientsReagents)
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(solution, recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
+                    .TryRemoveReagent(solutionUid, solution, recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
             }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)

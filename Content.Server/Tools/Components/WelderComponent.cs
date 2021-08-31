@@ -41,6 +41,8 @@ namespace Content.Server.Tools.Components
 
         public override string Name => "Welder";
 
+        public const string SolutionName = "welder";
+
         /// <summary>
         /// Default Cost of using the welder fuel for an action
         /// </summary>
@@ -77,7 +79,7 @@ namespace Content.Server.Tools.Components
             get
             {
                 Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
-                    .TryGetSolution(Owner, "welder", out var solution);
+                    .TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }
@@ -178,7 +180,7 @@ namespace Content.Server.Tools.Components
                 return false;
 
             var succeeded = EntitySystem.Get<SolutionContainerSystem>()
-                .TryRemoveReagent(WelderSolution, "WeldingFuel", ReagentUnit.New(value));
+                .TryRemoveReagent(Owner.Uid, WelderSolution, "WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
@@ -255,7 +257,7 @@ namespace Content.Server.Tools.Components
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(WelderSolution, "WeldingFuel",
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(Owner.Uid, WelderSolution, "WeldingFuel",
                 ReagentUnit.New(FuelLossRate * frameTime));
 
             EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
@@ -303,7 +305,7 @@ namespace Content.Server.Tools.Components
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
                 && EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
+                    .TryGetDrainableSolution(eventArgs.Target.Uid, out var targetSolution)
                 && WelderSolution != null)
             {
                 if (WelderLit)
@@ -316,8 +318,8 @@ namespace Content.Server.Tools.Components
                 var trans = ReagentUnit.Min(WelderSolution.AvailableVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
-                    var drained = EntitySystem.Get<SolutionContainerSystem>().Drain(targetSolution, trans);
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(WelderSolution, drained);
+                    var drained = EntitySystem.Get<SolutionContainerSystem>().Drain(eventArgs.Target.Uid, targetSolution,  trans);
+                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, WelderSolution, drained);
                     SoundSystem.Play(Filter.Pvs(Owner), WelderRefill.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,
                         Loc.GetString("welder-component-after-interact-refueled-message"));

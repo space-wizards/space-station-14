@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                            .TryAddReagent(component, id, reactant.Amount, out var quantity));
+                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
                 });

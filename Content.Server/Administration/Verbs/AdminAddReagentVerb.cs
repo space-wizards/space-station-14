@@ -123,15 +123,18 @@ namespace Content.Server.Administration.Verbs
                         var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
                         if (_target.TryGetComponent(out InjectableSolutionComponent? injectable)
-                            && solutionsSys.TryGetSolution(_target, injectable.Name, out var solutionHolder))
+                            && solutionsSys.TryGetSolution(_target, injectable.Name, out var targetSolution))
                         {
                             var solution = new Solution(id, amount);
-                            solutionsSys.Inject(solutionHolder, solution);
+                            solutionsSys.Inject(_target.Uid, targetSolution, solution);
                         }
                         else
                         {
-                            solutionsSys.TryGetSolution(_target, "default", out var solution);
-                            solutionsSys.TryAddReagent(solution, id, amount, out _);
+                            //TODO decide how to find the solution
+                            if (solutionsSys.TryGetSolution(_target, "default", out var solution))
+                            {
+                                solutionsSys.TryAddReagent(_target.Uid,solution, id, amount, out _);
+                            }
                         }
 
                         StateDirty();

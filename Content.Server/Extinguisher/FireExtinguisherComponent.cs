@@ -32,15 +32,16 @@ namespace Content.Server.Extinguisher
                 return false;
             }
 
+            var targetEntity = eventArgs.Target;
             if (eventArgs.Target.HasComponent<ReagentTankComponent>()
-                && solutionContainerSystem.TryGetDrainableSolution(eventArgs.Target, out var targetSolution)
+                && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
                 && solutionContainerSystem.TryGetSolution(Owner, SolutionName, out var container))
             {
                 var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)
                 {
-                    var drained = solutionContainerSystem.Drain(targetSolution, transfer);
-                    solutionContainerSystem.TryAddSolution(container, drained);
+                    var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
+                    solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,

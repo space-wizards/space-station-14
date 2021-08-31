@@ -67,7 +67,7 @@ namespace Content.Server.Body.Circulatory
                 return false;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(_internalSolution, solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, _internalSolution, solution);
             return true;
         }
 

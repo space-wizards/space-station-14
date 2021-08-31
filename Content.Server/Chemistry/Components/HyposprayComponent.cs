@@ -64,7 +64,7 @@ namespace Content.Server.Chemistry.Components
                 return true;
             }
 
-            if (!solutionsSys.TryGetInjectableSolution(target, out var targetSolution))
+            if (!solutionsSys.TryGetInjectableSolution(target.Uid, out var targetSolution))
             {
                 user.PopupMessage(user,
                     Loc.GetString("hypospray-cant-inject", ("target", target)));
@@ -84,20 +84,20 @@ namespace Content.Server.Chemistry.Components
             SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution!.AvailableVolume);
+            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
                 user.PopupMessage(user,
                     Loc.GetString("hypospray-component-transfer-already-full-message",
-                        ("owner", targetSolution.OwnerUid)));
+                        ("owner", target)));
                 return true;
             }
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .SplitSolution(hypoSpraySolution, realTransferAmount);
+                    .SplitSolution(Owner.Uid, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
@@ -106,7 +106,7 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetSolution, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Uid, targetSolution, removedSolution);
 
             static bool EligibleEntity(IEntity entity)
             {

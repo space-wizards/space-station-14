@@ -46,7 +46,7 @@ namespace Content.Server.Nutrition.Components
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
             Owner.EnsureComponent<SolutionContainerManagerComponent>();
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "food");
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, FoodComponent.SolutionName);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -56,7 +56,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "food", out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, FoodComponent.SolutionName, out var solution))
             {
                 return false;
             }
@@ -85,7 +85,7 @@ namespace Content.Server.Nutrition.Components
                 return true;
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(solution, "Nutriment",
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(Owner.Uid, solution, "Nutriment",
                 solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }

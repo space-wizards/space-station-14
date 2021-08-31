@@ -235,7 +235,7 @@ namespace Content.Server.Weapon.Melee
         private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
             IEntity owner = EntityManager.GetEntity(uid);
-            if (!_solutionsSystem.TryGetInjectableSolution(owner, out var solutionContainer))
+            if (!_solutionsSystem.TryGetInjectableSolution(owner.Uid, out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();

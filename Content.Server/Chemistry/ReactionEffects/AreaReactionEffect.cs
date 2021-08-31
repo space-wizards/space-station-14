@@ -2,7 +2,6 @@
 using Content.Server.Chemistry.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
@@ -91,7 +90,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
         public void React(Solution solution, IEntity solutionEntity, double intensity)
         {
-            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solution, solution.MaxVolume);
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity.Uid, solution, solution.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);

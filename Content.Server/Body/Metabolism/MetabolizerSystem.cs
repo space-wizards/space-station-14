@@ -7,6 +7,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -14,6 +15,22 @@ namespace Content.Server.Body.Metabolism
     [UsedImplicitly]
     public class MetabolizerSystem : EntitySystem
     {
+        [Dependency]
+        private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+        }
+
+        private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+        {
+            _solutionContainerSystem.EnsureSolution(EntityManager.GetEntity(uid), component.SolutionName);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);

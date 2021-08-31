@@ -255,7 +255,7 @@ namespace Content.Server.Chemistry.Components
                         if (_bufferModeTransfer)
                         {
                             EntitySystem.Get<SolutionContainerSystem>()
-                                .TryAddReagent(beakerSolution, id, actualAmount, out var _);
+                                .TryAddReagent(beaker.Uid, beakerSolution, id, actualAmount, out var _);
                             // beakerSolution.Solution.AddReagent(id, actualAmount);
                         }
 
@@ -279,7 +279,7 @@ namespace Content.Server.Chemistry.Components
                             actualAmount = ReagentUnit.Min(reagent.Quantity, amount);
                         }
 
-                        EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(beakerSolution, id, actualAmount);
+                        EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(beaker.Uid, beakerSolution, id, actualAmount);
                         BufferSolution.AddReagent(id, actualAmount);
                         break;
                     }
@@ -308,7 +308,7 @@ namespace Content.Server.Chemistry.Components
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
                     var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle, "bottle");
 
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottleSolution, bufferSolution);
+                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle.Uid, bottleSolution, bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&
@@ -341,7 +341,7 @@ namespace Content.Server.Chemistry.Components
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
                     var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "pill");
-                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pillSolution, bufferSolution);
+                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
 
                     //Try to give them the bottle
                     if (user.TryGetComponent<HandsComponent>(out var hands) &&

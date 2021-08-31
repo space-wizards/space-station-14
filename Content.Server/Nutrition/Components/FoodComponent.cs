@@ -161,12 +161,12 @@ namespace Content.Server.Nutrition.Components
             }
 
             var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
-            var split = solutionContainerSys.SplitSolution(solution, transferAmount);
+            var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
-                solutionContainerSys.TryAddSolution(solution, split);
+                solutionContainerSys.TryAddSolution(Owner.Uid, solution, split);
                 trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }

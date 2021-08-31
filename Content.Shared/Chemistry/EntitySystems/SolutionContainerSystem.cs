@@ -23,12 +23,6 @@ namespace Content.Shared.Chemistry.EntitySystems
     /// </summary>
     public class SolutionChangedEvent : EntityEventArgs
     {
-        public EntityUid Owner { get; }
-
-        public SolutionChangedEvent(EntityUid owner)
-        {
-            Owner = owner;
-        }
     }
 
     /// <summary>
@@ -37,8 +31,11 @@ namespace Content.Shared.Chemistry.EntitySystems
     [UsedImplicitly]
     public partial class SolutionContainerSystem : EntitySystem
     {
-        [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency]
+        private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+
+        [Dependency]
+        private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -53,12 +50,13 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                solutionHolder.OwnerUid = component.Owner.Uid;
+                // solutionHolder.OwnerUid = component.Owner.Uid;
                 if (solutionHolder.MaxVolume == ReagentUnit.Zero && solutionHolder.TotalVolume > solutionHolder.MaxVolume)
                 {
                     solutionHolder.MaxVolume = solutionHolder.TotalVolume;
                 }
-                UpdateAppearance(solutionHolder);
+
+                UpdateAppearance(uid, solutionHolder);
             }
         }
 
@@ -96,9 +94,9 @@ namespace Content.Shared.Chemistry.EntitySystems
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
-        private void UpdateAppearance(Solution solution)
+        private void UpdateAppearance(EntityUid uid, Solution solution)
         {
-            if (!EntityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+            if (!EntityManager.TryGetEntity(uid, out var solutionEntity)
                 || solutionEntity.Deleted
                 || !solutionEntity.TryGetComponent<SharedAppearanceComponent>(out var appearance))
                 return;
@@ -111,73 +109,67 @@ namespace Content.Shared.Chemistry.EntitySystems
         /// <summary>
         ///     Removes part of the solution in the container.
         /// </summary>
+        /// <param name="targetUid"></param>
         /// <param name="solutionHolder"></param>
         /// <param name="quantity">the volume of solution to remove.</param>
         /// <returns>The solution that was removed.</returns>
-        public Solution SplitSolution(Solution solutionHolder, ReagentUnit quantity)
+        public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, ReagentUnit quantity)
         {
             var splitSol = solutionHolder.SplitSolution(quantity);
-            splitSol.OwnerUid = solutionHolder.OwnerUid;
-            UpdateChemicals(solutionHolder);
+            UpdateChemicals(targetUid, solutionHolder);
             return splitSol;
         }
 
-        private void UpdateChemicals(Solution solutionHolder, bool needsReactionsProcessing = false)
+        private void UpdateChemicals(EntityUid uid, Solution solutionHolder, bool needsReactionsProcessing = false)
         {
             // Process reactions
             if (needsReactionsProcessing && solutionHolder.CanReact)
             {
                 _chemistrySystem
-                    .FullyReactSolution(solutionHolder, EntityManager.GetEntity(solutionHolder.OwnerUid), solutionHolder.MaxVolume);
+                    .FullyReactSolution(solutionHolder, EntityManager.GetEntity(uid), solutionHolder.MaxVolume);
             }
 
-            UpdateAppearance(solutionHolder);
-            RaiseLocalEvent(solutionHolder.OwnerUid, new SolutionChangedEvent(solutionHolder.OwnerUid));
+            UpdateAppearance(uid, solutionHolder);
+            RaiseLocalEvent(uid, new SolutionChangedEvent());
         }
 
-        public void RemoveAllSolution(Solution solutionHolder)
+        public void RemoveAllSolution(EntityUid uid, Solution solutionHolder)
         {
             if (solutionHolder.CurrentVolume == 0)
                 return;
 
             solutionHolder.RemoveAllSolution();
-            UpdateChemicals(solutionHolder);
+            UpdateChemicals(uid, solutionHolder);
         }
 
         public void RemoveAllSolution(EntityUid uid)
         {
-            if (!EntityManager.TryGetEntity(uid, out var owner)
-                || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
             {
-                RemoveAllSolution(solution);
+                RemoveAllSolution(uid, solution);
             }
         }
 
         /// <summary>
         ///     Adds reagent of an Id to the container.
         /// </summary>
-        /// <param name="solutionHolder">Container to which we are adding reagent</param>
+        /// <param name="targetUid"></param>
+        /// <param name="targetSolution">Container to which we are adding reagent</param>
         /// <param name="reagentId">The Id of the reagent to add.</param>
         /// <param name="quantity">The amount of reagent to add.</param>
         /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
         /// <returns>If all the reagent could be added.</returns>
-        public bool TryAddReagent(Solution? solutionHolder, string reagentId, ReagentUnit quantity,
+        public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, string reagentId, ReagentUnit quantity,
             out ReagentUnit acceptedQuantity)
         {
-            if (solutionHolder == null)
-            {
-                acceptedQuantity = ReagentUnit.Zero;
-                return false;
-            }
-
-            acceptedQuantity = solutionHolder.AvailableVolume > quantity ? quantity : solutionHolder.AvailableVolume;
-            solutionHolder.AddReagent(reagentId, acceptedQuantity);
+            acceptedQuantity = targetSolution.AvailableVolume > quantity ? quantity : targetSolution.AvailableVolume;
+            targetSolution.AddReagent(reagentId, acceptedQuantity);
 
             if (acceptedQuantity > 0)
-                UpdateChemicals(solutionHolder, true);
+                UpdateChemicals(targetUid, targetSolution, true);
 
             return acceptedQuantity == quantity;
         }
@@ -185,40 +177,54 @@ namespace Content.Shared.Chemistry.EntitySystems
         /// <summary>
         ///     Removes reagent of an Id to the container.
         /// </summary>
+        /// <param name="targetUid"></param>
         /// <param name="container">Solution container from which we are removing reagent</param>
         /// <param name="reagentId">The Id of the reagent to remove.</param>
         /// <param name="quantity">The amount of reagent to remove.</param>
         /// <returns>If the reagent to remove was found in the container.</returns>
-        public bool TryRemoveReagent(Solution? container, string reagentId, ReagentUnit quantity)
+        public bool TryRemoveReagent(EntityUid targetUid, Solution? container, string reagentId, ReagentUnit quantity)
         {
             if (container == null || !container.ContainsReagent(reagentId))
                 return false;
 
             container.RemoveReagent(reagentId, quantity);
-            UpdateChemicals(container);
+            UpdateChemicals(targetUid, container);
             return true;
         }
 
         /// <summary>
         ///     Adds a solution to the container, if it can fully fit.
         /// </summary>
+        /// <param name="targetUid"></param>
         /// <param name="targetSolution">The container to which we try to add.</param>
         /// <param name="solution">The solution to try to add.</param>
         /// <returns>If the solution could be added.</returns>
-        public bool TryAddSolution(Solution? targetSolution, Solution solution)
+        public bool TryAddSolution(EntityUid targetUid, Solution? targetSolution, Solution solution)
         {
             if (targetSolution == null || !targetSolution.CanAddSolution(solution) || solution.TotalVolume == 0)
                 return false;
 
             targetSolution.AddSolution(solution);
-            UpdateChemicals(targetSolution, true);
+            UpdateChemicals(targetUid, targetSolution, true);
             return true;
         }
 
         public bool TryGetSolution(IEntity? target, string name,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (target == null || target.Deleted || !target.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
+            if (target == null || target.Deleted)
+            {
+                solution = null;
+                return false;
+            }
+
+            return TryGetSolution(target.Uid, name, out solution);
+        }
+
+        public bool TryGetSolution(EntityUid uid, string name,
+            [NotNullWhen(true)] out Solution? solution)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
             {
                 solution = null;
                 return false;
@@ -239,9 +245,9 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (!solutionsMgr.Solutions.ContainsKey(name))
             {
                 var newSolution = new Solution();
-                newSolution.OwnerUid = owner.Uid;
                 solutionsMgr.Solutions.Add(name, newSolution);
             }
+
             return solutionsMgr.Solutions[name];
         }
 
@@ -268,8 +274,8 @@ namespace Content.Shared.Chemistry.EntitySystems
                     solution.Contents[i] = new Solution.ReagentQuantity(reagentId, newQuantity);
                     solution.TotalVolume -= quantity;
                 }
-
             }
+
             return removedReagent;
         }
 

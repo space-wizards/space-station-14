@@ -50,6 +50,8 @@ namespace Content.Server.Fluids.Components
         [Dependency] private readonly IRobustRandom _random = default!;
         public override string Name => "Puddle";
 
+        public const string DefaultSolutionName = "puddle";
+
         private CancellationTokenSource? _evaporationToken;
 
         [DataField("evaporate_threshold")] private ReagentUnit
@@ -120,7 +122,7 @@ namespace Content.Server.Fluids.Components
 
         private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
 
-        private Solution? PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "puddle");
+        private Solution? PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
 
         protected override void Initialize()
         {
@@ -177,7 +179,7 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var result = EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(PuddleSolution, solution);
+            var result = EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, PuddleSolution, solution);
             if (!result)
             {
                 return false;
@@ -209,7 +211,7 @@ namespace Content.Server.Fluids.Components
         {
             if (PuddleSolution != null)
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution, quantity);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, PuddleSolution, quantity);
                 CheckEvaporate();
                 UpdateAppearance();
             }
@@ -228,7 +230,7 @@ namespace Content.Server.Fluids.Components
         {
             if (PuddleSolution != null)
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution,
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, PuddleSolution,
                     ReagentUnit.Min(ReagentUnit.New(1), PuddleSolution.CurrentVolume));
             }
 
@@ -339,7 +341,7 @@ namespace Content.Server.Fluids.Components
                     {
                         var adjacentPuddle = adjacent();
                         var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
-                        var spillAmount = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(PuddleSolution, quantity);
+                        var spillAmount = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, PuddleSolution, quantity);
 
                         adjacentPuddle.TryAddSolution(spillAmount, false, false, false);
                         nextPuddles.Add(adjacentPuddle);

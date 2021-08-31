@@ -25,7 +25,6 @@ namespace Content.Server.Chemistry.Components
     [RegisterComponent]
     public class InjectorComponent : SharedInjectorComponent, IAfterInteract, IUse
     {
-
         public const string SolutionName = "injector";
 
         /// <summary>
@@ -126,9 +125,9 @@ namespace Content.Server.Chemistry.Components
             // Handle injecting/drawing for solutions
             if (ToggleState == InjectorToggleMode.Inject)
             {
-                if (solutionsSys.TryGetInjectableSolution(targetEntity, out var injectableSolution))
+                if (solutionsSys.TryGetInjectableSolution(targetEntity.Uid, out var injectableSolution))
                 {
-                    TryInject(injectableSolution, eventArgs.User);
+                    TryInject(targetEntity, injectableSolution, eventArgs.User);
                 }
                 else if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream))
                 {
@@ -145,7 +144,7 @@ namespace Content.Server.Chemistry.Components
             {
                 if (solutionsSys.TryGetDrawableSolution(targetEntity, out var drawableSolution))
                 {
-                    TryDraw(drawableSolution, eventArgs.User);
+                    TryDraw(targetEntity, drawableSolution, eventArgs.User);
                 }
                 else
                 {
@@ -154,6 +153,7 @@ namespace Content.Server.Chemistry.Components
                             ("owner", eventArgs.User)));
                 }
             }
+
             return true;
         }
 
@@ -187,7 +187,7 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution =
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(bloodstream, realTransferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(user.Uid, bloodstream, realTransferAmount);
 
             if (!bloodstream.CanAddSolution(removedSolution))
             {
@@ -195,10 +195,10 @@ namespace Content.Server.Chemistry.Components
             }
 
             // TODO: Account for partial transfer.
-            var bloodsStreamEntity = Owner.EntityManager.GetEntity(bloodstream.OwnerUid);
+            var bloodsStreamEntity = Owner.EntityManager.GetEntity(user.Uid);
             removedSolution.DoEntityReaction(bloodsStreamEntity, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bloodstream, removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(user.Uid, bloodstream, removedSolution);
 
             removedSolution.DoEntityReaction(targetBloodstream.Owner, ReactionMethod.Injection);
 
@@ -210,7 +210,7 @@ namespace Content.Server.Chemistry.Components
             AfterInject();
         }
 
-        private void TryInject(Solution targetSolution, IEntity user)
+        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 || solution.CurrentVolume == 0)
@@ -224,23 +224,22 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("injector-component-target-already-full-message", ("target", targetSolution.OwnerUid)));
+                    Loc.GetString("injector-component-target-already-full-message", ("target", targetEntity)));
                 return;
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solution, realTransferAmount);
-            var targetSolutionEntity = Owner.EntityManager.GetEntity(targetSolution.OwnerUid);
+            var removedSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, solution, realTransferAmount);
 
-            removedSolution.DoEntityReaction(targetSolutionEntity, ReactionMethod.Injection);
+            removedSolution.DoEntityReaction(targetEntity, ReactionMethod.Injection);
 
             EntitySystem.Get<SolutionContainerSystem>()
-                .Inject(targetSolution, removedSolution);
+                .Inject(targetEntity.Uid, targetSolution, removedSolution);
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-transfer-success-message",
                     ("amount", removedSolution.TotalVolume),
-                    ("target", targetSolution.OwnerUid)));
+                    ("target", targetEntity)));
             Dirty();
             AfterInject();
         }
@@ -265,17 +264,16 @@ namespace Content.Server.Chemistry.Components
             }
         }
 
-        private void TryDraw(Solution targetSolution, IEntity user)
+        private void TryDraw(IEntity targetEntity, Solution targetSolution, IEntity user)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
-            || solution.AvailableVolume == 0)
+                || solution.AvailableVolume == 0)
             {
                 return;
             }
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
             var realTransferAmount = ReagentUnit.Min(_transferAmount, targetSolution.DrawAvailable);
-            var targetEntity = Owner.EntityManager.GetEntity(targetSolution.OwnerUid);
 
             if (realTransferAmount <= 0)
             {
@@ -286,9 +284,9 @@ namespace Content.Server.Chemistry.Components
 
             // Move units from attackSolution to targetSolution
             var removedSolution = EntitySystem.Get<SolutionContainerSystem>()
-                .Draw(targetSolution, realTransferAmount);
+                .Draw(targetEntity.Uid, targetSolution, realTransferAmount);
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(solution, removedSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(targetEntity.Uid, solution, removedSolution))
             {
                 return;
             }
@@ -300,7 +298,6 @@ namespace Content.Server.Chemistry.Components
             Dirty();
             AfterDraw();
         }
-
 
 
         public override ComponentState GetComponentState(ICommonSession player)

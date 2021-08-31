@@ -94,7 +94,7 @@ namespace Content.Server.Fluids.Components
                 if (currentVolume > 0)
                 {
                     // Drop the liquid on the mop on to the ground
-                    EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, CurrentVolume)
+                    EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, CurrentVolume)
                         .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
                     return true;
                 }
@@ -161,12 +161,12 @@ namespace Content.Server.Fluids.Components
             if (
                 puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, transferAmount)
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount)
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(contents, transferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount);
             }
 
             SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
