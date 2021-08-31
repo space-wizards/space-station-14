@@ -31,12 +31,11 @@ namespace Content.Server.Actions.Actions
             var booCounter = 0;
             foreach (var ent in ents)
             {
-                var boos = ent.GetAllComponents<IGhostBooAffected>().ToList();
-                foreach (var boo in boos)
-                {
-                    if (boo.AffectedByGhostBoo(args))
-                        booCounter++;
-                }
+                var ghostBoo = new GhostBooEvent();
+                ent.EntityManager.EventBus.RaiseLocalEvent(ent.Uid, ghostBoo);
+
+                if (ghostBoo.Handled)
+                    booCounter++;
 
                 if (booCounter >= _maxTargets)
                     break;

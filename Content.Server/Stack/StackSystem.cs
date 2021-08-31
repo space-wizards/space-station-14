@@ -29,23 +29,6 @@ namespace Content.Server.Stack
         }
 
         /// <summary>
-        ///     Try to use an amount of items on this stack. Returns whether this succeeded.
-        /// </summary>
-        public bool Use(EntityUid uid, SharedStackComponent stack, int amount)
-        {
-            // Check if we have enough things in the stack for this...
-            if (stack.Count < amount)
-            {
-                // Not enough things in the stack, return false.
-                return false;
-            }
-
-            // We do have enough things in the stack, so remove them and change.
-            SetCount(uid, stack, stack.Count - amount);
-            return true;
-        }
-
-        /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="IEntity"/> if successful.
         /// </summary>
         public IEntity? Split(EntityUid uid, SharedStackComponent stack, int amount, EntityCoordinates spawnPosition)
