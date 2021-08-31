@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, AssembleVerbsEvent args)
         {
-            if (!args.InRange || args.Hands == null)
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 
             if (!args.Types.HasFlag(VerbTypes.Activate))

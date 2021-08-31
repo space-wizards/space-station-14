@@ -1,5 +1,6 @@
-﻿using Content.Shared.DragDrop;
+using Content.Shared.DragDrop;
 using Content.Shared.Examine;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -357,6 +358,16 @@ namespace Content.Shared.Interaction.Helpers
             Ignored? predicate = null,
             bool ignoreInsideBlocker = true)
         {
+            return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
+                ignoreInsideBlocker);
+        }
+
+        public static bool InRangeUnOccluded(
+        this AssembleVerbsEvent args,
+        float range = InteractionRange,
+        Ignored? predicate = null,
+        bool ignoreInsideBlocker = true)
+            {
             return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
                 ignoreInsideBlocker);
         }

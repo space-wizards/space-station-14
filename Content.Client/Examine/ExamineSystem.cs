@@ -94,6 +94,9 @@ namespace Content.Client.Examine
             if (!args.Types.HasFlag(VerbTypes.Other))
                 return;
 
+            if (!CanExamine(args.User, args.Target))
+                return;
+
             Verb verb = new("examine");
             verb.Act = () => DoExamine(args.Target) ;
             if (args.PrepareGUI)

@@ -14,7 +14,7 @@ namespace Content.Shared.Verbs
     public class SharedVerbSystem : EntitySystem
     {
         /// <summary>
-        ///     Get all of the entities relevant for the contextmenu
+        ///     Get all of the entities relevant for the context menu
         /// </summary>
         /// <param name="player"></param>
         /// <param name="targetPos"></param>

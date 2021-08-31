@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Physics;
+using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -442,6 +443,17 @@ namespace Content.Shared.Interaction.Helpers
                 return false;
 
             return true;
+        }
+
+        public static bool InRangeUnobstructed(
+            this AssembleVerbsEvent args,
+            float range = InteractionRange,
+            CollisionGroup collisionMask = CollisionGroup.Impassable,
+            Ignored? predicate = null,
+            bool ignoreInsideBlocker = false,
+            bool popup = false)
+        {
+            return SharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(

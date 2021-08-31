@@ -15,7 +15,7 @@ namespace Content.Server.Access
 
         private void HandleVerbAssembly(EntityUid uid, IdCardConsoleComponent component, AssembleVerbsEvent args)
         {
-            if (args.Hands == null || !args.InRange)
+            if (args.Hands == null || !args.DefaultInRangeUnobstructed)
                 // No non-physical interactions here.
                 return;
 

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
+using Content.Shared.Interaction.Helpers;
 
 namespace Content.Shared.Verbs
 {
@@ -59,9 +59,13 @@ namespace Content.Shared.Verbs
         public VerbTypes Types;
 
         /// <summary>
-        ///     Is the user in range of the target for physical interactions?
+        ///     Is the user in range and has obstructed access to the target?
         /// </summary>
-        public bool InRange;
+        /// <remarks>
+        ///     This is simply a cached <see cref="SharedUnobstructedExtensions.InRangeUnobstructed"/> result with the
+        ///     default arguments, in order to avoid the function being called by every single system that wants to add a verb.
+        /// </remarks>
+        public bool DefaultInRangeUnobstructed;
 
         /// <summary>
         ///     The entity being targeted for the verb.
@@ -109,6 +113,9 @@ namespace Content.Shared.Verbs
             PrepareGUI = prepareGUI;
             Types = types;
 
+            // Because the majority of verbs need to check InRangeUnobstructed, cache it with default args.
+            DefaultInRangeUnobstructed = this.InRangeUnobstructed();
+
             // Here we check if physical interactions are permitted. First, does the user have hands?
             if (!user.TryGetComponent<SharedHandsComponent>(out var hands))
                 return;
@@ -124,10 +131,6 @@ namespace Content.Shared.Verbs
             // Physical interactions are allowed.
             Hands = hands;
             Hands.TryGetActiveHeldEntity(out Using);
-
-            // Are they in range? Some verbs may not require this.
-            var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition).LengthSquared;
-            InRange = distanceSquared <= SharedInteractionSystem.InteractionRangeSquared;
         }
     }
 }

@@ -1,6 +1,7 @@
 using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -36,13 +37,17 @@ namespace Content.Server.Buckle.Systems
                 return;
 
             // Can the user interact?
-            if (!args.InRange || args.Hands == null)
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
+            // Note that for whatever bloody reason, every buckle component has its own interaction range, so we have to
+            // check a modified InRangeUnobstructed for every verb.
 
             // Add unstrap verbs for every strapped entity.
             foreach (var entity in component.BuckledEntities)
             {
                 var buckledComp = entity.GetComponent<BuckleComponent>();
+                if (!args.InRangeUnobstructed(range: buckledComp.Range))
+                    continue;
 
                 Verb verb = new("unbuckle:"+entity.Uid.ToString());
                 verb.Act = () => buckledComp.TryUnbuckle(args.User);
@@ -61,7 +66,8 @@ namespace Content.Server.Buckle.Systems
             if (args.User.TryGetComponent<BuckleComponent>(out var buckle) &&
                 buckle.BuckledTo != component &&
                 args.User != component.Owner &&
-                component.HasSpace(buckle))
+                component.HasSpace(buckle) &&
+                args.InRangeUnobstructed(range: buckle.Range))
             {
                 Verb verb = new("buckle:self");
                 verb.Act = () => buckle.TryBuckle(args.User, args.Target);
@@ -75,11 +81,13 @@ namespace Content.Server.Buckle.Systems
 
 
             // Check if the user is currently pulling an entity that can be buckled to the target?
+            // Damn this is one ugly if block.
             if (args.Using != null &&
                 args.Using.TryGetComponent<HandVirtualPullComponent>(out var virtualPull) &&
                 _entityManager.TryGetEntity(virtualPull.PulledEntity, out var pulledEntity) &&
                 pulledEntity.TryGetComponent<BuckleComponent>(out var pulledBuckle) &&
-                component.HasSpace(pulledBuckle))
+                component.HasSpace(pulledBuckle) &&
+                args.InRangeUnobstructed(range: pulledBuckle.Range))
             {
                 // Check that the pulled entity is obstructed from the target (ignoring the user/puller).
                 bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == pulledEntity;

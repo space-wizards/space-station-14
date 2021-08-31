@@ -41,7 +41,7 @@ namespace Content.Server.Buckle.Systems
             if (!args.Types.HasFlag(VerbTypes.Interact))
                 return;
 
-            if (!component.Buckled || !args.InRange || args.Hands == null)
+            if (!component.Buckled || !args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
             
             Verb verb = new("unbuckle");

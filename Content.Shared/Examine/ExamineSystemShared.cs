@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Linq;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -156,6 +157,14 @@ namespace Content.Shared.Examine
         {
             var originPos = args.User.Transform.MapPosition;
             var otherPos = args.DropLocation.ToMap(args.User.EntityManager);
+
+            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
+        }
+
+        public static bool InRangeUnOccluded(AssembleVerbsEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
+        {
+            var originPos = args.User.Transform.MapPosition;
+            var otherPos = args.Target.Transform.MapPosition;
 
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
