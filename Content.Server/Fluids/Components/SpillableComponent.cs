@@ -14,7 +14,7 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
-        private const string SolutionName = "puddle";
+        public const string SolutionName = "puddle";
 
         /// <summary>
         ///     Transfers solution from the held container to the floor.

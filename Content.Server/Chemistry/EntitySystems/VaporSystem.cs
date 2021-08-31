@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Physics;
+using Content.Shared.Vapor;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -65,7 +66,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, "vapor", out _))
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName, out _))
             {
                 return false;
             }

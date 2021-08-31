@@ -50,13 +50,16 @@ namespace Content.Server.Chemistry.Components
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
-        private readonly Solution BufferSolution = new();
+        private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+
+        private Solution? _bufferSolution;
 
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ChemMasterUiKey.Key);
 
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+
 
         /// <summary>
         /// Called once per instance of this component. Gets references to any other components needed
@@ -74,8 +77,7 @@ namespace Content.Server.Chemistry.Components
             _beakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
-            //BufferSolution = Owner.BufferSolution
-            BufferSolution.RemoveAllSolution();
+            _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
 
             UpdateUserInterface();
         }
@@ -85,13 +87,13 @@ namespace Content.Server.Chemistry.Components
             base.HandleMessage(message, component);
             switch (message)
             {
-                case PowerChangedMessage powerChanged:
-                    OnPowerChanged(powerChanged);
+                case PowerChangedMessage:
+                    OnPowerChanged();
                     break;
             }
         }
 
-        private void OnPowerChanged(PowerChangedMessage e)
+        private void OnPowerChanged()
         {
             UpdateUserInterface();
         }
@@ -149,6 +151,7 @@ namespace Content.Server.Chemistry.Components
         /// Checks whether the player entity is able to use the chem master.
         /// </summary>
         /// <param name="playerEntity">The player entity.</param>
+        /// <param name="needsPower">whether the device requires power</param>
         /// <returns>Returns true if the entity can use the chem master, and false if it cannot.</returns>
         private bool PlayerCanUseChemMaster(IEntity? playerEntity, bool needsPower = true)
         {
@@ -198,7 +201,7 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <summary>
-        /// If this component contains an entity with a <see cref="SolutionHolder"/>, eject it.
+        /// If this component contains an entity with a <see cref="Solution"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto chem master if both hands are full.
         /// </summary>
         private void TryEject(IEntity user)
@@ -390,7 +393,7 @@ namespace Content.Server.Chemistry.Components
 
         /// <summary>
         /// Called when you click the owner entity with something in your active hand. If the entity in your hand
-        /// contains a <see cref="SolutionHolder"/>, if you have hands, and if the chem master doesn't already
+        /// contains a <see cref="Solution"/>, if you have hands, and if the chem master doesn't already
         /// hold a container, it will be added to the chem master.
         /// </summary>
         /// <param name="args">Data relevant to the event such as the actor which triggered it.</param>

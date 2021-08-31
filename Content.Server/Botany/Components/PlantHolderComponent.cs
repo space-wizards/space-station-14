@@ -37,6 +37,7 @@ namespace Content.Server.Botany.Components
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
+        private const string SoilSolutionName = "soil";
 
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -542,7 +543,7 @@ namespace Content.Server.Botany.Components
         public void UpdateReagents()
         {
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSystem.TryGetSolution(Owner, "soil", out var solution))
+            if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -720,7 +721,7 @@ namespace Content.Server.Botany.Components
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
-                && solutionSystem.TryGetSolution(Owner, "soil", out var targetSolution))
+                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;

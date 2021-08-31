@@ -80,7 +80,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "mop", out var contents ) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {

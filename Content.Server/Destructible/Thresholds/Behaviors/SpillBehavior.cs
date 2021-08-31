@@ -13,7 +13,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(IEntity owner, DestructibleSystem system)
         {
             // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(owner, "spill", out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(owner, SpillableComponent.SolutionName, out var solution))
                 return;
 
             solution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);

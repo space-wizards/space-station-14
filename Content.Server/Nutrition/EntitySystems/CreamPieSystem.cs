@@ -1,5 +1,6 @@
 using Content.Server.Fluids.Components;
 using Content.Server.Notification;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Notification.Managers;
@@ -20,12 +21,11 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
-
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
             SoundSystem.Play(Filter.Pvs(creamPie.Owner), creamPie.Sound.GetSound(), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
-            if (_solutionsSystem.TryGetSolution(creamPie.Owner, "food", out var solution))
+            if (_solutionsSystem.TryGetSolution(creamPie.Owner, FoodComponent.SolutionName, out var solution))
             {
                 solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
             }

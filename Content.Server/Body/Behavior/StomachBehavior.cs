@@ -17,6 +17,7 @@ namespace Content.Server.Body.Behavior
     /// </summary>
     public class StomachBehavior : MechanismBehavior
     {
+        private const string DefaultSolutionName = "stomach";
         private float _accumulatedFrameTime;
 
         /// <summary>
@@ -90,7 +91,7 @@ namespace Content.Server.Body.Behavior
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "stomach", out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, DefaultSolutionName, out var solution);
                 return solution;
             }
         }
@@ -135,7 +136,7 @@ namespace Content.Server.Body.Behavior
         {
             base.Startup();
 
-            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "stomach");
+            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
             solution.MaxVolume = InitialMaxVolume;
         }
 
