@@ -87,7 +87,7 @@ namespace Content.Server.Buckle.Systems
                 _entityManager.TryGetEntity(virtualPull.PulledEntity, out var pulledEntity) &&
                 pulledEntity.TryGetComponent<BuckleComponent>(out var pulledBuckle) &&
                 component.HasSpace(pulledBuckle) &&
-                args.InRangeUnobstructed(range: pulledBuckle.Range))
+                args.InRangeUnobstructed(range: pulledBuckle.Range, userOverride: pulledEntity))
             {
                 // Check that the pulled entity is obstructed from the target (ignoring the user/puller).
                 bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == pulledEntity;

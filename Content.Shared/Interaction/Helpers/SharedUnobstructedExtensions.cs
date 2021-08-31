@@ -451,9 +451,10 @@ namespace Content.Shared.Interaction.Helpers
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,
             bool ignoreInsideBlocker = false,
-            bool popup = false)
+            bool popup = false,
+            IEntity? userOverride = null)
         {
-            return SharedInteractionSystem.InRangeUnobstructed(args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
+            return SharedInteractionSystem.InRangeUnobstructed(userOverride ?? args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
         public static bool InRangeUnobstructed(

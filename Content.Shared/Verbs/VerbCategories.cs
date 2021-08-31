@@ -39,7 +39,7 @@ namespace Content.Shared.Verbs
     /// <summary>
     ///     Standard verb categories used across multiple systems.
     /// </summary>
-    public static class VerbCategories
+    public struct VerbCategories
     {
         public static readonly VerbCategoryData Debug =
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
