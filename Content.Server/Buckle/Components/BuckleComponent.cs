@@ -427,29 +427,5 @@ namespace Content.Server.Buckle.Components
 
             IsOnStrapEntityThisFrame = false;
         }
-
-        /// <summary>
-        ///     Allows the unbuckling of the owning entity through a verb if
-        ///     anyone right clicks them.
-        /// </summary>
-        [Verb]
-        private sealed class BuckleVerb : Verb<BuckleComponent>
-        {
-            protected override void GetData(IEntity user, BuckleComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.Buckled)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("buckle-verb-unbuckle");
-            }
-
-            protected override void Activate(IEntity user, BuckleComponent component)
-            {
-                component.TryUnbuckle(user);
-            }
-        }
     }
 }

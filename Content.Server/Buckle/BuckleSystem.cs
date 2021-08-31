@@ -2,10 +2,12 @@ using Content.Server.Buckle.Components;
 using Content.Server.Interaction;
 using Content.Shared.Buckle;
 using Content.Shared.Interaction;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Buckle
 {
@@ -30,6 +32,35 @@ namespace Content.Server.Buckle
             SubscribeLocalEvent<StrapComponent, EntRemovedFromContainerMessage>(ContainerModifiedStrap);
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
+
+            SubscribeLocalEvent<BuckleComponent, AssembleVerbsEvent>(AddBuckleVerb);
+        }
+
+        private void AddBuckleVerb(EntityUid uid, BuckleComponent component, AssembleVerbsEvent args)
+        {
+            if (!args.Types.HasFlag(VerbTypes.Interact))
+                return;
+
+            if (!component.Buckled || !args.InRange || args.Hands == null)
+                return;
+            
+            Verb verb = new("buckle");
+            verb.Act = () => component.TryUnbuckle(args.User);
+
+            if (args.Target == args.User && args.Using == null)
+            {
+                // A user is left clicking themselves with an empty hand, while buckled.
+                // It is very likely they are trying to unbuckle themselves.
+                verb.Priority = 2;
+                // Probably not important (what else would using an empty hand on yourself do?
+            }
+
+            if (args.PrepareGUI)
+            {
+                verb.Text = Loc.GetString("buckle-verb-unbuckle");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png";
+            }
+            args.Verbs.Add(verb);
         }
 
         private void HandleInteractHand(EntityUid uid, BuckleComponent component, InteractHandEvent args)
