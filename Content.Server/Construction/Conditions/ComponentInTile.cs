@@ -44,7 +44,7 @@ namespace Content.Server.Construction.Conditions
             var type = _componentFactory.GetRegistration(Component).Type;
 
             var indices = entity.Transform.Coordinates.ToVector2i(entity.EntityManager, _mapManager);
-            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, true, IoCManager.Resolve<IEntityLookup>());
+            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
 
             foreach (var ent in entities)
             {

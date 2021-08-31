@@ -26,7 +26,7 @@ namespace Content.Server.Actions.Actions
             if (!args.Performer.TryGetComponent<SharedActionsComponent>(out var actions)) return;
 
             // find all IGhostBooAffected nearby and do boo on them
-            var ents = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(args.Performer, _radius, false);
+            var ents = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(args.Performer, _radius);
 
             var booCounter = 0;
             foreach (var ent in ents)

@@ -6,6 +6,9 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
+using Content.Server.Light.Components;
+using Content.Server.MachineLinking.Events;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -17,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
+            SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
         }
 
         private void OnGhostBoo(EntityUid uid, PoweredLightComponent light, GhostBooEvent args)
@@ -53,6 +57,16 @@ namespace Content.Server.Light.EntitySystems
             if (!light.Owner.TryGetComponent(out AppearanceComponent? appearance))
                 return;
             appearance.SetData(PoweredLightVisuals.Blinking, isNowBlinking);
+        }
+
+        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
+        {
+            switch (args.Port)
+            {
+                case "toggle":
+                    component.ToggleLight();
+                    break;
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
@@ -33,10 +35,6 @@ namespace Content.Server.Body.Respiratory
 
         private bool _isShivering;
         private bool _isSweating;
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _suffocationDamage = 1;
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _suffocationDamageRecovery = 1;
 
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
@@ -93,6 +91,22 @@ namespace Content.Server.Body.Respiratory
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
         [ViewVariables] public bool Suffocating { get; private set; }
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _damage = 1;
+
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _damageRecovery = 1;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Asphyxiation"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {
@@ -349,7 +363,7 @@ namespace Content.Server.Body.Respiratory
                 return;
             }
 
-            damageable.ChangeDamage(DamageType.Asphyxiation, _suffocationDamage, false);
+            damageable.TryChangeDamage(DamageType, _damage, false);
         }
 
         private void StopSuffocation()
@@ -358,7 +372,7 @@ namespace Content.Server.Body.Respiratory
 
             if (Owner.TryGetComponent(out IDamageableComponent? damageable))
             {
-                damageable.ChangeDamage(DamageType.Asphyxiation, -_suffocationDamageRecovery, false);
+                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
             }
 
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))

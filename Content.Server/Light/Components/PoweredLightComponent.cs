@@ -2,8 +2,6 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Signals;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Damage;
@@ -17,6 +15,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -29,7 +28,7 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -80,6 +79,19 @@ namespace Content.Server.Light.Components
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
+        }
+
         [ViewVariables]
         public LightBulbComponent? LightBulb
         {
@@ -129,7 +141,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
+                damageableComponent.TryChangeDamage(DamageType, 20);
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
@@ -252,13 +264,6 @@ namespace Content.Server.Light.Components
             }
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
-        }
-
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
@@ -305,13 +310,7 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-        public void TriggerSignal(bool signal)
-        {
-            _on = signal;
-            UpdateLight();
-        }
-
-        public void TriggerSignal(ToggleSignal signal)
+        public void ToggleLight()
         {
             _on = !_on;
             UpdateLight();
