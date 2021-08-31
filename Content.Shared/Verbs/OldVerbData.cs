@@ -101,7 +101,8 @@ namespace Content.Shared.Verbs
         public VerbCategoryData? Category;
 
         /// <summary>
-        ///     Whether this verb is visible, but, disabled (greyed out).
+        ///     Whether this verb is disabled. Disabled verbs are still shown in the context menu, but cannot be
+        ///     triggered.
         /// </summary>
         public bool IsDisabled;
 
