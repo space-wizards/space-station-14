@@ -39,7 +39,7 @@ namespace Content.Server.Physics.Controllers
                 return;
             }
 
-            var intersecting = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, true);
+            var intersecting = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
             var direction = comp.GetAngle().ToVec();
             Vector2? ownerPos = null;
 

@@ -1886,3 +1886,33 @@ Entries:
   - {message: Add meteor swarm event., type: Add}
   id: 336
   time: '2021-08-23T03:28:48.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fix grav gen losing power after only a bit, type: Fix}
+  id: 337
+  time: '2021-08-24T15:36:50.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability for chairs to catch items thrown by people sitting
+      on them., type: Fix}
+  id: 338
+  time: '2021-08-25T10:35:37.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
+  id: 339
+  time: '2021-08-25T11:45:33.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix admin events UI tab, type: Fix}
+  id: 340
+  time: '2021-08-26T09:45:06.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Adds unique screen for NTBlockGame, type: Add}
+  id: 341
+  time: '2021-08-30T22:25:08.0000000+00:00'
+- author: Macoron
+  changes: []
+  id: 342
+  time: '2021-08-31T08:33:55.0000000+00:00'

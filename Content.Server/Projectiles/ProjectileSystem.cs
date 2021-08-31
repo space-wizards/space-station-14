@@ -7,12 +7,17 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
+using Content.Shared.Damage;
 
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -49,9 +54,9 @@ namespace Content.Server.Projectiles
             {
                 EntityManager.TryGetEntity(component.Shooter, out var shooter);
 
-                foreach (var (damageType, amount) in component.Damages)
+                foreach (var (damageTypeID, amount) in component.Damages)
                 {
-                    damage.ChangeDamage(damageType, amount, false, shooter);
+                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), amount);
                 }
 
                 component.DamagedEntity = true;

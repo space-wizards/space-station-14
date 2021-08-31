@@ -16,25 +16,25 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly Dictionary<DamageClass, int> DamageClasses;
-            public readonly Dictionary<DamageType, int> DamageTypes;
+            public readonly Dictionary<string, int> DamagePerSupportedGroupID;
+            public readonly Dictionary<string, int> DamagePerTypeID;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                Dictionary<DamageClass, int> damageClasses,
-                Dictionary<DamageType, int> damageTypes,
+                Dictionary<string, int> damagePerSupportedGroupID,
+                Dictionary<string, int> damagePerTypeID,
                 bool isScanned)
             {
                 Entity = entity;
-                DamageClasses = damageClasses;
-                DamageTypes = damageTypes;
+                DamagePerSupportedGroupID = damagePerSupportedGroupID;
+                DamagePerTypeID = damagePerTypeID;
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamageClasses.Count > 0 || DamageTypes.Count > 0;
+                return DamagePerSupportedGroupID.Count > 0 || DamagePerTypeID.Count > 0;
             }
         }
 
