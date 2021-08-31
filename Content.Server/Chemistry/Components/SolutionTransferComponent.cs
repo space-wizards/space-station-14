@@ -135,7 +135,7 @@ namespace Content.Server.Chemistry.Components
             if (!Owner.HasComponent<SolutionContainerManagerComponent>())
                 return false;
 
-            var target = eventArgs.Target;
+            var target = eventArgs.Target!;
             if (!target.HasComponent<SolutionContainerManagerComponent>())
             {
                 return false;
@@ -146,7 +146,7 @@ namespace Content.Server.Chemistry.Components
                            && solutionsSys.TryGetRefillableSolution(Owner.Uid, out var ownerRefill)
                            && solutionsSys.TryGetDrainableSolution(eventArgs.Target.Uid, out var targetDrain))
             {
-                var transferred = DoTransfer(eventArgs.Target,targetDrain, Owner,ownerRefill, tank.TransferAmount, eventArgs.User);
+                var transferred = DoTransfer(eventArgs.User, eventArgs.Target, targetDrain, Owner, ownerRefill, tank.TransferAmount);
                 if (transferred > 0)
                 {
                     var toTheBrim = ownerRefill.AvailableVolume == 0;
@@ -155,7 +155,7 @@ namespace Content.Server.Chemistry.Components
                         : "comp-solution-transfer-fill-normal";
 
                     target.PopupMessage(eventArgs.User,
-                        Loc.GetString(msg, ("owner", Owner), ("amount", transferred), ("target", target)));
+                        Loc.GetString(msg, ("owner", eventArgs.Target), ("amount", transferred), ("target", Owner)));
                     return true;
                 }
             }
@@ -163,7 +163,7 @@ namespace Content.Server.Chemistry.Components
             if (CanSend && solutionsSys.TryGetRefillableSolution(eventArgs.Target.Uid, out var targetRefill)
                         && solutionsSys.TryGetDrainableSolution(Owner.Uid, out var ownerDrain))
             {
-                var transferred = DoTransfer(Owner, ownerDrain, eventArgs.Target, targetRefill, TransferAmount, eventArgs.User);
+                var transferred = DoTransfer(eventArgs.User, Owner, ownerDrain, target, targetRefill, TransferAmount);
 
                 if (transferred > 0)
                 {
@@ -180,14 +180,14 @@ namespace Content.Server.Chemistry.Components
         }
 
         /// <returns>The actual amount transferred.</returns>
-        private static ReagentUnit DoTransfer(IEntity owner,
+        private static ReagentUnit DoTransfer(IEntity user,
+            IEntity sourceEntity,
             Solution source,
             IEntity targetEntity,
             Solution target,
-            ReagentUnit amount,
-            IEntity user)
+            ReagentUnit amount)
         {
-            var sourceEntity = owner;
+
             if (source.DrainAvailable == 0)
             {
                 sourceEntity.PopupMessage(user,
@@ -205,7 +205,7 @@ namespace Content.Server.Chemistry.Components
             var actualAmount =
                 ReagentUnit.Min(amount, ReagentUnit.Min(source.DrainAvailable, target.AvailableVolume));
 
-            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(owner.Uid, source, actualAmount);
+            var solution = EntitySystem.Get<SolutionContainerSystem>().Drain(sourceEntity.Uid, source, actualAmount);
             EntitySystem.Get<SolutionContainerSystem>().Refill(targetEntity.Uid, target, solution);
 
             return actualAmount;

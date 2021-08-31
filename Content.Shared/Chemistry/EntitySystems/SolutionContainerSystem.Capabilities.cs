@@ -63,8 +63,9 @@ namespace Content.Shared.Chemistry.EntitySystems
         {
             if (ComponentManager.TryGetComponent(targetUid, out RefillableSolutionComponent? refillable) &&
                 ComponentManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(refillable.Solution, out solution))
+                manager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
             {
+                solution = refillableSolution;
                 return true;
             }
 
