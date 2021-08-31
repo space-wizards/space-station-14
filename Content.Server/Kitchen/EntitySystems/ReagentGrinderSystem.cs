@@ -28,7 +28,6 @@ namespace Content.Server.Kitchen.EntitySystems
     [UsedImplicitly]
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
         private Queue<ReagentGrinderComponent> _uiUpdateQueue = new();
@@ -227,7 +226,7 @@ namespace Content.Server.Kitchen.EntitySystems
                     foreach (var entity in comp.Chamber.ContainedEntities)
                     {
                         if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
-                        
+
                         canJuice = component.GrindableSolution == null;
                         canGrind = component.GrindableSolution != null;
                     }
@@ -264,7 +263,7 @@ namespace Content.Server.Kitchen.EntitySystems
             component.BeakerContainer.Remove(beaker);
 
             if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) ||
-                !_entityManager.TryGetEntity(component.HeldBeaker.OwnerUid, out var entityHeldBeaker) ||
+                !EntityManager.TryGetEntity(component.HeldBeaker.OwnerUid, out var entityHeldBeaker) ||
                 !entityHeldBeaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             hands.PutInHandOrDrop(item);
@@ -307,8 +306,8 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.TryGetComponent(out ExtractableComponent? extract) 
-                                || extract.GrindableSolution == null 
+                            if (!item.TryGetComponent(out ExtractableComponent? extract)
+                                || extract.GrindableSolution == null
                                 || !_solutionsSystem.TryGetSolution(item, extract.GrindableSolution, out var solution)) continue;
 
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0

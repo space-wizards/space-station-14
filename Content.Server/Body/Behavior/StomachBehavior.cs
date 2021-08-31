@@ -48,7 +48,7 @@ namespace Content.Server.Body.Behavior
             // Note that "Owner" should be the organ that has this behaviour/mechanism, and it should have a dedicated
             // solution container. "Body.Owner" is something else, and may have more than one solution container.
             if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream)
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "bloodstream", out var solution))
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SharedBloodstreamComponent.DefaultSolutionName, out var solution))
             {
                 return;
             }

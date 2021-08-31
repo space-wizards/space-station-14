@@ -12,5 +12,7 @@ namespace Content.Shared.Body.Networks
         /// <param name="solution">The solution to be transferred.</param>
         /// <returns>Whether or not transfer was successful.</returns>
         public abstract bool TryTransferSolution(Solution solution);
+
+        public const string DefaultSolutionName = "bloodstream";
     }
 }

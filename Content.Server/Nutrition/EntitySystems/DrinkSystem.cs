@@ -11,8 +11,6 @@ namespace Content.Server.Nutrition.EntitySystems
     public class DrinkSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
 
         public override void Initialize()
         {
@@ -26,13 +24,13 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             component.Opened = component.DefaultToOpened;
 
-            var owner = _entityManager.GetEntity(uid);
+            var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetComponent(out DrainableSolutionComponent? existingDrainable))
             {
                 // Beakers have Drink component but they should use the existing Drainable
                 component.SolutionName = existingDrainable.Solution;
             }
-            else 
+            else
             {
                 _solutionContainerSystem.EnsureSolution(owner, component.SolutionName);
             }

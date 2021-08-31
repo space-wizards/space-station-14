@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Shared.Chemistry;
+using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameObjects;
 
@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
 
             if (target == null
                 || target.Deleted
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, "drink", out var drink))
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;
             }

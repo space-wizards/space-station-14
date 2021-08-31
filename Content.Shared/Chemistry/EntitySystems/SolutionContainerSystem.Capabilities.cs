@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         public void Refill(Solution targetSolution, Solution addedSolution)
         {
-            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
                 || !targetEntity.HasComponent<RefillableSolutionComponent>())
                 return;
 
@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void Inject(Solution targetSolution, Solution addedSolution)
         {
-            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
                 || !targetEntity.HasComponent<InjectableSolutionComponent>())
                 return;
 
@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public Solution Draw(Solution solution, ReagentUnit amount)
         {
-            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+            if (!EntityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
                 || !solutionEntity.HasComponent<DrawableSolutionComponent>())
             {
                 var newSolution = new Solution();
@@ -40,7 +40,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public Solution Drain(Solution targetSolution, ReagentUnit amount)
         {
-            if (!_entityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
+            if (!EntityManager.TryGetEntity(targetSolution.OwnerUid, out var targetEntity)
                 || !targetEntity.HasComponent<DrainableSolutionComponent>())
             {
                 var newSolution = new Solution();
@@ -124,7 +124,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetFitsInDispenser(EntityUid owner,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (_entityManager.TryGetEntity(owner, out var ownerEntity) &&
+            if (EntityManager.TryGetEntity(owner, out var ownerEntity) &&
                 ownerEntity.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
                 ownerEntity.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))

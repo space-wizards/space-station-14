@@ -23,6 +23,7 @@ namespace Content.Server.Fluids.Components
     public class MopComponent : Component, IAfterInteract
     {
         public override string Name => "Mop";
+        public const string SolutionName = "mop";
 
         /// <summary>
         ///     Used to prevent do_after spam if we're currently mopping.
@@ -33,7 +34,7 @@ namespace Content.Server.Fluids.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, "mop", out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
                 return solution;
             }
         }

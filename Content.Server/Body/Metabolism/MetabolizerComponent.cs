@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -29,7 +30,7 @@ namespace Content.Server.Body.Metabolism
         ///     as opposed to a solution container on the metabolizing entity itself.
         /// </summary>
         [DataField("solution")]
-        public string SolutionName { get; set; } = "bloodstream";
+        public string SolutionName { get; set; } = SharedBloodstreamComponent.DefaultSolutionName;
 
         /// <summary>
         ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.

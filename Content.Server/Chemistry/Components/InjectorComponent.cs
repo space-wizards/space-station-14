@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Circulatory;
+using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -26,7 +27,7 @@ namespace Content.Server.Chemistry.Components
     {
 
         public const string SolutionName = "injector";
-        
+
         /// <summary>
         /// Whether or not the injector is able to draw from containers or if it's a single use
         /// device that can only inject.
@@ -169,7 +170,8 @@ namespace Content.Server.Chemistry.Components
 
         private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(user, "bloodstream", out var bloodstream)
+            if (!EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetSolution(user, SharedBloodstreamComponent.DefaultSolutionName, out var bloodstream)
                 || bloodstream.CurrentVolume == 0)
                 return;
 

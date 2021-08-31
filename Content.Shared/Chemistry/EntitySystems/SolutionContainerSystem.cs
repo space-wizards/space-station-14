@@ -39,7 +39,6 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         [Dependency] private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
@@ -99,7 +98,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         private void UpdateAppearance(Solution solution)
         {
-            if (!_entityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
+            if (!EntityManager.TryGetEntity(solution.OwnerUid, out var solutionEntity)
                 || solutionEntity.Deleted
                 || !solutionEntity.TryGetComponent<SharedAppearanceComponent>(out var appearance))
                 return;
@@ -129,7 +128,7 @@ namespace Content.Shared.Chemistry.EntitySystems
             if (needsReactionsProcessing && solutionHolder.CanReact)
             {
                 _chemistrySystem
-                    .FullyReactSolution(solutionHolder, _entityManager.GetEntity(solutionHolder.OwnerUid), solutionHolder.MaxVolume);
+                    .FullyReactSolution(solutionHolder, EntityManager.GetEntity(solutionHolder.OwnerUid), solutionHolder.MaxVolume);
             }
 
             UpdateAppearance(solutionHolder);
@@ -147,7 +146,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void RemoveAllSolution(EntityUid uid)
         {
-            if (!_entityManager.TryGetEntity(uid, out var owner)
+            if (!EntityManager.TryGetEntity(uid, out var owner)
                 || !owner.TryGetComponent(out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
@@ -236,11 +235,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         /// <returns>solution</returns>
         public Solution EnsureSolution(IEntity owner, string name)
         {
-            if (!owner.TryGetComponent(out SolutionContainerManagerComponent? solutionsMgr))
-            {
-                solutionsMgr = owner.AddComponent<SolutionContainerManagerComponent>();
-            }
-
+            var solutionsMgr = owner.EnsureComponent<SolutionContainerManagerComponent>();
             if (!solutionsMgr.Solutions.ContainsKey(name))
             {
                 var newSolution = new Solution();
@@ -289,7 +284,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public ReagentUnit GetReagentQuantity(EntityUid ownerUid, string reagentId)
         {
             var reagentQuantity = ReagentUnit.New(0);
-            if (_entityManager.TryGetEntity(ownerUid, out var owner)
+            if (EntityManager.TryGetEntity(ownerUid, out var owner)
                 && owner.TryGetComponent(out SolutionContainerManagerComponent? managerComponent))
             {
                 foreach (var solution in managerComponent.Solutions.Values)

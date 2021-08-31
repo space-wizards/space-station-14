@@ -33,7 +33,8 @@ namespace Content.Server.Nutrition.Components
         [Dependency] private readonly IRobustRandom _random = default!;
 
         [DataField("solution")]
-        public string SolutionName { get; set; } = "drink";
+        public string SolutionName { get; set; } = DefaultSolutionName;
+        public const string DefaultSolutionName = "drink";
 
         public override string Name => "Drink";
 
