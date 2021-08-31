@@ -9,7 +9,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Buckle
+namespace Content.Server.Buckle.Systems
 {
     [UsedImplicitly]
     internal sealed class BuckleSystem : SharedBuckleSystem
@@ -44,7 +44,7 @@ namespace Content.Server.Buckle
             if (!component.Buckled || !args.InRange || args.Hands == null)
                 return;
             
-            Verb verb = new("buckle");
+            Verb verb = new("unbuckle");
             verb.Act = () => component.TryUnbuckle(args.User);
 
             if (args.Target == args.User && args.Using == null)
@@ -57,8 +57,7 @@ namespace Content.Server.Buckle
 
             if (args.PrepareGUI)
             {
-                verb.Text = Loc.GetString("buckle-verb-unbuckle");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png";
+                verb.Category = VerbCategories.Unbuckle;
             }
             args.Verbs.Add(verb);
         }

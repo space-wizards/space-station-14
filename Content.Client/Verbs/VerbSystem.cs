@@ -218,8 +218,14 @@ namespace Content.Client.Verbs
                     }
                     else
                     {
-                        // This category only contains a single verb, and the verb is flagged as collapsible. Add a single modified verb instead.
-                        verb.Text = verb.Category.Text + " " + verb.Text;
+                        // This category only contains a single verb, and the verb is flagged as collapsible. Add a
+                        // single modified verb instead.
+
+                        if (verb.Text == string.Empty)
+                            verb.Text = verb.Category.Text;
+                        else
+                            verb.Text = verb.Category.Text + " " + verb.Text;
+
                         verb.Icon = verb.Category.Icon;
                         vBox.AddChild(new VerbButton(this, verb, entity));
                     }

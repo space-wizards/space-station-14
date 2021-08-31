@@ -47,6 +47,10 @@ namespace Content.Shared.Verbs
             new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png", true);
         public static readonly VerbCategoryData Insert =
             new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png", true);
+        public static readonly VerbCategoryData Buckle =
+            new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png", true);
+        public static readonly VerbCategoryData Unbuckle =
+            new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png", true);
 
         public static readonly VerbCategoryData Rotate = new("Rotate", null);
         public static readonly VerbCategoryData Construction =

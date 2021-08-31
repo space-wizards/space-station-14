@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -56,11 +57,6 @@ namespace Content.Shared.Verbs
         ///     What kind of verbs to assemble. Defaults to all verb types
         /// </summary>
         public VerbTypes Types;
-
-        /// <summary>
-        ///     Constant for determining whether the target verb is 'In Range' for physical interactions.
-        /// </summary>
-        public const float InteractionRangeSquared = 4;
 
         /// <summary>
         ///     Is the user in range of the target for physical interactions?
@@ -131,7 +127,7 @@ namespace Content.Shared.Verbs
 
             // Are they in range? Some verbs may not require this.
             var distanceSquared = (user.Transform.WorldPosition - target.Transform.WorldPosition).LengthSquared;
-            InRange = distanceSquared <= InteractionRangeSquared;
+            InRange = distanceSquared <= SharedInteractionSystem.InteractionRangeSquared;
         }
     }
 }
