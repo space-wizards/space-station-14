@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Climbing.Components;
 using Content.Shared.Climbing;
 using Content.Shared.GameTicking;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Climbing
 {
@@ -18,6 +21,33 @@ namespace Content.Server.Climbing
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<ClimbableComponent, AssembleVerbsEvent>(AddClimbVerb);
+        }
+
+        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, AssembleVerbsEvent args)
+        {
+            // Is the user looking for alt-interact verbs?
+            if (!args.Types.HasFlag(VerbTypes.Alternative))
+                return;
+
+            // Check that the user interact?
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            // Check that the user climb.
+            if (!args.User.TryGetComponent(out ClimbingComponent? climbingComponent) ||
+                climbingComponent.IsClimbing)
+                return;
+
+            // Add a climb verb
+            Verb verb = new("climb");
+            verb.Act = () => component.TryClimb(args.User);
+            if (args.PrepareGUI)
+            {
+                verb.Text = Loc.GetString("comp-climbable-verb-climb");
+                // TODO VERBS ICON add a climbing icon?
+            }
+            args.Verbs.Add(verb);
         }
 
         public void AddActiveClimber(ClimbingComponent climbingComponent)
