@@ -137,15 +137,8 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 _gridsToShake[gridId] = shakeTimes;
             }
-            // Play the gravity sound
-            foreach (var player in _playerManager.GetAllPlayers())
-            {
-                if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId)
-                    continue;
 
-                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), comp.GravityShakeSound.GetSound(), player.AttachedEntity);
-            }
+            SoundSystem.Play(Filter.BroadcastGrid(gridId), comp.GravityShakeSound.GetSound(), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()
