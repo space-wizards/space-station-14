@@ -10,6 +10,7 @@ using Content.Server.PDA;
 using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Traitor;
+using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
@@ -125,28 +126,12 @@ namespace Content.Server.GameTicking.Presets
                 var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
                 _uplinkManager.AddNewAccount(uplinkAccount);
 
-                var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
-                {
-                    Logger.ErrorS("preset", "Failed getting pda for picked traitor.");
+                if (!UplinkExtensions.AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
-                }
-
-                var pda = pdaItem.Owner;
-
-                var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.ContainedID == null)
-                {
-                    Logger.ErrorS("preset","PDA had no id for picked traitor");
-                    continue;
-                }
 
                 var traitorRole = new TraitorRole(mind);
-
                 mind.AddRole(traitorRole);
                 _traitors.Add(traitorRole);
-                var uplink = pda.AddComponent<UplinkComponent>();
-                uplink.UplinkAccount = uplinkAccount;
             }
 
             var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;

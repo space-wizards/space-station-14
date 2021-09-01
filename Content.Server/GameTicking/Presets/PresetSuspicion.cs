@@ -7,6 +7,7 @@ using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
+using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
@@ -111,23 +112,16 @@ namespace Content.Server.GameTicking.Presets
                 var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
                 mind!.AddRole(traitorRole);
                 traitors.Add(traitorRole);
+
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount =
-                    new UplinkAccount(mind.OwnedEntity!.Uid,
-                        TraitorStartingBalance);
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, TraitorStartingBalance);
                 _uplinkManager.AddNewAccount(uplinkAccount);
 
-                var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
-                {
+                // try to place uplink
+                if (!UplinkExtensions.AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
-                }
-
-                var pda = pdaItem.Owner;
-                var uplink = pda.AddComponent<UplinkComponent>();
-                uplink.UplinkAccount = uplinkAccount;
             }
 
             foreach (var player in list)

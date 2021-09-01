@@ -19,6 +19,16 @@ namespace Content.Server.Traitor.Uplink
     {
     }
 
+    public class UplinkSetAccountEvent : HandledEntityEventArgs
+    {
+        public UplinkAccount Account;
+
+        public UplinkSetAccountEvent(UplinkAccount account)
+        {
+            Account = account;
+        }
+    }
+
     public class ShowUplinkUIAttempt : CancellableEntityEventArgs
     {
         public IPlayerSession Session;

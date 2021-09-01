@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using System;
 using System.Linq;
@@ -24,16 +25,33 @@ namespace Content.Server.Traitor.Uplink.Systems
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<UplinkComponent, UplinkSetAccountEvent>(OnSetAccount);
             SubscribeLocalEvent<UplinkComponent, ShowUplinkUIAttempt>(OnShowUI);
+        }
+
+        private void OnSetAccount(EntityUid uid, UplinkComponent component, UplinkSetAccountEvent args)
+        {
+            if (component.UplinkAccount != null)
+            {
+                Logger.Error("Can't init one uplink with different account!");
+                return;
+            }
+
+            component.UplinkAccount = args.Account;
+            component.UplinkAccount.BalanceChanged += (acc) =>
+            {
+                UpdateUserInterface(component);
+            };
+
         }
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
-            RaiseLocalEvent(uid, new UplinkInitEvent(component));
-
             var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
             if (ui != null)
                 ui.OnReceiveMessage += (msg) => OnUIMessage(component, msg);
+
+            RaiseLocalEvent(uid, new UplinkInitEvent(component));
         }
 
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
@@ -46,7 +64,7 @@ namespace Content.Server.Traitor.Uplink.Systems
             var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
             ui?.Toggle(args.Session);
 
-            UpdatePDAUserInterface(component);
+            UpdateUserInterface(component);
         }
 
         private void OnUIMessage(UplinkComponent uplink, ServerBoundUserInterfaceMessage message)
@@ -54,7 +72,7 @@ namespace Content.Server.Traitor.Uplink.Systems
             switch (message.Message)
             {
                 case UplinkRequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(uplink);
+                    UpdateUserInterface(uplink);
                     break;
                 case UplinkBuyListingMessage buyMsg:
                     {
@@ -86,7 +104,7 @@ namespace Content.Server.Traitor.Uplink.Systems
             }
         }
 
-        private void UpdatePDAUserInterface(UplinkComponent component)
+        private void UpdateUserInterface(UplinkComponent component)
         {
             var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
             if (ui == null)

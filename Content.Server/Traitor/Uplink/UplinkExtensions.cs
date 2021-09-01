@@ -1,3 +1,4 @@
+using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.PDA;
 using Content.Server.PDA.Managers;
@@ -14,24 +15,43 @@ namespace Content.Server.Traitor.Uplink
     {
         public static bool AddUplink(IEntity user, UplinkAccount account, IEntity? uplinkEntity = null)
         {
-            // Get target item
+            // Try to find target item
             if (uplinkEntity == null)
             {
-                // Try to find PDA
-                if (!user.TryGetComponent(out InventoryComponent? inventory))
+                uplinkEntity = FindUplinkTarget(user);
+                if (uplinkEntity == null)
                     return false;
-
-                var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
-                if (foundPDA == null)
-                    return false;
-
-                uplinkEntity = foundPDA.Owner;
             }
 
-            var uplink = uplinkEntity.AddComponent<UplinkComponent>();
-            uplink.UplinkAccount = account;
+            var uplink = uplinkEntity.EnsureComponent<UplinkComponent>();
+            var eventBus = uplink.Owner.EntityManager.EventBus;
+            eventBus.RaiseLocalEvent(uplink.Owner.Uid, new UplinkSetAccountEvent(account));
 
             return true;
+        }
+
+        private static IEntity? FindUplinkTarget(IEntity user)
+        {
+            // Try to find PDA in inventory
+            if (user.TryGetComponent(out InventoryComponent? inventory))
+            {
+                var foundPDA = inventory.LookupItems<PDAComponent>().FirstOrDefault();
+                if (foundPDA != null)
+                    return foundPDA.Owner;
+            }
+
+            // Also check hands
+            if (user.TryGetComponent(out IHandsComponent? hands))
+            {
+                var heldItems = hands.GetAllHeldItems();
+                foreach (var item in heldItems)
+                {
+                    if (item.Owner.HasComponent<PDAComponent>())
+                        return item.Owner;
+                }
+            }
+
+            return null;
         }
     }
 }
