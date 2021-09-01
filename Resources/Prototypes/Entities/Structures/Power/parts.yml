@@ -47,7 +47,6 @@
     mode: SnapgridCenter
   components:
   - type: AmbientSound
-    range: 2
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: Clickable

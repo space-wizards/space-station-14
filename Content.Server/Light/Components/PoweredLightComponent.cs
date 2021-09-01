@@ -269,11 +269,6 @@ namespace Content.Server.Light.Components
         {
             _currentLit = value;
 
-            if (Owner.TryGetComponent(out AmbientSoundComponent? ambience))
-            {
-                ambience.Enabled = value;
-            }
-
             if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
             pointLight.Enabled = value;
 

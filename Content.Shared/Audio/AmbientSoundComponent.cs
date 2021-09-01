@@ -1,6 +1,8 @@
+using System;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -16,7 +18,6 @@ namespace Content.Shared.Audio
         [DataField("enabled")]
         public bool Enabled { get; set; } = true;
 
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("sound")]
         public SoundSpecifier Sound = default!;
 
@@ -25,13 +26,21 @@ namespace Content.Shared.Audio
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("range")]
-        public float Range = 7f;
+        public float Range = 1.5f;
 
         /// <summary>
         /// Applies this volume to the sound being played.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("volume")]
-        public float Volume = -1f;
+        public float Volume = -15f;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class AmbientSoundComponentState : ComponentState
+    {
+        public bool Enabled { get; init; }
+        public float Range { get; init; }
+        public float Volume { get; init; }
     }
 }

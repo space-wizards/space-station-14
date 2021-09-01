@@ -6,6 +6,11 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: AmbientSound
+    volume: -7
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: Physics

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Audio;
@@ -14,7 +15,7 @@ namespace Content.Client.Audio
     /// <summary>
     /// Samples nearby <see cref="AmbientSoundComponent"/> and plays audio.
     /// </summary>
-    public sealed class AmbientSoundSystem : EntitySystem
+    public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
         [Dependency] private IEntityLookup _lookup = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -34,16 +35,11 @@ namespace Content.Client.Audio
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
-        /*
-         * So you want to make a new ambience sound? First thing you should do is make sure your sound is nice when looping.
-         * Easiest way to do this (in audacity anyway) is cut the start of the clip, overlay it towards the end of the
-         * audio on a new track so that the end of it extends past the existing audio, then crossfade the tracks where they overlap.
-         */
+        private const float RangeBuffer = 0.1f;
 
         public override void Initialize()
         {
             base.Initialize();
-
         }
 
         private int PlayingCount(string countSound)
@@ -77,12 +73,13 @@ namespace Content.Client.Audio
             foreach (var (comp, (stream, _)) in _playingSounds.ToArray())
             {
                 if (!comp.Deleted && comp.Enabled && comp.Owner.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) &&
-                    range <= comp.Range * 2)
+                    range <= comp.Range)
                 {
                     continue;
                 }
 
                 stream?.Stop();
+
                 _playingSounds.Remove(comp);
             }
 
@@ -116,7 +113,7 @@ namespace Content.Client.Audio
                     !ambientComp.Enabled ||
                     // We'll also do this crude distance check because it's what we're doing in the active loop above.
                     !entity.Transform.Coordinates.TryDistance(EntityManager, coordinates, out var range) ||
-                    range > ambientComp.Range * 2)
+                    range > ambientComp.Range - RangeBuffer)
                 {
                     continue;
                 }
@@ -135,10 +132,9 @@ namespace Content.Client.Audio
 
                 var audioParams = AudioHelpers
                     .WithVariation(0.01f)
-                    .WithVolume(comp.Volume)
+                    .WithVolume(comp.Volume + 10f)
                     .WithLoop(true)
-                    .WithAttenuation(0.8f);
-                    // .WithMaxDistance(comp.Range);
+                    .WithMaxDistance(comp.Range);
 
                 var stream = SoundSystem.Play(
                     Filter.Local(),

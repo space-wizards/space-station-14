@@ -1,0 +1,33 @@
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Audio
+{
+    public abstract class SharedAmbientSoundSystem : EntitySystem
+    {
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<AmbientSoundComponent, ComponentGetState>(GetCompState);
+            SubscribeLocalEvent<AmbientSoundComponent, ComponentHandleState>(HandleCompState);
+        }
+
+        private void HandleCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not AmbientSoundComponentState state) return;
+            component.Enabled = state.Enabled;
+            component.Range = state.Range;
+            component.Volume = state.Volume;
+        }
+
+        private void GetCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentGetState args)
+        {
+            args.State = new AmbientSoundComponentState
+            {
+                Enabled = component.Enabled,
+                Range = component.Range,
+                Volume = component.Volume,
+            };
+        }
+    }
+}

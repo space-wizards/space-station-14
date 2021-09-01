@@ -274,7 +274,8 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
-            "SpawnItemsOnUse"
+            "SpawnItemsOnUse",
+            "AmbientOnPowered",
         };
     }
 }
