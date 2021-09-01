@@ -29,6 +29,8 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+    - key: enum.UplinkUiKey.Key
+      type: UplinkBoundUserInterface
   - type: ItemSlots
     slots:
       pda_pen_slot:

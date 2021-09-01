@@ -1,4 +1,5 @@
 using Content.Client.Examine;
+using Content.Client.Message;
 using Content.Shared.PDA;
 using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
@@ -7,6 +8,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
@@ -49,7 +51,7 @@ namespace Content.Client.Traitor.Uplink
                     };
                 }
 
-                SendMessage(new PDAUplinkBuyListingMessage(listing.ItemId));
+                SendMessage(new UplinkBuyListingMessage(listing.ItemId));
             };
 
             _menu.OnCategoryButtonPressed += (_, category) =>
@@ -58,6 +60,43 @@ namespace Content.Client.Traitor.Uplink
                 SendMessage(new PDARequestUpdateInterfaceMessage());
 
             };
+        }
+
+        protected override void UpdateState(BoundUserInterfaceState state)
+        {
+            base.UpdateState(state);
+
+            if (_menu == null)
+            {
+                return;
+            }
+
+            switch (state)
+            {
+                case UplinkUpdateState msg:
+                    {
+                        if (msg.Account != null)
+                        {
+                            _menu.CurrentLoggedInAccount = msg.Account;
+                            var balance = msg.Account.DataBalance;
+                            var weightedColor = GetWeightedColorString(balance);
+                            _menu.BalanceInfo.SetMarkup(Loc.GetString("pda-bound-user-interface-tc-balance-popup",
+                                                                     ("weightedColor", weightedColor),
+                                                                     ("balance", balance)));
+                        }
+
+                        if (msg.Listings != null)
+                        {
+                            _menu.ClearListings();
+                            foreach (var item in msg.Listings) //Should probably chunk these out instead. to-do if this clogs the internet tubes.
+                            {
+                                _menu.AddListingGui(item);
+                            }
+                        }
+
+                        break;
+                    }
+            }
         }
 
         /// <summary>
@@ -89,6 +128,33 @@ namespace Content.Client.Traitor.Uplink
                 weightedColor = Color.Purple;
             }
 
+            return weightedColor;
+        }
+
+        public static string GetWeightedColorString(int x)
+        {
+            var weightedColor = "gray";
+            if (x <= 0)
+            {
+                return weightedColor;
+            }
+
+            if (x <= 5)
+            {
+                weightedColor = "green";
+            }
+            else if (x > 5 && x < 10)
+            {
+                weightedColor = "yellow";
+            }
+            else if (x > 10 && x <= 20)
+            {
+                weightedColor = "yellow";
+            }
+            else if (x > 20 && x <= 50)
+            {
+                weightedColor = "purple";
+            }
             return weightedColor;
         }
 
@@ -124,6 +190,9 @@ namespace Content.Client.Traitor.Uplink
             public UplinkMenu(UplinkBoundUserInterface owner, IPrototypeManager prototypeManager)
             {
                 _prototypeManager = prototypeManager;
+
+                MinSize = SetSize = (512, 512);
+                Title = Loc.GetString("pda-bound-user-interface-uplink-tab-title");
 
                 //Uplink Tab
                 CategoryListContainer = new BoxContainer
@@ -205,6 +274,8 @@ namespace Content.Client.Traitor.Uplink
                     }
                 };
                 PopulateUplinkCategoryButtons();
+
+                Contents.AddChild(UplinkTabContainer);
             }
 
             public UplinkCategory CurrentFilterCategory

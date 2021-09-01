@@ -32,15 +32,14 @@ namespace Content.Shared.PDA
     }
 
     [Serializable, NetSerializable]
-    public sealed class PDAUplinkBuyListingMessage : BoundUserInterfaceMessage
+    public sealed class PDAShowUplinkMessage : BoundUserInterfaceMessage
     {
-        public string ItemId;
-
-        public PDAUplinkBuyListingMessage(string itemId)
+        public PDAShowUplinkMessage()
         {
-            ItemId = itemId;
+
         }
     }
+
 
     [Serializable, NetSerializable]
     public sealed class PDARequestUpdateInterfaceMessage : BoundUserInterfaceMessage

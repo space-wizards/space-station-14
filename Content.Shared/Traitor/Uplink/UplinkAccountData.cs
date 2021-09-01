@@ -7,10 +7,10 @@ namespace Content.Shared.Traitor.Uplink
     [Serializable, NetSerializable]
     public class UplinkAccountData
     {
-        public EntityUid DataAccountHolder;
+        public EntityUid? DataAccountHolder;
         public int DataBalance;
 
-        public UplinkAccountData(EntityUid dataAccountHolder, int dataBalance)
+        public UplinkAccountData(EntityUid? dataAccountHolder, int dataBalance)
         {
             DataAccountHolder = dataAccountHolder;
             DataBalance = dataBalance;

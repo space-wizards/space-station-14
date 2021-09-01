@@ -1,20 +1,13 @@
-using System;
-using Content.Client.Examine;
 using Content.Client.Message;
 using Content.Shared.PDA;
-using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BaseButton;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.PDA
@@ -23,8 +16,6 @@ namespace Content.Client.PDA
     public class PDABoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-
         private PDAMenu? _menu;
 
         public PDABoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -52,6 +43,12 @@ namespace Content.Client.PDA
             {
                 SendMessage(new PDAEjectPenMessage());
             };
+
+            _menu.ActivateUplinkButton.OnPressed += _ =>
+            {
+                SendMessage(new PDAShowUplinkMessage());
+            };
+
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -108,11 +105,6 @@ namespace Content.Client.PDA
 
         private class PDAMenu : SS14Window
         {
-            [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-            [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-
-            private PDABoundUserInterface _owner { get; }
-
             public Button FlashLightToggleButton { get; }
             public Button EjectIDButton { get; }
             public Button EjectPenButton { get; }
@@ -128,9 +120,6 @@ namespace Content.Client.PDA
             public PDAMenu(PDABoundUserInterface owner, IPrototypeManager prototypeManager)
             {
                 MinSize = SetSize = (512, 256);
-
-                _owner = owner;
-                _prototypeManager = prototypeManager;
                 Title = Loc.GetString("comp-pda-ui-menu-title");
 
                 #region MAIN_MENU_TAB
@@ -158,9 +147,7 @@ namespace Content.Client.PDA
                 };
                 ActivateUplinkButton = new Button
                 {
-                    Text = Loc.GetString("pda-bound-user-interface-uplink-tab-title"),
-                    HorizontalAlignment = HAlignment.Center,
-                    VerticalAlignment = VAlignment.Center
+                    Text = Loc.GetString("pda-bound-user-interface-uplink-tab-title")
                 };
 
                 var innerHBoxContainer = new BoxContainer
@@ -205,8 +192,6 @@ namespace Content.Client.PDA
                 };
 
                 #endregion
-
-
 
                 //The master menu that contains all of the tabs.
                 MasterTabContainer = new TabContainer

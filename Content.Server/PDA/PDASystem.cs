@@ -162,6 +162,12 @@ namespace Content.Server.PDA
                         RaiseLocalEvent(component.Owner.Uid, ejectAttempt);
                         break;
                     }
+                case PDAShowUplinkMessage _:
+                    {
+                        var showUplinkAttempt = new ShowUplinkUIAttempt(msg.Session);
+                        RaiseLocalEvent(component.Owner.Uid, showUplinkAttempt);
+                        break;
+                    }
             }
         }
     }

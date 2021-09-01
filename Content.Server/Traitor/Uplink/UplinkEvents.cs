@@ -1,5 +1,6 @@
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Traitor.Uplink;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Traitor.Uplink
@@ -16,5 +17,15 @@ namespace Content.Server.Traitor.Uplink
 
     public class UplinkRemovedEvent : EntityEventArgs
     {
+    }
+
+    public class ShowUplinkUIAttempt : CancellableEntityEventArgs
+    {
+        public IPlayerSession Session;
+
+        public ShowUplinkUIAttempt(IPlayerSession session)
+        {
+            Session = session;
+        }
     }
 }
