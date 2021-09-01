@@ -12,6 +12,7 @@
     state: icon
   - type: MeleeWeapon
     damage: 25
+  - type: Wieldable
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi

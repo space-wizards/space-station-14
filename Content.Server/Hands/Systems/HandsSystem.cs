@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Interaction;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -26,13 +27,14 @@ using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.Hands
+namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
 
         public override void Initialize()
         {
@@ -68,21 +70,10 @@ namespace Content.Server.Hands
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            foreach (var handName in component.ActivePriorityEnumerable())
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner.Uid, uid))
             {
-                var hand = component.GetHand(handName);
-                if (!hand.IsEmpty)
-                    continue;
-
-                var pos = component.Owner.Transform.Coordinates;
-                var virtualPull = EntityManager.SpawnEntity("HandVirtualPull", pos);
-                var virtualPullComp = virtualPull.GetComponent<HandVirtualPullComponent>();
-                virtualPullComp.PulledEntity = args.Pulled.Owner.Uid;
-                component.PutEntityIntoHand(hand, virtualPull);
-                return;
+                DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
-
-            DebugTools.Assert("Unable to find available hand when starting pulling??");
         }
 
         private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
@@ -92,8 +83,8 @@ namespace Content.Server.Hands
             foreach (var hand in component.Hands)
             {
                 if (hand.HeldEntity == null
-                    || !hand.HeldEntity.TryGetComponent(out HandVirtualPullComponent? virtualPull)
-                    || virtualPull.PulledEntity != args.Pulled.Owner.Uid)
+                    || !hand.HeldEntity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
+                    || virtualItem.BlockingEntity != args.Pulled.Owner.Uid)
                     continue;
 
                 hand.HeldEntity.Delete();

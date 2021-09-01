@@ -96,4 +96,16 @@ namespace Content.Shared.Hands
             HandName = handName;
         }
     }
+
+    public class VirtualItemDeletedEvent : EntityEventArgs
+    {
+        public EntityUid BlockingEntity;
+        public EntityUid User;
+
+        public VirtualItemDeletedEvent(EntityUid blockingEntity, EntityUid user)
+        {
+            BlockingEntity = blockingEntity;
+            User = user;
+        }
+    }
 }

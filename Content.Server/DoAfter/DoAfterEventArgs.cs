@@ -83,22 +83,22 @@ namespace Content.Server.DoAfter
         /// <summary>
         ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
         /// </summary>
-        public EntityEventArgs? UserCancelledEvent { get; set; }
+        public object? UserCancelledEvent { get; set; }
 
         /// <summary>
         ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
         /// </summary>
-        public EntityEventArgs? UserFinishedEvent { get; set; }
+        public object? UserFinishedEvent { get; set; }
 
         /// <summary>
         ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
         /// </summary>
-        public EntityEventArgs? TargetCancelledEvent { get; set; }
+        public object? TargetCancelledEvent { get; set; }
 
         /// <summary>
         ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is finished successfully.
         /// </summary>
-        public EntityEventArgs? TargetFinishedEvent { get; set; }
+        public object? TargetFinishedEvent { get; set; }
 
         /// <summary>
         ///     Event to be broadcast when the DoAfter is cancelled.
