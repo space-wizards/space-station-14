@@ -1,5 +1,11 @@
-using Content.Server.Damage;
+using Content.Server.Atmos.Components;
+using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Stunnable.Components;
 using Content.Shared.Administration;
+using Content.Shared.Damage.Components;
+using Content.Shared.MobState;
+using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -28,7 +34,7 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine(Loc.GetString("rejuvenate-command-no-entity-attached-message"));
                     return;
                 }
-                RejuvenateVerb.PerformRejuvenate(player.AttachedEntity);
+                PerformRejuvenate(player.AttachedEntity);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -39,7 +45,22 @@ namespace Content.Server.Administration.Commands
                     shell.WriteLine(Loc.GetString("shell-could-not-find-entity",("entity", arg)));
                     continue;
                 }
-                RejuvenateVerb.PerformRejuvenate(entity);
+                PerformRejuvenate(entity);
+            }
+        }
+
+        public static void PerformRejuvenate(IEntity target)
+        {
+            target.GetComponentOrNull<IDamageableComponent>()?.TrySetAllDamage(0);
+            target.GetComponentOrNull<IMobStateComponent>()?.UpdateState(0);
+            target.GetComponentOrNull<HungerComponent>()?.ResetFood();
+            target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
+            target.GetComponentOrNull<StunnableComponent>()?.ResetStuns();
+            target.GetComponentOrNull<FlammableComponent>()?.Extinguish();
+
+            if (target.TryGetComponent(out CreamPiedComponent? creamPied))
+            {
+                EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
             }
         }
     }
