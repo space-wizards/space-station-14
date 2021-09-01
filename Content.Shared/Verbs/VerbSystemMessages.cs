@@ -24,10 +24,10 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public class VerbsResponseMessage : EntityEventArgs
     {
-        public readonly List<Verb> Verbs;
+        public readonly List<Verb>? Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseMessage(List<Verb> verbs, EntityUid entity)
+        public VerbsResponseMessage(List<Verb>? verbs, EntityUid entity)
         {
             Verbs = verbs;
             Entity = entity;

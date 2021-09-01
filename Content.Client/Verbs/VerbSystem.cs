@@ -144,7 +144,7 @@ namespace Content.Client.Verbs
             {
                 _currentVerbs = msg.Verbs;
             }
-            else
+            else if (msg.Verbs != null)
             {
                 // Merge message verbs with client side verb list
                 foreach (var verb in msg.Verbs)
@@ -158,7 +158,7 @@ namespace Content.Client.Verbs
             vBox.DisposeAllChildren();
 
             // Show verbs, if there are any to show
-            if (_currentVerbs.Count() > 0)
+            if (_currentVerbs != null && _currentVerbs.Count() > 0)
             {
                 FillVerbMenu();
             }

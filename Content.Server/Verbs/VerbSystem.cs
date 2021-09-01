@@ -23,7 +23,7 @@ namespace Content.Server.Verbs
             IoCManager.InjectDependencies(this);
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<RequestServerVerbsEvent>(RequestVerbs);
+            SubscribeNetworkEvent<RequestServerVerbsEvent>(HanddleVerbRequest);
             SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
@@ -87,7 +87,7 @@ namespace Content.Server.Verbs
 
             // Generate the list of verbs
             var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
-            RaiseLocalEvent(targetEntity.Uid, verbEvent, false);
+            RaiseLocalEvent(targetEntity.Uid, verbEvent);
 
             // Find the verb that matches the key specified by the message. Maybe verbs should have been a dictionary
             // instead of a list. But then you can't use Verbs.Sort(), and other logic becomes messier.
@@ -105,13 +105,13 @@ namespace Content.Server.Verbs
             }
         }
 
-        private void RequestVerbs(RequestServerVerbsEvent req, EntitySessionEventArgs eventArgs)
+        private void HanddleVerbRequest(RequestServerVerbsEvent req, EntitySessionEventArgs eventArgs)
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
             if (!EntityManager.TryGetEntity(req.EntityUid, out var targetEntity))
             {
-                Logger.Warning($"{nameof(RequestVerbs)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
+                Logger.Warning($"{nameof(HanddleVerbRequest)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;
             }
 
@@ -123,16 +123,22 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (!TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true) || !entities.Contains(targetEntity))
+            // Send the verbs if the user has access to the requested item. Note that this is not perfect, and the
+            // entity can be considered invalid/hidden by the server despite being accessible by the client.
+            if (TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true) && entities.Contains(targetEntity))
             {
-                return;
+                var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
+                RaiseLocalEvent(targetEntity.Uid, verbEvent);
+
+                var response = new VerbsResponseMessage(verbEvent.Verbs, req.EntityUid);
+                RaiseNetworkEvent(response, player.ConnectedClient);
             }
-
-            var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
-            RaiseLocalEvent(targetEntity.Uid, verbEvent, false);
-
-            var response = new VerbsResponseMessage(verbEvent.Verbs, req.EntityUid);
-            RaiseNetworkEvent(response, player.ConnectedClient);
+            else
+            {
+                // Don't leave the client hanging on "Waiting for server....", send empty response
+                var response = new VerbsResponseMessage(null, req.EntityUid);
+                RaiseNetworkEvent(response, player.ConnectedClient);
+            }
         }
     }
 }
