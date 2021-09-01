@@ -15,11 +15,6 @@
   </PropertyGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.DefineConstants.targets" />
   <ItemGroup>
-    <Compile Remove="Traitor\Uplink\Events\**" />
-    <EmbeddedResource Remove="Traitor\Uplink\Events\**" />
-    <None Remove="Traitor\Uplink\Events\**" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2020.3.0" PrivateAssets="All" />
   </ItemGroup>
   <ItemGroup>
