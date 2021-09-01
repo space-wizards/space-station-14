@@ -8,6 +8,18 @@ namespace Content.Shared.CCVar
     public sealed class CCVars : CVars
     {
         /*
+         * Ambience
+         */
+
+        /// <summary>
+        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// </summary>
+        public static readonly CVarDef<float> AmbientCooldown =
+            CVarDef.Create("ambience.cooldown", 1f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+
+
+        /*
          * Status
          */
 

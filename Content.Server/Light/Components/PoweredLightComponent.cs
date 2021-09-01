@@ -4,6 +4,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
@@ -268,6 +269,11 @@ namespace Content.Server.Light.Components
         {
             _currentLit = value;
 
+            if (Owner.TryGetComponent(out AmbientSoundComponent? ambience))
+            {
+                ambience.Enabled = value;
+            }
+
             if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
             pointLight.Enabled = value;
 
@@ -327,6 +333,6 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
- 
+
     }
 }
