@@ -42,7 +42,7 @@ namespace Content.Client.Traitor.Uplink
             {
                 if (_menu.CurrentLoggedInAccount?.DataBalance < listing.Price)
                 {
-                    _failPopup = new UplinkMenuPopup(Loc.GetString("pda-bound-user-interface-insufficient-funds-popup"));
+                    _failPopup = new UplinkMenuPopup(Loc.GetString("uplink-bound-user-interface-insufficient-funds-popup"));
                     _userInterfaceManager.ModalRoot.AddChild(_failPopup);
                     _failPopup.Open(UIBox2.FromDimensions(_menu.Position.X + 150, _menu.Position.Y + 60, 156, 24));
                     _menu.OnClose += () =>
@@ -80,7 +80,7 @@ namespace Content.Client.Traitor.Uplink
                             _menu.CurrentLoggedInAccount = msg.Account;
                             var balance = msg.Account.DataBalance;
                             var weightedColor = GetWeightedColorString(balance);
-                            _menu.BalanceInfo.SetMarkup(Loc.GetString("pda-bound-user-interface-tc-balance-popup",
+                            _menu.BalanceInfo.SetMarkup(Loc.GetString("uplink-bound-user-interface-tc-balance-popup",
                                                                      ("weightedColor", weightedColor),
                                                                      ("balance", balance)));
                         }
