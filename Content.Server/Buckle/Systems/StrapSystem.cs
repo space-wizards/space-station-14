@@ -4,6 +4,7 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -20,7 +21,7 @@ namespace Content.Server.Buckle.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrapComponent, AssembleVerbsEvent>(AddStrapVerb);
+            SubscribeLocalEvent<StrapComponent, AssembleVerbsEvent>(AddStrapVerbs);
         }
 
         // TODO ECS BUCKLE/STRAP
@@ -31,7 +32,7 @@ namespace Content.Server.Buckle.Systems
         ///     Unstrap a buckle-able entity from another entity. Similar functionality to unbuckling, except here the
         ///     targeted entity is the one that the other entity is strapped to (e.g., a hospital bed).
         /// </summary>
-        private void AddStrapVerb(EntityUid uid, StrapComponent component, AssembleVerbsEvent args)
+        private void AddStrapVerbs(EntityUid uid, StrapComponent component, AssembleVerbsEvent args)
         {
             if (!args.Types.HasFlag(VerbTypes.Interact))
                 return;
@@ -80,28 +81,31 @@ namespace Content.Server.Buckle.Systems
             }
 
 
-            // Check if the user is currently pulling an entity that can be buckled to the target?
-            // Damn this is one ugly if block.
+            // If the user is currently holding an entity that can be buckled, add a verb for that.
             if (args.Using != null &&
-                args.Using.TryGetComponent<HandVirtualPullComponent>(out var virtualPull) &&
-                _entityManager.TryGetEntity(virtualPull.PulledEntity, out var pulledEntity) &&
-                pulledEntity.TryGetComponent<BuckleComponent>(out var pulledBuckle) &&
-                component.HasSpace(pulledBuckle) &&
-                args.InRangeUnobstructed(range: pulledBuckle.Range, userOverride: pulledEntity))
+                args.Using.TryGetComponent<BuckleComponent>(out var usingBuckle) &&
+                component.HasSpace(usingBuckle) &&
+                args.InRangeUnobstructed(range: usingBuckle.Range, userOverride: args.Using))
             {
-                // Check that the pulled entity is obstructed from the target (ignoring the user/puller).
-                bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == pulledEntity;
-                if (!_interactionSystem.InRangeUnobstructed(pulledEntity, args.Target, pulledBuckle.Range, predicate: Ignored))
+                // Check that the entity is unobstructed from the target (ignoring the user). Note that if the item is
+                // held in hand, this doesn't matter. BUT the user may instead be pulling a person here.
+                bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == args.Using;
+                if (!_interactionSystem.InRangeUnobstructed(args.Using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                // Add a verb to buckle the pulled entity
-                Verb verb = new("buckle:pulled");
-                verb.Act = () => pulledBuckle.TryBuckle(args.User, args.Target);
+                // Add a verb to buckle the used entity
+                Verb verb = new("buckle:using");
+                verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 if (args.PrepareGUI)
                 {
                     verb.Category = VerbCategories.Buckle;
-                    verb.Text = pulledEntity.Name;
+                    verb.Text = args.Using.Name;
                 }
+
+                // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
+                // just a held object, the user is probably just trying to sit down.
+                verb.Priority = args.Using.HasComponent<ActorComponent>() ? 1 : -1;
+
                 args.Verbs.Add(verb);
             }
         }

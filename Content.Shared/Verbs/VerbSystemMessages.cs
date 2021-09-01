@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Content.Shared.Interaction.Helpers;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Verbs
 {
@@ -131,6 +132,13 @@ namespace Content.Shared.Verbs
             // Physical interactions are allowed.
             Hands = hands;
             Hands.TryGetActiveHeldEntity(out Using);
+
+            // If the "Held" entity is a virtual pull entity, consider the pulled entity as being used on the object
+            if (Using != null && Using.TryGetComponent<HandVirtualPullComponent>(out var pull))
+            {
+                // Resolve entity uid
+                Using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.PulledEntity);
+            }
         }
     }
 }
