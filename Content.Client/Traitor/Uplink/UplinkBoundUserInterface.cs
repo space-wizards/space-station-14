@@ -57,7 +57,7 @@ namespace Content.Client.Traitor.Uplink
             _menu.OnCategoryButtonPressed += (_, category) =>
             {
                 _menu.CurrentFilterCategory = category;
-                SendMessage(new PDARequestUpdateInterfaceMessage());
+                SendMessage(new UplinkRequestUpdateInterfaceMessage());
 
             };
         }

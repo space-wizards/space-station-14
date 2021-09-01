@@ -14,4 +14,13 @@ namespace Content.Shared.Traitor.Uplink
             ItemId = itemId;
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class UplinkRequestUpdateInterfaceMessage : BoundUserInterfaceMessage
+    {
+        public UplinkRequestUpdateInterfaceMessage()
+        {
+
+        }
+    }
 }
