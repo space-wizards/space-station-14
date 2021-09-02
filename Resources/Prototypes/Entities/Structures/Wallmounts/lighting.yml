@@ -28,6 +28,12 @@
     softness: 1.1
     offset: "0, -0.5"
   - type: SignalReceiver
+    inputs:
+      - name: toggle
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalReceiverUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

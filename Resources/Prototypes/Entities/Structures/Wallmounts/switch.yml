@@ -12,6 +12,14 @@
   - type: SignalSwitch
   - type: Rotatable
   - type: SignalTransmitter
+    outputs:
+      - name: state
+        type: bool
+      - name: stateChange
+  - type: UserInterface
+    interfaces:
+      - key: enum.SignalTransmitterUiKey.Key
+        type: SignalPortSelectorBoundUserInterface
   placement:
     snap:
     - Wallmount
@@ -30,6 +38,8 @@
   - type: SignalButton
   - type: Rotatable
   - type: SignalTransmitter
+    outputs:
+      - name: pressed
   placement:
     snap:
     - Wallmount

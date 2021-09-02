@@ -14,7 +14,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Conveyor
 {
     [RegisterComponent]
-    public class ConveyorComponent : Component, ISignalReceiver<TwoWayLeverSignal>, ISignalReceiver<bool>
+    public class ConveyorComponent : Component
     {
         public override string Name => "Conveyor";
 
@@ -150,7 +150,7 @@ namespace Content.Server.Conveyor
             return true;
         }
 
-        public void TriggerSignal(TwoWayLeverSignal signal)
+        public void SetState(TwoWayLeverSignal signal)
         {
             State = signal switch
             {
@@ -159,11 +159,6 @@ namespace Content.Server.Conveyor
                 TwoWayLeverSignal.Right => ConveyorState.Forward,
                 _ => ConveyorState.Off
             };
-        }
-
-        public void TriggerSignal(bool signal)
-        {
-            State = signal ? ConveyorState.Forward : ConveyorState.Off;
         }
     }
 }
