@@ -152,6 +152,8 @@ namespace Content.Shared.Movement
         {
             return body.BodyStatus == BodyStatus.OnGround &&
                    body.Owner.HasComponent<IMobStateComponent>() &&
+                   // If we're being pulled then don't mess with our velocity.
+                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove(body.Owner);
         }
 
