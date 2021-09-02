@@ -8,21 +8,16 @@ using Robust.Shared.Serialization;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Default metabolism for medicine reagents. Attempts to find a DamageableComponent on the target,
-    /// and to update its damage values.
+    /// Default metabolism for medicine reagents. Raises a <see cref="TryChangeDamageEvent"/> every metabolism cycle while this reagent is in the bloodstream.
     /// </summary>
     public class HealthChange : ReagentEffect, ISerializationHooks
     {
-
         /// <summary>
-        /// Damage to apply when 1u of reagent is consumed.
+        /// Damage to apply every metabolism cycle. Damage Ignores resistances.
         /// </summary>
         [DataField("damage", required: true)]
         public DamageSpecifier Damage = default!;
 
-        /// <summary>
-        ///     Changes damage if a DamageableComponent can be found.
-        /// </summary>
         public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
             solutionEntity.EntityManager.EventBus.RaiseLocalEvent(solutionEntity.Uid, new TryChangeDamageEvent(Damage, true), false);
