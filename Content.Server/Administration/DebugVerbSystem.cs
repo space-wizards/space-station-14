@@ -159,51 +159,6 @@ namespace Content.Server.Administration
                 };
                 args.Verbs.Add(verb);
             }
-
-            // AttachToSelf verb
-            if (_groupController.CanCommand(player, "attachtoself") &&
-                args.User != args.Target)
-            {
-                Verb verb = new Verb("debug:attachtoself");
-                verb.Text = Loc.GetString("attach-to-self-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
-                // TODO VERB ICON attach icons?
-                verb.Act = () =>
-                {
-                    args.Target.Transform.AttachParent(args.User);
-                };
-                args.Verbs.Add(verb);
-            }
-
-            // AttachToGrid verb
-            if (_groupController.CanCommand(player, "attachtogrid") &&
-                args.User != args.Target)
-            {
-                Verb verb = new Verb("debug:attachtogrid");
-                verb.Text = Loc.GetString("attach-to-grid-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
-                // TODO VERB ICON attach icons?
-                verb.Act = () =>
-                {
-                    args.Target.Transform.AttachToGridOrMap();
-                };
-                args.Verbs.Add(verb);
-            }
-
-            // AttachToGrid verb
-            if (_groupController.CanCommand(player, "attachtograndparent") &&
-                args.User != args.Target)
-            {
-                Verb verb = new Verb("debug:attachtograndparent");
-                verb.Text = Loc.GetString("attach-to-grandparent-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
-                // TODO VERB ICON attach icons?
-                verb.Act = () =>
-                {
-                    args.Target.Transform.AttachToGrandparent();
-                };
-                args.Verbs.Add(verb);
-            }
         }
     }
 }
