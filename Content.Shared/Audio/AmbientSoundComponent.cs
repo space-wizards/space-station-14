@@ -26,7 +26,7 @@ namespace Content.Shared.Audio
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("range")]
-        public float Range = 1.5f;
+        public float Range = 2f;
 
         /// <summary>
         /// Applies this volume to the sound being played.

@@ -25,7 +25,7 @@ namespace Content.Client.Audio
 
         private float _maxAmbientRange = 5f;
 
-        private const float Cooldown = 1f;
+        private const float Cooldown = 0.5f;
         private float _accumulator;
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace Content.Client.Audio
 
                 var audioParams = AudioHelpers
                     .WithVariation(0.01f)
-                    .WithVolume(comp.Volume + 10f)
+                    .WithVolume(comp.Volume)
                     .WithLoop(true)
                     .WithMaxDistance(comp.Range);
 
