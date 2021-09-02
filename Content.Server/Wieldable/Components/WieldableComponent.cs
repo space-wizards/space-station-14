@@ -5,7 +5,7 @@ using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Wieldable
+namespace Content.Server.Wieldable.Components
 {
     /// <summary>
     ///     Used for objects that can be wielded in two or more hands,
@@ -20,6 +20,13 @@ namespace Content.Server.Wieldable
 
         [DataField("unwieldSound")]
         public SoundSpecifier? UnwieldSound = default!;
+
+        /// <summary>
+        ///     Number of free hands required (excluding the item itself) required
+        ///     to wield it
+        /// </summary>
+        [DataField("freeHandsRequired")]
+        public int FreeHandsRequired = 1;
 
         public bool Wielded = false;
 
@@ -37,7 +44,8 @@ namespace Content.Server.Wieldable
 
             protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
             {
-                data.Visibility = component.Wielded ? VerbVisibility.Invisible : VerbVisibility.Visible;
+                var canWield = EntitySystem.Get<WieldableSystem>().CanWield(component.Owner.Uid, component, user);
+                data.Visibility = component.Wielded || !canWield ? VerbVisibility.Invisible : VerbVisibility.Visible;
                 data.Text = "Wield";
             }
 
@@ -55,7 +63,7 @@ namespace Content.Server.Wieldable
             protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
             {
                 var canWield = EntitySystem.Get<WieldableSystem>().CanWield(component.Owner.Uid, component, user);
-                data.Visibility = component.Wielded ? VerbVisibility.Visible : VerbVisibility.Invisible;
+                data.Visibility = component.Wielded || !canWield ? VerbVisibility.Visible : VerbVisibility.Invisible;
                 data.Text = "Unwield";
             }
 
