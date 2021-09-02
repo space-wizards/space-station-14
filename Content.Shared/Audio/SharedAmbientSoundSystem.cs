@@ -12,6 +12,18 @@ namespace Content.Shared.Audio
             SubscribeLocalEvent<AmbientSoundComponent, ComponentHandleState>(HandleCompState);
         }
 
+        public void SetAmbience(EntityUid uid, bool value)
+        {
+            // Reason I didn't make this eventbus for the callers is because it seemed a bit silly
+            // trying to account for damageable + powered + toggle, plus we can't just check if it's powered.
+            // So we'll just call it directly for whatever.
+            if (!ComponentManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambience) ||
+                ambience.Enabled == value) return;
+
+            ambience.Enabled = value;
+            ambience.Dirty();
+        }
+
         private void HandleCompState(EntityUid uid, AmbientSoundComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not AmbientSoundComponentState state) return;

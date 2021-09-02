@@ -4,10 +4,8 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
-  - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -20
-    range: 1
+    volume: -25
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
   - type: Clickable

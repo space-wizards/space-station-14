@@ -6,7 +6,6 @@
   placement:
     mode: AlignTileAny
   components:
-  - type: AmbientOnPowered
   - type: AmbientSound
     range: 7
     sound:

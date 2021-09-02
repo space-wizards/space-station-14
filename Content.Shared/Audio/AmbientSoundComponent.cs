@@ -33,7 +33,7 @@ namespace Content.Shared.Audio
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("volume")]
-        public float Volume = -15f;
+        public float Volume = -10f;
     }
 
     [Serializable, NetSerializable]

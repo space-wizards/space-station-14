@@ -1,9 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Audio;
+using Content.Shared.CCVar;
 using Robust.Client.Player;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -21,11 +22,10 @@ namespace Content.Client.Audio
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
-        private int _maxAmbientCount = 6;
+        private int _maxAmbientCount;
 
-        private float _maxAmbientRange = 5f;
-
-        private const float Cooldown = 0.5f;
+        private float _maxAmbientRange;
+        private float _cooldown;
         private float _accumulator;
 
         /// <summary>
@@ -40,6 +40,23 @@ namespace Content.Client.Audio
         public override void Initialize()
         {
             base.Initialize();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.AmbientCooldown, SetCooldown, true);
+            configManager.OnValueChanged(CCVars.MaxAmbientSources, SetAmbientCount, true);
+            configManager.OnValueChanged(CCVars.AmbientRange, SetAmbientRange, true);
+        }
+
+        private void SetCooldown(float value) => _cooldown = value;
+        private void SetAmbientCount(int value) => _maxAmbientCount = value;
+        private void SetAmbientRange(float value) => _maxAmbientRange = value;
+
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.UnsubValueChanged(CCVars.AmbientCooldown, SetCooldown);
+            configManager.UnsubValueChanged(CCVars.MaxAmbientSources, SetAmbientCount);
+            configManager.UnsubValueChanged(CCVars.AmbientRange, SetAmbientRange);
         }
 
         private int PlayingCount(string countSound)
@@ -57,9 +74,16 @@ namespace Content.Client.Audio
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            if (_cooldown <= 0f)
+            {
+                _accumulator = 0f;
+                return;
+            }
+
             _accumulator += frameTime;
-            if (_accumulator < Cooldown) return;
-            _accumulator -= Cooldown;
+            if (_accumulator < _cooldown) return;
+            _accumulator -= _cooldown;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
             if (player == null)
@@ -134,6 +158,9 @@ namespace Content.Client.Audio
                     .WithVariation(0.01f)
                     .WithVolume(comp.Volume)
                     .WithLoop(true)
+                    .WithAttenuation(Attenuation.LinearDistance)
+                    .WithRolloffFactor(20f)
+                    .WithPlayOffset(_random.NextFloat())
                     .WithMaxDistance(comp.Range);
 
                 var stream = SoundSystem.Play(
