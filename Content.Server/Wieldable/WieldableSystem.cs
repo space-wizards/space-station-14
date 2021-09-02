@@ -2,6 +2,7 @@
 using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Items;
+using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -30,6 +31,8 @@ namespace Content.Server.Wieldable
             SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
             SubscribeLocalEvent<WieldableComponent, RemovedFromHandEvent>(OnItemLeaveHand);
             SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+
+            SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
         }
 
         private void OnUseInHand(EntityUid uid, WieldableComponent component, UseInHandEvent args)
@@ -190,6 +193,14 @@ namespace Content.Server.Wieldable
         {
             if(args.BlockingEntity == uid && component.Wielded)
                 AttemptUnwield(args.BlockingEntity, component, EntityManager.GetEntity(args.User));
+        }
+
+        private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
+        {
+            if (args.Handled)
+                return;
+            args.Multiplier *= component.DamageMultiplier;
+            args.FlatDamage += component.FlatDamage;
         }
     }
 

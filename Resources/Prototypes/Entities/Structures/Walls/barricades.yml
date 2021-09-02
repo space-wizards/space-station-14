@@ -61,3 +61,6 @@
       normalState: 1
       Sprite:
         drawdepth: Overlays
+  - type: Tag
+    tags:
+    - Wooden

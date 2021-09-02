@@ -10,7 +10,12 @@ namespace Content.Server.Wieldable.Components
     {
         public override string Name { get; } = "IncreaseDamageOnWield";
 
-        [DataField("damageMultiplier", required: true)]
+        // TODO Change to use resistanceset/damageset/whatever so this can be of arbitrary type
+
+        [DataField("damageMultiplier")]
         public int DamageMultiplier = 1;
+
+        [DataField("flatDamage")]
+        public int FlatDamage = 0;
     }
 }

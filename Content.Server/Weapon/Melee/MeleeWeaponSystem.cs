@@ -36,6 +36,7 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
+            SubscribeLocalEvent<ExtraDamageAgainstWhitelistComponent, MeleeHitEvent>(OnExtraDamageHit);
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
@@ -90,7 +91,8 @@ namespace Content.Server.Weapon.Melee
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
                     {
-                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
+                        damageableComponent.TryChangeDamage(comp.DamageType,
+                            comp.Damage * hitEvent.Multiplier + hitEvent.FlatDamage);
                     }
 
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -159,7 +161,8 @@ namespace Content.Server.Weapon.Melee
                 {
                     if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
                     {
-                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
+                        damageComponent.TryChangeDamage(comp.DamageType,
+                            comp.Damage * hitEvent.Multiplier + hitEvent.FlatDamage);
                     }
                 }
             }
@@ -262,6 +265,23 @@ namespace Content.Server.Weapon.Melee
             }
         }
 
+        private void OnExtraDamageHit(EntityUid uid, ExtraDamageAgainstWhitelistComponent component, MeleeHitEvent args)
+        {
+            if (args.Handled)
+                return;
+            foreach (var ent in args.HitEntities)
+            {
+                // TODO this means even if one thing thats hit was valid, if they aren't all valid,
+                // then it doesn't apply extra damage; that shouldn't be the case
+                if (ent == null) continue;
+                if (!component.Whitelist.IsValid(ent))
+                    return;
+            }
+
+            args.Multiplier *= component.DamageMultiplier;
+            args.FlatDamage += component.FlatDamage;
+        }
+
         public void SendAnimation(string arc, Angle angle, IEntity attacker, IEntity source, IEnumerable<IEntity> hits, bool textureEffect = false, bool arcFollowAttacker = true)
         {
             RaiseNetworkEvent(new MeleeWeaponSystemMessages.PlayMeleeWeaponAnimationMessage(arc, angle, attacker.Uid, source.Uid,
@@ -280,6 +300,19 @@ namespace Content.Server.Weapon.Melee
     /// </summary>
     public class MeleeHitEvent : HandledEntityEventArgs
     {
+        /// <summary>
+        ///     An amount to multiply damage by, so other systems
+        ///     can give feedback.
+        ///     TODO MIRROR change this, make resistance use this, make armor use this?? use resistanceset instead of just
+        ///     multiplier so you can do flat/multiplicative as well?
+        /// </summary>
+        public int Multiplier = 1;
+
+        /// <summary>
+        ///     A flat amount of damage to add. Same reason as above with Multiplier.
+        /// </summary>
+        public int FlatDamage = 0;
+
         /// <summary>
         ///     A list containing every hit entity. Can be zero.
         /// </summary>
