@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Damage
 {
@@ -12,6 +12,7 @@ namespace Content.Server.Damage
     public class GodmodeSystem : EntitySystem
     {
         private readonly Dictionary<IEntity, OldEntityInformation> _entities = new();
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -42,6 +43,7 @@ namespace Content.Server.Damage
             if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
                 damageable.DamagePerType = new();
+                _damageableSystem.DamageChanged(entity.Uid, damageable, false);
             }
 
             return true;
@@ -69,6 +71,7 @@ namespace Content.Server.Damage
                 if (old.DamagePerType != null)
                 {
                     damageable.DamagePerType = old.DamagePerType;
+                    _damageableSystem.DamageChanged(entity.Uid, damageable, false);
                 }
             }
 

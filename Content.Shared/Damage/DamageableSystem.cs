@@ -101,9 +101,6 @@ namespace Content.Shared.Damage
         {
             if (args.Damage == null)
             {
-                // This should never happen. Damage data should be a required data field. However, the YAML linter
-                // currently does not properly detect this. Logs are better than hard-crashes. Lets hope I didn't miss
-                // too many YAML files.
                 Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
                 return;
             }
@@ -111,9 +108,6 @@ namespace Content.Shared.Damage
             //Check that the DamageSpecifier actually contains data:
             if (args.Damage.DamageDict.Count() == 0)
             {
-                // This can happen if AfterDeserialization hooks were not called, or if someone performed
-                // math-operations before calling the hooks. An example of this would be when someone uses an abstract
-                // entity, as these do not call deserialization hooks.
                 Logger.Warning("Empty DamageSpecifier passed to DamageableComponent. Was AfterDeserialization not called?");
                 return;
             }
