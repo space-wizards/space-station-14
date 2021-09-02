@@ -23,6 +23,7 @@
   - type: Tag
     tags:
     - ExplosivePassable
+    - Wooden
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -61,6 +62,3 @@
       normalState: 1
       Sprite:
         drawdepth: Overlays
-  - type: Tag
-    tags:
-    - Wooden
