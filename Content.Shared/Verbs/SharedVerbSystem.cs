@@ -87,6 +87,7 @@ namespace Content.Shared.Verbs
         Interact = 1, //   Z/left-mouse or context menu
         Activate = 2, // E/Z/left-mouse or context menu
         Alternative = 4, // alt + E/Z/left-mouse or context menu
-        Other = 8 // context menu only
+        Other = 8, // context menu only
+        All = 1+2+4+8
     }
 }

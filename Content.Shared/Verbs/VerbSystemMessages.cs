@@ -107,7 +107,7 @@ namespace Content.Shared.Verbs
         /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
         /// <param name="types">The types of interactions to include as verbs.</param>
         public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false,
-            VerbTypes types = VerbTypes.Activate | VerbTypes.Interact | VerbTypes.Alternative | VerbTypes.Other)
+            VerbTypes types = VerbTypes.All)
         {
             User = user;
             Target = target;

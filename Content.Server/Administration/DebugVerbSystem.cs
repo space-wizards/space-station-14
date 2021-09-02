@@ -1,7 +1,6 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
-using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Players;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -89,6 +88,23 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     var cmd = new MakeSentientCommand();
+                    var uidStr = args.Target.Uid.ToString();
+                    cmd.Execute(new ConsoleShell(_consoleHost, player), $"{cmd.Command} {uidStr}",
+                        new[] { uidStr });
+                };
+                args.Verbs.Add(verb);
+            }
+
+            // Set clothing verb
+            if (_groupController.CanCommand(player, "setoutfit"))
+            {
+                Verb verb = new Verb("set-outfit");
+                verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
+                verb.Category = VerbCategories.Debug;
+                verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
+                verb.Act = () =>
+                {
+                    var cmd = new SetOutfitCommand();
                     var uidStr = args.Target.Uid.ToString();
                     cmd.Execute(new ConsoleShell(_consoleHost, player), $"{cmd.Command} {uidStr}",
                         new[] { uidStr });

@@ -1,11 +1,15 @@
 using Content.Server.Inventory.Components;
+using Robust.Server.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Inventory
 {
     class InventorySystem : EntitySystem
     {
+        [Dependency] private readonly IConGroupController _groupController = default!;
+
         public override void Initialize()
         {
             base.Initialize();
