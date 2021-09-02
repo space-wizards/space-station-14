@@ -1,25 +1,20 @@
 using System;
 using System.Threading.Tasks;
+using Content.Client.Entry;
 using Content.Client.IoC;
 using Content.Client.Parallax.Managers;
 using Content.Server.GameTicking;
 using Content.Server.IoC;
 using Content.Shared.CCVar;
-using Moq;
 using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
-using Robust.Server.Maps;
-using Robust.Shared;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.UnitTesting;
-using EntryPoint = Content.Client.Entry.EntryPoint;
 
 namespace Content.IntegrationTests
 {
@@ -69,11 +64,12 @@ namespace Content.IntegrationTests
             return base.StartClient(options);
         }
 
-        protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
+        protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions? options = null)
         {
             options ??= new ServerContentIntegrationOption()
             {
-                FailureLogLevel = LogLevel.Warning
+                FailureLogLevel = LogLevel.Warning,
+                Pool = true
             };
 
             // Load content resources, but not config and user data.
@@ -123,7 +119,10 @@ namespace Content.IntegrationTests
 
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerContentIntegrationOption();
+            options ??= new ServerContentIntegrationOption
+            {
+                Pool = true
+            };
 
             // Load content resources, but not config and user data.
             options.Options = new ServerOptions()
@@ -142,6 +141,8 @@ namespace Content.IntegrationTests
             StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null,
                 ServerIntegrationOptions serverOptions = null)
         {
+            serverOptions ??= new ServerIntegrationOptions {Pool = false};
+
             var client = StartClient(clientOptions);
             var server = StartServer(serverOptions);
 
@@ -149,7 +150,6 @@ namespace Content.IntegrationTests
 
             return (client, server);
         }
-
 
         protected async Task<(ClientIntegrationInstance client, ServerIntegrationInstance server)>
             StartConnectedServerDummyTickerClientPair(ClientIntegrationOptions clientOptions = null,
@@ -163,30 +163,18 @@ namespace Content.IntegrationTests
             return (client, server);
         }
 
-        protected async Task<IMapGrid> InitializeMap(ServerIntegrationInstance server, string mapPath)
+        protected override async Task TearDown(ServerIntegrationInstance server)
         {
             await server.WaitIdleAsync();
 
-            var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var mapLoader = server.ResolveDependency<IMapLoader>();
+            var systems = server.ResolveDependency<IEntitySystemManager>();
 
-            IMapGrid grid = null;
-
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
-                grid = mapLoader.LoadBlueprint(mapId, mapPath);
-
-                pauseManager.DoMapInitialize(mapId);
+                systems.GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await server.WaitIdleAsync();
-
-            return grid;
+            await server.WaitRunTicks(3);
         }
 
         protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600,

@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption {Pool = false});
             await server.WaitIdleAsync();
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
