@@ -38,38 +38,23 @@ namespace Content.Server.Wieldable.Components
         public float WieldTime = 0.5f;
 
         [Verb]
-        public sealed class WieldVerb : Verb<WieldableComponent>
+        public sealed class ToggleWieldVerb : Verb<WieldableComponent>
         {
             public override bool AlternativeInteraction => true;
 
             protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
             {
-                var canWield = EntitySystem.Get<WieldableSystem>().CanWield(component.Owner.Uid, component, user);
-                data.Visibility = component.Wielded || !canWield ? VerbVisibility.Invisible : VerbVisibility.Visible;
-                data.Text = "Wield";
+                data.Visibility = VerbVisibility.Visible;
+                data.Text = component.Wielded ? "Unwield" : "Wield";
             }
 
             protected override void Activate(IEntity user, WieldableComponent component)
             {
-                EntitySystem.Get<WieldableSystem>().AttemptWield(component.Owner.Uid, component, user);
-            }
-        }
+                if(!component.Wielded)
+                    EntitySystem.Get<WieldableSystem>().AttemptWield(component.Owner.Uid, component, user);
+                else
+                    EntitySystem.Get<WieldableSystem>().AttemptUnwield(component.Owner.Uid, component, user);
 
-        [Verb]
-        public sealed class UnwieldVerb : Verb<WieldableComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
-            {
-                var canWield = EntitySystem.Get<WieldableSystem>().CanWield(component.Owner.Uid, component, user);
-                data.Visibility = component.Wielded || !canWield ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.Text = "Unwield";
-            }
-
-            protected override void Activate(IEntity user, WieldableComponent component)
-            {
-                EntitySystem.Get<WieldableSystem>().AttemptUnwield(component.Owner.Uid, component, user);
             }
         }
     }

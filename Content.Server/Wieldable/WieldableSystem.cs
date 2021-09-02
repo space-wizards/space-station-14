@@ -11,6 +11,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
 namespace Content.Server.Wieldable
@@ -45,14 +46,27 @@ namespace Content.Server.Wieldable
         {
             // Do they have enough hands free?
             if (!ComponentManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
+            {
+                user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
                 return false;
+            }
 
             if (hands.GetFreeHands() < component.FreeHandsRequired)
+            {
+                // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
+                user.PopupMessage(Loc.GetString("wieldable-component-not-enough-free-hands",
+                    ("number", component.FreeHandsRequired),
+                    ("item", EntityManager.GetEntity(uid))));
                 return false;
+            }
 
             // Is it.. actually in one of their hands?
             if (!hands.TryGetHandHoldingEntity(EntityManager.GetEntity(uid), out var _))
+            {
+                user.PopupMessage(Loc.GetString("wieldable-component-not-in-hands",
+                    ("item", EntityManager.GetEntity(uid))));
                 return false;
+            }
 
             // Seems legit.
             return true;
@@ -131,6 +145,9 @@ namespace Content.Server.Wieldable
             {
                 _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.User.Uid);
             }
+
+            args.User.PopupMessage(Loc.GetString("wieldable-component-successful-wield",
+                ("item", EntityManager.GetEntity(uid))));
         }
 
         private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
@@ -147,9 +164,16 @@ namespace Content.Server.Wieldable
 
             component.Wielded = false;
 
-            if (component.UnwieldSound != null && !args.Force) // don't play sound if this was a forced unwield
+            if (!args.Force) // don't play sound/popup if this was a forced unwield
             {
-                SoundSystem.Play(Filter.Pvs(EntityManager.GetEntity(uid)), component.UnwieldSound.GetSound());
+                if (component.UnwieldSound != null)
+                {
+                    SoundSystem.Play(Filter.Pvs(EntityManager.GetEntity(uid)),
+                        component.UnwieldSound.GetSound());
+                }
+
+                args.User.PopupMessage(Loc.GetString("wieldable-component-failed-wield",
+                    ("item", EntityManager.GetEntity(uid))));
             }
 
             _virtualItemSystem.DeleteInHandsMatching(args.User.Uid, uid);
