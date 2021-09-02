@@ -1,7 +1,11 @@
 using Content.Server.Administration.Commands;
+using Content.Server.Disposal.Tube.Components;
+using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -23,8 +27,18 @@ namespace Content.Server.Administration
         public override void Initialize()
         {
             SubscribeLocalEvent<AssembleVerbsEvent>(AddDebugVerbs);
+            // TODO QUESTION VERBS
+            // if allowing an Assemble-Target and Assemble-Tool/USing
+            // Maybe allow assemble on user?
         }
 
+
+        // TODO QUESTION
+        // MAAAAybe these verbs should go into dedicated systens.
+        // E.g., tube verb -> disposal tubes system.
+        // and posses/take-control into mind system
+        // But then where do you put stuff like make sentient
+        // its defining feature is that it's target does NOT have a mind, so no targeted subscriptions
         private void AddDebugVerbs(AssembleVerbsEvent args)
         {
             if (!args.Types.HasFlag(VerbTypes.Other))
@@ -96,9 +110,10 @@ namespace Content.Server.Administration
             }
 
             // Set clothing verb
-            if (_groupController.CanCommand(player, "setoutfit"))
+            if (_groupController.CanCommand(player, "setoutfit") &&
+                args.Target.HasComponent<InventoryComponent>())
             {
-                Verb verb = new Verb("set-outfit");
+                Verb verb = new Verb("debug:outfit");
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
@@ -108,6 +123,38 @@ namespace Content.Server.Administration
                     var uidStr = args.Target.Uid.ToString();
                     cmd.Execute(new ConsoleShell(_consoleHost, player), $"{cmd.Command} {uidStr}",
                         new[] { uidStr });
+                };
+                args.Verbs.Add(verb);
+            }
+
+            // In range unoccluded verb
+            if (_groupController.CanCommand(player, "inrangeunoccluded"))
+            {
+                Verb verb = new Verb("debug:unoccluded");
+                verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
+                verb.Category = VerbCategories.Debug;
+                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+                verb.Act = () =>
+                {
+                    var message = args.User.InRangeUnOccluded(args.Target)
+                    ? Loc.GetString("in-range-unoccluded-verb-on-activate-not-occluded")
+                    : Loc.GetString("in-range-unoccluded-verb-on-activate-occluded");
+                    args.Target.PopupMessage(args.User, message);
+                };
+                args.Verbs.Add(verb);
+            }
+
+            // Get Disposal tube direction verb
+            if (_groupController.CanCommand(player, "tubeconnections") &&
+                args.Target.TryGetComponent<IDisposalTubeComponent>(out var component))
+            {
+                Verb verb = new Verb("debug:tubeconnections");
+                verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
+                verb.Category = VerbCategories.Debug;
+                verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
+                verb.Act = () =>
+                {
+                    component.PopupDirections(args.User);
                 };
                 args.Verbs.Add(verb);
             }
