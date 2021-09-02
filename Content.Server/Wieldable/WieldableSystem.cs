@@ -197,6 +197,11 @@ namespace Content.Server.Wieldable
 
         private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
         {
+            if (ComponentManager.TryGetComponent<WieldableComponent>(uid, out var wield))
+            {
+                if (!wield.Wielded)
+                    return;
+            }
             if (args.Handled)
                 return;
             args.Multiplier *= component.DamageMultiplier;
