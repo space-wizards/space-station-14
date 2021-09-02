@@ -1922,3 +1922,8 @@ Entries:
   - {message: Stop lobby UI from crashing, type: Fix}
   id: 343
   time: '2021-09-01T23:39:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mob pulling no longer locked to server tickrate, type: Fix}
+  id: 344
+  time: '2021-09-02T02:35:16.0000000+00:00'
