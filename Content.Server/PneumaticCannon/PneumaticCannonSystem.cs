@@ -15,10 +15,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Server.Throwing;
 using Content.Server.Tools.Components;
+using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -79,7 +81,8 @@ namespace Content.Server.PneumaticCannon
             if (args.Used.HasComponent<GasTankComponent>() && component.GasTankSlot.CanInsert(args.Used))
             {
                 component.GasTankSlot.Insert(args.Used);
-                // popup
+                args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-insert",
+                    ("tank", args.Used), ("cannon", component.Owner)));
                 UpdateAppearance(component);
                 return;
             }
@@ -92,7 +95,8 @@ namespace Content.Server.PneumaticCannon
                     var val = (byte) component.Mode;
                     val = (byte) ((val + 1) % Enum.GetValues<PneumaticCannonFireMode>().Length);
                     component.Mode = (PneumaticCannonFireMode) val;
-                    // popup
+                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-fire-mode",
+                        ("mode", component.Mode.ToString())));
                     // sound
                     return;
                 } else if (tool.HasQuality(component.ModifyPower))
@@ -100,7 +104,8 @@ namespace Content.Server.PneumaticCannon
                     var val = (byte) component.Power;
                     val = (byte) ((val + 1) % Enum.GetValues<PneumaticCannonPower>().Length);
                     component.Power = (PneumaticCannonPower) val;
-                    // popup
+                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-power",
+                        ("power", component.Power.ToString())));
                     // sound
                     return;
                 }
@@ -112,11 +117,13 @@ namespace Content.Server.PneumaticCannon
                 if (storage.CanInsert(args.Used))
                 {
                     storage.Insert(args.Used);
-                    // popup
+                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-success",
+                        ("item", args.Used), ("cannon", component.Owner)));
                 }
                 else
                 {
-                    // popup
+                    args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-insert-item-failure",
+                        ("item", args.Used), ("cannon", component.Owner)));
                 }
             }
         }
@@ -169,7 +176,8 @@ namespace Content.Server.PneumaticCannon
                     if (user.TryGetComponent<StunnableComponent>(out var stun))
                     {
                         stun.Paralyze(3);
-                        // popup
+                        user.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
+                            ("cannon", component.Owner)));
                     }
                 }
             }
@@ -179,7 +187,8 @@ namespace Content.Server.PneumaticCannon
         {
             if (component.GasTankSlot.ContainedEntity == null)
             {
-                //popup
+                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-none",
+                    ("cannon", component.Owner)));
                 return;
             }
 
@@ -191,7 +200,8 @@ namespace Content.Server.PneumaticCannon
                     hands.TryPutInActiveHandOrAny(ent);
                 }
 
-                //popup
+                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-remove",
+                    ("tank", ent), ("cannon", component.Owner)));
                 UpdateAppearance(component);
             }
         }
@@ -209,6 +219,9 @@ namespace Content.Server.PneumaticCannon
                         hands.TryPutInActiveHandOrAny(entity);
                     }
                 }
+
+                user.PopupMessage(Loc.GetString("pneumatic-cannon-component-ejected-all",
+                    ("cannon", (component.Owner))));
             }
         }
 
