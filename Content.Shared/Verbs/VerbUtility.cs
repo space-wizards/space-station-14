@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Robust.Shared.Containers;
@@ -31,27 +31,6 @@ namespace Content.Shared.Verbs
 
                     var verb = typeFactory.CreateInstance<OldVerb>(nestedType);
                     yield return (component, verb);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Returns an IEnumerable of all classes inheriting <see cref="GlobalVerb"/> with the <see cref="GlobalVerbAttribute"/> attribute.
-        /// </summary>
-        /// <param name="assembly">The assembly to search for global verbs in.</param>
-        public static IEnumerable<GlobalVerb> GetGlobalVerbs(Assembly assembly)
-        {
-            var typeFactory = IoCManager.Resolve<IDynamicTypeFactory>();
-
-            foreach (Type type in assembly.GetTypes())
-            {
-                if (Attribute.IsDefined(type, typeof(GlobalVerbAttribute)))
-                {
-                    if (!typeof(GlobalVerb).IsAssignableFrom(type) || type.IsAbstract)
-                    {
-                        continue;
-                    }
-                    yield return typeFactory.CreateInstance<GlobalVerb>(type);
                 }
             }
         }
