@@ -1,5 +1,6 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Disposal.Tube.Components;
+using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
@@ -23,6 +24,8 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+
 
         public override void Initialize()
         {
@@ -54,7 +57,7 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "deleteentity"))
             {
                 Verb verb = new Verb("debug:delete");
-                verb.Text = Loc.GetString("delete-verb-get-data-text");
+                verb.Text = Loc.GetString("pointing-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
@@ -155,6 +158,22 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     component.PopupDirections(args.User);
+                };
+                args.Verbs.Add(verb);
+            }
+
+            // Make ghost role verb
+            if (_groupController.CanCommand(player, "makeghostrole") &&
+                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false) )
+            {
+                Verb verb = new Verb("debug:makeghostrole");
+                verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
+                verb.Category = VerbCategories.Debug;
+                // TODO VERB ICON add ghost icon
+                // Where is the national park service icon for haunted forests?
+                verb.Act = () =>
+                {
+                    _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
                 };
                 args.Verbs.Add(verb);
             }
