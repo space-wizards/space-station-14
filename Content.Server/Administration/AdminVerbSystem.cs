@@ -6,7 +6,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
-using Content.Shared.Transform;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -18,9 +17,9 @@ using Robust.Shared.Localization;
 namespace Content.Server.Administration
 {
     /// <summary>
-    ///     System to provide various global debug verbs
+    ///     System to provide various global admin/debug verbs
     /// </summary>
-    public class DebugVerbSystem : EntitySystem 
+    public class AdminVerbSystem : EntitySystem 
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
