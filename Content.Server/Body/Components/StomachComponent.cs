@@ -24,7 +24,7 @@ namespace Content.Server.Body.Components
 
         public float AccumulatedFrameTime;
 
-        // TODO mirror better solution
+        // TODO MIRROR better solution
         [ComponentDependency]
         public MechanismComponent? Mechanism = default!;
 

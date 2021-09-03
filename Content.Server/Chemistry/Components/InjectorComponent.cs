@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body;
+using Content.Server.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;

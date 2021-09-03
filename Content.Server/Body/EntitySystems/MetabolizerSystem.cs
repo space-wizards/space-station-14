@@ -46,10 +46,10 @@ namespace Content.Server.Body.EntitySystems
                 if (body != null)
                 {
                     if (body.Owner.TryGetComponent<BloodstreamComponent>(out var bloodstream)
-                        && bloodstream.Solution.CurrentVolume >= ReagentUnit.Zero)
+                        && bloodstream.InternalSolution.CurrentVolume >= ReagentUnit.Zero)
                     {
-                        solution = bloodstream.Solution;
-                        reagentList = bloodstream.Solution.ReagentList.ToList();
+                        solution = bloodstream.InternalSolution;
+                        reagentList = bloodstream.InternalSolution.ReagentList.ToList();
                     }
                 }
             }

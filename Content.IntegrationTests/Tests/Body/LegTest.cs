@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Content.Client.Body;
 using Content.Server.Body;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;

@@ -1,7 +1,6 @@
 using System;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Respiratory;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -58,12 +57,12 @@ namespace Content.Server.Body.Components
         public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
-            if (solution.TotalVolume + _internalSolution.CurrentVolume > _internalSolution.MaxVolume)
+            if (solution.TotalVolume + InternalSolution.CurrentVolume > InternalSolution.MaxVolume)
             {
                 return false;
             }
 
-            _internalSolution.TryAddSolution(solution);
+            InternalSolution.TryAddSolution(solution);
             return true;
         }
 

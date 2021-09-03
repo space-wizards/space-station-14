@@ -53,7 +53,7 @@ namespace Content.Server.Body.EntitySystems
                 foreach (var delta in stom.ReagentDeltas.ToList())
                 {
                     //Increment lifetime of reagents
-                    delta.Increment(1);
+                    delta.Increment(stom.UpdateFrequency);
                     if (delta.Lifetime > stom.DigestionDelay)
                     {
                         // This reagent has been in the stomach long enough, TRY to transfer it.

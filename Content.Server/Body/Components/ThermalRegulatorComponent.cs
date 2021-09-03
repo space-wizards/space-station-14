@@ -6,6 +6,7 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Components;
+using Content.Server.Body.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -28,17 +29,18 @@ namespace Content.Server.Body.Components
     ///     Handles lung behavior.
     /// </summary>
     [RegisterComponent]
-    public class RespiratorComponent : Component
+    public class ThermalRegulatorComponent : Component
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
         public override string Name => "Respirator";
 
-        private float _accumulatedFrameTime;
+        public float AccumulatedFrametime;
 
-        private bool _isShivering;
-        private bool _isSweating;
+        public bool IsShivering;
+        public bool IsSweating;
 
+        // TODO MIRROR move to bloodstream
         [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
 
         [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
@@ -93,11 +95,12 @@ namespace Content.Server.Body.Components
         [DataField("thermalRegulationTemperatureThreshold")]
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
+        // TODO MIRROR move to bloodstream
         [ViewVariables] public bool Suffocating { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] private int _damage = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] public int SuffocationDamage = 1;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] private int _damageRecovery = 1;
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] public int DamageRecovery = 1;
 
         // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
         // Also remove Initialize override, if no longer needed.
@@ -192,7 +195,8 @@ namespace Content.Server.Body.Components
                 return;
             }
 
-            var lungs = _body.GetMechanismBehaviors<LungBehavior>().ToArray();
+            // TODO MIRROR remove
+            var lungs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<ThermalRegulatorComponent>(_body);
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;
@@ -325,31 +329,7 @@ namespace Content.Server.Body.Components
         /// </param>
         public void Update(float frameTime)
         {
-            if (!Owner.TryGetComponent<IMobStateComponent>(out var state) ||
-                state.IsDead())
-            {
-                return;
-            }
 
-            _accumulatedFrameTime += frameTime;
-
-            if (_accumulatedFrameTime < 1)
-            {
-                return;
-            }
-
-            ProcessGases(_accumulatedFrameTime);
-            ProcessThermalRegulation(_accumulatedFrameTime);
-
-            _accumulatedFrameTime -= 1;
-
-            if (SuffocatingPercentage() > 0)
-            {
-                TakeSuffocationDamage();
-                return;
-            }
-
-            StopSuffocation();
         }
 
         private void TakeSuffocationDamage()
