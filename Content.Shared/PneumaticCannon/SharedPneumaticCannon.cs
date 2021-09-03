@@ -11,7 +11,7 @@ namespace Content.Shared.PneumaticCannon
     }
 
     [Serializable, NetSerializable]
-    public enum PneumaticCannonVisuals : byte
+    public enum PneumaticCannonVisuals
     {
         Tank
     }

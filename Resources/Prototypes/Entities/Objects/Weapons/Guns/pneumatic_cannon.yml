@@ -17,6 +17,8 @@
     size: 24
   - type: PneumaticCannon
   - type: Storage
+    # todo mirror pneum replace with ecs/evnts
+    clickInsert: false
     capacity: 30
   - type: Appearance
     visuals:

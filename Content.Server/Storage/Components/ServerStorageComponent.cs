@@ -54,6 +54,9 @@ namespace Content.Server.Storage.Components
         [DataField("quickInsert")]
         private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
 
+        [DataField("clickInsert")]
+        private bool _clickInsert = true; // Can insert stuff by clicking the storage entity with it
+
         [DataField("areaInsert")]
         private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
 
@@ -471,6 +474,8 @@ namespace Content.Server.Storage.Components
         /// <returns>true if inserted, false otherwise</returns>
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
+            if (!_clickInsert)
+                return false;
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) attacked by user (UID {eventArgs.User.Uid}) with entity (UID {eventArgs.Using.Uid}).");
 
             if (Owner.HasComponent<PlaceableSurfaceComponent>())
