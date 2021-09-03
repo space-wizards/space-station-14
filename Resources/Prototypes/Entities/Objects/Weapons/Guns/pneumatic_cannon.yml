@@ -1,0 +1,23 @@
+﻿- type: entity
+  name: improvised pneumatic cannon
+  parent: BaseItem
+  id: ImprovisedPneumaticCannon
+  description: Is this even legal?
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/pneumatic_cannon.rsi
+    netsync: false
+    layers:
+    - state: pneumaticCannon
+      map: [ "enum.PneumaticCannonVisualLayers.Base" ]
+    - state: oxygen
+      map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
+      visible: false
+  - type: Item
+    size: 24
+  - type: PneumaticCannon
+  - type: Storage
+    capacity: 30
+  - type: Appearance
+    visuals:
+    - type: PneumaticCannonVisualizer
