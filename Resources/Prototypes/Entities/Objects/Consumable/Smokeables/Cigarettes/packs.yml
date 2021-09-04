@@ -13,24 +13,25 @@
     size: 6
   - type: StorageFill
     contents:
-      - id: Cigarette
-        amount: 6
-  - type: StorageCounter
-    countTag: Cigarette
+    - id: Cigarette
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Cigarette]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: open
-      - type: StackVisualizer
-        sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
-        composite: true
-        stackLayers:
-          - cig1
-          - cig2
-          - cig3
-          - cig4
-          - cig5
-          - cig6
+    - type: BagOpenCloseVisualizer
+      openIcon: open
+    - type: StackVisualizer
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      composite: true
+      stackLayers:
+      - cig1
+      - cig2
+      - cig3
+      - cig4
+      - cig5
+      - cig6
 
 - type: entity
   id: CigPackGreen
@@ -42,7 +43,7 @@
     netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
     layers:
-      - state: closed
+    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/green.rsi
     size: 6
@@ -57,7 +58,7 @@
     netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
     layers:
-      - state: closed
+    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/red.rsi
     size: 6
@@ -72,7 +73,7 @@
     netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
     layers:
-      - state: closed
+    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/blue.rsi
     size: 6
@@ -87,7 +88,7 @@
     netsync: false
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
     layers:
-      - state: closed
+    - state: closed
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/black.rsi
     size: 6

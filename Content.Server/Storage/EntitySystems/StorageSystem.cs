@@ -39,11 +39,6 @@ namespace Content.Server.Storage.EntitySystems
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
-
-            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
-            {
-                newStorageComp.ContainerUpdateAppearance(message.Container);
-            }
         }
 
         private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
@@ -53,11 +48,6 @@ namespace Content.Server.Storage.EntitySystems
             if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
-            }
-
-            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
-            {
-                newStorageComp.ContainerUpdateAppearance(message.Container);
             }
         }
 
