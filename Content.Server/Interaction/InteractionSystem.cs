@@ -421,7 +421,7 @@ namespace Content.Server.Interaction
                 if (user.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
                 {
                     // We're buckled to another object. Is that object rotatable?
-                    if (buckle.BuckledTo!.Owner.TryGetComponent(out SharedRotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
+                    if (buckle.BuckledTo!.Owner.TryGetComponent(out RotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
                     {
                         // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
                         // (Since the user being buckled to it holds it down with their weight.)

@@ -28,11 +28,20 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly bool Contractible;
 
-        public VerbCategoryData(string text, string? icon, bool contractible = false)
+        /// <summary>
+        ///     If true, this verb category is shown in the context menu as a grid of icons without any text.
+        /// </summary>
+        /// <remarks>
+        ///     For example, the 'Rotate' category simply shows two icons for rotating left and right.
+        /// </remarks>
+        public readonly bool IconsOnly;
+
+        public VerbCategoryData(string text, string? icon, bool contractible = false, bool iconsOnly = false)
         {
             Text = Loc.GetString(text);
             Contractible = contractible;
             Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
+            IconsOnly = iconsOnly;
         }
     }
 
@@ -55,7 +64,7 @@ namespace Content.Shared.Verbs
             new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png", true);
         public static readonly VerbCategoryData Close =
             new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
-
-        public static readonly VerbCategoryData Rotate = new("Rotate", null);
+        public static readonly VerbCategoryData Rotate =
+            new("verb-categories-rotate", null, iconsOnly: true);
     }
 }

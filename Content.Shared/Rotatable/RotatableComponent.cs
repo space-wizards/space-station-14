@@ -4,7 +4,8 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Rotatable
 {
-    public abstract class SharedRotatableComponent : Component
+    [RegisterComponent]
+    public class RotatableComponent : Component
     {
         public override string Name => "Rotatable";
 

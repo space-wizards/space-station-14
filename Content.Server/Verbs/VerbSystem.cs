@@ -122,7 +122,7 @@ namespace Content.Server.Verbs
 
             // Send the verbs if the user has access to the requested item. Note that this is not perfect, and the
             // entity can be considered invalid/hidden by the server despite being accessible by the client.
-            if (TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true) && entities.Contains(targetEntity))
+            if (TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true))
             {
                 var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
                 RaiseLocalEvent(targetEntity.Uid, verbEvent);

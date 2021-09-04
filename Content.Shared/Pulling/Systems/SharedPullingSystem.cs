@@ -221,7 +221,7 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
+            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)
