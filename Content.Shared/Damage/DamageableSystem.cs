@@ -75,6 +75,10 @@ namespace Content.Shared.Damage
             }
 
             component.TotalDamage = 0;
+
+            // TODO REMOVE THIS
+            component.Dirty();
+            RaiseLocalEvent(component.Owner.Uid, new DamageChangedEvent(component, false), false);
         }
 
         /// <summary>
