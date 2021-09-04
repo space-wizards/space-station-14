@@ -81,7 +81,7 @@ namespace Content.Server.Xenobiology
                 }
                 else
                 {
-                    specimen.PopupMessageEveryone(Loc.GetString("specimen-wrong-food"));
+                    specimen.PopupMessage(Loc.GetString("specimen-wrong-food"));
                 }
                
             }
