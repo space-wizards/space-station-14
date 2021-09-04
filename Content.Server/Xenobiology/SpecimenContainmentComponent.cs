@@ -30,8 +30,6 @@ namespace Content.Server.Xenobiology
     {
         public override string Name => "SpecimenContainment";
 
-        private readonly Vector2 _ejectOffset = new(0f, 0f);
-
         [ViewVariables] public ContainerSlot TubeContainer = default!;
 
         public bool IsOccupied => TubeContainer.ContainedEntity != null;
