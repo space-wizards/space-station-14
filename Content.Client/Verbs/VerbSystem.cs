@@ -43,8 +43,8 @@ namespace Content.Client.Verbs
         private EntityUid _currentEntity;
         private List<Verb>? _currentVerbs;
 
-        // TODO: Move presenter out of the system
-        // TODO: Separate the rest of the UI from the logic
+        // TODO VERBS Move presenter out of the system
+        // TODO VERBS Separate the rest of the UI from the logic
         public override void Initialize()
         {
             base.Initialize();
@@ -116,7 +116,7 @@ namespace Content.Client.Verbs
             // Get verb lists from client-side / shared systems
             var user = _playerManager.LocalPlayer!.ControlledEntity!;
             AssembleVerbsEvent assembleVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(assembleVerbs);
+            RaiseLocalEvent(entity.Uid, assembleVerbs);
             _currentVerbs = assembleVerbs.Verbs;
 
             // Show the menu
@@ -327,15 +327,9 @@ namespace Content.Client.Verbs
                         system.CloseAllMenus();
                         try
                         {
-                            if (verb.Act != null)
+                            // Try run the verb locally. Else, ask the server to run it.
+                            if (!system.TryExecuteVerb(verb))
                             {
-                                // verb was defined client-side (e.g., examine)
-                                // May still end up raising network events.
-                                verb.Act();
-                            }
-                            else
-                            {
-                                // Verb was defined server-side.
                                 system.RaiseNetworkEvent(new UseVerbMessage(owner.Uid, verb.Key));
                             }
                         }

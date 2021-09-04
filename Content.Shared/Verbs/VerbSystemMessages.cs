@@ -133,7 +133,9 @@ namespace Content.Shared.Verbs
             Hands = hands;
             Hands.TryGetActiveHeldEntity(out Using);
 
-            // If the "Held" entity is a virtual pull entity, consider the pulled entity as being used on the object
+            // If the "Held" entity is a virtual pull entity, consider the pulled entity as being used on the object.
+            // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
+            // their sprite.
             if (Using != null && Using.TryGetComponent<HandVirtualPullComponent>(out var pull))
             {
                 // Resolve entity uid

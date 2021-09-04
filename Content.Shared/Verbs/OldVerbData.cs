@@ -68,18 +68,47 @@ namespace Content.Shared.Verbs
         }
     }
 
+    /// <summary>
+    ///     Verb objects describe actions that a user can take. The actions can be specified via an Action delegate,
+    ///     local events, or networked events. Verbs also provide text, icons, and categories for displaying in the
+    ///     context-menu.
+    /// </summary>
     [Serializable, NetSerializable]
     public class Verb : IComparable
     {
         /// <summary>
-        ///     This action "acts" out the verb.
+        ///     This is a delegate action that will be run when the verb is "acted" out.
         /// </summary>
         /// <remarks>
-        ///     This is probably either some function in the system assembling this verb, or a lambda function that raises some event.
+        ///     This delegate probably just points to some function in the system assembling this verb. This delegate
+        ///     will be run regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="NetworkVerbEventArgs"/>
+        ///     are defined.
         /// </remarks>
-        [NonSerialized]
-        public Action? Act;
+        [NonSerialized] public Action? Act;
 
+        /// <summary>
+        ///     This is local event that will be raised when the verb is executed.
+        /// </summary>
+        /// <remarks>
+        ///     This event will be raised regardless of whether <see cref="NetworkVerbEventArgs"/> or <see cref="Act"/>
+        ///     are defined.
+        /// </remarks>
+        [NonSerialized] public object? LocalVerbEventArgs;
+
+        /// <summary>
+        ///     Where do direct the local event.
+        /// </summary>
+        [NonSerialized] public EntityUid LocalEventTarget = EntityUid.Invalid;
+
+        /// <summary>
+        ///     This is networked event that will be raised when the verb is executed.
+        /// </summary>
+        /// <remarks>
+        ///     This event will be raised regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="Act"/>
+        ///     are defined.
+        /// </remarks>
+        [NonSerialized] public EntityEventArgs? NetworkVerbEventArgs;
+        
         /// <summary>
         ///     The text that the user sees on the verb button.
         /// </summary>

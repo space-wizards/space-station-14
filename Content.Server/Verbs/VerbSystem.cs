@@ -89,20 +89,17 @@ namespace Content.Server.Verbs
             var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
             RaiseLocalEvent(targetEntity.Uid, verbEvent);
 
-            // Find the verb that matches the key specified by the message. Maybe verbs should have been a dictionary
+            // Find the verb that matches the key specified by the message. Maybe verbs should be a dictionary
             // instead of a list. But then you can't use Verbs.Sort(), and other logic becomes messier.
             var requestedVerb = verbEvent.Verbs.FirstOrDefault(verb => verb.Key == use.VerbKey);
 
-            // execute the verb
-            if (requestedVerb != null)
-            {
-                requestedVerb.Act?.Invoke();
-            }
-            else
+            if (requestedVerb == null)
             {
                 Logger.Warning($"{nameof(UseVerb)} called by player {session} with an invalid verb key: {use.VerbKey}");
                 return;
             }
+
+            TryExecuteVerb(requestedVerb);
         }
 
         private void HanddleVerbRequest(RequestServerVerbsEvent req, EntitySessionEventArgs eventArgs)

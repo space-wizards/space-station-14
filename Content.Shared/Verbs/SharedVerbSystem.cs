@@ -59,6 +59,45 @@ namespace Content.Shared.Verbs
             contextEntities = entities;
             return true;
         }
+
+        /// <summary>
+        ///     Run the given verb. This will try to call delegates and raises any events. If none of these fields are
+        ///     non-null (nothing to do), returns false. True otherwise.
+        /// </summary>
+        public bool TryExecuteVerb(Verb verb)
+        {
+            if (verb.Act == null &&
+                verb.LocalVerbEventArgs == null &&
+                verb.NetworkVerbEventArgs == null)
+            {
+                // Nothing to do. This verb is probably defined server-side, and the client needs to ask the server to execute this verb.
+                return false;
+            }
+
+            // Run the delegate
+            verb.Act?.Invoke();
+
+            // Raise the local event
+            if (verb.LocalVerbEventArgs != null)
+            {
+                if (verb.LocalEventTarget.IsValid())
+                {
+                    RaiseLocalEvent(verb.LocalEventTarget, verb.LocalVerbEventArgs);
+                }
+                else
+                {
+                    RaiseLocalEvent(verb.LocalVerbEventArgs);
+                }
+            }
+
+            // Network event
+            if (verb.NetworkVerbEventArgs != null)
+            {
+                RaiseNetworkEvent(verb.NetworkVerbEventArgs);
+            }
+
+            return true;
+        }
     }
 
     /// <summary>
