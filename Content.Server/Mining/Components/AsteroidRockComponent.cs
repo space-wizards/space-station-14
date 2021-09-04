@@ -38,7 +38,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(meleeWeaponComponent.Damage), false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, meleeWeaponComponent.Damage);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;

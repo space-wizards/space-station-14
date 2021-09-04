@@ -5,6 +5,7 @@ using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 
@@ -13,6 +14,8 @@ namespace Content.Server.Projectiles
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -47,8 +50,7 @@ namespace Content.Server.Projectiles
 
             if (!otherEntity.Deleted)
             {
-                var damageEvent = new TryChangeDamageEvent(component.Damage, false);
-                RaiseLocalEvent(otherEntity.Uid, damageEvent);
+                _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
                 component.DamagedEntity = true;
                 // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
                 // by resistance sets.

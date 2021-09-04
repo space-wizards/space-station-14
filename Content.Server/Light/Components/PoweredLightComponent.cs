@@ -137,7 +137,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                Owner.EntityManager.EventBus.RaiseLocalEvent(eventArgs.User.Uid, new TryChangeDamageEvent(Damage), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.User, Damage);
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 

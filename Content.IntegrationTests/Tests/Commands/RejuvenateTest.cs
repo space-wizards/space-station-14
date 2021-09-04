@@ -49,6 +49,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 // Sanity check
                 Assert.True(human.TryGetComponent(out DamageableComponent damageable));
                 Assert.True(human.TryGetComponent(out IMobStateComponent mobState));
+                mobState.UpdateState(0);
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
@@ -56,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 // Kill the entity
                 DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000);
-                entityManager.EventBus.RaiseLocalEvent(human.Uid, new TryChangeDamageEvent(damage, true), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human, damage, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);

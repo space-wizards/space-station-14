@@ -20,8 +20,8 @@ namespace Content.Server.Damage.Components
         public DamageSpecifier Damage = default!;
 
         void ILand.Land(LandEventArgs eventArgs)
-        { 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(Damage, IgnoreResistances), false);
+        {
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage, IgnoreResistances);
         }
     }
 }

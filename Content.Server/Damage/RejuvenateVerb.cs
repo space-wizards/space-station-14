@@ -64,11 +64,6 @@ namespace Content.Server.Damage
                 EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
             }
 
-            if (target.TryGetComponent(out IMobStateComponent? mobState))
-            {
-                mobState.UpdateState(0);
-            }
-
             if (target.TryGetComponent(out HungerComponent? hunger))
             {
                 hunger.ResetFood();

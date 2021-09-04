@@ -48,7 +48,7 @@ namespace Content.Server.Atmos.Components
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(Damage * Atmospherics.LowPressureDamage, true), false);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * Atmospherics.LowPressureDamage);
 
                     if (status == null) break;
 
@@ -68,9 +68,9 @@ namespace Content.Server.Atmos.Components
                     if(pressure < Atmospherics.WarningHighPressure)
                         goto default;
 
-                    var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient , Atmospherics.MaxHighPressureDamage);
+                    var damageScale = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient , Atmospherics.MaxHighPressureDamage);
 
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(Damage * damage, true), false);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * damageScale);
 
                     if (status == null) break;
 

@@ -190,7 +190,7 @@ namespace Content.Server.Nutrition.Components
                 _accumulatedFrameTime += frametime;
                 if (_accumulatedFrameTime >= 1)
                 {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(Damage * (int) _accumulatedFrameTime, true), false);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * (int) _accumulatedFrameTime, true);
                     _accumulatedFrameTime -= (int) _accumulatedFrameTime;
                 }
             }

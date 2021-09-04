@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.ReagentEffects
 
         public override void Metabolize(IEntity solutionEntity, Solution.ReagentQuantity amount)
         {
-            solutionEntity.EntityManager.EventBus.RaiseLocalEvent(solutionEntity.Uid, new TryChangeDamageEvent(Damage, true), false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(solutionEntity, Damage, true);
         }
     }
 }

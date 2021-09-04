@@ -535,7 +535,8 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                Owner.EntityManager.EventBus.RaiseLocalEvent(e.Owner.Uid, new TryChangeDamageEvent(CrushDamage), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner, CrushDamage);
+
                 stun.Paralyze(DoorStunTime);
             }
 

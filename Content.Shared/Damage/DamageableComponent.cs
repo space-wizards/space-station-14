@@ -5,6 +5,7 @@ using Content.Shared.Damage.Prototypes;
 using Content.Shared.Radiation;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -71,8 +72,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var damageEvent = new TryChangeDamageEvent(damage);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, damageEvent, false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
 
         // TODO EXPLOSION Remove this.
@@ -93,8 +93,7 @@ namespace Content.Shared.Damage
                 damage.DamageDict.Add(typeID, damageValue);
             }
 
-            var damageEvent = new TryChangeDamageEvent(damage);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, damageEvent, false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, damage);
         }
     }
 

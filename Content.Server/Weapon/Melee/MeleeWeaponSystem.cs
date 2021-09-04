@@ -25,7 +25,7 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
-
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -87,7 +87,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
-                    RaiseLocalEvent(target.Uid, new TryChangeDamageEvent(comp.Damage), false);
+                    _damageableSystem.TryChangeDamage(target, comp.Damage);
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -152,7 +152,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    RaiseLocalEvent(entity.Uid, new TryChangeDamageEvent(comp.Damage), false);
+                    _damageableSystem.TryChangeDamage(entity, comp.Damage);
                 }
             }
 

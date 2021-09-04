@@ -16,7 +16,6 @@ namespace Content.Shared.Damage
         public override void Initialize()
         {
             SubscribeLocalEvent<DamageableComponent, ComponentInit>(DamageableInit);
-            SubscribeLocalEvent<DamageableComponent, TryChangeDamageEvent>(TryChangeDamage);
             SubscribeLocalEvent<DamageableComponent, ComponentHandleState>(DamageableHandleState);
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
         }
@@ -31,7 +30,7 @@ namespace Content.Shared.Damage
 
             if (component.DamageContainerID == null ||
                 !_prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID, out var damageContainerPrototype) ||
-                damageContainerPrototype.SupportAll )
+                damageContainerPrototype.SupportAll)
             {
                 // Either the container should support all damage types, or no valid DamageContainerID was given (for
                 // which we default to support all). Add every single damage type to our component:
@@ -39,26 +38,25 @@ namespace Content.Shared.Damage
                 {
                     component.DamagePerType.Add(type.ID, 0);
                 }
-
-                DamageChanged(uid, component, false);
-                return;
             }
-
-            // A valid damage container ID was provided. Initialize damage dictionary, using the types from the damage
-            // container prototype
-            component.DamagePerType = new(damageContainerPrototype.SupportedTypes.Count);
-            foreach (var type in damageContainerPrototype.SupportedTypes)
+            else
             {
-                component.DamagePerType.Add(type, 0);
-            }
-
-            // Then also add the supported damage groups
-            foreach (var groupID in damageContainerPrototype.SupportedGroups)
-            {
-                var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
-                foreach (var type in group.DamageTypes)
+                // A valid damage container ID was provided. Initialize damage dictionary, using the types from the damage
+                // container prototype
+                component.DamagePerType = new(damageContainerPrototype.SupportedTypes.Count);
+                foreach (var type in damageContainerPrototype.SupportedTypes)
                 {
-                    component.DamagePerType.TryAdd(type, 0);
+                    component.DamagePerType.Add(type, 0);
+                }
+
+                // Then also add the supported damage groups
+                foreach (var groupID in damageContainerPrototype.SupportedGroups)
+                {
+                    var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
+                    foreach (var type in group.DamageTypes)
+                    {
+                        component.DamagePerType.TryAdd(type, 0);
+                    }
                 }
             }
 
@@ -86,16 +84,16 @@ namespace Content.Shared.Damage
         ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
-        public void DamageChanged(EntityUid uid, DamageableComponent component, bool damageIncreased)
+        public void DamageChanged(DamageableComponent component, bool damageIncreased)
         {
             component.TotalDamage = component.DamagePerType.Values.Sum();
             component.DamagePerGroup = GetDamagePerGroup(component.DamagePerType);
             component.Dirty();
-            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageIncreased), false);
+            RaiseLocalEvent(component.Owner.Uid, new DamageChangedEvent(component, damageIncreased), false);
         }
 
         /// <summary>
-        ///     Applies damage to the component, using damage specified via a <see cref="DamageSpecifier"/> instance.
+        ///     Applies damage specified via a <see cref="DamageSpecifier"/>.
         /// </summary>
         /// <remarks>
         ///     <see cref="DamageSpecifier"/> is effectively just a dictionary of damage types and damage values. This
@@ -105,32 +103,38 @@ namespace Content.Shared.Damage
         /// <returns>
         ///     Returns false if a no damage change occurred; true otherwise.
         /// </returns>
-        public void TryChangeDamage(EntityUid uid, DamageableComponent component, TryChangeDamageEvent args)
+        public bool TryChangeDamage(IEntity target, DamageSpecifier damage, bool ignoreResistances = false)
         {
-            if (args.Damage == null)
+            if (!target.TryGetComponent<DamageableComponent>(out var damageable))
+            {
+                // TODO BODY SYSTEM pass damage onto body system
+                return false;
+            }
+
+            if (damage == null)
             {
                 Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
-                return;
+                return false;
             }
 
             //Check that the DamageSpecifier actually contains data:
-            if (args.Damage.DamageDict.Count() == 0)
+            if (damage.DamageDict.Count() == 0)
             {
                 Logger.Warning("Empty DamageSpecifier passed to DamageableComponent. Was AfterDeserialization not called?");
-                return;
+                return false;
             }
 
             // Apply resistances
-            var damage = args.Damage;
-            if (!args.IgnoreResistances && component.ResistanceSetID != null)
+            if (!ignoreResistances && damageable.ResistanceSetID != null)
             {
-                if (_prototypeManager.TryIndex<ResistanceSetPrototype>(component.ResistanceSetID, out var resistanceSet))
+                if (_prototypeManager.TryIndex<ResistanceSetPrototype>(damageable.ResistanceSetID, out var resistanceSet))
                 {
                     damage = DamageSpecifier.ApplyResistanceSet(damage, resistanceSet);
                 }
 
                 // Has the resistance set removed all damage?
-                if (damage.TotalAbsoluteDamage() == 0) return;
+                if (damage.TotalAbsoluteDamage() == 0)
+                    return false;
             }
 
             // Deal/heal damage, while keeping track of whether the damage changed.
@@ -142,18 +146,28 @@ namespace Content.Shared.Damage
                 if (entry.Value == 0) continue;
 
                 // This is where we actually apply damage, using the TryChangeDamage() function
-                if (!TryChangeDamage(component, entry.Key, entry.Value))
+                if (!TryChangeDamage(damageable, entry.Key, entry.Value))
                     continue;
 
                 damageChanged = true;
-                if (entry.Value > 0) damageIncreased = true; 
+                if (entry.Value > 0) damageIncreased = true;
             }
 
             // If any damage change occurred, update the other data on the damageable component and re-sync
             if (damageChanged)
             {
-                DamageChanged(uid, component, damageIncreased);
+                DamageChanged(damageable, damageIncreased);
             }
+
+            return true;
+        }
+
+        public bool TryChangeDamage(EntityUid targetUid, DamageSpecifier damage, bool ignoreResistances = false)
+        {
+            if (EntityManager.TryGetEntity(targetUid, out var entity))
+                return TryChangeDamage(entity, damage, ignoreResistances);
+            else
+                return false;
         }
 
         /// <summary>
@@ -207,7 +221,7 @@ namespace Content.Shared.Damage
             }
 
             // Setting damage does not count as 'dealing' damage, even if it is set to a larger value. Hence damageIncreased: false
-            DamageChanged(component.Owner.Uid, component, damageIncreased: false);
+            DamageChanged(component, damageIncreased: false);
         }
 
         /// <summary>
@@ -290,29 +304,6 @@ namespace Content.Shared.Damage
         {
             Damageable = damageable;
             DamageIncreased = damageIncreased;
-        }
-    }
-
-    /// <summary>
-    ///     Event used to deal or heal damage on a damageable component. Handled by <see cref="DamageableSystem"/>
-    /// </summary>
-    public class TryChangeDamageEvent : EntityEventArgs
-    {
-        /// <summary>
-        ///     Damage that is added to the DamageableComponent
-        /// </summary>
-        public readonly DamageSpecifier Damage;
-
-        /// <summary>
-        ///     Whether to ignore resistances of the damageable component. Healing ignores resistances. Defaults
-        ///     to false.
-        /// </summary>
-        public readonly bool IgnoreResistances;
-
-        public TryChangeDamageEvent(DamageSpecifier damage, bool ignoreResistances = false)
-        {
-            Damage = damage;
-            IgnoreResistances = ignoreResistances;
         }
     }
 }

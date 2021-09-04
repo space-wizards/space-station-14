@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 Assert.DoesNotThrow(() =>
                 {
-                    sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bruteDamage, true), false);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
                 });
 
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));

@@ -33,6 +33,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             IEntity sDestructibleEntity = null;
             DamageableComponent sDamageableComponent = null;
             TestDestructibleListenerSystem sTestThresholdListenerSystem = null;
+            DamageableSystem sDamageableSystem = null;
 
             await server.WaitPost(() =>
             {
@@ -43,6 +44,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageTypeEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             });
 
             await server.WaitRunTicks(5);
@@ -61,19 +63,19 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var slashDamage = new DamageSpecifier(slashDamageType,5);
 
                 // Raise blunt damage to 5
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // No thresholds reached yet, the earliest one is at 10 damage
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage, true);
 
                 // No threshold reached, slash needs to be 10 as well
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise slash damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * 2, true);
 
                 // One threshold reached, blunt 10 + slash 10
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -96,25 +98,25 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Raise blunt damage to 20
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise slash damage to 20
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Lower blunt damage to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * -4, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * -4, true);
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise blunt damage back up to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * 2, true);
 
                 // 10 blunt + 10 slash threshold reached, blunt was healed and brought back to its threshold amount and slash stayed the same
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -122,20 +124,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sTestThresholdListenerSystem.ThresholdsReached.Clear();
 
                 // Heal both types of damage to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * -2, true), false);
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * -4, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * -2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * -4, true);
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise slash damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * 2, true);
 
                 // Both types of damage were healed and then raised again, the threshold should have been reached as triggers once is default false
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
@@ -161,20 +163,20 @@ namespace Content.IntegrationTests.Tests.Destructible
                 threshold.TriggersOnce = true;
 
                 // Heal blunt and slash back to 0
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * -2, true), false);
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * -2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * -2, true);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * -2, true);
 
                 // No new thresholds reached from healing
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise blunt damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(bluntDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, bluntDamage * 2, true);
 
                 // No new thresholds reached
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);
 
                 // Raise slash damage to 10
-                sEntityManager.EventBus.RaiseLocalEvent(sDestructibleEntity.Uid, new TryChangeDamageEvent(slashDamage * 2, true), false);
+                sDamageableSystem.TryChangeDamage(sDestructibleEntity, slashDamage * 2, true);
 
                 // No new thresholds reached as triggers once is set to true and it already triggered before
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

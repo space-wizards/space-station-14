@@ -67,7 +67,7 @@ namespace Content.Server.GameTicking.Presets
                     //todo: what if they dont breathe lol
                     //cry deeply
                     DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(playerEntity.Uid, new TryChangeDamageEvent(damage, true), false);                        
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity, damage);                  
                 }
             }
 

@@ -93,7 +93,7 @@ namespace Content.Server.Atmos.Components
 
                 // TODO ATMOS Fire resistance from armor
                 var damageScale = Math.Min((int) (FireStacks * 2.5f), 10);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(Damage * damageScale), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage * damageScale);
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));
             }

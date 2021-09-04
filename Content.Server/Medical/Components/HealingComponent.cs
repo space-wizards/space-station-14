@@ -48,7 +48,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(eventArgs.Target.Uid, new TryChangeDamageEvent(Damage), false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, Damage, true);
 
             return true;
         }

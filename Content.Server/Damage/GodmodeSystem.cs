@@ -43,7 +43,7 @@ namespace Content.Server.Damage
             if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
                 damageable.DamagePerType = new();
-                _damageableSystem.DamageChanged(entity.Uid, damageable, false);
+                _damageableSystem.DamageChanged(damageable, false);
             }
 
             return true;
@@ -71,7 +71,7 @@ namespace Content.Server.Damage
                 if (old.DamagePerType != null)
                 {
                     damageable.DamagePerType = old.DamagePerType;
-                    _damageableSystem.DamageChanged(entity.Uid, damageable, false);
+                    _damageableSystem.DamageChanged(damageable, false);
                 }
             }
 

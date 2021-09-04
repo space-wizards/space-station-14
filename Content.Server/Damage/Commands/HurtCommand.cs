@@ -85,7 +85,7 @@ namespace Content.Server.Damage.Commands
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
-            IPlayerSession? player,
+            IEntity target,
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
@@ -103,8 +103,8 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damageEvent = new TryChangeDamageEvent(new DamageSpecifier(damageGroup, amount), ignoreResistances);
-                    entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
+                    var damage = new DamageSpecifier(damageGroup, amount);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
@@ -116,8 +116,8 @@ namespace Content.Server.Damage.Commands
             {
                 func = (entity, ignoreResistances) =>
                 {
-                    var damageEvent = new TryChangeDamageEvent(new DamageSpecifier(damageType, amount), ignoreResistances);
-                    entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, damageEvent, false);
+                    var damage = new DamageSpecifier(damageType, amount);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity, damage, ignoreResistances);
 
                     shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
@@ -163,10 +163,6 @@ namespace Content.Server.Damage.Commands
                     shell.WriteLine($"Invalid number of arguments ({args.Length}).\n{Help}");
                     return;
                 case var n when n >= 2 && n <= 4:
-                    if (!TryParseDamageArgs(shell, player, args, out damageFunc))
-                    {
-                        return;
-                    }
 
                     var entityUid = n == 2 ? "_" : args[2];
 
@@ -176,6 +172,11 @@ namespace Content.Server.Damage.Commands
                     }
 
                     entity = parsedEntity;
+
+                    if (!TryParseDamageArgs(shell, entity, args, out damageFunc))
+                    {
+                        return;
+                    }
 
                     if (n == 4)
                     {

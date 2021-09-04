@@ -107,12 +107,12 @@ namespace Content.Server.Temperature.Components
             if (CurrentTemperature >= _heatDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(HeatDamage * tempDamage), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, HeatDamage * tempDamage);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(ColdDamage * tempDamage), false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, ColdDamage * tempDamage);
             }
         }
 

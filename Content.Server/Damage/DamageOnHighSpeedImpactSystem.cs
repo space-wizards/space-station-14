@@ -18,6 +18,7 @@ namespace Content.Server.Damage
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -45,7 +46,7 @@ namespace Content.Server.Damage
                 stun.Stun(component.StunSeconds);
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
-            RaiseLocalEvent(uid, new TryChangeDamageEvent(component.Damage * damageScale));
+            _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);
         }
     }
 }

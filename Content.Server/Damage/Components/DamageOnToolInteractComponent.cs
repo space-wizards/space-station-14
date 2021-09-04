@@ -37,7 +37,7 @@ namespace Content.Server.Damage.Components
                     {
                         if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
                         {
-                            Owner.EntityManager.EventBus.RaiseLocalEvent(eventArgs.Target.Uid, new TryChangeDamageEvent(WeldingDamage));
+                            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, WeldingDamage);
                             return true;
                         }
                         break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
@@ -45,7 +45,7 @@ namespace Content.Server.Damage.Components
 
                     if (tool.HasQuality(toolQuality))
                     {
-                        Owner.EntityManager.EventBus.RaiseLocalEvent(eventArgs.Target.Uid, new TryChangeDamageEvent(DefaultDamage), false);
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, WeldingDamage);
                         return true;
                     }
                 }

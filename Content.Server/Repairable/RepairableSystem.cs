@@ -11,7 +11,7 @@ namespace Content.Server.Repairable
 {
     public class ReairableSystem : EntitySystem
     {
-        [Dependency] DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

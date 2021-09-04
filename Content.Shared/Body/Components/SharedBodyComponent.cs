@@ -189,15 +189,11 @@ namespace Content.Shared.Body.Components
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
 
-            // creadth: immediately kill entity if last vital part removed
-            if (Owner.TryGetComponent(out DamageableComponent? damageable))
+            if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
             {
-                if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
-                {
-                    // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
-                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new TryChangeDamageEvent(damage), false);
-                }
+                // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
+                var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner, damage);
             }
 
             OnBodyChanged();
