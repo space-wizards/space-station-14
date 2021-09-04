@@ -77,7 +77,6 @@ namespace Content.Server.Xenobiology
                     if (comp.GrowthState >= 5)
                     {
                         specimen.TryRemoveFromContainer();
-                        SoundSystem.Play(Filter.Broadcast(), "gib1.ogg", specimen);
                     }
                 }
                 else

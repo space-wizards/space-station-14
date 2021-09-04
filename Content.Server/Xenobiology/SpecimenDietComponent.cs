@@ -1,25 +1,8 @@
-using Content.Server.CombatMode;
-using Content.Server.Interaction;
-using Content.Server.Power.Components;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Acts;
-using Content.Shared.DragDrop;
-using Content.Shared.Interaction;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
-using Content.Shared.Xenobiology;
-using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
-using System.Collections.Generic;
-using System.Numerics;
-using YamlDotNet.Core.Tokens;
 
 
 namespace Content.Server.Xenobiology
