@@ -1,3 +1,4 @@
+using Content.Server.Construction.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
@@ -48,6 +49,19 @@ namespace Content.Server.Explosion
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentInit>(CheckEnable);
+            SubscribeLocalEvent<TriggerOnProximityComponent, UnanchoredEvent>(HandleAnchor);
+            SubscribeLocalEvent<TriggerOnProximityComponent, AnchoredEvent>(HandleAnchor);
+
+        }
+
+        private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, UnanchoredEvent args)
+        {
+            SetProximityFixture(uid, component, component.enabled && component.Owner.Transform.Anchored);
+        }
+
+        private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, AnchoredEvent args)
+        {
+            SetProximityFixture(uid, component, component.enabled && component.Owner.Transform.Anchored);
         }
 
         private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
@@ -87,7 +101,7 @@ namespace Content.Server.Explosion
         {
             bool repeatable = component.Repeating && component.LastFlash + TimeSpan.FromSeconds(component.Cooldown) < _gameTiming.CurTime;
 
-            if (!component.Flashed ^ repeatable)
+            if (!component.Flashed || repeatable)
             {
                 FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
                 component.Flashed = true;

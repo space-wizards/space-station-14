@@ -1,3 +1,4 @@
+using Content.Server.Construction.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -25,7 +26,7 @@ namespace Content.Server.Explosion.Components
         {
             set
             {
-                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value);
+                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value && Owner.Transform.Anchored);
                 enabled = value;
             }
             get => enabled;
