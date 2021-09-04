@@ -173,6 +173,9 @@
       - APCElectronics
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - GasAnalyzer
+      - AtmosHardsuitHelmet
+      - AtmosHardsuitOuter
       - Bucket
       - MopItem
       - SprayBottle

@@ -244,6 +244,23 @@
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
 
+# Atmospherics Theory Technology Tree
+
+- type: technology
+  name: "atmospherics theory"
+  id: AtmosphericsTheory
+  description: Temporary description.
+  icon:
+    sprite: Structures/Storage/canister.rsi
+    state: yellow
+  requiredPoints: 10000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - GasAnalyzer
+    - AtmosHardsuitHelmet
+    - AtmosHardsuitOuter
+
 # Basic Parts Technology Tree
 
 - type: technology
