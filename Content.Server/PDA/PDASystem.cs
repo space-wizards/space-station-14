@@ -3,6 +3,7 @@ using Content.Server.Containers.ItemSlots;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
@@ -16,6 +17,7 @@ namespace Content.Server.PDA
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ItemSlotsSystem _slotsSystem = default!;
+        [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
 
         public override void Initialize()
         {
@@ -165,8 +167,8 @@ namespace Content.Server.PDA
                     }
                 case PDAShowUplinkMessage _:
                     {
-                        var showUplinkAttempt = new ShowUplinkUIAttempt(msg.Session);
-                        RaiseLocalEvent(pda.Owner.Uid, showUplinkAttempt);
+                        if (pda.Owner.TryGetComponent(out UplinkComponent? uplink))
+                            _uplinkSystem.ToggleUplinkUI(uplink, msg.Session);
                         break;
                     }
             }

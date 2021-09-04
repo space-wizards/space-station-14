@@ -18,14 +18,4 @@ namespace Content.Server.Traitor.Uplink
     public class UplinkRemovedEvent : EntityEventArgs
     {
     }
-
-    public class ShowUplinkUIAttempt : CancellableEntityEventArgs
-    {
-        public IPlayerSession Session;
-
-        public ShowUplinkUIAttempt(IPlayerSession session)
-        {
-            Session = session;
-        }
-    }
 }

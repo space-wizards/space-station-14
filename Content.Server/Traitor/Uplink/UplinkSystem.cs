@@ -5,6 +5,7 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -25,7 +26,6 @@ namespace Content.Server.Traitor.Uplink.Systems
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, ShowUplinkUIAttempt>(OnShowUI);
         }
 
         public void SetAccount(UplinkComponent component, UplinkAccount account)
@@ -58,10 +58,10 @@ namespace Content.Server.Traitor.Uplink.Systems
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
         }
 
-        private void OnShowUI(EntityUid uid, UplinkComponent component, ShowUplinkUIAttempt args)
+        public void ToggleUplinkUI(UplinkComponent component, IPlayerSession session)
         {
             var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
-            ui?.Toggle(args.Session);
+            ui?.Toggle(session);
 
             UpdateUserInterface(component);
         }
