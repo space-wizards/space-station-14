@@ -25,7 +25,6 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
-            SubscribeLocalEvent<PDAComponent, TrySetPDAOwner>(OnSetOwner);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
 
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
@@ -94,9 +93,9 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface(pda);
         }
 
-        private void OnSetOwner(EntityUid uid, PDAComponent pda, TrySetPDAOwner args)
+        public void SetOwner(PDAComponent pda, string ownerName)
         {
-            pda.OwnerName = args.OwnerName;
+            pda.OwnerName = ownerName;
             UpdatePDAUserInterface(pda);
         }
 
