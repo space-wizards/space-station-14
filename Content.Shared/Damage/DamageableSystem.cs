@@ -26,12 +26,6 @@ namespace Content.Shared.Damage
         /// </summary>
         private void DamageableInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
-            // Get resistance set, if any was specified.
-            if (component.ResistanceSetID != null)
-            {
-                _prototypeManager.TryIndex(component.ResistanceSetID, out component.ResistanceSet);
-            }
-
             // Note that component.DamageContainerID may be null despite being a required data field. In particular,
             // this can happen when adding this component via ViewVariables.
 
@@ -81,7 +75,7 @@ namespace Content.Shared.Damage
         public void DamageChanged(EntityUid uid, DamageableComponent component, bool damageIncreased)
         {
             component.TotalDamage = component.DamagePerType.Values.Sum();
-            component.DamagePerGroup = GetDamagePerGroup(component);
+            component.DamagePerGroup = GetDamagePerGroup(component.DamagePerType);
             component.Dirty();
             RaiseLocalEvent(uid, new DamageChangedEvent(component, damageIncreased), false);
         }
@@ -114,9 +108,12 @@ namespace Content.Shared.Damage
 
             // Apply resistances
             var damage = args.Damage;
-            if (!args.IgnoreResistances && component.ResistanceSet != null)
+            if (!args.IgnoreResistances && component.ResistanceSetID != null)
             {
-                damage = DamageSpecifier.ApplyResistanceSet(damage, component.ResistanceSet);
+                if (_prototypeManager.TryIndex<ResistanceSetPrototype>(component.ResistanceSetID, out var resistanceSet))
+                {
+                    damage = DamageSpecifier.ApplyResistanceSet(damage, resistanceSet);
+                }
 
                 // Has the resistance set removed all damage?
                 if (damage.TotalAbsoluteDamage() == 0) return;
@@ -209,7 +206,7 @@ namespace Content.Shared.Damage
         ///     will contribute to the total of each group. If a group has no supported damage types, it is not in the
         ///     resulting dictionary.
         /// </remarks>
-        public Dictionary<string, int> GetDamagePerGroup(DamageableComponent component)
+        public Dictionary<string, int> GetDamagePerGroup(Dictionary<string, int> damagePerType)
         {
             var damageGroupDict = new Dictionary<string, int>();
             foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
@@ -219,7 +216,7 @@ namespace Content.Shared.Damage
 
                 foreach (var type in group.DamageTypes)
                 {
-                    if (component.DamagePerType.TryGetValue(type, out var damage))
+                    if (damagePerType.TryGetValue(type, out var damage))
                     {
                         groupIsSupported = true;
                         groupDamage += damage;
@@ -237,7 +234,7 @@ namespace Content.Shared.Damage
 
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
-            args.State = new DamageableComponentState(component.DamagePerType, component.DamagePerGroup, component.ResistanceSet);
+            args.State = new DamageableComponentState(component.DamagePerType, component.ResistanceSetID);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -247,24 +244,18 @@ namespace Content.Shared.Damage
                 return;
             }
 
-            // Update damage values
             component.DamagePerType = state.DamagePerType;
-            component.DamagePerGroup = state.DamagePerGroup;
-            component.TotalDamage = component.DamagePerType.Values.Sum();
+            component.ResistanceSetID = state.ResistanceSetID;
 
-            // Do we need to update ResistanceSet?
-            if (state.ResistanceSetID != component.ResistanceSet?.ID)
-            {
-                component.ResistanceSetID = state.ResistanceSetID;
-                component.ResistanceSet = state.ResistanceSetID == null ? null : _prototypeManager.Index<ResistanceSetPrototype>(state.ResistanceSetID);
-            }
+            component.DamagePerGroup = GetDamagePerGroup(component.DamagePerType);
+            component.TotalDamage = component.DamagePerType.Values.Sum();
         }
     }
 
     public class DamageChangedEvent : EntityEventArgs
     {
         /// <summary>
-        ///     This is the component whose damage .  
+        ///     This is the component whose damage was changed.  
         /// </summary>
         /// <remarks>
         ///     Given that nearly every component that cares about a change in the damage, needs to know the

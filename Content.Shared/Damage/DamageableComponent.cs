@@ -32,9 +32,6 @@ namespace Content.Shared.Damage
         [DataField("resistanceSet", customTypeSerializer: typeof(PrototypeIdSerializer<ResistanceSetPrototype>))]
         public string? ResistanceSetID;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public ResistanceSetPrototype? ResistanceSet;
-
         /// <summary>
         ///     The main damage dictionary. All the damage information is stored in this dictionary using <see cref="DamageTypePrototype"/> IDs as keys.
         /// </summary>
@@ -105,22 +102,14 @@ namespace Content.Shared.Damage
     public class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, int> DamagePerType;
-        public readonly Dictionary<string, int> DamagePerGroup;
         public readonly string? ResistanceSetID;
 
         public DamageableComponentState(
             Dictionary<string, int> damagePerType,
-            Dictionary<string, int>  damagePerGroup,
-            ResistanceSetPrototype? resistanceSet) 
+            string? resistanceSetID) 
         {
-            // Convert prototypes to IDs for sending over the network.
             DamagePerType = damagePerType;
-            DamagePerGroup = damagePerGroup;
-
-            if (resistanceSet != null)
-            {
-                ResistanceSetID = resistanceSet.ID;
-            }
+            ResistanceSetID = resistanceSetID;
         }
     }
 }
