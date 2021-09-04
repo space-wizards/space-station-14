@@ -25,11 +25,10 @@ namespace Content.Server.Traitor.Uplink.Systems
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, UplinkSetAccountEvent>(OnSetAccount);
             SubscribeLocalEvent<UplinkComponent, ShowUplinkUIAttempt>(OnShowUI);
         }
 
-        private void OnSetAccount(EntityUid uid, UplinkComponent component, UplinkSetAccountEvent args)
+        public void SetAccount(UplinkComponent component, UplinkAccount account)
         {
             if (component.UplinkAccount != null)
             {
@@ -37,7 +36,7 @@ namespace Content.Server.Traitor.Uplink.Systems
                 return;
             }
 
-            component.UplinkAccount = args.Account;
+            component.UplinkAccount = account;
             component.UplinkAccount.BalanceChanged += (acc) =>
             {
                 UpdateUserInterface(component);

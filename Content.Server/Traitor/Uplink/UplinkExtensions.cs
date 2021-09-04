@@ -3,6 +3,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.PDA;
 using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.Inventory;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
@@ -24,8 +25,8 @@ namespace Content.Server.Traitor.Uplink
             }
 
             var uplink = uplinkEntity.EnsureComponent<UplinkComponent>();
-            var eventBus = uplink.Owner.EntityManager.EventBus;
-            eventBus.RaiseLocalEvent(uplink.Owner.Uid, new UplinkSetAccountEvent(account));
+            uplinkEntity.EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                .SetAccount(uplink, account);
 
             return true;
         }
