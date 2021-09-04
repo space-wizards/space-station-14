@@ -97,7 +97,8 @@ namespace Content.Client.ContextMenu.UI
 
             Timer.Spawn(e.HoverDelay, () =>
             {
-                _verbSystem.CloseGroupMenu();
+                // close any currently open popup
+                _verbSystem.CurrentCategoryPopup?.Close();
 
                 if (_contextMenuView.Menus.Count == 0)
                 {
@@ -172,7 +173,7 @@ namespace Content.Client.ContextMenu.UI
             _cancellationTokenSource?.Cancel();
 
             var entity = e.ContextEntity;
-            _verbSystem.CloseGroupMenu();
+            _verbSystem.CurrentCategoryPopup = null;
 
             OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
 
@@ -327,8 +328,7 @@ namespace Content.Client.ContextMenu.UI
         private void CloseAllMenus()
         {
             _contextMenuView.CloseContextPopups();
-            _verbSystem.CloseGroupMenu();
-            _verbSystem.CloseVerbMenu();
+            _verbSystem.CloseContextMenu();
         }
 
         public void Dispose()

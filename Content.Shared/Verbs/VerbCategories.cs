@@ -29,7 +29,7 @@ namespace Content.Shared.Verbs
         public readonly bool Contractible;
 
         /// <summary>
-        ///     If true, this verb category is shown in the context menu as a grid of icons without any text.
+        ///     If true, this verb category is shown in the context menu as a row of icons without any text.
         /// </summary>
         /// <remarks>
         ///     For example, the 'Rotate' category simply shows two icons for rotating left and right.

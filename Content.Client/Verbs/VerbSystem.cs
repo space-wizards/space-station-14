@@ -39,9 +39,19 @@ namespace Content.Client.Verbs
 
         private ContextMenuPresenter _contextMenuPresenter = default!;
         private VerbPopup? _currentVerbListRoot;
-        private VerbPopup? _currentGroupList;
         private EntityUid _currentEntity;
         private List<Verb>? _currentVerbs;
+
+        private VerbPopup? _currentCategoryPopup;
+        public VerbPopup? CurrentCategoryPopup
+        {
+            get => _currentCategoryPopup;
+            set 
+            {
+                _currentCategoryPopup?.Close();
+                _currentCategoryPopup = value;
+            }
+        }
 
         // TODO VERBS Move presenter out of the system
         // TODO VERBS Separate the rest of the UI from the logic
@@ -99,13 +109,13 @@ namespace Content.Client.Verbs
         {
             if (_currentVerbListRoot != null)
             {
-                CloseVerbMenu();
+                CloseContextMenu();
             }
 
             _currentEntity = entity.Uid;
             _currentVerbListRoot = new VerbPopup();
             _userInterfaceManager.ModalRoot.AddChild(_currentVerbListRoot);
-            _currentVerbListRoot.OnPopupHide += CloseVerbMenu;
+            _currentVerbListRoot.OnPopupHide += CloseContextMenu;
 
             // Add text informing user that the verb list may be incomplete.
             if (!entity.Uid.IsClientSide())
@@ -175,7 +185,7 @@ namespace Content.Client.Verbs
         /// </summary>
         private void FillVerbMenu()
         {
-            if (!EntityManager.TryGetEntity(_currentEntity, out var entity) || _currentVerbs == null)
+            if (!EntityManager.TryGetEntity(_currentEntity, out var target) || _currentVerbs == null)
                 return;
 
             _currentVerbs.Sort();
@@ -184,11 +194,12 @@ namespace Content.Client.Verbs
             var vBox = _currentVerbListRoot!.List;
 
             HashSet<string> categories = new();
-            var first = true;
+            var addLine = false;
 
             foreach (var verb in _currentVerbs)
             {
-                if (!first)
+                // Add a small horizontal line between verbs
+                if (addLine)
                 {
                     vBox.AddChild(new PanelContainer
                     {
@@ -196,12 +207,13 @@ namespace Content.Client.Verbs
                         PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
                     });
                 }
-                first = false;
+                addLine = true;
 
                 if (verb.Category == null)
                 {
                     // Lone verb. just create a button for it
-                    vBox.AddChild(new VerbButton(this, verb, entity));
+                    vBox.AddChild(new VerbButton(this, verb, target));
+                    addLine = true;
                 }
                 else if (categories.Add(verb.Category.Text))
                 {
@@ -214,7 +226,7 @@ namespace Content.Client.Verbs
                     {
                         // Create a new verb category button,
                         vBox.AddChild(
-                            new VerbCategoryButton(this, verb.Category, categoryVerbs, entity));
+                            new VerbCategoryButton(this, verb.Category, categoryVerbs, target));
                     }
                     else
                     {
@@ -227,59 +239,85 @@ namespace Content.Client.Verbs
                             verb.Text = verb.Category.Text + " " + verb.Text;
 
                         verb.Icon = verb.Category.Icon;
-                        vBox.AddChild(new VerbButton(this, verb, entity));
+                        vBox.AddChild(new VerbButton(this, verb, target));
                     }
+                }
+                else
+                {
+                    // This verb belongs to a category that was already drawn.
+                    // Dont draw extra line-spacings for this
+                    addLine = false;
                 }
             }
         }
 
-        public void CloseVerbMenu()
+        public void CloseContextMenu()
         {
             _currentVerbListRoot?.Dispose();
             _currentVerbListRoot = null;
+            CurrentCategoryPopup?.Dispose();
+            CurrentCategoryPopup = null;
             _currentEntity = EntityUid.Invalid;
             _currentVerbs = null;
         }
 
-        private void CloseAllMenus()
-        {
-            CloseVerbMenu();
-            // CloseContextPopups();
-            CloseGroupMenu();
-        }
-
-        public void CloseGroupMenu()
-        {
-            _currentGroupList?.Dispose();
-            _currentGroupList = null;
-        }
-
-        private sealed class VerbPopup : Popup
+        public class VerbPopup : Popup
         {
             public BoxContainer List { get; }
 
-            public VerbPopup()
+            public VerbPopup(LayoutOrientation orientation = LayoutOrientation.Vertical)
             {
                 AddChild(new PanelContainer
                 {
                     Children = {(List = new BoxContainer
                     {
-                        Orientation = LayoutOrientation.Vertical
+                        Orientation = orientation
                     })},
                     PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#111E")}
                 });
             }
         }
 
+
+        /// <summary>
+        ///     These are the popups that appears when hovering over a verb category in the context menu.
+        /// </summary>
+        public sealed class VerbCategoryPopup : VerbPopup
+        {
+            public VerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, IEntity target, bool drawOnlyIcons, bool drawVerbIcons)
+                : base(drawOnlyIcons ? LayoutOrientation.Horizontal : LayoutOrientation.Vertical)
+            {
+                if (drawOnlyIcons)
+                    drawVerbIcons = true;
+
+                var first = true;
+                foreach (var verb in verbs)
+                {
+                    if (!first)
+                    {
+                        List.AddChild(new PanelContainer
+                        {
+                            MinSize = (0, 2),
+                            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
+                        });
+                    }
+
+                    first = false;
+
+                    List.AddChild(new VerbButton(system, verb, target, drawVerbIcons));
+                }
+            }
+        }
+
         private sealed class VerbButton : BaseButton
         {
-            public VerbButton(VerbSystem system, Verb verb, IEntity owner, bool drawIcons = true)
+            public VerbButton(VerbSystem system, Verb verb, IEntity target, bool drawIcons = true)
             {
                 Disabled = verb.IsDisabled;
 
-                RichTextLabel label = new RichTextLabel();
-                label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+                var buttonContents = new BoxContainer { Orientation = LayoutOrientation.Horizontal };
 
+                // maybe draw verb icons
                 if (drawIcons)
                 {
                     TextureRect icon = new()
@@ -289,53 +327,45 @@ namespace Content.Client.Verbs
                         TextureScale = (0.5f, 0.5f)
                     };
 
+                    // Even though we are drawing icons, the icon for this specific verb may be null.
                     if (verb.Icon != null)
                     {
                         icon.Texture = verb.Icon.Frame0();
                     }
 
-                    AddChild(new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Children =
-                    {
-                        icon,
-                        label,
-                        // Padding
-                        new Control {MinSize = (8, 0)}
-                    }
-                    });
-                }
-                else
-                {
-                    AddChild(new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Horizontal,
-                        Children =
-                    {
-                        label,
-                        // Padding
-                        new Control {MinSize = (8, 0)}
-                    }
-                    });
+                    buttonContents.AddChild(icon);
                 }
 
+                // maybe add a label
+                if (verb.Text != string.Empty)
+                {
+                    var label = new RichTextLabel();
+                    label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+                    buttonContents.AddChild(label);
+
+                    // If we added a label, also add some padding
+                    buttonContents.AddChild(new Control { MinSize = (8, 0) });
+                }
+
+                AddChild(buttonContents);
+
+                // give the button functionality!
                 if (!Disabled)
                 {
                     OnPressed += _ =>
                     {
-                        system.CloseAllMenus();
+                        system.CloseContextMenu();
                         try
                         {
                             // Try run the verb locally. Else, ask the server to run it.
                             if (!system.TryExecuteVerb(verb))
                             {
-                                system.RaiseNetworkEvent(new UseVerbMessage(owner.Uid, verb.Key));
+                                system.RaiseNetworkEvent(new UseVerbMessage(target.Uid, verb.Key));
                             }
                         }
                         catch (Exception e)
                         {
-                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb.Key, owner.ToString(), e);
+                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb.Key, target.ToString(), e);
                         }
                     };
                 }
@@ -345,7 +375,12 @@ namespace Content.Client.Verbs
             {
                 base.Draw(handle);
 
-                if (DrawMode == DrawModeEnum.Hover)
+                if (Disabled)
+                {
+                    // somewhat darker background
+                    handle.DrawRect(PixelSizeBox, new Color(0,0,0,155)); 
+                }    
+                else if (DrawMode == DrawModeEnum.Hover)
                 {
                     handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
                 }
@@ -358,20 +393,11 @@ namespace Content.Client.Verbs
 
             private readonly VerbSystem _system;
 
-            private readonly RichTextLabel _label;
-            private readonly TextureRect _icon;
-
             private CancellationTokenSource? _openCancel;
 
             private readonly IEntity _owner;
 
             private readonly IEnumerable<Verb> _verbs;
-
-            public Texture? Icon
-            {
-                get => _icon.Texture;
-                set => _icon.Texture = value;
-            }
 
             /// <summary>
             ///     Whether or not the leave space to draw verb icons when showing the verbs in the group.
@@ -380,62 +406,79 @@ namespace Content.Client.Verbs
             ///     If no verbs in this group have icons, default to hiding them. Alternative would be to leave blank
             ///     space, or duplicate the Category icon repeatedly.
             /// </remarks>
-            public bool DrawVerbIcons;
+            private readonly bool _drawVerbIcons;
 
-            public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, IEntity owner)
+            /// <summary>
+            ///     Whether or not to hide member verb text and just show icons.
+            /// </summary>
+            private readonly bool _drawOnlyIcons;
+
+            /// <summary>
+            ///     The popup that appears when hovering over this verb group.
+            /// </summary>
+            private readonly VerbCategoryPopup _popup;
+
+            public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, IEntity target)
             {
                 _system = system;
-                _owner = owner;
+                _owner = target;
                 _verbs = verbs;
+                _drawOnlyIcons = category.IconsOnly;
+
+                var label = new RichTextLabel();
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(category.Text));
+                label.HorizontalExpand = true;
+
+                // the icon for the verb group
+                var icon = new TextureRect
+                {
+                    MinSize = (32, 32),
+                    TextureScale = (0.5f, 0.5f),
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                };
+                if (category.Icon != null)
+                {
+                    icon.Texture = category.Icon.Frame0();
+                }
+
+                // The little ">" icon that tells you it's a group of verbs
+                var groupIndicatorIcon = new TextureRect
+                {
+                    Texture = IoCManager.Resolve<IResourceCache>()
+                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
+                    TextureScale = (0.5f, 0.5f),
+                    Stretch = TextureRect.StretchMode.KeepCentered,
+                };
 
                 // Do any verbs have icons
                 foreach (var verb in verbs)
                 {
                     if (verb.Icon != null)
                     {
-                        DrawVerbIcons = true;
+                        _drawVerbIcons = true;
                         break;
                     }
                 }
 
                 MouseFilter = MouseFilterMode.Stop;
 
+                // The verb button itself
                 AddChild(new BoxContainer
                 {
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
-                        (_icon = new TextureRect
-                        {
-                            MinSize = (32, 32),
-                            TextureScale = (0.5f, 0.5f),
-                            Stretch = TextureRect.StretchMode.KeepCentered
-                        }),
-
-                        (_label = new RichTextLabel
-                        {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand
-                        }),
-
+                        icon,
+                        label,
                         // Padding
                         new Control {MinSize = (8, 0)},
-
-                        new TextureRect
-                        {
-                            Texture = IoCManager.Resolve<IResourceCache>()
-                                .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
-                            TextureScale = (0.5f, 0.5f),
-                            Stretch = TextureRect.StretchMode.KeepCentered,
-                        }
+                        groupIndicatorIcon
                     }
                 });
 
-                _label.SetMessage(FormattedMessage.FromMarkupPermissive(category.Text));
-
-                if (category.Icon!= null)
-                {
-                    _icon.Texture = category.Icon.Frame0();
-                }
+                // The popup that appears when hovering over the button
+                _popup = new VerbCategoryPopup(_system, _verbs, _owner, _drawOnlyIcons, _drawVerbIcons);
+                UserInterfaceManager.ModalRoot.AddChild(_popup);
             }
 
             protected override void Draw(DrawingHandleScreen handle)
@@ -456,32 +499,8 @@ namespace Content.Client.Verbs
 
                 Timer.Spawn(HoverDelay, () =>
                 {
-                    if (_system._currentGroupList != null)
-                    {
-                        _system.CloseGroupMenu();
-                    }
-
-                    var popup = _system._currentGroupList = new VerbPopup();
-
-                    var first = true;
-                    foreach (var verb in _verbs)
-                    {
-                        if (!first)
-                        {
-                            popup.List.AddChild(new PanelContainer
-                            {
-                                MinSize = (0, 2),
-                                PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#333")}
-                            });
-                        }
-
-                        first = false;
-
-                        popup.List.AddChild(new VerbButton(_system, verb, _owner, DrawVerbIcons));
-                    }
-
-                    UserInterfaceManager.ModalRoot.AddChild(popup);
-                    popup.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), (1, 1)), GlobalPosition);
+                    _system.CurrentCategoryPopup = _popup;
+                    _popup.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), (1, 1)), GlobalPosition);
                 }, _openCancel.Token);
             }
 
@@ -492,6 +511,37 @@ namespace Content.Client.Verbs
                 _openCancel?.Cancel();
                 _openCancel = null;
             }
+        }
+
+        /// <summary>
+        ///     This returns the popup that appears when hovering over a verb category in the context menu.
+        /// </summary>
+        private static VerbPopup GetVerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, IEntity target, bool drawOnlyIcons, bool drawVerbIcons)
+        {
+            // We need to show at least something
+            if (drawOnlyIcons)
+                drawVerbIcons = true;
+
+            var popup = system.CurrentCategoryPopup = new VerbPopup(orientation: drawOnlyIcons?  LayoutOrientation.Horizontal : LayoutOrientation.Vertical);
+
+            var first = true;
+            foreach (var verb in verbs)
+            {
+                if (!first)
+                {
+                    popup.List.AddChild(new PanelContainer
+                    {
+                        MinSize = (0, 2),
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
+                    });
+                }
+
+                first = false;
+
+                popup.List.AddChild(new VerbButton(system, verb, target, drawVerbIcons));
+            }
+
+            return popup;
         }
     }
 }
