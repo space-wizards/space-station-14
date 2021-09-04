@@ -41,6 +41,7 @@ namespace Content.Tests.Shared
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
             _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            _prototypeManager.Initialize();
             _prototypeManager.LoadString(_damagePrototypes);
             _prototypeManager.Resync();
 
