@@ -13,7 +13,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -34,7 +34,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -53,7 +53,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -73,7 +73,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -93,7 +93,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -113,7 +113,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -132,7 +132,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -151,7 +151,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.1,-0.4,0.1,0.4"
+          bounds: "-0.4,-0.1,0.4,0.1"
       layer:
       - SmallImpassable
       mask:
@@ -171,7 +171,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -189,7 +189,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -207,7 +207,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -225,7 +225,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -243,7 +243,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -261,7 +261,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -279,7 +279,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -297,7 +297,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -315,7 +315,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -333,7 +333,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -350,7 +350,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -367,7 +367,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -384,7 +384,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -401,7 +401,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -418,7 +418,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -435,7 +435,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -452,7 +452,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -469,7 +469,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -486,7 +486,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -503,7 +503,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -520,7 +520,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -537,7 +537,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -554,7 +554,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -571,7 +571,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -588,7 +588,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -605,7 +605,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -622,7 +622,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -639,7 +639,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -656,7 +656,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -676,7 +676,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -694,7 +694,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -712,7 +712,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -730,7 +730,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -748,7 +748,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -766,7 +766,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -784,7 +784,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2,-0.3,0.2,0.3"
+          bounds: "-0.3,-0.2,0.3,0.2"
       layer:
       - SmallImpassable
       mask:
@@ -802,7 +802,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -820,7 +820,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
@@ -838,7 +838,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4,-0.3,0.4,0.3"
+          bounds: "-0.3,-0.4,0.3,0.4"
       layer:
       - SmallImpassable
       mask:
