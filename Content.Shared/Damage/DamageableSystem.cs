@@ -62,7 +62,21 @@ namespace Content.Shared.Damage
                 }
             }
 
-            DamageChanged(uid, component, false);
+            // Initialize damage per group dictionary.
+            component.DamagePerGroup = new Dictionary<string, int>();
+            foreach (var group in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
+            {
+                foreach (var type in group.DamageTypes)
+                {
+                    if (component.DamagePerType.ContainsKey(type))
+                    {
+                        component.DamagePerGroup.TryAdd(group.ID, 0);
+                        break;
+                    }
+                }
+            }
+
+            component.TotalDamage = 0;
         }
 
         /// <summary>
