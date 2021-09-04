@@ -77,7 +77,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
-                verb.Act = () => Rejuvenate.PerformRejuvenate(args.Target);
+                verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
                 args.Verbs.Add(verb);
             }
 
