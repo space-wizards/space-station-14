@@ -1,5 +1,7 @@
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.UI;
 using Content.Server.Disposal.Tube.Components;
+using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
@@ -10,7 +12,6 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -23,9 +24,8 @@ namespace Content.Server.Administration
     public class AdminVerbSystem : EntitySystem 
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
-        [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-
+        [Dependency] private readonly EuiManager _euiManager = default!;
 
         public override void Initialize()
         {
@@ -35,9 +35,15 @@ namespace Content.Server.Administration
             // Maybe allow assemble on user?
         }
 
+        // Odd collection of verbs.
+        // Some require components to be present
+        // And maybe should be moved to relevant systems
+        // but also: all of them require IConGroupController.CanCommand(player, "....") checks
+        // and also, all of them are debug-category verbs
+        // Many of then need IServerConsoleHost
 
         // TODO QUESTION
-        // MAAAAybe these verbs should go into dedicated systens.
+        // Maybe these verbs should go into dedicated systems.
         // E.g., tube verb -> disposal tubes system.
         // and posses/take-control into mind system
         // But then where do you put stuff like make sentient
@@ -102,13 +108,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
-                verb.Act = () =>
-                {
-                    var cmd = new MakeSentientCommand();
-                    var uidStr = args.Target.Uid.ToString();
-                    cmd.Execute(new ConsoleShell(_consoleHost, player), $"{cmd.Command} {uidStr}",
-                        new[] { uidStr });
-                };
+                verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
                 args.Verbs.Add(verb);
             }
 
@@ -116,17 +116,11 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "setoutfit") &&
                 args.Target.HasComponent<InventoryComponent>())
             {
-                Verb verb = new Verb("debug:outfit");
+                Verb verb = new Verb("debug:setoutfit");
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
-                verb.Act = () =>
-                {
-                    var cmd = new SetOutfitCommand();
-                    var uidStr = args.Target.Uid.ToString();
-                    cmd.Execute(new ConsoleShell(_consoleHost, player), $"{cmd.Command} {uidStr}",
-                        new[] { uidStr });
-                };
+                verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
                 args.Verbs.Add(verb);
             }
 
@@ -155,10 +149,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 verb.Category = VerbCategories.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () =>
-                {
-                    component.PopupDirections(args.User);
-                };
+                verb.Act = () => component.PopupDirections(args.User);
                 args.Verbs.Add(verb);
             }
 
@@ -171,10 +162,7 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategories.Debug;
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
-                verb.Act = () =>
-                {
-                    _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
-                };
+                verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
                 args.Verbs.Add(verb);
             }
         }

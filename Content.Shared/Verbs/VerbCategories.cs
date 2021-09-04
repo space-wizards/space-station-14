@@ -57,9 +57,5 @@ namespace Content.Shared.Verbs
             new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
 
         public static readonly VerbCategoryData Rotate = new("Rotate", null);
-        public static readonly VerbCategoryData Construction =
-            new("Construction", "/Textures/Interface/hammer_scaled.svg.192dpi.png");
-        public static readonly VerbCategoryData SetTransferAmount =
-            new("Set Transfer Amount", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
     }
 }
