@@ -11,18 +11,6 @@ namespace Content.Server.Light.EntitySystems
 {
     public class UnpoweredFlashlightSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<UnpoweredFlashlightComponent, TryToggleLightEvent>(OnToggleLight);
-        }
-
-        private void OnToggleLight(EntityUid uid, UnpoweredFlashlightComponent component, TryToggleLightEvent args)
-        {
-            ToggleLight(component);
-        }
-
         public void ToggleLight(UnpoweredFlashlightComponent flashlight)
         {
             if (!flashlight.Owner.TryGetComponent(out PointLightComponent? light))

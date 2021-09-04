@@ -1,5 +1,7 @@
 using Content.Server.Access.Components;
 using Content.Server.Containers.ItemSlots;
+using Content.Server.Light.Components;
+using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
@@ -18,6 +20,7 @@ namespace Content.Server.PDA
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ItemSlotsSystem _slotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
+        [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
         public override void Initialize()
         {
@@ -151,8 +154,12 @@ namespace Content.Server.PDA
                     UpdatePDAUserInterface(pda);
                     break;
                 case PDAToggleFlashlightMessage _:
-                    RaiseLocalEvent(pda.Owner.Uid, new TryToggleLightEvent());
-                    break;
+                    {
+                        if (pda.Owner.TryGetComponent(out UnpoweredFlashlightComponent? flashlight))
+                            _unpoweredFlashlight.ToggleLight(flashlight);
+                        break;
+                    }
+
                 case PDAEjectIDMessage _:
                     {
                         if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
