@@ -119,8 +119,8 @@ namespace Content.Server.Xenobiology
             UpdateAppearance();
         }
 
-
-        public void UpdateAppearance() //Communicates with the visualiser through a Shared component
+        //Communicates with the visualiser through a Shared component
+        public void UpdateAppearance() 
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearancecomp))
             {
