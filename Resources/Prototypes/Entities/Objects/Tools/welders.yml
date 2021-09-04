@@ -4,6 +4,9 @@
   id: Welder
   description: "Melts anything as long as it's fueled, don't forget your eye protection!"
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/welder_drop.ogg
   - type: Sprite
     sprite: Objects/Tools/welder.rsi
     layers:

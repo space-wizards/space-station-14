@@ -26,7 +26,7 @@ namespace Content.Client.Light.Components
     [ImplicitDataDefinitionForInheritors]
     public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
-        protected readonly IRobustRandom _random = IoCManager.Resolve<IRobustRandom>();
+        protected IRobustRandom _random = default!;
 
         [DataField("id")] [ViewVariables] public string ID { get; set; } = string.Empty;
 
@@ -53,8 +53,9 @@ namespace Content.Client.Light.Components
         private float _maxTime = default;
         private IEntity _parent = default!;
 
-        public void Initialize(IEntity parent)
+        public void Initialize(IEntity parent, IRobustRandom random)
         {
+            _random = random;
             _parent = parent;
 
             if (Enabled && _parent.TryGetComponent(out PointLightComponent? light))
@@ -399,7 +400,7 @@ namespace Content.Client.Light.Components
 
             foreach (var container in _animations)
             {
-                container.LightBehaviour.Initialize(Owner);
+                container.LightBehaviour.Initialize(Owner, IoCManager.Resolve<IRobustRandom>());
             }
 
             // we need to initialize all behaviours before starting any
@@ -541,7 +542,7 @@ namespace Content.Client.Light.Components
                 AnimationTracks = {behaviour}
             };
 
-            behaviour.Initialize(Owner);
+            behaviour.Initialize(Owner, IoCManager.Resolve<IRobustRandom>());
 
             var container = new AnimationContainer(key, animation, behaviour);
             _animations.Add(container);
