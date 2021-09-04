@@ -77,11 +77,14 @@ namespace Content.Server.PDA
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
-            protected override void Activate(IEntity user, PDAComponent component)
+            protected override void Activate(IEntity user, PDAComponent pda)
             {
-                var entityManager = component.Owner.EntityManager;
-                entityManager.EventBus.RaiseLocalEvent(component.Owner.Uid,
-                    new EjectItemAttempt(PenSlotName, user));
+                var entityManager = pda.Owner.EntityManager;
+                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                {
+                    entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                        TryEjectContent(itemSlots, PenSlotName, user);
+                }
             }
         }
 
@@ -109,11 +112,14 @@ namespace Content.Server.PDA
                 data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
             }
 
-            protected override void Activate(IEntity user, PDAComponent component)
+            protected override void Activate(IEntity user, PDAComponent pda)
             {
-                var entityManager = component.Owner.EntityManager;
-                entityManager.EventBus.RaiseLocalEvent(component.Owner.Uid,
-                    new EjectItemAttempt(IDSlotName, user));
+                var entityManager = pda.Owner.EntityManager;
+                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                {
+                    entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                        TryEjectContent(itemSlots, IDSlotName, user);
+                }
             }
         }
         #endregion

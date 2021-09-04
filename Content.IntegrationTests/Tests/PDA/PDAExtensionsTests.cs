@@ -76,7 +76,10 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 var pdaComponent = dummyPda.GetComponent<PDAComponent>();
                 var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
-                sEntityManager.EventBus.RaiseLocalEvent(dummyPda.Uid, new PlaceItemAttempt(PDAComponent.IDSlotName, pdaIdCard));
+
+                var itemSlots = dummyPda.GetComponent<ItemSlotsComponent>();
+                sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
+                    .TryInsertContent(itemSlots, pdaIdCard, PDAComponent.IDSlotName);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first

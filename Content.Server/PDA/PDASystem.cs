@@ -15,6 +15,7 @@ namespace Content.Server.PDA
     public class PDASystem : EntitySystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly ItemSlotsSystem _slotsSystem = default!;
 
         public override void Initialize()
         {
@@ -47,7 +48,8 @@ namespace Content.Server.PDA
             {
                 // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = _entityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
-                RaiseLocalEvent(uid, new PlaceItemAttempt(PDAComponent.IDSlotName, idCard));
+                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                    _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlotName);
             }
         }
 
@@ -140,32 +142,32 @@ namespace Content.Server.PDA
             ui?.SetState(new PDAUpdateState(pda.FlashlightOn, pda.PenInserted, ownerInfo, hasUplink));
         }
 
-        private void OnUIMessage(PDAComponent component, ServerBoundUserInterfaceMessage msg)
+        private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
             switch (msg.Message)
             {
                 case PDARequestUpdateInterfaceMessage _:
-                    UpdatePDAUserInterface(component);
+                    UpdatePDAUserInterface(pda);
                     break;
                 case PDAToggleFlashlightMessage _:
-                    RaiseLocalEvent(component.Owner.Uid, new TryToggleLightEvent());
+                    RaiseLocalEvent(pda.Owner.Uid, new TryToggleLightEvent());
                     break;
                 case PDAEjectIDMessage _:
                     {
-                        var ejectAttempt = new EjectItemAttempt(PDAComponent.IDSlotName, msg.Session.AttachedEntity);
-                        RaiseLocalEvent(component.Owner.Uid, ejectAttempt);
+                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.IDSlotName, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        var ejectAttempt = new EjectItemAttempt(PDAComponent.PenSlotName, msg.Session.AttachedEntity);
-                        RaiseLocalEvent(component.Owner.Uid, ejectAttempt);
+                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.PenSlotName, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAShowUplinkMessage _:
                     {
                         var showUplinkAttempt = new ShowUplinkUIAttempt(msg.Session);
-                        RaiseLocalEvent(component.Owner.Uid, showUplinkAttempt);
+                        RaiseLocalEvent(pda.Owner.Uid, showUplinkAttempt);
                         break;
                     }
             }

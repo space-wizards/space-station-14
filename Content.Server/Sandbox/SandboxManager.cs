@@ -135,8 +135,11 @@ namespace Content.Server.Sandbox
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        _entityManager.EventBus.RaiseLocalEvent(pda.Owner.Uid,
-                            new PlaceItemAttempt(PDAComponent.IDSlotName, newID));
+                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                        {
+                            _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                                TryInsertContent(itemSlots, newID, PDAComponent.IDSlotName);
+                        }
                     }
                     else
                     {

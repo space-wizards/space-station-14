@@ -20,9 +20,6 @@ namespace Content.Server.Containers.ItemSlots
             SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
-
-            SubscribeLocalEvent<ItemSlotsComponent, PlaceItemAttempt>(OnPlaceItem);
-            SubscribeLocalEvent<ItemSlotsComponent, EjectItemAttempt>(OnEjectItem);
         }
 
         private void OnComponentInit(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
@@ -67,20 +64,6 @@ namespace Content.Server.Containers.ItemSlots
                 return;
 
             args.Handled = TryInsertContent(itemSlots, args.Used, args.User);
-        }
-
-        private void OnPlaceItem(EntityUid uid, ItemSlotsComponent slots, PlaceItemAttempt args)
-        {
-            var wasInserted = TryInsertContent(slots, args.Item, args.SlotName);
-            if (!wasInserted)
-                args.Cancel();
-        }
-
-        private void OnEjectItem(EntityUid uid, ItemSlotsComponent component, EjectItemAttempt args)
-        {
-            var wasEjected = TryEjectContent(component, args.SlotName, args.User);
-            if (!wasEjected)
-                args.Cancel();
         }
 
         /// <summary>
