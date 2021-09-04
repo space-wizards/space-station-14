@@ -1,15 +1,13 @@
 using System;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
+using Content.Server.MachineLinking.Events;
 using Content.Shared.Light;
+using Content.Shared.Damage;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Content.Server.Light.Components;
-using Content.Shared.Damage;
-using Robust.Shared.GameObjects;
-using Content.Server.MachineLinking.Events;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -31,7 +29,7 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Destroy the light bulb if the light took any damage.
         /// </summary>
-        public static void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
+        public void HandleLightDamaged(EntityUid uid, PoweredLightComponent component, DamageChangedEvent args)
         {
             // Was it being repaired, or did it take damage?
             if (args.DamageIncreased)

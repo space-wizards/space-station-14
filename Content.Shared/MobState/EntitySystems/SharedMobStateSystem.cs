@@ -24,7 +24,7 @@ namespace Content.Shared.MobState.EntitySystems
                 args.Cancel();
         }
 
-        public static void UpdateState(EntityUid _, SharedMobStateComponent component, DamageChangedEvent args)
+        public void UpdateState(EntityUid _, SharedMobStateComponent component, DamageChangedEvent args)
         {
             component.UpdateState(args.Damageable.TotalDamage);
         }

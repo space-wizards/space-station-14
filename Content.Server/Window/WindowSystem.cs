@@ -11,7 +11,7 @@ namespace Content.Server.Window
             SubscribeLocalEvent<WindowComponent, DamageChangedEvent>(UpdateVisuals);
         }
 
-        public static void UpdateVisuals(EntityUid _, WindowComponent component, DamageChangedEvent args)
+        public void UpdateVisuals(EntityUid _, WindowComponent component, DamageChangedEvent args)
         {
             component.UpdateVisuals(args.Damageable.TotalDamage);
         }

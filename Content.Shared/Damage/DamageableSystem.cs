@@ -151,7 +151,7 @@ namespace Content.Shared.Damage
         /// <returns>
         ///     False if the given type is not supported or no damage change occurred; true otherwise.
         /// </returns>
-        public static bool TryChangeDamage(DamageableComponent component, string damageType, int changeAmount)
+        public bool TryChangeDamage(DamageableComponent component, string damageType, int changeAmount)
         {
             // Check if damage type is supported, and get the current value if it is.
             if (!component.DamagePerType.TryGetValue(damageType, out var currentDamage))
