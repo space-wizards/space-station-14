@@ -32,7 +32,7 @@
         - Welder
         - Radio
         - PowerCell
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       cutters_red:
         whitelist:
@@ -99,7 +99,7 @@
         - Radio
         - Handcuff
         - PowerCell
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       drill:
         whitelist:
@@ -161,7 +161,7 @@
         - Handcuff
         - RangedMagazine
         - Ammo
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       flashbang:
         whitelist:
@@ -196,7 +196,7 @@
         - Soap
         - Flashlight
         - CigPack
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       bottle:
         whitelist:
@@ -241,7 +241,7 @@
         - Hypospray
         - SurgeryTool
         - Radio
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       bottle:
         whitelist:
@@ -300,7 +300,7 @@
       components:
         - Seed
         - Smoking
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       hatchet:
         whitelist:
@@ -352,7 +352,7 @@
         - FlashOnTrigger
         - Flash
         - Handcuff
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       flashbang:
         whitelist:
@@ -396,7 +396,7 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       sheath-bag:
         whitelist:
