@@ -23,6 +23,10 @@
       type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
+    layers:
+      - state: icon
+        map: ["enum.DrinkCanVisualLayers.Icon"]    
+    netsync: false
 
   - type: Spillable
 
@@ -155,10 +159,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-    layers:
-      - state: icon
-        map: ["enum.DrinkCanVisualLayers.Icon"]    
-    netsync: false
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Appearance
