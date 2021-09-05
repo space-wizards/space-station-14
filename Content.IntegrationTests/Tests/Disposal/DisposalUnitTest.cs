@@ -5,11 +5,11 @@ using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Power.Components;
+using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Physics;
+using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.Disposal
 {
@@ -23,8 +23,8 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             foreach (var entity in entities)
             {
-                var insertTask = unit.TryInsert(entity);
                 Assert.That(EntitySystem.Get<DisposalUnitSystem>().CanInsert(unit, entity), Is.EqualTo(result));
+                var insertTask = unit.TryInsert(entity);
                 insertTask.ContinueWith(task =>
                 {
                     Assert.That(task.Result, Is.EqualTo(result));
@@ -69,6 +69,8 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: MobState
   - type: Damageable
     damageContainer: Biological
+  - type: Physics
+    bodyType: KinematicController
 
 - type: entity
   name: WrenchDummy
@@ -78,6 +80,8 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: Tool
     qualities:
       - Anchoring
+  - type: Physics
+    bodyType: Dynamic
 
 - type: entity
   name: DisposalUnitDummy
@@ -94,6 +98,7 @@ namespace Content.IntegrationTests.Tests.Disposal
   id: DisposalTrunkDummy
   components:
   - type: DisposalEntry
+  - type: SnapGrid
 ";
 
         [Test]
@@ -101,37 +106,63 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
             var server = StartServerDummyTicker(options);
+            await server.WaitIdleAsync();
 
             IEntity human;
             IEntity wrench;
             DisposalUnitComponent unit;
+            EntityCoordinates coordinates = default!;
+            var mapManager = server.ResolveDependency<IMapManager>();
+            var entityManager = server.ResolveDependency<IEntityManager>();
+            var pauseManager = server.ResolveDependency<IPauseManager>();
+            var componentFactory = server.ResolveDependency<IComponentFactory>();
+            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
 
-            server.Assert(async () =>
+            // Build up test environment
+            server.Post(() =>
             {
-                var mapManager = IoCManager.Resolve<IMapManager>();
+                // Create a one tile grid to anchor our disposal unit to.
+                var mapId = mapManager.CreateMap();
 
-                mapManager.CreateNewMapEntity(MapId.Nullspace);
+                pauseManager.AddUninitializedMap(mapId);
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
+                var gridId = new GridId(1);
 
+                if (!mapManager.TryGetGrid(gridId, out var grid))
+                {
+                    grid = mapManager.CreateGrid(mapId, gridId);
+                }
+
+                var tileDefinition = tileDefinitionManager["underplating"];
+                var tile = new Tile(tileDefinition.TileId);
+                coordinates = grid.ToCoordinates();
+
+                grid.SetTile(coordinates, tile);
+
+                pauseManager.DoMapInitialize(mapId);
+            });
+
+            await server.WaitAssertion(() =>
+            {
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanDummy", MapCoordinates.Nullspace);
-                wrench = entityManager.SpawnEntity("WrenchDummy", MapCoordinates.Nullspace);
-                var disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", MapCoordinates.Nullspace);
+                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
+                var disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 var disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
+
+                // Check that we have a grid, so that we can anchor our unit
+                Assert.That(mapManager.TryFindGridAt(disposalUnit.Transform.MapPosition, out var _));
 
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));
                 Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
 
                 // Can't insert, unanchored and unpowered
-                var physics = disposalUnit.GetComponent<IPhysBody>();
-                physics.BodyType = BodyType.Dynamic;
-                Assert.False(unit.Owner.Transform.Anchored);
+                unit.Owner.Transform.Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
-                physics.BodyType = BodyType.Static;
+                unit.Owner.Transform.Anchored = true;
 
                 // No power
                 Assert.False(unit.Powered);
