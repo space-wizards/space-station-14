@@ -272,7 +272,7 @@ namespace Content.Shared.MobState.Components
         }
 
         /// <summary>
-        ///     Updates the mob state. Does not dirty the component.
+        ///     Updates the mob state..
         /// </summary>
         public void UpdateState(int damage)
         {
@@ -285,7 +285,7 @@ namespace Content.Shared.MobState.Components
         }
 
         /// <summary>
-        ///     Sets the mob state. Does not dirty the component.
+        ///     Sets the mob state and marks the component as dirty.
         /// </summary>
         private void SetMobState(IMobState? old, (IMobState state, int threshold)? current)
         {

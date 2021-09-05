@@ -267,7 +267,7 @@ namespace Content.Shared.Damage
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
         {
-            if (args.Next is not DamageableComponentState state)
+            if (args.Current is not DamageableComponentState state)
             {
                 return;
             }
@@ -280,6 +280,7 @@ namespace Content.Shared.Damage
             if (component.TotalDamage == newTotalDamage &&
                 component.DamagePerType.Count == state.DamagePerType.Count)
             {
+                // Check every damage type for changes
                 var damageChanged = false;
                 foreach (var (type, newValue) in state.DamagePerType)
                 {
@@ -294,12 +295,10 @@ namespace Content.Shared.Damage
                 if (!damageChanged)
                     return;
             }
-            
-
 
             component.DamagePerType = state.DamagePerType;
 
-            // Calculate dependent values and raise local event. The event is needed as there may be client-exclusive
+            // Calculate dependent values and raise a local event. The event is needed as there may be client-exclusive
             // systems (e.g. UI) that need to know if damage changed as a result of server-exclusive damage-dealing
             // systems.
             DamageChanged(component, component.TotalDamage < newTotalDamage);
