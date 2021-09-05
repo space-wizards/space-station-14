@@ -1,8 +1,5 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
-using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
@@ -11,7 +8,6 @@ using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Sound;
@@ -28,6 +24,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -50,7 +48,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("isOpen")]
-        private bool _defaultToOpened;
+        private bool _isOpenDefault;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public ReagentUnit TransferAmount { get; [UsedImplicitly] private set; } = ReagentUnit.New(5);
@@ -67,7 +65,7 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 _opened = value;
-                OpenedChanged();
+                OnOpenedChanged();
             }
         }
 
@@ -85,15 +83,15 @@ namespace Content.Server.Nutrition.Components
         {
             base.Initialize();
 
-            Opened = _defaultToOpened;
+            Opened = _isOpenDefault;
             UpdateAppearance();
         }
 
-        private void OpenedChanged()
+        private void OnOpenedChanged()
         {
-            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(DrinkCanStateVisuals.Opened, Opened);
+                appearance.SetData(DrinkCanStateVisual.Opened, Opened);
             }
 
             if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? contents))
@@ -124,8 +122,8 @@ namespace Content.Server.Nutrition.Components
                 return;
             }
 
-            appearance.SetData(DrinkCanStateVisuals.Opened, Opened);
-            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, contents.DrainAvailable.Float());
+            appearance.SetData(FoodVisuals.Visual, contents.DrainAvailable.Float());
+            appearance.SetData(DrinkCanStateVisual.Opened, Opened);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -240,12 +238,14 @@ namespace Content.Server.Nutrition.Components
 
         void ILand.Land(LandEventArgs eventArgs)
         {
+            // Bursting
             if (_pressurized &&
                 !Opened &&
                 _random.Prob(0.25f) &&
                 Owner.TryGetComponent(out ISolutionInteractionsComponent? interactions))
             {
                 Opened = true;
+                UpdateAppearance();
 
                 if (!interactions.CanDrain)
                 {

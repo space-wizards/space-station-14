@@ -155,14 +155,17 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-    state: dr_gibb
+    layers:
+      - state: icon
+        map: ["enum.DrinkCanVisualLayers.Icon"]    
+    netsync: false
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
   - type: Appearance
     visuals:
     - type: DrinkCanVisualizer
-      state_closed: dr_gibb
-      state_open: dr_gibb_open
+      stateClosed: icon
+      stateOpen: icon_open
 
 - type: entity
   parent: DrinkCanBaseFull

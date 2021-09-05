@@ -8,10 +8,10 @@
   "copyright": "https://github.com/discordia-space/CEV-Eris/raw/9c980cb9bc84d07b1c210c5447798af525185f80/icons/obj/food.dmi",
   "states": [
     {
-      "name": "dr_gibb"
+      "name": "icon"
     },
 	{
-	  "name": "dr_gibb_open"
+	  "name": "icon_open"
 	},
     {
       "name": "inhand-right",

@@ -1,9 +1,6 @@
-using Content.Client.Items.Components;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Nutrition.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Nutrition.Visualizers
@@ -11,25 +8,33 @@ namespace Content.Client.Nutrition.Visualizers
     [UsedImplicitly]
     public sealed class DrinkCanVisualizer : AppearanceVisualizer
     {
-        [DataField("state_closed")]
+        [DataField("stateClosed")]
         private string? _stateClosed;
 
-        [DataField("state_open")]
+        [DataField("stateOpen")]
         private string? _stateOpen;
 
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-
-            if (component.TryGetData<bool>(DrinkCanStateVisuals.Opened, out var opened) && opened)
+            if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
             {
-                sprite.LayerSetState(0, $"{_stateOpen}");
                 return;
             }
 
-            sprite.LayerSetState(0, $"{_stateClosed}");
+            if (component.TryGetData<bool>(DrinkCanStateVisual.Opened, out var opened) && opened)
+            {
+                sprite.LayerSetState(DrinkCanVisualLayers.Icon, $"{_stateOpen}");
+                return;
+            }
+
+            sprite.LayerSetState(DrinkCanVisualLayers.Icon, $"{_stateClosed}");
         }
+    }
+
+    public enum DrinkCanVisualLayers : byte
+    {
+        Icon = 0
     }
 }
