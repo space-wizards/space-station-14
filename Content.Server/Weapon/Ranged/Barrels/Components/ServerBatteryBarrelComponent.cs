@@ -188,7 +188,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 if (energyRatio < 1.0)
                 {
-                    var newDamages = new Dictionary<DamageType, int>(projectileComponent.Damages.Count);
+                    var newDamages = new Dictionary<string, int>(projectileComponent.Damages.Count);
                     foreach (var (damageType, damage) in projectileComponent.Damages)
                     {
                         newDamages.Add(damageType, (int) (damage * energyRatio));
@@ -223,7 +223,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             _powerCellContainer.Insert(entity);
 
@@ -273,7 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
@@ -290,6 +290,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [Verb]
         public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)

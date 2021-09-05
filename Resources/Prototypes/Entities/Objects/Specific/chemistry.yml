@@ -42,7 +42,8 @@
         damage: 5
       behaviors:
       - !type:PlaySoundBehavior
-        collection:: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -55,7 +56,7 @@
     amount: 5
   - type: DamageOtherOnHit
     amount: 5
-  
+
 - type: entity
   name: large beaker
   parent: Beaker
@@ -156,13 +157,14 @@
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
+  - type: Item
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    HeldPrefix: 0
   - type: SolutionContainer
     maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
-  - type: Item
-    sprite: Objects/Specific/Chemistry/syringe.rsi
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
@@ -186,7 +188,14 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
-  - type: Pill
+  - type: Item
+    sprite: Objects/Specific/Chemistry/pills.rsi
+  - type: Tag
+    tags:
+      - Pill
+  - type: Food
+    transferAmount: null
+    eatMessage: food-swallow
   - type: SolutionContainer
     maxVol: 50
     caps: None

@@ -17,8 +17,8 @@
 
 - type: itemAction
   actionType: ToggleLight
-  icon: Objects/Tools/flashlight.rsi/lantern_off.png
-  iconOn: Objects/Tools/flashlight.rsi/lantern_on.png
+  icon: Objects/Tools/flashlight.rsi/flashlight.png
+  iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
   name: "Toggle Light"
   description: "Turn the light on."
   filters:

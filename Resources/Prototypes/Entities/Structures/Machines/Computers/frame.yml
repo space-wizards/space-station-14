@@ -9,7 +9,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5,-0.25,0.5,0.25"
+          bounds: "-0.25,-0.5,0.25,0.5"
       mass: 25
       mask:
         - MobImpassable
@@ -36,7 +36,8 @@
         damage: 100
       behaviors:
       - !type:PlaySoundBehavior
-        collection: GlassBreak
+        sound:
+          collection: GlassBreak
       - !type:ChangeConstructionNodeBehavior
         node: monitorBroken
       - !type:DoActsBehavior

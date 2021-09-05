@@ -87,16 +87,10 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAYAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAGAAAACEAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAACAAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAYAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAHgAAABYAAAAWAAAAFgAAABYAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAAA4AAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAADgAAAA4AAAAWAAAAFgAAAA==
   - ind: "-3,0"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABgAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAA==
-  - ind: "-4,0"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-3,-1"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAgAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAABgAAAAgAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAABYAAAAWAAAAIQAAACAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAWAAAAFgAAACEAAAAgAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAhAAAAFgAAABYAAAAhAAAAIAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAAA==
   - ind: "3,-1"
     tiles: AAAAAB8AAAAAAAAAAAAAAB8AAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAIQAAACEAAAAYAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAhAAAAIQAAABgAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAIQAAABgAAAAhAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGAAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAgAAAAIAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAYAAAAGAAAACAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAGAAAABgAAAAgAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAABgAAAAYAAAAIAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAgAAAAIAAAACAAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAGAAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: "2,1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-  - ind: "-3,1"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "2,-2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAfAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAHwAAAAAAAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAfAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAHwAAAAAAAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAB8AAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAHwAAAAAAAAAAAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAB8AAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAfAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAB8AAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAAAAAAAfAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAfAAAAAAAAAA==
   - ind: "3,-2"
@@ -105,8 +99,6 @@ grids:
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "2,-3"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==
-  - ind: "0,-3"
-    tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
 entities:
 - uid: 0
   type: SuspicionHitscanSpawner
@@ -494,7 +486,7 @@ entities:
     pos: 39.53893,-0.77325034
     parent: 853
     type: Transform
-  - useSound:
+  - useSound: !type:SoundPathSpecifier
       path: /Audio/Items/jaws_pry.ogg
     type: Tool
 - uid: 54
@@ -5584,7 +5576,7 @@ entities:
   - pos: -11.5,-6.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -6796,6 +6788,11 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 708
   type: WallReinforced
   components:
@@ -7183,7 +7180,7 @@ entities:
     pos: 5.5,-21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7205,7 +7202,7 @@ entities:
     pos: -23.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7218,7 +7215,7 @@ entities:
     pos: 24.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7251,7 +7248,7 @@ entities:
     pos: -2.5,30.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7264,7 +7261,7 @@ entities:
     pos: 9.5,30.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7329,7 +7326,7 @@ entities:
     pos: -37.5,-6.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7342,7 +7339,7 @@ entities:
     pos: -11.5,-11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7361,7 +7358,7 @@ entities:
     pos: -12.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7374,7 +7371,7 @@ entities:
     pos: 13.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7387,7 +7384,7 @@ entities:
     pos: 12.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7400,7 +7397,7 @@ entities:
     pos: 28.5,12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7413,7 +7410,7 @@ entities:
     pos: 43.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7426,7 +7423,7 @@ entities:
     pos: 44.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7439,7 +7436,7 @@ entities:
     pos: 23.5,0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7452,7 +7449,7 @@ entities:
     pos: 8.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7465,7 +7462,7 @@ entities:
     pos: 9.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7478,7 +7475,7 @@ entities:
     pos: -15.5,-17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7491,7 +7488,7 @@ entities:
     pos: -7.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7504,7 +7501,7 @@ entities:
     pos: 26.5,12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7517,7 +7514,7 @@ entities:
     pos: 23.5,1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7530,7 +7527,7 @@ entities:
     pos: -14.5,-17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7543,7 +7540,7 @@ entities:
     pos: -11.5,-10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7556,7 +7553,7 @@ entities:
     pos: -37.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7569,7 +7566,7 @@ entities:
     pos: -39.5,2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7582,7 +7579,7 @@ entities:
     pos: -34.5,10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7595,7 +7592,7 @@ entities:
     pos: 6.5,26.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7615,7 +7612,7 @@ entities:
   - pos: 39.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7649,7 +7646,7 @@ entities:
     pos: -14.5,1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7661,7 +7658,7 @@ entities:
   - pos: -19.5,10.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7680,7 +7677,7 @@ entities:
   - pos: 23.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7693,7 +7690,7 @@ entities:
     pos: -12.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7706,7 +7703,7 @@ entities:
     pos: -13.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7719,7 +7716,7 @@ entities:
     pos: -14.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7738,7 +7735,7 @@ entities:
     pos: -11.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7751,7 +7748,7 @@ entities:
     pos: 21.5,-15.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7771,7 +7768,7 @@ entities:
     pos: 10.5,21.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7807,7 +7804,7 @@ entities:
     pos: 36.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7820,7 +7817,7 @@ entities:
     pos: 36.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7833,7 +7830,7 @@ entities:
     pos: 37.5,-1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7846,7 +7843,7 @@ entities:
     pos: 35.5,-1.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7859,7 +7856,7 @@ entities:
     pos: 35.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7872,7 +7869,7 @@ entities:
     pos: -2.5,-24.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -7903,7 +7900,7 @@ entities:
   - pos: -11.5,-12.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -12697,6 +12694,9 @@ entities:
       mass: 132
     bodyType: Dynamic
     type: Physics
+  - gravityShakeSound: !type:SoundPathSpecifier
+      path: /Audio/Effects/alert.ogg
+    type: Gravity
 - uid: 854
   type: Catwalk
   components:
@@ -14976,7 +14976,7 @@ entities:
     pos: -19.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15018,7 +15018,7 @@ entities:
     pos: 24.5,-4.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15065,7 +15065,7 @@ entities:
   - pos: 22.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15085,7 +15085,7 @@ entities:
   - pos: 21.5,-7.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15160,7 +15160,7 @@ entities:
     pos: 39.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15208,7 +15208,7 @@ entities:
     pos: -6.5,22.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15674,7 +15674,7 @@ entities:
     pos: 38.5,9.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15706,7 +15706,7 @@ entities:
     pos: 35.5,-0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15725,7 +15725,7 @@ entities:
     pos: 35.5,0.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -15820,7 +15820,7 @@ entities:
     pos: -27.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -18563,7 +18563,7 @@ entities:
   - pos: 38.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -21586,7 +21586,7 @@ entities:
     pos: -13.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -21875,7 +21875,7 @@ entities:
   - pos: -7.5,8.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -22798,7 +22798,7 @@ entities:
   - pos: 40.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -24441,7 +24441,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2378
-  type: d20
+  type: d20Dice
   components:
   - pos: -23.834803,-5.3811545
     parent: 853
@@ -24449,7 +24449,7 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2379
-  type: d8
+  type: d8Dice
   components:
   - pos: -24.287928,-6.3967795
     parent: 853
@@ -24713,7 +24713,7 @@ entities:
   - pos: -8.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -25241,7 +25241,7 @@ entities:
   - pos: 21.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -25499,7 +25499,7 @@ entities:
   - pos: 20.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -40704,7 +40704,7 @@ entities:
   - pos: 45.585052,4.6
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -41206,7 +41206,7 @@ entities:
   - pos: 38.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -42740,7 +42740,8 @@ entities:
 - uid: 4178
   type: Poweredlight
   components:
-  - pos: 38.499187,9.874689
+  - rot: 3.141592653589793 rad
+    pos: 50.5,-1
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -42924,7 +42925,7 @@ entities:
     pos: -11.5,-3.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -42937,7 +42938,7 @@ entities:
     pos: -13.5,-3.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -43457,6 +43458,11 @@ entities:
   - containers:
       cellslot_cell_container: !type:ContainerSlot {}
     type: ContainerContainer
+  - cellInsertSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magout.ogg
+    cellRemoveSound: !type:SoundPathSpecifier
+      path: /Audio/Items/pistol_magin.ogg
+    type: PowerCellSlot
 - uid: 4271
   type: Table
   components:
@@ -47581,7 +47587,7 @@ entities:
   - pos: 39.5,11.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -47599,7 +47605,7 @@ entities:
   - pos: 22.5,13.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48804,7 +48810,7 @@ entities:
   - pos: -17.5,-18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48816,7 +48822,7 @@ entities:
   - pos: -17.5,-19.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -48828,7 +48834,7 @@ entities:
   - pos: -17.5,-20.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -49635,7 +49641,7 @@ entities:
   - pos: -20.5,16.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -49873,7 +49879,7 @@ entities:
   - pos: -20.5,17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50118,7 +50124,7 @@ entities:
   - pos: 26.5,-22.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50197,7 +50203,7 @@ entities:
   - pos: -26.5,19.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50209,7 +50215,7 @@ entities:
   - pos: -26.5,18.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50221,7 +50227,7 @@ entities:
   - pos: -26.5,17.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50261,7 +50267,7 @@ entities:
   - pos: 24.5,-25.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50273,7 +50279,7 @@ entities:
   - pos: 27.5,-20.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50581,7 +50587,7 @@ entities:
     pos: 19.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50594,7 +50600,7 @@ entities:
     pos: 18.5,-2.5
     parent: 853
     type: Transform
-  - IsPlaceable: False
+  - isPlaceable: False
     type: PlaceableSurface
   - containers:
       EntityStorageComponent: !type:Container
@@ -50828,4 +50834,50 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 5150
+  type: CableHV
+  components:
+  - anchored: True
+    pos: 40.5,5.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5151
+  type: CableHV
+  components:
+  - anchored: True
+    pos: 42.5,5.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 5152
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 38,9.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5153
+  type: Poweredlight
+  components:
+  - rot: -1.5707963267948966 rad
+    pos: 45,9.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 ...

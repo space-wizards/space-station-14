@@ -17,6 +17,23 @@
     sprite: Objects/Tools/Hydroponics/hoe.rsi
 
 - type: entity
+  name: plant clippers
+  parent: BaseItem
+  id: HydroponicsToolClippers
+  description: A tool used to take samples from plants.
+  components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+
+- type: entity
   name: scythe
   parent: BaseItem
   id: HydroponicsToolScythe
@@ -30,9 +47,12 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
-  - type: Item
+  - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
-
+    size: 20
+    Slots:
+    - back
+    
 - type: entity
   name: hatchet
   parent: BaseItem

@@ -11,6 +11,6 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Rotates this <see cref="Node"/>.
         /// </summary>
-        void RotateEvent(RotateEvent ev);
+        void RotateEvent(ref RotateEvent ev);
     }
 }

@@ -207,7 +207,7 @@ namespace Content.Server.Disposal.Unit.Components
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("self-insert-verb-get-data-text");
+                data.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
@@ -230,13 +230,44 @@ namespace Content.Server.Disposal.Unit.Components
                 }
 
                 data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("flush-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                data.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                data.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
             }
 
             protected override void Activate(IEntity user, DisposalUnitComponent component)
             {
                 EntitySystem.Get<DisposalUnitSystem>().Engage(component);
+            }
+        }
+
+        [Verb]
+        private sealed class EjectVerb : Verb<DisposalUnitComponent>
+        {
+            public override bool AlternativeInteraction => true;
+
+            protected override void GetData(IEntity user, DisposalUnitComponent component, VerbData data)
+            {
+                data.Visibility = VerbVisibility.Invisible;
+
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
+                    component.ContainedEntities.Contains(user))
+                {
+                    return;
+                }
+
+                // Only show verb if actually containing any entities.
+                if (component.ContainedEntities.Count > 0)
+                    data.Visibility = VerbVisibility.Visible;
+                else
+                    data.Visibility = VerbVisibility.Invisible;
+
+                data.Text = Loc.GetString("disposal-eject-verb-get-data-text");
+                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+            }
+
+            protected override void Activate(IEntity user, DisposalUnitComponent component)
+            {
+                EntitySystem.Get<DisposalUnitSystem>().TryEjectContents(component); 
             }
         }
 
