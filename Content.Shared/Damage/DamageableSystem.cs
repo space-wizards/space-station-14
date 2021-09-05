@@ -75,10 +75,6 @@ namespace Content.Shared.Damage
             }
 
             component.TotalDamage = 0;
-
-            // TODO REMOVE THIS
-            component.Dirty();
-            RaiseLocalEvent(component.Owner.Uid, new DamageChangedEvent(component, false), false);
         }
 
         /// <summary>
@@ -271,16 +267,42 @@ namespace Content.Shared.Damage
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not DamageableComponentState state)
+            if (args.Next is not DamageableComponentState state)
             {
                 return;
             }
 
-            component.DamagePerType = state.DamagePerType;
             component.ResistanceSetID = state.ResistanceSetID;
 
-            component.DamagePerGroup = GetDamagePerGroup(component.DamagePerType);
-            component.TotalDamage = component.DamagePerType.Values.Sum();
+            // Check if the damage per type has updated. Usually a damage change is apparent by just looking at the
+            // total. Only check every single damage type if we need to.
+            var newTotalDamage = state.DamagePerType.Values.Sum();
+            if (component.TotalDamage == newTotalDamage &&
+                component.DamagePerType.Count == state.DamagePerType.Count)
+            {
+                var damageChanged = false;
+                foreach (var (type, newValue) in state.DamagePerType)
+                {
+                    if (!component.DamagePerType.TryGetValue(type, out var oldValue) ||
+                        oldValue != newValue)
+                    {
+                        damageChanged = true;
+                        break;
+                    }
+                }
+
+                if (!damageChanged)
+                    return;
+            }
+            
+
+
+            component.DamagePerType = state.DamagePerType;
+
+            // Calculate dependent values and raise local event. The event is needed as there may be client-exclusive
+            // systems (e.g. UI) that need to know if damage changed as a result of server-exclusive damage-dealing
+            // systems.
+            DamageChanged(component, component.TotalDamage < newTotalDamage);
         }
     }
 
@@ -292,17 +314,13 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     Given that nearly every component that cares about a change in the damage, needs to know the
         ///     current damage values, directly passing this information prevents a lot of duplicate
-        ///     Owner.TryGetComponent() calls. One of the few exceptions is lightbulbs, which just care if ANY damage
-        ///     was taken, not how much.
+        ///     Owner.TryGetComponent() calls.
         /// </remarks>
         public readonly DamageableComponent Damageable;
 
         /// <summary>
-        ///     Has any damage type increased? 
+        ///     Has the total damage in the container increased?
         /// </summary>
-        /// <remarks>
-        ///     This can still be true even if the overall effect of the damage change was to reduce the total damage.
-        /// </remarks>
         public readonly bool DamageIncreased;
         public DamageChangedEvent(DamageableComponent damageable, bool damageIncreased)
         {

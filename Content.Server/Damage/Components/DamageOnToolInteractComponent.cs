@@ -45,7 +45,7 @@ namespace Content.Server.Damage.Components
 
                     if (tool.HasQuality(toolQuality))
                     {
-                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, WeldingDamage);
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target, DefaultDamage);
                         return true;
                     }
                 }

@@ -7,29 +7,29 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
 {
-    public class SharedMobStateSystem : EntitySystem
+    public class MobStateSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedMobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
-            SubscribeLocalEvent<SharedMobStateComponent, DamageChangedEvent>(UpdateState);
-            SubscribeLocalEvent<SharedMobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
+            SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
+            SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
         }
 
-        private void OnStartPullAttempt(EntityUid uid, SharedMobStateComponent component, StartPullAttemptEvent args)
+        private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {
             if(component.IsIncapacitated())
                 args.Cancel();
         }
 
-        public void UpdateState(EntityUid _, SharedMobStateComponent component, DamageChangedEvent args)
+        public void UpdateState(EntityUid _, MobStateComponent component, DamageChangedEvent args)
         {
             component.UpdateState(args.Damageable.TotalDamage);
         }
 		
-        private void OnMoveAttempt(EntityUid uid, SharedMobStateComponent component, MovementAttemptEvent args)
+        private void OnMoveAttempt(EntityUid uid, MobStateComponent component, MovementAttemptEvent args)
         {
             switch (component.CurrentState)
             {
