@@ -1,4 +1,5 @@
 #nullable enable
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Disposal.Tube.Components;
@@ -19,13 +20,13 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestOf(typeof(DisposalUnitComponent))]
     public class DisposalUnitTest : ContentIntegrationTest
     {
-        private void UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private async Task UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
+            List<Task> insertionTasks = new();
             foreach (var entity in entities)
             {
                 Assert.That(EntitySystem.Get<DisposalUnitSystem>().CanInsert(unit, entity), Is.EqualTo(result));
-                var insertTask = unit.TryInsert(entity);
-                insertTask.ContinueWith(task =>
+                var insertTask = unit.TryInsert(entity).ContinueWith(task =>
                 {
                     Assert.That(task.Result, Is.EqualTo(result));
                     if (result)
@@ -34,7 +35,9 @@ namespace Content.IntegrationTests.Tests.Disposal
                         Assert.That(entity.Transform.Parent, Is.EqualTo(unit.Owner.Transform));
                     }
                 });
+                insertionTasks.Add(insertTask);
             }
+            Task.WaitAll(insertionTasks.ToArray());
         }
 
         private void UnitContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
@@ -45,9 +48,9 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private async void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
-            UnitInsert(unit, result, entities);
+            await UnitInsert(unit, result, entities);
             UnitContains(unit, result, entities);
         }
 
@@ -104,14 +107,17 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
+            var options = new ServerIntegrationOptions { ExtraPrototypes = Prototypes };
             var server = StartServerDummyTicker(options);
             await server.WaitIdleAsync();
 
-            IEntity human;
-            IEntity wrench;
-            DisposalUnitComponent unit;
+            IEntity human = default!;
+            IEntity wrench = default!;
+            IEntity disposalUnit = default!;
+            IEntity disposalTrunk = default!;
+            DisposalUnitComponent unit = default!;
             EntityCoordinates coordinates = default!;
+
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
@@ -147,8 +153,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Spawn the entities
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
-                var disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
-                var disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
+                disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
+                disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
 
                 // Check that we have a grid, so that we can anchor our unit
                 Assert.That(mapManager.TryFindGridAt(disposalUnit.Transform.MapPosition, out var _));
@@ -160,7 +166,10 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Can't insert, unanchored and unpowered
                 unit.Owner.Transform.Anchored = false;
                 UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
+            });
 
+            await server.WaitAssertion(() =>
+            {
                 // Anchor the disposal unit
                 unit.Owner.Transform.Anchored = true;
 
@@ -172,19 +181,28 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Can insert mobs and items
                 UnitInsertContains(unit, true, human, wrench);
+            });
 
+            await server.WaitAssertion(() =>
+            {
                 // Move the disposal trunk away
                 disposalTrunk.Transform.WorldPosition += (1, 0);
 
                 // Fail to flush with a mob and an item
                 Flush(unit, false, human, wrench);
+            });
 
+            await server.WaitAssertion(() =>
+            {
                 // Move the disposal trunk back
                 disposalTrunk.Transform.WorldPosition -= (1, 0);
 
                 // Fail to flush with a mob and an item, no power
                 Flush(unit, false, human, wrench);
+            });
 
+            await server.WaitAssertion(() =>
+            {
                 // Remove power need
                 Assert.True(disposalUnit.TryGetComponent(out ApcPowerReceiverComponent? power));
                 power!.NeedsPower = false;
@@ -192,12 +210,13 @@ namespace Content.IntegrationTests.Tests.Disposal
 
                 // Flush with a mob and an item
                 Flush(unit, true, human, wrench);
+            });
 
+            await server.WaitAssertion(() =>
+            {
                 // Re-pressurizing
                 Flush(unit, false);
             });
-
-            await server.WaitIdleAsync();
         }
     }
 }
