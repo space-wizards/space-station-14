@@ -20,9 +20,50 @@
         - VaultImpassable
   - type: Sprite
     sprite: Structures/Furniture/potted_plants.rsi
-  - type: PottedPlantHide
   - type: SecretStash
     secretPartName: the plant
+  - type: Pullable
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/plant_rustle.ogg
+
+- type: entity
+  id: ECSPottedPlantBase
+  parent: BaseStructureDynamic
+  abstract: true
+  components:
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 25
+      mask:
+        - MobImpassable
+      layer:
+        - Opaque
+        - MobImpassable
+        - SmallImpassable
+        - VaultImpassable
+  - type: Sprite
+    sprite: Structures/Furniture/potted_plants.rsi
+  - type: PottedPlantHide
+  - type: SecretStashECS
+    secretPartName: the ECS plant
+    noItemOnInteractMessage: potted-plant-hide-component-interact-hand-got-no-item-message
+    interactionSound:
+      path: /Audio/Effects/plant_rustle.ogg
   - type: Pullable
   - type: Damageable
   - type: Destructible
@@ -48,8 +89,18 @@
   - type: RandomPottedPlant
 
 - type: entity
+  id: PottedPlantECSRandom
+  parent: ECSPottedPlantBase
+  name: ECS potted plant
+  description: A little bit of nature contained in a pot.
+  components:
+  - type: Sprite
+    state: random
+  - type: RandomPottedPlant
+
+- type: entity
   id: PottedPlantRandomPlastic
-  parent: PottedPlantBase
+  parent: ECSPottedPlantBase
   name: plastic potted plant
   description: A fake, cheap looking, plastic tree. Perfect for people who kill every plant they touch.
   components:
@@ -60,7 +111,7 @@
 
 - type: entity
   id: PottedPlantRD
-  parent: PottedPlantBase
+  parent: ECSPottedPlantBase
   name: "RD's potted plant"
   description: "A gift from the botanical staff, presented after the RD's reassignment. There's a tag on it that says \"Y'all come back now, y'hear?\"\nIt doesn't look very healthy..."
   components:
@@ -80,7 +131,7 @@
 
 - type: entity
   id: PottedPlantBioluminscent
-  parent: PottedPlantBase
+  parent: ECSPottedPlantBase
   name: "bioluminescent potted plant"
   description: "It produces light!"
   components:

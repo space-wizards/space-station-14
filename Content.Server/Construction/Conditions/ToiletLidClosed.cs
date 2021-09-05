@@ -16,13 +16,13 @@ namespace Content.Server.Construction.Conditions
         public async Task<bool> Condition(IEntity entity)
         {
             if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
-            return !toilet.LidOpen;
+            return !toilet.IsLidOpen;
         }
 
         public bool DoExamine(IEntity entity, FormattedMessage message, bool inExamineRange)
         {
             if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
-            if (!toilet.LidOpen) return false;
+            if (!toilet.IsLidOpen) return false;
 
             message.AddMarkup(Loc.GetString("construction-condition-toilet-lid-closed") + "\n");
             return true;

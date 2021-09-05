@@ -11,7 +11,7 @@
     state: closed_toilet_seat_up
     netsync: false
   - type: Toilet
-  - type: SecretStash
+  - type: SecretStashECS
     secretPartName: the toilet cistern
   - type: SolutionContainer
     maxVol: 250

@@ -4,6 +4,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.Chat.Managers;
 using Content.Server.Notification;
 using Content.Server.Storage.Components;
+using Content.Server.Storage.EntitySystems;
 using Content.Server.Tools.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
@@ -38,22 +39,19 @@ namespace Content.Server.Toilet
 
         private bool _isPrying = false;
 
-        [ViewVariables] public bool LidOpen { get; private set; }
+        [ViewVariables] public bool IsLidOpen { get; private set; }
         [ViewVariables] public bool IsSeatUp { get; private set; }
-
-        [ViewVariables] private SecretStashComponent _secretStash = default!;
 
         [DataField("toggleSound")] SoundSpecifier _toggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
 
         protected override void Initialize()
         {
             base.Initialize();
-            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
         }
 
         public void MapInit()
         {
-            // roll is toilet seat will be up or down
+            // randomize if toilet seat will be up or down
             var random = IoCManager.Resolve<IRobustRandom>();
             IsSeatUp = random.Prob(0.5f);
             UpdateSprite();
@@ -79,15 +77,20 @@ namespace Content.Server.Toilet
                 _isPrying = false;
 
                 // all cool - toggle lid
-                LidOpen = !LidOpen;
+                IsLidOpen = !IsLidOpen;
                 UpdateSprite();
 
                 return true;
             }
-            // maybe player trying to hide something inside cistern?
-            else if (LidOpen)
+            // Try to hide something in secret stash
+            else if (IsLidOpen && Owner.TryGetComponent<SecretStashECSComponent>(out var secretStash))
             {
-                return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
+                var secretStashSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<SecretStashSystem>();
+                var isAnItemStashed = secretStashSystem.HasItemInside(secretStash);
+                var args = new SecretStashTryHideItemEvent(eventArgs.User, Owner, eventArgs.Using);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, args);
+                
+                return !isAnItemStashed;
             }
 
             return false;
@@ -95,13 +98,18 @@ namespace Content.Server.Toilet
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            // trying get something from stash?
-            if (LidOpen)
+            // Try to access secret stash
+            if (IsLidOpen && Owner.TryGetComponent<SecretStashECSComponent>(out var secretStash))
             {
-                var gotItem = _secretStash.TryGetItem(eventArgs.User);
-
+                var secretStashSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<SecretStashSystem>();
+                var gotItem = secretStashSystem.HasItemInside(secretStash);
+                var args = new SecretStashTryGetItemEvent(eventArgs.User, Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, args);
+                           
                 if (gotItem)
+                {
                     return true;
+                }
             }
 
             // just want to up/down seat?
@@ -118,9 +126,10 @@ namespace Content.Server.Toilet
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (inDetailsRange && LidOpen)
+            if (inDetailsRange && IsLidOpen && Owner.TryGetComponent<SecretStashECSComponent>(out var secretStash))
             {
-                if (_secretStash.HasItemInside())
+                var secretStashSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<SecretStashSystem>();
+                if (secretStashSystem.HasItemInside(secretStash))
                 {
                     message.AddMarkup(Loc.GetString("toilet-component-on-examine-found-hidden-item"));
                 }
@@ -139,7 +148,7 @@ namespace Content.Server.Toilet
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(ToiletVisuals.LidOpen, LidOpen);
+                appearance.SetData(ToiletVisuals.LidOpen, IsLidOpen);
                 appearance.SetData(ToiletVisuals.SeatUp, IsSeatUp);
             }
         }

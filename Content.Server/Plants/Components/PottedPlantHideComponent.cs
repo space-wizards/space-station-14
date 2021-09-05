@@ -1,16 +1,8 @@
-using System.Threading.Tasks;
 using Content.Server.Storage.Components;
-using Content.Shared.Audio;
+using Content.Server.Storage.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
-using Content.Shared.Sound;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
-using Robust.Shared.Player;
-using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.ViewVariables;
+using System.Threading.Tasks;
 
 namespace Content.Server.Plants.Components
 {
@@ -19,37 +11,37 @@ namespace Content.Server.Plants.Components
     {
         public override string Name => "PottedPlantHide";
 
-        [ViewVariables] private SecretStashComponent _secretStash = default!;
-        [DataField("rustleSound")] private SoundSpecifier _rustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            _secretStash = Owner.EnsureComponent<SecretStashComponent>();
-        }
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            Rustle();
-            return _secretStash.TryHideItem(eventArgs.User, eventArgs.Using);
+            if (Owner.TryGetComponent<SecretStashECSComponent>(out var secretStash))
+            {
+                var secretStashSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<SecretStashSystem>();
+                var isAnItemStashed = secretStashSystem.HasItemInside(secretStash);
+                var args = new SecretStashTryHideItemEvent(eventArgs.User, Owner, eventArgs.Using);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, args);
+
+                return !isAnItemStashed;
+            }
+
+            return false;
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            Rustle();
-
-            var gotItem = _secretStash.TryGetItem(eventArgs.User);
-            if (!gotItem)
+            if (Owner.TryGetComponent<SecretStashECSComponent>(out var secretStash))
             {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("potted-plant-hide-component-interact-hand-got-no-item-message"));
+                var secretStashSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<SecretStashSystem>();
+                var gotItem = secretStashSystem.HasItemInside(secretStash);
+                var args = new SecretStashTryGetItemEvent(eventArgs.User, Owner);
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, args);
+
+                if (gotItem)
+                {
+                    return true;
+                }
             }
 
-            return gotItem;
-        }
-
-        private void Rustle()
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), _rustleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.25f));
+            return false;
         }
     }
 }
