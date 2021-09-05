@@ -1,4 +1,3 @@
-using Content.Server.Placeable;
 using Content.Server.Storage.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Acts;
@@ -7,6 +6,7 @@ using Content.Shared.Explosion;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Placeable;
 using Content.Shared.Storage;
 using Content.Shared.Tool;
 using JetBrains.Annotations;
@@ -58,7 +58,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (comp.Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
-                placeableSurfaceComponent.IsPlaceable = comp.Open;
+                Get<PlaceableSurfaceSystem>().SetPlaceable(placeableSurfaceComponent, comp.Open);
             }
 
             UpdateAppearance(comp);
@@ -181,7 +181,7 @@ namespace Content.Server.Storage.EntitySystems
 
             if (comp.Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
             {
-                placeableSurfaceComponent.IsPlaceable = comp.Open;
+                Get<PlaceableSurfaceSystem>().SetPlaceable(placeableSurfaceComponent, comp.Open);
             }
 
             if (comp.Owner.TryGetComponent(out AppearanceComponent? appearance))
