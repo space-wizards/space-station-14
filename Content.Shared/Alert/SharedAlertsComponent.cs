@@ -87,9 +87,12 @@ namespace Content.Shared.Alert
         {
             if (AlertManager.TryGet(alertType, out var alert))
             {
+                // Check whether the alert category we want to show is already being displayed, with the same type,
+                // severity, and cooldown.
                 if (_alerts.TryGetValue(alert.AlertKey, out var alertStateCallback) &&
-                    alert.AlertType == alertType &&
-                    alertStateCallback.Severity == severity && alertStateCallback.Cooldown == cooldown)
+                    alertStateCallback.Type == alertType &&
+                    alertStateCallback.Severity == severity &&
+                    alertStateCallback.Cooldown == cooldown)
                 {
                     return;
                 }
@@ -98,7 +101,7 @@ namespace Content.Shared.Alert
                 _alerts.Remove(alert.AlertKey);
 
                 _alerts[alert.AlertKey] = new AlertState
-                    {Cooldown = cooldown, Severity = severity};
+                    {Cooldown = cooldown, Severity = severity, Type=alertType};
 
                 AfterShowAlert();
 
@@ -180,12 +183,12 @@ namespace Content.Shared.Alert
     [Serializable, NetSerializable]
     public class ClickAlertMessage : ComponentMessage
     {
-        public readonly AlertType AlertType;
+        public readonly AlertType Type;
 
         public ClickAlertMessage(AlertType alertType)
         {
             Directed = true;
-            AlertType = alertType;
+            Type = alertType;
         }
     }
 
@@ -194,5 +197,6 @@ namespace Content.Shared.Alert
     {
         public short? Severity;
         public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
+        public AlertType Type;
     }
 }
