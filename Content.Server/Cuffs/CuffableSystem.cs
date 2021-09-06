@@ -4,6 +4,8 @@ using Content.Shared.Hands.Components;
 using Content.Shared.Cuffs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Content.Shared.Verbs;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Cuffs
 {
@@ -15,6 +17,27 @@ namespace Content.Server.Cuffs
             base.Initialize();
 
             EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, OnHandCountChanged);
+
+            SubscribeLocalEvent<CuffableComponent, AssembleVerbsEvent>(AddCuffableVerbs);
+        }
+
+        private void AddCuffableVerbs(EntityUid uid, CuffableComponent component, AssembleVerbsEvent args)
+        {
+            if (component.CuffedHandCount == 0 || !args.DefaultInRangeUnobstructed)
+                return;
+
+            // check if the user can interact (or is uncuffing themselves)
+            if (args.User != component.Owner && args.Hands == null)
+                return;
+
+            Verb verb = new("uncuff");
+            verb.Act = () => component.TryUncuff(args.User);
+            if (args.PrepareGUI)
+            {
+                verb.Text = Loc.GetString("uncuff-verb-get-data-text");
+                //TODO VERB ICON add uncuffing symbol? may re-use the symbol showing that you are currently cuffed?
+            }
+            args.Verbs.Add(verb);
         }
 
         /// <summary>
