@@ -397,6 +397,7 @@ namespace Content.Server.Atmos.EntitySystems
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
                         otherTile2.MonstermosInfo = new MonstermosInfo {LastQueueCycle = queueCycle};
                         _depressurizeTiles[tileCount++] = otherTile2;
+                        if (tileCount >= limit) break;
                     }
                 }
 
