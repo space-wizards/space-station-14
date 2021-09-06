@@ -560,7 +560,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AdjustEqMovement(TileAtmosphere tile, AtmosDirection direction, float amount)
         {
-            DebugTools.Assert(tile.AdjacentBits.HasFlag(direction));
+            DebugTools.Assert(tile.AdjacentBits.IsFlagSet(direction));
             DebugTools.Assert(tile.AdjacentTiles[direction.ToIndex()] != null);
             tile.MonstermosInfo[direction] += amount;
             // Every call to this method already ensures that the adjacent tile won't be null.
