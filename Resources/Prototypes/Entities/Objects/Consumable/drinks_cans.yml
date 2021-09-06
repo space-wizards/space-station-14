@@ -196,8 +196,9 @@
     contents:
       - id: DrinkColaCan
         amount: 6
-  - type: StorageCounter
-    countTag: Cola
+  - type: ItemCounter
+    count:
+      tags: [Cola]
   - type: Appearance
     visuals:
       - type: StackVisualizer

@@ -203,8 +203,6 @@
     sprite: Objects/Fun/crayons.rsi
     size: 9999
     HeldPrefix: box
-  - type: StorageCounter
-    countTag: Crayon
   - type: StorageFill
     contents:
     - id: CrayonRed
@@ -214,7 +212,7 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
-  - type: ItemCounter
+  - type: ItemMapper
     mapLayers:
       black_box:
         whitelist:

@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -22,7 +23,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     [UsedImplicitly]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class AreaReactionEffect : IReactionEffect
+    public abstract class AreaReactionEffect : IReactionEffect, ISerializationHooks
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -83,7 +84,7 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
-        protected AreaReactionEffect()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
