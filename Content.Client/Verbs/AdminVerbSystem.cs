@@ -53,6 +53,7 @@ namespace Content.Client.Verbs
 
             // TODO VERBS support verbs when right clicking empty tiles? E.g., can point at a tile via keybind but
             // not via verbs. Would require assemble verbs event to support a null-able entity and pass map coords?
+            // Then make this verb hidden unless the user is acting on a tile?
 
             var coords = args.Target.Transform.MapPosition;
             if (!_mapManager.TryFindGridAt(coords, out var grid))

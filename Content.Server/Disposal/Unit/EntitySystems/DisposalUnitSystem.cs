@@ -26,6 +26,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
+using Content.Shared.Verbs;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
@@ -58,6 +59,52 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<DisposalUnitComponent, InteractHandEvent>(HandleInteractHand);
             SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
+
+            SubscribeLocalEvent<DisposalUnitComponent, AssembleVerbsEvent>(AddDisposalVerbs);
+        }
+
+        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, AssembleVerbsEvent args)
+        {
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            // Verb to flush the unit
+            if (component.ContainedEntities.Count != 0)
+            {
+                Verb verb = new("Disposal:flush");
+                verb.Act = () => Engage(component);
+                if (args.PrepareGUI)
+                {
+                    verb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                    verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                }
+                args.Verbs.Add(verb);
+            }
+
+            // Verb to climb inside of the unit, where the average user belongs.
+            if (!component.ContainedEntities.Contains(args.User))
+            {
+                Verb verb = new("Disposal:selfinsert");
+                verb.Act = () => component.TryInsert(args.User, args.User);
+                if (args.PrepareGUI)
+                {
+                    verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
+                    verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                }
+                args.Verbs.Add(verb);
+            }
+
+            // Verb to eject contents onto the floor
+            if (component.ContainedEntities.Count != 0)
+            {
+                Verb verb = new("Disposal:eject");
+                verb.Act = () => TryEjectContents(component);
+                if (args.PrepareGUI)
+                {
+                    verb.Category = VerbCategories.Eject;
+                }
+                args.Verbs.Add(verb);
+            }
         }
 
         public override void Update(float frameTime)
