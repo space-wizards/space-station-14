@@ -19,12 +19,19 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<EmergencyLightMessage>(HandleEmergencyLightMessage);
             SubscribeLocalEvent<EmergencyLightComponent, ComponentGetState>(GetCompState);
+            SubscribeLocalEvent<EmergencyLightComponent, PointLightToggleEvent>(HandleLightToggle);
+        }
+
+        private void HandleLightToggle(EntityUid uid, EmergencyLightComponent component, PointLightToggleEvent args)
+        {
+            if (component.Enabled == args.Enabled) return;
+            component.Enabled = args.Enabled;
+            component.Dirty();
         }
 
         private void GetCompState(EntityUid uid, EmergencyLightComponent component, ref ComponentGetState args)
         {
-            if (args.State is not EmergencyLightComponentState state) return;
-            component.Enabled = state.Enabled;
+            args.State = new EmergencyLightComponentState(component.Enabled);
         }
 
         private void HandleEmergencyLightMessage(EmergencyLightMessage message)

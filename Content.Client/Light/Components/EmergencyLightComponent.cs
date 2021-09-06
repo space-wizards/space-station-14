@@ -8,6 +8,5 @@ namespace Content.Client.Light.Components
     [NetworkedComponent]
     public class EmergencyLightComponent : SharedEmergencyLightComponent
     {
-        public override string Name => "EmergencyLight";
     }
 }

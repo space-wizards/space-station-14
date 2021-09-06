@@ -1,9 +1,11 @@
 ﻿using System;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Light.Component
 {
+    [NetworkedComponent]
     public abstract class SharedEmergencyLightComponent : Robust.Shared.GameObjects.Component
     {
         public override string Name => "EmergencyLight";

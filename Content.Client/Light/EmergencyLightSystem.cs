@@ -47,8 +47,9 @@ namespace Content.Client.Light
         {
             if (args.Current is not EmergencyLightComponentState state) return;
 
-            if (component.Enabled == state.Enabled ||
-                !ComponentManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
+            if (component.Enabled == state.Enabled) return;
+
+            var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
 
             component.Enabled = state.Enabled;
 
@@ -69,16 +70,17 @@ namespace Content.Client.Light
 
         private void HandleStartup(EntityUid uid, EmergencyLightComponent component, ComponentStartup args)
         {
-            component.Owner.EnsureComponent<AnimationPlayerComponent>();
-            PlayAnimation(uid, component);
+            PlayAnimation(component);
         }
 
-        private void PlayAnimation(EntityUid uid, EmergencyLightComponent component)
+        private void PlayAnimation(EmergencyLightComponent component)
         {
-            if (!component.Enabled ||
-                !ComponentManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
+            if (!component.Enabled) return;
 
-            playerComponent.Play(Animation, AnimKey);
+            var playerComponent = component.Owner.EnsureComponent<AnimationPlayerComponent>();
+
+            if (!playerComponent.HasRunningAnimation(AnimKey))
+                playerComponent.Play(Animation, AnimKey);
         }
     }
 }
