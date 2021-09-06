@@ -4,7 +4,7 @@ using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Storage.ItemCounter
+namespace Content.Shared.Storage.Components
 {
     [Serializable, NetSerializable]
     public enum StorageMapVisuals : sbyte

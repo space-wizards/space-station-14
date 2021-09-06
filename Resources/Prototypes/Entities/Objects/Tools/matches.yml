@@ -63,8 +63,9 @@
     contents:
       - id: Matchstick
         amount: 6
-  - type: StorageCounter
-    countTag: Matchstick
+  - type: ItemCounter
+    count:
+      tags: [Cigar]
   - type: Appearance
     visuals:
       - type: BagOpenCloseVisualizer
