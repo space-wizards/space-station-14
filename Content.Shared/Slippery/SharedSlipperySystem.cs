@@ -28,7 +28,9 @@ namespace Content.Shared.Slippery
 
             if (!CanSlip(component, otherUid, out _)) return;
 
-            _slipped.Add(component);
+            if (!_slipped.Contains(component))
+                _slipped.Add(component);
+
             component.Colliding.Add(otherUid);
         }
 
