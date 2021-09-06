@@ -1,10 +1,12 @@
-﻿using Content.Shared.Sound;
+﻿using System.Collections.Generic;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Content.Shared.Verbs;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -24,7 +26,27 @@ namespace Content.Server.PneumaticCannon
         [ViewVariables(VVAccess.ReadWrite)]
         public PneumaticCannonFireMode Mode = PneumaticCannonFireMode.Single;
 
+        /// <summary>
+        ///     Used to fire the pneumatic cannon in intervals rather than all at the same time
+        /// </summary>
+        public float AccumulatedFrametime;
+
+        public Queue<FireData> FireQueue = new();
+
+        [DataField("fireInterval")]
+        public float FireInterval = 0.1f;
+
+        /// <summary>
+        ///     Whether the pneumatic cannon should instantly fire once, or whether it should wait for the
+        ///     fire interval initially.
+        /// </summary>
+        [DataField("instantFire")]
+        public bool InstantFire = true;
+
+        [DataField("toolModifyPower")]
         public ToolQuality ModifyPower = ToolQuality.Screwing;
+
+        [DataField("toolModifyMode")]
         public ToolQuality ModifyMode = ToolQuality.Anchoring;
 
         /// <remarks>
@@ -37,6 +59,13 @@ namespace Content.Server.PneumaticCannon
         [DataField("baseThrowRange")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseThrowRange = 8.0f;
+
+        /// <summary>
+        ///     How long to stun for if they shoot the pneumatic cannon at high power.
+        /// </summary>
+        [DataField("highPowerStunTime")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float HighPowerStunTime = 3.0f;
 
         [DataField("fireSound")]
         public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Effects/thunk.ogg");
@@ -79,6 +108,13 @@ namespace Content.Server.PneumaticCannon
                 EntitySystem.Get<PneumaticCannonSystem>().TryEjectAllItems(component, user);
             }
         }
+
+        public struct FireData
+        {
+            public IEntity User;
+            public float Strength;
+            public Vector2 Direction;
+        }
     }
 
     /// <summary>
@@ -90,7 +126,8 @@ namespace Content.Server.PneumaticCannon
     {
         Low = 0,
         Medium = 1,
-        High = 2
+        High = 2,
+        Len = 3 // used for length calc
     }
 
     /// <summary>
@@ -99,6 +136,7 @@ namespace Content.Server.PneumaticCannon
     public enum PneumaticCannonFireMode : byte
     {
         Single = 0,
-        All = 1
+        All = 1,
+        Len = 2 // used for length calc
     }
 }

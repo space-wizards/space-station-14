@@ -8,10 +8,22 @@ pneumatic-cannon-component-verb-eject-items-name = Eject all items
 pneumatic-cannon-component-insert-item-success = You insert { THE($item) } into { THE($cannon) }.
 pneumatic-cannon-component-insert-item-failure = You can't seem to fit { THE($item) } in { THE($cannon) }.
 
+## Shown when trying to fire, but no gas
+
+pneumatic-cannon-component-fire-no-gas = { CAPITALIZE(THE($cannon)) } whirrs, but no gas comes out.
+
 ## Shown when changing the fire mode or power.
 
-pneumatic-cannon-component-change-fire-mode = You set the firing mode to: { $mode }.
-pneumatic-cannon-component-change-power = You set the power to: { $power }.
+pneumatic-cannon-component-change-fire-mode = { $mode ->
+    [All] You loosen the valves to fire everything at once.
+    *[Single] You tighten the valves to fire one item at a time.
+}
+
+pneumatic-cannon-component-change-power = { $power ->
+    [High] You set the limiter to maximum power. It feels a little too powerful...
+    [Medium] You set the limiter to medium power.
+    *[Low] You set the limiter to low power.
+}
 
 ## Shown when inserting/removing the gas tank.
 

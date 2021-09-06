@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Camera;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -30,10 +31,9 @@ namespace Content.Server.PneumaticCannon
     public class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
-        private Queue<FireData> _fireQueue = new();
-        private float _accumulatedFrametime = 0f;
-        private float _dequeueInterval = .1f;
+        private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
 
         public override void Initialize()
         {
@@ -48,31 +48,42 @@ namespace Content.Server.PneumaticCannon
         {
             base.Update(frameTime);
 
-            if (_fireQueue.Count == 0)
-            {
-                _accumulatedFrametime = 0;
+            if (_currentlyFiring.Count == 0)
                 return;
-            }
 
-            _accumulatedFrametime += frameTime;
-
-            if (_accumulatedFrametime >= _dequeueInterval)
+            foreach (var comp in _currentlyFiring.ToArray())
             {
-                _accumulatedFrametime -= _dequeueInterval;
-                var dat = _fireQueue.Dequeue();
-                SoundSystem.Play(Filter.Pvs(dat.User), dat.Sound.GetSound());
-                if (dat.User.TryGetComponent<CameraRecoilComponent>(out var recoil))
+                if (comp.FireQueue.Count == 0)
                 {
-                    recoil.Kick(Vector2.One * dat.Strength);
+                    _currentlyFiring.Remove(comp);
+                    // reset acc frametime to the fire interval if we're instant firing
+                    if (comp.InstantFire)
+                    {
+                        comp.AccumulatedFrametime = comp.FireInterval;
+                    }
+                    else
+                    {
+                        comp.AccumulatedFrametime = 0f;
+                    }
+                    return;
                 }
 
-                dat.Item.TryThrow(dat.Direction, dat.Strength, dat.User);
+                comp.AccumulatedFrametime += frameTime;
+                if (comp.AccumulatedFrametime > comp.FireInterval)
+                {
+                    var dat = comp.FireQueue.Dequeue();
+                    Fire(comp, dat);
+                    comp.AccumulatedFrametime -= comp.FireInterval;
+                }
             }
         }
 
         private void OnComponentInit(EntityUid uid, PneumaticCannonComponent component, ComponentInit args)
         {
             component.GasTankSlot = component.Owner.EnsureContainer<ContainerSlot>($"{component.Name}-gasTank");
+
+            if (component.InstantFire)
+                component.AccumulatedFrametime = component.FireInterval;
         }
 
         private void OnInteractUsing(EntityUid uid, PneumaticCannonComponent component, InteractUsingEvent args)
@@ -92,17 +103,19 @@ namespace Content.Server.PneumaticCannon
                 if (tool.HasQuality(component.ModifyMode))
                 {
                     // this is kind of ugly but it just cycles the enum
-                    var val = (byte) component.Mode;
-                    val = (byte) ((val + 1) % Enum.GetValues<PneumaticCannonFireMode>().Length);
+                    var val = (int) component.Mode;
+                    val = (val + 1) % (int) PneumaticCannonFireMode.Len;
                     component.Mode = (PneumaticCannonFireMode) val;
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-fire-mode",
                         ("mode", component.Mode.ToString())));
                     // sound
                     return;
-                } else if (tool.HasQuality(component.ModifyPower))
+                }
+
+                if (tool.HasQuality(component.ModifyPower))
                 {
-                    var val = (byte) component.Power;
-                    val = (byte) ((val + 1) % Enum.GetValues<PneumaticCannonPower>().Length);
+                    var val = (int) component.Power;
+                    val = (val + 1) % (int) PneumaticCannonPower.Len;
                     component.Power = (PneumaticCannonPower) val;
                     args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-change-power",
                         ("power", component.Power.ToString())));
@@ -111,6 +124,9 @@ namespace Content.Server.PneumaticCannon
                 }
             }
 
+            // this overrides the ServerStorageComponent's insertion stuff because
+            // it's not event-based yet and I can't cancel it, so tools and stuff
+            // will modify mode/power then get put in anyway
             if (args.Used.TryGetComponent<ItemComponent>(out var item)
                 && component.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
             {
@@ -128,59 +144,124 @@ namespace Content.Server.PneumaticCannon
             }
         }
 
+        // todo maybe change to clickattack
         private void OnAfterInteract(EntityUid uid, PneumaticCannonComponent component, AfterInteractEvent args)
         {
-            Fire(component, args.User, args.ClickLocation);
+            args.Handled = true;
+            if (!HasGas(component))
+            {
+                args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
+                    ("cannon", component.Owner)));
+                return;
+            }
+            AddToQueue(component, args.User, args.ClickLocation);
         }
 
-        public void Fire(PneumaticCannonComponent component, IEntity user, EntityCoordinates click)
+        public void AddToQueue(PneumaticCannonComponent comp, IEntity user, EntityCoordinates click)
         {
-            if (component.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+            if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+                return;
+            if (storage.StoredEntities == null) return;
+            if (storage.StoredEntities.Count == 0) return;
+
+            _currentlyFiring.Add(comp);
+
+            int entCounts = comp.Mode switch
             {
-                if (storage.StoredEntities == null) return;
-                if (storage.StoredEntities.Count == 0) return;
-                List<IEntity> ents = new List<IEntity>();
-                switch (component.Mode)
+                PneumaticCannonFireMode.All => storage.StoredEntities.Count,
+                PneumaticCannonFireMode.Single => 1,
+                _ => 0
+            };
+
+            for (int i = 0; i < entCounts; i++)
+            {
+                var dir = (click.ToMapPos(EntityManager) - user.Transform.WorldPosition).Normalized;
+
+                var randomAngle = GetRandomFireAngleFromPower(comp.Power).RotateVec(dir);
+                var randomStrengthMult = _random.NextFloat(0.75f, 1.25f);
+                var throwMult = GetRangeMultFromPower(comp.Power);
+
+                var data = new PneumaticCannonComponent.FireData
                 {
-                    case PneumaticCannonFireMode.Single:
-                        ents.Add(_random.Pick(storage.StoredEntities));
-                        break;
-                    case PneumaticCannonFireMode.All:
-                        ents = storage.StoredEntities.ToList();
-                        break;
+                    User = user,
+                    Strength = comp.ThrowStrength * randomStrengthMult,
+                    Direction = (dir + randomAngle).Normalized * comp.BaseThrowRange * throwMult,
+                };
+                comp.FireQueue.Enqueue(data);
+            }
+        }
 
-                }
-                foreach (var entity in ents)
+        public void Fire(PneumaticCannonComponent comp, PneumaticCannonComponent.FireData data)
+        {
+            if (!HasGas(comp))
+            {
+                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
+                    ("cannon", comp.Owner)));
+                // click sound
+                return;
+            }
+
+            if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
+                return;
+
+            if (data.User.Deleted)
+                return;
+
+            if (storage.StoredEntities == null) return;
+            if (storage.StoredEntities.Count == 0) return; // click sound?
+
+            IEntity ent = _random.Pick(storage.StoredEntities);
+            storage.Remove(ent);
+
+            SoundSystem.Play(Filter.Pvs(data.User), comp.FireSound.GetSound());
+            if (data.User.TryGetComponent<CameraRecoilComponent>(out var recoil))
+            {
+                recoil.Kick(Vector2.One * data.Strength);
+            }
+
+            ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
+
+            if(data.User.TryGetComponent<StunnableComponent>(out var stunnable)
+                && comp.Power == PneumaticCannonPower.High)
+            {
+                stunnable.Paralyze(comp.HighPowerStunTime);
+                data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
+                    ("cannon", comp.Owner)));
+            }
+
+            if (comp.GasTankSlot.ContainedEntity != null)
+            {
+                // we checked for this earlier in HasGas so a GetComp is okay
+                var gas = comp.GasTankSlot.ContainedEntity.GetComponent<GasTankComponent>();
+                var environment = _atmos.GetTileMixture(comp.Owner.Transform.Coordinates, true);
+                var removed = gas.RemoveAir(GetMoleUsageFromPower(comp.Power));
+                if (environment != null && removed != null)
                 {
-                    storage.Remove(entity);
-                    var dir = (click.ToMapPos(EntityManager) - user.Transform.WorldPosition).Normalized;
-
-                    var randomAngle = GetRandomFireAngleFromPower(component.Power).RotateVec(dir);
-                    var randomStrengthMult = _random.NextFloat(0.75f, 1.25f);
-                    var throwMult = GetRangeMultFromPower(component.Power);
-
-                    var data = new FireData
-                    {
-                        User = user,
-                        Item = entity,
-                        Strength = component.ThrowStrength * randomStrengthMult,
-                        Sound = component.FireSound,
-                        Direction = (dir + randomAngle).Normalized * component.BaseThrowRange * throwMult,
-                    };
-                    _fireQueue.Enqueue(data);
-                }
-
-                if (component.Power == PneumaticCannonPower.High)
-                {
-                    // if power was high, fall on our ass
-                    if (user.TryGetComponent<StunnableComponent>(out var stun))
-                    {
-                        stun.Paralyze(3);
-                        user.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
-                            ("cannon", component.Owner)));
-                    }
+                    _atmos.Merge(environment, removed);
                 }
             }
+        }
+
+        /// <summary>
+        ///     Returns whether the pneumatic cannon has enough gas to shoot an item.
+        /// </summary>
+        public bool HasGas(PneumaticCannonComponent component)
+        {
+            var usage = GetMoleUsageFromPower(component.Power);
+
+            if (component.GasTankSlot.ContainedEntity == null)
+                return false;
+
+            // not sure how it wouldnt, but it might not! who knows
+            if (component.GasTankSlot.ContainedEntity.TryGetComponent<GasTankComponent>(out var tank))
+            {
+                if (tank.Air.TotalMoles < usage)
+                    return false;
+
+                return true;
+            }
+
+            return false;
         }
 
         public void TryRemoveGasTank(PneumaticCannonComponent component, IEntity user)
@@ -214,10 +295,6 @@ namespace Content.Server.PneumaticCannon
                 foreach (var entity in storage.StoredEntities.ToArray())
                 {
                     storage.Remove(entity);
-                    if (user.TryGetComponent<HandsComponent>(out var hands))
-                    {
-                        hands.TryPutInActiveHandOrAny(entity);
-                    }
                 }
 
                 user.PopupMessage(Loc.GetString("pneumatic-cannon-component-ejected-all",
@@ -236,39 +313,42 @@ namespace Content.Server.PneumaticCannon
 
         private Angle GetRandomFireAngleFromPower(PneumaticCannonPower power)
         {
-            switch (power)
+            return power switch
             {
-                default:
-                case PneumaticCannonPower.Low:
-                    return _random.NextAngle(-0.1, 0.1);
-                case PneumaticCannonPower.Medium:
-                    return _random.NextAngle(-0.2, 0.2);
-                case PneumaticCannonPower.High:
-                    return _random.NextAngle(-0.3, 0.3);
-            }
+                PneumaticCannonPower.High => _random.NextAngle(-0.3, 0.3),
+                PneumaticCannonPower.Medium => _random.NextAngle(-0.2, 0.2),
+                PneumaticCannonPower.Low or _ => _random.NextAngle(-0.1, 0.1),
+            };
         }
 
         private float GetRangeMultFromPower(PneumaticCannonPower power)
         {
-            switch (power)
+            return power switch
             {
-                default:
-                case PneumaticCannonPower.Low:
-                    return 1.0f;
-                case PneumaticCannonPower.Medium:
-                    return 1.3f;
-                case PneumaticCannonPower.High:
-                    return 1.6f;
-            }
+                PneumaticCannonPower.High => 1.6f,
+                PneumaticCannonPower.Medium => 1.3f,
+                PneumaticCannonPower.Low or _ => 1.0f,
+            };
         }
 
-        public struct FireData
+        private float GetMoleUsageFromPower(PneumaticCannonPower power)
         {
-            public IEntity User;
-            public IEntity Item;
-            public float Strength;
-            public SoundSpecifier Sound;
-            public Vector2 Direction;
+            return power switch
+            {
+                PneumaticCannonPower.High => 15f,
+                PneumaticCannonPower.Medium => 10f,
+                PneumaticCannonPower.Low or _ => 5f,
+            };
+        }
+
+        private float GetPushbackRatioFromPower(PneumaticCannonPower power)
+        {
+            return power switch
+            {
+                PneumaticCannonPower.Medium => 8.0f,
+                PneumaticCannonPower.High => 16.0f,
+                PneumaticCannonPower.Low or _ => 0f
+            };
         }
     }
 }
