@@ -95,7 +95,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             // Verb to eject contents onto the floor
-            if (component.ContainedEntities.Count != 0)
+            if (component.ContainedEntities.Count != 0 &&
+                args.Types.HasFlag(VerbTypes.Alternative))
             {
                 Verb verb = new("Disposal:eject");
                 verb.Act = () => TryEjectContents(component);

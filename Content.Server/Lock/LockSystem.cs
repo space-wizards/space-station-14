@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -26,6 +27,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<LockComponent, AssembleVerbsEvent>(AddLockVerbs);
         }
 
         private void OnStartup(EntityUid eUI, LockComponent lockComp, ComponentStartup args)
@@ -38,15 +40,17 @@ namespace Content.Server.Lock
 
         private void OnActivated(EntityUid eUI, LockComponent lockComp, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             // Only attempt an unlock by default on Activate
             if (lockComp.Locked)
             {
-                DoUnlock(lockComp, args);
+                args.Handled = TryUnlock(lockComp, args.User);
             }
-            else
+            else if (lockComp.LockOnClick)
             {
-                if (lockComp.LockOnClick)
-                    DoLock(lockComp, args);
+                args.Handled = TryLock(lockComp, args.User);
             }
         }
 
@@ -59,14 +63,14 @@ namespace Content.Server.Lock
                                                ("entityName", lockComp.Owner.Name)));
         }
 
-        public void DoLock(LockComponent lockComp, ActivateInWorldEvent args)
+        public bool TryLock(LockComponent lockComp, IEntity user)
         {
-            if (!HasUserAccess(lockComp, args.User))
+            if (!HasUserAccess(lockComp, user))
             {
-                return;
+                return false;
             }
 
-            lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
             if(lockComp.LockSound != null)
             {
@@ -80,17 +84,17 @@ namespace Content.Server.Lock
 
             RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(true));
 
-            args.Handled = true;
+            return true;
         }
 
-        public void DoUnlock(LockComponent lockComp, ActivateInWorldEvent args )
+        public bool TryUnlock(LockComponent lockComp, IEntity user)
         {
-            if (!HasUserAccess(lockComp, args.User))
+            if (!HasUserAccess(lockComp, user))
             {
-                return;
+                return false;
             }
 
-            lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
             if(lockComp.UnlockSound != null)
             {
@@ -104,8 +108,7 @@ namespace Content.Server.Lock
 
             RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(false));
 
-            // To stop EntityStorageComponent from opening right after the container gets unlocked
-            args.Handled = true;
+            return true;
         }
 
         private static bool HasUserAccess(LockComponent lockComp, IEntity user)
@@ -120,6 +123,33 @@ namespace Content.Server.Lock
             }
 
             return true;
+        }
+
+        private void AddLockVerbs(EntityUid uid, LockComponent component, AssembleVerbsEvent args)
+        {
+            if (!args.Types.HasFlag(VerbTypes.Alternative))
+                return;
+            
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            if (component.Owner.TryGetComponent(out EntityStorageComponent? entityStorageComponent)
+                && entityStorageComponent.Open)
+                return;
+
+            Verb verb = new("togglelock");
+
+            verb.Act = component.Locked ?
+                () => TryUnlock(component, args.User) :
+                () => TryLock(component, args.User);
+
+            if (args.PrepareGUI)
+            {
+                verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
+                // TODO VERB ICONS need padlock open/close icons.
+            }
+
+            args.Verbs.Add(verb);
         }
     }
 }
