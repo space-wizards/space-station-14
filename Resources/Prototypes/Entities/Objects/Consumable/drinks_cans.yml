@@ -35,10 +35,6 @@
   - type: Tag
     tags:
     - Cola
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
 
