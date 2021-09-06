@@ -11,10 +11,10 @@ namespace Content.Server.Items
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedItemComponent, GetOtherVerbsEvent>(AddPickupVerb);
+            SubscribeLocalEvent<SharedItemComponent, GetInteractionVerbsEvent>(AddPickupVerb);
         }
 
-        private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetOtherVerbsEvent args)
+        private void AddPickupVerb(EntityUid uid, SharedItemComponent component, GetInteractionVerbsEvent args)
         {
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;

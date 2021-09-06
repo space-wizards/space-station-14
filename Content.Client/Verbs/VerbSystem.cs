@@ -34,13 +34,20 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
+        private readonly Color _separatorColor = Color.FromHex("#333");
+
         public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs>? ToggleContextMenu;
         public event EventHandler<bool>? ToggleContainerVisibility;
 
         private ContextMenuPresenter _contextMenuPresenter = default!;
         private VerbPopup? _currentVerbListRoot;
         private EntityUid _currentEntity;
-        private List<Verb>? _currentVerbs;
+
+        // Verb types to be displayed in the context menu.
+        private List<Verb> _interactionVerbs = new();
+        private List<Verb> _activationVerbs = new();
+        private List<Verb> _alternativeVerbs = new();
+        private List<Verb> _otherVerbs = new();
 
         private VerbPopup? _currentCategoryPopup;
         public VerbPopup? CurrentCategoryPopup
@@ -123,11 +130,7 @@ namespace Content.Client.Verbs
                 _currentVerbListRoot.List.AddChild(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
             }
 
-            // Get verb lists from client-side / shared systems
-            var user = _playerManager.LocalPlayer!.ControlledEntity!;
-            GetOtherVerbsEvent assembleVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(entity.Uid, assembleVerbs);
-            _currentVerbs = assembleVerbs.Verbs;
+            GetAllClientsideVerbs(entity);
 
             // Show the menu
             FillVerbMenu();
@@ -136,6 +139,34 @@ namespace Content.Client.Verbs
 
             //ask server for remaining verbs
             RaiseNetworkEvent(new RequestServerVerbsEvent(_currentEntity));
+        }
+
+        /// <summary>
+        ///     Raise events to get a list of all verbs on an entity.
+        /// </summary>
+        private void GetAllClientsideVerbs(IEntity entity)
+        {
+            var user = _playerManager.LocalPlayer!.ControlledEntity!;
+
+            // Get primary-interaction verbs
+            GetInteractionVerbsEvent interactionVerbs = new(user, entity, prepareGUI: true);
+            RaiseLocalEvent(entity.Uid, interactionVerbs);
+            _interactionVerbs = interactionVerbs.Verbs;
+
+            // Get activation verbs
+            GetActivationVerbsEvent activationVerbs = new(user, entity, prepareGUI: true);
+            RaiseLocalEvent(entity.Uid, activationVerbs);
+            _activationVerbs = activationVerbs.Verbs;
+
+            // Get primary-interaction verbs
+            GetAlternativeVerbsEvent alternativeVerbs = new(user, entity, prepareGUI: true);
+            RaiseLocalEvent(entity.Uid, alternativeVerbs);
+            _alternativeVerbs = alternativeVerbs.Verbs;
+
+            // Get primary-interaction verbs
+            GetOtherVerbsEvent otherVerbs = new(user, entity, prepareGUI: true);
+            RaiseLocalEvent(entity.Uid, otherVerbs);
+            _otherVerbs = otherVerbs.Verbs;
         }
 
         public void OnContextButtonPressed(IEntity entity)
@@ -150,103 +181,140 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            if (_currentVerbs == null)
+            // Merge message verbs with client side verb list
+            foreach (var verb in msg.InteractionVerbs)
             {
-                _currentVerbs = msg.Verbs;
+                _interactionVerbs.Add(verb);
             }
-            else if (msg.Verbs != null)
+
+            foreach (var verb in msg.ActivationVerbs)
             {
-                // Merge message verbs with client side verb list
-                foreach (var verb in msg.Verbs)
-                {
-                    _currentVerbs.Add(verb);
-                }
+                _activationVerbs.Add(verb);
+            }
+
+            foreach (var verb in msg.AlternativeVerbs)
+            {
+                _alternativeVerbs.Add(verb);
+            }
+
+            foreach (var verb in msg.OtherVerbs)
+            {
+                _otherVerbs.Add(verb);
             }
 
             // Clear currently shown verbs
-            var vBox = _currentVerbListRoot!.List;
-            vBox.DisposeAllChildren();
+            _currentVerbListRoot!.List.DisposeAllChildren();
 
             // Show verbs, if there are any to show
-            if (_currentVerbs != null && _currentVerbs.Count() > 0)
+            FillVerbMenu();
+        }
+
+        private void FillVerbMenu()
+        {
+            if (_currentEntity == EntityUid.Invalid)
+                return;
+
+            DebugTools.AssertNotNull(_currentVerbListRoot);
+            var verbBox = _currentVerbListRoot!.List;
+
+            var addSeparator = false;
+
+            if (_interactionVerbs.Count != 0)
             {
-                FillVerbMenu();
+                AddVerbList(verbBox, _interactionVerbs);
+                addSeparator = true;
             }
-            else
+
+            if (_activationVerbs.Count != 0)
             {
+                AddVerbList(verbBox, _activationVerbs, addSeparator);
+                addSeparator = true;
+            }
+
+            if (_alternativeVerbs.Count != 0)
+            {
+                AddVerbList(verbBox, _alternativeVerbs, addSeparator);
+                addSeparator = true;
+            }
+
+            if (_otherVerbs.Count != 0)
+            {
+                AddVerbList(verbBox, _otherVerbs, addSeparator);
+                addSeparator = true;
+            }
+
+            if (!addSeparator)
+            {
+                // This can only happen if all of the verb lists were empty!
                 var panel = new PanelContainer();
                 panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
-                vBox.AddChild(panel);
+                verbBox.AddChild(panel);
             }
         }
 
         /// <summary>
-        ///     Iterates over the current verbs list and creates GUI buttons.
+        ///     Add a list of verbs to a BoxContainer. Iterates over the given verbs list and creates GUI buttons.
         /// </summary>
-        private void FillVerbMenu()
+        private void AddVerbList(BoxContainer box, List<Verb> verbList, bool addSeparator = false)
         {
-            if (!EntityManager.TryGetEntity(_currentEntity, out var target) || _currentVerbs == null)
-                return;
+            // Sort verbs by priority or name
+            verbList.Sort();
 
-            _currentVerbs.Sort();
-
-            DebugTools.AssertNotNull(_currentVerbListRoot);
-            var vBox = _currentVerbListRoot!.List;
+            // If requested, add a vertical line separator
+            if (addSeparator)
+            {
+                box.AddChild(new PanelContainer
+                {
+                    MinSize = (0, 2),
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = _separatorColor }
+                });
+            }
 
             HashSet<string> categories = new();
-            var addLine = false;
 
-            foreach (var verb in _currentVerbs)
+            foreach (var verb in verbList)
             {
                 // Add a small horizontal line between verbs
-                if (addLine)
+                if (addSeparator)
                 {
-                    vBox.AddChild(new PanelContainer
+                    box.AddChild(new PanelContainer
                     {
                         MinSize = (0, 2),
-                        PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#333") }
+                        PanelOverride = new StyleBoxFlat { BackgroundColor = _separatorColor }
                     });
                 }
-                addLine = true;
+
+                addSeparator = false;
 
                 if (verb.Category == null)
                 {
                     // Lone verb. just create a button for it
-                    vBox.AddChild(new VerbButton(this, verb, target));
-                    addLine = true;
+                    box.AddChild(new VerbButton(this, verb, _currentEntity));
+                    addSeparator = true;
                 }
                 else if (categories.Add(verb.Category.Text))
                 {
-                    // This verb belong to a category that was not yet listed in the categories HashSet.
+                    // This is a new verb category. add a button for it
+                    var verbsInCategory = verbList.Where(v => v.Category?.Text == verb.Category.Text);
 
-                    // Get the actual verbs in this category
-                    var categoryVerbs = _currentVerbs.Where(v => v.Category?.Text == verb.Category.Text);
-
-                    if (categoryVerbs.Count() > 1 || !verb.Category.Contractible)
+                    if (!verb.Category.Contractible || verbsInCategory.Count() > 1 )
                     {
-                        // Create a new verb category button,
-                        vBox.AddChild(
-                            new VerbCategoryButton(this, verb.Category, categoryVerbs, target));
+                        box.AddChild(
+                            new VerbCategoryButton(this, verb.Category, verbsInCategory, _currentEntity));
                     }
                     else
                     {
-                        // This category only contains a single verb, and the verb is flagged as collapsible. Add a
-                        // single modified verb instead.
+                        // This category only contains a single verb, and the category is flagged as Contractible/collapsible.
+                        // Add a single modified verb button instead of a verb group button.
 
                         if (verb.Text == string.Empty)
                             verb.Text = verb.Category.Text;
                         else
                             verb.Text = verb.Category.Text + " " + verb.Text;
-
-                        verb.Icon = verb.Category.Icon;
-                        vBox.AddChild(new VerbButton(this, verb, target));
+                        verb.Icon ??= verb.Category.Icon;
+                        box.AddChild(new VerbButton(this, verb, _currentEntity));
                     }
-                }
-                else
-                {
-                    // This verb belongs to a category that was already drawn.
-                    // Dont draw extra line-spacings for this
-                    addLine = false;
+                    addSeparator = true;
                 }
             }
         }
@@ -258,7 +326,10 @@ namespace Content.Client.Verbs
             CurrentCategoryPopup?.Dispose();
             CurrentCategoryPopup = null;
             _currentEntity = EntityUid.Invalid;
-            _currentVerbs = null;
+            _interactionVerbs.Clear();
+            _activationVerbs.Clear();
+            _alternativeVerbs.Clear();
+            _otherVerbs.Clear();
         }
 
         public class VerbPopup : Popup
@@ -284,7 +355,7 @@ namespace Content.Client.Verbs
         /// </summary>
         public sealed class VerbCategoryPopup : VerbPopup
         {
-            public VerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, IEntity target, bool drawOnlyIcons, bool drawVerbIcons)
+            public VerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, EntityUid target, bool drawOnlyIcons, bool drawVerbIcons)
                 : base(drawOnlyIcons ? LayoutOrientation.Horizontal : LayoutOrientation.Vertical)
             {
                 if (drawOnlyIcons)
@@ -311,7 +382,7 @@ namespace Content.Client.Verbs
 
         private sealed class VerbButton : BaseButton
         {
-            public VerbButton(VerbSystem system, Verb verb, IEntity target, bool drawIcons = true)
+            public VerbButton(VerbSystem system, Verb verb, EntityUid target, bool drawIcons = true)
             {
                 Disabled = verb.IsDisabled;
 
@@ -360,12 +431,12 @@ namespace Content.Client.Verbs
                             // Try run the verb locally. Else, ask the server to run it.
                             if (!system.TryExecuteVerb(verb))
                             {
-                                system.RaiseNetworkEvent(new UseVerbEvent(target.Uid, verb.Key));
+                                system.RaiseNetworkEvent(new UseVerbEvent(target, verb.Key));
                             }
                         }
                         catch (Exception e)
                         {
-                            Logger.ErrorS("verb", "Exception in verb {0} on {1}:\n{2}", verb.Key, target.ToString(), e);
+                            Logger.ErrorS("verb", "Exception in verb {0} on uid {1}:\n{2}", verb.Key, target.ToString(), e);
                         }
                     };
                 }
@@ -395,7 +466,7 @@ namespace Content.Client.Verbs
 
             private CancellationTokenSource? _openCancel;
 
-            private readonly IEntity _owner;
+            private readonly EntityUid _target;
 
             private readonly IEnumerable<Verb> _verbs;
 
@@ -418,10 +489,10 @@ namespace Content.Client.Verbs
             /// </summary>
             private readonly VerbCategoryPopup _popup;
 
-            public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, IEntity target)
+            public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, EntityUid target)
             {
                 _system = system;
-                _owner = target;
+                _target = target;
                 _verbs = verbs;
                 _drawOnlyIcons = category.IconsOnly;
 
@@ -477,7 +548,7 @@ namespace Content.Client.Verbs
                 });
 
                 // The popup that appears when hovering over the button
-                _popup = new VerbCategoryPopup(_system, _verbs, _owner, _drawOnlyIcons, _drawVerbIcons);
+                _popup = new VerbCategoryPopup(_system, _verbs, _target, _drawOnlyIcons, _drawVerbIcons);
                 UserInterfaceManager.ModalRoot.AddChild(_popup);
             }
 
@@ -516,7 +587,7 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     This returns the popup that appears when hovering over a verb category in the context menu.
         /// </summary>
-        private static VerbPopup GetVerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, IEntity target, bool drawOnlyIcons, bool drawVerbIcons)
+        private static VerbPopup GetVerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, EntityUid target, bool drawOnlyIcons, bool drawVerbIcons)
         {
             // We need to show at least something
             if (drawOnlyIcons)

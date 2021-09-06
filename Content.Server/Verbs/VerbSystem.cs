@@ -106,15 +106,15 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.TryGetEntity(req.EntityUid, out var targetEntity))
+            if (!EntityManager.TryGetEntity(req.EntityUid, out var target))
             {
                 Logger.Warning($"{nameof(HanddleVerbRequest)} called on a nonexistant entity with id {req.EntityUid} by player {player}.");
                 return;
             }
 
-            var userEntity = player.AttachedEntity;
+            var user = player.AttachedEntity;
 
-            if (userEntity == null)
+            if (user == null)
             {
                 Logger.Warning($"{nameof(UseVerb)} called by player {player} with no attached entity.");
                 return;
@@ -122,20 +122,29 @@ namespace Content.Server.Verbs
 
             // Send the verbs if the user has access to the requested item. Note that this is not perfect, and the
             // entity can be considered invalid/hidden by the server despite being accessible by the client.
-            if (TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true))
+            if (TryGetContextEntities(user, target.Transform.MapPosition, out var entities, true))
             {
-                var verbEvent = new GetOtherVerbsEvent(userEntity, targetEntity, prepareGUI: true);
-                RaiseLocalEvent(targetEntity.Uid, verbEvent);
+                GetInteractionVerbsEvent interactionVerbs = new(user, target, prepareGUI: true);
+                RaiseLocalEvent(target.Uid, interactionVerbs);
 
-                var response = new VerbsResponseEvent(verbEvent.Verbs, req.EntityUid);
+                GetActivationVerbsEvent activationVerbs = new(user, target, prepareGUI: true);
+                RaiseLocalEvent(target.Uid, activationVerbs);
+
+                GetAlternativeVerbsEvent alternativeVerbs = new(user, target, prepareGUI: true);
+                RaiseLocalEvent(target.Uid, alternativeVerbs);
+
+                GetOtherVerbsEvent otherVerbs = new(user, target, prepareGUI: true);
+                RaiseLocalEvent(target.Uid, otherVerbs);
+
+                var response = new VerbsResponseEvent(req.EntityUid,
+                    interactionVerbs.Verbs,
+                    activationVerbs.Verbs,
+                    alternativeVerbs.Verbs,
+                    otherVerbs.Verbs);
                 RaiseNetworkEvent(response, player.ConnectedClient);
             }
-            else
-            {
-                // Don't leave the client hanging on "Waiting for server....", send empty response
-                var response = new VerbsResponseEvent(null, req.EntityUid);
-                RaiseNetworkEvent(response, player.ConnectedClient);
-            }
+
+            // TODO VERBS Don't leave the client hanging on "Waiting for server....", send empty response 
         }
     }
 }

@@ -61,43 +61,34 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
 
             // Verbs
-            SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddDisposalVerbs);
-            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
+            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddDisposalVerbs);
         }
 
-        private void AddEjectVerb(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
+        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
         {
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 
-            if (component.ContainedEntities.Count == 0)
-                return;
-
-            Verb verb = new("Disposal:eject");
-            verb.Act = () => TryEjectContents(component);
-            if (args.PrepareGUI)
-            {
-                verb.Category = VerbCategories.Eject;
-            }
-            args.Verbs.Add(verb);
-        }
-
-        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetOtherVerbsEvent args)
-        {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
-                return;
-
-            // Verb to flush the unit
+            // Verbs to flush and eject the unit
             if (component.ContainedEntities.Count != 0)
             {
-                Verb verb = new("Disposal:flush");
-                verb.Act = () => Engage(component);
+                Verb flushVerb = new("Disposal:flush");
+                flushVerb.Act = () => Engage(component);
                 if (args.PrepareGUI)
                 {
-                    verb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                    verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+                    flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                    flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 }
-                args.Verbs.Add(verb);
+                flushVerb.Priority = 1;
+                args.Verbs.Add(flushVerb);
+
+                Verb ejectVerb = new("Disposal:eject");
+                ejectVerb.Act = () => TryEjectContents(component);
+                if (args.PrepareGUI)
+                {
+                    ejectVerb.Category = VerbCategories.Eject;
+                }
+                args.Verbs.Add(ejectVerb);
             }
 
             // Verb to climb inside of the unit, where the average user belongs.
@@ -110,6 +101,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
                     verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                 }
+                verb.Priority = -1;
                 args.Verbs.Add(verb);
             }
         }
