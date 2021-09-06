@@ -347,7 +347,7 @@ namespace Content.Server.Body.Respiratory
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage);
         }
 
         private void StopSuffocation()
@@ -359,7 +359,7 @@ namespace Content.Server.Body.Respiratory
                 alertsComponent.ClearAlert(AlertType.LowOxygen);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, DamageRecovery);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery);
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)

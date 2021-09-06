@@ -21,7 +21,7 @@ namespace Content.Server.Damage.Components
 
         void ILand.Land(LandEventArgs eventArgs)
         {
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner, Damage, IgnoreResistances);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, IgnoreResistances);
         }
     }
 }

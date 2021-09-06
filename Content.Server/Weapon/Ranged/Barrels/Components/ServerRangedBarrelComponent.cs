@@ -395,7 +395,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity, hitscan.Damage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
             }
             else
             {

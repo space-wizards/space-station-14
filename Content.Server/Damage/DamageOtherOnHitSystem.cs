@@ -18,7 +18,7 @@ namespace Content.Server.Damage
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
             // Get damage from component, and apply to the target.
-            _damageableSystem.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances);
+            _damageableSystem.TryChangeDamage(args.Target.Uid, component.Damage, component.IgnoreResistances);
         }
     }
 }

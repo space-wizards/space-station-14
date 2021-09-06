@@ -87,7 +87,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
-                    _damageableSystem.TryChangeDamage(target, comp.Damage);
+                    _damageableSystem.TryChangeDamage(target.Uid, comp.Damage);
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -152,7 +152,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    _damageableSystem.TryChangeDamage(entity, comp.Damage);
+                    _damageableSystem.TryChangeDamage(entity.Uid, comp.Damage);
                 }
             }
 

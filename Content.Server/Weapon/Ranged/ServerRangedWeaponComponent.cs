@@ -170,7 +170,7 @@ namespace Content.Server.Weapon.Ranged
             if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 //Wound them
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user, ClumsyDamage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
 
                 // Knock them down
                 if (user.TryGetComponent(out StunnableComponent? stun))

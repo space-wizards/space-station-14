@@ -103,9 +103,9 @@ namespace Content.Shared.Damage
         /// <returns>
         ///     Returns false if a no damage change occurred; true otherwise.
         /// </returns>
-        public bool TryChangeDamage(IEntity target, DamageSpecifier damage, bool ignoreResistances = false)
+        public bool TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false)
         {
-            if (!target.TryGetComponent<DamageableComponent>(out var damageable))
+            if (!ComponentManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return false;
@@ -160,14 +160,6 @@ namespace Content.Shared.Damage
             }
 
             return true;
-        }
-
-        public bool TryChangeDamage(EntityUid targetUid, DamageSpecifier damage, bool ignoreResistances = false)
-        {
-            if (EntityManager.TryGetEntity(targetUid, out var entity))
-                return TryChangeDamage(entity, damage, ignoreResistances);
-            else
-                return false;
         }
 
         /// <summary>

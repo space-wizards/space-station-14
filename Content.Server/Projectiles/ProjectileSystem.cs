@@ -50,7 +50,7 @@ namespace Content.Server.Projectiles
 
             if (!otherEntity.Deleted)
             {
-                _damageableSystem.TryChangeDamage(otherEntity, component.Damage);
+                _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
                 component.DamagedEntity = true;
                 // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
                 // by resistance sets.

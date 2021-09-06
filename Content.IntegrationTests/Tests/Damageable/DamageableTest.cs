@@ -156,7 +156,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 var damageToDeal = types.Count() * 5;
                 DamageSpecifier damage = new(group3, damageToDeal);
 
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, true);
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
@@ -168,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 }
 
                 // Heal
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, -damage);
+                sDamageableSystem.TryChangeDamage(uid, -damage);
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
@@ -183,7 +183,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 types = group3.DamageTypes;
                 damageToDeal = types.Count() * 5 - 1;
                 damage = new DamageSpecifier(group3, damageToDeal);
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, true);
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
@@ -194,7 +194,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(sDamageableComponent.DamagePerType[type3c.ID], Is.EqualTo(1 + damageToDeal / types.Count())); 
 
                 // Heal
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, -damage);
+                sDamageableSystem.TryChangeDamage(uid, -damage);
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.Zero);
@@ -208,7 +208,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 // Test that unsupported groups return false when setting/getting damage (and don't change damage)
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
                 damage = new DamageSpecifier(group1, 10) + new DamageSpecifier(type2b, 10);
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, damage, true);
+                sDamageableSystem.TryChangeDamage(uid, damage, true);
                 Assert.That(DamageChanged, Is.False);
                 Assert.That(sDamageableComponent.DamagePerGroup.TryGetValue(group1.ID, out groupDamage), Is.False);
                 Assert.That(sDamageableComponent.DamagePerType.TryGetValue(type1.ID, out typeDamage), Is.False);
@@ -221,21 +221,21 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test 'wasted' healing
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, new DamageSpecifier(type3a, 5));
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, new DamageSpecifier(type3b, 7));
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, new DamageSpecifier(group3, -11));
+                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3a, 5));
+                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(type3b, 7));
+                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -11));
                 Assert.That(sDamageableComponent.DamagePerType[type3a.ID], Is.EqualTo(2));
                 Assert.That(sDamageableComponent.DamagePerType[type3b.ID], Is.EqualTo(3));
                 Assert.That(sDamageableComponent.DamagePerType[type3c.ID], Is.EqualTo(0));
 
                 // Test Over-Healing
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, new DamageSpecifier(group3, -100));
+                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -100));
                 Assert.That(DamageChanged);
                 DamageChanged = false;
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
 
                 // Test that if no health change occurred, returns false
-                sDamageableSystem.TryChangeDamage(sDamageableEntity, new DamageSpecifier(group3, -100));
+                sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -100));
                 Assert.That(DamageChanged, Is.False);
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
             });
