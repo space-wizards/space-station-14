@@ -376,12 +376,7 @@ namespace Content.Server.Atmos.EntitySystems
                 otherTile.MonstermosInfo.LastCycle = cycleNum;
                 otherTile.MonstermosInfo.CurrentTransferDirection = AtmosDirection.Invalid;
                 // Tiles in the _depressurizeTiles array cannot have null air.
-                if (otherTile.Air!.Immutable)
-                {
-                    _depressurizeSpaceTiles[spaceTileCount++] = otherTile;
-                    otherTile.PressureSpecificTarget = otherTile;
-                }
-                else
+                if (!otherTile.Air!.Immutable)
                 {
                     for (var j = 0; j < Atmospherics.Directions; j++)
                     {
@@ -395,14 +390,21 @@ namespace Content.Server.Atmos.EntitySystems
 
                         // The firelocks might have closed on us.
                         if (!otherTile.AdjacentBits.IsFlagSet(direction)) continue;
-                        otherTile2.MonstermosInfo = new MonstermosInfo {LastQueueCycle = queueCycle};
+                        otherTile2.MonstermosInfo = new MonstermosInfo { LastQueueCycle = queueCycle };
                         _depressurizeTiles[tileCount++] = otherTile2;
                         if (tileCount >= limit) break;
                     }
                 }
+                else
+                {
+                    _depressurizeSpaceTiles[spaceTileCount++] = otherTile;
+                    otherTile.PressureSpecificTarget = otherTile;
+                }
 
-                if (tileCount >= limit || spaceTileCount >= limit)
-                    break;
+                if (tileCount < limit && spaceTileCount < limit)
+                    continue;
+
+                break;
             }
 
             var queueCycleSlow = ++gridAtmosphere.EqualizationQueueCycleControl;
