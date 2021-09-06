@@ -54,6 +54,7 @@
       - SmallImpassable
       layer:
       - MobImpassable
+  - type: SolutionContainerManager
   - type: Bloodstream
     max_volume: 100
   - type: Damageable

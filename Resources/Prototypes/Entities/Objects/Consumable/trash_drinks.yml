@@ -1,15 +1,17 @@
 # These can still be used as containers
 - type: entity
   name: base empty bottle
+  id: DrinkBottleBaseEmpty
   parent: BaseItem
   abstract: true
-  id: DrinkBottleBaseEmpty
   description: That's an empty bottle.
   components:
   - type: Sprite
     state: icon
-  - type: SolutionContainer
-    maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 10
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 5
