@@ -35,13 +35,11 @@ namespace Content.Server.Wieldable.Components
         public string? OldInhandPrefix = null;
 
         [DataField("wieldTime")]
-        public float WieldTime = 0.5f;
+        public float WieldTime = 1.5f;
 
         [Verb]
         public sealed class ToggleWieldVerb : Verb<WieldableComponent>
         {
-            public override bool AlternativeInteraction => true;
-
             protected override void GetData(IEntity user, WieldableComponent component, VerbData data)
             {
                 data.Visibility = VerbVisibility.Visible;

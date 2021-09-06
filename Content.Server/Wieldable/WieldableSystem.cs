@@ -45,29 +45,38 @@ namespace Content.Server.Wieldable
                 AttemptUnwield(uid, component, args.User);
         }
 
-        public bool CanWield(EntityUid uid, WieldableComponent component, IEntity user)
+        public bool CanWield(EntityUid uid, WieldableComponent component, IEntity user, bool quiet=false)
         {
             // Do they have enough hands free?
             if (!ComponentManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
             {
-                user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
+                if(!quiet)
+                    user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
                 return false;
             }
 
             if (hands.GetFreeHands() < component.FreeHandsRequired)
             {
                 // TODO FLUENT need function to change 'hands' to 'hand' when there's only 1 required
-                user.PopupMessage(Loc.GetString("wieldable-component-not-enough-free-hands",
-                    ("number", component.FreeHandsRequired),
-                    ("item", EntityManager.GetEntity(uid))));
+                if (!quiet)
+                {
+                    user.PopupMessage(Loc.GetString("wieldable-component-not-enough-free-hands",
+                        ("number", component.FreeHandsRequired),
+                        ("item", EntityManager.GetEntity(uid))));
+                }
+
                 return false;
             }
 
             // Is it.. actually in one of their hands?
             if (!hands.TryGetHandHoldingEntity(EntityManager.GetEntity(uid), out var _))
             {
-                user.PopupMessage(Loc.GetString("wieldable-component-not-in-hands",
-                    ("item", EntityManager.GetEntity(uid))));
+                if (!quiet)
+                {
+                    user.PopupMessage(Loc.GetString("wieldable-component-not-in-hands",
+                        ("item", EntityManager.GetEntity(uid))));
+                }
+
                 return false;
             }
 
@@ -95,7 +104,7 @@ namespace Content.Server.Wieldable
                 used
             )
             {
-                BreakOnUserMove = true,
+                BreakOnUserMove = false,
                 BreakOnDamage = true,
                 BreakOnStun = true,
                 BreakOnTargetMove = true,

@@ -21,9 +21,11 @@
       - Wooden
       components:
       - Window
+      - Airlock
     damageMultiplier: 8
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
+    QuickEquip: false
     Slots:
     - back

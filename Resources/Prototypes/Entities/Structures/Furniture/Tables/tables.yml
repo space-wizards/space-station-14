@@ -244,6 +244,9 @@
   - type: Construction
     graph: table
     node: TableWood
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableCarpet
@@ -277,6 +280,9 @@
   - type: Construction
     graph: table
     node: TableCarpet
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableStone
