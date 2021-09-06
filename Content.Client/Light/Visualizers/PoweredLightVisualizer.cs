@@ -18,7 +18,7 @@ namespace Content.Client.Light.Visualizers
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
-        [DataField("blinkingSound", required: true)] private SoundSpecifier _blinkingSound = default!;
+        [DataField("blinkingSound")] private SoundSpecifier? _blinkingSound = default;
 
         private bool _wasBlinking;
 
@@ -29,7 +29,6 @@ namespace Content.Client.Light.Visualizers
             base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
-            if (!component.Owner.TryGetComponent(out PointLightComponent? light)) return;
             if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
 
             switch (state)
@@ -37,33 +36,26 @@ namespace Content.Client.Light.Visualizers
                 case PoweredLightState.Empty:
                     sprite.LayerSetState(PoweredLightLayers.Base, "empty");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.Off:
                     sprite.LayerSetState(PoweredLightLayers.Base, "off");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.On:
-                    if (component.TryGetData(PoweredLightVisuals.BulbColor, out Color color))
-                        light.Color = color;
                     if (component.TryGetData(PoweredLightVisuals.Blinking, out bool isBlinking))
                         ToggleBlinkingAnimation(component, isBlinking);
                     if (!isBlinking)
                     {
                         sprite.LayerSetState(PoweredLightLayers.Base, "on");
-                        light.Enabled = true;
                     }
                     break;
                 case PoweredLightState.Broken:
                     sprite.LayerSetState(PoweredLightLayers.Base, "broken");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.Burned:
                     sprite.LayerSetState(PoweredLightLayers.Base, "burn");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
             }
         }
@@ -125,13 +117,16 @@ namespace Content.Client.Light.Visualizers
                 }
             };
 
-            blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+            if (_blinkingSound != null)
             {
-                KeyFrames =
+                blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
+                {
+                    KeyFrames =
                 {
                     new AnimationTrackPlaySound.KeyFrame(_blinkingSound.GetSound(), 0.5f)
                 }
-            });
+                });
+            }
 
             return blinkingAnim;
         }

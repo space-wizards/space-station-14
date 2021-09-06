@@ -24,7 +24,7 @@ namespace Content.Shared.Chemistry
             SubscribeLocalEvent<MovespeedModifierMetabolismComponent, ComponentStartup>(AddComponent);
         }
 
-        private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ComponentHandleState args)
+        private void OnMovespeedHandleState(EntityUid uid, MovespeedModifierMetabolismComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;

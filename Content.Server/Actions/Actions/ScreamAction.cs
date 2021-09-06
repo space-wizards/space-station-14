@@ -14,12 +14,13 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using System;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Actions.Actions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class ScreamAction : IInstantAction
+    public class ScreamAction : IInstantAction, ISerializationHooks
     {
         private const float Variation = 0.125f;
         private const float Volume = 4f;
@@ -33,7 +34,7 @@ namespace Content.Server.Actions.Actions
         /// seconds
         [DataField("cooldown")] private float _cooldown = 10;
 
-        public ScreamAction()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
