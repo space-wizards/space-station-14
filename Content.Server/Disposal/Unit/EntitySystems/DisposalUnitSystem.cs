@@ -60,10 +60,29 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, InteractHandEvent>(HandleInteractHand);
             SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
 
-            SubscribeLocalEvent<DisposalUnitComponent, AssembleVerbsEvent>(AddDisposalVerbs);
+            // Verbs
+            SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddDisposalVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
         }
 
-        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, AssembleVerbsEvent args)
+        private void AddEjectVerb(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
+        {
+            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+                return;
+
+            if (component.ContainedEntities.Count == 0)
+                return;
+
+            Verb verb = new("Disposal:eject");
+            verb.Act = () => TryEjectContents(component);
+            if (args.PrepareGUI)
+            {
+                verb.Category = VerbCategories.Eject;
+            }
+            args.Verbs.Add(verb);
+        }
+
+        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetOtherVerbsEvent args)
         {
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
@@ -90,19 +109,6 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 {
                     verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
                     verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
-                }
-                args.Verbs.Add(verb);
-            }
-
-            // Verb to eject contents onto the floor
-            if (component.ContainedEntities.Count != 0 &&
-                args.Types.HasFlag(VerbTypes.Alternative))
-            {
-                Verb verb = new("Disposal:eject");
-                verb.Act = () => TryEjectContents(component);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategories.Eject;
                 }
                 args.Verbs.Add(verb);
             }

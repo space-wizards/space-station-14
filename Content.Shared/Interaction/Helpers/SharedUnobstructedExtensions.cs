@@ -446,7 +446,7 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnobstructed(
-            this AssembleVerbsEvent args,
+            this GetVerbsEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
             Ignored? predicate = null,

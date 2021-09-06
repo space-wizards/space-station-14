@@ -19,15 +19,12 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, AssembleVerbsEvent>(AddOpenUIVerb);
+            SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
         }
 
-        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, AssembleVerbsEvent args)
+        private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
         {
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
-                return;
-
-            if (!args.Types.HasFlag(VerbTypes.Activate))
                 return;
 
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))

@@ -31,16 +31,22 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
 
-            SubscribeLocalEvent<ItemCabinetComponent, AssembleVerbsEvent>(AddCabinetVerbs);
+            SubscribeLocalEvent<ItemCabinetComponent, GetInteractionVerbsEvent>(AddCabinetVerbs);
         }
 
-        private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, AssembleVerbsEvent args)
+        private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Interact))
-                return;
-
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
+
+            // Toggle open verb
+            Verb toggleVerb = new("ItemCabined:toggle");
+            toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
+            if (args.PrepareGUI)
+            {
+                toggleVerb.Category = component.Opened ? VerbCategories.Close : VerbCategories.Open;
+            }
+            args.Verbs.Add(toggleVerb);
 
             // add Eject item verb
             if (component.Opened && component.ItemContainer.ContainedEntity != null)
@@ -83,15 +89,6 @@ namespace Content.Server.Cabinet
                 verb.Priority = 1;
                 args.Verbs.Add(verb);
             }
-
-            // Toggle open verb
-            Verb toggleVerb = new("ItemCabined:toggle");
-            toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
-            if (args.PrepareGUI)
-            {
-                toggleVerb.Category = component.Opened ? VerbCategories.Close : VerbCategories.Open;
-            }
-            args.Verbs.Add(toggleVerb);
         }
 
         private void OnMapInitialize(EntityUid uid, ItemCabinetComponent comp, MapInitEvent args)

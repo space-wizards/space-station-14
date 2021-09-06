@@ -50,7 +50,7 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
-            SubscribeLocalEvent<ConstructionComponent, AssembleVerbsEvent>(AddConstructionVerbs);
+            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddConstructionVerbs);
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
@@ -473,12 +473,8 @@ namespace Content.Server.Construction
         }
 
 
-        private void AddConstructionVerbs(EntityUid uid, ConstructionComponent component, AssembleVerbsEvent args)
+        private void AddConstructionVerbs(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
         {
-            // Only accessible via context menu.
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             // Needs to be able to interact to construct
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;

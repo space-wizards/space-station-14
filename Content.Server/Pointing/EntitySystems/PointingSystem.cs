@@ -187,7 +187,7 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<AssembleVerbsEvent>(AddPointingVerb);
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
@@ -196,11 +196,8 @@ namespace Content.Server.Pointing.EntitySystems
                 .Register<PointingSystem>();
         }
 
-        private void AddPointingVerb(AssembleVerbsEvent args)
+        private void AddPointingVerb(GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             //Check if the object is already being pointed at
             if (args.Target.HasComponent<PointingArrowComponent>())
                 return;

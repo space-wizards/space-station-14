@@ -40,7 +40,7 @@ namespace Content.Client.Examine
         {
             IoCManager.InjectDependencies(this);
 
-            SubscribeLocalEvent<AssembleVerbsEvent>(AddExamineVerb);
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
@@ -89,11 +89,8 @@ namespace Content.Client.Examine
             return true;
         }
 
-        private void AddExamineVerb(AssembleVerbsEvent args)
+        private void AddExamineVerb(GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             if (!CanExamine(args.User, args.Target))
                 return;
 

@@ -21,16 +21,12 @@ namespace Content.Server.Climbing
             base.Initialize();
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeLocalEvent<ClimbableComponent, AssembleVerbsEvent>(AddClimbVerb);
+            SubscribeLocalEvent<ClimbableComponent, GetAlternativeVerbsEvent>(AddClimbVerb);
         }
 
-        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, AssembleVerbsEvent args)
+        private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
-            // Is the user looking for alt-interact verbs?
-            if (!args.Types.HasFlag(VerbTypes.Alternative))
-                return;
-
-            // Check that the user interact?
+            // Check that the user interact.
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 

@@ -8,16 +8,6 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Verbs
 {
-
-    // TODO QUESTION
-    // This really shouldn't be it's own system.
-    // Maybe add onto client-verb-system?
-    // Similar for the DebugVerb System
-    // Should that be added onto some sort of admin system? Or the verb system?
-    // Also note that tehse are the only verbs that truly need to target component
-    // if they were directly adddded by verb systems, events could be non-broadcast
-
-
     /// <summary>
     ///     Client-side admin verb system. These usually open some sort of UIs.
     /// </summary>
@@ -30,14 +20,11 @@ namespace Content.Client.Verbs
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<AssembleVerbsEvent>(AddAdminVerbs);
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddAdminVerbs);
         }
 
-        private void AddAdminVerbs(AssembleVerbsEvent args)
+        private void AddAdminVerbs(GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             if (_clientConGroupController.CanViewVar())
             {
                 Verb verb = new("ViewVariables");

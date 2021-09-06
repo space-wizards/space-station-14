@@ -18,10 +18,10 @@ namespace Content.Server.Cuffs
 
             EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, OnHandCountChanged);
 
-            SubscribeLocalEvent<CuffableComponent, AssembleVerbsEvent>(AddCuffableVerbs);
+            SubscribeLocalEvent<CuffableComponent, GetOtherVerbsEvent>(AddCuffableVerbs);
         }
 
-        private void AddCuffableVerbs(EntityUid uid, CuffableComponent component, AssembleVerbsEvent args)
+        private void AddCuffableVerbs(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
         {
             if (component.CuffedHandCount == 0 || !args.DefaultInRangeUnobstructed)
                 return;

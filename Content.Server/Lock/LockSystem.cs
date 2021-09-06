@@ -27,7 +27,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<LockComponent, AssembleVerbsEvent>(AddLockVerbs);
+            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddLockVerbs);
         }
 
         private void OnStartup(EntityUid eUI, LockComponent lockComp, ComponentStartup args)
@@ -125,11 +125,8 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private void AddLockVerbs(EntityUid uid, LockComponent component, AssembleVerbsEvent args)
+        private void AddLockVerbs(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Alternative))
-                return;
-            
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 

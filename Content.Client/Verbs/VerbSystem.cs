@@ -125,7 +125,7 @@ namespace Content.Client.Verbs
 
             // Get verb lists from client-side / shared systems
             var user = _playerManager.LocalPlayer!.ControlledEntity!;
-            AssembleVerbsEvent assembleVerbs = new(user, entity, prepareGUI: true);
+            GetOtherVerbsEvent assembleVerbs = new(user, entity, prepareGUI: true);
             RaiseLocalEvent(entity.Uid, assembleVerbs);
             _currentVerbs = assembleVerbs.Verbs;
 

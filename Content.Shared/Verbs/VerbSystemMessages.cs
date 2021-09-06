@@ -47,17 +47,67 @@ namespace Content.Shared.Verbs
         }
     }
 
-    public class AssembleVerbsEvent : EntityEventArgs
+
+    /// <summary>
+    ///    Request primary interaction verbs.
+    /// </summary>
+    /// <remarks>
+    ///    These verbs those that involve using the hands or the currently held item on some entity. These verbs usually
+    ///    correspond to interactions that can be triggered by left-clicking or using 'Z', and often depend on the
+    ///    currently held item. These verbs are collectively shown first in the context menu.
+    /// </remarks>
+    public class GetInteractionVerbsEvent : GetVerbsEvent
+    {
+        public GetInteractionVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+    }
+
+    /// <summary>
+    ///    Request activation verbs.
+    /// </summary>
+    /// <remarks>
+    ///    These are verbs that activate an item in the world but are independent of the currently held items. For
+    ///    example, opening a door or a GUI. These verbs should correspond to interactions that can be triggered by
+    ///    using 'E', though many of those can also be triggered by left-mouse or 'Z' if there is no other interaction.
+    ///    These verbs are collectively shown second in the context menu.
+    /// </remarks>
+    public class GetActivationVerbsEvent : GetVerbsEvent
+    {
+        public GetActivationVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+    }
+
+    /// <summary>
+    ///     Request alternative-interaction verbs.    
+    /// </summary>
+    /// <remarks>
+    ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
+    ///     These verbs are collectively shown second-to-last in the context menu.
+    /// </remarks>
+    public class GetAlternativeVerbsEvent : GetVerbsEvent
+    {
+        public GetAlternativeVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+    }
+
+    /// <summary>
+    ///     Request Miscellaneous verbs.    
+    /// </summary>
+    /// <remarks>
+    ///     Includes (nearly) global interactions like "examine", "pull", or "debug". These verbs are collectively shown
+    ///     last in the context menu.
+    /// </remarks>
+    public class GetOtherVerbsEvent : GetVerbsEvent
+    {
+        public GetOtherVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+    }
+
+    /// <summary>
+    ///     Directed event that requests verbs from any systems/components on a target entity.
+    /// </summary>
+    public class GetVerbsEvent : EntityEventArgs
     {
         /// <summary>
         ///     Event output. List of verbs that can be executed.
         /// </summary>
         public List<Verb> Verbs = new();
-
-        /// <summary>
-        ///     What kind of verbs to assemble. Defaults to all verb types
-        /// </summary>
-        public VerbTypes Types;
 
         /// <summary>
         ///     Is the user in range and has obstructed access to the target?
@@ -105,14 +155,11 @@ namespace Content.Shared.Verbs
         /// <param name="user">The user that will perform the verb.</param>
         /// <param name="target">The target entity.</param>
         /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
-        /// <param name="types">The types of interactions to include as verbs.</param>
-        public AssembleVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false,
-            VerbTypes types = VerbTypes.All)
+        public GetVerbsEvent(IEntity user, IEntity target, bool prepareGUI)
         {
             User = user;
             Target = target;
             PrepareGUI = prepareGUI;
-            Types = types;
 
             // Because the majority of verbs need to check InRangeUnobstructed, cache it with default args.
             DefaultInRangeUnobstructed = this.InRangeUnobstructed();

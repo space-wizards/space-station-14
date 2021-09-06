@@ -86,7 +86,7 @@ namespace Content.Server.Verbs
             }
 
             // Generate the list of verbs
-            var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: false);
+            var verbEvent = new GetOtherVerbsEvent(userEntity, targetEntity, prepareGUI: false);
             RaiseLocalEvent(targetEntity.Uid, verbEvent);
 
             // Find the verb that matches the key specified by the message. Maybe verbs should be a dictionary
@@ -124,7 +124,7 @@ namespace Content.Server.Verbs
             // entity can be considered invalid/hidden by the server despite being accessible by the client.
             if (TryGetContextEntities(userEntity, targetEntity.Transform.MapPosition, out var entities, true))
             {
-                var verbEvent = new AssembleVerbsEvent(userEntity, targetEntity, prepareGUI: true);
+                var verbEvent = new GetOtherVerbsEvent(userEntity, targetEntity, prepareGUI: true);
                 RaiseLocalEvent(targetEntity.Uid, verbEvent);
 
                 var response = new VerbsResponseMessage(verbEvent.Verbs, req.EntityUid);

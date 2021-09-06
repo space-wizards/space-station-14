@@ -363,7 +363,7 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-        this AssembleVerbsEvent args,
+        this GetOtherVerbsEvent args,
         float range = InteractionRange,
         Ignored? predicate = null,
         bool ignoreInsideBlocker = true)

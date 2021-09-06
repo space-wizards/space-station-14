@@ -29,7 +29,7 @@ namespace Content.Server.Administration
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<AssembleVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
             // TODO QUESTION VERBS
             // if allowing an Assemble-Target and Assemble-Tool/USing
             // Maybe allow assemble on user?
@@ -48,11 +48,8 @@ namespace Content.Server.Administration
         // and posses/take-control into mind system
         // But then where do you put stuff like make sentient
         // its defining feature is that it's target does NOT have a mind, so no targeted subscriptions
-        private void AddDebugVerbs(AssembleVerbsEvent args)
+        private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))
             {
                 return;

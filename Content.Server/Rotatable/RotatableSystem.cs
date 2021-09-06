@@ -15,15 +15,12 @@ namespace Content.Server.Rotatable
     {
         public override void Initialize()
         {
-            SubscribeLocalEvent<FlippableComponent, AssembleVerbsEvent>(AddFlipVerb);
-            SubscribeLocalEvent<RotatableComponent, AssembleVerbsEvent>(AddRotateVerbs);
+            SubscribeLocalEvent<FlippableComponent, GetOtherVerbsEvent>(AddFlipVerb);
+            SubscribeLocalEvent<RotatableComponent, GetOtherVerbsEvent>(AddRotateVerbs);
         }
 
-        private void AddFlipVerb(EntityUid uid, FlippableComponent component, AssembleVerbsEvent args)
+        private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 
@@ -37,11 +34,8 @@ namespace Content.Server.Rotatable
             args.Verbs.Add(verb);
         }
 
-        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, AssembleVerbsEvent args)
+        private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Other))
-                return;
-
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
 

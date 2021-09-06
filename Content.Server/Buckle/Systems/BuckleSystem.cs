@@ -33,14 +33,11 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
-            SubscribeLocalEvent<BuckleComponent, AssembleVerbsEvent>(AddBuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, GetInteractionVerbsEvent>(AddBuckleVerb);
         }
 
-        private void AddBuckleVerb(EntityUid uid, BuckleComponent component, AssembleVerbsEvent args)
+        private void AddBuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Interact))
-                return;
-
             if (!component.Buckled || !args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
             
@@ -52,7 +49,6 @@ namespace Content.Server.Buckle.Systems
                 // A user is left clicking themselves with an empty hand, while buckled.
                 // It is very likely they are trying to unbuckle themselves.
                 verb.Priority = 2;
-                // Probably not important (what else would using an empty hand on yourself do?
             }
 
             if (args.PrepareGUI)

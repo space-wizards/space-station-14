@@ -21,22 +21,19 @@ namespace Content.Server.Buckle.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<StrapComponent, AssembleVerbsEvent>(AddStrapVerbs);
+            SubscribeLocalEvent<StrapComponent, GetInteractionVerbsEvent>(AddStrapVerbs);
         }
 
-        // TODO ECS BUCKLE/STRAP
-        // These 'Strap' verbs are an incestuous mess of buckle component and strap component functions.
-        // Whenever these are fully ECSed, maybe do it in a way that allows for these verbs to be done in a sensible manner?
+        // TODO ECS BUCKLE/STRAP These 'Strap' verbs are an incestuous mess of buckle component and strap component
+        // functions. Whenever these are fully ECSed, maybe do it in a way that allows for these verbs to be handled in
+        // a sensible manner in a single system?
 
         /// <summary>
         ///     Unstrap a buckle-able entity from another entity. Similar functionality to unbuckling, except here the
         ///     targeted entity is the one that the other entity is strapped to (e.g., a hospital bed).
         /// </summary>
-        private void AddStrapVerbs(EntityUid uid, StrapComponent component, AssembleVerbsEvent args)
+        private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.Types.HasFlag(VerbTypes.Interact))
-                return;
-
             // Can the user interact?
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
