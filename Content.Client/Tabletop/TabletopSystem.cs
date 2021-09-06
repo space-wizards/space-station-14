@@ -135,7 +135,7 @@ namespace Content.Client.Tabletop
             _window.OnClose += OnWindowClose;
         }
 
-        private void HandleComponentState(EntityUid uid, TabletopDraggableComponent component, ComponentHandleState args)
+        private void HandleComponentState(EntityUid uid, TabletopDraggableComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not TabletopDraggableComponentState state) return;
 

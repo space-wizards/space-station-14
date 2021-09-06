@@ -24,10 +24,5 @@ namespace Content.Server.Tabletop.Components
                 Dirty();
             }
         }
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new TabletopDraggableComponentState(DraggingPlayer);
-        }
     }
 }

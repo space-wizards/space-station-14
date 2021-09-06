@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -31,6 +32,12 @@ namespace Content.Server.Tabletop
             SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChanged);
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
+            SubscribeLocalEvent<TabletopDraggableComponent, ComponentGetState>(GetCompState);
+        }
+
+        private void GetCompState(EntityUid uid, TabletopDraggableComponent component, ref ComponentGetState args)
+        {
+            args.State = new TabletopDraggableComponentState(component.DraggingPlayer);
         }
 
         /// <summary>
