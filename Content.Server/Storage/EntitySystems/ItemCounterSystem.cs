@@ -1,41 +1,29 @@
-﻿using System.Collections.Generic;
-using Content.Server.Storage.Components;
-using Content.Shared.Storage.ItemCounter;
+﻿using Content.Server.Storage.Components;
+using Content.Shared.Storage.Components;
+using Content.Shared.Storage.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
     public class ItemCounterSystem : SharedItemCounterSystem
     {
-        protected override bool TryGetContainer(ContainerModifiedMessage msg,
-            ItemCounterComponent itemCounter,
-            out IReadOnlyList<string> showLayers)
+        protected override int? GetCount(ContainerModifiedMessage msg, ItemCounterComponent itemCounter)
         {
-            if (msg.Container.Owner.TryGetComponent(out ServerStorageComponent? component))
+            if (!msg.Container.Owner.TryGetComponent(out ServerStorageComponent? component)
+                || component.StoredEntities == null)
             {
-                var containedLayers = component.StoredEntities ?? new List<IEntity>();
-                var list = new List<string>();
-                foreach (var mapLayerData in itemCounter.MapLayers.Values)
-                {
-                    foreach (var entity in containedLayers)
-                    {
-                        if (mapLayerData.Whitelist.IsValid(entity))
-                        {
-                            list.Add(mapLayerData.Layer);
-                            break;
-                        }
-                    }
-                }
-
-                showLayers = list;
-                return true;
+                return null;
             }
 
-            showLayers = new List<string>();
-            return false;
+            var count = 0;
+            foreach (var entity in component.StoredEntities)
+            {
+                if (itemCounter.Count.IsValid(entity)) count++;
+            }
+
+            return count;
         }
     }
 }

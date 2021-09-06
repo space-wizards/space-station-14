@@ -1,5 +1,8 @@
+using Content.Shared.Body.Components;
+using Content.Shared.MobState;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -30,6 +33,30 @@ namespace Content.Client.Physics.Controllers
             {
                 joint.BodyA.Predict = true;
                 joint.BodyB.Predict = true;
+            }
+
+            // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
+            if (player.TryGetComponent(out SharedPullableComponent? pullableComp))
+            {
+                var puller = pullableComp.Puller;
+                if (puller != null && puller.TryGetComponent<PhysicsComponent>(out var pullerBody))
+                {
+                    pullerBody.Predict = false;
+                    body.Predict = false;
+                }
+            }
+
+            // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
+            if (player.TryGetComponent(out SharedPullerComponent? pullerComp))
+            {
+                var pulling = pullerComp.Pulling;
+
+                if (pulling != null &&
+                    pulling.HasComponent<IMobStateComponent>() &&
+                    pulling.TryGetComponent(out PhysicsComponent? pullingBody))
+                {
+                    pullingBody.Predict = false;
+                }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit

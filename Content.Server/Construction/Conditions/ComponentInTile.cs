@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
@@ -14,12 +15,12 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition
+    public class ComponentInTile : IGraphCondition, ISerializationHooks
     {
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public ComponentInTile()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
