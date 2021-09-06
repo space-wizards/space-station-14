@@ -37,13 +37,15 @@ namespace Content.Server.Buckle.Systems
             // Can the user interact?
             if (!args.DefaultInRangeUnobstructed || args.Hands == null)
                 return;
-            // Note that for whatever bloody reason, every buckle component has its own interaction range, so we have to
-            // check a modified InRangeUnobstructed for every verb.
+
+            // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
+            // verb can be set per-component, so we have to check a modified InRangeUnobstructed for every verb.
 
             // Add unstrap verbs for every strapped entity.
             foreach (var entity in component.BuckledEntities)
             {
                 var buckledComp = entity.GetComponent<BuckleComponent>();
+
                 if (!args.InRangeUnobstructed(range: buckledComp.Range))
                     continue;
 
@@ -77,8 +79,7 @@ namespace Content.Server.Buckle.Systems
                 args.Verbs.Add(verb);
             }
 
-
-            // If the user is currently holding an entity that can be buckled, add a verb for that.
+            // If the user is currently holding/pulling an entity that can be buckled, add a verb for that.
             if (args.Using != null &&
                 args.Using.TryGetComponent<BuckleComponent>(out var usingBuckle) &&
                 component.HasSpace(usingBuckle) &&

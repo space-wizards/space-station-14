@@ -22,12 +22,12 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class VerbsResponseMessage : EntityEventArgs
+    public class VerbsResponseEvent : EntityEventArgs
     {
         public readonly List<Verb>? Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseMessage(List<Verb>? verbs, EntityUid entity)
+        public VerbsResponseEvent(List<Verb>? verbs, EntityUid entity)
         {
             Verbs = verbs;
             Entity = entity;
@@ -35,12 +35,12 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class UseVerbMessage : EntityEventArgs
+    public class UseVerbEvent : EntityEventArgs
     {
         public readonly EntityUid EntityUid;
         public readonly string VerbKey;
 
-        public UseVerbMessage(EntityUid entityUid, string verbKey)
+        public UseVerbEvent(EntityUid entityUid, string verbKey)
         {
             EntityUid = entityUid;
             VerbKey = verbKey;
@@ -139,6 +139,9 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     The User's hand component.
         /// </summary>
+        /// <remarks>
+        ///     This may be null if the user has no hands.
+        /// </remarks>
         public SharedHandsComponent? Hands;
 
         /// <summary>
@@ -180,7 +183,7 @@ namespace Content.Shared.Verbs
             Hands = hands;
             Hands.TryGetActiveHeldEntity(out Using);
 
-            // If the "Held" entity is a virtual pull entity, consider the pulled entity as being used on the object.
+            // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
             // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
             // their sprite.
             if (Using != null && Using.TryGetComponent<HandVirtualPullComponent>(out var pull))

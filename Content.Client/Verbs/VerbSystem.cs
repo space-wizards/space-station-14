@@ -60,7 +60,7 @@ namespace Content.Client.Verbs
             base.Initialize();
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
-            SubscribeNetworkEvent<VerbsResponseMessage>(HandleVerbResponse);
+            SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
             _contextMenuPresenter = new ContextMenuPresenter(this);
@@ -143,7 +143,7 @@ namespace Content.Client.Verbs
             OpenContextMenu(entity, _userInterfaceManager.MousePositionScaled);
         }
 
-        private void HandleVerbResponse(VerbsResponseMessage msg)
+        private void HandleVerbResponse(VerbsResponseEvent msg)
         {
             if (_currentEntity != msg.Entity)
             {
@@ -360,7 +360,7 @@ namespace Content.Client.Verbs
                             // Try run the verb locally. Else, ask the server to run it.
                             if (!system.TryExecuteVerb(verb))
                             {
-                                system.RaiseNetworkEvent(new UseVerbMessage(target.Uid, verb.Key));
+                                system.RaiseNetworkEvent(new UseVerbEvent(target.Uid, verb.Key));
                             }
                         }
                         catch (Exception e)

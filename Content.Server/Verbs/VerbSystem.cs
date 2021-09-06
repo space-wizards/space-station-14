@@ -24,7 +24,7 @@ namespace Content.Server.Verbs
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<RequestServerVerbsEvent>(HanddleVerbRequest);
-            SubscribeNetworkEvent<UseVerbMessage>(UseVerb);
+            SubscribeNetworkEvent<UseVerbEvent>(UseVerb);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
@@ -69,7 +69,7 @@ namespace Content.Server.Verbs
             return _seesThroughContainers.Contains(session);
         }
 
-        private void UseVerb(UseVerbMessage use, EntitySessionEventArgs eventArgs)
+        private void UseVerb(UseVerbEvent use, EntitySessionEventArgs eventArgs)
         {
             var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
@@ -127,13 +127,13 @@ namespace Content.Server.Verbs
                 var verbEvent = new GetOtherVerbsEvent(userEntity, targetEntity, prepareGUI: true);
                 RaiseLocalEvent(targetEntity.Uid, verbEvent);
 
-                var response = new VerbsResponseMessage(verbEvent.Verbs, req.EntityUid);
+                var response = new VerbsResponseEvent(verbEvent.Verbs, req.EntityUid);
                 RaiseNetworkEvent(response, player.ConnectedClient);
             }
             else
             {
                 // Don't leave the client hanging on "Waiting for server....", send empty response
-                var response = new VerbsResponseMessage(null, req.EntityUid);
+                var response = new VerbsResponseEvent(null, req.EntityUid);
                 RaiseNetworkEvent(response, player.ConnectedClient);
             }
         }

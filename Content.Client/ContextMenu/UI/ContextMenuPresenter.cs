@@ -6,7 +6,6 @@ using Content.Client.Interactable;
 using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Verbs;
