@@ -1,5 +1,4 @@
 using Content.Client.Administration.UI.Tabs.AtmosTab;
-using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
@@ -60,6 +59,7 @@ namespace Content.Client.Verbs
                 return;
             var tileIndices = grid.WorldToTile(coords.Position);
 
+            // Verb to open Add Gas admin window, with pre-filled coordinates
             if (_clientConGroupController.CanCommand("addgas"))
             {
                 Verb verb = new("addgas");
@@ -69,6 +69,22 @@ namespace Content.Client.Verbs
                 verb.Act = () =>
                 {
                     var window = _dynamicTypeFactory.CreateInstance<AddGasWindow>();
+                    window.FillCoords(grid.Index, tileIndices.X, tileIndices.Y);
+                    window.OpenCentered();
+                };
+                args.Verbs.Add(verb);
+            }
+
+            // Verb to open Set temperature admin window, with pre-filled coordinates
+            if (_clientConGroupController.CanCommand("settemp"))
+            {
+                Verb verb = new("settemp");
+                verb.Category = VerbCategories.Debug;
+                verb.Text = "Set Temperature";
+                // TODO VERB ICON add thermometer?
+                verb.Act = () =>
+                {
+                    var window = _dynamicTypeFactory.CreateInstance<SetTemperatureWindow>();
                     window.FillCoords(grid.Index, tileIndices.X, tileIndices.Y);
                     window.OpenCentered();
                 };
