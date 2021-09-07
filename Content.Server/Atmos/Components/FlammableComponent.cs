@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Alert;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.ActionBlocker;
@@ -17,24 +18,24 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public class FlammableComponent : SharedFlammableComponent, IStartCollide, IFireAct, IInteractUsing
+    public class FlammableComponent : SharedFlammableComponent, IFireAct, IInteractUsing
     {
         private bool _resisting = false;
         private readonly List<EntityUid> _collided = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool OnFire { get; private set; }
+        public bool OnFire { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public float FireStacks { get; private set; }
+        public float FireStacks { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("fireSpread")]
@@ -44,15 +45,16 @@ namespace Content.Server.Atmos.Components
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
 
-        public void Ignite()
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat"!;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
         {
-            if (FireStacks > 0 && !OnFire)
-            {
-                OnFire = true;
-
-            }
-
-            UpdateAppearance();
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
 
         public void Extinguish()
@@ -75,7 +77,7 @@ namespace Content.Server.Atmos.Components
             UpdateAppearance();
         }
 
-        public void Update(TileAtmosphere tile)
+        public void Update(GasMixture air)
         {
             // Slowly dry ourselves off if wet.
             if (FireStacks < 0)
@@ -104,7 +106,7 @@ namespace Content.Server.Atmos.Components
                 {
                     // TODO ATMOS Fire resistance from armor
                     var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.ChangeDamage(DamageClass.Burn, damage, false);
+                    damageable.TryChangeDamage(DamageType, damage, false);
                 }
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));
@@ -116,13 +118,13 @@ namespace Content.Server.Atmos.Components
             }
 
             // If we're in an oxygenless environment, put the fire out.
-            if (tile.Air?.GetMoles(Gas.Oxygen) < 1f)
+            if (air.GetMoles(Gas.Oxygen) < 1f)
             {
                 Extinguish();
                 return;
             }
 
-            tile.HotspotExpose(700, 50, true);
+            EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700f, 50f, true);
 
             var physics = Owner.GetComponent<IPhysBody>();
 
@@ -144,37 +146,7 @@ namespace Content.Server.Atmos.Components
             }
         }
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (!otherFixture.Body.Owner.TryGetComponent(out FlammableComponent? otherFlammable))
-                return;
-
-            if (!FireSpread || !otherFlammable.FireSpread)
-                return;
-
-            if (OnFire)
-            {
-                if (otherFlammable.OnFire)
-                {
-                    var fireSplit = (FireStacks + otherFlammable.FireStacks) / 2;
-                    FireStacks = fireSplit;
-                    otherFlammable.FireStacks = fireSplit;
-                }
-                else
-                {
-                    FireStacks /= 2;
-                    otherFlammable.FireStacks += FireStacks;
-                    otherFlammable.Ignite();
-                }
-            } else if (otherFlammable.OnFire)
-            {
-                otherFlammable.FireStacks /= 2;
-                FireStacks += otherFlammable.FireStacks;
-                Ignite();
-            }
-        }
-
-        private void UpdateAppearance()
+        public void UpdateAppearance()
         {
             if (Owner.Deleted || !Owner.TryGetComponent(out AppearanceComponent? appearanceComponent)) return;
             appearanceComponent.SetData(FireVisuals.OnFire, OnFire);
@@ -184,7 +156,7 @@ namespace Content.Server.Atmos.Components
         public void FireAct(float temperature, float volume)
         {
             AdjustFireStacks(3);
-            Ignite();
+            EntitySystem.Get<FlammableSystem>().Ignite(this);
         }
 
         // This needs some improvements...
@@ -211,7 +183,7 @@ namespace Content.Server.Atmos.Components
             {
                 if (hotItem.IsCurrentlyHot())
                 {
-                    Ignite();
+                    EntitySystem.Get<FlammableSystem>().Ignite(this);
                     return true;
                 }
             }

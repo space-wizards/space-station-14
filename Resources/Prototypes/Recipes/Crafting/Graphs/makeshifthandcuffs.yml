@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: makeshifthandcuffs
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: cuffscable
+          steps:
+            - material: Cable
+              amount: 15
+              doAfter: 5
+    - node: cuffscable
+      entity: Cablecuffs
+      

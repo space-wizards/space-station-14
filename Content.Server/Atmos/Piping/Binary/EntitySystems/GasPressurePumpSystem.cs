@@ -1,7 +1,7 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
 using JetBrains.Annotations;
@@ -25,22 +25,23 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
         {
             var appearance = pump.Owner.GetComponentOrNull<AppearanceComponent>();
-            appearance?.SetData(PressurePumpVisuals.Enabled, false);
 
-            if (!pump.Enabled)
-                return;
-
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
-                return;
-
-            if (!nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
+            if (!pump.Enabled
+                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
+            {
+                appearance?.SetData(PressurePumpVisuals.Enabled, false);
                 return;
+            }
 
             var outputStartingPressure = outlet.Air.Pressure;
 
             if (MathHelper.CloseTo(pump.TargetPressure, outputStartingPressure))
+            {
+                appearance?.SetData(PressurePumpVisuals.Enabled, false);
                 return; // No need to pump gas if target has been reached.
+            }
 
             if (inlet.Air.TotalMoles > 0 && inlet.Air.Temperature > 0)
             {

@@ -1,8 +1,7 @@
-#nullable enable
 using System;
-using Content.Server.Battery.Components;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
+using Content.Server.Power.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Examine;
 using Content.Shared.PowerCell;
@@ -22,15 +21,16 @@ namespace Content.Server.PowerCell.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(BatteryComponent))]
-    public class PowerCellComponent : BatteryComponent, IExamine, ISolutionChange
+    public class PowerCellComponent : BatteryComponent, IExamine
     {
         public override string Name => "PowerCell";
+        public const string SolutionName = "powerCell";
 
         [ViewVariables] public PowerCellSize CellSize => _cellSize;
         [DataField("cellSize")]
         private PowerCellSize _cellSize = PowerCellSize.Small;
 
-        [ViewVariables] public bool IsRigged { get; private set; }
+        [ViewVariables] public bool IsRigged { get; set; }
 
         protected override void Initialize()
         {
@@ -94,15 +94,8 @@ namespace Content.Server.PowerCell.Components
         {
             if (inDetailsRange)
             {
-                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100}:F0")));
+                message.AddMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{CurrentCharge / MaxCharge * 100:F0}")));
             }
-        }
-
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            IsRigged = Owner.TryGetComponent(out SolutionContainerComponent? solution)
-                       && solution.Solution.ContainsReagent("Plasma", out var plasma)
-                       && plasma >= 5;
         }
     }
 

@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Client.GameTicking.Managers;
 using Content.Client.Lobby;
 using Content.Client.Viewport;
@@ -26,11 +25,12 @@ namespace Content.Client.Audio
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IStateManager _stateManager = default!;
         [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private readonly ClientGameTicker _gameTicker = default!;
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
-        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, true, 0f);
-        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, true, 0f);
+        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
+        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
@@ -49,7 +49,7 @@ namespace Content.Client.Audio
             _client.PlayerJoinedServer += OnJoin;
             _client.PlayerLeaveServer += OnLeave;
 
-            Get<ClientGameTicker>().LobbyStatusUpdated += LobbySongReceived;
+            _gameTicker.LobbyStatusUpdated += LobbySongReceived;
         }
 
         public override void Shutdown()
@@ -61,7 +61,7 @@ namespace Content.Client.Audio
             _client.PlayerJoinedServer -= OnJoin;
             _client.PlayerLeaveServer -= OnLeave;
 
-            Get<ClientGameTicker>().LobbyStatusUpdated -= LobbySongReceived;
+            _gameTicker.LobbyStatusUpdated -= LobbySongReceived;
 
             EndAmbience();
             EndLobbyMusic();
@@ -166,7 +166,7 @@ namespace Content.Client.Audio
         private void StartLobbyMusic()
         {
             EndLobbyMusic();
-            var file = Get<ClientGameTicker>().LobbySong;
+            var file = _gameTicker.LobbySong;
             if (file == null) // We have not received the lobby song yet.
             {
                 return;

@@ -3,6 +3,7 @@ using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -62,6 +63,7 @@ namespace Content.Client.Ghost
         private void OnGhostRemove(EntityUid uid, GhostComponent component, ComponentRemove args)
         {
             component.Gui?.Dispose();
+            component.Gui = null;
 
             // PlayerDetachedMsg might not fire due to deletion order so...
             if (component.IsAttached)
@@ -72,14 +74,11 @@ namespace Content.Client.Ghost
 
         private void OnGhostPlayerAttach(EntityUid uid, GhostComponent component, PlayerAttachedEvent playerAttachedEvent)
         {
+            // I hate UI I hate UI I Hate UI
             if (component.Gui == null)
             {
                 component.Gui = new GhostGui(component, EntityManager.EntityNetManager!);
                 component.Gui.Update();
-            }
-            else
-            {
-                component.Gui.Orphan();
             }
 
             _gameHud.HandsContainer.AddChild(component.Gui);

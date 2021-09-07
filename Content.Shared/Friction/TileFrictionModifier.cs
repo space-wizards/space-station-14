@@ -1,6 +1,4 @@
-#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -50,7 +48,7 @@ namespace Content.Shared.Friction
         {
             public float Modifier;
 
-            public TileFrictionComponentState(float modifier) : base(ContentNetIDs.TILE_FRICTION)
+            public TileFrictionComponentState(float modifier)
             {
                 Modifier = modifier;
             }

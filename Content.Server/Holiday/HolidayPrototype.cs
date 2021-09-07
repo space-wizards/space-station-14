@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Server.Holiday.Celebrate;
 using Content.Server.Holiday.Greet;

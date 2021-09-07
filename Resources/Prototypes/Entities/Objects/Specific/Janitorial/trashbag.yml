@@ -12,7 +12,8 @@
     capacity: 125
     quickInsert: true
     areaInsert: true
-    storageSoundCollection: trashBagRustle
+    storageSoundCollection:
+      collection: trashBagRustle
 
 - type: entity
   name: trash bag
@@ -29,4 +30,5 @@
     capacity: 125
     quickInsert: true
     areaInsert: true
-    storageSoundCollection: trashBagRustle
+    storageSoundCollection:
+      collection: trashBagRustle

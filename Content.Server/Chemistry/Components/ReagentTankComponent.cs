@@ -3,7 +3,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-#nullable enable
 
 namespace Content.Server.Chemistry.Components
 {

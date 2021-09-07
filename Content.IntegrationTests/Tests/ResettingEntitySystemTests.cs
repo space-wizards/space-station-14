@@ -9,15 +9,22 @@ using Robust.Shared.Reflection;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(IResettingEntitySystem))]
+    [TestOf(typeof(RoundRestartCleanupEvent))]
     public class ResettingEntitySystemTests : ContentIntegrationTest
     {
         [Reflect(false)]
-        private class TestResettingEntitySystem : EntitySystem, IResettingEntitySystem
+        private class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
 
-            public void Reset()
+            public override void Initialize()
+            {
+                base.Initialize();
+
+                SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            }
+
+            public void Reset(RoundRestartCleanupEvent ev)
             {
                 HasBeenReset = true;
             }
@@ -30,7 +37,7 @@ namespace Content.IntegrationTests.Tests
             {
                 ContentBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestResettingEntitySystem>();
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestRoundRestartCleanupEvent>();
                 }
             });
 
@@ -43,7 +50,7 @@ namespace Content.IntegrationTests.Tests
             {
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 
-                var system = entitySystemManager.GetEntitySystem<TestResettingEntitySystem>();
+                var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
 
                 system.HasBeenReset = false;
 

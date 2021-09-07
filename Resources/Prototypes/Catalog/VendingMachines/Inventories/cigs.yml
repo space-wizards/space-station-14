@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: CigaretteMachineInventory
   name: Cigarette machine
-  description: A vending machine containing smoking supplies.
   animationDuration: 2.1
   spriteName: cigs
   startingInventory:

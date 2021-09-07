@@ -7,7 +7,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: chair
   objectType: Structure
   placementMode: SnapgridCenter
@@ -24,7 +24,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: stool_base
   objectType: Structure
   placementMode: SnapgridCenter
@@ -41,7 +41,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: bar_stool
   objectType: Structure
   placementMode: SnapgridCenter
@@ -58,7 +58,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: officechair_white
   objectType: Structure
   placementMode: SnapgridCenter
@@ -75,7 +75,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: officechair_dark
   objectType: Structure
   placementMode: SnapgridCenter
@@ -92,7 +92,7 @@
   category: Furniture
   description: It looks comfy.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: comfychair_preview
   objectType: Structure
   placementMode: SnapgridCenter
@@ -109,7 +109,7 @@
   category: Furniture
   description: You sit in this. Either by will or force.
   icon:
-    sprite: Constructible/Misc/furniture.rsi
+    sprite: Structures/Furniture/furniture.rsi
     state: wooden_chair
   objectType: Structure
   placementMode: SnapgridCenter

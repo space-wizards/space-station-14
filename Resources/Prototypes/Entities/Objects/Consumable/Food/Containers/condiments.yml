@@ -10,11 +10,14 @@
   description: A small plastic pack with condiments to put on your food.
   components:
   - type: Drink
-    openSounds: packetOpenSounds
-  - type: SolutionContainer
-    maxVol: 10
+    openSounds:
+      collection: packetOpenSounds
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 10
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -29,11 +32,13 @@
   name: Astrotame
   description: The sweetness of a thousand sugars but none of the calories.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Astrotame
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Astrotame
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -54,11 +59,13 @@
   name: BBQ sauce
   description: Hand wipes not included.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: BbqSauce
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -79,11 +86,13 @@
   name: corn oil
   description: Corn oil. A delicious oil used in cooking. Made from corn.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Cornoil
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Cornoil
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -104,11 +113,13 @@
   name: coldsauce
   description: Coldsauce. Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -129,11 +140,13 @@
   name: horseradish sauce
   description: A packet of smelly horseradish sauce.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: HorseradishSauce
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: HorseradishSauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -154,11 +167,13 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-trans-2
@@ -179,11 +194,12 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -204,11 +220,12 @@
   name: black pepper
   description: Often used to flavor food or make people sneeze.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Blackpepper
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Blackpepper
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -229,11 +246,12 @@
   name: salt
   description: Salt. From space oceans, presumably.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Salt
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Salt
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -256,11 +274,12 @@
   name: soy sauce
   description: A salty soy-based flavoring.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Soysauce
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Soysauce
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -281,11 +300,12 @@
   name: sugar
   description: Tasty spacey sugar!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Sugar
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 10
   - type: Sprite
     layers:
       - state: packet-solid-2
@@ -309,11 +329,14 @@
   description: A thin glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
-  - type: SolutionContainer
-    maxVol: 30
+    openSounds:
+      collection: pop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 30
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -330,11 +353,12 @@
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -352,11 +376,12 @@
   name: universal enzyme
   description: Used in cooking various dishes.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Enzyme
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Enzyme
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -374,11 +399,12 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -396,11 +422,12 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -418,11 +445,12 @@
   name: BBQ sauce
   description: Hand wipes not included.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: BbqSauce
-        Quantity: 30
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: BbqSauce
+          Quantity: 30
   - type: Sprite
     layers:
     - state: bottle-empty
@@ -444,11 +472,14 @@
   description: A smaller glass bottle used to store condiments.
   components:
   - type: Drink
-    openSounds: pop
-  - type: SolutionContainer
-    maxVol: 15
+    openSounds:
+      collection: pop
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 15
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/condiments.rsi
@@ -465,11 +496,12 @@
   name: coldsauce bottle
   description: Leaves the tongue numb in its passage.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Frostoil
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Frostoil
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -487,11 +519,12 @@
   name: hotsauce
   description: You can almost TASTE the stomach ulcers now!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Hotsauce
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Hotsauce
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -509,11 +542,12 @@
   name: ketchup
   description: You feel more American already.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Ketchup
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Ketchup
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty
@@ -531,11 +565,12 @@
   name: vinegar
   description: Used in cooking to enhance flavor.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Vinegar
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Vinegar
+          Quantity: 15
   - type: Sprite
     layers:
     - state: bottle-s-empty

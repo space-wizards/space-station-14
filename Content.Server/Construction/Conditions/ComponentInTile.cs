@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Conditions
@@ -14,12 +15,12 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition
+    public class ComponentInTile : IGraphCondition, ISerializationHooks
     {
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        public ComponentInTile()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
@@ -44,7 +45,7 @@ namespace Content.Server.Construction.Conditions
             var type = _componentFactory.GetRegistration(Component).Type;
 
             var indices = entity.Transform.Coordinates.ToVector2i(entity.EntityManager, _mapManager);
-            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, true, IoCManager.Resolve<IEntityLookup>());
+            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
 
             foreach (var ent in entities)
             {

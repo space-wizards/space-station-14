@@ -20,11 +20,13 @@
       hard: false
       mask:
       - Impassable
+      layer:
       - MobImpassable
     linearDamping: 0
     angularDamping: 0
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Piercing: 20
 
@@ -35,11 +37,17 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Piercing: 10
-  - type: FlashProjectile
+  - type: FlashOnTrigger
     range: 1
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 - type: entity
   id: BulletBaseHV
@@ -68,11 +76,13 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Blunt: 3
-  - type: StunnableProjectile
-    paralyzeAmount: 2
+  - type: StunOnCollide
+    stunAmount: 2
+    knockdownAmount: 2
 
 # Energy projectiles
 - type: entity
@@ -95,17 +105,19 @@
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       mask:
-          - Impassable
-          - MobImpassable
+      - Impassable
+      layer:
+      - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
-    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
     damages:
       Heat: 5
-  - type: StunnableProjectile
+  - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
 
@@ -117,7 +129,7 @@
   components:
   - type: Sprite
     color: "#ffff33"
-    sprite: Constructible/Power/Singularity/emitter.rsi
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
     fixtures:
@@ -131,7 +143,8 @@
       mask:
         - Opaque
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
     damages:
       Heat: 20
   - type: Tag
@@ -149,7 +162,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
@@ -174,9 +189,11 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/gen_hit.ogg
-  - type: StunnableProjectile
-    paralyzeAmount: 8
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: StunOnCollide
+    stunAmount: 8
+    knockdownAmount: 8
 
 - type: entity
   id: BulletGrenadeBlast
@@ -188,7 +205,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
@@ -209,9 +228,15 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/flash_bang.ogg
-  - type: FlashProjectile
+    soundHit:
+      path: /Audio/Effects/flash_bang.ogg
+  - type: FlashOnTrigger
     range: 7
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
@@ -224,7 +249,9 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
   - type: Explosive
@@ -245,7 +272,8 @@
     state: foamdart
   - type: Projectile
     deleteOnCollide: true
-    soundHit: /Audio/Guns/Hits/snap.ogg
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
     damages:
       Blunt: 2
 
@@ -271,16 +299,19 @@
   description: get creampied, honk!!
   abstract: true
   components:
-    - type: Projectile
-      deleteOnCollide: false # CreamPie component handles this.
-    - type: CreamPie
-    - type: ThrownItem
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Food/pie.rsi
-      state: icon
-    - type: SolutionContainer
-      contents:
+  - type: Projectile
+    deleteOnCollide: false # CreamPie component handles this.
+  - type: CreamPie
+  - type: ThrownItem
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    netsync: false
+    layers:
+    - state: tin
+    - state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
         reagents:
-          - ReagentId: Nutriment
-            Quantity: 8
+        - ReagentId: Nutriment
+          Quantity: 8

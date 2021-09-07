@@ -7,7 +7,7 @@
   category: Structures
   description: A square piece of metal standing on four metal legs.
   icon:
-    sprite: Constructible/Structures/Tables/carpet.rsi
+    sprite: Structures/Furniture/Tables/carpet.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -24,7 +24,7 @@
   category: Structures
   description: A fancy table. Perfect for serving drinks.
   icon:
-    sprite: Constructible/Structures/Tables/bar.rsi
+    sprite: Structures/Furniture/Tables/bar.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -41,7 +41,7 @@
   category: Structures
   description: A square piece of metal standing on four metal legs. Extra robust.
   icon:
-    sprite: Constructible/Structures/Tables/reinforced.rsi
+    sprite: Structures/Furniture/Tables/reinforced.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -58,7 +58,7 @@
   category: Structures
   description: A square piece of glass, standing on four metal legs.
   icon:
-    sprite: Constructible/Structures/Tables/glass.rsi
+    sprite: Structures/Furniture/Tables/glass.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -75,7 +75,7 @@
   category: Structures
   description: A square piece of glass, standing on four metal legs. Extra robust.
   icon:
-    sprite: Constructible/Structures/Tables/r_glass.rsi
+    sprite: Structures/Furniture/Tables/r_glass.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -92,7 +92,7 @@
   category: Structures
   description: Do not apply fire to this. Rumour says it burns easily.
   icon:
-    sprite: Constructible/Structures/Tables/wood.rsi
+    sprite: Structures/Furniture/Tables/wood.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -109,7 +109,7 @@
   category: Structures
   description: A square piece of wood standing on four legs covered by a cloth. (What did you expect?)
   icon:
-    sprite: Constructible/Structures/Tables/carpet.rsi
+    sprite: Structures/Furniture/Tables/carpet.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter

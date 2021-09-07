@@ -5,6 +5,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.ViewVariables;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lathe.UI
 {
@@ -24,10 +25,14 @@ namespace Content.Client.Lathe.UI
             SetSize = MinSize = (300, 450);
             Title = Loc.GetString("lathequeue-menu-title");
 
-            var vBox = new VBoxContainer();
-
-            var hBox = new HBoxContainer()
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical
+            };
+
+            var hBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 SizeFlagsStretchRatio = 2,
             };
@@ -38,8 +43,9 @@ namespace Content.Client.Lathe.UI
                 SizeFlagsStretchRatio = 2,
             };
 
-            var vBoxInfo = new VBoxContainer()
+            var vBoxInfo = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 SizeFlagsStretchRatio = 3,
             };
@@ -91,7 +97,7 @@ namespace Content.Client.Lathe.UI
         {
             _icon.Texture = Texture.Transparent;
             _nameLabel.Text = "-------";
-            _description.Text = "lathequeue-menu-not-producing-text";
+            _description.Text = Loc.GetString("lathequeue-menu-not-producing-text");
         }
 
         public void PopulateList()

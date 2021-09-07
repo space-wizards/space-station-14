@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Shared.Coordinates;
@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests
   id: GravityGeneratorDummy
   components:
   - type: GravityGenerator
-  - type: PowerReceiver
+  - type: ApcPowerReceiver
 ";
         [Test]
         public async Task Test()
@@ -48,9 +48,9 @@ namespace Content.IntegrationTests.Tests
 
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
-                Assert.That(generator.HasComponent<PowerReceiverComponent>());
+                Assert.That(generator.HasComponent<ApcPowerReceiverComponent>());
                 var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<PowerReceiverComponent>();
+                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
                 Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.Unpowered));
                 powerComponent.NeedsPower = false;
             });
@@ -62,8 +62,12 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(generatorComponent.Status, Is.EqualTo(GravityGeneratorStatus.On));
 
-                Assert.That(!grid1.HasGravity);
-                Assert.That(grid2.HasGravity);
+                var entityMan = IoCManager.Resolve<IEntityManager>();
+                var grid1Entity = entityMan.GetEntity(grid1.GridEntityId);
+                var grid2Entity = entityMan.GetEntity(grid2.GridEntityId);
+
+                Assert.That(!grid1Entity.GetComponent<GravityComponent>().Enabled);
+                Assert.That(grid2Entity.GetComponent<GravityComponent>().Enabled);
             });
 
             await server.WaitIdleAsync();

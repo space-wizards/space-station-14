@@ -9,15 +9,15 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Toxin
+          Quantity: 1
   - type: Item
     size: 5
 
@@ -40,14 +40,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: plain
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutlet
@@ -60,19 +61,20 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     netsync: true
     state: bacon
   - type: RandomSpriteState
     spriteStates:
-      - bacon
-      - bacon2
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+    - bacon
+    - bacon2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw bear meat
@@ -82,14 +84,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: bear
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
@@ -102,14 +105,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: bird
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
@@ -122,14 +126,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: bird
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
@@ -142,14 +147,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: crab
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw goliath meat
@@ -159,14 +165,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: goliath
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
 
 - type: entity
   name: raw lizard meat
@@ -176,14 +183,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: lizard
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
@@ -205,14 +213,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: rotten
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 20
 
 - type: entity
   name: raw spider meat
@@ -222,14 +231,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: spider
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 20
   - type: SliceableFood
     count: 3
     slice: FoodMeatSpiderCutlet
@@ -242,14 +252,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: spiderleg
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 10
 
 - type: entity
   name: meatwheat clump
@@ -259,14 +270,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: clump
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw xeno meat
@@ -276,14 +288,15 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: xeno
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: SulfuricAcid
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 20
   - type: SliceableFood
     count: 3
     slice: FoodMeatXenoCutlet
@@ -308,7 +321,7 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: salami
   - type: SliceableFood
@@ -322,7 +335,7 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: clown
   - type: SliceableFood
@@ -336,7 +349,7 @@
   components:
   - type: Tag
     tags:
-      - Raw
+    - Raw
   - type: Sprite
     state: meatball
 
@@ -350,18 +363,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: plain-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+    - state: plate-meat
+    - state: plain-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
   - type: SliceableFood
     count: 3
     slice: FoodMeatCutletCooked
@@ -374,24 +388,25 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     netsync: true
     layers:
-      - state: plate-meat
-      - state: bacon-cooked
+    - state: plate-meat
+    - state: bacon-cooked
   - type: RandomSpriteState
     spriteLayer: 1
     spriteStates:
-      - bacon-cooked
-      - bacon2-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - bacon-cooked
+    - bacon2-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: cooked bear
@@ -401,18 +416,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: product-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - state: plate-meat
+    - state: product-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutletCooked
@@ -425,18 +441,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: bird-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - state: plate-meat
+    - state: bird-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletCooked
@@ -449,18 +466,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: bird-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    - state: plate-meat
+    - state: bird-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutletCooked
@@ -473,7 +491,7 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
@@ -481,13 +499,14 @@
     state: chicken-fried
   - type: RandomSpriteState
     spriteStates:
-      - chicken-fried
-      - chicken2-fried
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - chicken-fried
+    - chicken2-fried
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: cooked crab
@@ -497,18 +516,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: crab-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - state: plate-meat
+    - state: crab-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: goliath steak
@@ -518,18 +538,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: goliath-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - state: plate-meat
+    - state: goliath-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: lizard steak
@@ -539,18 +560,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: lizard-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    - state: plate-meat
+    - state: lizard-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutletCooked
@@ -563,18 +585,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-      - state: plate-meat
-      - state: spiderleg-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+    - state: plate-meat
+    - state: spiderleg-cooked
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: meatball
@@ -584,14 +607,15 @@
   components:
   - type: Tag
     tags:
-      - Cooked
+    - Cooked
   - type: Sprite
     state: meatball-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 # Cutlets
 
@@ -605,15 +629,16 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     state: cutlet
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw bear cutlet
@@ -623,18 +648,19 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet
-      - state: cutlet-alpha
-        color: brown
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+    - state: cutlet
+    - state: cutlet-alpha
+      color: brown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw penguin cutlet
@@ -644,16 +670,17 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     state: cutlet
     color: white
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw chicken cutlet
@@ -663,16 +690,17 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     state: cutlet
     color: white
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw lizard cutlet
@@ -682,19 +710,20 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet
-        color: green
-      - state: cutlet-alpha
-        color: pink
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 1
+    - state: cutlet
+      color: green
+    - state: cutlet-alpha
+      color: pink
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 1
 
 - type: entity
   name: raw spider cutlet
@@ -704,19 +733,20 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet
-        color: black
-      - state: cutlet-alpha
-        color: red
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 20
+    - state: cutlet
+      color: black
+    - state: cutlet-alpha
+      color: red
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 20
 
 - type: entity
   name: raw xeno cutlet
@@ -726,19 +756,20 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet
-        color: black
-      - state: cutlet-alpha
-        color: green
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: SulfuricAcid
-        Quantity: 20
+    - state: cutlet
+      color: black
+    - state: cutlet-alpha
+      color: green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: SulfuricAcid
+          Quantity: 20
 
 - type: entity
   name: raw killer tomato cutlet
@@ -748,7 +779,7 @@
   components:
   - type: Tag
     tags:
-      - Cutlet
+    - Cutlet
   - type: Sprite
     state: salami-slice
     color: red
@@ -761,15 +792,16 @@
   components:
   - type: Tag
     tags:
-      - Raw
-      - Cutlet
+    - Raw
+    - Cutlet
   - type: Sprite
     state: salami-slice
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
 
 # Cooked
 
@@ -781,15 +813,16 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     state: cutlet-cooked
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: bear cutlet
@@ -799,18 +832,19 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet-cooked
-      - state: cutlet-alpha
-        color: brown
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    - state: cutlet-cooked
+    - state: cutlet-alpha
+      color: brown
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: penguin cutlet
@@ -820,16 +854,17 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     state: cutlet-cooked
     color: white
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: chicken cutlet
@@ -839,16 +874,18 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     state: cutlet-cooked
     color: white
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
 
 - type: entity
   name: lizard cutlet
@@ -858,17 +895,18 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet-cooked
-        color: green
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+    - state: cutlet-cooked
+      color: green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: spider cutlet
@@ -878,19 +916,20 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet-cooked
-        color: black
-      - state: cutlet-alpha
-        color: red
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    - state: cutlet-cooked
+      color: black
+    - state: cutlet-alpha
+      color: red
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: xeno cutlet
@@ -900,16 +939,17 @@
   components:
   - type: Tag
     tags:
-      - Cooked
-      - Cutlet
+    - Cooked
+    - Cutlet
   - type: Sprite
     layers:
-      - state: cutlet-cooked
-        color: black
-      - state: cutlet-alpha
-        color: green
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+    - state: cutlet-cooked
+      color: black
+    - state: cutlet-alpha
+      color: green
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5

@@ -1,9 +1,8 @@
-﻿using Content.Server.Flash.Components;
+using Content.Server.Flash.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -14,7 +13,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Flash
 {
-    public class FlashSystem : EntitySystem
+    internal sealed class FlashSystem : EntitySystem
     {
         public override void Initialize()
         {
@@ -93,8 +92,7 @@ namespace Content.Server.Flash
                     });
                 }
 
-                SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/flash.ogg", comp.Owner.Transform.Coordinates,
-                    AudioParams.Default);
+                SoundSystem.Play(Filter.Pvs(comp.Owner), comp.Sound.GetSound(), comp.Owner, AudioParams.Default);
 
                 return true;
             }

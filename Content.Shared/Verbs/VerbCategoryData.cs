@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Verbs

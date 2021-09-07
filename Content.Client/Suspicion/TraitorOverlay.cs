@@ -82,18 +82,7 @@ namespace Content.Client.Suspicion
                 }
 
                 var screenCoordinates = args.ViewportControl!.WorldToScreen(physics.GetWorldAABB().TopLeft + (0, 0.5f));
-                DrawString(args.ScreenHandle, _font, screenCoordinates, _traitorText, Color.OrangeRed);
-            }
-        }
-
-        private static void DrawString(DrawingHandleScreen handle, Font font, Vector2 pos, string str, Color color)
-        {
-            var baseLine = new Vector2(pos.X, font.GetAscent(1) + pos.Y);
-
-            foreach (var rune in str.EnumerateRunes())
-            {
-                var advance = font.DrawChar(handle, rune, baseLine, 1, color);
-                baseLine += new Vector2(advance, 0);
+                args.ScreenHandle.DrawString(_font, screenCoordinates, _traitorText, Color.OrangeRed);
             }
         }
     }

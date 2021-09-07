@@ -5,6 +5,7 @@ using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -16,7 +17,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -25,6 +25,8 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -78,25 +80,25 @@ namespace Content.Server.Weapon.Melee
             if (target != null)
             {
                 // Raise event before doing damage so we can cancel damage if the event is handled
-                var hitEvent = new MeleeHitEvent(new List<IEntity>() {target}, args.User);
+                var hitEvent = new MeleeHitEvent(new List<IEntity>() { target }, args.User);
                 RaiseLocalEvent(uid, hitEvent, false);
 
                 if (!hitEvent.Handled)
                 {
-                    var targets = new[] {target};
+                    var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
                     if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
                     {
-                        damageableComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
 
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, target);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
             else
             {
-                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User);
+                SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User);
                 return;
             }
 
@@ -146,18 +148,18 @@ namespace Content.Server.Weapon.Melee
             {
                 if (entities.Count != 0)
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound, entities.First().Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), entities.First().Transform.Coordinates);
                 }
                 else
                 {
-                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound, args.User.Transform.Coordinates);
+                    SoundSystem.Play(Filter.Pvs(owner), comp.MissSound.GetSound(), args.User.Transform.Coordinates);
                 }
 
                 foreach (var entity in hitEntities)
                 {
                     if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
                     {
-                        damageComponent.ChangeDamage(comp.DamageType, comp.Damage, false, owner);
+                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
                     }
                 }
             }
@@ -217,7 +219,7 @@ namespace Content.Server.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(mapId,
+                var res = Get<SharedBroadphaseSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
 
@@ -232,7 +234,8 @@ namespace Content.Server.Weapon.Melee
 
         private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
-            if (!ComponentManager.TryGetComponent<SolutionContainerComponent>(uid, out var solutionContainer))
+            IEntity owner = EntityManager.GetEntity(uid);
+            if (!_solutionsSystem.TryGetInjectableSolution(owner.Uid, out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();
@@ -248,7 +251,7 @@ namespace Content.Server.Weapon.Melee
             if (hitBloodstreams.Count < 1)
                 return;
 
-            var removedSolution = solutionContainer.Solution.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+            var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
             var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);

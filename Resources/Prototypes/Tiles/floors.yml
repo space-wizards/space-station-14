@@ -6,7 +6,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds: 
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemDark
 
@@ -18,7 +19,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -29,7 +31,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemFreezer
 
@@ -41,7 +44,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -52,7 +56,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemGCircuit
 
@@ -64,7 +69,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemLino
 
@@ -76,7 +82,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemMono
 
@@ -88,7 +95,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemReinforced
 
@@ -100,7 +108,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -111,7 +120,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemShowroom
 
@@ -123,7 +133,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemSteel
 
@@ -135,7 +146,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemDirty
 
@@ -147,7 +159,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemTechmaint
 
@@ -159,7 +172,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.25
   item_drop: FloorTileItemWhite
 
@@ -171,7 +185,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -182,7 +197,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -193,7 +209,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -204,7 +221,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -215,7 +233,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -226,7 +245,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_asteroid
+  footstep_sounds:
+    collection: footstep_asteroid
   friction: 0.30
 
 - type: tile
@@ -237,7 +257,8 @@
   - space
   is_subfloor: false
   can_crowbar: false
-  footstep_sounds: footstep_snow
+  footstep_sounds:
+    collection: footstep_snow
   friction: 0.30
 
 - type: tile
@@ -248,7 +269,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: FloorTileItemGold
 
@@ -260,7 +282,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: SheetGlass1
 
@@ -272,7 +295,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
   item_drop: SheetRGlass1
 
@@ -284,7 +308,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -295,7 +320,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -306,7 +332,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -317,7 +344,8 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30
 
 - type: tile
@@ -328,5 +356,6 @@
   - plating
   is_subfloor: false
   can_crowbar: true
-  footstep_sounds: footstep_floor
+  footstep_sounds:
+    collection: footstep_floor
   friction: 0.30

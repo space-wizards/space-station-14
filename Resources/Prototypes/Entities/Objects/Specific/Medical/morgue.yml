@@ -23,13 +23,15 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.5,0.1,0.5"
+          bounds: "-0.5,-0.45,0.5,0.1"
       mass: 5
   - type: BodyBagEntityStorage
     CanWeldShut: false
     Capacity: 1
-    closeSound: /Audio/Misc/zip.ogg
-    openSound: /Audio/Misc/zip.ogg
+    closeSound:
+      path: /Audio/Misc/zip.ogg
+    openSound:
+      path: /Audio/Misc/zip.ogg
   - type: Appearance
     visuals:
     - type: StorageVisualizer

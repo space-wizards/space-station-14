@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Shared.Serialization;
 
@@ -8,7 +7,6 @@ namespace Content.Shared.Light
     public enum PoweredLightVisuals : byte
     {
         BulbState,
-        BulbColor,
         Blinking
     }
 

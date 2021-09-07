@@ -17,7 +17,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
-    public class GhostRoleSystem : EntitySystem, IResettingEntitySystem
+    public class GhostRoleSystem : EntitySystem
     {
         [Dependency] private readonly EuiManager _euiManager = default!;
 
@@ -33,6 +33,7 @@ namespace Content.Server.Ghost.Roles
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
         }
 
@@ -137,7 +138,7 @@ namespace Content.Server.Ghost.Roles
             CloseEui(message.Player);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             foreach (var session in _openUis.Keys)
             {
