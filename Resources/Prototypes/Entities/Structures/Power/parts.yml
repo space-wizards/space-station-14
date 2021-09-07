@@ -46,6 +46,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: AmbientOnPowered
   - type: AmbientSound
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
