@@ -7,13 +7,13 @@
     openSounds:
       collection: canOpenSounds
     pressurized: true
-  - type: SolutionContainer
-    maxVol: 20
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Cola
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cola
+          Quantity: 20
+        maxVol: 20
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -35,7 +35,6 @@
   - type: Tag
     tags:
     - Cola
-  - type: SolutionContainer
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
 
@@ -120,13 +119,13 @@
   name: thirteen loko can
   description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
-  - type: SolutionContainer
-    maxVol: 20
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: ThirteenLoko
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: ThirteenLoko
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
 

@@ -1,17 +1,13 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
-using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
-using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Chemistry
@@ -37,17 +33,19 @@ namespace Content.IntegrationTests.Tests.Chemistry
                 Console.WriteLine($"Testing {reactionPrototype.ID}");
 
                 IEntity beaker;
-                SolutionContainerComponent component = null;
+                Solution component = null;
 
                 server.Assert(() =>
                 {
                     mapManager.CreateNewMapEntity(MapId.Nullspace);
 
                     beaker = entityManager.SpawnEntity("BluespaceBeaker", MapCoordinates.Nullspace);
-                    Assert.That(beaker.TryGetComponent(out component));
+                    Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                        .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
-                        Assert.That(component.TryAddReagent(id, reactant.Amount, out var quantity));
+                        Assert.That(EntitySystem.Get<SolutionContainerSystem>()
+                            .TryAddReagent(beaker.Uid, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
                     }
                 });
@@ -61,7 +59,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
                     var foundProductsMap = reactionPrototype.Products
                         .Concat(reactionPrototype.Reactants.Where(x => x.Value.Catalyst).ToDictionary(x => x.Key, x => x.Value.Amount))
                         .ToDictionary(x => x, x => false);
-                    foreach (var reagent in component.Solution.Contents)
+                    foreach (var reagent in component.Contents)
                     {
                         Assert.That(foundProductsMap.TryFirstOrNull(x => x.Key.Key == reagent.ReagentId && x.Key.Value == reagent.Quantity, out var foundProduct));
                         foundProductsMap[foundProduct.Value.Key] = true;

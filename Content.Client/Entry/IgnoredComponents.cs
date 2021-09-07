@@ -224,8 +224,7 @@ namespace Content.Client.Entry
             "DebugEquip",
             "InnateActions",
             "ReagentGrinder",
-            "Grindable",
-            "Juiceable",
+            "Extractable",
             "WelderRefinable",
             "ConveyorAssembly",
             "TwoWayLever",
@@ -274,6 +273,7 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
+            "AmbientOnPowered",
             "TabletopGame"
         };
     }

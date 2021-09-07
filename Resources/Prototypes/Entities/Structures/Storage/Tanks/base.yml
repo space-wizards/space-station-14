@@ -33,7 +33,10 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SolutionContainer
-    maxVol: 1500
-    caps: Drainable
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 1500
+  - type: DrainableSolution
+    solution: tank
   - type: ReagentTank

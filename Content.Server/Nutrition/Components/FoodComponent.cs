@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -28,6 +28,7 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
+        public static string SolutionName = "food";
 
         [ViewVariables]
         [DataField("useSound")]
@@ -52,7 +53,7 @@ namespace Content.Server.Nutrition.Components
         {
             get
             {
-                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return 0;
                 }
@@ -69,7 +70,7 @@ namespace Content.Server.Nutrition.Components
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<SolutionContainerComponent>();
+            // Owner.EnsureComponentWarn<SolutionContainerManager>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -97,7 +98,8 @@ namespace Content.Server.Nutrition.Components
 
         public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionContainerSys.TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return false;
             }
@@ -147,7 +149,8 @@ namespace Content.Server.Nutrition.Components
 
                 if (!types.HasFlag(_utensilsNeeded))
                 {
-                    trueTarget.PopupMessage(user, Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
+                    trueTarget.PopupMessage(user,
+                        Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
                     return false;
                 }
             }
@@ -158,12 +161,12 @@ namespace Content.Server.Nutrition.Components
             }
 
             var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
-            var split = solution.SplitSolution(transferAmount);
+            var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
-                solution.TryAddSolution(split);
+                solutionContainerSys.TryAddSolution(Owner.Uid, solution, split);
                 trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
@@ -202,6 +205,8 @@ namespace Content.Server.Nutrition.Components
 
             return true;
         }
+
+
 
         private void DeleteAndSpawnTrash(IEntity user)
         {
