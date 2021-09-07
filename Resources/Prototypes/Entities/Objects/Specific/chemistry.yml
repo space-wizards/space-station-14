@@ -17,9 +17,18 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
-  - type: SolutionContainer
-    maxVol: 50
-    caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -72,8 +81,10 @@
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-  - type: SolutionContainer
-    maxVol: 100
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -90,9 +101,11 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
-  - type: SolutionContainer
-    maxVol: 60
-    canReact: false
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 60
+        canReact: false
 
 - type: entity
   name: bluespace beaker
@@ -104,8 +117,10 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
-  - type: SolutionContainer
-    maxVol: 300
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 300
 
 - type: entity
   name: dropper
@@ -121,9 +136,16 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainer
-    caps: OpenContainer
-    maxVol: 5
+  - type: SolutionContainerManager
+    solutions:
+      dropper:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: dropper
+  - type: DrainableSolution
+    solution: dropper
+  - type: ExaminableSolution
+    solution: dropper
   - type: SolutionTransfer
     minTransferAmount: 1
     transferAmount: 1
@@ -160,8 +182,10 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/syringe.rsi
     HeldPrefix: 0
-  - type: SolutionContainer
-    maxVol: 15
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
@@ -196,6 +220,7 @@
   - type: Food
     transferAmount: null
     eatMessage: food-swallow
-  - type: SolutionContainer
-    maxVol: 50
-    caps: None
+  - type: SolutionContainerManager
+    solutions:
+      pill:
+        maxVol: 50

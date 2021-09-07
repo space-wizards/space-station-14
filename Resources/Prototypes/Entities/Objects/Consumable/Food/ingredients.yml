@@ -25,8 +25,10 @@
   - type: Sprite
     netsync: false
     sprite: Objects/Consumable/Food/ingredients.rsi
-  - type: SolutionContainer
-    maxVol: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
   - type: SolutionTransfer
   - type: Drink
     openSounds:
@@ -43,11 +45,13 @@
   components:
   - type: Sprite
     state: flour-big
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Flour
-        Quantity: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50
+        reagents:
+        - ReagentId: Flour
+          Quantity: 50
   - type: DamageOnLand
     amount: 1
   - type: DamageOtherOnHit
@@ -78,12 +82,13 @@
   components:
   - type: Sprite
     state: flour-small
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Flour
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Flour
+          Quantity: 20
   - type: DamageOnLand
     amount: 1
   - type: DamageOtherOnHit
@@ -114,11 +119,12 @@
   components:
   - type: Sprite
     state: rice-big
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Rice
-        Quantity: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Rice
+          Quantity: 50
 
 - type: entity
   parent: ReagentContainerBase
@@ -128,12 +134,13 @@
   components:
   - type: Sprite
     state: rice-small
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Rice
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Rice
+          Quantity: 20
 
 - type: entity
   parent: ReagentContainerBase
@@ -143,11 +150,12 @@
   components:
   - type: Sprite
     state: sugar-big
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Sugar
-        Quantity: 50
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 50
 
 - type: entity
   parent: ReagentContainerBase
@@ -157,12 +165,13 @@
   components:
   - type: Sprite
     state: sugar-small
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Sugar
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Sugar
+          Quantity: 20
 
 # Milk
 
@@ -174,12 +183,13 @@
   components:
   - type: Sprite
     state: milk
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Milk
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Milk
+          Quantity: 20
 
 - type: entity
   parent: ReagentContainerBase
@@ -189,12 +199,13 @@
   components:
   - type: Sprite
     state: milk-soy
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: MilkSoy
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 20
 
 - type: entity
   parent: ReagentContainerBase
@@ -204,12 +215,13 @@
   components:
   - type: Sprite
     state: milk-oat
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: MilkOat
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: MilkOat
+          Quantity: 20
 
 # Misc
 
@@ -221,12 +233,13 @@
   components:
   - type: Sprite
     state: oliveoil
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: OilOlive
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: OilOlive
+          Quantity: 20
 
 # - type: entity
 #   parent: ReagentContainerBase
@@ -236,7 +249,7 @@
 #   components:
 #   - type: Sprite
 #     state: mayo
-#   - type: SolutionContainer
+#   - type: SolutionContainerManager
 #     maxVol: 10
 #     contents:
 #       reagents:
@@ -251,7 +264,7 @@
 #   components:
 #   - type: Sprite
 #     state: spice
-#   - type: SolutionContainer
+#   - type: SolutionContainerManager
 #     maxVol: 10
 #     contents:
 #       reagents:
@@ -270,12 +283,13 @@
     sprite: Objects/Consumable/Food/ingredients.rsi
     netsync: false
   - type: Food
-  - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
 
 - type: entity
   name: dough
@@ -400,11 +414,12 @@
   components:
   - type: Sprite
     state: badrecipe
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 2
-      - ReagentId: Toxin
-        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Toxin
+          Quantity: 3
