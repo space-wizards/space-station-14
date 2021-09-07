@@ -35,7 +35,7 @@ namespace Content.Client.Audio
 
         private Dictionary<AmbientSoundComponent, (IPlayingAudioStream? Stream, string Sound)> _playingSounds = new();
 
-        private const float RangeBuffer = 0.1f;
+        private const float RangeBuffer = 0.5f;
 
         public override void Initialize()
         {
@@ -159,7 +159,6 @@ namespace Content.Client.Audio
                     .WithVolume(comp.Volume)
                     .WithLoop(true)
                     .WithAttenuation(Attenuation.LinearDistance)
-                    .WithRolloffFactor(1f)
                     // Randomise start so 2 sources don't increase their volume.
                     .WithPlayOffset(_random.NextFloat())
                     .WithMaxDistance(comp.Range);
