@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Interactable.Components;
@@ -101,7 +101,6 @@ namespace Content.Client.ContextMenu.UI
     public sealed class StackContextElement : ContextMenuElement
      {
          public event Action? OnExitedTree;
-         public readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
          public HashSet<IEntity> ContextEntities { get; }
          public readonly StackContextElement? Pre;
@@ -176,18 +175,22 @@ namespace Content.Client.ContextMenu.UI
          }
      }
 
-    public sealed class ContextMenuPopup : Popup
+    public class ContextMenuPopup : Popup
     {
-        private static readonly Color DefaultColor = Color.FromHex("#1116");
-        private static readonly Color MarginColor = Color.FromHex("#222E");
+        private static readonly Color DefaultButtonColor = Color.FromHex("#1116");
+        private static readonly Color DefaultBackgroundColor = Color.FromHex("#222E");
         private const int MaxItemsBeforeScroll = 10;
         private const int MarginSizeBetweenElements = 2;
+
+        private readonly Color _buttonColor;
 
         public BoxContainer List { get; }
         public int Depth { get; }
 
-        public ContextMenuPopup(int depth = 0)
+        public ContextMenuPopup(int depth = 0, Color? buttonColor= null, Color? backgroundColor = null)
         {
+            _buttonColor = buttonColor ?? DefaultButtonColor;
+
             Depth = depth;
             AddChild(new ScrollContainer
             {
@@ -198,19 +201,35 @@ namespace Content.Client.ContextMenu.UI
                     {
                         Orientation = LayoutOrientation.Vertical
                     }) },
-                    PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
+                    PanelOverride = new StyleBoxFlat {  BackgroundColor = backgroundColor ?? DefaultBackgroundColor }
                 }}
             });
         }
 
-        public void AddToMenu(ContextMenuElement element)
+        /// <summary>
+        ///     Add a child, with a small border margin.
+        /// </summary>
+        /// <param name="element"></param>
+        public void AddToMenu(Control element)
         {
-            List.AddChild(new PanelContainer
+            if (List.ChildCount != 0)
             {
-                Children = { element },
-                Margin = new Thickness(0,0,0, MarginSizeBetweenElements),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = DefaultColor}
-            });
+                List.AddChild(new PanelContainer
+                {
+                    Children = { element },
+                    Margin = new Thickness(0, MarginSizeBetweenElements, 0, 0),
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
+                });
+            }
+            else
+            {
+                // do not include margins for the first element.
+                List.AddChild(new PanelContainer
+                {
+                    Children = { element },
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
+                });
+            }
         }
 
         public void RemoveFromMenu(ContextMenuElement element)

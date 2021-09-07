@@ -80,7 +80,7 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            if (!EntityManager.TryGetEntity(use.EntityUid, out var targetEntity))
+            if (!EntityManager.TryGetEntity(use.Target, out var targetEntity))
             {
                 return;
             }

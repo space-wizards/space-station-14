@@ -48,12 +48,12 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public class UseVerbEvent : EntityEventArgs
     {
-        public readonly EntityUid EntityUid;
+        public readonly EntityUid Target;
         public readonly string VerbKey;
 
-        public UseVerbEvent(EntityUid entityUid, string verbKey)
+        public UseVerbEvent(EntityUid target, string verbKey)
         {
-            EntityUid = entityUid;
+            Target = target;
             VerbKey = verbKey;
         }
     }

@@ -39,13 +39,15 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
+        public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
+        private CancellationTokenSource? _cancelHover;
+
         private readonly IContextMenuView _contextMenuView;
         private readonly VerbSystem _verbSystem;
 
         private bool _playerCanSeeThroughContainers;
 
         private MapCoordinates _mapCoordinates;
-        private CancellationTokenSource? _cancellationTokenSource;
 
         public ContextMenuPresenter(VerbSystem verbSystem)
         {
@@ -91,14 +93,11 @@ namespace Content.Client.ContextMenu.UI
         {
             var realGlobalPosition = e.GlobalPosition;
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
+            _cancelHover?.Cancel();
+            _cancelHover = new();
 
-            Timer.Spawn(e.HoverDelay, () =>
+            Timer.Spawn(HoverDelay, () =>
             {
-                // close any currently open popup
-                _verbSystem.CurrentCategoryPopup?.Close();
-
                 if (_contextMenuView.Menus.Count == 0)
                 {
                     return;
@@ -111,7 +110,7 @@ namespace Content.Client.ContextMenu.UI
                 {
                     _contextMenuView.AddChildMenu(filteredEntities, realGlobalPosition, e);
                 }
-            }, _cancellationTokenSource.Token);
+            }, _cancelHover.Token);
         }
 
         private void OnKeyBindDownStack(object? sender, (GUIBoundKeyEventArgs, StackContextElement) e)
@@ -169,10 +168,22 @@ namespace Content.Client.ContextMenu.UI
 
         private void OnMouseEnteredSingle(object? sender, SingleContextElement e)
         {
-            _cancellationTokenSource?.Cancel();
+            _cancelHover?.Cancel();
+            _cancelHover = new();
+
+            Timer.Spawn(HoverDelay, () =>
+            {
+                if (_contextMenuView.Menus.Count == 0)
+                {
+                    return;
+                }
+
+                OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
+
+            }, _cancelHover.Token);
+
 
             var entity = e.ContextEntity;
-            _verbSystem.CurrentCategoryPopup = null;
 
             OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
 
@@ -303,6 +314,8 @@ namespace Content.Client.ContextMenu.UI
                     if (!ExamineSystem.InRangeUnOccluded(player, listedEntity, ExamineSystem.ExamineRange, null))
                     {
                         _contextMenuView.RemoveEntity(listedEntity);
+                        if (_verbSystem.CurrentEntity == listedEntity.Uid)
+                            _verbSystem.CloseVerbMenu();
                     }
                 }
             }
@@ -312,6 +325,8 @@ namespace Content.Client.ContextMenu.UI
                 if (!ExamineSystem.InRangeUnOccluded(player, movingEntityy, ExamineSystem.ExamineRange, null))
                 {
                     _contextMenuView.RemoveEntity(movingEntityy);
+                    if (_verbSystem.CurrentEntity == movingEntityy.Uid)
+                        _verbSystem.CloseVerbMenu();
                 }
             }
         }
@@ -325,6 +340,8 @@ namespace Content.Client.ContextMenu.UI
                 if (entity.Deleted || !_playerCanSeeThroughContainers && entity.IsInContainer())
                 {
                     _contextMenuView.RemoveEntity(entity);
+                    if (_verbSystem.CurrentEntity == entity.Uid)
+                        _verbSystem.CloseVerbMenu();
                 }
             }
         }
@@ -348,7 +365,7 @@ namespace Content.Client.ContextMenu.UI
         private void CloseAllMenus()
         {
             _contextMenuView.CloseContextPopups();
-            _verbSystem.CloseContextMenu();
+            _verbSystem.CloseVerbMenu();
         }
 
         public void Dispose()
