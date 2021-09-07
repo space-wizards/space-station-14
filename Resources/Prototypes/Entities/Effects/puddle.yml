@@ -6,7 +6,7 @@
   - type: SnapGrid
   - type: Sprite
     drawdepth: FloorObjects
-  - type: SolutionContainer
+  - type: SolutionContainerManager
   - type: Puddle
     spill_sound:
       path: /Audio/Effects/Fluids/splat.ogg

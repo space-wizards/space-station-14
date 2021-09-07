@@ -8,18 +8,22 @@
     netsync: false
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
-      - state: fire_extinguisher_closed
-        map: [ "enum.SprayVisualLayers.Base" ]
+        - state: fire_extinguisher_closed
+          map: [ "enum.SprayVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable, Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      fireExtinguisher:
+        maxVol: 100
+        reagents:
         - ReagentId: Water
           Quantity: 100
+  - type: RefillableSolution
+    solution: fireExtinguisher
+  - type: DrainableSolution
+    solution: fireExtinguisher
   - type: ItemCooldown
   - type: Spray
     spraySound:

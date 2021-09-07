@@ -22,6 +22,7 @@ namespace Content.Shared.Movement
     /// </summary>
     public abstract class SharedMoverController : VirtualController
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private ActionBlockerSystem _blocker = default!;
@@ -99,7 +100,7 @@ namespace Content.Shared.Movement
 
             UsedMobMovement[mover.Owner.Uid] = true;
             var transform = mover.Owner.Transform;
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager);
+            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             // Handle wall-pushes.

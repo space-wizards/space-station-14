@@ -24,13 +24,15 @@
       types:
         Blunt: 10
   - type: ItemStatus
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable
-    contents:
-      reagents:
+  - type: RefillableSolution
+    solution: welder
+  - type: SolutionContainerManager
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 100
+        maxVol: 100
   - type: Welder
   - type: PointLight
     enabled: false
@@ -47,13 +49,15 @@
     sprite: Objects/Tools/welder_experimental.rsi
   - type: Item
     sprite: Objects/Tools/welder_experimental.rsi
-  - type: SolutionContainer
-    maxVol: 1000
-    caps: Refillable
-    contents:
-      reagents:
+  - type: RefillableSolution
+    solution: welder
+  - type: SolutionContainerManager
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 1000
+        maxVol: 1000
   - type: PointLight
     enabled: false
     radius: 1.5
@@ -69,13 +73,15 @@
     sprite: Objects/Tools/welder_mini.rsi
   - type: Item
     sprite: Objects/Tools/welder_mini.rsi
-  - type: SolutionContainer
-    maxVol: 25
-    caps: Refillable
-    contents:
-      reagents:
+  - type: RefillableSolution
+    solution: welder
+  - type: SolutionContainerManager
+    solutions:
+      welder:
+        reagents:
         - ReagentId: WeldingFuel
           Quantity: 25
+        maxVol: 25
   - type: PointLight
     enabled: false
     radius: 1.0

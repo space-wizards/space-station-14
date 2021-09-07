@@ -6,8 +6,10 @@
   id: FoodBowlBig
   description: A simple bowl, used for soups and salads.
   components:
-  - type: SolutionContainer
-    maxVol: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl

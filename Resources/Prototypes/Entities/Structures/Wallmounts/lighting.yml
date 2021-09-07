@@ -4,6 +4,10 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
+  - type: AmbientSound
+    volume: -12
+    sound:
+      path: /Audio/Ambience/Objects/light_hum.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
