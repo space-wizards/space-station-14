@@ -109,6 +109,9 @@ namespace Content.Client.Tabletop
         /// </summary>
         private void OnTabletopPlay(TabletopPlayEvent msg)
         {
+            // Close the currently opened window, if it exists
+            _window?.Close();
+
             _table = EntityManager.GetEntity(msg.TableUid);
 
             // Get the camera entity that the server has created for us
@@ -120,9 +123,6 @@ namespace Content.Client.Tabletop
                 Logger.Error("Camera entity does not have eye component!");
                 return;
             }
-
-            // Close the currently opened window, if it exists
-            _window?.Close();
 
             // Create a window to contain the viewport
             _window = new TabletopWindow(eyeComponent.Eye, (msg.Size.X, msg.Size.Y))
