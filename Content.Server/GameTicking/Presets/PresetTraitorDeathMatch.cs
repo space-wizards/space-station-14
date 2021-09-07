@@ -196,7 +196,7 @@ namespace Content.Server.GameTicking.Presets
                 {
                     // TODO BODY SYSTEM KILL
                     var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
                 } 
                 else if (!mobState.IsDead())
                 {

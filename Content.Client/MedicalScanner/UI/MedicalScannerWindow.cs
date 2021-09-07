@@ -55,23 +55,17 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
-                // Show the total damage
                 var totalDamage = state.DamagePerType.Values.Sum();
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
-                // Keep track of how many damage types we have shown
                 HashSet<string> shownTypes = new();
 
-                // Then show the total damage and type breakdown for each damage group.
+                // Show the total damage and type breakdown for each damage group.
                 foreach (var (damageGroupID, damageAmount) in state.DamagePerGroup)
                 {
-
-                    // Show total damage for the group
                     text.Append($"\n{Loc.GetString("medical-scanner-window-damage-group-text", ("damageGroup", damageGroupID), ("amount", damageAmount))}");
 
                     // Show the damage for each type in that group.
-                    // currently state has a dictionary mapping groupsIDs to damage, and typeIDs to damage, but does not know how types and groups are related.
-                    // So use PrototypeManager.
                     var group = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(damageGroupID);
                     foreach (var type in group.DamageTypes)
                     {

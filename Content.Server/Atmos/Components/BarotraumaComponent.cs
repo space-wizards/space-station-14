@@ -48,7 +48,8 @@ namespace Content.Server.Atmos.Components
                     if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * Atmospherics.LowPressureDamage);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * Atmospherics.LowPressureDamage, true);
 
                     if (status == null) break;
 
@@ -68,9 +69,10 @@ namespace Content.Server.Atmos.Components
                     if(pressure < Atmospherics.WarningHighPressure)
                         goto default;
 
-                    var damageScale = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient , Atmospherics.MaxHighPressureDamage);
+                    var damageScale = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * damageScale);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * damageScale, true);
 
                     if (status == null) break;
 

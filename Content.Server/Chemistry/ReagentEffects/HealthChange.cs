@@ -7,7 +7,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
-    /// Default metabolism for medicine reagents. Raises a <see cref="TryChangeDamageEvent"/> every metabolism cycle while this reagent is in the bloodstream.
+    /// Default metabolism for medicine reagents.
     /// </summary>
     public class HealthChange : ReagentEffect
     {

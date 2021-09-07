@@ -35,8 +35,6 @@ namespace Content.Shared.Damage
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, int> DamageDict
         {
-            // Cannot use ISerializationHooks.AfterDeserialization(). So instead using this to index damage
-            // prototypes after deserialization only when actually needed.
             get => GetCombinedDamageDictionary();
             set => _damageDict = value;
         }
