@@ -5,7 +5,7 @@
   suffix: Unpowered
   components:
   - type: AmbientSound
-    volume: -25
+    volume: -12
     sound:
       path: /Audio/Ambience/Objects/light_hum.ogg
   - type: Clickable
