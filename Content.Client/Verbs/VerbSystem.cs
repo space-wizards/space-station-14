@@ -182,25 +182,10 @@ namespace Content.Client.Verbs
             }
 
             // Merge message verbs with client side verb list
-            foreach (var verb in msg.InteractionVerbs)
-            {
-                _interactionVerbs.Add(verb);
-            }
-
-            foreach (var verb in msg.ActivationVerbs)
-            {
-                _activationVerbs.Add(verb);
-            }
-
-            foreach (var verb in msg.AlternativeVerbs)
-            {
-                _alternativeVerbs.Add(verb);
-            }
-
-            foreach (var verb in msg.OtherVerbs)
-            {
-                _otherVerbs.Add(verb);
-            }
+            _interactionVerbs.AddRange(msg.InteractionVerbs);
+            _activationVerbs.AddRange(msg.ActivationVerbs);
+            _alternativeVerbs.AddRange(msg.AlternativeVerbs);
+            _otherVerbs.AddRange(msg.OtherVerbs);
 
             // Clear currently shown verbs
             _currentVerbListRoot!.List.DisposeAllChildren();

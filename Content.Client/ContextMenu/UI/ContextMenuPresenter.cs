@@ -282,15 +282,36 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
+        /// <summary>
+        ///     Check that entities in the context menu are still visible. If not, remove them from the context menu.
+        /// </summary>
         public void HandleMoveEvent(ref MoveEvent ev)
         {
             if (_contextMenuView.Elements.Count == 0) return;
-            var entity = ev.Sender;
-            if (_contextMenuView.Elements.ContainsKey(entity))
+            var movingEntityy = ev.Sender;
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (player == null)
+                return;
+
+            // Did the player move? if yes, re-check that the user can still see the listed entities
+            if (movingEntityy == player)
             {
-                if (!entity.Transform.MapPosition.InRange(_mapCoordinates, 1.0f))
+                foreach (var listedEntity in _contextMenuView.Elements.Keys)
                 {
-                    _contextMenuView.RemoveEntity(entity);
+                    if (!ExamineSystem.InRangeUnOccluded(player, listedEntity, ExamineSystem.ExamineRange, null))
+                    {
+                        _contextMenuView.RemoveEntity(listedEntity);
+                    }
+                }
+            }
+            // Did one of the listed entities move out of range?
+            else if (_contextMenuView.Elements.ContainsKey(movingEntityy))
+            {
+                if (!ExamineSystem.InRangeUnOccluded(player, movingEntityy, ExamineSystem.ExamineRange, null))
+                {
+                    _contextMenuView.RemoveEntity(movingEntityy);
                 }
             }
         }
