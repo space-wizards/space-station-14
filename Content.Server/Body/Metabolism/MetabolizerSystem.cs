@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
@@ -8,6 +7,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Body.Metabolism
 {

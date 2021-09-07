@@ -3,14 +3,13 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
-using Robust.Shared.Serialization;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
     /// Default metabolism for medicine reagents. Raises a <see cref="TryChangeDamageEvent"/> every metabolism cycle while this reagent is in the bloodstream.
     /// </summary>
-    public class HealthChange : ReagentEffect, ISerializationHooks
+    public class HealthChange : ReagentEffect
     {
         /// <summary>
         /// Damage to apply every metabolism cycle. Damage Ignores resistances.
