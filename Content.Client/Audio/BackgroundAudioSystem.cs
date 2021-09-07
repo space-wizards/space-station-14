@@ -29,8 +29,8 @@ namespace Content.Client.Audio
 
         private SoundCollectionPrototype _ambientCollection = default!;
 
-        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, true, 0f);
-        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, true, 0f);
+        private AudioParams _ambientParams = new(-10f, 1, "Master", 0, 0, 0, true, 0f);
+        private AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 
         private IPlayingAudioStream? _ambientStream;
         private IPlayingAudioStream? _lobbyStream;
