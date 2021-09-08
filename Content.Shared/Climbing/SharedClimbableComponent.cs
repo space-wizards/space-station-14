@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.DragDrop;
+﻿using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

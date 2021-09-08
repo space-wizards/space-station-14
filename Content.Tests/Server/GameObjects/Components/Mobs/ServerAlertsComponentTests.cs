@@ -36,6 +36,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.RegisterClass<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));

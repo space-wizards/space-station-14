@@ -1,12 +1,9 @@
-#nullable enable
-#nullable disable warnings
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
-using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -18,6 +15,7 @@ using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -47,6 +45,8 @@ namespace Content.Server.Atmos.Components
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
+
+        [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -279,11 +279,11 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    tileAtmos?.AssumeAir(Air);
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if(environment != null)
+                        atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
-                        AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     Owner.QueueDelete();
                     return;
@@ -297,12 +297,12 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    if (tileAtmos == null)
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if (environment == null)
                         return;
 
                     var leakedGas = Air.RemoveRatio(0.25f);
-                    tileAtmos.AssumeAir(leakedGas);
+                    atmosphereSystem.Merge(environment, leakedGas);
                 }
                 else
                 {

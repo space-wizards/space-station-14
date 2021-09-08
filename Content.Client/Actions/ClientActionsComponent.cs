@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using Content.Client.Actions.Assignments;
 using Content.Client.Actions.UI;
 using Content.Client.Hands;
 using Content.Client.Inventory;
-using Content.Client.Items.UI;
+using Content.Client.Items.Managers;
 using Content.Shared.Actions.Components;
 using Content.Shared.Actions.Prototypes;
 using Robust.Client.GameObjects;
@@ -26,12 +25,13 @@ namespace Content.Client.Actions
         public const byte Slots = 10;
 
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
         [ComponentDependency] private readonly HandsComponent? _handsComponent = null;
         [ComponentDependency] private readonly ClientInventoryComponent? _inventoryComponent = null;
 
         private ActionsUI? _ui;
-        private readonly List<ItemSlotButton> _highlightingItemSlots = new();
+        private EntityUid _highlightedEntity;
 
         /// <summary>
         /// Current assignments for all hotbars / slots for this entity.
@@ -225,26 +225,8 @@ namespace Content.Client.Actions
         {
             StopHighlightingItemSlots();
 
-            // figure out if it's in hand or inventory and highlight it
-            foreach (var hand in _handsComponent!.Gui!.Hands)
-            {
-                if (hand.HeldItem != item || hand.HandButton == null) continue;
-                _highlightingItemSlots.Add(hand.HandButton);
-                hand.HandButton.Highlight(true);
-                return;
-            }
-
-            foreach (var (slot, slotItem) in _inventoryComponent!.AllSlots)
-            {
-                if (slotItem != item) continue;
-                foreach (var itemSlotButton in
-                    _inventoryComponent.InterfaceController.GetItemSlotButtons(slot))
-                {
-                    _highlightingItemSlots.Add(itemSlotButton);
-                    itemSlotButton.Highlight(true);
-                }
-                return;
-            }
+            _highlightedEntity = item.Uid;
+            _itemSlotManager.HighlightEntity(item.Uid);
         }
 
         /// <summary>
@@ -252,11 +234,11 @@ namespace Content.Client.Actions
         /// </summary>
         public void StopHighlightingItemSlots()
         {
-            foreach (var itemSlot in _highlightingItemSlots)
-            {
-                itemSlot.Highlight(false);
-            }
-            _highlightingItemSlots.Clear();
+            if (_highlightedEntity == default)
+                return;
+
+            _itemSlotManager.UnHighlightEntity(_highlightedEntity);
+            _highlightedEntity = default;
         }
 
         public void ToggleActionsMenu()

@@ -27,7 +27,7 @@ namespace Content.Server.AI.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
-    public class PathfindingSystem : EntitySystem, IResettingEntitySystem
+    public class PathfindingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -201,6 +201,7 @@ namespace Content.Server.AI.Pathfinding
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<CollisionChangeMessage>(QueueCollisionChangeMessage);
             SubscribeLocalEvent<MoveEvent>(QueueMoveEvent);
             SubscribeLocalEvent<AccessReaderChangeMessage>(QueueAccessChangeMessage);
@@ -223,6 +224,8 @@ namespace Content.Server.AI.Pathfinding
 
         private void HandleTileUpdate(TileRef tile)
         {
+            if (!_mapManager.GridExists(tile.GridIndex)) return;
+
             var node = GetNode(tile);
             node.UpdateTile(tile);
         }
@@ -288,7 +291,7 @@ namespace Content.Server.AI.Pathfinding
             _lastKnownPositions.Remove(entity);
         }
 
-        private void QueueMoveEvent(MoveEvent moveEvent)
+        private void QueueMoveEvent(ref MoveEvent moveEvent)
         {
             _moveUpdateQueue.Enqueue(moveEvent);
         }
@@ -385,7 +388,7 @@ namespace Content.Server.AI.Pathfinding
             return true;
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _graph.Clear();
             _collidableUpdateQueue.Clear();

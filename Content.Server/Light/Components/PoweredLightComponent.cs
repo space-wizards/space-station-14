@@ -1,26 +1,24 @@
-#nullable enable
 using System;
 using System.Threading.Tasks;
-using Content.Server.Ghost;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.MachineLinking.Components;
-using Content.Server.MachineLinking.Signals;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
-using Content.Shared.Actions.Behaviors;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
+using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
@@ -32,42 +30,69 @@ namespace Content.Server.Light.Components
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
     [RegisterComponent]
-    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit, ISignalReceiver<bool>, ISignalReceiver<ToggleSignal>, IGhostBooAffected
+    public class PoweredLightComponent : Component, IInteractHand, IInteractUsing, IMapInit
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override string Name => "PoweredLight";
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
-        // time to blink light when ghost made boo nearby
-        private static readonly TimeSpan ghostBlinkingTime = TimeSpan.FromSeconds(10);
-        private static readonly TimeSpan ghostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
         [ComponentDependency]
         private readonly AppearanceComponent? _appearance;
 
         private TimeSpan _lastThunk;
-        private TimeSpan? _lastGhostBlink;
+        public TimeSpan? LastGhostBlink;
+
+        [DataField("burnHandSound")]
+        private SoundSpecifier _burnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
+
+        [DataField("turnOnSound")]
+        private SoundSpecifier _turnOnSound = new SoundPathSpecifier("/Audio/Machines/light_tube_on.ogg");
 
         [DataField("hasLampOnSpawn")]
         private bool _hasLampOnSpawn = true;
 
-        [ViewVariables] [DataField("on")]
+        [ViewVariables]
+        [DataField("on")]
         private bool _on = true;
 
         [ViewVariables]
         private bool _currentLit;
 
         [ViewVariables]
-        private bool _isBlinking;
+        public bool IsBlinking;
 
-        [ViewVariables] [DataField("ignoreGhostsBoo")]
-        private bool _ignoreGhostsBoo;
+        [ViewVariables]
+        [DataField("ignoreGhostsBoo")]
+        public bool IgnoreGhostsBoo;
+
+        [ViewVariables]
+        [DataField("ghostBlinkingTime")]
+        public TimeSpan GhostBlinkingTime = TimeSpan.FromSeconds(10);
+
+        [ViewVariables]
+        [DataField("ghostBlinkingCooldown")]
+        public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
+
 
         [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
         public LightBulbType BulbType => _bulbType;
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Heat";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+            _lightBulbContainer = Owner.EnsureContainer<ContainerSlot>("light_bulb");
+        }
 
         [ViewVariables]
         public LightBulbComponent? LightBulb
@@ -96,9 +121,9 @@ namespace Content.Server.Light.Components
                 Eject();
                 return false;
             }
-            if(eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
+            if (eventArgs.User.TryGetComponent(out HeatResistanceComponent? heatResistanceComponent))
             {
-                if(CanBurn(heatResistanceComponent.GetHeatResistance()))
+                if (CanBurn(heatResistanceComponent.GetHeatResistance()))
                 {
                     Burn();
                     return true;
@@ -118,8 +143,8 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.ChangeDamage(DamageType.Heat, 20, false, Owner);
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/lightburn.ogg", Owner);
+                damageableComponent.TryChangeDamage(DamageType, 20);
+                SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
             void Eject()
@@ -198,11 +223,11 @@ namespace Content.Server.Light.Components
         /// </summary>
         public void UpdateLight()
         {
-            var powerReceiver = Owner.GetComponent<PowerReceiverComponent>();
+            var powerReceiver = Owner.GetComponent<ApcPowerReceiverComponent>();
 
             if (LightBulb == null) // No light bulb.
             {
-                _currentLit = false;
+                SetLight(false);
                 powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
@@ -213,39 +238,43 @@ namespace Content.Server.Light.Components
                 case LightBulbState.Normal:
                     if (powerReceiver.Powered && _on)
                     {
-                        _currentLit = true;
+                        SetLight(true, LightBulb.Color);
                         powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
-                        _appearance?.SetData(PoweredLightVisuals.BulbColor, LightBulb.Color);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
                         {
                             _lastThunk = time;
-                            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/light_tube_on.ogg", Owner, AudioParams.Default.WithVolume(-10f));
+                            SoundSystem.Play(Filter.Pvs(Owner), _turnOnSound.GetSound(), Owner, AudioParams.Default.WithVolume(-10f));
                         }
                     }
                     else
                     {
-                        _currentLit = false;
+                        SetLight(false);
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Off);
                     }
                     break;
                 case LightBulbState.Broken:
-                    _currentLit = false;
+                    SetLight(false);
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Broken);
                     break;
                 case LightBulbState.Burned:
-                    _currentLit = false;
+                    SetLight(false);
                     _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Burned);
                     break;
             }
         }
 
-        protected override void Initialize()
+        private void SetLight(bool value, Color? color = null)
         {
-            base.Initialize();
+            _currentLit = value;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, value);
 
-            _lightBulbContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "light_bulb");
+            if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
+            pointLight.Enabled = value;
+
+            if (color != null)
+                pointLight.Color = color.Value;
         }
 
         public override void HandleMessage(ComponentMessage message, IComponent? component)
@@ -294,47 +323,12 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-        public void TriggerSignal(bool signal)
-        {
-            _on = signal;
-            UpdateLight();
-        }
-
-        public void TriggerSignal(ToggleSignal signal)
+        public void ToggleLight()
         {
             _on = !_on;
             UpdateLight();
         }
 
-        public void ToggleBlinkingLight(bool isNowBlinking)
-        {
-            if (_isBlinking == isNowBlinking)
-                return;
 
-            _isBlinking = isNowBlinking;
-            _appearance?.SetData(PoweredLightVisuals.Blinking, _isBlinking);
-        }
-
-        public bool AffectedByGhostBoo(InstantActionEventArgs args)
-        {
-            if (_ignoreGhostsBoo)
-                return false;
-
-            // check cooldown first to prevent abuse
-            var time = _gameTiming.CurTime;
-            if (_lastGhostBlink != null)
-            {
-                if (time <= _lastGhostBlink + ghostBlinkingCooldown)
-                    return false;
-            }
-            _lastGhostBlink = time;
-
-            ToggleBlinkingLight(true);
-            Owner.SpawnTimer(ghostBlinkingTime, () => {
-                ToggleBlinkingLight(false);
-            });
-
-            return true;
-        }
     }
 }

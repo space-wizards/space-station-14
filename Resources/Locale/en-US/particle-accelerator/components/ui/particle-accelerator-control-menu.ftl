@@ -13,4 +13,4 @@ particle-accelerator-control-menu-status-label = Status: {$status}
 particle-accelerator-control-menu-status-operational = Operational
 particle-accelerator-control-menu-status-incomplete = Incomplete
 particle-accelerator-control-menu-draw-not-available = Draw: N/A
-particle-accelerator-control-menu-draw = Draw: {$watts}/{lastReceive} 
+particle-accelerator-control-menu-draw = Draw: {$watts}/{$lastReceive} 

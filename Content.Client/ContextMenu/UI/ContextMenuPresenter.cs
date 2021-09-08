@@ -1,4 +1,3 @@
-﻿#nullable enable
 using System;
 using System.Linq;
 using System.Threading;
@@ -122,7 +121,7 @@ namespace Content.Client.ContextMenu.UI
 
             if (firstEntity == null) return;
 
-            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
+            if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
             {
                 var inputSys = _systemManager.GetEntitySystem<InputSystem>();
 
@@ -222,7 +221,7 @@ namespace Content.Client.ContextMenu.UI
                  return;
              }
 
-             if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.Point ||
+             if (args.Function == EngineKeyFunctions.Use || args.Function == ContentKeyFunctions.AltActivateItemInWorld || args.Function == ContentKeyFunctions.Point ||
                  args.Function == ContentKeyFunctions.TryPullObject || args.Function == ContentKeyFunctions.MovePulledObject)
              {
                  var inputSys = _systemManager.GetEntitySystem<InputSystem>();
@@ -283,7 +282,7 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
-        public void HandleMoveEvent(MoveEvent ev)
+        public void HandleMoveEvent(ref MoveEvent ev)
         {
             if (_contextMenuView.Elements.Count == 0) return;
             var entity = ev.Sender;

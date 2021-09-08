@@ -21,7 +21,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
     /// </summary>
     /// Long-term can be used to do hierarchical pathfinding
     [UsedImplicitly]
-    public sealed class AiReachableSystem : EntitySystem, IResettingEntitySystem
+    public sealed class AiReachableSystem : EntitySystem
     {
         /*
          * The purpose of this is to provide a higher-level / hierarchical abstraction of the actual pathfinding graph
@@ -37,8 +37,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
          */
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
-        private PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
 
         /// <summary>
         /// Queued region updates
@@ -80,7 +79,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
 
         public override void Initialize()
         {
-            _pathfindingSystem = Get<PathfindingSystem>();
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PathfindingChunkUpdateMessage>(RecalculateNodeRegions);
 #if DEBUG
             SubscribeNetworkEvent<SharedAiDebug.SubscribeReachableMessage>(HandleSubscription);
@@ -699,7 +698,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
 #endif
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _queuedUpdates.Clear();
             _regions.Clear();

@@ -28,7 +28,6 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
-  - type: LoopingSound
 
 - type: entity
   parent: BasePDA
@@ -92,14 +91,14 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
+        bounds: "-0.4,-0.3,0.4,0.3"
       id: "slips"
       hard: false
       layer:
       - SmallImpassable
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
+        bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       mask:
       - SmallImpassable

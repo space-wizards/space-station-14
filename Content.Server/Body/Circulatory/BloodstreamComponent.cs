@@ -1,14 +1,12 @@
 using System;
-using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Chemistry.Components;
-using Content.Server.Interfaces;
-using Content.Server.Metabolism;
+using Content.Server.Body.Respiratory;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -24,31 +22,33 @@ namespace Content.Server.Body.Circulatory
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
-        [DataField("maxVolume")]
-        [ViewVariables] private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
+        [DataField("maxVolume")] [ViewVariables]
+        private ReagentUnit _initialMaxVolume = ReagentUnit.New(250);
 
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        [ViewVariables] private SolutionContainerComponent _internalSolution = default!;
+        [ViewVariables] private Solution? _internalSolution;
 
         /// <summary>
         ///     Empty volume of internal solution
         /// </summary>
-        [ViewVariables] public ReagentUnit EmptyVolume => _internalSolution.EmptyVolume;
+        [ViewVariables]
+        public ReagentUnit EmptyVolume => _internalSolution?.AvailableVolume ?? ReagentUnit.Zero;
 
         [ViewVariables]
         public GasMixture Air { get; set; } = new(6)
-            {Temperature = Atmospherics.NormalBodyTemperature};
-
-        [ViewVariables] public SolutionContainerComponent Solution => _internalSolution;
+            { Temperature = Atmospherics.NormalBodyTemperature };
 
         protected override void Initialize()
         {
             base.Initialize();
 
-            _internalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
-            _internalSolution.MaxVolume = _initialMaxVolume;
+            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
+            if (_internalSolution != null)
+            {
+                _internalSolution.MaxVolume = _initialMaxVolume;
+            }
         }
 
         /// <summary>
@@ -60,12 +60,14 @@ namespace Content.Server.Body.Circulatory
         public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
-            if (solution.TotalVolume + _internalSolution.CurrentVolume > _internalSolution.MaxVolume)
+            var current = _internalSolution?.CurrentVolume ?? ReagentUnit.Zero;
+            var max = _internalSolution?.MaxVolume ?? ReagentUnit.Zero;
+            if (solution.TotalVolume + current > max)
             {
                 return false;
             }
 
-            _internalSolution.TryAddSolution(solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, _internalSolution, solution);
             return true;
         }
 
@@ -73,7 +75,7 @@ namespace Content.Server.Body.Circulatory
         {
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            if (!Owner.TryGetComponent(out MetabolismComponent? metabolism))
+            if (!Owner.TryGetComponent(out RespiratorComponent? metabolism))
             {
                 atmosphereSystem.Merge(to, Air);
                 Air.Clear();

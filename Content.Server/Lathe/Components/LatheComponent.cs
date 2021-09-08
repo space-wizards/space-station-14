@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +41,7 @@ namespace Content.Server.Lathe.Components
         [ViewVariables]
         private LatheRecipePrototype? _producingRecipe;
         [ViewVariables]
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private static readonly TimeSpan InsertionTime = TimeSpan.FromSeconds(0.9f);
 

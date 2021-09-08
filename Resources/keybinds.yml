@@ -63,16 +63,22 @@ binds:
   key: T
 - function: FocusLocalChatWindow
   type: State
-  key: LBracket
+  key: Period
 - function: FocusRadioWindow
   type: State
   key: SemiColon
 - function: FocusOOCWindow
   type: State
-  key: RBracket
+  key: LBracket
 - function: FocusAdminChatWindow
   type: State
-  key: BackSlash
+  key: RBracket
+- function: FocusDeadChatWindow
+  type: State
+  key: Backslash
+- function: FocusConsoleChatWindow
+  type: State
+  key: Slash
 - function: EditorLinePlace
   type: State
   key: MouseLeft
@@ -103,6 +109,10 @@ binds:
 - function: ActivateItemInHand
   type: State
   key: Z
+- function: AltActivateItemInHand
+  type: State
+  key: Z
+  mod1: Alt
 - function: OpenCharacterMenu
   type: State
   key: C
@@ -122,6 +132,15 @@ binds:
 - function: ActivateItemInWorld
   type: State
   key: E
+- function: AltActivateItemInWorld
+  type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Alt
+- function: AltActivateItemInWorld # secondary binding
+  type: State
+  key: E
+  mod1: Alt
 - function: ThrowItemInHand
   type: State
   key: Q

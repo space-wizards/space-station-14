@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
 
-#nullable enable
 
 namespace Content.Server.Voting
 {

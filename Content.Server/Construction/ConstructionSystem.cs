@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,6 +39,8 @@ namespace Content.Server.Construction
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
@@ -85,7 +86,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 yield return near;
             }
@@ -171,7 +172,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = Get<StackSystem>().Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
+                            var splitStack = _stackSystem.Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
 
                             if (splitStack == null)
                                 continue;
@@ -227,8 +228,6 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterSystem = Get<DoAfterSystem>();
-
             var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
             {
                 BreakOnDamage = true,
@@ -238,7 +237,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;
@@ -457,8 +456,15 @@ namespace Content.Server.Construction
                 return;
             }
 
+            // We do this to be able to move the construction to its proper position in case it's anchored...
+            // Oh wow transform anchoring is amazing wow I love it!!!!
+            var wasAnchored = structure.Transform.Anchored;
+            structure.Transform.Anchored = false;
+
             structure.Transform.Coordinates = ev.Location;
             structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+
+            structure.Transform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

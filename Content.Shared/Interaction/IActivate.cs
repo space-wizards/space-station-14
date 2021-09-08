@@ -38,7 +38,7 @@ namespace Content.Shared.Interaction
     ///     Raised when an entity is activated in the world.
     /// </summary>
     [PublicAPI]
-    public class ActivateInWorldEvent : HandledEntityEventArgs
+    public class ActivateInWorldEvent : HandledEntityEventArgs, ITargetedInteractEventArgs
     {
         /// <summary>
         ///     Entity that activated the target world entity.

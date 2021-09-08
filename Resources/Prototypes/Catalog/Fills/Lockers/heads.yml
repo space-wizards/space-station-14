@@ -131,6 +131,10 @@
         prob: 1
       - id: ClothingMaskSterile
         prob: 1
+      - id: ClothingHeadHelmetHardsuitMedical
+        prob: 1
+      - id: ClothingOuterHardsuitMedical
+        prob: 1
 
 - type: entity
   id: LockerResearchDirectorFilled
@@ -146,6 +150,10 @@
       - id: ClothingNeckCloakRd
         prob: 1
       - id: ClothingHeadsetMedicalScience
+        prob: 1
+      - id: ClothingHeadHelmetHardsuitRd
+        prob: 1
+      - id: ClothingOuterHardsuitRd
         prob: 1
       - id: PlushieSlime
         prob: 0.1
@@ -183,6 +191,8 @@
         prob: 1
       - id: ClothingOuterHardsuitSecurityRed
         prob: 1
+      - id: ClothingShoeSlippersDuck
+        prob: 0.2
       - id: DrinkVacuumFlask
         prob: 0.8
       - id: ClothingBeltSecurityFilled

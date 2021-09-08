@@ -4,11 +4,15 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - ShotgunShell
   - type: Ammo
     caliber: Shotgun
     ammoSpread: 40
     projectilesFired: 6
-    soundCollectionEject: ShellEject
+    soundCollectionEject:
+      collection: ShellEject
   - type: Sprite
     netsync: false
     noRot: false
@@ -97,7 +101,13 @@
     projectilesFired: 1
     ammoSpread: 0
   - type: ChemicalAmmo
-  - type: SolutionContainer
-    maxVol: 15
-    caps: Refillable, Drainable
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
   - type: SolutionTransfer
+    maxTransferAmount: 15

@@ -1,11 +1,11 @@
-#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -21,10 +21,10 @@ namespace Content.Server.Chemistry.Components
     /// </summary>
     public abstract class SolutionAreaEffectComponent : Component
     {
+        public const string SolutionName = "solutionArea";
+
         [Dependency] protected readonly IMapManager MapManager = default!;
         [Dependency] protected readonly IPrototypeManager PrototypeManager = default!;
-
-        [ComponentDependency] protected readonly SolutionContainerComponent? SolutionContainerComponent = default!;
         public int Amount { get; set; }
         public SolutionAreaEffectInceptionComponent? Inception { get; set; }
 
@@ -68,10 +68,12 @@ namespace Content.Server.Chemistry.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                        out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor, out AirtightComponent? airtight) && airtight.AirBlocked)
+                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                        out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }
 
@@ -83,9 +85,9 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                if (SolutionContainerComponent != null)
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
-                    effectComponent.TryAddSolution(SolutionContainerComponent.Solution.Clone());
+                    effectComponent.TryAddSolution(solution.Clone());
                 }
 
                 effectComponent.Amount = Amount - 1;
@@ -96,7 +98,6 @@ namespace Content.Server.Chemistry.Components
             SpreadToDir(Direction.East);
             SpreadToDir(Direction.South);
             SpreadToDir(Direction.West);
-
         }
 
         /// <summary>
@@ -121,7 +122,7 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 return;
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
@@ -130,7 +131,7 @@ namespace Content.Server.Chemistry.Components
 
             var solutionFraction = 1 / Math.Floor(averageExposures);
 
-            foreach (var reagentQuantity in SolutionContainerComponent.ReagentList.ToArray())
+            foreach (var reagentQuantity in solution.Contents)
             {
                 if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
@@ -141,7 +142,8 @@ namespace Content.Server.Chemistry.Components
                 // Touch every entity on the tile
                 foreach (var entity in tile.GetEntitiesInTileFast().ToArray())
                 {
-                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent, reagentQuantity.Quantity * solutionFraction, SolutionContainerComponent.Solution);
+                    chemistry.ReactionEntity(entity, ReactionMethod.Touch, reagent,
+                        reagentQuantity.Quantity * solutionFraction, solution);
                 }
             }
 
@@ -158,13 +160,13 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (SolutionContainerComponent == null)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
-                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, SolutionContainerComponent.EmptyVolume));
+                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
-            SolutionContainerComponent.TryAddSolution(addSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solutionArea, addSolution);
 
             UpdateVisuals();
         }

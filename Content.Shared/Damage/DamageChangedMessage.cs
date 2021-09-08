@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 
@@ -13,7 +12,7 @@ namespace Content.Shared.Damage
             Data = data;
         }
 
-        public DamageChangedMessage(IDamageableComponent damageable, DamageType type, int newValue, int delta)
+        public DamageChangedMessage(IDamageableComponent damageable, DamageTypePrototype type, int newValue, int delta)
         {
             Damageable = damageable;
 
@@ -29,7 +28,7 @@ namespace Content.Shared.Damage
         public IDamageableComponent Damageable { get; }
 
         /// <summary>
-        ///     List containing data on each <see cref="DamageType"/> that was changed.
+        ///     List containing data on each <see cref="DamageTypePrototype"/> that was changed.
         /// </summary>
         public IReadOnlyList<DamageChangeData> Data { get; }
 

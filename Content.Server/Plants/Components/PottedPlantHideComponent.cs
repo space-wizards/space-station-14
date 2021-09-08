@@ -4,10 +4,12 @@ using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Plants.Components
@@ -18,6 +20,7 @@ namespace Content.Server.Plants.Components
         public override string Name => "PottedPlantHide";
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
+        [DataField("rustleSound")] private SoundSpecifier _rustleSound = new SoundPathSpecifier("/Audio/Effects/plant_rustle.ogg");
 
         protected override void Initialize()
         {
@@ -46,7 +49,7 @@ namespace Content.Server.Plants.Components
 
         private void Rustle()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/plant_rustle.ogg", Owner, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(Filter.Pvs(Owner), _rustleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.25f));
         }
     }
 }

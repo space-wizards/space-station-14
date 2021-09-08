@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/dc89ef0239830774bd3d9d7d6c8da2856da2b869",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bottle"
+    },
+    {
+      "name": "bottle_spray"
+    },
+    {
+      "name": "crowbar"
+    },
+    {
+      "name": "crowbar_brass"
+    },
+    {
+      "name": "crowbar_red"
+    },
+    {
+      "name": "cutters_brass"
+    },
+    {
+      "name": "cutters_red"
+    },
+    {
+      "name": "cutters_handle"
+    },
+    {
+      "name": "cutters_blade"
+    },
+    {
+      "name": "cutters_yellow"
+    },
+    {
+      "name": "drill"
+    },
+    {
+      "name": "flashbang"
+    },
+    {
+      "name": "hatchet"
+    },
+    {
+      "name": "hoe"
+    },
+    {
+      "name": "hydro"
+    },
+    {
+      "name": "hypo"
+    },
+    {
+      "name": "jaws"
+    },
+    {
+      "name": "multitool"
+    },
+    {
+      "name": "pill"
+    },
+    {
+      "name": "plantbgone"
+    },
+    {
+      "name": "screwdriver"
+    },
+    {
+      "name": "screwdriver_brass"
+    },
+    {
+      "name": "screwdriver_head"
+    },
+    {
+      "name": "screwdriver_nuke"
+    },
+    {
+      "name": "secateurs"
+    },
+    {
+      "name": "spray_med"
+    },
+    {
+      "name": "spray_brute"
+    },
+    {
+      "name": "spray_burn"
+    },
+    {
+      "name": "spray_synth"
+    },
+    {
+      "name": "stunbaton"
+    },
+    {
+      "name": "wrench"
+    },
+    {
+      "name": "wrench_brass"
+    },
+    {
+      "name": "wrench_medical"
+    },
+    {
+      "name": "analyzer-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "c4-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "electronic-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "geiger_counter-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "injector-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "lighter-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "medipen-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "painter-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "plasmatank-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "rolling_pin-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "rpd-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "rped-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "tele_baton-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "tray-equipped-BELT",
+      "directions": 4
+    }
+  ]
+}

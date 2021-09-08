@@ -2,6 +2,7 @@
 using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -55,7 +56,8 @@ namespace Content.Server.Administration.Commands
                 mind.TransferTo(ghost);
             }
 
-            ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
+            var comp = ghost.GetComponent<GhostComponent>();
+            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }
 }

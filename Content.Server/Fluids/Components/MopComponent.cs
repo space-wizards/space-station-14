@@ -1,12 +1,12 @@
-#nullable enable
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -23,28 +23,36 @@ namespace Content.Server.Fluids.Components
     public class MopComponent : Component, IAfterInteract
     {
         public override string Name => "Mop";
+        public const string SolutionName = "mop";
 
         /// <summary>
         ///     Used to prevent do_after spam if we're currently mopping.
         /// </summary>
         public bool Mopping { get; private set; }
 
-        public SolutionContainerComponent? Contents => Owner.GetComponentOrNull<SolutionContainerComponent>();
+        public Solution? MopSolution
+        {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                return solution;
+            }
+        }
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.GetComponentOrNull<SolutionContainerComponent>()?.MaxVolume ?? ReagentUnit.Zero;
+            get => MopSolution?.MaxVolume ?? ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                var solution = MopSolution;
+                if (solution != null)
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume =>
-            Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+        public ReagentUnit CurrentVolume => MopSolution?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
         // Picking up a puddle requires multiple clicks
@@ -54,21 +62,13 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit PickupAmount { get; } = ReagentUnit.New(5);
 
         [DataField("pickup_sound")]
-        private string? _pickupSound = "/Audio/Effects/Fluids/slosh.ogg";
+        private SoundSpecifier _pickupSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");
 
         /// <summary>
         ///     Multiplier for the do_after delay for how fast the mop works.
         /// </summary>
         [ViewVariables]
-        [DataField("speed")]
-        private float _mopSpeed = 1;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
-        }
+        [DataField("speed")] private float _mopSpeed = 1;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -80,7 +80,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -94,7 +94,8 @@ namespace Content.Server.Fluids.Components
                 if (currentVolume > 0)
                 {
                     // Drop the liquid on the mop on to the ground
-                    contents.SplitSolution(CurrentVolume).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                    EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, CurrentVolume)
+                        .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
                     return true;
                 }
 
@@ -117,13 +118,14 @@ namespace Content.Server.Fluids.Components
             Mopping = true;
 
             // So if the puddle has 20 units we mop in 2 seconds. Don't just store CurrentVolume given it can change so need to re-calc it anyway.
-            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f, target: eventArgs.Target)
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, _mopSpeed * puddleVolume.Float() / 10.0f,
+                target: eventArgs.Target)
             {
                 BreakOnUserMove = true,
                 BreakOnStun = true,
                 BreakOnDamage = true,
             };
-            var result = await EntitySystem.Get<DoAfterSystem>().DoAfter(doAfterArgs);
+            var result = await EntitySystem.Get<DoAfterSystem>().WaitDoAfter(doAfterArgs);
 
             Mopping = false;
 
@@ -138,7 +140,9 @@ namespace Content.Server.Fluids.Components
 
             if (transferAmount == 0)
             {
-                if (puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (
+                    puddleComponent
+                        .EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
@@ -154,19 +158,18 @@ namespace Content.Server.Fluids.Components
                 puddleComponent.SplitSolution(transferAmount);
             }
 
-            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
+            if (
+                puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                contents.SplitSolution(transferAmount).SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount)
+                    .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {
-                contents.SplitSolution(transferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount);
             }
 
-            if (!string.IsNullOrWhiteSpace(_pickupSound))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _pickupSound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _pickupSound.GetSound(), Owner);
 
             return true;
         }

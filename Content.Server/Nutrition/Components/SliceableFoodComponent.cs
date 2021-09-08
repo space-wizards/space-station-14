@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,23 +25,28 @@ namespace Content.Server.Nutrition.Components
 
         int IInteractUsing.Priority => 1; // take priority over eating with utensils
 
-        [DataField("slice")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("slice")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private string _slice = string.Empty;
 
-        [DataField("sound")] [ViewVariables(VVAccess.ReadWrite)]
-        private string _sound = "/Audio/Items/Culinary/chop.ogg";
+        [DataField("sound")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Items/Culinary/chop.ogg");
 
-        [DataField("count")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("count")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
 
-        [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ushort Count;
 
         protected override void Initialize()
         {
             base.Initialize();
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, FoodComponent.SolutionName);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -48,10 +55,12 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, FoodComponent.SolutionName, out var solution))
             {
                 return false;
             }
+
             if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
@@ -66,7 +75,7 @@ namespace Content.Server.Nutrition.Components
                 }
             }
 
-            SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner.Transform.Coordinates,
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner.Transform.Coordinates,
                 AudioParams.Default.WithVolume(-2));
 
             Count--;
@@ -75,7 +84,9 @@ namespace Content.Server.Nutrition.Components
                 Owner.Delete();
                 return true;
             }
-            solution.TryRemoveReagent("Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
+
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(Owner.Uid, solution, "Nutriment",
+                solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }
 

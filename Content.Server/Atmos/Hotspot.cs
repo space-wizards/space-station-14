@@ -24,11 +24,5 @@ namespace Content.Server.Atmos
         /// </summary>
         [ViewVariables]
         public byte State;
-
-        public void Start()
-        {
-            Valid = true;
-            State = 1;
-        }
     }
 }

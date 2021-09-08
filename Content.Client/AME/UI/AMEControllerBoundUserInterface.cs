@@ -19,15 +19,9 @@ namespace Content.Client.AME.UI
         {
             base.Open();
 
-            _window = new AMEWindow();
+            _window = new AMEWindow(this);
             _window.OnClose += Close;
             _window.OpenCentered();
-
-            _window.EjectButton.OnPressed += _ => ButtonPressed(UiButton.Eject);
-            _window.ToggleInjection.OnPressed += _ => ButtonPressed(UiButton.ToggleInjection);
-            _window.IncreaseFuelButton.OnPressed += _ => ButtonPressed(UiButton.IncreaseFuel);
-            _window.DecreaseFuelButton.OnPressed += _ => ButtonPressed(UiButton.DecreaseFuel);
-            _window.RefreshPartsButton.OnPressed += _ => ButtonPressed(UiButton.RefreshParts);
         }
 
         /// <summary>
@@ -45,7 +39,7 @@ namespace Content.Client.AME.UI
             _window?.UpdateState(castState); //Update window state
         }
 
-        private void ButtonPressed(UiButton button, int dispenseIndex = -1)
+        public void ButtonPressed(UiButton button, int dispenseIndex = -1)
         {
             SendMessage(new UiButtonPressedMessage(button));
         }

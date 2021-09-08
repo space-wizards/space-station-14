@@ -28,3 +28,32 @@
           Amount: 2
           DefaultPrototype: Beaker
           ExamineName: Glass Beaker
+
+- type: entity
+  id: CloningPodMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Cloning Pod (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: CloningPod
+      requirements:
+        ScanningModule: 2
+        Manipulator: 2
+      materialRequirements:
+        Glass: 1
+        Cable: 1
+
+- type: entity
+  id: MedicalScannerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Medical Scanner (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: MedicalScanner
+      requirements:
+        ScanningModule: 1
+        Manipulator: 1
+        Laser: 1
+      materialRequirements:
+        Glass: 1
+        Cable: 1

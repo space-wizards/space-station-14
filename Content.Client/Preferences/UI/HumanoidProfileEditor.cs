@@ -23,6 +23,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
 {
@@ -52,7 +53,7 @@ namespace Content.Client.Preferences.UI
 
         private readonly List<JobPrioritySelector> _jobPriorities;
         private readonly OptionButton _preferenceUnavailableButton;
-        private readonly Dictionary<string, VBoxContainer> _jobCategories;
+        private readonly Dictionary<string, BoxContainer> _jobCategories;
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
 
@@ -75,21 +76,32 @@ namespace Content.Client.Preferences.UI
 
             _preferencesManager = preferencesManager;
 
-            var hbox = new HBoxContainer();
+            var hbox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             AddChild(hbox);
 
             #region Left
 
-            var vBox = new VBoxContainer {Margin = new Thickness(10)};
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Margin = new Thickness(10)
+            };
             hbox.AddChild(vBox);
 
-            var middleContainer = new HBoxContainer
+            var middleContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
             vBox.AddChild(middleContainer);
 
-            var leftColumn = new VBoxContainer();
+            var leftColumn = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             middleContainer.AddChild(leftColumn);
 
             #region Randomize
@@ -108,8 +120,9 @@ namespace Content.Client.Preferences.UI
             #region Name
 
             var namePanel = HighlightedContainer();
-            var nameHBox = new HBoxContainer
+            var nameHBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true
             };
             var nameLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-name-label") };
@@ -136,10 +149,14 @@ namespace Content.Client.Preferences.UI
 
             #region Appearance
 
-            var appearanceList = new VBoxContainer();
-
-            var appearanceVBox = new VBoxContainer
+            var appearanceList = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical
+            };
+
+            var appearanceVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
                     new ScrollContainer
@@ -155,8 +172,9 @@ namespace Content.Client.Preferences.UI
             tabContainer.AddChild(appearanceVBox);
             tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
-            var sexAndAgeRow = new HBoxContainer
+            var sexAndAgeRow = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 10
             };
 
@@ -165,7 +183,10 @@ namespace Content.Client.Preferences.UI
             #region Sex
 
             var sexPanel = HighlightedContainer();
-            var sexHBox = new HBoxContainer();
+            var sexHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var sexLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-sex-label") };
 
             var sexButtonGroup = new ButtonGroup();
@@ -212,7 +233,10 @@ namespace Content.Client.Preferences.UI
             #region Age
 
             var agePanel = HighlightedContainer();
-            var ageHBox = new HBoxContainer();
+            var ageHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var ageLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-age-label") };
             _ageEdit = new LineEdit { MinSize = (40, 0) };
             _ageEdit.OnTextChanged += args =>
@@ -231,7 +255,10 @@ namespace Content.Client.Preferences.UI
             #region Gender
 
             var genderPanel = HighlightedContainer();
-            var genderHBox = new HBoxContainer();
+            var genderHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var genderLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-pronouns-label") };
 
             _genderButton = new OptionButton();
@@ -257,7 +284,10 @@ namespace Content.Client.Preferences.UI
             #region Hair
 
             var hairPanel = HighlightedContainer();
-            var hairHBox = new HBoxContainer();
+            var hairHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
 
             _hairPicker = new HairStylePicker
             {
@@ -315,7 +345,10 @@ namespace Content.Client.Preferences.UI
             #region Clothing
 
             var clothingPanel = HighlightedContainer();
-            var clothingHBox = new HBoxContainer();
+            var clothingHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var clothingLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-clothing-label") };
 
             _clothingButton = new OptionButton();
@@ -339,7 +372,10 @@ namespace Content.Client.Preferences.UI
             #region Backpack
 
             var backpackPanel = HighlightedContainer();
-            var backpackHBox = new HBoxContainer();
+            var backpackHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var backpackLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-backpack-label") };
 
             _backpackButton = new OptionButton();
@@ -364,7 +400,10 @@ namespace Content.Client.Preferences.UI
             #region Eyes
 
             var eyesPanel = HighlightedContainer();
-            var eyesVBox = new VBoxContainer();
+            var eyesVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             var eyesLabel = new Label { Text = Loc.GetString("humanoid-profile-editor-eyes-label") };
 
             _eyesPicker = new EyeColorPicker();
@@ -389,10 +428,14 @@ namespace Content.Client.Preferences.UI
 
             #region Jobs
 
-            var jobList = new VBoxContainer();
+            var jobList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
-                var jobVBox = new VBoxContainer
+                var jobVBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         (_preferenceUnavailableButton = new OptionButton()),
@@ -428,7 +471,7 @@ namespace Content.Client.Preferences.UI
             };
 
             _jobPriorities = new List<JobPrioritySelector>();
-            _jobCategories = new Dictionary<string, VBoxContainer>();
+            _jobCategories = new Dictionary<string, BoxContainer>();
 
             var firstCategory = true;
 
@@ -438,8 +481,9 @@ namespace Content.Client.Preferences.UI
                 {
                     if (!_jobCategories.TryGetValue(department, out var category))
                     {
-                        category = new VBoxContainer
+                        category = new BoxContainer
                         {
+                            Orientation = LayoutOrientation.Vertical,
                             Name = department,
                             ToolTip = Loc.GetString("humanoid-profile-editor-jobs-amount-in-department-tooltip",
                                                     ("departmentName", department))
@@ -509,10 +553,14 @@ namespace Content.Client.Preferences.UI
 
             #region Antags
 
-            var antagList = new VBoxContainer();
+            var antagList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
-                var antagVBox = new VBoxContainer
+                var antagVBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     Children =
                     {
                         new ScrollContainer
@@ -552,13 +600,19 @@ namespace Content.Client.Preferences.UI
 
             #endregion Antags
 
-            var rightColumn = new VBoxContainer();
+            var rightColumn = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             middleContainer.AddChild(rightColumn);
 
             #region Import/Export
 
             var importExportPanelContainer = HighlightedContainer();
-            var importExportHBox = new HBoxContainer();
+            var importExportHBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             var importButton = new Button
             {
                 Text = Loc.GetString("humanoid-profile-editor-import-button"),
@@ -598,8 +652,9 @@ namespace Content.Client.Preferences.UI
 
             #region Right
 
-            vBox = new VBoxContainer()
+            vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 VerticalExpand = true,
                 HorizontalExpand = true,
             };
@@ -925,8 +980,9 @@ namespace Content.Client.Preferences.UI
                     icon.Texture = specifier.Frame0();
                 }
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         icon,
@@ -968,8 +1024,9 @@ namespace Content.Client.Preferences.UI
                 _checkBox = new CheckBox {Text = $"{antag.Name}"};
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
-                AddChild(new HBoxContainer
+                AddChild(new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
                         _checkBox

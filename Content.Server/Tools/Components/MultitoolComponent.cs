@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
+using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,6 +16,7 @@ namespace Content.Server.Tools.Components
     ///     Not to be confused with Multitool (power)
     /// </summary>
     [RegisterComponent]
+    [NetworkedComponent()]
     public class MultiToolComponent : Component, IUse
     {
         [DataDefinition]
@@ -31,18 +33,14 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public string Sprite { get; } = string.Empty;
 
-            [DataField("useSound")]
-            public string Sound { get; } = string.Empty;
+            [DataField("useSound", required: true)]
+            public SoundSpecifier Sound { get; } = default!;
 
-            [DataField("useSoundCollection")]
-            public string SoundCollection { get; } = string.Empty;
-
-            [DataField("changeSound")]
-            public string ChangeSound { get; } = string.Empty;
+            [DataField("changeSound", required: true)]
+            public SoundSpecifier ChangeSound { get; } = default!;
         }
 
         public override string Name => "MultiTool";
-        public override uint? NetID => ContentNetIDs.MULTITOOLS;
         [DataField("tools")] private List<ToolEntry> _tools = new();
         private int _currentTool = 0;
 
@@ -62,8 +60,7 @@ namespace Content.Server.Tools.Components
             _currentTool = (_currentTool + 1) % _tools.Count;
             SetTool();
             var current = _tools[_currentTool];
-            if(!string.IsNullOrEmpty(current.ChangeSound))
-                SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), current.ChangeSound.GetSound(), Owner);
         }
 
         private void SetTool()
@@ -73,7 +70,6 @@ namespace Content.Server.Tools.Components
             var current = _tools[_currentTool];
 
             _tool.UseSound = current.Sound;
-            _tool.UseSoundCollection = current.SoundCollection;
             _tool.Qualities = current.Behavior;
 
             if (_sprite == null) return;

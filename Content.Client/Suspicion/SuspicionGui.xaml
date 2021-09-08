@@ -1,7 +1,7 @@
 ﻿<Control xmlns="https://spacestation14.io">
-    <VBoxContainer SeparationOverride="0">
+    <BoxContainer Orientation="Vertical" SeparationOverride="0">
         <Button Name="RoleButton">
             <Label Name="TimerLabel" SizeFlagsHorizontal="ShrinkEnd" SizeFlagsVertical="ShrinkEnd" />
         </Button>
-    </VBoxContainer>
+    </BoxContainer>
 </Control>

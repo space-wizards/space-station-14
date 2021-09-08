@@ -10,14 +10,18 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
     netsync: false
-  - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: SliceableFood
     count: 4
+  - type: Tag
+    tags:
+    - NoSpinOnThrow
 
 - type: entity
   parent: FoodPieBase
@@ -27,12 +31,13 @@
   components:
   - type: Food
     trash: FoodPlateSmall
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 # Pie
 

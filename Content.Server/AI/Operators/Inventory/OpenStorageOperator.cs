@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.AI.Utility;
+﻿using Content.Server.AI.Utility;
 using Content.Server.AI.WorldState.States.Inventory;
 using Content.Server.Storage.Components;
 using Content.Shared.Interaction;

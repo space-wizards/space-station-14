@@ -1,10 +1,9 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
-using Content.Server.Interfaces;
 using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
@@ -23,7 +22,6 @@ namespace Content.Server.Disposal.Unit.Components
     {
         public override string Name => "DisposalHolder";
 
-        private bool _deletionRequested = false;
         private Container _contents = null!;
 
         /// <summary>
@@ -113,7 +111,7 @@ namespace Content.Server.Disposal.Unit.Components
 
         public void ExitDisposals()
         {
-            if (_deletionRequested || Deleted)
+            if (Deleted)
                 return;
 
             PreviousTube = null;
@@ -137,16 +135,15 @@ namespace Content.Server.Disposal.Unit.Components
                 }
             }
 
-            if (Owner.Transform.Coordinates.TryGetTileAtmosphere(out var tileAtmos) &&
-                tileAtmos.Air != null)
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
+
+            if (atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true) is {} environment)
             {
-                tileAtmos.AssumeAir(Air);
+                atmosphereSystem.Merge(environment, Air);
                 Air.Clear();
             }
 
-            // FIXME: This is a workaround for https://github.com/space-wizards/RobustToolbox/issues/1646
-            Owner.SpawnTimer(TimeSpan.Zero, () => Owner.Delete());
-            _deletionRequested = true;
+            Owner.Delete();
         }
 
         public void Update(float frameTime)

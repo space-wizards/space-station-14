@@ -1,5 +1,4 @@
-﻿#nullable enable
-namespace Content.Shared.Light.Component
+﻿namespace Content.Shared.Light.Component
 {
     /// <summary>
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
