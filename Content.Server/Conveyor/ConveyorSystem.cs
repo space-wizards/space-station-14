@@ -22,6 +22,8 @@ namespace Content.Server.Conveyor
 {
     public class ConveyorSystem : EntitySystem
     {
+        [Dependency] private IEntityLookup _entityLookup = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -30,12 +32,6 @@ namespace Content.Server.Conveyor
             SubscribeLocalEvent<ConveyorComponent, PortDisconnectedEvent>(OnPortDisconnected);
             SubscribeLocalEvent<ConveyorComponent, LinkAttemptEvent>(OnLinkAttempt);
             SubscribeLocalEvent<ConveyorComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<ConveyorComponent, StartCollideEvent>(OnStartCollide);
-        }
-
-        private void OnStartCollide(EntityUid uid, ConveyorComponent component, StartCollideEvent args)
-        {
-            component.Intersecting.Add(args.OtherFixture.Body.Owner);
         }
 
         private void OnPowerChanged(EntityUid uid, ConveyorComponent component, PowerChangedEvent args)
@@ -137,15 +133,9 @@ namespace Content.Server.Conveyor
 
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
-            var toRemove = new List<IEntity>();
-            foreach (var entity in comp.Intersecting)
+            //todo uuuhhh cache this
+            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate))
             {
-                if (!IoCManager.Resolve<IEntityLookup>().IsIntersecting(comp.Owner, entity))
-                {
-                    toRemove.Add(entity);
-                    continue;
-                }
-
                 if (entity.Deleted)
                 {
                     continue;
@@ -173,11 +163,6 @@ namespace Content.Server.Conveyor
                 }
 
                 yield return (entity, physics);
-            }
-
-            foreach (var entity in toRemove)
-            {
-                comp.Intersecting.Remove(entity);
             }
         }
     }

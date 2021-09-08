@@ -21,8 +21,6 @@ namespace Content.Server.Conveyor
     {
         public override string Name => "Conveyor";
 
-        public HashSet<IEntity> Intersecting = new();
-
         /// <summary>
         ///     The angle to move entities by in relation to the owner's rotation.
         /// </summary>
