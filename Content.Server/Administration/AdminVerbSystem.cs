@@ -1,5 +1,6 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.UI;
+using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Roles;
@@ -21,7 +22,7 @@ namespace Content.Server.Administration
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
-    public class AdminVerbSystem : EntitySystem 
+    public class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
@@ -56,18 +57,18 @@ namespace Content.Server.Administration
             }
             var player = actor.PlayerSession;
 
-            // add delete verb?
+            // Delete verb
             if (_groupController.CanCommand(player, "deleteentity"))
             {
                 Verb verb = new Verb("debug:delete");
-                verb.Text = Loc.GetString("pointing-verb-get-data-text");
+                verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
                 args.Verbs.Add(verb);
             }
 
-            // add rejuvenate verb?
+            // Rejuvenate verb
             if (_groupController.CanCommand(player, "rejuvenate"))
             {
                 Verb verb = new Verb("debug:rejuvenate");
@@ -140,19 +141,19 @@ namespace Content.Server.Administration
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                args.Target.TryGetComponent<IDisposalTubeComponent>(out var component))
+                args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
             {
                 Verb verb = new Verb("debug:tubeconnections");
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
-                verb.Act = () => component.PopupDirections(args.User);
+                verb.Act = () => tube.PopupDirections(args.User);
                 args.Verbs.Add(verb);
             }
 
             // Make ghost role verb
             if (_groupController.CanCommand(player, "makeghostrole") &&
-                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false) )
+                !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
             {
                 Verb verb = new Verb("debug:makeghostrole");
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
@@ -160,6 +161,18 @@ namespace Content.Server.Administration
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);
+                args.Verbs.Add(verb);
+            }
+
+            // Configuration verb. Is this even used for anything!?
+            if (_groupController.CanAdminMenu(player) &&
+                args.Target.TryGetComponent<ConfigurationComponent>(out var config))
+            {
+                Verb verb = new Verb("debug:config");
+                verb.Text = Loc.GetString("configure-verb-get-data-text");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
+                verb.Category = VerbCategory.Debug;
+                verb.Act = () => config.OpenUserInterface(actor);
                 args.Verbs.Add(verb);
             }
         }
