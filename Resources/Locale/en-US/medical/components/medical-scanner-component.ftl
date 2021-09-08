@@ -7,10 +7,6 @@ medical-scanner-component-msg-soul-broken = ERROR: Soul present, but defunct / d
 
 enter-verb-get-data-text = Enter
 
-## EjectVerb
-
-medical-scanner-eject-verb-get-data-text = Eject
-
 ## UI
 
 medical-scanner-window-save-button-text = Scan and Save DNA

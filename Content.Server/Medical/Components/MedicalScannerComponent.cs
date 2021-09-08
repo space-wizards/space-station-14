@@ -17,7 +17,6 @@ using Content.Shared.Movement;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Preferences;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -203,51 +202,6 @@ namespace Content.Server.Medical.Components
                 return;
 
             UserInterface?.Open(actor.PlayerSession);
-        }
-
-        [Verb]
-        public sealed class EnterVerb : Verb<MedicalScannerComponent>
-        {
-            protected override void GetData(IEntity user, MedicalScannerComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("enter-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.InsertBody(user);
-            }
-        }
-
-        [Verb]
-        public sealed class EjectVerb : Verb<MedicalScannerComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, MedicalScannerComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("medical-scanner-eject-verb-get-data-text");
-                data.Visibility = component.IsOccupied ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, MedicalScannerComponent component)
-            {
-                component.EjectBody();
-            }
         }
 
         public void InsertBody(IEntity user)

@@ -94,13 +94,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Verb to climb inside of the unit, where the average user belongs.
             if (!component.ContainedEntities.Contains(args.User))
             {
-                Verb verb = new("Disposal:selfinsert");
+                Verb verb = new("Disposal:enter");
                 verb.Act = () => component.TryInsert(args.User, args.User);
                 if (args.PrepareGUI)
                 {
                     verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
-                    verb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
                 }
+                // TODO VERN ICON
+                // TODO VERB CATEGORY
+                // create a verb category for "enter"?
+                // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
                 verb.Priority = -1;
                 args.Verbs.Add(verb);
             }

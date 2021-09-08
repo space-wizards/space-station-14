@@ -14,7 +14,6 @@ using Content.Shared.Chemistry.Solution;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
