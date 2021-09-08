@@ -10,6 +10,7 @@ namespace Content.Shared.Chemistry.Components
     public abstract class SharedHyposprayComponent : Component
     {
         public sealed override string Name => "Hypospray";
+        public const string SolutionName = "hypospray";
 
         [Serializable, NetSerializable]
         protected sealed class HyposprayComponentState : ComponentState

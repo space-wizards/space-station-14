@@ -4,6 +4,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
+using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
@@ -226,7 +227,7 @@ namespace Content.Server.Light.Components
 
             if (LightBulb == null) // No light bulb.
             {
-                _currentLit = false;
+                SetLight(false);
                 powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
@@ -267,6 +268,7 @@ namespace Content.Server.Light.Components
         private void SetLight(bool value, Color? color = null)
         {
             _currentLit = value;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, value);
 
             if (!Owner.TryGetComponent(out PointLightComponent? pointLight)) return;
             pointLight.Enabled = value;
@@ -327,6 +329,6 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
- 
+
     }
 }

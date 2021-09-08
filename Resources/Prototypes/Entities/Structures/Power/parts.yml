@@ -46,6 +46,9 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: AmbientSound
+    sound:
+      path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]

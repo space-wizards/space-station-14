@@ -534,8 +534,13 @@ entities:
     pos: -15.694785,24.608267
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
 - uid: 60
   type: DisgustingSweptSoup
   components:
@@ -650,8 +655,13 @@ entities:
     pos: -3.470539,16.956116
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
 - uid: 74
   type: Carpet
   components:
@@ -698,8 +708,13 @@ entities:
   - pos: 8.439846,26.712742
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
 - uid: 81
   type: Table
   components:
@@ -924,8 +939,13 @@ entities:
   - pos: 8.661116,25.513401
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
 - uid: 114
   type: FoodBoxDonkpocket
   components:
@@ -15150,7 +15170,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - sleepTime: 1114.4688
     type: Physics
 - uid: 1162
@@ -24934,8 +24954,13 @@ entities:
     pos: -8.476567,-17.420076
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
 - uid: 2443
   type: TableWood
   components:
@@ -47242,8 +47267,13 @@ entities:
     pos: -20.5,-1.5
     parent: 853
     type: Transform
-  - caps: Refillable, Drainable
-    type: SolutionContainer
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+  - type: RefillableSolution
+    solution: bucket
+  - type: DrainableSolution
+    solution: bucket
 - uid: 4719
   type: SpawnPointLatejoin
   components:
@@ -50248,7 +50278,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5079
@@ -50258,7 +50288,7 @@ entities:
     parent: 853
     type: Transform
   - caps: Refillable, Drainable
-    type: SolutionContainer
+    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5080

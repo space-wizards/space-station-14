@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
-using Content.Client.Items.Components;
 using Content.Client.Hands;
+using Content.Client.Items.Components;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -33,7 +35,6 @@ namespace Content.Client.Storage
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow? _window;
-        private SharedBagState _bagState;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
@@ -83,15 +84,12 @@ namespace Content.Client.Storage
                 //Updates what we are storing for the UI
                 case StorageHeldItemsMessage msg:
                     HandleStorageMessage(msg);
-                    ChangeStorageVisualization(_bagState);
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
-                    ChangeStorageVisualization(SharedBagState.Open);
                     ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
-                    ChangeStorageVisualization(SharedBagState.Close);
                     CloseUI();
                     break;
                 case AnimateInsertingEntitiesMessage msg:
@@ -138,22 +136,36 @@ namespace Content.Client.Storage
             if (_window == null) return;
 
             if (_window.IsOpen)
+            {
                 _window.Close();
+                ChangeStorageVisualization(SharedBagState.Close);
+            }
             else
+            {
                 _window.OpenCentered();
+                ChangeStorageVisualization(SharedBagState.Open);
+            }
         }
 
         private void CloseUI()
         {
-            _window?.Close();
+            if (_window == null) return;
+
+            _window.Close();
+            ChangeStorageVisualization(SharedBagState.Close);
+
         }
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-            _bagState = state;
+           
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
+                if (Owner.HasComponent<ItemCounterComponent>())
+                {
+                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
+                }
             }
         }
 

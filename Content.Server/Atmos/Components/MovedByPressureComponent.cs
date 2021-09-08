@@ -45,7 +45,6 @@ namespace Content.Server.Atmos.Components
             if (!Owner.TryGetComponent(out PhysicsComponent? physics))
                 return;
 
-            physics.WakeBody();
             // TODO ATMOS stuns?
 
             var transform = physics.Owner.Transform;
@@ -62,7 +61,6 @@ namespace Content.Server.Atmos.Components
                                                  && (maxForce >= (MoveResist * MoveForcePushRatio)))
                 || (physics.BodyType == BodyType.Static && (maxForce >= (MoveResist * MoveForceForcePushRatio))))
             {
-
                 if (physics.Owner.HasComponent<IMobStateComponent>())
                 {
                     physics.BodyStatus = BodyStatus.InAir;

@@ -4,7 +4,7 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
-using static Content.Shared.Chemistry.Solution.Solution;
+using static Content.Shared.Chemistry.Components.Solution;
 
 namespace Content.Client.Kitchen.UI
 {

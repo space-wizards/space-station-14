@@ -89,8 +89,13 @@
   - type: Projectile
     damages:
       Blunt: 1
-  - type: SolutionContainer
-    maxVol: 15
-    caps: Refillable, Drainable
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
   - type: SolutionInjectOnCollide
     transferAmount: 15
