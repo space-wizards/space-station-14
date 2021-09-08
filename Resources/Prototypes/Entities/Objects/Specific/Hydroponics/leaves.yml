@@ -11,11 +11,12 @@
   - type: Produce
     seed: cannabis
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: THCOil
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: THCOil
+          Quantity: 5
 
 - type: entity
   name: dried cannabis leaves
@@ -27,11 +28,12 @@
     stackType: LeavesCannabisDried
     max: 5
     count: 1
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: THC
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      produce:
+        reagents:
+        - ReagentId: THC
+          Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tobacco.rsi
     state: dried
@@ -46,11 +48,12 @@
     stackType: GroundCannabis
     max: 5
     count: 1
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: THC
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      produce:
+        reagents:
+        - ReagentId: THC
+          Quantity: 10
   - type: Sprite
     sprite: Objects/Misc/reageant_fillings.rsi
     state: powderpile
@@ -65,10 +68,10 @@
   id: LeavesTobacco
   description: "Dry them out to make some smokes."
   components:
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/tobacco.rsi
-    - type: Produce
-      seed: tobacco
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tobacco.rsi
+  - type: Produce
+    seed: tobacco
 
 - type: entity
   name: dried tobacco leaves
@@ -76,18 +79,19 @@
   id: LeavesTobaccoDried
   description: "Dried tobacco leaves, ready to be ground."
   components:
-    - type: Stack
-      stackType: LeavesTobaccoDried
-      max: 5
-      count: 1
-    - type: SolutionContainer
-      contents:
+  - type: Stack
+    stackType: LeavesTobaccoDried
+    max: 5
+    count: 1
+  - type: SolutionContainerManager
+    solutions:
+      produce:
         reagents:
-          - ReagentId: Nicotine
-            Quantity: 2
-    - type: Sprite
-      sprite: Objects/Specific/Hydroponics/tobacco.rsi
-      state: dried
+        - ReagentId: Nicotine
+          Quantity: 2
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tobacco.rsi
+    state: dried
 
 - type: entity
   name: ground tobacco
@@ -95,19 +99,20 @@
   id: GroundTobacco
   description: "Ground tobacco, perfect for hand-rolled cigarettes."
   components:
-    - type: Stack
-      stackType: GroundTobacco
-      max: 5
-      count: 1
-    - type: SolutionContainer
-      contents:
+  - type: Stack
+    stackType: GroundTobacco
+    max: 5
+    count: 1
+  - type: SolutionContainerManager
+    solutions:
+      produce:
         reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-    - type: Sprite
-      sprite: Objects/Misc/reageant_fillings.rsi
-      state: powderpile
-      color: brown
-    - type: Construction
-      graph: smokeableGroundTobacco
-      node: ground
+        - ReagentId: Nicotine
+          Quantity: 10
+  - type: Sprite
+    sprite: Objects/Misc/reageant_fillings.rsi
+    state: powderpile
+    color: brown
+  - type: Construction
+    graph: smokeableGroundTobacco
+    node: ground

@@ -1,9 +1,8 @@
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -12,13 +11,13 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-
 namespace Content.Server.Extinguisher
 {
     [RegisterComponent]
     public class FireExtinguisherComponent : Component, IAfterInteract
     {
         public override string Name => "FireExtinguisher";
+        private const string SolutionName = "fireExtinguisher";
 
         [DataField("refillSound")] SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
@@ -27,24 +26,26 @@ namespace Content.Server.Extinguisher
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (eventArgs.Target == null || !eventArgs.CanReach)
             {
                 return false;
             }
 
-            if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
-                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
-                && targetSolution.CanDrain
-                && Owner.TryGetComponent(out SolutionContainerComponent? container))
+            var targetEntity = eventArgs.Target;
+            if (eventArgs.Target.HasComponent<ReagentTankComponent>()
+                && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
+                && solutionContainerSystem.TryGetSolution(Owner, SolutionName, out var container))
             {
-                var trans = ReagentUnit.Min(container.EmptyVolume, targetSolution.DrainAvailable);
-                if (trans > 0)
+                var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
+                if (transfer > 0)
                 {
-                    var drained = targetSolution.Drain(trans);
-                    container.TryAddSolution(drained);
+                    var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);
+                    solutionContainerSystem.TryAddSolution(Owner.Uid, container, drained);
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-after-interact-refilled-message",("owner", Owner)));
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("fire-extinguisher-component-after-interact-refilled-message", ("owner", Owner)));
                 }
 
                 return true;

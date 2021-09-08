@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Chemistry.Reaction
@@ -7,6 +8,6 @@ namespace Content.Shared.Chemistry.Reaction
     /// </summary>
     public interface IReactionEffect
     {
-        void React(IEntity solutionEntity, double intensity);
+        void React(Solution solution, IEntity solutionEntity, double intensity);
     }
 }

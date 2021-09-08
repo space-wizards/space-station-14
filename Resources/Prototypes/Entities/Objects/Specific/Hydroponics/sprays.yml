@@ -11,13 +11,15 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: plantbgone
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
         - ReagentId: PlantBGone
           Quantity: 100
+  - type: DrainableSolution
+    solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     HeldPrefix: plantbgone
@@ -32,13 +34,15 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: weedspray
-  - type: SolutionContainer
-    maxVol: 50
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
         - ReagentId: WeedKiller
           Quantity: 50
+  - type: DrainableSolution
+    solution: spray
   - type: Spillable
   - type: ItemCooldown
   - type: Spray
@@ -55,12 +59,14 @@
   components:
   - type: Sprite
     state: pestspray
-  - type: SolutionContainer
-    maxVol: 50
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
         - ReagentId: PestKiller
           Quantity: 50
+  - type: DrainableSolution
+    solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
