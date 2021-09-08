@@ -1,10 +1,10 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Chemistry.Components;
 using Content.Server.EUI;
 using Content.Shared.Administration;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Content.Shared.Eui;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
@@ -12,7 +12,6 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-
 
 namespace Content.Server.Administration.Verbs
 {
@@ -34,9 +33,8 @@ namespace Content.Server.Administration.Verbs
         {
             // ISolutionInteractionsComponent doesn't exactly have an interface for "admin tries to refill this", so...
             // Still have a path for SolutionContainerComponent in case it doesn't allow direct refilling.
-            if (!target.HasComponent<SolutionContainerComponent>()
-                && !(target.TryGetComponent(out ISolutionInteractionsComponent? interactions)
-                     && interactions.CanInject))
+            if (!(target.HasComponent<SolutionContainerManagerComponent>()
+                  && target.HasComponent<InjectableSolutionComponent>()))
             {
                 data.Visibility = VerbVisibility.Invisible;
                 return;
@@ -87,22 +85,13 @@ namespace Content.Server.Administration.Verbs
 
             public override EuiStateBase GetNewState()
             {
-                if (_target.TryGetComponent(out SolutionContainerComponent? container))
+                if (EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetSolution(_target, "default", out var container))
                 {
                     return new AdminAddReagentEuiState
                     {
                         CurVolume = container.CurrentVolume,
                         MaxVolume = container.MaxVolume
-                    };
-                }
-
-                if (_target.TryGetComponent(out ISolutionInteractionsComponent? interactions))
-                {
-                    return new AdminAddReagentEuiState
-                    {
-                        // We don't exactly have an absolute total volume so good enough.
-                        CurVolume = ReagentUnit.Zero,
-                        MaxVolume = interactions.InjectSpaceAvailable
                     };
                 }
 
@@ -131,15 +120,21 @@ namespace Content.Server.Administration.Verbs
 
                         var id = doAdd.ReagentId;
                         var amount = doAdd.Amount;
+                        var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
-                        if (_target.TryGetComponent(out SolutionContainerComponent? container))
-                        {
-                            container.TryAddReagent(id, amount, out _);
-                        }
-                        else if (_target.TryGetComponent(out ISolutionInteractionsComponent? interactions))
+                        if (_target.TryGetComponent(out InjectableSolutionComponent? injectable)
+                            && solutionsSys.TryGetSolution(_target, injectable.Name, out var targetSolution))
                         {
                             var solution = new Solution(id, amount);
-                            interactions.Inject(solution);
+                            solutionsSys.Inject(_target.Uid, targetSolution, solution);
+                        }
+                        else
+                        {
+                            //TODO decide how to find the solution
+                            if (solutionsSys.TryGetSolution(_target, "default", out var solution))
+                            {
+                                solutionsSys.TryAddReagent(_target.Uid,solution, id, amount, out _);
+                            }
                         }
 
                         StateDirty();

@@ -56,7 +56,7 @@ namespace Content.Shared.Placeable
             args.Handled = true;
         }
 
-        private void OnHandleState(EntityUid uid, PlaceableSurfaceComponent component, ComponentHandleState args)
+        private void OnHandleState(EntityUid uid, PlaceableSurfaceComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not PlaceableSurfaceComponentState state)
                 return;

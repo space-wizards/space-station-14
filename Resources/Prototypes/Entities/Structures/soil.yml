@@ -40,9 +40,12 @@
     drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: false
-  - type: SolutionContainer
-    maxVol: 200
-    caps: Refillable
+  - type: SolutionContainerManager
+    solutions:
+      soil:
+        maxVol: 200
+  - type: RefillableSolution
+    solution: soil
   - type: SnapGrid
   - type: Reactive
     reactions:

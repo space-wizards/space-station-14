@@ -113,9 +113,6 @@
   id: GlassBeaker
 
 - type: Tag
-  id: Grindable
-
-- type: Tag
   id: Hoe
 
 - type: Tag
