@@ -54,7 +54,6 @@ namespace Content.Client.ContextMenu.UI
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
-            _verbSystem.ToggleContextMenu += SystemOnToggleContextMenu;
             _verbSystem.ToggleContainerVisibility += SystemOnToggleContainerVisibility;
 
             _contextMenuView = new ContextMenuView();
@@ -71,6 +70,11 @@ namespace Content.Client.ContextMenu.UI
             _contextMenuView.OnCloseChildMenu += OnCloseChildMenu;
 
             _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, _contextMenuView.OnGroupingContextMenuChanged, true);
+
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenContextMenu,
+                new PointerInputCmdHandler(HandleOpenContextMenu))
+                .Register<ContextMenuPresenter>();
         }
 
         #region View Events
@@ -267,30 +271,38 @@ namespace Content.Client.ContextMenu.UI
             _playerCanSeeThroughContainers = args;
         }
 
-        private void SystemOnToggleContextMenu(object? sender, PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
+            if (args.State != BoundKeyState.Down)
+            {
+                return false;
+            }
+
             if (_stateManager.CurrentState is not GameScreenBase)
             {
-                return;
+                return false;
             }
 
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
             if (playerEntity == null)
             {
-                return;
+                return false;
             }
 
             _mapCoordinates = args.Coordinates.ToMap(_entityManager);
             if (!_verbSystem.TryGetContextEntities(playerEntity, _mapCoordinates, out var entities))
             {
-                return;
+                return false;
             }
 
             entities = entities.Where(CanSeeOnContextMenu).ToList();
-            if (entities.Count > 0)
+            if (entities.Count == 0)
             {
-                _contextMenuView.AddRootMenu(entities);
+                return false;
             }
+
+            _contextMenuView.AddRootMenu(entities);
+            return true;
         }
 
         /// <summary>
@@ -370,7 +382,6 @@ namespace Content.Client.ContextMenu.UI
 
         public void Dispose()
         {
-            _verbSystem.ToggleContextMenu -= SystemOnToggleContextMenu;
             _verbSystem.ToggleContainerVisibility -= SystemOnToggleContainerVisibility;
 
             _contextMenuView.OnKeyBindDownSingle -= OnKeyBindDownSingle;
@@ -384,6 +395,8 @@ namespace Content.Client.ContextMenu.UI
             _contextMenuView.OnExitedTree -= OnExitedTree;
             _contextMenuView.OnCloseRootMenu -= OnCloseRootMenu;
             _contextMenuView.OnCloseChildMenu -= OnCloseChildMenu;
+
+            CommandBinds.Unregister<ContextMenuPresenter>();
         }
     }
 }

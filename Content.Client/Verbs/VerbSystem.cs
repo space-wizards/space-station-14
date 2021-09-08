@@ -10,7 +10,6 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,7 +24,6 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public event EventHandler<PointerInputCmdHandler.PointerInputCmdArgs>? ToggleContextMenu;
         public event EventHandler<bool>? ToggleContainerVisibility;
 
         private ContextMenuPresenter _contextMenuPresenter = default!;
@@ -47,11 +45,6 @@ namespace Content.Client.Verbs
 
             _contextMenuPresenter = new ContextMenuPresenter(this);
             SubscribeLocalEvent<MoveEvent>(_contextMenuPresenter.HandleMoveEvent);
-
-            CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenContextMenu,
-                    new PointerInputCmdHandler(HandleOpenContextMenu))
-                .Register<VerbSystem>();
         }
 
         public override void Shutdown()
@@ -59,8 +52,6 @@ namespace Content.Client.Verbs
             base.Shutdown();
 
             _contextMenuPresenter?.Dispose();
-
-            CommandBinds.Unregister<VerbSystem>();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -68,14 +59,6 @@ namespace Content.Client.Verbs
             ToggleContainerVisibility?.Invoke(this, false);
         }
 
-        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (args.State == BoundKeyState.Down)
-            {
-                ToggleContextMenu?.Invoke(this, args);
-            }
-            return true;
-        }
         private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
         {
             ToggleContainerVisibility?.Invoke(this, ev.CanSeeThrough);

@@ -94,6 +94,7 @@ namespace Content.Client.Viewport
         private void SetupPresenters()
         {
             _constructionMenu = new ConstructionMenuPresenter(_gameHud);
+            // TODO VERBS verb/context menu presenter
         }
 
         /// <summary>
@@ -102,6 +103,7 @@ namespace Content.Client.Viewport
         private void DisposePresenters()
         {
             _constructionMenu?.Dispose();
+            // TODO VERBS verb/context menu presenter
         }
 
         internal static void FocusChat(ChatBox chat)
