@@ -46,7 +46,7 @@ namespace Content.Server.Rotatable
             // rotate clockwise
             Verb rotateCW = new("rotatecw");
             rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
-            rotateCW.Category = VerbCategories.Rotate;
+            rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             rotateCW.Priority = -2;
             args.Verbs.Add(rotateCW);
@@ -54,7 +54,7 @@ namespace Content.Server.Rotatable
             // rotate counter-clockwise
             Verb rotateCCW = new("rotateccw");
             rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
-            rotateCCW.Category = VerbCategories.Rotate;
+            rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             rotateCCW.Priority = -1;
             args.Verbs.Add(rotateCCW);

@@ -314,7 +314,7 @@ namespace Content.Client.ContextMenu.UI
                     if (!ExamineSystem.InRangeUnOccluded(player, listedEntity, ExamineSystem.ExamineRange, null))
                     {
                         _contextMenuView.RemoveEntity(listedEntity);
-                        if (_verbSystem.CurrentEntity == listedEntity.Uid)
+                        if (_verbSystem.CurrentTarget == listedEntity.Uid)
                             _verbSystem.CloseVerbMenu();
                     }
                 }
@@ -325,7 +325,7 @@ namespace Content.Client.ContextMenu.UI
                 if (!ExamineSystem.InRangeUnOccluded(player, movingEntityy, ExamineSystem.ExamineRange, null))
                 {
                     _contextMenuView.RemoveEntity(movingEntityy);
-                    if (_verbSystem.CurrentEntity == movingEntityy.Uid)
+                    if (_verbSystem.CurrentTarget == movingEntityy.Uid)
                         _verbSystem.CloseVerbMenu();
                 }
             }
@@ -340,7 +340,7 @@ namespace Content.Client.ContextMenu.UI
                 if (entity.Deleted || !_playerCanSeeThroughContainers && entity.IsInContainer())
                 {
                     _contextMenuView.RemoveEntity(entity);
-                    if (_verbSystem.CurrentEntity == entity.Uid)
+                    if (_verbSystem.CurrentTarget == entity.Uid)
                         _verbSystem.CloseVerbMenu();
                 }
             }

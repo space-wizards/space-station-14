@@ -86,7 +86,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 ejectVerb.Act = () => TryEjectContents(component);
                 if (args.PrepareGUI)
                 {
-                    ejectVerb.Category = VerbCategories.Eject;
+                    ejectVerb.Category = VerbCategory.Eject;
                 }
                 args.Verbs.Add(ejectVerb);
             }

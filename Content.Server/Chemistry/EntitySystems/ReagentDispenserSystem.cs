@@ -35,7 +35,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (args.PrepareGUI)
             {
-                verb.Category = VerbCategories.Eject;
+                verb.Category = VerbCategory.Eject;
             }
 
             args.Verbs.Add(verb);
@@ -60,7 +60,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (args.PrepareGUI)
             {
-                verb.Category = VerbCategories.Insert;
+                verb.Category = VerbCategory.Insert;
             }
 
             args.Verbs.Add(verb);

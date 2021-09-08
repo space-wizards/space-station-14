@@ -61,7 +61,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:delete");
                 verb.Text = Loc.GetString("pointing-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
                 args.Verbs.Add(verb);
@@ -72,7 +72,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:rejuvenate");
                 verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
                 verb.Act = () => RejuvenateCommand.PerformRejuvenate(args.Target);
                 args.Verbs.Add(verb);
@@ -86,7 +86,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:control");
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
@@ -103,7 +103,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:sentient");
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
                 verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
                 args.Verbs.Add(verb);
@@ -115,7 +115,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:setoutfit");
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
                 verb.Act = () => _euiManager.OpenEui(new SetOutfitEui(args.Target), player);
                 args.Verbs.Add(verb);
@@ -126,7 +126,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:unoccluded");
                 verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
                 verb.Act = () =>
                 {
@@ -144,7 +144,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:tubeconnections");
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
                 verb.Act = () => component.PopupDirections(args.User);
                 args.Verbs.Add(verb);
@@ -156,7 +156,7 @@ namespace Content.Server.Administration
             {
                 Verb verb = new Verb("debug:makeghostrole");
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
-                verb.Category = VerbCategories.Debug;
+                verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON add ghost icon
                 // Where is the national park service icon for haunted forests?
                 verb.Act = () => _ghostRoleSystem.OpenMakeGhostRoleEui(player, args.Target.Uid);

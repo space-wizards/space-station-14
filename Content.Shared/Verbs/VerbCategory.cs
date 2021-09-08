@@ -1,4 +1,3 @@
-
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -7,10 +6,10 @@ using System;
 namespace Content.Shared.Verbs
 {
     /// <summary>
-    /// Contains combined name and icon information for a verb category.
+    ///     Contains combined name and icon information for a verb category.
     /// </summary>
     [Serializable, NetSerializable]
-    public class VerbCategoryData
+    public class VerbCategory
     {
         public readonly string Text;
 
@@ -36,35 +35,29 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly bool IconsOnly;
 
-        public VerbCategoryData(string text, string? icon, bool contractible = false, bool iconsOnly = false)
+        public VerbCategory(string text, string? icon, bool contractible = false, bool iconsOnly = false)
         {
             Text = Loc.GetString(text);
             Contractible = contractible;
             Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
             IconsOnly = iconsOnly;
         }
-    }
 
-    /// <summary>
-    ///     Standard verb categories used across multiple systems.
-    /// </summary>
-    public struct VerbCategories
-    {
-        public static readonly VerbCategoryData Debug =
+        public static readonly VerbCategory Debug =
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
-        public static readonly VerbCategoryData Eject =
+        public static readonly VerbCategory Eject =
             new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Insert =
+        public static readonly VerbCategory Insert =
             new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Buckle =
+        public static readonly VerbCategory Buckle =
             new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Unbuckle =
+        public static readonly VerbCategory Unbuckle =
             new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Open =
+        public static readonly VerbCategory Open =
             new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Close =
+        public static readonly VerbCategory Close =
             new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
-        public static readonly VerbCategoryData Rotate =
+        public static readonly VerbCategory Rotate =
             new("verb-categories-rotate", null, iconsOnly: true);
     }
 }

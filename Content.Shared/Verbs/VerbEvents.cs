@@ -14,50 +14,46 @@ namespace Content.Shared.Verbs
     public class RequestServerVerbsEvent : EntityEventArgs
     {
         public readonly EntityUid EntityUid;
+        public readonly VerbType Type;
 
-        public RequestServerVerbsEvent(EntityUid entityUid)
+        public RequestServerVerbsEvent(EntityUid entityUid, VerbType type)
         {
             EntityUid = entityUid;
+            Type = type;
         }
     }
 
     [Serializable, NetSerializable]
     public class VerbsResponseEvent : EntityEventArgs
     {
-        public readonly List<Verb> InteractionVerbs;
-        public readonly List<Verb> ActivationVerbs;
-        public readonly List<Verb> AlternativeVerbs;
-        public readonly List<Verb> OtherVerbs;
-
+        public readonly Dictionary<VerbType, List<Verb>>? Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseEvent(EntityUid entity,
-            List<Verb> interactionVerbs,
-            List<Verb> activationVerbs,
-            List<Verb> alternativeVerbs,
-            List<Verb> otherVerbs)
+        public VerbsResponseEvent(EntityUid entity, Dictionary<VerbType, List<Verb>>? verbs)
         {
             Entity = entity;
-            InteractionVerbs = interactionVerbs;
-            ActivationVerbs = activationVerbs;
-            AlternativeVerbs = alternativeVerbs;
-            OtherVerbs = otherVerbs;
+            Verbs = verbs;
         }
     }
 
     [Serializable, NetSerializable]
-    public class UseVerbEvent : EntityEventArgs
+    public class TryExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly string VerbKey;
 
-        public UseVerbEvent(EntityUid target, string verbKey)
+        /// <summary>
+        ///     The type of verb to try execute. Avoids having to get a list of all verbs on the receiving end.
+        /// </summary>
+        public readonly VerbType Type;
+
+        public TryExecuteVerbEvent(EntityUid target, string verbKey, VerbType type)
         {
             Target = target;
             VerbKey = verbKey;
+            Type = type;
         }
     }
-
 
     /// <summary>
     ///    Request primary interaction verbs.

@@ -44,7 +44,7 @@ namespace Content.Server.Cabinet
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
             if (args.PrepareGUI)
             {
-                toggleVerb.Category = component.Opened ? VerbCategories.Close : VerbCategories.Open;
+                toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
             }
             args.Verbs.Add(toggleVerb);
 
@@ -60,7 +60,7 @@ namespace Content.Server.Cabinet
                 };
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Eject;
+                    verb.Category = VerbCategory.Eject;
                 }
                 // eject takes priority over open/close
                 verb.Priority = 1;
@@ -83,7 +83,7 @@ namespace Content.Server.Cabinet
 
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Insert;
+                    verb.Category = VerbCategory.Insert;
                 }
                 // insert takes priority over open/close
                 verb.Priority = 1;

@@ -53,7 +53,7 @@ namespace Content.Server.Buckle.Systems
                 verb.Act = () => buckledComp.TryUnbuckle(args.User);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Unbuckle;
+                    verb.Category = VerbCategory.Unbuckle;
                     if (entity == args.User)
                         verb.Text = Loc.GetString("verb-self-target-pronoun");
                     else
@@ -73,7 +73,7 @@ namespace Content.Server.Buckle.Systems
                 verb.Act = () => buckle.TryBuckle(args.User, args.Target);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Buckle;
+                    verb.Category = VerbCategory.Buckle;
                     verb.Text = Loc.GetString("verb-self-target-pronoun");
                 }
                 args.Verbs.Add(verb);
@@ -96,7 +96,7 @@ namespace Content.Server.Buckle.Systems
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Buckle;
+                    verb.Category = VerbCategory.Buckle;
                     verb.Text = args.Using.Name;
                 }
 

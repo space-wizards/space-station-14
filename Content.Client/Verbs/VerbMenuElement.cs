@@ -25,7 +25,7 @@ namespace Content.Client.Verbs
     /// </summary>
     public sealed class VerbCategoryPopup : ContextMenuPopup
     {
-        public VerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, EntityUid target, bool drawOnlyIcons)
+        public VerbCategoryPopup(VerbSystem system, IEnumerable<Verb> verbs, VerbType type, EntityUid target, bool drawOnlyIcons)
             : base()
         {
             // Do any verbs have icons? If not, don't bother leaving space for icons in the pop-up.
@@ -49,14 +49,14 @@ namespace Content.Client.Verbs
 
             foreach (var verb in verbs)
             {
-                AddToMenu(new VerbButton(system, verb, target, drawVerbIcons));
+                AddToMenu(new VerbButton(system, verb, type, target, drawVerbIcons));
             }
         }
     }
 
     public sealed class VerbButton : BaseButton
     {
-        public VerbButton(VerbSystem system, Verb verb, EntityUid target, bool drawIcons = true) : base()
+        public VerbButton(VerbSystem system, Verb verb, VerbType type, EntityUid target, bool drawIcons = true) : base()
         {
             Disabled = verb.IsDisabled;
 
@@ -101,18 +101,7 @@ namespace Content.Client.Verbs
             OnPressed += _ =>
             {
                 system.CloseVerbMenu();
-                try
-                {
-                    // Try run the verb locally. Else, ask the server to run it.
-                    if (!system.TryExecuteVerb(verb))
-                    {
-                        system.ExecuteServerVerb(target, verb.Key);
-                    }
-                }
-                catch (Exception e)
-                {
-                    Logger.ErrorS("verb", "Exception in verb {0} on uid {1}:\n{2}", verb.Key, target.ToString(), e);
-                }
+                system.TryExecuteVerb(verb, true, target, type);
             };
         }
 
@@ -143,7 +132,7 @@ namespace Content.Client.Verbs
         ///     Whether or not to hide member verb text and just show icons.
         /// </summary>
         /// <remarks>
-        ///     If no members have icons, this option is ignored and text is shown anyways. Defaults to using <see cref="VerbCategoryData.IconsOnly"/>.
+        ///     If no members have icons, this option is ignored and text is shown anyways. Defaults to using <see cref="VerbCategory.IconsOnly"/>.
         /// </remarks>
         private readonly bool _drawOnlyIcons;
 
@@ -152,7 +141,7 @@ namespace Content.Client.Verbs
         /// </summary>
         private readonly VerbCategoryPopup _popup;
 
-        public VerbCategoryButton(VerbSystem system, VerbCategoryData category, IEnumerable<Verb> verbs, EntityUid target, bool? drawOnlyIcons = null) : base()
+        public VerbCategoryButton(VerbSystem system, VerbCategory category, IEnumerable<Verb> verbs, VerbType type, EntityUid target, bool? drawOnlyIcons = null) : base()
         {
             _system = system;
             _drawOnlyIcons = drawOnlyIcons ?? category.IconsOnly;
@@ -194,7 +183,7 @@ namespace Content.Client.Verbs
             });
 
             // The pop-up that appears when hovering over the button
-            _popup = new VerbCategoryPopup(_system, verbs, target, _drawOnlyIcons);
+            _popup = new VerbCategoryPopup(_system, verbs, type, target, _drawOnlyIcons);
             UserInterfaceManager.ModalRoot.AddChild(_popup);
 
             AddChild(box);

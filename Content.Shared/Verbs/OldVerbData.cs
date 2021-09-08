@@ -50,7 +50,7 @@ namespace Content.Shared.Verbs
         ///     Convenience property to set verb category and icon at once.
         /// </summary>
         [ValueProvider("Content.Shared.GameObjects.VerbCategories")]
-        public VerbCategoryData CategoryData
+        public VerbCategory CategoryData
         {
             set
             {
@@ -68,6 +68,15 @@ namespace Content.Shared.Verbs
         }
     }
 
+    [Flags] public enum VerbType
+    {
+        Interaction = 1,
+        Activation = 2,
+        Alternative = 4,
+        Other = 8,
+        All = 1+2+4+8
+    }
+
     /// <summary>
     ///     Verb objects describe actions that a user can take. The actions can be specified via an Action delegate,
     ///     local events, or networked events. Verbs also provide text, icons, and categories for displaying in the
@@ -76,6 +85,7 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public class Verb : IComparable
     {
+
         /// <summary>
         ///     This is a delegate action that will be run when the verb is "acted" out.
         /// </summary>
@@ -127,7 +137,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.
         /// </summary>
-        public VerbCategoryData? Category;
+        public VerbCategory? Category;
 
         /// <summary>
         ///     Whether this verb is disabled. Disabled verbs are still shown in the context menu, but cannot be

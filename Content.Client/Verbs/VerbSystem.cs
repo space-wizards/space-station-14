@@ -30,15 +30,10 @@ namespace Content.Client.Verbs
 
         private ContextMenuPresenter _contextMenuPresenter = default!;
 
-        // Verb types to be displayed in the context menu.
-        private List<Verb> _interactionVerbs = new();
-        private List<Verb> _activationVerbs = new();
-        private List<Verb> _alternativeVerbs = new();
-        private List<Verb> _otherVerbs = new();
-
-        public EntityUid CurrentEntity;
+        public EntityUid CurrentTarget;
         public ContextMenuPopup? CurrentVerbPopup;
         public ContextMenuPopup? CurrentCategoryPopup;
+        public Dictionary<VerbType, List<Verb>> CurrentVerbs = new();
 
         // TODO VERBS Move presenter out of the system
         // TODO VERBS Separate the rest of the UI from the logic
@@ -92,64 +87,35 @@ namespace Content.Client.Verbs
             _contextMenuPresenter?.Update();
         }
 
-        public void OpenVerbMenu(IEntity entity, ScreenCoordinates screenCoordinates)
+        public void OpenVerbMenu(IEntity target, ScreenCoordinates screenCoordinates)
         {
             if (CurrentVerbPopup != null)
             {
                 CloseVerbMenu();
             }
 
-            CurrentEntity = entity.Uid;
+            var user = _playerManager.LocalPlayer?.ControlledEntity;
+            if (user == null)
+                return;
+
+            CurrentTarget = target.Uid;
 
             CurrentVerbPopup = new ContextMenuPopup();
             _userInterfaceManager.ModalRoot.AddChild(CurrentVerbPopup);
             CurrentVerbPopup.OnPopupHide += CloseVerbMenu;
 
-            GetAllClientsideVerbs(entity);
+            CurrentVerbs = GetVerbs(target, user, VerbType.All);
 
-            if (!entity.Uid.IsClientSide())
+            if (!target.Uid.IsClientSide())
             {
                 CurrentVerbPopup.AddToMenu(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
-                RaiseNetworkEvent(new RequestServerVerbsEvent(CurrentEntity));
+                RaiseNetworkEvent(new RequestServerVerbsEvent(CurrentTarget, VerbType.All));
             }
 
             // Show the menu
             FillVerbPopup(CurrentVerbPopup);
             var box = UIBox2.FromDimensions(screenCoordinates.Position, (1, 1));
             CurrentVerbPopup.Open(box);
-        }
-
-        internal void ExecuteServerVerb(EntityUid target, string key)
-        {
-            RaiseNetworkEvent(new UseVerbEvent(target, key));
-        }
-
-        /// <summary>
-        ///     Raise events to get a list of all verbs on an entity.
-        /// </summary>
-        private void GetAllClientsideVerbs(IEntity entity)
-        {
-            var user = _playerManager.LocalPlayer!.ControlledEntity!;
-
-            // Get primary-interaction verbs
-            GetInteractionVerbsEvent interactionVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(entity.Uid, interactionVerbs);
-            _interactionVerbs = interactionVerbs.Verbs;
-
-            // Get activation verbs
-            GetActivationVerbsEvent activationVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(entity.Uid, activationVerbs);
-            _activationVerbs = activationVerbs.Verbs;
-
-            // Get primary-interaction verbs
-            GetAlternativeVerbsEvent alternativeVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(entity.Uid, alternativeVerbs);
-            _alternativeVerbs = alternativeVerbs.Verbs;
-
-            // Get primary-interaction verbs
-            GetOtherVerbsEvent otherVerbs = new(user, entity, prepareGUI: true);
-            RaiseLocalEvent(entity.Uid, otherVerbs);
-            _otherVerbs = otherVerbs.Verbs;
         }
 
         public void OnContextButtonPressed(IEntity entity)
@@ -159,16 +125,23 @@ namespace Content.Client.Verbs
 
         private void HandleVerbResponse(VerbsResponseEvent msg)
         {
-            if (CurrentEntity != msg.Entity || CurrentVerbPopup == null)
+            if (CurrentTarget != msg.Entity || CurrentVerbPopup == null)
             {
                 return;
             }
 
-            // Merge message verbs with client side verb list
-            _interactionVerbs.AddRange(msg.InteractionVerbs);
-            _activationVerbs.AddRange(msg.ActivationVerbs);
-            _alternativeVerbs.AddRange(msg.AlternativeVerbs);
-            _otherVerbs.AddRange(msg.OtherVerbs);
+            // Add verbs, if the server gave us any. Note that either way we need to update the pop-up to get rid of the
+            // "waiting for server...".
+            if (msg.Verbs !=null)
+            {
+                foreach (var entry in msg.Verbs)
+                {
+                    if (!CurrentVerbs.TryAdd(entry.Key, entry.Value))
+                    {
+                        CurrentVerbs[entry.Key].AddRange(entry.Value);
+                    }
+                }
+            }
 
             // Clear currently shown verbs and show new ones
             CurrentVerbPopup.List.DisposeAllChildren();
@@ -178,13 +151,16 @@ namespace Content.Client.Verbs
 
         private void FillVerbPopup(ContextMenuPopup popup)
         {
-            if (CurrentEntity == EntityUid.Invalid)
+            if (CurrentTarget == EntityUid.Invalid)
                 return;
 
-            AddVerbList(popup, _interactionVerbs);
-            AddVerbList(popup, _activationVerbs);
-            AddVerbList(popup, _alternativeVerbs);
-            AddVerbList(popup, _otherVerbs);
+            // Add verbs to pop-up, grouped by type. Order determined by how types are defined VerbTypes
+            var types = CurrentVerbs.Keys.ToList();
+            types.Sort();
+            foreach (var type in types)
+            {
+                AddVerbList(popup, type);
+            }
 
             // Were the verb lists empty?
             if (popup.List.ChildCount == 0)
@@ -199,9 +175,9 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     Add a list of verbs to a BoxContainer. Iterates over the given verbs list and creates GUI buttons.
         /// </summary>
-        private void AddVerbList(ContextMenuPopup popup, List<Verb> verbList)
+        private void AddVerbList(ContextMenuPopup popup, VerbType type)
         {
-            if (verbList.Count == 0)
+            if (!CurrentVerbs.TryGetValue(type, out var verbList) || verbList.Count == 0)
                 return;
 
             // Sort verbs by priority or name
@@ -214,7 +190,7 @@ namespace Content.Client.Verbs
                 if (verb.Category == null)
                 {
                     // Lone verb. just create a button for it
-                    popup.AddToMenu(new VerbButton(this, verb, CurrentEntity));
+                    popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget));
                     continue;
                 }
 
@@ -231,7 +207,7 @@ namespace Content.Client.Verbs
                 if (verbsInCategory.Count() > 1 || !verb.Category.Contractible)
                 {
                     popup.AddToMenu(
-                        new VerbCategoryButton(this, verb.Category, verbsInCategory, CurrentEntity));
+                        new VerbCategoryButton(this, verb.Category, verbsInCategory, type, CurrentTarget));
                     listedCategories.Add(verb.Category.Text);
                     continue;
                 }
@@ -245,7 +221,7 @@ namespace Content.Client.Verbs
                 else
                     verb.Text = verb.Category.Text + " " + verb.Text;
 
-                popup.AddToMenu(new VerbButton(this, verb, CurrentEntity));
+                popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget));
             }
         }
 
@@ -255,11 +231,8 @@ namespace Content.Client.Verbs
             CurrentVerbPopup = null;
             CurrentCategoryPopup?.Dispose();
             CurrentCategoryPopup = null;
-            CurrentEntity = EntityUid.Invalid;
-            _interactionVerbs.Clear();
-            _activationVerbs.Clear();
-            _alternativeVerbs.Clear();
-            _otherVerbs.Clear();
+            CurrentTarget = EntityUid.Invalid;
+            CurrentVerbs.Clear();
         }
     }
 }

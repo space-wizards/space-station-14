@@ -31,7 +31,7 @@ namespace Content.Server.Access
                 verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Insert;
+                    verb.Category = VerbCategory.Insert;
                     verb.Text = Loc.GetString("id-card-console-privileged-id");
                 }
                 args.Verbs.Add(verb);
@@ -44,7 +44,7 @@ namespace Content.Server.Access
                 verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Insert;
+                    verb.Category = VerbCategory.Insert;
                     verb.Text = Loc.GetString("id-card-console-target-id");
                 }
                 args.Verbs.Add(verb);
@@ -63,7 +63,7 @@ namespace Content.Server.Access
                 verb.Act = () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Eject;
+                    verb.Category = VerbCategory.Eject;
                     verb.Text = Loc.GetString("id-card-console-privileged-id");
                 }
                 args.Verbs.Add(verb);
@@ -76,7 +76,7 @@ namespace Content.Server.Access
                 verb.Act = () => component.PutIdInHand(component.TargetIdContainer, args.Hands);
                 if (args.PrepareGUI)
                 {
-                    verb.Category = VerbCategories.Eject;
+                    verb.Category = VerbCategory.Eject;
                     verb.Text = Loc.GetString("id-card-console-target-id");
 
                     verb.Priority = -20;

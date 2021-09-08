@@ -53,7 +53,7 @@ namespace Content.Server.Buckle.Systems
 
             if (args.PrepareGUI)
             {
-                verb.Category = VerbCategories.Unbuckle;
+                verb.Category = VerbCategory.Unbuckle;
             }
             args.Verbs.Add(verb);
         }
