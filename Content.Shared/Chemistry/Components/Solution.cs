@@ -14,27 +14,25 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Solution
+namespace Content.Shared.Chemistry.Components
 {
     /// <summary>
     ///     A solution of reagents.
     /// </summary>
     [Serializable, NetSerializable]
     [DataDefinition]
-    public class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
+    public partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // Most objects on the station hold only 1 or 2 reagents
         [ViewVariables]
         [DataField("reagents")]
-        private List<ReagentQuantity> _contents = new(2);
-
-        public IReadOnlyList<ReagentQuantity> Contents => _contents;
-
+        public List<ReagentQuantity> Contents = new(2);
+        
         /// <summary>
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
         [ViewVariables]
-        public ReagentUnit TotalVolume { get; private set; }
+        public ReagentUnit TotalVolume { get; set; }
 
         public Color Color => GetColor();
 
@@ -56,7 +54,7 @@ namespace Content.Shared.Chemistry.Solution
         void ISerializationHooks.AfterDeserialization()
         {
             TotalVolume = ReagentUnit.Zero;
-            _contents.ForEach(reagent => TotalVolume += reagent.Quantity);
+            Contents.ForEach(reagent => TotalVolume += reagent.Quantity);
         }
 
         public bool ContainsReagent(string reagentId)
@@ -100,18 +98,18 @@ namespace Content.Shared.Chemistry.Solution
             if (quantity <= 0)
                 return;
 
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                var reagent = _contents[i];
+                var reagent = Contents[i];
                 if (reagent.ReagentId != reagentId)
                     continue;
 
-                _contents[i] = new ReagentQuantity(reagentId, reagent.Quantity + quantity);
+                Contents[i] = new ReagentQuantity(reagentId, reagent.Quantity + quantity);
                 TotalVolume += quantity;
                 return;
             }
 
-            _contents.Add(new ReagentQuantity(reagentId, quantity));
+            Contents.Add(new ReagentQuantity(reagentId, quantity));
             TotalVolume += quantity;
         }
 
@@ -122,7 +120,7 @@ namespace Content.Shared.Chemistry.Solution
         public void ScaleSolution(float scale)
         {
             if (scale == 1) return;
-            var tempContents = new List<ReagentQuantity>(_contents);
+            var tempContents = new List<ReagentQuantity>(Contents);
             foreach(ReagentQuantity current in tempContents)
             {
                 if(scale > 1)
@@ -143,10 +141,10 @@ namespace Content.Shared.Chemistry.Solution
         /// <returns>The quantity in milli-units.</returns>
         public ReagentUnit GetReagentQuantity(string reagentId)
         {
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                if (_contents[i].ReagentId == reagentId)
-                    return _contents[i].Quantity;
+                if (Contents[i].ReagentId == reagentId)
+                    return Contents[i].Quantity;
             }
 
             return ReagentUnit.New(0);
@@ -157,9 +155,9 @@ namespace Content.Shared.Chemistry.Solution
             if(quantity <= 0)
                 return;
 
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                var reagent = _contents[i];
+                var reagent = Contents[i];
                 if(reagent.ReagentId != reagentId)
                     continue;
 
@@ -168,12 +166,12 @@ namespace Content.Shared.Chemistry.Solution
                 var newQuantity = curQuantity - quantity;
                 if (newQuantity <= 0)
                 {
-                    _contents.RemoveSwap(i);
+                    Contents.RemoveSwap(i);
                     TotalVolume -= curQuantity;
                 }
                 else
                 {
-                    _contents[i] = new ReagentQuantity(reagentId, newQuantity);
+                    Contents[i] = new ReagentQuantity(reagentId, newQuantity);
                     TotalVolume -= quantity;
                 }
 
@@ -198,16 +196,16 @@ namespace Content.Shared.Chemistry.Solution
                 return;
             }
 
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                var reagent = _contents[i];
+                var reagent = Contents[i];
                 var oldQuantity = reagent.Quantity;
 
                 // quantity taken is always a little greedy, so fractional quantities get rounded up to the nearest
                 // whole unit. This should prevent little bits of chemical remaining because of float rounding errors.
                 var newQuantity = oldQuantity * ratio;
 
-                _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
+                Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
             }
 
             TotalVolume = TotalVolume * ratio;
@@ -215,7 +213,7 @@ namespace Content.Shared.Chemistry.Solution
 
         public void RemoveAllSolution()
         {
-            _contents.Clear();
+            Contents.Clear();
             TotalVolume = ReagentUnit.New(0);
         }
 
@@ -237,17 +235,17 @@ namespace Content.Shared.Chemistry.Solution
             var newTotalVolume = ReagentUnit.New(0);
             var remainingVolume = TotalVolume;
 
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                var reagent = _contents[i];
+                var reagent = Contents[i];
                 var ratio = (remainingVolume - quantity).Double() / remainingVolume.Double();
                 remainingVolume -= reagent.Quantity;
 
                 var newQuantity = reagent.Quantity * ratio;
                 var splitQuantity = reagent.Quantity - newQuantity;
 
-                _contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
-                newSolution._contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
+                Contents[i] = new ReagentQuantity(reagent.ReagentId, newQuantity);
+                newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
                 newTotalVolume += splitQuantity;
                 quantity -= splitQuantity;
             }
@@ -260,25 +258,25 @@ namespace Content.Shared.Chemistry.Solution
 
         public void AddSolution(Solution otherSolution)
         {
-            for (var i = 0; i < otherSolution._contents.Count; i++)
+            for (var i = 0; i < otherSolution.Contents.Count; i++)
             {
-                var otherReagent = otherSolution._contents[i];
+                var otherReagent = otherSolution.Contents[i];
 
                 var found = false;
-                for (var j = 0; j < _contents.Count; j++)
+                for (var j = 0; j < Contents.Count; j++)
                 {
-                    var reagent = _contents[j];
+                    var reagent = Contents[j];
                     if (reagent.ReagentId == otherReagent.ReagentId)
                     {
                         found = true;
-                        _contents[j] = new ReagentQuantity(reagent.ReagentId, reagent.Quantity + otherReagent.Quantity);
+                        Contents[j] = new ReagentQuantity(reagent.ReagentId, reagent.Quantity + otherReagent.Quantity);
                         break;
                     }
                 }
 
                 if (!found)
                 {
-                    _contents.Add(new ReagentQuantity(otherReagent.ReagentId, otherReagent.Quantity));
+                    Contents.Add(new ReagentQuantity(otherReagent.ReagentId, otherReagent.Quantity));
                 }
             }
 
@@ -322,10 +320,10 @@ namespace Content.Shared.Chemistry.Solution
             var volume = ReagentUnit.New(0);
             var newSolution = new Solution();
 
-            for (var i = 0; i < _contents.Count; i++)
+            for (var i = 0; i < Contents.Count; i++)
             {
-                var reagent = _contents[i];
-                newSolution._contents.Add(reagent);
+                var reagent = Contents[i];
+                newSolution.Contents.Add(reagent);
                 volume += reagent.Quantity;
             }
 
@@ -337,7 +335,7 @@ namespace Content.Shared.Chemistry.Solution
         {
             var chemistry = EntitySystem.Get<ChemistrySystem>();
 
-            foreach (var (reagentId, quantity) in _contents.ToArray())
+            foreach (var (reagentId, quantity) in Contents.ToArray())
             {
                 chemistry.ReactionEntity(entity, method, reagentId, quantity, this);
             }
@@ -377,7 +375,7 @@ namespace Content.Shared.Chemistry.Solution
 
         public IEnumerator<ReagentQuantity> GetEnumerator()
         {
-            return _contents.GetEnumerator();
+            return Contents.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

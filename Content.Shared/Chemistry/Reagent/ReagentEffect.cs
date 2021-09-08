@@ -18,6 +18,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("conditions")]
         public ReagentEffectCondition[]? Conditions;
 
-        public abstract void Metabolize(IEntity solutionEntity, Solution.Solution.ReagentQuantity amount);
+        public abstract void Metabolize(IEntity solutionEntity, Components.Solution.ReagentQuantity amount);
     }
 }

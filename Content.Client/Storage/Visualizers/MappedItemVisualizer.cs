@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Storage.ItemCounter;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -36,7 +36,7 @@ namespace Content.Client.Storage.Visualizers
                     InitLayers(spriteComponent, component);
                 }
                 EnableLayers(spriteComponent, component);
-                
+
             }
         }
 

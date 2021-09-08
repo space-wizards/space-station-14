@@ -1,4 +1,5 @@
 using System;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -9,7 +10,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Stacks
 {
-    [NetworkedComponent()]
+    [NetworkedComponent, Friend(typeof(SharedStackSystem))]
     public abstract class SharedStackComponent : Component, ISerializationHooks
     {
         public sealed override string Name => "Stack";
@@ -20,7 +21,7 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         ///     Current stack count.
-        ///     Do NOT set this directly, raise the <see cref="StackChangeCountEvent"/> event instead.
+        ///     Do NOT set this directly, use the <see cref="SharedStackSystem.SetCount"/> method instead.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("count")]
@@ -35,11 +36,6 @@ namespace Content.Shared.Stacks
 
         [ViewVariables]
         public int AvailableSpace => MaxCount - Count;
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new StackComponentState(Count, MaxCount);
-        }
     }
 
     [Serializable, NetSerializable]

@@ -6,6 +6,10 @@
   placement:
     mode: AlignTileAny
   components:
+  - type: AmbientSound
+    range: 7
+    sound:
+      path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/gravity_generator.rsi

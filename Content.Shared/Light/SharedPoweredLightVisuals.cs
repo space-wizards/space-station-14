@@ -7,7 +7,6 @@ namespace Content.Shared.Light
     public enum PoweredLightVisuals : byte
     {
         BulbState,
-        BulbColor,
         Blinking
     }
 

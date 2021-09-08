@@ -1,14 +1,17 @@
 ﻿using System.Collections.Generic;
+using Content.Shared.Storage.EntitySystems;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Storage.ItemCounter
+namespace Content.Shared.Storage.Components
 {
     [RegisterComponent]
-    public class ItemCounterComponent : Component, ISerializationHooks
+    [Friend(typeof(SharedItemMapperSystem))]
+    public class ItemMapperComponent : Component, ISerializationHooks
     {
-        public override string Name => "ItemCounter";
+        public override string Name => "ItemMapper";
 
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
 

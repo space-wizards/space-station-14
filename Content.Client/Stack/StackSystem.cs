@@ -17,7 +17,7 @@ namespace Content.Client.Stack
         private void OnStackCountChanged(EntityUid uid, StackComponent component, StackCountChangedEvent args)
         {
             // Dirty the UI now that the stack count has changed.
-            component.DirtyUI();
+            component.UiUpdateNeeded = true;
         }
     }
 }

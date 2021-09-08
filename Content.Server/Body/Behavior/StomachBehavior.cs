@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Body.Networks;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -18,6 +17,7 @@ namespace Content.Server.Body.Behavior
     /// </summary>
     public class StomachBehavior : MechanismBehavior
     {
+        private const string DefaultSolutionName = "stomach";
         private float _accumulatedFrameTime;
 
         /// <summary>
@@ -30,7 +30,6 @@ namespace Content.Server.Body.Behavior
         /// </param>
         public override void Update(float frameTime)
         {
-
             // Do not metabolise if the organ does not have a body.
             if (Body == null)
             {
@@ -47,15 +46,13 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            // Note that "Owner" should be the organ that has this behaviour/mechanism, and it should have a dedicated
-            // solution container. "Body.Owner" is something else, and may have more than one solution container.
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution) ||
-                !Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
+            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream) ||
+                StomachSolution == null) // Something has gone wrong here.
             {
                 return;
             }
 
-            // Add reagents ready for transfer to bloodstream to transferSolution
+            // Reagents ready to transfer into the bloodstream are added to this solution
             var transferSolution = new Solution();
 
             // Use ToList here to remove entries while iterating
@@ -65,16 +62,18 @@ namespace Content.Server.Body.Behavior
                 delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    // This reagent has been in the somach long enough, TRY to transfer it.
+                    // This reagent has been in the stomach long enough, TRY to transfer it.
                     // But first, check if the reagent still exists, and how much is left.
                     // Some poor spessman may have washed down a potassium snack with some water.
-                    if (solution.Solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity)){
-
-                        if (quantity > delta.Quantity) {
+                    if (StomachSolution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity))
+                    {
+                        if (quantity > delta.Quantity)
+                        {
                             quantity = delta.Quantity;
                         }
 
-                        solution.TryRemoveReagent(delta.ReagentId, quantity);
+                        EntitySystem.Get<SolutionContainerSystem>()
+                            .TryRemoveReagent(Owner.Uid, StomachSolution, delta.ReagentId, quantity);
                         transferSolution.AddReagent(delta.ReagentId, quantity);
                     }
 
@@ -86,17 +85,28 @@ namespace Content.Server.Body.Behavior
             bloodstream.TryTransferSolution(transferSolution);
         }
 
+        public Solution? StomachSolution
+        {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, DefaultSolutionName, out var solution);
+                return solution;
+            }
+        }
+
         /// <summary>
         ///     Max volume of internal solution storage
         /// </summary>
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SharedSolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get =>
+                StomachSolution?.MaxVolume ?? ReagentUnit.Zero;
+
             set
             {
-                if (Owner.TryGetComponent(out SharedSolutionContainerComponent? solution))
+                if (StomachSolution != null)
                 {
-                    solution.MaxVolume = value;
+                    StomachSolution.MaxVolume = value;
                 }
             }
         }
@@ -118,27 +128,25 @@ namespace Content.Server.Body.Behavior
         /// <summary>
         ///     Used to track how long each reagent has been in the stomach
         /// </summary>
-        [ViewVariables]
-        private readonly List<ReagentDelta> _reagentDeltas = new();
+        [ViewVariables] private readonly List<ReagentDelta> _reagentDeltas = new();
 
         public override void Startup()
         {
             base.Startup();
 
-            Owner.EnsureComponentWarn(out SolutionContainerComponent solution);
-
+            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
             solution.MaxVolume = InitialMaxVolume;
         }
 
         public bool CanTransferSolution(Solution solution)
         {
-            if (!Owner.TryGetComponent(out SharedSolutionContainerComponent? solutionComponent))
+            if (StomachSolution == null)
             {
                 return false;
             }
 
             // TODO: For now no partial transfers. Potentially change by design
-            if (!solutionComponent.CanAddSolution(solution))
+            if (!StomachSolution.CanAddSolution(solution))
             {
                 return false;
             }
@@ -151,13 +159,13 @@ namespace Content.Server.Body.Behavior
             if (Owner == null || !CanTransferSolution(solution))
                 return false;
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solutionComponent))
+            if (StomachSolution == null)
             {
                 return false;
             }
 
             // Add solution to _stomachContents
-            solutionComponent.TryAddSolution(solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, StomachSolution, solution);
             // Add each reagent to _reagentDeltas. Used to track how long each reagent has been in the stomach
             foreach (var reagent in solution.Contents)
             {
