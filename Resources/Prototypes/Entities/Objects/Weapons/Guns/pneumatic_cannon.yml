@@ -14,7 +14,7 @@
       map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
       visible: false
   - type: Item
-    size: 24
+    size: 40
   - type: PneumaticCannon
   - type: Storage
     # todo mirror pneum replace with ecs/evnts

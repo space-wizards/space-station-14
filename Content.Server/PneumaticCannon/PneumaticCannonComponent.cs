@@ -77,9 +77,9 @@ namespace Content.Server.PneumaticCannon
 
             protected override void GetData(IEntity user, PneumaticCannonComponent component, VerbData data)
             {
-                if (component.GasTankSlot.ContainedEntities.Count == 1)
+                if (component.GasTankSlot.ContainedEntities.Count == 0)
                 {
-                    data.Visibility = VerbVisibility.Visible;
+                    data.Visibility = VerbVisibility.Disabled;
                 }
 
                 data.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
@@ -99,7 +99,6 @@ namespace Content.Server.PneumaticCannon
 
             protected override void GetData(IEntity user, PneumaticCannonComponent component, VerbData data)
             {
-                data.Visibility = VerbVisibility.Visible;
                 data.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
             }
 

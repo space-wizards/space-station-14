@@ -222,7 +222,8 @@ namespace Content.Server.PneumaticCannon
             ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
             if(data.User.TryGetComponent<StunnableComponent>(out var stunnable)
-                && comp.Power == PneumaticCannonPower.High)
+                && comp.Power == PneumaticCannonPower.High
+                && !stunnable.Stunned)
             {
                 stunnable.Paralyze(comp.HighPowerStunTime);
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",

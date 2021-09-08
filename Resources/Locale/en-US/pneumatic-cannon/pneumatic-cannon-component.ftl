@@ -10,7 +10,7 @@ pneumatic-cannon-component-insert-item-failure = You can't seem to fit { THE($it
 
 ## Shown when trying to fire, but no gas
 
-pneumatic-cannon-component-fire-no-gas = { CAPITALIZE(THE($cannon)) } whirrs, but no gas comes out.
+pneumatic-cannon-component-fire-no-gas = { CAPITALIZE(THE($cannon)) } clicks, but no gas comes out.
 
 ## Shown when changing the fire mode or power.
 
