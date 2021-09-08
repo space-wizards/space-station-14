@@ -36,6 +36,12 @@ namespace Content.Server.Administration
             // Maybe allow assemble on user?
         }
 
+
+        // TODO VERBS
+        // Maybe this should all be without the 'if can command' checks
+        // Just show the verbs or don't.
+
+
         // Odd collection of verbs.
         // Some require components to be present
         // And maybe should be moved to relevant systems
@@ -173,6 +179,18 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () => config.OpenUserInterface(actor);
+                args.Verbs.Add(verb);
+            }
+
+            // Configuration verb... again? But for a specific component?
+            if (_groupController.CanAdminMenu(player) &&
+                args.Target.TryGetComponent<DisposalTaggerComponent>(out var tagger))
+            {
+                Verb verb = new Verb("debug:disposalconfig");
+                verb.Text = Loc.GetString("configure-verb-get-data-text");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
+                verb.Category = VerbCategory.Debug;
+                verb.Act = () => tagger.OpenUserInterface(actor);
                 args.Verbs.Add(verb);
             }
         }
