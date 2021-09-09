@@ -3,6 +3,7 @@ using System.Diagnostics.Tracing;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
 using Robust.Client.Audio.Midi;
+using Robust.Client.GameObjects;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

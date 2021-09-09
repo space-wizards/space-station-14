@@ -36,7 +36,31 @@ namespace Content.Client.Juke.UI
             _window.LoopButtonToggled += OnLoopButtonToggled;
 
             _window.ItemSelected += OnItemSelected;
+            SendMessage(new MidiJukeSongListRequestMessage());
+        }
 
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            switch (message)
+            {
+                case MidiJukeSongListMessage songListMsg:
+                    if (_window == null) return;
+                    _window.PopulateList(songListMsg.SongList);
+                    break;
+                case MidiJukeTimestampMessage timestampMsg:
+                    if (_window == null) return;
+                    var elapsed = timestampMsg.Elapsed;
+                    var duration = timestampMsg.Duration;
+                    if (elapsed == null || duration == null)
+                    {
+                        _window.EmptyTime();
+                    }
+                    else
+                    {
+                        _window.SetTime((int) elapsed, (int) duration);
+                    }
+                    break;
+            }
         }
 
         private void OnItemSelected(string filename)
@@ -76,8 +100,8 @@ namespace Content.Client.Juke.UI
 
             _window.SetPlaybackStatus(cast.PlaybackStatus);
             _window.SetLoop(cast.Loop);
-            _window.PopulateList(cast.Songs);
-            //_window.SetSelectedSong(cast.CurrentSong);
+            _window.SetCurrentFilename(cast.CurrentSong);
+            _window.SetCurrentSongTitle(cast.CurrentSongTitle);
         }
 
         protected override void Dispose(bool disposing)

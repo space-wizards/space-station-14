@@ -1,9 +1,14 @@
+using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
+using Melanchall.DryWetMidi.Core;
+using Melanchall.DryWetMidi.Interaction;
 using Robust.Server.Audio.Midi;
 using Robust.Server.GameObjects;
 using Robust.Shared.ContentPack;
@@ -21,8 +26,9 @@ namespace Content.Server.Juke
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
-        private readonly List<string> _midiFiles = new();
+        private readonly SortedList<string, string> _midiFiles = new();
         private const string MidiPath = "data/midis/"; //trailing slash es muchos importante
+        private double _updateAccumulator = 0; //there must be a better way
 
         public override void Initialize()
         {
@@ -30,12 +36,31 @@ namespace Content.Server.Juke
             SubscribeLocalEvent<MidiJukeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<MidiJukeComponent, InteractHandEvent>(OnInteractHand);
 
-            //TODO: "what you want is [IWritableDirProvider.cs], use UserData in [IResourceManager.cs]"
+            //TODO: "what you want is [IWritableDirProvider.cs], use UserData in [IResourceManager.cs]" (use this instead of System.IO
+            var loaded = 0;
+            var failed = 0;
             foreach (var file in System.IO.Directory.GetFiles(MidiPath, "*.mid"))
             {
                 var fileName = System.IO.Path.GetFileName(file);
-                _midiFiles.Add(fileName);
+                try
+                {
+                    var midiFile = MidiFile.Read(file, VirtualMidiPlayer.DefaultReadingSettings);
+                    var timedEvents = midiFile.GetTrackChunks().GetTimedEvents();
+                    string title = string.Empty;
+                    if (timedEvents.First(x => x.Event is SequenceTrackNameEvent).Event is SequenceTrackNameEvent trackName)
+                    {
+                        title = trackName.Text;
+                    }
+                    _midiFiles.Add(fileName, title == string.Empty ? fileName : title);
+                    loaded++;
+                }
+                catch (Exception e)
+                {
+                    Logger.Error($"Failed to parse MIDI file {fileName}: {e.GetType()}: {e.Message}");
+                    failed++;
+                }
             }
+            Logger.InfoS("MidiJukeSystem", $"Loaded {loaded} MIDI files in x seconds. {failed} files failed to load.");
         }
 
         private void OnStartup(EntityUid uid, MidiJukeComponent midiJuke, ComponentStartup args)
@@ -58,12 +83,44 @@ namespace Content.Server.Juke
                 return;
 
             ui.SetState(GetState(midiJuke));
+            UpdateTimestamp(uid, midiJuke.PlaybackStatus == MidiJukePlaybackStatus.Stop);
         }
 
         private MidiJukeBoundUserInterfaceState GetState(MidiJukeComponent component)
         {
-            return new MidiJukeBoundUserInterfaceState(component.PlaybackStatus, component.Loop, _midiFiles,
-                System.IO.Path.GetFileName(component.MidiFileName));
+            var currentSong = System.IO.Path.GetFileName(component.MidiFileName);
+            var currentSongTitle = _midiFiles.GetValueOrDefault(currentSong, "");
+            return new MidiJukeBoundUserInterfaceState(component.PlaybackStatus, component.Loop,
+                currentSong, currentSongTitle);
+        }
+
+        private void UpdateSongList(EntityUid uid)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out MidiJukeComponent midiJuke)
+                || !ComponentManager.TryGetComponent(uid, out ServerUserInterfaceComponent userInterfaceComponent)
+                || !userInterfaceComponent.TryGetBoundUserInterface(MidiJukeUiKey.Key, out var ui))
+                return;
+            ui.SendMessage(new MidiJukeSongListMessage(_midiFiles.Keys.ToList()));
+        }
+
+        private void UpdateTimestamp(EntityUid uid, bool blank = false)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out MidiJukeComponent midiJuke)
+                || !ComponentManager.TryGetComponent(uid, out ServerUserInterfaceComponent userInterfaceComponent)
+                || !userInterfaceComponent.TryGetBoundUserInterface(MidiJukeUiKey.Key, out var ui))
+                return;
+
+            int? elapsed, duration;
+            if (blank)
+            {
+                elapsed = duration = null;
+            }
+            else
+            {
+                elapsed = midiJuke.MidiPlayer?.CurrentTime;
+                duration = midiJuke.MidiPlayer?.Duration;
+            }
+            ui.SendMessage(new MidiJukeTimestampMessage(elapsed, duration));
         }
 
         private void OnMidiJukeUiMessage(EntityUid uid, MidiJukeComponent component, ServerBoundUserInterfaceMessage msg)
@@ -96,6 +153,9 @@ namespace Content.Server.Juke
                     OpenMidiFile(component, MidiPath + songMsg.Song);
                     Play(component);
                     break;
+                case MidiJukeSongListRequestMessage:
+                    UpdateSongList(uid);
+                    break;
             }
 
             DirtyUI(component.Owner.Uid);
@@ -110,6 +170,13 @@ namespace Content.Server.Juke
 
         public override void Update(float frameTime)
         {
+            _updateAccumulator += frameTime;
+            var updateTimestamp = false;
+            if (_updateAccumulator >= 1)
+            {
+                updateTimestamp = true;
+                _updateAccumulator = 0;
+            }
             foreach (var component in ComponentManager.EntityQuery<MidiJukeComponent>(true))
             {
                 if (!component.Playing || component.MidiPlayer == null) continue;
@@ -117,6 +184,8 @@ namespace Content.Server.Juke
                 if (midiEvents == null) continue;
                 var uid = component.Owner.Uid;
                 RaiseNetworkEvent(new MidiJukeMidiEventsEvent(uid, midiEvents.ToArray()), Filter.Pvs(component.Owner));
+                if (updateTimestamp)
+                    UpdateTimestamp(uid);
             }
         }
 
@@ -157,7 +226,7 @@ namespace Content.Server.Juke
             {
                 component.MidiPlayer.Start();
                 component.PlaybackStatus = MidiJukePlaybackStatus.Play;
-                RaiseNetworkEvent(new MidiJukePlayEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                RaiseNetworkEvent(new MidiJukePlayEvent(component.Owner.Uid, component.MidiFileName), Filter.Pvs(component.Owner));
             }
         }
 
@@ -201,7 +270,7 @@ namespace Content.Server.Juke
             }
 
             component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
-            var nextSong = _robustRandom.Pick(_midiFiles);
+            var nextSong = _robustRandom.Pick(_midiFiles.Keys.ToList());
             OpenMidiFile(component, MidiPath + nextSong);
             RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
             if (component.MidiPlayer == null)

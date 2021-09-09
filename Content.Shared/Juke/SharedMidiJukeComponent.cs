@@ -48,16 +48,15 @@ namespace Content.Shared.Juke
     {
         public MidiJukePlaybackStatus PlaybackStatus { get; }
         public bool Loop { get; }
-        public IEnumerable<string> Songs { get; }
         public string CurrentSong { get; }
-        //TODO: timestamp?
+        public string CurrentSongTitle { get; }
 
-        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus, bool loop, IEnumerable<string> songs, string currentSong)
+        public MidiJukeBoundUserInterfaceState(MidiJukePlaybackStatus playbackStatus, bool loop, string currentSong, string currentSongTitle)
         {
             PlaybackStatus = playbackStatus;
             Loop = loop;
-            Songs = songs;
             CurrentSong = currentSong;
+            CurrentSongTitle = currentSongTitle;
         }
     }
 
@@ -100,6 +99,38 @@ namespace Content.Shared.Juke
         public MidiJukeSongSelectMessage(string song)
         {
             Song = song;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeSongListRequestMessage : BoundUserInterfaceMessage
+    {
+        public MidiJukeSongListRequestMessage()
+        {
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeSongListMessage : BoundUserInterfaceMessage
+    {
+        public List<string> SongList { get; }
+
+        public MidiJukeSongListMessage(List<string> songList)
+        {
+            SongList = songList;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class MidiJukeTimestampMessage : BoundUserInterfaceMessage
+    {
+        public int? Elapsed { get; }
+        public int? Duration { get; }
+
+        public MidiJukeTimestampMessage(int? elapsed, int? duration)
+        {
+            Elapsed = elapsed;
+            Duration = duration;
         }
     }
 }

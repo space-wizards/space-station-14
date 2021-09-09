@@ -7,6 +7,15 @@
             <Button Name="SkipButton" ToggleMode="False" Text="Skip" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
             <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
         </BoxContainer>
+        <BoxContainer Orientation="Horizontal" VerticalExpand="False">
+            <Label Name="SongFilename" Text="No song playing" />
+            <Control HorizontalExpand="True"/>
+            <Label Name="TimeStamp" Align="Right" Text="--/--"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" VerticalExpand="False">
+            <Label Name="SongTitle" />
+        </BoxContainer>
         <ItemList Name="MidiList" SelectMode="Single" VerticalExpand="True"/>
+
     </BoxContainer>
 </SS14Window>

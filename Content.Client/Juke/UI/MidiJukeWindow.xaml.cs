@@ -91,9 +91,9 @@ namespace Content.Client.Juke.UI
         {
             _midis = items;
             MidiList.Clear();
-            foreach (var item in _midis)
+            foreach (var fileName in _midis)
             {
-                MidiList.Add(GetItem(item, MidiList));
+                MidiList.Add(GetItem(fileName, MidiList));
             }
         }
 
@@ -116,8 +116,32 @@ namespace Content.Client.Juke.UI
             return new ItemList.Item(owner)
             {
                 Metadata = filename,
-                Text = filename //todo: different text from actual filename?
+                Text = filename
             };
+        }
+
+        public void SetTime(int elapsed, int duration)
+        {
+            var elapsedMins = elapsed / 60;
+            var elapsedSecs = elapsed % 60;
+            var durationMins = duration / 60;
+            var durationSecs = duration % 60;
+            TimeStamp.Text = $"{elapsedMins}:{elapsedSecs:D2}/{durationMins}:{durationSecs:D2}";
+        }
+
+        public void EmptyTime()
+        {
+            TimeStamp.Text = "--/--";
+        }
+
+        public void SetCurrentFilename(string song)
+        {
+            SongFilename.Text = song == string.Empty ? "No song playing" : song;
+        }
+
+        public void SetCurrentSongTitle(string title)
+        {
+            SongTitle.Text = title;
         }
     }
 }
