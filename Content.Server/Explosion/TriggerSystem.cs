@@ -129,14 +129,13 @@ namespace Content.Server.Explosion
         private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             var curTime = _gameTiming.CurTime;
-            if (args.OurFixture.ID == TriggerOnProximityComponent.FixtureID)
-            {
-                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime && component.Repeating)
-                {
-                    Trigger(component.Owner);
-                    component.LastTrigger = curTime;
-                }
-            }
+            if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID)
+                return;
+            if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) >= curTime || !component.Repeating)
+                return;
+
+            Trigger(component.Owner);
+            component.LastTrigger = curTime;
         }
 
         public void Trigger(IEntity trigger, IEntity? user = null)
