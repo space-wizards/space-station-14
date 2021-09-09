@@ -259,6 +259,7 @@ namespace Content.Client.Entry
             "Shovel",
             "ReagentTank",
             "UtilityAI",
+            "Extractable",
             "MouseAccent",
             "GhostTakeoverAvailable",
             "GhostRoleMobSpawner",
@@ -275,7 +276,9 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
-            "CCTV"
+            "AmbientOnPowered",
+            "SecurityConsole",
+            "SecurityCamera"
         };
     }
 }
