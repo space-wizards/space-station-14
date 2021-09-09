@@ -125,10 +125,11 @@ namespace Content.Server.Explosion
         {
             Trigger(component.Owner);
         }
+
         private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             var curTime = _gameTiming.CurTime;
-            if (args.OurFixture.ID == component.FixtureID)
+            if (args.OurFixture.ID == TriggerOnProximityComponent.FixtureID)
             {
                 if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime && component.Repeating)
                 {
@@ -137,6 +138,7 @@ namespace Content.Server.Explosion
                 }
             }
         }
+
         public void Trigger(IEntity trigger, IEntity? user = null)
         {
             var triggerEvent = new TriggerEvent(trigger, user);
@@ -157,6 +159,7 @@ namespace Content.Server.Explosion
                 Trigger(triggered, user);
             });
         }
+
         public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool remove)
         {
             var entity = EntityManager.GetEntity(uid);
@@ -164,14 +167,14 @@ namespace Content.Server.Explosion
 
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
-                var fixture = physics.GetFixture(component.FixtureID);
+                var fixture = physics.GetFixture(TriggerOnProximityComponent.FixtureID);
                 if (!remove && fixture != null)
                 {
                     broadphase.DestroyFixture(physics, fixture);
                 }
                 else
                 {
-                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.FixtureID });
+                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID });
                 }
             }
         }

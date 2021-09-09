@@ -14,6 +14,7 @@ namespace Content.Server.Explosion.Components
         public TimeSpan LastTrigger = TimeSpan.Zero;
         public const string FixtureID  = "trigger-on-proximity-fixture";
 
+
         [DataField("shape", required: true)]
         public IPhysShape Shape { get; set; } = default!;
 
