@@ -79,7 +79,8 @@ namespace Content.Server.Explosion
         {
             if (component.Flashed) return;
 
-            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration);
+            // TODO Make flash durations sane ffs.
+            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
             component.Flashed = true;
         }
         #endregion
