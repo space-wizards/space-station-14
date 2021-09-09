@@ -149,12 +149,11 @@ namespace Content.Server.Flash
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            if (!ComponentManager.TryGetComponent<ITransformComponent>(source, out var transform))
-                return;
+            var transform = ComponentManager.GetComponent<ITransformComponent>(source);
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {
-                if (!entity.TryGetComponent(out FlashableComponent? _) ||
+                if (!entity.HasComponent<FlashableComponent>() ||
                     !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
 
                 Flash(entity.Uid, user, source, duration, slowTo, displayPopup);
