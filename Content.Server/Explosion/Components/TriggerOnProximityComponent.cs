@@ -12,28 +12,30 @@ namespace Content.Server.Explosion.Components
     {
         public override string Name => "TriggerOnProximity";
         public TimeSpan LastTrigger = TimeSpan.Zero;
-        public string ProximityFixture { get; } = "proximity-fixture";
+        public const string FixtureID  = "trigger-on-proximity-fixture";
 
         [DataField("shape", required: true)]
         public IPhysShape Shape { get; set; } = default!;
 
-
         [DataField("enabled")]
-        public bool enabled;
+        public bool Enabled = true;
         
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled
+        public bool EnabledVV
         {
             set
             {
                 EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value && Owner.Transform.Anchored);
-                enabled = value;
+                Enabled = value;
             }
-            get => enabled;
+            get => Enabled;
         }
 
-        [DataField("cooldown", required: true)]
+        [DataField("cooldown")]
         public int Cooldown { get; set; } = 2;
+
+        [DataField("repeating")]
+        internal bool Repeating = true;
 
     }
 }
