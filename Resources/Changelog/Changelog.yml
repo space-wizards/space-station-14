@@ -1943,3 +1943,8 @@ Entries:
     type: Fix}
   id: 347
   time: '2021-09-09T06:37:20.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Sunglasses now protect you against flashes., type: Tweak}
+  id: 348
+  time: '2021-09-09T14:20:41.0000000+00:00'
