@@ -15,7 +15,8 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/recycling.rsi
