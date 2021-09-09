@@ -147,7 +147,7 @@ namespace Content.Server.Flash
             }
         }
 
-        public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo=0f, bool displayPopup=false, SoundSpecifier? sound = null)
+        public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
             if (!ComponentManager.TryGetComponent<ITransformComponent>(source, out var transform))
                 return;
