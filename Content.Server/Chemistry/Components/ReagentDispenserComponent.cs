@@ -279,7 +279,7 @@ namespace Content.Server.Chemistry.Components
                     .TryGetSolution(BeakerContainer.ContainedEntity, "beaker", out var solution))
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(_beakerContainer.ContainedEntity!.Uid, solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(BeakerContainer.ContainedEntity!.Uid, solution);
 
             UpdateUserInterface();
         }

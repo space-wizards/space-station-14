@@ -210,7 +210,7 @@ namespace Content.Server.Chemistry.Components
 
             return actualAmount;
         }
-
+/*
         // TODO refactor when dynamic verbs are a thing
 
         [Verb]
@@ -323,6 +323,6 @@ namespace Content.Server.Chemistry.Components
 
                 component.UserInterface?.Open(actor.PlayerSession);
             }
-        }
+        }*/
     }
 }

@@ -3,6 +3,7 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -40,16 +41,16 @@ namespace Content.Server.Chemistry.EntitySystems
             args.Verbs.Add(verb);
         }
 
+
+
+
         private void AddInsertVerb(EntityUid uid, ChemMasterComponent component, GetInteractionVerbsEvent args)
         {
-            // check if we are holding an applicable solution container and can insert it.
-            if (component.HasBeaker ||
-                args.Using == null ||
-                !args.Using.TryGetComponent<SolutionContainerComponent>(out var solution) ||
-                !solution.CanUseWithChemDispenser)
-            {
+            if (!args.DefaultInRangeUnobstructed || args.Using == null || component.HasBeaker)
                 return;
-            }
+
+            if (!args.Using.HasComponent<FitsInDispenserComponent>())
+                return;
 
             Verb verb = new("ChemMaster:Insert");
             verb.Act = () =>

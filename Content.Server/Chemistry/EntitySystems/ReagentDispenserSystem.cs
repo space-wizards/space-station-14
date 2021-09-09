@@ -3,12 +3,16 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Content.Shared.Chemistry.Components.SolutionManager;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
     public class ReagentDispenserSystem : EntitySystem
     {
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -23,10 +27,8 @@ namespace Content.Server.Chemistry.EntitySystems
         // system mentioned in #4538? The code here is basically identical to the stuff in ChemDispenserSystem
         private void AddEjectVerb(EntityUid uid, ReagentDispenserComponent component, GetAlternativeVerbsEvent args)
         {
-            // only physical interactions
             if (!args.DefaultInRangeUnobstructed || args.Hands == null || !component.HasBeaker)
                 return;
-
 
             Verb verb = new("ReagentDispenser:Eject");
             verb.Act = () =>
@@ -45,14 +47,15 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void AddInsertVerb(EntityUid uid, ReagentDispenserComponent component, GetInteractionVerbsEvent args)
         {
-            // Check if we are holding an applicable solution container and can insert it.
-            if (component.HasBeaker ||
-                args.Using == null ||
-                !args.Using.TryGetComponent<SolutionContainerComponent>(out var solution) ||
-                !solution.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
+            if (!args.DefaultInRangeUnobstructed || args.Using == null || component.HasBeaker )
+                return;
+
+            if (!args.Using.HasComponent<FitsInDispenserComponent>() ||
+                !_solutionContainerSystem.TryGetSolution(args.Using.Uid, "beaker", out _))
             {
                 return;
             }
+
             Verb verb = new("ReagentDispenser:Insert");
             verb.Act = () =>
             {

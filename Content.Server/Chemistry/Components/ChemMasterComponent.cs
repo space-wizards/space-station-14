@@ -37,10 +37,10 @@ namespace Content.Server.Chemistry.Components
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
     {
         [ViewVariables]
-        private ContainerSlot BeakerContainer = default!;
+        public ContainerSlot BeakerContainer = default!;
 
         [ViewVariables]
-        private bool HasBeaker => BeakerContainer.ContainedEntity != null;
+        public bool HasBeaker => BeakerContainer.ContainedEntity != null;
 
         [ViewVariables]
         private bool _bufferModeTransfer = true;
