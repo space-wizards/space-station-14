@@ -1,6 +1,5 @@
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;

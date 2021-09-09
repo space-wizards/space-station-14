@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using Content.Server.Chemistry.Components;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
@@ -87,12 +89,9 @@ namespace Content.Server.Chemistry.ReactionEffects
             IoCManager.InjectDependencies(this);
         }
 
-        public void React(IEntity solutionEntity, double intensity)
+        public void React(Solution solution, IEntity solutionEntity, double intensity)
         {
-            if (!solutionEntity.TryGetComponent(out SolutionContainerComponent? contents))
-                return;
-
-            var solution = contents.SplitSolution(contents.MaxVolume);
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity.Uid, solution, solution.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);
@@ -115,7 +114,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                     solutionFraction = amount * (1 - _reagentMaxConcentrationFactor) / _reagentDilutionStart +
                                        _reagentMaxConcentrationFactor;
                 }
-                solution.RemoveSolution(solution.TotalVolume * solutionFraction);
+                splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
             }
 
             if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;
@@ -133,7 +132,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                 return;
             }
 
-            areaEffectComponent.TryAddSolution(solution);
+            areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
             SoundSystem.Play(Filter.Pvs(solutionEntity), _sound.GetSound(), solutionEntity, AudioHelpers.WithVariation(0.125f));

@@ -36,14 +36,19 @@
   - type: Barotrauma
     damageType: Blunt
   - type: DamageOnHighSpeedImpact
-    soundHit: 
+    soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
-  - type: SolutionContainer
-    maxVol: 250
-    caps: Injectable, Drawable
+  - type: SolutionContainerManager
+    solutions:
+      bloodstream:
+        maxVol: 250
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: DrawableSolution
+    solution: bloodstream
   - type: Bloodstream
     max_volume: 100
   # StatusEffects

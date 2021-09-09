@@ -1,17 +1,19 @@
 using Content.Shared.Verbs;
-using Robust.Shared.GameObjects;
 using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-    // TODO ECS ChemMasterComponent
-    /// <summary>
-    ///     Barebones system for ChemMasterComponent.
-    /// </summary>
-    public class ChemMasterSysten : EntitySystem
+	[UsedImplicitly]
+    public class ChemMasterSystem : EntitySystem
     {
         public override void Initialize()
         {
+			base.Initialize();
+
+            SubscribeLocalEvent<ChemMasterComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<ChemMasterComponent, GetInteractionVerbsEvent>(AddInsertVerb);
             SubscribeLocalEvent<ChemMasterComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
         }
@@ -63,5 +65,11 @@ namespace Content.Server.Chemistry.EntitySystems
 
             args.Verbs.Add(verb);
         }
-    }
+		
+        private void OnSolutionChange(EntityUid uid, ChemMasterComponent component,
+            SolutionChangedEvent solutionChanged)
+        {
+            component.UpdateUserInterface();
+        }
+	}
 }

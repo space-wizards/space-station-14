@@ -1,8 +1,8 @@
 using Content.Server.Interaction.Components;
 using Content.Server.MobState.States;
 using Content.Server.Weapon.Melee;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
@@ -18,7 +18,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent, ISolutionChange
+    public sealed class HyposprayComponent : SharedHyposprayComponent
     {
         [DataField("ClumsyFailChance")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,8 +30,6 @@ namespace Content.Server.Chemistry.Components
 
         [DataField("InjectSound")]
         private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Items/hypospray.ogg");
-
-        [ComponentDependency] private readonly SolutionContainerComponent? _solution = default!;
 
         protected override void Initialize()
         {
@@ -57,13 +55,24 @@ namespace Content.Server.Chemistry.Components
                 target = user;
             }
 
-            if (_solution == null || _solution.CurrentVolume == 0)
+            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
+
+            if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
                 user.PopupMessageCursor(Loc.GetString("hypospray-component-empty-message"));
                 return true;
             }
 
-            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",("other", target)));
+            if (!solutionsSys.TryGetInjectableSolution(target.Uid, out var targetSolution))
+            {
+                user.PopupMessage(user,
+                    Loc.GetString("hypospray-cant-inject", ("target", target)));
+                return false;
+            }
+
+            user.PopupMessage(Loc.GetString(msgFormat ?? "hypospray-component-inject-other-message",
+                ("other", target)));
             if (target != user)
             {
                 target.PopupMessage(Loc.GetString("hypospray-component-feel-prick-message"));
@@ -74,19 +83,21 @@ namespace Content.Server.Chemistry.Components
 
             SoundSystem.Play(Filter.Pvs(user), _injectSound.GetSound(), user);
 
-            var targetSolution = target.GetComponent<SolutionContainerComponent>();
-
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(TransferAmount, targetSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {
-                user.PopupMessage(user, Loc.GetString("hypospray-component-transfer-already-full-message ",("owner", targetSolution.Owner)));
+                user.PopupMessage(user,
+                    Loc.GetString("hypospray-component-transfer-already-full-message",
+                        ("owner", target)));
                 return true;
             }
 
             // Move units from attackSolution to targetSolution
-            var removedSolution = _solution.SplitSolution(realTransferAmount);
+            var removedSolution =
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .SplitSolution(Owner.Uid, hypoSpraySolution, realTransferAmount);
 
             if (!targetSolution.CanAddSolution(removedSolution))
             {
@@ -95,29 +106,26 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(target, ReactionMethod.Injection);
 
-            targetSolution.TryAddSolution(removedSolution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(target.Uid, targetSolution, removedSolution);
 
             static bool EligibleEntity(IEntity entity)
             {
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
-                return entity.HasComponent<SolutionContainerComponent>() && entity.HasComponent<MobStateComponent>();
+
+                return entity.HasComponent<SharedChemMasterComponent>()
+                       && entity.HasComponent<MobStateComponent>();
             }
 
             return true;
         }
 
-        void ISolutionChange.SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            Dirty();
-        }
-
         public override ComponentState GetComponentState(ICommonSession player)
         {
-            if (_solution == null)
-                return new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
-
-            return new HyposprayComponentState(_solution.CurrentVolume, _solution.MaxVolume);
+            var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
+            return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
+                ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
+                : new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
         }
     }
 }
