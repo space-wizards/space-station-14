@@ -14,6 +14,10 @@ namespace Content.Shared.Flash
 
         private void OnFlashableGetState(EntityUid uid, SharedFlashableComponent component, ref ComponentGetState args)
         {
+            // Only send state to the player attached to the entity.
+            if (args.Player.AttachedEntityUid != uid)
+                return;
+
             args.State = new FlashableComponentState(component.Duration, component.LastFlash);
         }
     }
