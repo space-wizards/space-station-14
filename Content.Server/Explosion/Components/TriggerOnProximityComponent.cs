@@ -7,6 +7,10 @@ using System;
 
 namespace Content.Server.Explosion.Components
 {
+
+    /// <summary>
+    /// Raises a <see cref="TriggerEvent"/> whenever an entity collides with a fixture attached to the owner of this component.
+    /// </summary>
     [RegisterComponent]
     public class TriggerOnProximityComponent : Component
     {
