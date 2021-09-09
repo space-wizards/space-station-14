@@ -271,6 +271,7 @@
   id: LockerDetective
   parent: LockerBooze
   name: detective's cabinet
+  description: Usually cold and empty... like your heart.
   components:
   - type: AccessReader
     access: [["Service"]] # TODO access [["Detective"]]
