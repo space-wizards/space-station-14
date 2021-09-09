@@ -56,17 +56,17 @@ namespace Content.Server.Explosion
 
         private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, UnanchoredEvent args)
         {
-            SetProximityFixture(uid, component, component.enabled && component.Owner.Transform.Anchored);
+            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
         }
 
         private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, AnchoredEvent args)
         {
-            SetProximityFixture(uid, component, component.enabled && component.Owner.Transform.Anchored);
+            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
         }
 
         private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
         {
-            component.Enabled = component.enabled;
+            component.EnabledVV = component.Enabled;
         }
 
         #region Explosions
@@ -128,9 +128,9 @@ namespace Content.Server.Explosion
         private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
             var curTime = _gameTiming.CurTime;
-            if (args.OurFixture.ID == component.ProximityFixture)
+            if (args.OurFixture.ID == component.FixtureID)
             {
-                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime)
+                if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) < curTime && component.Repeating)
                 {
                     Trigger(component.Owner);
                     component.LastTrigger = curTime;
@@ -164,14 +164,14 @@ namespace Content.Server.Explosion
 
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
-                var fixture = physics.GetFixture(component.ProximityFixture);
+                var fixture = physics.GetFixture(component.FixtureID);
                 if (!remove && fixture != null)
                 {
                     broadphase.DestroyFixture(physics, fixture);
                 }
                 else
                 {
-                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.ProximityFixture });
+                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = component.FixtureID });
                 }
             }
         }
