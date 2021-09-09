@@ -42,8 +42,7 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                damageable.DamagePerType = new();
-                _damageableSystem.DamageChanged(damageable, false);
+                _damageableSystem.SetDamage(damageable, new DamageSpecifier());
             }
 
             return true;
@@ -68,10 +67,9 @@ namespace Content.Server.Damage
 
             if (entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                if (old.DamagePerType != null)
+                if (old.Damage != null)
                 {
-                    damageable.DamagePerType = old.DamagePerType;
-                    _damageableSystem.DamageChanged(damageable, false);
+                    _damageableSystem.SetDamage(damageable, old.Damage);
                 }
             }
 
@@ -106,7 +104,7 @@ namespace Content.Server.Damage
 
                 if (entity.TryGetComponent(out DamageableComponent? damageable))
                 {
-                    DamagePerType = damageable.DamagePerType;
+                    Damage = damageable.Damage;
                 }
             }
 
@@ -114,7 +112,7 @@ namespace Content.Server.Damage
 
             public bool MovedByPressure { get; }
 
-            public Dictionary<string, int>? DamagePerType { get; }
+            public DamageSpecifier? Damage { get; }
         }
     }
 }

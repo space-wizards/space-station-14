@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Shared.Acts;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Radiation;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -22,20 +23,35 @@ namespace Content.Shared.Damage
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
+    [Friend(typeof(DamageableSystem))]
     public class DamageableComponent : Component, IRadiationAct, IExAct
     {
         public override string Name => "Damageable";
 
-        [DataField("damageContainer", required : true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        public readonly string DamageContainerID = default!;
+        /// <summary>
+        ///     This <see cref="DamageContainerPrototype"/> specifies what damage types are supported by this component.
+        ///     If null, all damage types will be supported.
+        /// </summary>
+        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
+        public string? DamageContainerID;
 
+        /// <summary>
+        ///     This <see cref="ResistanceSetPrototype"/> will be applied to any damage that is dealt to this container,
+        ///     unless the damage explicitly ignores resistances.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("resistanceSet", customTypeSerializer: typeof(PrototypeIdSerializer<ResistanceSetPrototype>))]
         public string? ResistanceSetID;
 
         /// <summary>
-        ///     The main damage dictionary. All the damage information is stored in this dictionary using <see cref="DamageTypePrototype"/> IDs as keys.
+        ///     All the damage information is stored in this <see cref="DamageSpecifier"/>.
         /// </summary>
-        [ViewVariables] public Dictionary<string, int> DamagePerType = new();
+        /// <remarks>
+        ///     If this data-field is specified, this allows damageable components to be initialized with non-zero damage.
+        /// </remarks>
+        [DataField("damage")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = new();
 
         /// <summary>
         ///     Damage, indexed by <see cref="DamageGroupPrototype"/> ID keys.
@@ -99,14 +115,14 @@ namespace Content.Shared.Damage
     [Serializable, NetSerializable]
     public class DamageableComponentState : ComponentState
     {
-        public readonly Dictionary<string, int> DamagePerType;
+        public readonly Dictionary<string, int> DamageDict;
         public readonly string? ResistanceSetID;
 
         public DamageableComponentState(
-            Dictionary<string, int> damagePerType,
+            Dictionary<string, int> damageDict,
             string? resistanceSetID) 
         {
-            DamagePerType = damagePerType;
+            DamageDict = damageDict;
             ResistanceSetID = resistanceSetID;
         }
     }

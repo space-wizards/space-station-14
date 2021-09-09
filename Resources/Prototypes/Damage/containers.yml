@@ -1,8 +1,4 @@
 - type: damageContainer
-  id: AllDamage
-  supportAll: true
-
-- type: damageContainer
   id: Biological
   supportedGroups:
     - Brute

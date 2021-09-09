@@ -27,7 +27,7 @@ namespace Content.Shared.MedicalScanner
             {
                 Entity = entity;
                 DamagePerGroup = damageable?.DamagePerGroup ?? new();
-                DamagePerType = damageable?.DamagePerType ?? new();
+                DamagePerType = damageable?.Damage?.DamageDict ?? new();
                 IsScanned = isScanned;
             }
 

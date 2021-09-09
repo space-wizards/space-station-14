@@ -25,12 +25,6 @@ namespace Content.Shared.Damage.Prototypes
         public string ID { get; } = default!;
 
         /// <summary>
-        ///     Determines whether this DamageContainerPrototype will support ALL damage types and groups. If true, ignore
-        ///     all other options.
-        /// </summary>
-        [DataField("supportAll")] public bool SupportAll;
-
-        /// <summary>
         ///     List of damage groups that are supported by this container.
         /// </summary>
         [DataField("supportedGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageGroupPrototype>))]

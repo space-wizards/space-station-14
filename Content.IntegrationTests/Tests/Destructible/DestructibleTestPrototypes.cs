@@ -41,10 +41,6 @@ namespace Content.IntegrationTests.Tests.Destructible
     - TestShock
     - TestCold
 
-- type: damageContainer
-  id: TestContainer
-  supportAll: true
-
 - type: entity
   id: {SpawnedEntityId}
   name: {SpawnedEntityId}
@@ -54,7 +50,6 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleEntityId}
   components:
   - type: Damageable
-    damageContainer: TestContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -82,7 +77,6 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDestructionEntityId}
   components:
   - type: Damageable
-    damageContainer: TestContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -105,7 +99,6 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDamageTypeEntityId}
   components:
   - type: Damageable
-    damageContainer: TestContainer
   - type: Destructible
     thresholds:
     - trigger:
@@ -123,7 +116,6 @@ namespace Content.IntegrationTests.Tests.Destructible
   name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
-    damageContainer: TestContainer
   - type: Destructible
     thresholds:
     - trigger:

@@ -60,7 +60,7 @@ namespace Content.Tests.Shared
 
             // Check that it properly split up the groups into types
             int damage;
-            Assert.That(damageSpec.TotalDamage, Is.EqualTo(8));
+            Assert.That(damageSpec.Total, Is.EqualTo(8));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(2));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -72,7 +72,7 @@ namespace Content.Tests.Shared
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
-            Assert.That(damageSpec.TotalDamage, Is.EqualTo(16));
+            Assert.That(damageSpec.Total, Is.EqualTo(16));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
             Assert.That(damage, Is.EqualTo(4));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
@@ -92,7 +92,7 @@ namespace Content.Tests.Shared
             Assert.That(damage, Is.EqualTo(4));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
             Assert.That(damage, Is.EqualTo(13));
-            Assert.That(damageSpec.TotalDamage, Is.EqualTo(9 + 9 + 4 + 13));
+            Assert.That(damageSpec.Total, Is.EqualTo(9 + 9 + 4 + 13));
 
             // check that integer division works
             damageSpec = damageSpec / 2;
@@ -159,7 +159,7 @@ namespace Content.Tests.Shared
             damageSpec = DamageSpecifier.ApplyResistanceSet(damageSpec, resistanceSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(30));
             Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // resistances don't apply to healing
-            Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(0));  // Reduction reduced to 0, not below.
+            Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
             Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(32));
         }
 
@@ -271,10 +271,6 @@ namespace Content.Tests.Shared
     Shock: 0
   flatReductions:
     Blunt: 5
-    
-- type: damageContainer
-  id: AllDamage
-  supportAll: true
 
 - type: damageContainer
   id: Biological

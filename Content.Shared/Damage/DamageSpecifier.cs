@@ -1,8 +1,10 @@
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
@@ -14,11 +16,11 @@ namespace Content.Shared.Damage
     // use DamageUnit math operators.
 
     /// <summary>
-    ///     Data class with information on a set of damage to deal/heal.
+    ///     This class represents a collection of damage types and damage values.
     /// </summary>
     /// <remarks>
-    ///     Automatically unpacks damage groups into types, and provides functions to apply resistance sets.
-    ///     Supports basic math operations to modify damage.
+    ///     The actual damage information is stored in <see cref="DamageDict"/>. This class provides
+    ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
     public class DamageSpecifier
@@ -35,17 +37,30 @@ namespace Content.Shared.Damage
         [ViewVariables(VVAccess.ReadWrite)]
         public Dictionary<string, int> DamageDict
         {
-            get => GetCombinedDamageDictionary();
+            get
+            {
+                if (_damageDict == null)
+                    DeserializeDamage();
+                return _damageDict!; 
+            }
             set => _damageDict = value;
         }
         private Dictionary<string, int>? _damageDict;
 
         /// <summary>
-        ///     Total damage. Note that this being zero does not mean this damage has no effect. Healing in one type may
-        ///     cancel damage in another. For the sum of the absolute damage values, see <see
-        ///     cref="TotalAbsoluteDamage"/>.
+        ///     Sum of the damage values.
         /// </summary>
-        public int TotalDamage => DamageDict.Values.Sum();
+        /// <remarks>
+        ///     Note that this being zero does not mean this damage has no effect. Healing in one type may cancel damage
+        ///     in another. For this purpose, you should instead use <see cref="TrimZeros()"/> and then check the <see
+        ///     cref="Empty"/> property.
+        /// </remarks>
+        public int Total => DamageDict.Values.Sum();
+
+        /// <summary>
+        ///     Whether this damage specifier has any entries.
+        /// </summary>
+        public bool Empty => DamageDict.Count == 0;
 
         #region constructors
         /// <summary>
@@ -81,13 +96,8 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Combines the damage group and type datafield dictionaries into a single damage dictionary.
         /// </summary>
-        public Dictionary<string, int> GetCombinedDamageDictionary()
+        public void DeserializeDamage()
         {
-            if (_damageDict != null && _damageDict.Count > 0)
-            {
-                return _damageDict;
-            }
-
             // Add all the damage types by just copying the type dictionary (if it is not null).
             if (_damageTypeDictionary != null)
             {
@@ -98,32 +108,36 @@ namespace Content.Shared.Damage
                 _damageDict = new();
             }
 
-            // Then resolve any damage groups and add them
-            if (_damageGroupDictionary != null)
-            {
-                foreach (var entry in _damageGroupDictionary)
-                {
-                    var damageGroup = IoCManager.Resolve<IPrototypeManager>().Index<DamageGroupPrototype>(entry.Key);
+            if (_damageGroupDictionary == null)
+                return;
 
-                    // Simply distribute evenly (except for rounding).
-                    // We do this by reducing remaining the # of types and damage every loop.
-                    var remainingTypes = damageGroup.DamageTypes.Count;
-                    var remainingDamage = entry.Value;
-                    foreach (var damageType in damageGroup.DamageTypes)
+            // Then resolve damage groups and add them
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            foreach (var entry in _damageGroupDictionary)
+            {
+                if (!prototypeManager.TryIndex<DamageGroupPrototype>(entry.Key, out var group))
+                {
+                    // This can happen if deserialized before prototypes are loaded.
+                    Logger.Error($"Unknown damage group given to DamageSpecifier: {entry.Key}");
+                    continue;
+                }    
+
+                // Simply distribute evenly (except for rounding).
+                // We do this by reducing remaining the # of types and damage every loop.
+                var remainingTypes = group.DamageTypes.Count;
+                var remainingDamage = entry.Value;
+                foreach (var damageType in group.DamageTypes)
+                {
+                    var damage = remainingDamage / remainingTypes;
+                    if (!_damageDict.TryAdd(damageType, damage))
                     {
-                        var damage = remainingDamage / remainingTypes;
-                        if (!_damageDict.TryAdd(damageType, damage))
-                        {
-                            // Key already exists, add values
-                            _damageDict[damageType] += damage;
-                        }
-                        remainingDamage -= damage;
-                        remainingTypes -= 1;
+                        // Key already exists, add values
+                        _damageDict[damageType] += damage;
                     }
+                    remainingDamage -= damage;
+                    remainingTypes -= 1;
                 }
             }
-
-            return _damageDict;
         }
 
         /// <summary>
@@ -164,22 +178,128 @@ namespace Content.Shared.Damage
 
                 newDamage.DamageDict[entry.Key] = (int) newValue;
             }
+
+            newDamage.TrimZeros();
             return newDamage;
         }
 
         /// <summary>
-        ///     Sum of the absolute value of every damage type. Useful for testing whether resistances have reduced
-        ///     damage to zero. Compare with <see cref="TotalDamage"/>, which might be zero despite non-zero damage
-        ///     values.
+        ///     Remove any damage entries with zero damage.
         /// </summary>
-        public int TotalAbsoluteDamage()
+        public void TrimZeros()
         {
-            var sum = 0;
-            foreach (var value in DamageDict.Values)
+            foreach (var (key, value) in DamageDict)
             {
-                sum += Math.Abs(value);
+                if (value == 0)
+                {
+                    DamageDict.Remove(key);
+                }
             }
-            return sum;
+        }
+
+        /// <summary>
+        ///     Clamps each damage value to be within the given range.
+        /// </summary>
+        public void Clamp(int minValue = 0, int maxValue = 0)
+        {
+            DebugTools.Assert(minValue < maxValue);
+            ClampMax(maxValue);
+            ClampMin(minValue);
+        }
+
+        /// <summary>
+        ///     Sets all damage values to be at least as large as the given number.
+        /// </summary>
+        /// <remarks>
+        ///     Note that this only acts on damage types present in the dictionary. It will not add new damage types.
+        /// </remarks>
+        public void ClampMin(int minValue = 0)
+        {
+            foreach (var (key, value) in DamageDict)
+            {
+                if (value < minValue)
+                {
+                    DamageDict[key] = minValue;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Sets all damage values to be at most some number. Note that if a damage type is not present in the
+        ///     dictionary, these will not be added.
+        /// </summary>
+        public void ClampMax(int maxValue = 0)
+        {
+            foreach (var (key, value) in DamageDict)
+            {
+                if (value > maxValue)
+                {
+                    DamageDict[key] = maxValue;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     This adds the damage values of some other <see cref="DamageSpecifier"/> to the current one without
+        ///     adding any new damage types.
+        /// </summary>
+        /// <remarks>
+        ///     This is used for <see cref="DamageableComponent"/>s, such that only "supported" damage types are
+        ///     actually added to the component. In most other instances, you can just use the addition operator.
+        /// </remarks>
+        public void ExclusiveAdd(DamageSpecifier other)
+        {
+            foreach (var (type, value) in other.DamageDict)
+            {
+                if (DamageDict.ContainsKey(type))
+                {
+                    DamageDict[type] += value;
+                }
+            }
+        }
+
+        /// <summary>
+        ///     Add up all the damage values for damage types that are members of a given group.
+        /// </summary>
+        /// <remarks>
+        ///     If no members of the group are included in this specifier, returns false.
+        /// </remarks>
+        public bool TryGetDamageInGroup(DamageGroupPrototype group, out int total)
+        {
+            bool containsMemeber = false;
+            total = 0;
+
+            foreach (var type in group.DamageTypes)
+            {
+                if (DamageDict.TryGetValue(type, out var value))
+                {
+                    total += value;
+                    containsMemeber = true;
+                }
+            }
+            return containsMemeber;
+        }
+
+        /// <summary>
+        ///     Returns a dictionary using <see cref="DamageGroupPrototype.ID"/> keys, with values calculated by adding
+        ///     up the values for each damage type in that group
+        /// </summary>
+        /// <remarks>
+        ///     If a damage type is associated with more than one supported damage group, it will contribute to the
+        ///     total of each group. If no members of a group are present in this <see cref="DamageSpecifier"/>, the
+        ///     group is not included in the resulting dictionary.
+        /// </remarks>
+        public Dictionary<string, int> GetDamagePerGroup()
+        {
+            var damageGroupDict = new Dictionary<string, int>();
+            foreach (var group in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<DamageGroupPrototype>())
+            {
+                if (TryGetDamageInGroup(group, out var value))
+                {
+                    damageGroupDict.Add(group.ID, value);
+                }
+            }
+            return damageGroupDict;
         }
 
         #region Operators

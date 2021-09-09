@@ -22,7 +22,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
 
         public bool Reached(DamageableComponent damageable, DestructibleSystem system)
         {
-            return damageable.DamagePerType.TryGetValue(DamageType, out var damageReceived) &&
+            return damageable.Damage.DamageDict.TryGetValue(DamageType, out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }
