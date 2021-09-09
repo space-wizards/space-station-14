@@ -42,6 +42,9 @@ namespace Content.Server.PDA
 
         [ViewVariables] private bool _lightOn;
 
+        [ViewVariables] [DataField("idCard")] private string? _startingIdCard = "AssistantIDCard";
+        [ViewVariables] [DataField("pen")] private string? _startingPen = "Pen";
+
         [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
@@ -56,22 +59,9 @@ namespace Content.Server.PDA
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(PDAUiKey.Key);
 
-        [ViewVariables]
-        [DataField("idCard")]
-        private string? _startingIdCard = "AssistantIDCard";
-
-        [ViewVariables]
-        [DataField("pen")]
-        private string? _startingPen = "Pen";
-
-        [DataField("insertIdSound")]
-        private SoundSpecifier _insertIdSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
-
-        [DataField("toggleFlashlightSound")]
-        private SoundSpecifier _toggleFlashlightSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
-
-        [DataField("ejectIdSound")]
-        private SoundSpecifier _ejectIdSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
+        [DataField("insertIdSound")] private SoundSpecifier _insertIdSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
+        [DataField("toggleFlashlightSound")] private SoundSpecifier _toggleFlashlightSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
+        [DataField("ejectIdSound")] private SoundSpecifier _ejectIdSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
 
         public PDAComponent()
         {
