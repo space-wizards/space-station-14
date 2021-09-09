@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
 using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
@@ -89,6 +87,8 @@ namespace Content.Client.Verbs
 
             CurrentVerbs = GetVerbs(target, user, VerbType.All);
 
+            
+
             if (!target.Uid.IsClientSide())
             {
                 CurrentVerbPopup.AddToMenu(new Label { Text = Loc.GetString("verb-system-waiting-on-server-text") });
@@ -113,16 +113,23 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            // Add verbs, if the server gave us any. Note that either way we need to update the pop-up to get rid of the
-            // "waiting for server...".
-            if (msg.Verbs !=null)
+            // This **should** not happen.
+            if (msg.Verbs == null)
             {
-                foreach (var entry in msg.Verbs)
+                // update "waiting for server...".
+                CurrentVerbPopup.List.DisposeAllChildren();
+                CurrentVerbPopup.AddToMenu(new Label { Text = Loc.GetString("verb-system-null-server-response") });
+                FillVerbPopup(CurrentVerbPopup);
+                CurrentVerbPopup.InvalidateMeasure();
+                return;
+            }
+
+            // Add the new server-side verbs.
+            foreach (var entry in msg.Verbs)
+            {
+                if (!CurrentVerbs.TryAdd(entry.Key, entry.Value))
                 {
-                    if (!CurrentVerbs.TryAdd(entry.Key, entry.Value))
-                    {
-                        CurrentVerbs[entry.Key].AddRange(entry.Value);
-                    }
+                    CurrentVerbs[entry.Key].AddRange(entry.Value);
                 }
             }
 

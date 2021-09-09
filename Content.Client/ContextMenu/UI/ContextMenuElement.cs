@@ -177,19 +177,21 @@ namespace Content.Client.ContextMenu.UI
 
     public class ContextMenuPopup : Popup
     {
-        private static readonly Color DefaultButtonColor = Color.FromHex("#1116");
-        private static readonly Color DefaultBackgroundColor = Color.FromHex("#222E");
+        private static readonly Color DefaultButtonColor = Color.FromHex("#1B1B1BF5");
+        private static readonly Color DefaultSeparatorColor = Color.FromHex("#222E");
         private const int MaxItemsBeforeScroll = 10;
         private const int MarginSizeBetweenElements = 2;
 
         private readonly Color _buttonColor;
+        private readonly Color _separatorColor;
 
         public BoxContainer List { get; }
         public int Depth { get; }
 
-        public ContextMenuPopup(int depth = 0, Color? buttonColor= null, Color? backgroundColor = null)
+        public ContextMenuPopup(int depth = 0, Color? buttonColor= null, Color? separatorColor = null)
         {
             _buttonColor = buttonColor ?? DefaultButtonColor;
+            _separatorColor = separatorColor ?? DefaultSeparatorColor;
 
             Depth = depth;
             AddChild(new ScrollContainer
@@ -200,8 +202,7 @@ namespace Content.Client.ContextMenu.UI
                     Children = { (List = new BoxContainer
                     {
                         Orientation = LayoutOrientation.Vertical
-                    }) },
-                    PanelOverride = new StyleBoxFlat {  BackgroundColor = backgroundColor ?? DefaultBackgroundColor }
+                    }) }
                 }}
             });
         }
@@ -214,22 +215,18 @@ namespace Content.Client.ContextMenu.UI
         {
             if (List.ChildCount != 0)
             {
+                // Add a small separator between elements
                 List.AddChild(new PanelContainer
                 {
-                    Children = { element },
-                    Margin = new Thickness(0, MarginSizeBetweenElements, 0, 0),
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
-                });
+                    MinSize = (0, 2),
+                    PanelOverride = new StyleBoxFlat { BackgroundColor = _separatorColor }
+                });;
             }
-            else
+            List.AddChild(new PanelContainer
             {
-                // do not include margins for the first element.
-                List.AddChild(new PanelContainer
-                {
-                    Children = { element },
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
-                });
-            }
+                Children = { element },
+                PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
+            });
         }
 
         public void RemoveFromMenu(ContextMenuElement element)

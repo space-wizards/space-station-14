@@ -1,4 +1,5 @@
 verb-system-waiting-on-server-text = Waiting on Server... 
+verb-system-null-server-response = Entity not in view. You should not see this.
 verb-system-no-verbs-text = No verbs!
 
 # if verbs have a range of targets (e.g., multiple ejectables) you can

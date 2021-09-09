@@ -115,22 +115,23 @@ namespace Content.Server.Verbs
 
             if (user == null)
             {
-                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {player} with no attached entity.");
+                Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
             }
 
-            // Send the verbs if the user has access to the requested item. Note that this is not perfect, and the
-            // entity can be considered invalid/hidden by the server despite being accessible by the client.
             VerbsResponseEvent response;
+
+            // Validate input (check that the user can see the entity)
             if (TryGetContextEntities(user, target.Transform.MapPosition, out var entities, true))
             {
                 response = new(args.EntityUid, GetVerbs(target, user, args.Type));
             }
             else
             {
-                // Don't leave the client hanging on "Waiting for server....", send empty response
+                // Don't leave the client hanging on "Waiting for server....", send empty response.
                 response = new(args.EntityUid, null);
             }
+
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

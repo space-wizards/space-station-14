@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
@@ -13,6 +14,9 @@ namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
+
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s)
         /// </summary>
@@ -54,42 +58,24 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Get all of the entities relevant for the context menu
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="targetPos"></param>
-        /// <param name="contextEntities"></param>
-        /// <param name="buffer">Whether we should slightly extend out the ignored range for the ray predicated</param>
+        /// <param name="buffer">Whether we should slightly extend the entrity search area.</param>
         /// <returns></returns>
-        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
+        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos,
+            [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
         {
             contextEntities = null;
             var length = buffer ? 1.0f : 0.5f;
 
-            var entities = IoCManager.Resolve<IEntityLookup>().
-                GetEntitiesIntersecting(targetPos.MapId, Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
+            var entities = _entityLookup.GetEntitiesIntersecting(targetPos.MapId,
+                Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
 
             if (entities.Count == 0)
             {
                 return false;
             }
 
-            // Check if we have LOS to the clicked-location, otherwise no popup.
-            var vectorDiff = player.Transform.MapPosition.Position - targetPos.Position;
-            var distance = vectorDiff.Length + 0.01f;
-            bool Ignored(IEntity entity)
-            {
-                return entities.Contains(entity) ||
-                       entity == player ||
-                       !entity.TryGetComponent(out OccluderComponent? occluder) ||
-                       !occluder.Enabled;
-            }
-
-            var mask = player.TryGetComponent(out SharedEyeComponent? eye) && eye.DrawFov
-                ? CollisionGroup.Opaque
-                : CollisionGroup.None;
-
-            var result = player.InRangeUnobstructed(targetPos, distance, mask, Ignored);
-
-            if (!result)
+            // Check if we have LOS to the clicked-location.
+            if (!player.InRangeUnOccluded(targetPos, ExamineSystemShared.ExamineRange))
             {
                 return false;
             }

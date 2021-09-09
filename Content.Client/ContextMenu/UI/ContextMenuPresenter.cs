@@ -7,7 +7,9 @@ using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
+using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -295,7 +297,11 @@ namespace Content.Client.ContextMenu.UI
                 return false;
             }
 
-            entities = entities.Where(CanSeeOnContextMenu).ToList();
+            // Only include entities that are able to be shown on the context menu. Also exclude entities that the user
+            // cannot see the center of. This last part is what the sever checks later on, and will help prevent confusing
+            // behavior.
+            entities.RemoveAll(e => !CanSeeOnContextMenu(e) || !playerEntity.InRangeUnOccluded(e, ExamineSystemShared.ExamineRange));
+
             if (entities.Count == 0)
             {
                 return false;
