@@ -14,7 +14,6 @@ using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
@@ -74,7 +73,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
+            foreach (var entity in _entityLookup.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
             {
                 Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
             }
