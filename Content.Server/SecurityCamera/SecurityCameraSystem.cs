@@ -1,18 +1,20 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.IoC;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Shared.Movement;
 using Content.Shared.SecurityCamera;
 using Content.Shared.Interaction;
+using Content.Server.Camera;
+using Robust.Shared.Log;
 
 namespace Content.Server.SecurityCamera
 {
     public class SecurityCameraSystem : EntitySystem
     {
-        [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
-        public Dictionary<int,SecurityCameraComponent> cameraList = new();
+        public Dictionary<int,EntityUid> cameraList = new();
 
         public override void Initialize()
         {
@@ -43,44 +45,26 @@ namespace Content.Server.SecurityCamera
 
         public void HandleInteract(EntityUid uid, SecurityConsoleComponent component, InteractHandEvent args)
         {
-            UpdateList();
             var user = args.User;
+            UpdateList(user);
+            Logger.Info("Updated List");
             var secClient = user.EnsureComponent<SecurityClientComponent>();
-            
-            // Decide Next Camera
-            int nextCam = secClient.currentCamInt + 1;
-            if(nextCam > cameraList.Count) nextCam = 1;
-            secClient.currentCamInt = nextCam;
-            if(cameraList.TryGetValue(nextCam,out SecurityCameraComponent _))
-            {
-                var camera = CreateCamera(user,cameraList[nextCam].Owner.Transform.MapPosition);
-                RaiseNetworkEvent(new SecurityCameraConnectEvent(user.Uid,camera.Uid),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
-                secClient.active = true;               
-            }
+            RaiseNetworkEvent(new SecurityCameraConnectEvent(user.Uid,cameraList),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
+            Logger.Info("Sent Event");
+            secClient.active = true;               
         }
 
-        public void UpdateList()
+        public void UpdateList(IEntity user)
         {
             // Update List Of Cameras
             foreach(var cam in EntityManager.ComponentManager.EntityQuery<SecurityCameraComponent>(true))
             {
-                if(!cameraList.ContainsValue(cam))
+                if(!cameraList.ContainsValue(cam.Owner.Uid))
                 {
-                    cameraList.Add(cameraList.Count + 1, cam);
+                    EntitySystem.Get<CameraSystem>().CreateCamera(user,cam.Owner.Transform.MapPosition,true,new Vector2(1,1));
+                    cameraList.Add(cameraList.Count + 1, cam.Owner.Uid);
                 }
             }
-        }
-
-        public IEntity CreateCamera(IEntity user,MapCoordinates coords)
-        {
-            // Create New Entity With EyeComponent
-            var camera = EntityManager.SpawnEntity(null,coords);
-
-            var eyecomp = camera.EnsureComponent<EyeComponent>();
-            
-            _viewSubscriberSystem.AddViewSubscriber(camera.Uid, user.GetComponent<ActorComponent>().PlayerSession);
-
-            return camera;
         }
     }
 }

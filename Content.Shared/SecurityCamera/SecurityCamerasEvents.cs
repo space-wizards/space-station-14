@@ -10,12 +10,12 @@ namespace Content.Shared.SecurityCamera
     public class SecurityCameraConnectEvent : EntityEventArgs
     {
         public EntityUid User {get;}
-        public EntityUid Camera {get;}
+        public Dictionary<int,EntityUid> CameraList {get;}
     
-        public SecurityCameraConnectEvent(EntityUid user, EntityUid camera)
+        public SecurityCameraConnectEvent(EntityUid user, Dictionary<int,EntityUid> cameraList)
         {
             User = user;
-            Camera = camera;
+            CameraList = cameraList;
         }
     }
 
