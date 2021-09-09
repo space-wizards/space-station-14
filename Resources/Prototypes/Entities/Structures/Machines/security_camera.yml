@@ -1,0 +1,12 @@
+- type: entity
+  id: SecurityCamera
+  name: security camera
+  description: description
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart
+  - type: SecurityCamera
+  - type: Eye
+  placement:
+    mode: SnapgridCenter
