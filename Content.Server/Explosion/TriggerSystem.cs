@@ -1,11 +1,13 @@
 ﻿using System;
 using Content.Server.Explosion.Components;
+using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -30,6 +32,8 @@ namespace Content.Server.Explosion
     [UsedImplicitly]
     public sealed class TriggerSystem : EntitySystem
     {
+        [Dependency] private readonly FlashSystem _flashSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -72,12 +76,13 @@ namespace Content.Server.Explosion
 
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
-                {
-                    if (component.Flashed) return;
+        {
+            if (component.Flashed) return;
 
-                    FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
-                    component.Flashed = true;
-                }
+            // TODO Make flash durations sane ffs.
+            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
+            component.Flashed = true;
+        }
         #endregion
 
         private void HandleSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
