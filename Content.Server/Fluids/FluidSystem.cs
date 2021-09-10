@@ -1,26 +1,53 @@
 using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids
 {
     [UsedImplicitly]
-    internal sealed class PuddleSystem : EntitySystem
+    internal sealed class FluidSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
             _mapManager.TileChanged += HandleTileChanged;
+
+            SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             _mapManager.TileChanged -= HandleTileChanged;
+        }
+
+
+        private void AddSpillVerb(EntityUid uid, SpillableComponent component, GetOtherVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var solution))
+                return;
+
+            if (solution.DrainAvailable < ReagentUnit.Zero)
+                return;
+
+            Verb verb = new("spill");
+            verb.Text = Loc.GetString("spill-target-verb-get-data-text");
+            // TODO VERB ICONS spill icon? pouring out a glass/beaker?
+            verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,
+                solution, solution.DrainAvailable).SpillAt(args.Target.Transform.Coordinates, "PuddleSmear");
+            args.Verbs.Add(verb);
         }
 
         //TODO: Replace all this with an Unanchored event that deletes the puddle
