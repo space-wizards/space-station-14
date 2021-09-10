@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
+using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
+using Content.Shared.Storage.Events;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -9,7 +13,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class StorageSystem : EntitySystem
+    internal sealed class StorageSystem : SharedStorageSystem
     {
         private readonly List<IPlayerSession> _sessionCache = new();
 
@@ -20,7 +24,16 @@ namespace Content.Server.Storage.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+            SubscribeNetworkEvent<OpenCloseBagEvent>(OnOpenCloseBag);
         }
+
+        private void OnOpenCloseBag(OpenCloseBagEvent ev)
+        {
+            if (!ComponentManager.HasComponent<ServerStorageComponent>(ev.Owner)) return;
+
+            OnOpenCloseEvent(ev);
+        }
+
 
         /// <inheritdoc />
         public override void Update(float frameTime)

@@ -5,9 +5,11 @@ using Content.Client.Hands;
 using Content.Client.Items.Components;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
-using Content.Shared.Stacks;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
+using Content.Shared.Storage.Events;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -158,15 +160,7 @@ namespace Content.Client.Storage
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-           
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
-            {
-                appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
-                if (Owner.HasComponent<ItemCounterComponent>())
-                {
-                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
-                }
-            }
+            Owner.EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenCloseBagEvent(Owner.Uid, state));
         }
 
         /// <summary>
