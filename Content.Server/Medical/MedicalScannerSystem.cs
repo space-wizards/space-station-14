@@ -1,7 +1,9 @@
 using Content.Server.Medical.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Medical
@@ -9,6 +11,8 @@ namespace Content.Server.Medical
     [UsedImplicitly]
     internal sealed class MedicalScannerSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -19,10 +23,11 @@ namespace Content.Server.Medical
 
         private void AddInsertOtherVerb(EntityUid uid, MedicalScannerComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
-                return;
-
-            if (component.IsOccupied || args.Using == null || !component.CanInsert(args.Using))
+            if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                component.IsOccupied ||
+                !component.CanInsert(args.Using))
                 return;
 
             Verb verb = new("medscan:insert");
@@ -33,7 +38,7 @@ namespace Content.Server.Medical
 
         private void AddAlternativeVerbs(EntityUid uid, MedicalScannerComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Eject verb
@@ -46,7 +51,9 @@ namespace Content.Server.Medical
             }
 
             // Self-insert verb
-            if (!component.IsOccupied && component.CanInsert(args.User))
+            if (!component.IsOccupied &&
+                component.CanInsert(args.User) &&
+                _actionBlockerSystem.CanMove(args.User))
             {
                 Verb verb = new("medscan:enter");
                 verb.Act = () => component.InsertBody(args.User);

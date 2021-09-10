@@ -21,10 +21,7 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
-                return;
-
-            if (component.MirrorEntity == null)
+            if (!args.CanAccess || !args.CanInteract || component.MirrorEntity == null)
                 return;
 
             Verb verb = new("flip");
@@ -36,11 +33,13 @@ namespace Content.Server.Rotatable
 
         private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.
-            if (!component.RotateWhileAnchored && component.Owner.TryGetComponent(out IPhysBody? physics) && physics.BodyType == BodyType.Static)
+            if (!component.RotateWhileAnchored &&
+                component.Owner.TryGetComponent(out IPhysBody? physics) &&
+                physics.BodyType == BodyType.Static)
                 return;
 
             // rotate clockwise
@@ -48,7 +47,7 @@ namespace Content.Server.Rotatable
             rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
-            rotateCW.Priority = -2;
+            rotateCW.Priority = -2; // show CCW, then CW
             args.Verbs.Add(rotateCW);
 
             // rotate counter-clockwise
@@ -65,8 +64,8 @@ namespace Content.Server.Rotatable
         /// </summary>
         public static void TryFlip(FlippableComponent component, IEntity user)
         {
-            // TODO FLIPPABLE Currently an entity needs t0 be un-anchored when flipping, but the newly spawned in entity
-            // defaults to being flipped (and spawns under floor tiles). Fix this?
+            // TODO FLIPPABLE Currently an entity needs to be un-anchored when flipping. But the newly spawned entity
+            // defaults to being anchored (and spawns under floor tiles). Fix this?
             if (component.Owner.TryGetComponent(out IPhysBody? physics) &&
                 physics.BodyType == BodyType.Static)
             {

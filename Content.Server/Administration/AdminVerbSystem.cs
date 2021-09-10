@@ -58,9 +58,8 @@ namespace Content.Server.Administration
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))
-            {
                 return;
-            }
+
             var player = actor.PlayerSession;
 
             // Delete verb

@@ -33,8 +33,7 @@ namespace Content.Server.Buckle.Systems
         /// </summary>
         private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
         {
-            // Can the user interact?
-            if (!args.CanAccess || args.Hands == null)
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this

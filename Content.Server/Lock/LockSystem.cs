@@ -27,7 +27,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddLockVerbs);
+            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddToggleLockVerb);
         }
 
         private void OnStartup(EntityUid eUI, LockComponent lockComp, ComponentStartup args)
@@ -125,11 +125,12 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private void AddLockVerbs(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
+        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
+            // Cannot lock if the entity is currently opened.
             if (component.Owner.TryGetComponent(out EntityStorageComponent? entityStorageComponent)
                 && entityStorageComponent.Open)
                 return;
@@ -138,10 +139,8 @@ namespace Content.Server.Lock
             verb.Act = component.Locked ?
                 () => TryUnlock(component, args.User) :
                 () => TryLock(component, args.User);
-
             verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
             // TODO VERB ICONS need padlock open/close icons.
-
             args.Verbs.Add(verb);
         }
     }

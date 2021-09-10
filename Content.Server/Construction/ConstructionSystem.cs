@@ -50,7 +50,39 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
-            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddConstructionVerbs);
+            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
+        }
+
+        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
+        {
+            if (!args.CanAccess)
+                return;
+
+            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
+                component.Node?.Name == component.DeconstructionNodeIdentifier)
+                return;
+
+            Verb verb = new("deconstruct");
+            //verb.Category = VerbCategories.Construction;
+            //TODO VERBS add more construction verbs? Until then, removing construction category
+            verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
+            verb.IconTexture = "/Textures/Interface/hammer_scaled.svg.192dpi.png";
+
+            verb.Act = () =>
+            {
+                component.SetNewTarget(component.DeconstructionNodeIdentifier);
+                if (component.Target == null)
+                {
+                    // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
+                }
+                else
+                {
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
+                }
+            };
+
+            args.Verbs.Add(verb);
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
@@ -470,40 +502,6 @@ namespace Content.Server.Construction
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 
             Cleanup();
-        }
-
-
-        private void AddConstructionVerbs(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
-        {
-            // Needs to be able to interact to construct
-            if (!args.CanAccess || args.Hands == null)
-                return;
-
-            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
-                component.Node?.Name == component.DeconstructionNodeIdentifier)
-                return;
-
-            Verb verb = new("deconstruct");
-            //verb.Category = VerbCategories.Construction;
-            //TODO VERBS add more construction verbs? Until then, removing construction category
-            verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
-            verb.IconTexture = "/Textures/Interface/hammer_scaled.svg.192dpi.png";
-
-            verb.Act = () =>
-                {
-                    component.SetNewTarget(component.DeconstructionNodeIdentifier);
-                    if (component.Target == null)
-                    {
-                        // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
-                        component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
-                    }
-                    else
-                    {
-                        component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
-                    }
-                };
-
-            args.Verbs.Add(verb);
         }
     }
 }

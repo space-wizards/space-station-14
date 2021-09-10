@@ -33,12 +33,12 @@ namespace Content.Server.Buckle.Systems
 
             SubscribeLocalEvent<BuckleComponent, InteractHandEvent>(HandleInteractHand);
 
-            SubscribeLocalEvent<BuckleComponent, GetInteractionVerbsEvent>(AddBuckleVerb);
+            SubscribeLocalEvent<BuckleComponent, GetInteractionVerbsEvent>(AddUnbuckleVerb);
         }
 
-        private void AddBuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
+        private void AddUnbuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
         {
-            if (!component.Buckled || !args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
             
             Verb verb = new("unbuckle");
@@ -48,7 +48,7 @@ namespace Content.Server.Buckle.Systems
             {
                 // A user is left clicking themselves with an empty hand, while buckled.
                 // It is very likely they are trying to unbuckle themselves.
-                verb.Priority = 2;
+                verb.Priority = 1;
             }
 
             verb.Category = VerbCategory.Unbuckle;

@@ -363,16 +363,6 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnOccluded(
-        this GetOtherVerbsEvent args,
-        float range = InteractionRange,
-        Ignored? predicate = null,
-        bool ignoreInsideBlocker = true)
-            {
-            return ExamineSystemShared.InRangeUnOccluded(args, range, predicate,
-                ignoreInsideBlocker);
-        }
-
-        public static bool InRangeUnOccluded(
             this AfterInteractEventArgs args,
             float range = InteractionRange,
             Ignored? predicate = null,

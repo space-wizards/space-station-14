@@ -161,14 +161,6 @@ namespace Content.Shared.Examine
             return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
         }
 
-        public static bool InRangeUnOccluded(GetOtherVerbsEvent args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
-        {
-            var originPos = args.User.Transform.MapPosition;
-            var otherPos = args.Target.Transform.MapPosition;
-
-            return InRangeUnOccluded(originPos, otherPos, range, predicate, ignoreInsideBlocker);
-        }
-
         public static bool InRangeUnOccluded(AfterInteractEventArgs args, float range, Ignored? predicate, bool ignoreInsideBlocker = true)
         {
             var originPos = args.User.Transform.MapPosition;

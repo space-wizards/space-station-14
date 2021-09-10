@@ -186,7 +186,7 @@ namespace Content.Shared.Verbs
             }
 
             // Finally, use verb text as tie-breaker
-            return string.Compare(Text,otherVerb.Text, StringComparison.CurrentCulture);
+            return string.Compare(Text, otherVerb.Text, StringComparison.CurrentCulture);
         }
     }
 }

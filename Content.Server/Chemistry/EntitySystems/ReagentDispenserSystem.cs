@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -12,6 +13,7 @@ namespace Content.Server.Chemistry.EntitySystems
     public class ReagentDispenserSystem : EntitySystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -24,10 +26,14 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         // TODO VERBS EJECTABLES Standardize eject/insert verbs into a single system? Maybe using something like the
-        // system mentioned in #4538? The code here is basically identical to the stuff in ChemDispenserSystem
+        // system mentioned in #4538? The code here is basically identical to the stuff in ChemDispenserSystem.
         private void AddEjectVerb(EntityUid uid, ReagentDispenserComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null || !component.HasBeaker)
+            if (args.Hands == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                !component.HasBeaker ||
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             Verb verb = new("ReagentDispenser:Eject");
@@ -43,7 +49,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void AddInsertVerb(EntityUid uid, ReagentDispenserComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.CanAccess || args.Using == null || component.HasBeaker )
+            if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                component.HasBeaker ||
+                !args.Using.HasComponent<FitsInDispenserComponent>() ||
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             if (!args.Using.HasComponent<FitsInDispenserComponent>() ||

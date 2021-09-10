@@ -1,12 +1,16 @@
 using Content.Server.Access.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Access
 {
     public class IdCardConsoleSystem : EntitySystem 
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -16,12 +20,11 @@ namespace Content.Server.Access
 
         private void AddInsertVerbs(EntityUid uid, IdCardConsoleComponent component, GetInteractionVerbsEvent args)
         {
-            if (args.Hands == null || !args.CanAccess)
-                return;
-
-            // If we are holding an ID card, add insert verbs
             if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
                 !args.Using.HasComponent<IdCardComponent>())
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             // Can we insert a privileged ID? 
@@ -47,7 +50,10 @@ namespace Content.Server.Access
 
         private void AddEjectVerbs(EntityUid uid, IdCardConsoleComponent component, GetAlternativeVerbsEvent args)
         {
-            if (args.Hands == null || !args.CanAccess)
+            if (args.Hands == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             // Can we eject a privileged ID? 

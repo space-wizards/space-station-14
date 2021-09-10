@@ -1,15 +1,16 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Cabinet;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -17,16 +18,21 @@ namespace Content.Server.Cabinet
 {
     public class ItemCabinetSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInitialize);
 
+
             SubscribeLocalEvent<ItemCabinetComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemCabinetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
+            // TODO METHOD EVENTS These are a bunch of method events. Even worse, some of these are method events that
+            // are exclusively raised by and handled by the same system. wtf, why aren't those just function calls?
             SubscribeLocalEvent<ItemCabinetComponent, TryEjectItemCabinetEvent>(OnTryEjectItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
@@ -36,17 +42,20 @@ namespace Content.Server.Cabinet
 
         private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Toggle open verb
             Verb toggleVerb = new("ItemCabined:toggle");
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
             toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
+            toggleVerb.Priority = -1; // eject/insert takes priority over open/close
             args.Verbs.Add(toggleVerb);
 
-            // add Eject item verb
-            if (component.Opened && component.ItemContainer.ContainedEntity != null)
+            // Eject item verb
+            if (component.Opened &&
+                component.ItemContainer.ContainedEntity != null &&
+                _actionBlockerSystem.CanPickup(args.User))
             {
                 Verb verb = new("ItemCabined:eject");
                 verb.Act = () =>
@@ -55,14 +64,13 @@ namespace Content.Server.Cabinet
                     UpdateVisuals(component);
                 };
                 verb.Category = VerbCategory.Eject;
-                // eject takes priority over open/close
-                verb.Priority = 1;
                 args.Verbs.Add(verb);
             }
 
-            // add Insert item verb, if a valid item is held
+            // Insert item verb
             if (component.Opened &&
                 args.Using != null &&
+                _actionBlockerSystem.CanDrop(args.User) &&
                 (component.Whitelist?.IsValid(args.Using) ?? true) &&
                 component.ItemContainer.CanInsert(args.Using))
             {
@@ -73,9 +81,6 @@ namespace Content.Server.Cabinet
                     UpdateVisuals(component);
                 };
                 verb.Category = VerbCategory.Insert;
-
-                // insert takes priority over open/close
-                verb.Priority = 1;
                 args.Verbs.Add(verb);
             }
         }

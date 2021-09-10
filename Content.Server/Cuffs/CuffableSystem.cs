@@ -18,16 +18,16 @@ namespace Content.Server.Cuffs
 
             EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, OnHandCountChanged);
 
-            SubscribeLocalEvent<CuffableComponent, GetOtherVerbsEvent>(AddCuffableVerbs);
+            SubscribeLocalEvent<CuffableComponent, GetOtherVerbsEvent>(AddUncuffVerb);
         }
 
-        private void AddCuffableVerbs(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
+        private void AddUncuffVerb(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
         {
-            if (component.CuffedHandCount == 0 || !args.CanAccess)
+            if (!args.CanAccess || component.CuffedHandCount == 0)
                 return;
 
-            // check if the user can interact (or is uncuffing themselves)
-            if (args.User != component.Owner && args.Hands == null)
+            // check that the user is either un-cuffing themselves or is able to interact with the target.
+            if (args.User != args.Target && !args.CanInteract)
                 return;
 
             Verb verb = new("uncuff");

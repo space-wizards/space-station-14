@@ -34,7 +34,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
 
         private readonly List<DisposalUnitComponent> _activeDisposals = new();
@@ -66,29 +66,30 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract)
                 return;
 
             // Verbs to flush and eject the unit
             if (component.ContainedEntities.Count != 0)
             {
-                Verb flushVerb = new("Disposal:flush");
+                Verb flushVerb = new("disposal:flush");
                 flushVerb.Act = () => Engage(component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
                 flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 
-                Verb ejectVerb = new("Disposal:eject");
+                Verb ejectVerb = new("disposal:eject");
                 ejectVerb.Act = () => TryEjectContents(component);
                 ejectVerb.Category = VerbCategory.Eject;
                 args.Verbs.Add(ejectVerb);
             }
 
             // Verb to climb inside of the unit, where the average user belongs.
-            if (!component.ContainedEntities.Contains(args.User))
+            if (!component.ContainedEntities.Contains(args.User) &&
+                _actionBlockerSystem.CanMove(args.User))
             {
-                Verb verb = new("Disposal:enter");
+                Verb verb = new("disposal:enter");
                 verb.Act = () => component.TryInsert(args.User, args.User);
                 verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
                 // TODO VERN ICON

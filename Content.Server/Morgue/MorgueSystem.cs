@@ -22,16 +22,8 @@ namespace Content.Server.Morgue
 
         private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetAlternativeVerbsEvent args)
         {
-
-            if (!args.CanAccess || args.Hands == null)
-            {
+            if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
                 return;
-            }
-
-            if (component.Cooking || component.Open)
-            {
-                return;
-            }
 
             Verb verb = new("morgue:cremate");
             verb.Text = Loc.GetString("cremate-verb-get-data-text");
@@ -41,20 +33,13 @@ namespace Content.Server.Morgue
         }
 
         /// <summary>
-        ///     This adds the "remove label" verb to the list of verbs. Yes, this is a stupid function name, but it's consistent.
+        ///     This adds the "remove label" verb to the list of verbs. Yes, this is a stupid function name, but it's
+        ///     consistent. with other get-verb event handlers.
         /// </summary>
         private void AddRemoveLabelVerb(EntityUid uid, BodyBagEntityStorageComponent component, GetAlternativeVerbsEvent args)
         {
-
-            if (!args.CanAccess || args.Hands == null)
-            {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract || component.LabelContainer?.ContainedEntity == null)
                 return;
-            }
-
-            if (component.LabelContainer?.ContainedEntity == null)
-            {
-                return;
-            }
 
             Verb verb = new("morgue:removelabel");
             verb.Text = Loc.GetString("remove-label-verb-get-data-text");

@@ -198,6 +198,9 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void AddPointingVerb(GetOtherVerbsEvent args)
         {
+            if (args.Hands == null)
+                return;
+
             //Check if the object is already being pointed at
             if (args.Target.HasComponent<PointingArrowComponent>())
                 return;

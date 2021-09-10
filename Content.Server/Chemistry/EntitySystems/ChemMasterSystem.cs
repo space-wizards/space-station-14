@@ -4,12 +4,16 @@ using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Robust.Shared.IoC;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
 	[UsedImplicitly]
     public class ChemMasterSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         public override void Initialize()
         {
 			base.Initialize();
@@ -23,7 +27,11 @@ namespace Content.Server.Chemistry.EntitySystems
         // system mentioned in #4538? The code here is basically identical to the stuff in ChemDispenserSystem
         private void AddEjectVerb(EntityUid uid, ChemMasterComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null || !component.HasBeaker)
+            if (args.Hands == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                !component.HasBeaker ||
+                !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
             Verb verb = new("ChemMaster:Eject");
@@ -36,15 +44,14 @@ namespace Content.Server.Chemistry.EntitySystems
             args.Verbs.Add(verb);
         }
 
-
-
-
         private void AddInsertVerb(EntityUid uid, ChemMasterComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.CanAccess || args.Using == null || component.HasBeaker)
-                return;
-
-            if (!args.Using.HasComponent<FitsInDispenserComponent>())
+            if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                component.HasBeaker ||
+                !args.Using.HasComponent<FitsInDispenserComponent>() ||
+                !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
             Verb verb = new("ChemMaster:Insert");

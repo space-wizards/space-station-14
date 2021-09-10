@@ -24,10 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
         {
-            if (!args.CanAccess || args.Hands == null)
-                return;
-
-            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+            if (!args.CanAccess ||  !args.User.TryGetComponent<ActorComponent>(out var actor))
                 return;
 
             Verb verb = new("GasTank:OpenUI");

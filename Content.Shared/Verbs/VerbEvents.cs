@@ -56,7 +56,7 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///    Request primary interaction verbs.
+    ///    Request primary interaction verbs. This includes both use-in-hand and interacting with external entities.
     /// </summary>
     /// <remarks>
     ///    These verbs those that involve using the hands or the currently held item on some entity. These verbs usually
@@ -120,19 +120,10 @@ namespace Content.Shared.Verbs
         ///     Can the user physically access the target?
         /// </summary>
         /// <remarks>
-        ///     This is a combination of <see cref="InteractionSystem.InRangeUnobstructed"/> and <see
-        ///     cref="ContainerHelpers.IsInSameOrParentContainer(IEntity, IEntity)"/>.
+        ///     This is a combination of <see cref="ContainerHelpers.IsInSameOrParentContainer(IEntity, IEntity)"/> and
+        ///     <see cref="SharedInteractionSystem.InRangeUnobstructed"/>.
         /// </remarks>
         public bool CanAccess;
-
-        /// <summary>
-        ///     Can the user physically interact?
-        /// </summary>
-        /// <remarks>
-        ///     This is a combination of <see cref="ActionBlockerSystem.CanInteract"/> and whether the user has
-        ///     hands. Ranged interactions may require this, but not <see cref="CanAccess"/>
-        /// </remarks>
-        public bool CanInteract;
 
         /// <summary>
         ///     The entity being targeted for the verb.
@@ -145,12 +136,14 @@ namespace Content.Shared.Verbs
         public IEntity User;
 
         /// <summary>
-        ///     The entity currently being held by the active hand.
+        ///     Can the user physically interact?
         /// </summary>
         /// <remarks>
-        ///     If this is null, but the user has a HandsComponent, the hand is probably empty.
+        ///     This is a just a cached <see cref="ActionBlockerSystem.CanInteract"/> result. Given that many verbs need
+        ///     to check this, it prevents it from having to be repeatedly called by each individual system that might
+        ///     contribute a verb.
         /// </remarks>
-        public IEntity? Using;
+        public bool CanInteract;
 
         /// <summary>
         ///     The User's hand component.
@@ -161,28 +154,32 @@ namespace Content.Shared.Verbs
         public SharedHandsComponent? Hands;
 
         /// <summary>
-        /// 
+        ///     The entity currently being held by the active hand.
         /// </summary>
-        /// <param name="user">The user that will perform the verb.</param>
-        /// <param name="target">The target entity.</param>
-        /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
+        /// <remarks>
+        ///     This is only ever not null when <see cref="ActionBlockerSystem.CanUse(IEntity)"/> is true and the user
+        ///     has hands.
+        /// </remarks>
+        public IEntity? Using;
+
         public GetVerbsEvent(IEntity user, IEntity target)
         {
             User = user;
             Target = target;
 
-            CanAccess = user.IsInSameOrParentContainer(target) &&
+            CanAccess = (Target == User) || user.IsInSameOrParentContainer(target) &&
                 EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
 
-            // TODO HANDS should hands use action blocker to block interactions?
-            CanInteract = user.TryGetComponent(out Hands) &&
-                EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
+            // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
+            // call ActionBlocker checks, just cache it for the verb request.
+            var actionBlockerSystem = EntitySystem.Get<ActionBlockerSystem>();
+            CanInteract = actionBlockerSystem.CanInteract(user);
 
-            if (!CanInteract)
+            if (!user.TryGetComponent(out Hands) ||
+                !actionBlockerSystem.CanUse(user))
                 return;
 
-            // Physical interactions are allowed.
-            Hands!.TryGetActiveHeldEntity(out Using);
+            Hands.TryGetActiveHeldEntity(out Using);
 
             // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
             // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging

@@ -2,11 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Climbing.Components;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Climbing;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Climbing
@@ -15,6 +17,8 @@ namespace Content.Server.Climbing
     internal sealed class ClimbSystem : SharedClimbSystem
     {
         private readonly HashSet<ClimbingComponent> _activeClimbers = new();
+
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
@@ -26,8 +30,7 @@ namespace Content.Server.Climbing
 
         private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
-            // Check that the user interact.
-            if (!args.CanAccess || args.Hands == null)
+            if (!args.CanAccess || !args.CanInteract || !_actionBlockerSystem.CanMove(args.User))
                 return;
 
             // Check that the user climb.
