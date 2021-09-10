@@ -429,15 +429,11 @@ namespace Content.Shared.Hands.Components
             if (hand.Name == ActiveHand)
                 DeselectActiveHeldEntity();
 
-            Owner.EntityManager.EventBus.RaiseLocalEvent(heldEntity.Uid, new RemovedFromHandEvent(Owner), false);
-
             if (!handContainer.Remove(heldEntity))
             {
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {handContainer}.");
                 return;
             }
-
-
 
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
@@ -934,19 +930,6 @@ namespace Content.Shared.Hands.Components
         }
 
         public IEntity Sender { get; }
-    }
-
-    /// <summary>
-    ///     Raised on the item removed when it's removed from a hand.
-    /// </summary>
-    public class RemovedFromHandEvent : EntityEventArgs
-    {
-        public IEntity User;
-
-        public RemovedFromHandEvent(IEntity user)
-        {
-            User = user;
-        }
     }
 
     [Serializable, NetSerializable]
