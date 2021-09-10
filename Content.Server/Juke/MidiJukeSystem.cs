@@ -158,6 +158,7 @@ namespace Content.Server.Juke
                     break;
             }
 
+            component.Dirty();
             DirtyUI(component.Owner.Uid);
         }
 
@@ -203,6 +204,14 @@ namespace Content.Server.Juke
                 component.MidiFileName = filename;
                 component.MidiPlayer.Finished += (sender, eventArgs) => OnPlaybackFinished(component); //LOW KEY WORRIED ABOUT THE MEMORY SAFETY OF THIS
                 component.MidiPlayer.Loop = component.Loop;
+                component.MidiPlayer.EventPlayed += (sender, eventArgs) =>
+                {
+                    if (eventArgs.Event is ProgramChangeEvent programChangeEvent)
+                    {
+                        component.ChannelPrograms[programChangeEvent.Channel] = programChangeEvent.ProgramNumber;
+                        component.Dirty();
+                    }
+                };
             }
         }
 

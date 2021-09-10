@@ -5,12 +5,14 @@ using Content.Shared.Stacks;
 using Robust.Server.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Juke
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedMidiJukeComponent))]
+    [NetworkedComponent()]
     public class MidiJukeComponent : SharedMidiJukeComponent
     {
         public VirtualMidiPlayer? MidiPlayer;

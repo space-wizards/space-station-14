@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Juke
 {
@@ -15,8 +17,18 @@ namespace Content.Shared.Juke
         /// Whether the juke is currently playing a song.
         /// </summary>
         public MidiJukePlaybackStatus PlaybackStatus { get; set; } = MidiJukePlaybackStatus.Stop;
-
         public bool Playing => PlaybackStatus == MidiJukePlaybackStatus.Play;
+        /// <summary>
+        /// Contains the currently selected program for each channel, so we can sync this to clients who join
+        /// midway through a song.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public readonly byte[] ChannelPrograms = new byte[16];
+
+        public override ComponentState GetComponentState(ICommonSession player)
+        {
+            return new MidiJukeComponentState(PlaybackStatus, ChannelPrograms);
+        }
     }
 
     [Serializable, NetSerializable]
@@ -35,11 +47,14 @@ namespace Content.Shared.Juke
     [Serializable, NetSerializable]
     public sealed class MidiJukeComponentState : ComponentState
     {
-        public bool Playing { get; }
+        [ViewVariables(VVAccess.ReadWrite)]
+        public byte[] ChannelPrograms { get; }
+        public MidiJukePlaybackStatus PlaybackStatus { get; }
 
-        public MidiJukeComponentState(bool playing)
+        public MidiJukeComponentState(MidiJukePlaybackStatus playbackStatus, byte[] channelPrograms)
         {
-            Playing = playing;
+            PlaybackStatus = playbackStatus;
+            ChannelPrograms = channelPrograms;
         }
     }
 

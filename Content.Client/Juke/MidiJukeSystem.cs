@@ -2,12 +2,14 @@ using System;
 using System.Diagnostics.Tracing;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
+using Melanchall.DryWetMidi.Core;
 using Robust.Client.Audio.Midi;
 using Robust.Client.GameObjects;
-using Robust.Shared.Audio.Midi;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Client.Juke
 {
@@ -19,11 +21,31 @@ namespace Content.Client.Juke
         {
             base.Initialize();
 
+            SubscribeLocalEvent<MidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
+
             SubscribeNetworkEvent<MidiJukeMidiEventsEvent>(OnMidiEvent);
             SubscribeNetworkEvent<MidiJukeStopEvent>(OnStopEvent);
             SubscribeNetworkEvent<MidiJukePlayEvent>(OnPlayEvent);
             SubscribeNetworkEvent<MidiJukePauseEvent>(OnPauseEvent);
             SubscribeNetworkEvent<MidiJukePlaybackFinishedEvent>(OnPlaybackFinishedEvent);
+        }
+
+        private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ComponentHandleState args)
+        {
+            Logger.Debug("Handling midijukestate");
+            if (args.Current is not MidiJukeComponentState cast) return;
+
+            var programs = cast.ChannelPrograms;
+            for (var i = 0; i < programs.Length; i++)
+            {
+                var old = component.ChannelPrograms[i];
+                component.ChannelPrograms[i] = programs[i];
+                if (old != programs[i])
+                {
+                    component.Renderer?.SendMidiEvent(new MidiEvent
+                        { Type = 192, Channel = (byte) i, Program = programs[i] });
+                }
+            }
         }
 
         private void OnPlaybackFinishedEvent(MidiJukePlaybackFinishedEvent evt)
@@ -100,6 +122,12 @@ namespace Content.Client.Juke
             if (!component.IsRendererAlive) SetupRenderer(component);
             foreach (var evt in midiEvents)
             {
+                //Keeping this up to date here isn't that important, but might as well do it.
+                if (evt.Type == 192)
+                {
+                    if (evt.Channel > component.ChannelPrograms.Length) return;
+                    component.ChannelPrograms[evt.Channel] = evt.Program;
+                }
                 component.Renderer?.SendMidiEvent(evt); //todo: some kind of buffering?
             }
         }

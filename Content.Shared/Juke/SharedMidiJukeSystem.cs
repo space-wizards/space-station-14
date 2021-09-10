@@ -15,11 +15,18 @@ namespace Content.Shared.Juke
             base.Initialize();
 
             //SubscribeLocalEvent<SharedMidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
+
         }
 
-        private void OnMidiJukeHandleState(EntityUid uid, SharedMidiJukeComponent component, ComponentHandleState args)
+        protected void OnMidiJukeHandleState(EntityUid uid, SharedMidiJukeComponent component, ComponentHandleState args)
         {
-            throw new System.NotImplementedException();
+            if (args.Current is not MidiJukeComponentState cast) return;
+
+            var programs = cast.ChannelPrograms;
+            for (var i = 0; i < programs.Length; i++)
+            {
+                component.ChannelPrograms[i] = programs[i];
+            }
         }
     }
 
