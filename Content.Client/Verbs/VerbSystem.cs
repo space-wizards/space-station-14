@@ -120,7 +120,6 @@ namespace Content.Client.Verbs
                 CurrentVerbPopup.List.DisposeAllChildren();
                 CurrentVerbPopup.AddToMenu(new Label { Text = Loc.GetString("verb-system-null-server-response") });
                 FillVerbPopup(CurrentVerbPopup);
-                CurrentVerbPopup.InvalidateMeasure();
                 return;
             }
 
@@ -136,7 +135,6 @@ namespace Content.Client.Verbs
             // Clear currently shown verbs and show new ones
             CurrentVerbPopup.List.DisposeAllChildren();
             FillVerbPopup(CurrentVerbPopup);
-            CurrentVerbPopup.InvalidateMeasure();
         }
 
         private void FillVerbPopup(ContextMenuPopup popup)
@@ -160,6 +158,8 @@ namespace Content.Client.Verbs
                 panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 popup.AddChild(panel);
             }
+
+            popup.InvalidateMeasure();
         }
 
         /// <summary>

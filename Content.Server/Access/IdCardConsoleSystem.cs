@@ -23,7 +23,7 @@ namespace Content.Server.Access
             if (args.Using == null ||
                 !args.CanAccess ||
                 !args.CanInteract ||
-                !args.Using.HasComponent<IdCardComponent>())
+                !args.Using.HasComponent<IdCardComponent>() ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
@@ -31,7 +31,7 @@ namespace Content.Server.Access
             if (component.PrivilegedIDEmpty)
             {
                 Verb verb = new("IDConsole:InsertPrivilegedID");
-                verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands);
+                verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands!);
                 verb.Category = VerbCategory.Insert;
                 verb.Text = Loc.GetString("id-card-console-privileged-id");
                 args.Verbs.Add(verb);
@@ -41,7 +41,7 @@ namespace Content.Server.Access
             if (component.TargetIDEmpty)
             {
                 Verb verb = new("IDConsole:InsertTargetID");
-                verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands);
+                verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands!);
                 verb.Category = VerbCategory.Insert;
                 verb.Text = Loc.GetString("id-card-console-target-id");
                 args.Verbs.Add(verb);

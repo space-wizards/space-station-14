@@ -43,6 +43,7 @@ namespace Content.Server.Buckle.Systems
             
             Verb verb = new("unbuckle");
             verb.Act = () => component.TryUnbuckle(args.User);
+            verb.Category = VerbCategory.Unbuckle;
 
             if (args.Target == args.User && args.Using == null)
             {
@@ -51,7 +52,6 @@ namespace Content.Server.Buckle.Systems
                 verb.Priority = 1;
             }
 
-            verb.Category = VerbCategory.Unbuckle;
             args.Verbs.Add(verb);
         }
 

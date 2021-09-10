@@ -177,33 +177,31 @@ namespace Content.Client.ContextMenu.UI
 
     public class ContextMenuPopup : Popup
     {
-        private static readonly Color DefaultButtonColor = Color.FromHex("#1B1B1BF5");
-        private static readonly Color DefaultSeparatorColor = Color.FromHex("#222E");
+        private static readonly Color ButtonColor = Color.FromHex("#1116");
+        private static readonly Color BackgroundColor = Color.FromHex("#222E");
+
         private const int MaxItemsBeforeScroll = 10;
         private const int MarginSizeBetweenElements = 2;
 
-        private readonly Color _buttonColor;
-        private readonly Color _separatorColor;
-
         public BoxContainer List { get; }
+        public ScrollContainer Scroll { get; }
         public int Depth { get; }
 
-        public ContextMenuPopup(int depth = 0, Color? buttonColor= null, Color? separatorColor = null)
+        public ContextMenuPopup(int depth = 0)
         {
-            _buttonColor = buttonColor ?? DefaultButtonColor;
-            _separatorColor = separatorColor ?? DefaultSeparatorColor;
+            MaxHeight = MaxItemsBeforeScroll * (32 + MarginSizeBetweenElements);
 
             Depth = depth;
-            AddChild(new ScrollContainer
+            List = new() { Orientation = LayoutOrientation.Vertical };
+            Scroll = new()
             {
                 HScrollEnabled = false,
-                Children = { new PanelContainer
-                {
-                    Children = { (List = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical
-                    }) }
-                }}
+                Children = { List }
+            };
+            AddChild(new PanelContainer
+            {
+                Children = { Scroll },
+                PanelOverride = new StyleBoxFlat { BackgroundColor = BackgroundColor }
             });
         }
 
@@ -216,16 +214,14 @@ namespace Content.Client.ContextMenu.UI
             if (List.ChildCount != 0)
             {
                 // Add a small separator between elements
-                List.AddChild(new PanelContainer
-                {
-                    MinSize = (0, 2),
-                    PanelOverride = new StyleBoxFlat { BackgroundColor = _separatorColor }
-                });;
+                List.AddChild(new PanelContainer {
+                    MinSize = (0, MarginSizeBetweenElements)
+                });
             }
             List.AddChild(new PanelContainer
             {
                 Children = { element },
-                PanelOverride = new StyleBoxFlat { BackgroundColor = _buttonColor }
+                PanelOverride = new StyleBoxFlat { BackgroundColor = ButtonColor }
             });
         }
 
@@ -245,15 +241,23 @@ namespace Content.Client.ContextMenu.UI
                 return Vector2.Zero;
             }
 
-            List.Measure(availableSize);
-            var listSize = List.DesiredSize;
+            Scroll.Measure(availableSize);
+            var size = List.DesiredSize;
+            // TODO QUESTION Why is there no way to get the "DesiredSize" from a ScrollContainer bar?
+            // I'd much rather just use something like:
+            // size = Scroll.DesiredSize()
 
-            if (List.ChildCount < MaxItemsBeforeScroll)
+            // account for scroll bar
+            if (size.Y > MaxHeight)
             {
-                return listSize;
+                // And if there is a good reason, then at the very least let the ScrollContainer expose the size of it's own
+                // scrollbar? Its 10 pixels btw:
+                size.X += 10;
+                // Then at least I could use:
+                // size.X += Scroll.VScrollBar.DesiredSize
             }
-            listSize.Y = MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * MarginSizeBetweenElements;
-            return listSize;
+
+            return size;
         }
     }
 }
