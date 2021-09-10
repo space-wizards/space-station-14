@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
+using Content.Server.Notification;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
@@ -41,6 +42,7 @@ namespace Content.Server.Juke
             //TODO: "what you want is [IWritableDirProvider.cs], use UserData in [IResourceManager.cs]" (use this instead of System.IO
             var loaded = 0;
             var failed = 0;
+            var start = _gameTiming.RealTime;
             foreach (var file in System.IO.Directory.GetFiles(MidiPath, "*.mid"))
             {
                 var fileName = System.IO.Path.GetFileName(file);
@@ -62,7 +64,10 @@ namespace Content.Server.Juke
                     failed++;
                 }
             }
-            Logger.InfoS("MidiJukeSystem", $"Loaded {loaded} MIDI files in x seconds. {failed} files failed to load.");
+
+            var finish = _gameTiming.RealTime;
+            var delta = (finish - start).TotalSeconds;
+            Logger.InfoS("MidiJukeSystem", $"Loaded {loaded} MIDI files in {delta} seconds. {failed} files failed to load.");
         }
 
         private void OnStartup(EntityUid uid, MidiJukeComponent midiJuke, ComponentStartup args)
@@ -160,7 +165,6 @@ namespace Content.Server.Juke
                     break;
             }
 
-            Logger.Debug($"Making it dirty at tick {_gameTiming.CurTick}");
             component.Dirty();
             DirtyUI(component.Owner.Uid);
         }
@@ -220,12 +224,11 @@ namespace Content.Server.Juke
 
         private void OnPlaybackFinished(MidiJukeComponent component)
         {
-            // component.MidiPlayer?.MoveToStart();
-            // component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
-            // RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
             Logger.Debug("Playback finished, shuffling song.");
-            ShuffleSong(component);
+            var nextSong = ShuffleSong(component);
             DirtyUI(component.Owner.Uid);
+            if (nextSong != null)
+                component.Owner.PopupMessageEveryone($"Now playing: {nextSong}.");
         }
 
         /// <summary>
@@ -273,7 +276,12 @@ namespace Content.Server.Juke
             }
         }
 
-        private void ShuffleSong(MidiJukeComponent component)
+        /// <summary>
+        /// Picks a random song to play on the component.
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns>The file name of the song picked, or null if we failed to pick anything.</returns>
+        private string? ShuffleSong(MidiJukeComponent component)
         {
             if (component.MidiPlayer != null)
             {
@@ -287,9 +295,10 @@ namespace Content.Server.Juke
             RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
             if (component.MidiPlayer == null)
             {
-                return;
+                return null;
             }
             Play(component);
+            return nextSong;
         }
 
         private void SetLoop(MidiJukeComponent component, bool loop)
