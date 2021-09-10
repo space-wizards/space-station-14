@@ -32,6 +32,7 @@ namespace Content.Client.Juke
 
         private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ComponentHandleState args)
         {
+            //TODO: check playback state here and start the renderer if needed.
             Logger.Debug("Handling midijukestate");
             if (args.Current is not MidiJukeComponentState cast) return;
 
