@@ -120,7 +120,7 @@ namespace Content.Shared.Verbs
         ///     Can the user physically access the target?
         /// </summary>
         /// <remarks>
-        ///     This is a combination of <see cref="ContainerHelpers.IsInSameOrParentContainer(IEntity, IEntity)"/> and
+        ///     This is a combination of <see cref="ContainerHelpers.IsInSameOrParentContainer"/> and
         ///     <see cref="SharedInteractionSystem.InRangeUnobstructed"/>.
         /// </remarks>
         public bool CanAccess;

@@ -180,18 +180,6 @@ namespace Content.Server.Administration
                 verb.Act = () => config.OpenUserInterface(actor);
                 args.Verbs.Add(verb);
             }
-
-            // Configuration verb... again? But for a specific component?
-            if (_groupController.CanAdminMenu(player) &&
-                args.Target.TryGetComponent<DisposalTaggerComponent>(out var tagger))
-            {
-                Verb verb = new Verb("debug:disposalconfig");
-                verb.Text = Loc.GetString("configure-verb-get-data-text");
-                verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-                verb.Category = VerbCategory.Debug;
-                verb.Act = () => tagger.OpenUserInterface(actor);
-                args.Verbs.Add(verb);
-            }
         }
     }
 }
