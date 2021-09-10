@@ -7,6 +7,7 @@ namespace Content.Shared.Vapor
     public class SharedVaporComponent : Component
     {
         public override string Name => "Vapor";
+        public const string SolutionName = "vapor";
     }
 
     [Serializable, NetSerializable]

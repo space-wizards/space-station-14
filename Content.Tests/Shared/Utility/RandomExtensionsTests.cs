@@ -26,6 +26,7 @@ namespace Content.Tests.Shared.Utility
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
 
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
 

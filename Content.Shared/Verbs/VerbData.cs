@@ -16,6 +16,9 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     The text that the user sees on the verb button.
         /// </summary>
+        /// <remarks>
+        ///     This string is automatically passed through Loc.GetString().
+        /// </remarks>
         public string Text { get; set; } = string.Empty;
 
         /// <summary>

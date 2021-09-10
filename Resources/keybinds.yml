@@ -109,6 +109,10 @@ binds:
 - function: ActivateItemInHand
   type: State
   key: Z
+- function: AltActivateItemInHand
+  type: State
+  key: Z
+  mod1: Alt
 - function: OpenCharacterMenu
   type: State
   key: C
@@ -128,6 +132,15 @@ binds:
 - function: ActivateItemInWorld
   type: State
   key: E
+- function: AltActivateItemInWorld
+  type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Alt
+- function: AltActivateItemInWorld # secondary binding
+  type: State
+  key: E
+  mod1: Alt
 - function: ThrowItemInHand
   type: State
   key: Q

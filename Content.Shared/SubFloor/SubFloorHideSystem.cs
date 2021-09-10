@@ -81,7 +81,7 @@ namespace Content.Shared.SubFloor
             UpdateEntity(uid, true);
         }
 
-        private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, AnchorStateChangedEvent args)
+        private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, ref AnchorStateChangedEvent args)
         {
             var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
 
@@ -89,7 +89,7 @@ namespace Content.Shared.SubFloor
             UpdateEntity(uid);
         }
 
-        private void HandleComponentState(EntityUid uid, SubFloorHideComponent component, ComponentHandleState args)
+        private void HandleComponentState(EntityUid uid, SubFloorHideComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not SubFloorHideComponentState state)
                 return;

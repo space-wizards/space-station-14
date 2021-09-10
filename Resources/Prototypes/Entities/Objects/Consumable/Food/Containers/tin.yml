@@ -7,8 +7,10 @@
   name: tin
   description: A tin of something, sealed tight.
   components:
-  - type: SolutionContainer
-    maxVol: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
@@ -74,11 +76,13 @@
   components:
   - type: Sprite
     state: peachtin-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -123,11 +127,12 @@
   components:
   - type: Sprite
     state: peachtinmaint-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinPeachesMaintTrash
 
@@ -172,11 +177,12 @@
   components:
   - type: Sprite
     state: beans-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -223,11 +229,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
     state: tin-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinMRETrash
 
