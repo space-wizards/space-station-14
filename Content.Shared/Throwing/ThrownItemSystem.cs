@@ -102,22 +102,13 @@ namespace Content.Shared.Throwing
             var coordinates = landing.Transform.Coordinates;
 
             // LandInteraction
-            // TODO: Refactor these to system messages
+            // TODO: Why is this handleable nani the fuck
             var landMsg = new LandEvent(user, landing, coordinates);
             RaiseLocalEvent(landing.Uid, landMsg);
+
             if (landMsg.Handled)
             {
                 return;
-            }
-
-            var comps = landing.GetAllComponents<ILand>().ToArray();
-            var landArgs = new LandEventArgs(user, coordinates);
-
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                if (landing.Deleted) break;
-                comp.Land(landArgs);
             }
 
             ComponentManager.RemoveComponent(landing.Uid, thrownItem);
