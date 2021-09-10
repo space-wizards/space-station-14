@@ -10,11 +10,13 @@ namespace Content.Shared.SecurityCamera
     public class SecurityCameraConnectEvent : EntityEventArgs
     {
         public EntityUid User {get;}
+        public EntityUid Console {get;}
         public Dictionary<int,EntityUid> CameraList {get;}
     
-        public SecurityCameraConnectEvent(EntityUid user, Dictionary<int,EntityUid> cameraList)
+        public SecurityCameraConnectEvent(EntityUid user, Dictionary<int,EntityUid> cameraList,EntityUid console)
         {
             User = user;
+            Console = console;
             CameraList = cameraList;
         }
     }
@@ -25,5 +27,13 @@ namespace Content.Shared.SecurityCamera
         public EntityUid User {get;}
 
         public SecurityCameraDisconnectEvent(EntityUid user){User = user;}
+    }
+
+    [Serializable, NetSerializable]
+    public class PowerChangedDisconnectEvent : EntityEventArgs
+    {
+        public EntityUid Console {get;}
+
+        public PowerChangedDisconnectEvent(EntityUid console){Console = console;}
     }
 }

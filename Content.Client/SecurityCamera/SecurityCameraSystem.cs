@@ -27,40 +27,48 @@ namespace Content.Client.SecurityCamera
             base.Initialize();
 
             SubscribeNetworkEvent<SecurityCameraConnectEvent>(HandleSecurityCameraConnectEvent);
+            SubscribeNetworkEvent<PowerChangedDisconnectEvent>(HandlePowerChangedDisconnectEvent);
             SubscribeLocalEvent<SecurityClientComponent, MovementAttemptEvent>(HandleMovementEvent);
         }
         private void HandleMovementEvent(EntityUid uid, SecurityClientComponent component, MovementAttemptEvent args)
         {
+            // Cancel movement
             if(component.active == true)
             {
                 args.Cancel();
             }
         }
 
+        private void HandlePowerChangedDisconnectEvent(PowerChangedDisconnectEvent msg)
+        {
+            // Handle power changes
+            if(msg.Console == cameraclient.connectedComputer){HandleSecurityDisconnectEvent();}
+        }
+
         private void HandleSecurityCameraConnectEvent(SecurityCameraConnectEvent msg)
         {
-            Logger.Info("Received Event");
-            // Set Vars
+            // Set variables
             cameraList = msg.CameraList;
             var user = EntityManager.GetEntity(msg.User);
             var secClient = user.EnsureComponent<SecurityClientComponent>();
             secClient.active = true;
+            secClient.connectedComputer = msg.Console;
             secClient.currentCamInt = 1;
             cameraclient = secClient;
-            var key = secClient.currentCamInt;
-            var eye = EntityManager.GetEntity(cameraList[secClient.currentCamInt]).GetComponent<EyeComponent>();
-
+            var eye = EntityManager.GetEntity(cameraList[1]).GetComponent<EyeComponent>();
+            // Create new viewport
             var viewport = EntitySystem.Get<CameraSystem>().CreateCameraViewport(new Vector2i(512,512),eye,ScalingViewportRenderScaleMode.CeilInt);
             if(currentWindow.Title == "Temporary")
             {       
-                // Create New Window
-                var window = new SS14Window
+                // Create new window
+                currentWindow = new SS14Window
                 {
                     Title = "Cameras",
                     MinSize = (500, 600)
                 };
-                window.Contents.AddChild(viewport);
-                window.Contents.AddChild(new BoxContainer
+                // Create Ui
+                currentWindow.Contents.AddChild(viewport);
+                currentWindow.Contents.AddChild(new BoxContainer
                 {
 	                Orientation = LayoutOrientation.Vertical,
                     Children =  {
@@ -75,15 +83,14 @@ namespace Content.Client.SecurityCamera
                 }}});
                 nextButton.OnPressed += OnNextButtonPressed;
                 prevButton.OnPressed += OnPrevButtonPressed;
-                window.OnClose += () => HandleSecurityDisconnectEvent();
-
-                currentWindow = window;
+                currentWindow.OnClose += () => HandleSecurityDisconnectEvent();
                 currentWindow.OpenToLeft();
                 return;
             }
             if(currentWindow.Title == "Cameras")
             {
-                ChangeCam(cameraclient.currentCamInt);
+                // Reopen stored window
+                currentWindow.Open();
             }
         }
         
@@ -105,11 +112,13 @@ namespace Content.Client.SecurityCamera
 
         private void ChangeCam(int camera)
         {
+            // Cycle cameras
+            var eye = EntityManager.GetEntity(cameraList[camera]).GetComponent<EyeComponent>().Eye;
             foreach(var child in currentWindow.Contents.Children)
             {
-                if(child is ScalingViewport view)
+                if(child is ScalingViewport viewport)
                 {
-                    view.Eye = EntityManager.GetEntity(cameraList[camera]).GetComponent<EyeComponent>().Eye;
+                    viewport.Eye = eye;
                 }
             }
         }
@@ -118,8 +127,6 @@ namespace Content.Client.SecurityCamera
         {
             RaiseNetworkEvent(new SecurityCameraDisconnectEvent(cameraclient.Owner.Uid));
             currentWindow.Close();
-            currentWindow.Title = "Temporary";
-            currentWindow.Contents.Clear();
             cameraclient.active = false;
         }
     }

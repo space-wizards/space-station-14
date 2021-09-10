@@ -10,5 +10,7 @@ namespace Content.Shared.SecurityCamera
         public bool active;
 
         public int currentCamInt;
+
+        public EntityUid connectedComputer;
     }
 }

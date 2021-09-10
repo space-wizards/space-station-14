@@ -8,6 +8,7 @@ using Content.Shared.Movement;
 using Content.Shared.SecurityCamera;
 using Content.Shared.Interaction;
 using Content.Server.Camera;
+using Content.Server.Power.Components;
 using Robust.Shared.Log;
 
 namespace Content.Server.SecurityCamera
@@ -21,12 +22,14 @@ namespace Content.Server.SecurityCamera
             base.Initialize();
 
             SubscribeLocalEvent<SecurityConsoleComponent,InteractHandEvent>(HandleInteract);
+            SubscribeLocalEvent<SecurityConsoleComponent, PowerChangedEvent>(HandlePowerChangedEvent);
             SubscribeLocalEvent<SecurityClientComponent, MovementAttemptEvent>(HandleMovementEvent);
             SubscribeNetworkEvent<SecurityCameraDisconnectEvent>(HandleSecurityCameraDisconnectEvent);
         }
 
         private void HandleMovementEvent(EntityUid uid, SecurityClientComponent component, MovementAttemptEvent args)
         {
+            // Cancel movement
             if(component.active == true)
             {
                 args.Cancel();
@@ -45,18 +48,29 @@ namespace Content.Server.SecurityCamera
 
         public void HandleInteract(EntityUid uid, SecurityConsoleComponent component, InteractHandEvent args)
         {
+            // Check power
+            component._powerReceiverComponent = component.Owner.GetComponent<ApcPowerReceiverComponent>();
+            if(!component.Powered){return;}
+
+            // Set variables
             var user = args.User;
             UpdateList(user);
-            Logger.Info("Updated List");
             var secClient = user.EnsureComponent<SecurityClientComponent>();
-            RaiseNetworkEvent(new SecurityCameraConnectEvent(user.Uid,cameraList),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
-            Logger.Info("Sent Event");
-            secClient.active = true;               
+            secClient.connectedComputer = component.Owner.Uid;
+            secClient.active = true;   
+            RaiseNetworkEvent(new SecurityCameraConnectEvent(user.Uid,cameraList,component.Owner.Uid),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
+        }
+
+        public void HandlePowerChangedEvent(EntityUid uid, SecurityConsoleComponent component, PowerChangedEvent args)
+        {
+            // Handle power changes
+            if(args.Powered){return;}
+            RaiseNetworkEvent(new PowerChangedDisconnectEvent(component.Owner.Uid));
         }
 
         public void UpdateList(IEntity user)
         {
-            // Update List Of Cameras
+            // Update list of cameras
             foreach(var cam in EntityManager.ComponentManager.EntityQuery<SecurityCameraComponent>(true))
             {
                 if(!cameraList.ContainsValue(cam.Owner.Uid))
