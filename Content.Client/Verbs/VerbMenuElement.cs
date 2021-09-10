@@ -98,7 +98,7 @@ namespace Content.Client.Verbs
             // give the button functionality!
             OnPressed += _ =>
             {
-                system.CloseVerbMenu();
+                system.ContextMenuPresenter.CloseAllMenus();
                 system.TryExecuteVerb(verb, true, target, type);
             };
         }

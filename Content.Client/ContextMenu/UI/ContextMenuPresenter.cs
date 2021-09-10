@@ -380,7 +380,7 @@ namespace Content.Client.ContextMenu.UI
             return _playerCanSeeThroughContainers || !entity.TryGetContainer(out var container) || container.ShowContents;
         }
 
-        private void CloseAllMenus()
+        public void CloseAllMenus()
         {
             _contextMenuView.CloseContextPopups();
             _verbSystem.CloseVerbMenu();

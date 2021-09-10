@@ -24,7 +24,7 @@ namespace Content.Client.Verbs
 
         public event EventHandler<bool>? ToggleContainerVisibility;
 
-        private ContextMenuPresenter _contextMenuPresenter = default!;
+        public ContextMenuPresenter ContextMenuPresenter = default!;
 
         public EntityUid CurrentTarget;
         public ContextMenuPopup? CurrentVerbPopup;
@@ -41,15 +41,15 @@ namespace Content.Client.Verbs
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
             SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
 
-            _contextMenuPresenter = new ContextMenuPresenter(this);
-            SubscribeLocalEvent<MoveEvent>(_contextMenuPresenter.HandleMoveEvent);
+            ContextMenuPresenter = new ContextMenuPresenter(this);
+            SubscribeLocalEvent<MoveEvent>(ContextMenuPresenter.HandleMoveEvent);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
 
-            _contextMenuPresenter?.Dispose();
+            ContextMenuPresenter?.Dispose();
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
@@ -65,7 +65,7 @@ namespace Content.Client.Verbs
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            _contextMenuPresenter?.Update();
+            ContextMenuPresenter?.Update();
         }
 
         public void OpenVerbMenu(IEntity target, ScreenCoordinates screenCoordinates)
