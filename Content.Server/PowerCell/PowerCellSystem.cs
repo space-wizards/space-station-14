@@ -35,8 +35,9 @@ namespace Content.Server.PowerCell
                 return;
 
             Verb verb = new("cell:eject");
-            verb.Act = () => component.EjectCell(args.User);
+            verb.Text = component.Cell!.Name;
             verb.Category = VerbCategory.Eject;
+            verb.Act = () => component.EjectCell(args.User);
             args.Verbs.Add(verb);
         }
 
@@ -51,8 +52,9 @@ namespace Content.Server.PowerCell
                 return;
 
             Verb verb = new("cell:Insert");
-            verb.Act = () => component.InsertCell(args.Using);
+            verb.Text = args.Using.Name;
             verb.Category = VerbCategory.Insert;
+            verb.Act = () => component.InsertCell(args.Using);
             args.Verbs.Add(verb);
         }
 

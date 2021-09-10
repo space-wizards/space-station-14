@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -20,6 +22,9 @@ namespace Content.Server.Storage.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+
+            SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
+            SubscribeLocalEvent<ServerStorageComponent, GetInteractionVerbsEvent>(AddOpenUiVerb);
         }
 
         /// <inheritdoc />
@@ -29,6 +34,42 @@ namespace Content.Server.Storage.EntitySystems
             {
                 CheckSubscribedEntities(component);
             }
+        }
+
+        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!component.CanOpen(args.User, silent: true))
+                return;
+
+            Verb verb = new Verb("storage:toggleopen");
+            verb.Category = component.Open ? VerbCategory.Close : VerbCategory.Open;
+            verb.Act = () => component.ToggleOpen(args.User);
+            args.Verbs.Add(verb);
+        }
+
+        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked)
+                return;
+
+            // Get the session for the user
+            var session = args.User.GetComponentOrNull<ActorComponent>()?.PlayerSession;
+            if (session == null)
+                return;
+
+            // Does this player currently have the storage UI open?
+            var uiOpen = component.SubscribedSessions.Contains(session);
+
+            Verb verb = new Verb("storage:toggleui");
+            verb.Act = () => component.OpenStorageUI(args.User);
+            verb.Category = uiOpen ? VerbCategory.Close : VerbCategory.Open;
+            args.Verbs.Add(verb);
         }
 
         private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)

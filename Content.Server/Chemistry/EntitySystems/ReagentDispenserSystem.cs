@@ -43,6 +43,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 component.UpdateUserInterface();
             };
             verb.Category = VerbCategory.Eject;
+            verb.Text = component.BeakerContainer.ContainedEntity!.Name;
 
             args.Verbs.Add(verb);
         }
@@ -70,6 +71,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 component.UpdateUserInterface();
             };
             verb.Category = VerbCategory.Insert;
+            verb.Text = args.Using.Name;
             args.Verbs.Add(verb);
         }
 

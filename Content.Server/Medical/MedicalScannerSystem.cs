@@ -33,6 +33,7 @@ namespace Content.Server.Medical
             Verb verb = new("medscan:insert");
             verb.Act = () => component.InsertBody(args.Using);
             verb.Category = VerbCategory.Insert;
+            verb.Text = args.Using.Name;
             args.Verbs.Add(verb);
         }
 

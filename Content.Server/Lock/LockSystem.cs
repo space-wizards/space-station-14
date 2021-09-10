@@ -65,7 +65,7 @@ namespace Content.Server.Lock
 
         public bool TryLock(LockComponent lockComp, IEntity user)
         {
-            if (!HasUserAccess(lockComp, user))
+            if (!CanToggleLock(lockComp, user, quiet: false))
             {
                 return false;
             }
@@ -89,7 +89,7 @@ namespace Content.Server.Lock
 
         public bool TryUnlock(LockComponent lockComp, IEntity user)
         {
-            if (!HasUserAccess(lockComp, user))
+            if (!CanToggleLock(lockComp, user, quiet: false))
             {
                 return false;
             }
@@ -111,15 +111,24 @@ namespace Content.Server.Lock
             return true;
         }
 
-        private static bool HasUserAccess(LockComponent lockComp, IEntity user)
+        public bool CanToggleLock(LockComponent component, IEntity user, bool quiet = true)
         {
-            if (lockComp.Owner.TryGetComponent(out AccessReader? reader))
+            // Cannot lock if the entity is currently opened.
+            if (component.Owner.TryGetComponent(out EntityStorageComponent? entityStorageComponent)
+                && entityStorageComponent.Open)
+                return false;
+
+            // Cannot lock from the inside
+            if (entityStorageComponent?.Contents?.Contains(user) ?? false)
+                return false;
+
+            // Does the user not have access?
+            if (component.Owner.TryGetComponent(out AccessReader? reader) && !reader.IsAllowed(user))
             {
-                if (!reader.IsAllowed(user))
-                {
-                    lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
-                    return false;
-                }
+                if (!quiet)
+                    component.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
+                    
+                return false;
             }
 
             return true;
@@ -127,12 +136,7 @@ namespace Content.Server.Lock
 
         private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract)
-                return;
-
-            // Cannot lock if the entity is currently opened.
-            if (component.Owner.TryGetComponent(out EntityStorageComponent? entityStorageComponent)
-                && entityStorageComponent.Open)
+            if (!args.CanAccess || !args.CanInteract || !CanToggleLock(component, args.User))
                 return;
 
             Verb verb = new("togglelock");

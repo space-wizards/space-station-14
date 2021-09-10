@@ -52,18 +52,19 @@ namespace Content.Server.Cabinet
             toggleVerb.Priority = -1; // eject/insert takes priority over open/close
             args.Verbs.Add(toggleVerb);
 
-            // Eject item verb
+            // "Eject" item verb
             if (component.Opened &&
                 component.ItemContainer.ContainedEntity != null &&
                 _actionBlockerSystem.CanPickup(args.User))
             {
-                Verb verb = new("ItemCabined:eject");
+                Verb verb = new("itemcabined:eject");
                 verb.Act = () =>
                 {
                     TakeItem(component, args.Hands, component.ItemContainer.ContainedEntity, args.User);
                     UpdateVisuals(component);
                 };
-                verb.Category = VerbCategory.Eject;
+                verb.Text = Loc.GetString("pick-up-verb-get-data-text");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
                 args.Verbs.Add(verb);
             }
 
@@ -74,13 +75,14 @@ namespace Content.Server.Cabinet
                 (component.Whitelist?.IsValid(args.Using) ?? true) &&
                 component.ItemContainer.CanInsert(args.Using))
             {
-                Verb verb = new("ItemCabined:insert");
+                Verb verb = new("itemcabined:insert");
                 verb.Act = () =>
                 {
                     args.Hands.TryPutEntityIntoContainer(args.Using, component.ItemContainer);
                     UpdateVisuals(component);
                 };
                 verb.Category = VerbCategory.Insert;
+                verb.Text = args.Using.Name;
                 args.Verbs.Add(verb);
             }
         }
