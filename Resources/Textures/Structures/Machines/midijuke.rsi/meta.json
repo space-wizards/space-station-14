@@ -1,0 +1,17 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-SA 4.0",
+    "copyright": "Space Station 14",
+    "states": [
+        {
+            "name": "midijuke",
+        },
+        {
+            "name": "midijuke_on",
+        },
+    ]
+}

@@ -1,21 +1,29 @@
 - type: entity
-  name: basejuke
-  id: BaseJuke
-  parent: BaseStructureDynamic
-  abstract: true
-  components:
-    - type: InteractionOutline
-    - type: Sprite
-      sprite: Structures/Furniture/instruments.rsi
-
-- type: entity
-  name: midi juke
+  name: Roband Space Canvas 88 Pro
+  description: A device for playing back some kind of ancient digital music.
   id: MidiJuke
-  parent: BaseJuke
+  parent: BaseMachinePowered
   components:
     - type: MidiJuke
     - type: Sprite
-      state: piano
+      netsync: false
+      sprite: Structures/Machines/midijuke.rsi
+      layers:
+        - state: midijuke
+        - state: midijuke_on
+          shader: unshaded
+    - type: InteractionOutline
+    - type: Physics
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.3, -0.16, 0.3, 0.16"
+        mass: 15
+        layer:
+        - MobMask
+        - Opaque
+        mask:
+        - MobMask
     - type: UserInterface
       interfaces:
         - key: enum.MidiJukeUiKey.Key
