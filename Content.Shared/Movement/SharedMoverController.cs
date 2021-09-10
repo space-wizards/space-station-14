@@ -154,7 +154,7 @@ namespace Content.Shared.Movement
             return body.BodyStatus == BodyStatus.OnGround &&
                    body.Owner.HasComponent<IMobStateComponent>() &&
                    // If we're being pulled then don't mess with our velocity.
-                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
+                   (!body.Owner.TryGetComponent(out PullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove(body.Owner);
         }
 
@@ -179,7 +179,7 @@ namespace Content.Shared.Movement
                     !otherCollider.CanCollide ||
                     ((collider.CollisionMask & otherCollider.CollisionLayer) == 0 &&
                     (otherCollider.CollisionMask & collider.CollisionLayer) == 0) ||
-                    (otherCollider.Owner.TryGetComponent(out SharedPullableComponent? pullable) && pullable.BeingPulled))
+                    (otherCollider.Owner.TryGetComponent(out PullableComponent? pullable) && pullable.BeingPulled))
                 {
                     continue;
                 }

@@ -36,7 +36,7 @@ namespace Content.Client.Physics.Controllers
             }
 
             // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
-            if (player.TryGetComponent(out SharedPullableComponent? pullableComp))
+            if (player.TryGetComponent(out PullableComponent? pullableComp))
             {
                 var puller = pullableComp.Puller;
                 if (puller != null && puller.TryGetComponent<PhysicsComponent>(out var pullerBody))

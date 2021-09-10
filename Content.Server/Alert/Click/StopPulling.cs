@@ -19,7 +19,7 @@ namespace Content.Server.Alert.Click
             EntitySystem
                 .Get<SharedPullingSystem>()
                 .GetPulled(args.Player)?
-                .GetComponentOrNull<SharedPullableComponent>()?
+                .GetComponentOrNull<PullableComponent>()?
                 .TryStopPull();
         }
     }

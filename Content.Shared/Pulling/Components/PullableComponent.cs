@@ -1,7 +1,5 @@
 using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
-using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
@@ -17,7 +15,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pulling.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedPullableComponent : Component, IRelayMoveInput
+    [RegisterComponent]
+    public class PullableComponent : Component, IRelayMoveInput
     {
         public override string Name => "Pullable";
 
@@ -111,7 +110,7 @@ namespace Content.Shared.Pulling.Components
                     var oldPulling = valuePuller.Pulling;
                     if (oldPulling != null)
                     {
-                        if (oldPulling.TryGetComponent(out SharedPullableComponent? pullable))
+                        if (oldPulling.TryGetComponent(out PullableComponent? pullable))
                         {
                             pullable.TryStopPull();
                         }

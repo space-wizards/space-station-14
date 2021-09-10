@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Coordinates.Helpers;
-using Content.Server.Pulling;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;

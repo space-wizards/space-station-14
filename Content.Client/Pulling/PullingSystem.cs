@@ -1,4 +1,5 @@
-﻿using Content.Shared.Pulling;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Client.Physics;
 
