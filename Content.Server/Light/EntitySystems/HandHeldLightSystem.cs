@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Light.Components;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -18,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<ActivateHandheldLightMessage>(HandleActivate);
             SubscribeLocalEvent<DeactivateHandheldLightMessage>(HandleDeactivate);
+            SubscribeLocalEvent<HandheldLightComponent, GetInteractionVerbsEvent>(AddToggleLightVerb);
         }
 
         public override void Shutdown()
@@ -43,6 +46,18 @@ namespace Content.Server.Light.EntitySystems
                 if (handheld.Deleted || handheld.Paused) continue;
                 handheld.OnUpdate(frameTime);
             }
+        }
+
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            Verb verb = new Verb("light:toggle");
+            verb.Text = Loc.GetString("toggle-light-verb-get-data-text");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
+            verb.Act = component.Activated ? () => component.TurnOff() : () => component.TurnOn(args.User);
+            args.Verbs.Add(verb);
         }
     }
 }
