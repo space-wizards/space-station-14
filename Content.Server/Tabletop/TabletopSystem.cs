@@ -102,7 +102,8 @@ namespace Content.Server.Tabletop
             if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession) return;
 
             // Check if player is actually playing at this table
-            if (!_gameSessions[msg.TableUid].IsPlaying(playerSession)) return;
+            if (!_gameSessions.TryGetValue(msg.TableUid, out var tableUid) ||
+                !tableUid.IsPlaying(playerSession)) return;
 
             // Return if can not see table or stunned/no hands
             if (!EntityManager.TryGetEntity(msg.TableUid, out var table)) return;
