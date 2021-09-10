@@ -38,7 +38,7 @@ namespace Content.Server.Buckle.Systems
 
         private void AddBuckleVerb(EntityUid uid, BuckleComponent component, GetInteractionVerbsEvent args)
         {
-            if (!component.Buckled || !args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!component.Buckled || !args.CanAccess || args.Hands == null)
                 return;
             
             Verb verb = new("unbuckle");
@@ -51,10 +51,7 @@ namespace Content.Server.Buckle.Systems
                 verb.Priority = 2;
             }
 
-            if (args.PrepareGUI)
-            {
-                verb.Category = VerbCategory.Unbuckle;
-            }
+            verb.Category = VerbCategory.Unbuckle;
             args.Verbs.Add(verb);
         }
 

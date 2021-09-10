@@ -36,32 +36,25 @@ namespace Content.Server.Cabinet
 
         private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Toggle open verb
             Verb toggleVerb = new("ItemCabined:toggle");
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
-            if (args.PrepareGUI)
-            {
-                toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
-            }
+            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
             args.Verbs.Add(toggleVerb);
 
             // add Eject item verb
             if (component.Opened && component.ItemContainer.ContainedEntity != null)
             {
                 Verb verb = new("ItemCabined:eject");
-
                 verb.Act = () =>
                 {
                     TakeItem(component, args.Hands, component.ItemContainer.ContainedEntity, args.User);
                     UpdateVisuals(component);
                 };
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Eject;
-                }
+                verb.Category = VerbCategory.Eject;
                 // eject takes priority over open/close
                 verb.Priority = 1;
                 args.Verbs.Add(verb);
@@ -74,17 +67,13 @@ namespace Content.Server.Cabinet
                 component.ItemContainer.CanInsert(args.Using))
             {
                 Verb verb = new("ItemCabined:insert");
-
                 verb.Act = () =>
                 {
                     args.Hands.TryPutEntityIntoContainer(args.Using, component.ItemContainer);
                     UpdateVisuals(component);
                 };
+                verb.Category = VerbCategory.Insert;
 
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Insert;
-                }
                 // insert takes priority over open/close
                 verb.Priority = 1;
                 args.Verbs.Add(verb);

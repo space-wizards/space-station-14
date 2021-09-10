@@ -27,7 +27,7 @@ namespace Content.Server.Climbing
         private void AddClimbVerb(EntityUid uid, ClimbableComponent component, GetAlternativeVerbsEvent args)
         {
             // Check that the user interact.
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Check that the user climb.
@@ -38,11 +38,8 @@ namespace Content.Server.Climbing
             // Add a climb verb
             Verb verb = new("climb");
             verb.Act = () => component.TryClimb(args.User);
-            if (args.PrepareGUI)
-            {
-                verb.Text = Loc.GetString("comp-climbable-verb-climb");
-                // TODO VERBS ICON add a climbing icon?
-            }
+            verb.Text = Loc.GetString("comp-climbable-verb-climb");
+            // TODO VERBS ICON add a climbing icon?
             args.Verbs.Add(verb);
         }
 

@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.EntitySystems
         // system mentioned in #4538? The code here is basically identical to the stuff in ChemDispenserSystem
         private void AddEjectVerb(EntityUid uid, ChemMasterComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null || !component.HasBeaker)
+            if (!args.CanAccess || args.Hands == null || !component.HasBeaker)
                 return;
 
             Verb verb = new("ChemMaster:Eject");
@@ -32,12 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 component.TryEject(args.User);
                 component.UpdateUserInterface();
             };
-
-            if (args.PrepareGUI)
-            {
-                verb.Category = VerbCategory.Eject;
-            }
-
+            verb.Category = VerbCategory.Eject;
             args.Verbs.Add(verb);
         }
 
@@ -46,7 +41,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void AddInsertVerb(EntityUid uid, ChemMasterComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Using == null || component.HasBeaker)
+            if (!args.CanAccess || args.Using == null || component.HasBeaker)
                 return;
 
             if (!args.Using.HasComponent<FitsInDispenserComponent>())
@@ -58,12 +53,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 component.BeakerContainer.Insert(args.Using);
                 component.UpdateUserInterface();
             };
-
-            if (args.PrepareGUI)
-            {
-                verb.Category = VerbCategory.Insert;
-            }
-
+            verb.Category = VerbCategory.Insert;
             args.Verbs.Add(verb);
         }
 		

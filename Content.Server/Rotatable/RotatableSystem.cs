@@ -21,7 +21,7 @@ namespace Content.Server.Rotatable
 
         private void AddFlipVerb(EntityUid uid, FlippableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             if (component.MirrorEntity == null)
@@ -36,7 +36,7 @@ namespace Content.Server.Rotatable
 
         private void AddRotateVerbs(EntityUid uid, RotatableComponent component, GetOtherVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Check if the object is anchored, and whether we are still allowed to rotate it.

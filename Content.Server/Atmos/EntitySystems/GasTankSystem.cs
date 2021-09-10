@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))
@@ -32,13 +32,8 @@ namespace Content.Server.Atmos.EntitySystems
 
             Verb verb = new("GasTank:OpenUI");
             verb.Act = () => component.OpenInterface(actor.PlayerSession);
-
-            if (args.PrepareGUI)
-            {
-                verb.Text = Loc.GetString("control-verb-open-control-panel-text");
-                // TODO VERBS add "open UI" icon?
-            }
-
+            verb.Text = Loc.GetString("control-verb-open-control-panel-text");
+            // TODO VERBS add "open UI" icon?
             args.Verbs.Add(verb);
         }
 

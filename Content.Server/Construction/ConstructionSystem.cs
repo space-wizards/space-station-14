@@ -476,7 +476,7 @@ namespace Content.Server.Construction
         private void AddConstructionVerbs(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
         {
             // Needs to be able to interact to construct
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             if (component.Target?.Name == component.DeconstructionNodeIdentifier ||

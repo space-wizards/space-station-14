@@ -5,9 +5,8 @@ using Content.Shared.Hands.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Content.Shared.Interaction.Helpers;
 using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Content.Shared.Interaction;
 
 namespace Content.Shared.Verbs
 {
@@ -66,7 +65,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetInteractionVerbsEvent : GetVerbsEvent
     {
-        public GetInteractionVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+        public GetInteractionVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
     }
 
     /// <summary>
@@ -80,7 +79,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetActivationVerbsEvent : GetVerbsEvent
     {
-        public GetActivationVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+        public GetActivationVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
     }
 
     /// <summary>
@@ -92,7 +91,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetAlternativeVerbsEvent : GetVerbsEvent
     {
-        public GetAlternativeVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+        public GetAlternativeVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
     }
 
     /// <summary>
@@ -104,7 +103,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetOtherVerbsEvent : GetVerbsEvent
     {
-        public GetOtherVerbsEvent(IEntity user, IEntity target, bool prepareGUI = false) : base(user, target, prepareGUI) { }
+        public GetOtherVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
     }
 
     /// <summary>
@@ -118,13 +117,22 @@ namespace Content.Shared.Verbs
         public List<Verb> Verbs = new();
 
         /// <summary>
-        ///     Is the user in range and has obstructed access to the target?
+        ///     Can the user physically access the target?
         /// </summary>
         /// <remarks>
-        ///     This is simply a cached <see cref="SharedUnobstructedExtensions.InRangeUnobstructed"/> result with the
-        ///     default arguments, in order to avoid the function being called by every single system that wants to add a verb.
+        ///     This is a combination of <see cref="InteractionSystem.InRangeUnobstructed"/> and <see
+        ///     cref="ContainerHelpers.IsInSameOrParentContainer(IEntity, IEntity)"/>.
         /// </remarks>
-        public bool DefaultInRangeUnobstructed;
+        public bool CanAccess;
+
+        /// <summary>
+        ///     Can the user physically interact?
+        /// </summary>
+        /// <remarks>
+        ///     This is a combination of <see cref="ActionBlockerSystem.CanInteract"/> and whether the user has
+        ///     hands. Ranged interactions may require this, but not <see cref="CanAccess"/>
+        /// </remarks>
+        public bool CanInteract;
 
         /// <summary>
         ///     The entity being targeted for the verb.
@@ -153,50 +161,34 @@ namespace Content.Shared.Verbs
         public SharedHandsComponent? Hands;
 
         /// <summary>
-        ///     Whether or not to load icons and string localizations in preparation for displaying in a GUI.
-        /// </summary>
-        /// <remarks>
-        ///     Avoids sending unnecessary data over the network.
-        /// </remarks>
-        public bool PrepareGUI;
-
-        /// <summary>
         /// 
         /// </summary>
         /// <param name="user">The user that will perform the verb.</param>
         /// <param name="target">The target entity.</param>
         /// <param name="prepareGUI">Whether the verbs will be displayed in a GUI</param>
-        public GetVerbsEvent(IEntity user, IEntity target, bool prepareGUI)
+        public GetVerbsEvent(IEntity user, IEntity target)
         {
             User = user;
             Target = target;
-            PrepareGUI = prepareGUI;
 
-            // Because the majority of verbs need to check InRangeUnobstructed, cache it with default args.
-            DefaultInRangeUnobstructed = this.InRangeUnobstructed();
+            CanAccess = user.IsInSameOrParentContainer(target) &&
+                EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
 
-            // Here we check if physical interactions are permitted. First, does the user have hands?
-            if (!user.TryGetComponent<SharedHandsComponent>(out var hands))
-                return;
+            // TODO HANDS should hands use action blocker to block interactions?
+            CanInteract = user.TryGetComponent(out Hands) &&
+                EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
 
-            // Are physical interactions blocked somehow?
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                return;
-
-            // Can the user physically access the target?
-            if (!user.IsInSameOrParentContainer(target))
+            if (!CanInteract)
                 return;
 
             // Physical interactions are allowed.
-            Hands = hands;
-            Hands.TryGetActiveHeldEntity(out Using);
+            Hands!.TryGetActiveHeldEntity(out Using);
 
             // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
             // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
             // their sprite.
             if (Using != null && Using.TryGetComponent<HandVirtualPullComponent>(out var pull))
             {
-                // Resolve entity uid
                 Using = IoCManager.Resolve<IEntityManager>().GetEntity(pull.PulledEntity);
             }
         }

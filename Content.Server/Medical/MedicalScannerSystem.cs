@@ -19,7 +19,7 @@ namespace Content.Server.Medical
 
         private void AddInsertOtherVerb(EntityUid uid, MedicalScannerComponent component, GetInteractionVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             if (component.IsOccupied || args.Using == null || !component.CanInsert(args.Using))
@@ -33,7 +33,7 @@ namespace Content.Server.Medical
 
         private void AddAlternativeVerbs(EntityUid uid, MedicalScannerComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Eject verb

@@ -26,28 +26,28 @@ namespace Content.Shared.Verbs
 
             if (verbTypes.HasFlag(VerbType.Activation))
             {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target, prepareGUI: true);
+                GetInteractionVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if (verbTypes.HasFlag(VerbType.Interaction))
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target, prepareGUI: true);
+                GetActivationVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if (verbTypes.HasFlag(VerbType.Alternative))
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target, prepareGUI: true);
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if (verbTypes.HasFlag(VerbType.Other))
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target, prepareGUI: true);
+                GetOtherVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }
@@ -58,7 +58,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Get all of the entities relevant for the context menu
         /// </summary>
-        /// <param name="buffer">Whether we should slightly extend the entrity search area.</param>
+        /// <param name="buffer">Whether we should slightly extend the entity search area.</param>
         /// <returns></returns>
         public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos,
             [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)

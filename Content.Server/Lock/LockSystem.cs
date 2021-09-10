@@ -127,7 +127,7 @@ namespace Content.Server.Lock
 
         private void AddLockVerbs(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             if (component.Owner.TryGetComponent(out EntityStorageComponent? entityStorageComponent)
@@ -135,16 +135,12 @@ namespace Content.Server.Lock
                 return;
 
             Verb verb = new("togglelock");
-
             verb.Act = component.Locked ?
                 () => TryUnlock(component, args.User) :
                 () => TryLock(component, args.User);
 
-            if (args.PrepareGUI)
-            {
-                verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
-                // TODO VERB ICONS need padlock open/close icons.
-            }
+            verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
+            // TODO VERB ICONS need padlock open/close icons.
 
             args.Verbs.Add(verb);
         }

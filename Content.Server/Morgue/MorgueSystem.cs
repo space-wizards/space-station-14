@@ -23,7 +23,7 @@ namespace Content.Server.Morgue
         private void AddCremateVerb(EntityUid uid, CrematoriumEntityStorageComponent component, GetAlternativeVerbsEvent args)
         {
 
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
             {
                 return;
             }
@@ -46,7 +46,7 @@ namespace Content.Server.Morgue
         private void AddRemoveLabelVerb(EntityUid uid, BodyBagEntityStorageComponent component, GetAlternativeVerbsEvent args)
         {
 
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
             {
                 return;
             }

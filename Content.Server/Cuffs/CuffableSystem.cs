@@ -23,7 +23,7 @@ namespace Content.Server.Cuffs
 
         private void AddCuffableVerbs(EntityUid uid, CuffableComponent component, GetOtherVerbsEvent args)
         {
-            if (component.CuffedHandCount == 0 || !args.DefaultInRangeUnobstructed)
+            if (component.CuffedHandCount == 0 || !args.CanAccess)
                 return;
 
             // check if the user can interact (or is uncuffing themselves)
@@ -32,11 +32,8 @@ namespace Content.Server.Cuffs
 
             Verb verb = new("uncuff");
             verb.Act = () => component.TryUncuff(args.User);
-            if (args.PrepareGUI)
-            {
-                verb.Text = Loc.GetString("uncuff-verb-get-data-text");
-                //TODO VERB ICON add uncuffing symbol? may re-use the symbol showing that you are currently cuffed?
-            }
+            verb.Text = Loc.GetString("uncuff-verb-get-data-text");
+            //TODO VERB ICON add uncuffing symbol? may re-use the symbol showing that you are currently cuffed?
             args.Verbs.Add(verb);
         }
 

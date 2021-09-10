@@ -66,7 +66,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Verbs to flush and eject the unit
@@ -74,20 +74,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 Verb flushVerb = new("Disposal:flush");
                 flushVerb.Act = () => Engage(component);
-                if (args.PrepareGUI)
-                {
-                    flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                    flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                }
+                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 
                 Verb ejectVerb = new("Disposal:eject");
                 ejectVerb.Act = () => TryEjectContents(component);
-                if (args.PrepareGUI)
-                {
-                    ejectVerb.Category = VerbCategory.Eject;
-                }
+                ejectVerb.Category = VerbCategory.Eject;
                 args.Verbs.Add(ejectVerb);
             }
 
@@ -96,10 +90,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 Verb verb = new("Disposal:enter");
                 verb.Act = () => component.TryInsert(args.User, args.User);
-                if (args.PrepareGUI)
-                {
-                    verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
-                }
+                verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
                 // TODO VERN ICON
                 // TODO VERB CATEGORY
                 // create a verb category for "enter"?

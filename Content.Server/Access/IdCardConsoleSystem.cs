@@ -16,7 +16,7 @@ namespace Content.Server.Access
 
         private void AddInsertVerbs(EntityUid uid, IdCardConsoleComponent component, GetInteractionVerbsEvent args)
         {
-            if (args.Hands == null || !args.DefaultInRangeUnobstructed)
+            if (args.Hands == null || !args.CanAccess)
                 return;
 
             // If we are holding an ID card, add insert verbs
@@ -29,11 +29,8 @@ namespace Content.Server.Access
             {
                 Verb verb = new("IDConsole:InsertPrivilegedID");
                 verb.Act = () => component.InsertIdFromHand(args.User, component.PrivilegedIdContainer, args.Hands);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Insert;
-                    verb.Text = Loc.GetString("id-card-console-privileged-id");
-                }
+                verb.Category = VerbCategory.Insert;
+                verb.Text = Loc.GetString("id-card-console-privileged-id");
                 args.Verbs.Add(verb);
             }
 
@@ -42,18 +39,15 @@ namespace Content.Server.Access
             {
                 Verb verb = new("IDConsole:InsertTargetID");
                 verb.Act = () => component.InsertIdFromHand(args.User, component.TargetIdContainer, args.Hands);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Insert;
-                    verb.Text = Loc.GetString("id-card-console-target-id");
-                }
+                verb.Category = VerbCategory.Insert;
+                verb.Text = Loc.GetString("id-card-console-target-id");
                 args.Verbs.Add(verb);
             }
         }
 
         private void AddEjectVerbs(EntityUid uid, IdCardConsoleComponent component, GetAlternativeVerbsEvent args)
         {
-            if (args.Hands == null || !args.DefaultInRangeUnobstructed)
+            if (args.Hands == null || !args.CanAccess)
                 return;
 
             // Can we eject a privileged ID? 
@@ -61,11 +55,8 @@ namespace Content.Server.Access
             {
                 Verb verb = new("IDConsole:EjectPrivilegedID");
                 verb.Act = () => component.PutIdInHand(component.PrivilegedIdContainer, args.Hands);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Eject;
-                    verb.Text = Loc.GetString("id-card-console-privileged-id");
-                }
+                verb.Category = VerbCategory.Eject;
+                verb.Text = Loc.GetString("id-card-console-privileged-id");
                 args.Verbs.Add(verb);
             }
 
@@ -74,13 +65,8 @@ namespace Content.Server.Access
             {
                 Verb verb = new("IDConsole:EjectTargetID");
                 verb.Act = () => component.PutIdInHand(component.TargetIdContainer, args.Hands);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Eject;
-                    verb.Text = Loc.GetString("id-card-console-target-id");
-
-                    verb.Priority = -20;
-                }
+                verb.Category = VerbCategory.Eject;
+                verb.Text = Loc.GetString("id-card-console-target-id");
                 args.Verbs.Add(verb);
             }
         }

@@ -14,7 +14,6 @@ namespace Content.Server.Buckle.Systems
     [UsedImplicitly]
     internal sealed class StrapSystem : EntitySystem
     {
-        [Dependency] IEntityManager _entityManager = default!;
         [Dependency] InteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
@@ -35,7 +34,7 @@ namespace Content.Server.Buckle.Systems
         private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
         {
             // Can the user interact?
-            if (!args.DefaultInRangeUnobstructed || args.Hands == null)
+            if (!args.CanAccess || args.Hands == null)
                 return;
 
             // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
@@ -46,19 +45,16 @@ namespace Content.Server.Buckle.Systems
             {
                 var buckledComp = entity.GetComponent<BuckleComponent>();
 
-                if (!args.InRangeUnobstructed(range: buckledComp.Range))
+                if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
                 Verb verb = new("unbuckle:"+entity.Uid.ToString());
                 verb.Act = () => buckledComp.TryUnbuckle(args.User);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Unbuckle;
-                    if (entity == args.User)
-                        verb.Text = Loc.GetString("verb-self-target-pronoun");
-                    else
-                        verb.Text = entity.Name;
-                }
+                verb.Category = VerbCategory.Unbuckle;
+                if (entity == args.User)
+                    verb.Text = Loc.GetString("verb-self-target-pronoun");
+                else
+                    verb.Text = entity.Name;
                 args.Verbs.Add(verb);
             }
 
@@ -67,15 +63,12 @@ namespace Content.Server.Buckle.Systems
                 buckle.BuckledTo != component &&
                 args.User != component.Owner &&
                 component.HasSpace(buckle) &&
-                args.InRangeUnobstructed(range: buckle.Range))
+                _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
                 Verb verb = new("buckle:self");
                 verb.Act = () => buckle.TryBuckle(args.User, args.Target);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Buckle;
-                    verb.Text = Loc.GetString("verb-self-target-pronoun");
-                }
+                verb.Category = VerbCategory.Buckle;
+                verb.Text = Loc.GetString("verb-self-target-pronoun");
                 args.Verbs.Add(verb);
             }
 
@@ -83,7 +76,7 @@ namespace Content.Server.Buckle.Systems
             if (args.Using != null &&
                 args.Using.TryGetComponent<BuckleComponent>(out var usingBuckle) &&
                 component.HasSpace(usingBuckle) &&
-                args.InRangeUnobstructed(range: usingBuckle.Range, userOverride: args.Using))
+                _interactionSystem.InRangeUnobstructed(args.Using, args.Target, range: usingBuckle.Range))
             {
                 // Check that the entity is unobstructed from the target (ignoring the user). Note that if the item is
                 // held in hand, this doesn't matter. BUT the user may instead be pulling a person here.
@@ -94,11 +87,8 @@ namespace Content.Server.Buckle.Systems
                 // Add a verb to buckle the used entity
                 Verb verb = new("buckle:using");
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
-                if (args.PrepareGUI)
-                {
-                    verb.Category = VerbCategory.Buckle;
-                    verb.Text = args.Using.Name;
-                }
+                verb.Category = VerbCategory.Buckle;
+                verb.Text = args.Using.Name;
 
                 // If the used entity is a person being pulled, prioritize this verb. Conversely, if it is
                 // just a held object, the user is probably just trying to sit down.

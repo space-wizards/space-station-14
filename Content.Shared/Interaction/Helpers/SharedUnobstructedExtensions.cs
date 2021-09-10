@@ -446,18 +446,6 @@ namespace Content.Shared.Interaction.Helpers
         }
 
         public static bool InRangeUnobstructed(
-            this GetVerbsEvent args,
-            float range = InteractionRange,
-            CollisionGroup collisionMask = CollisionGroup.Impassable,
-            Ignored? predicate = null,
-            bool ignoreInsideBlocker = false,
-            bool popup = false,
-            IEntity? userOverride = null)
-        {
-            return SharedInteractionSystem.InRangeUnobstructed(userOverride ?? args.User, args.Target, range, collisionMask, predicate, ignoreInsideBlocker, popup);
-        }
-
-        public static bool InRangeUnobstructed(
             this AfterInteractEvent args,
             float range = InteractionRange,
             CollisionGroup collisionMask = CollisionGroup.Impassable,
