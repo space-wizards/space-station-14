@@ -27,11 +27,9 @@ namespace Content.Shared.Juke
     public class MidiJukePlayEvent : EntityEventArgs
     {
         public EntityUid EntityUid;
-        public string SongTitle;
-        public MidiJukePlayEvent(EntityUid entityUid, string songTitle)
+        public MidiJukePlayEvent(EntityUid entityUid)
         {
             EntityUid = entityUid;
-            SongTitle = songTitle;
         }
     }
 

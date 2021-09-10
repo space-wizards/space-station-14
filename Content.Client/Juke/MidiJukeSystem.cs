@@ -9,6 +9,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using SharpFont;
 using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Client.Juke
@@ -22,12 +23,26 @@ namespace Content.Client.Juke
             base.Initialize();
 
             SubscribeLocalEvent<MidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
+            SubscribeLocalEvent<MidiJukeComponent, ComponentInit>(OnMidiJukeInit);
+            SubscribeLocalEvent<MidiJukeComponent, ComponentRemove>(OnMidiJukeRemove);
 
             SubscribeNetworkEvent<MidiJukeMidiEventsEvent>(OnMidiEvent);
             SubscribeNetworkEvent<MidiJukeStopEvent>(OnStopEvent);
             SubscribeNetworkEvent<MidiJukePlayEvent>(OnPlayEvent);
             SubscribeNetworkEvent<MidiJukePauseEvent>(OnPauseEvent);
             SubscribeNetworkEvent<MidiJukePlaybackFinishedEvent>(OnPlaybackFinishedEvent);
+        }
+
+        private void OnMidiJukeInit(EntityUid uid, MidiJukeComponent component, ComponentInit args)
+        {
+            Logger.Debug("MidiJukeInit");
+            SetupRenderer(component);
+        }
+
+        private void OnMidiJukeRemove(EntityUid uid, MidiJukeComponent component, ComponentRemove args)
+        {
+            Logger.Debug("MidiJukeRemove");
+            DisposeRenderer(component);
         }
 
         private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ref ComponentHandleState args)
@@ -38,12 +53,12 @@ namespace Content.Client.Juke
             switch (component.PlaybackStatus)
             {
                 case MidiJukePlaybackStatus.Play or MidiJukePlaybackStatus.Pause when !component.IsRendererAlive:
-                    //The juke is playing but our renderer is dead (eg. we just moved into range) so we need to start the renderer
+                    //The juke is playing but our renderer is dead, so we need to start the renderer
                     SetupRenderer(component);
                     break;
                 case MidiJukePlaybackStatus.Stop when component.IsRendererAlive:
-                    //The juke isn't playing but our renderer is alive for some reason, so let's kill it dead.
-                    DisposeRenderer(component);
+                    //Reset the renderer to make sure it doesn't have some old state in it
+                    ResetRenderer(component);
                     break;
             }
 
@@ -66,7 +81,7 @@ namespace Content.Client.Juke
             if (!ComponentManager.TryGetComponent<MidiJukeComponent>(uid, out var component)) return;
             if (!component.IsRendererAlive || component.Renderer == null) return;
 
-            DisposeRenderer(component);
+            ResetRenderer(component);
             component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
         }
 
@@ -83,9 +98,8 @@ namespace Content.Client.Juke
         {
             var uid = evt.EntityUid;
             if (!ComponentManager.TryGetComponent<MidiJukeComponent>(uid, out var component)) return;
-            if (component.IsRendererAlive) return;
-
-            SetupRenderer(component);
+            if (!component.IsRendererAlive)
+                SetupRenderer(component);
             component.PlaybackStatus = MidiJukePlaybackStatus.Play;
         }
 
@@ -104,7 +118,7 @@ namespace Content.Client.Juke
             var uid = evt.EntityUid;
             if (!ComponentManager.TryGetComponent<MidiJukeComponent>(uid, out var component)) return;
 
-            DisposeRenderer(component);
+            ResetRenderer(component);
             component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
         }
 
@@ -127,6 +141,12 @@ namespace Content.Client.Juke
             // I think this is a little ugly but instruments do it too...
             component.Owner.SpawnTimer(2000, () => {renderer?.Dispose(); });
             component.Renderer = null;
+        }
+
+        private void ResetRenderer(MidiJukeComponent component)
+        {
+            if (!component.IsRendererAlive) return;
+            component.Renderer!.ResetSynth();
         }
 
         private void PlayEvents(MidiJukeComponent component, MidiEvent[] midiEvents)
