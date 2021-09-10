@@ -110,13 +110,14 @@ namespace Content.Server.Tabletop
 
             // Check if moved entity exists and has tabletop draggable component
             if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity)) return;
-            if (!movedEntity.HasComponent<TabletopDraggableComponent>()) return;
+            if (!ComponentManager.HasComponent<TabletopDraggableComponent>(movedEntity.Uid)) return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(movedEntity.Transform.MapID), msg.Coordinates.Position);
-            movedEntity.Transform.Coordinates = entityCoordinates;
+            var transform = ComponentManager.GetComponent<ITransformComponent>(movedEntity.Uid);
+            var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
+            transform.Coordinates = entityCoordinates;
             movedEntity.Dirty();
         }
 
