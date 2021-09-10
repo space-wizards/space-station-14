@@ -14,19 +14,12 @@ namespace Content.Shared.Juke
         {
             base.Initialize();
 
-            //SubscribeLocalEvent<SharedMidiJukeComponent, ComponentHandleState>(OnMidiJukeHandleState);
-
+            SubscribeLocalEvent<SharedMidiJukeComponent, ComponentGetState>(OnMidiJukeGetState);
         }
 
-        protected void OnMidiJukeHandleState(EntityUid uid, SharedMidiJukeComponent component, ComponentHandleState args)
+        private void OnMidiJukeGetState(EntityUid uid, SharedMidiJukeComponent component, ref ComponentGetState args)
         {
-            if (args.Current is not MidiJukeComponentState cast) return;
-
-            var programs = cast.ChannelPrograms;
-            for (var i = 0; i < programs.Length; i++)
-            {
-                component.ChannelPrograms[i] = programs[i];
-            }
+            args.State = new MidiJukeComponentState(component.PlaybackStatus, component.ChannelPrograms);
         }
     }
 

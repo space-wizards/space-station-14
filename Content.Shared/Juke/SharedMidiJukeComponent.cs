@@ -24,11 +24,6 @@ namespace Content.Shared.Juke
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public readonly byte[] ChannelPrograms = new byte[16];
-
-        public override ComponentState GetComponentState(ICommonSession player)
-        {
-            return new MidiJukeComponentState(PlaybackStatus, ChannelPrograms);
-        }
     }
 
     [Serializable, NetSerializable]

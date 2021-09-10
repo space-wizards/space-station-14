@@ -17,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Juke
@@ -25,6 +26,7 @@ namespace Content.Server.Juke
     public class MidiJukeSystem : SharedMidiJukeSystem
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private readonly SortedList<string, string> _midiFiles = new();
         private const string MidiPath = "data/midis/"; //trailing slash es muchos importante
@@ -158,6 +160,7 @@ namespace Content.Server.Juke
                     break;
             }
 
+            Logger.Debug($"Making it dirty at tick {_gameTiming.CurTick}");
             component.Dirty();
             DirtyUI(component.Owner.Uid);
         }
@@ -209,7 +212,7 @@ namespace Content.Server.Juke
                     if (eventArgs.Event is ProgramChangeEvent programChangeEvent)
                     {
                         component.ChannelPrograms[programChangeEvent.Channel] = programChangeEvent.ProgramNumber;
-                        component.Dirty();
+                        //component.Dirty();
                     }
                 };
             }

@@ -30,11 +30,22 @@ namespace Content.Client.Juke
             SubscribeNetworkEvent<MidiJukePlaybackFinishedEvent>(OnPlaybackFinishedEvent);
         }
 
-        private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ComponentHandleState args)
+        private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ref ComponentHandleState args)
         {
-            //TODO: check playback state here and start the renderer if needed.
-            Logger.Debug("Handling midijukestate");
             if (args.Current is not MidiJukeComponentState cast) return;
+
+            component.PlaybackStatus = cast.PlaybackStatus;
+            switch (component.PlaybackStatus)
+            {
+                case MidiJukePlaybackStatus.Play or MidiJukePlaybackStatus.Pause when !component.IsRendererAlive:
+                    //The juke is playing but our renderer is dead (eg. we just moved into range) so we need to start the renderer
+                    SetupRenderer(component);
+                    break;
+                case MidiJukePlaybackStatus.Stop when component.IsRendererAlive:
+                    //The juke isn't playing but our renderer is alive for some reason, so let's kill it dead.
+                    DisposeRenderer(component);
+                    break;
+            }
 
             var programs = cast.ChannelPrograms;
             for (var i = 0; i < programs.Length; i++)
