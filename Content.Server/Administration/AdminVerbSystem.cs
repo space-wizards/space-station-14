@@ -8,6 +8,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
@@ -65,7 +66,7 @@ namespace Content.Server.Administration
             // Delete verb
             if (_groupController.CanCommand(player, "deleteentity"))
             {
-                Verb verb = new Verb("debug:delete");
+                Verb verb = new("debug:delete");
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
@@ -76,7 +77,7 @@ namespace Content.Server.Administration
             // Rejuvenate verb
             if (_groupController.CanCommand(player, "rejuvenate"))
             {
-                Verb verb = new Verb("debug:rejuvenate");
+                Verb verb = new("debug:rejuvenate");
                 verb.Text = Loc.GetString("rejuvenate-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/rejuvenate.svg.192dpi.png";
@@ -90,7 +91,7 @@ namespace Content.Server.Administration
                 args.User.HasComponent<MindComponent>() &&
                 args.Target.TryGetComponent<MindComponent>(out var targetMind))
             {
-                Verb verb = new Verb("debug:control");
+                Verb verb = new("debug:control");
                 verb.Text = Loc.GetString("control-mob-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON control mob icon
@@ -107,7 +108,7 @@ namespace Content.Server.Administration
                 args.User != args.Target &&
                 !args.Target.HasComponent<MindComponent>())
             {
-                Verb verb = new Verb("debug:sentient");
+                Verb verb = new("debug:sentient");
                 verb.Text = Loc.GetString("make-sentient-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
@@ -119,7 +120,7 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "setoutfit") &&
                 args.Target.HasComponent<InventoryComponent>())
             {
-                Verb verb = new Verb("debug:setoutfit");
+                Verb verb = new("debug:setoutfit");
                 verb.Text = Loc.GetString("set-outfit-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/outfit.svg.192dpi.png";
@@ -130,7 +131,7 @@ namespace Content.Server.Administration
             // In range unoccluded verb
             if (_groupController.CanCommand(player, "inrangeunoccluded"))
             {
-                Verb verb = new Verb("debug:unoccluded");
+                Verb verb = new("debug:unoccluded");
                 verb.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
@@ -148,7 +149,7 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "tubeconnections") &&
                 args.Target.TryGetComponent<IDisposalTubeComponent>(out var tube))
             {
-                Verb verb = new Verb("debug:tubeconnections");
+                Verb verb = new("debug:tubeconnections");
                 verb.Text = Loc.GetString("tube-direction-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
@@ -160,7 +161,7 @@ namespace Content.Server.Administration
             if (_groupController.CanCommand(player, "makeghostrole") &&
                 !(args.Target.GetComponentOrNull<MindComponent>()?.HasMind ?? false))
             {
-                Verb verb = new Verb("debug:makeghostrole");
+                Verb verb = new("debug:makeghostrole");
                 verb.Text = Loc.GetString("make-ghost-role-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 // TODO VERB ICON add ghost icon
@@ -173,11 +174,30 @@ namespace Content.Server.Administration
             if (_groupController.CanAdminMenu(player) &&
                 args.Target.TryGetComponent<ConfigurationComponent>(out var config))
             {
-                Verb verb = new Verb("debug:config");
+                Verb verb = new("debug:config");
                 verb.Text = Loc.GetString("configure-verb-get-data-text");
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () => config.OpenUserInterface(actor);
+                args.Verbs.Add(verb);
+            }
+
+            // Add reagent verb
+            if (_groupController.CanAdminMenu(player) &&
+                args.Target.HasComponent<SolutionContainerManagerComponent>())
+            {
+                Verb verb = new("debug:addreagent");
+                verb.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
+                verb.Category = VerbCategory.Debug;
+                verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
+                verb.Act = () => _euiManager.OpenEui(new AddReagentEui(args.Target), player);
+
+                // TODO CHEMISTRY
+                // Add reagent ui broke after solution refactor. Needs fixing
+                verb.Text += " (broken)";
+                verb.IsDisabled = true;
+                verb.Priority = -10;
+
                 args.Verbs.Add(verb);
             }
         }

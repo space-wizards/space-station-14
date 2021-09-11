@@ -6,7 +6,6 @@ using Robust.Shared.Localization;
 
 namespace Content.Server.Items
 {
-
     public class ItemSystem : EntitySystem
     {
         public override void Initialize()

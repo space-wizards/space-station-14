@@ -7,13 +7,13 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Administration
 {
     [Serializable, NetSerializable]
-    public sealed class AdminAddReagentEuiState : EuiStateBase
+    public sealed class AddReagentEuiState : EuiStateBase
     {
         public ReagentUnit MaxVolume;
         public ReagentUnit CurVolume;
     }
 
-    public static class AdminAddReagentEuiMsg
+    public static class AddReagentEuiMsg
     {
         [Serializable, NetSerializable]
         public sealed class Close : EuiMessageBase

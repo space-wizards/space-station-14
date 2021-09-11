@@ -44,7 +44,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!component.CanOpen(args.User, silent: true))
                 return;
 
-            Verb verb = new Verb("storage:toggleopen");
+            Verb verb = new("storage:toggleopen");
             verb.Category = component.Open ? VerbCategory.Close : VerbCategory.Open;
             verb.Act = () => component.ToggleOpen(args.User);
             args.Verbs.Add(verb);
@@ -66,7 +66,7 @@ namespace Content.Server.Storage.EntitySystems
             // Does this player currently have the storage UI open?
             var uiOpen = component.SubscribedSessions.Contains(session);
 
-            Verb verb = new Verb("storage:toggleui");
+            Verb verb = new("storage:toggleui");
             verb.Act = () => component.OpenStorageUI(args.User);
             verb.Category = uiOpen ? VerbCategory.Close : VerbCategory.Open;
             args.Verbs.Add(verb);

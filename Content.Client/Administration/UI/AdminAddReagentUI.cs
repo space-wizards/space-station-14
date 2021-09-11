@@ -13,16 +13,16 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Administration.UI
 {
     [UsedImplicitly]
-    public sealed class AdminAddReagentEui : BaseEui
+    public sealed class AddReagentEui : BaseEui
     {
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         private readonly Menu _window;
 
-        public AdminAddReagentEui()
+        public AddReagentEui()
         {
             _window = new Menu(this);
-            _window.OnClose += () => SendMessage(new AdminAddReagentEuiMsg.Close());
+            _window.OnClose += () => SendMessage(new AddReagentEuiMsg.Close());
         }
 
         public override void Opened()
@@ -37,12 +37,12 @@ namespace Content.Client.Administration.UI
 
         public override void HandleState(EuiStateBase state)
         {
-            _window.HandleState((AdminAddReagentEuiState) state);
+            _window.HandleState((AddReagentEuiState) state);
         }
 
         private void DoAdd(bool close, string reagentId, ReagentUnit amount)
         {
-            SendMessage(new AdminAddReagentEuiMsg.DoAdd
+            SendMessage(new AddReagentEuiMsg.DoAdd
             {
                 Amount = amount,
                 ReagentId = reagentId,
@@ -52,7 +52,7 @@ namespace Content.Client.Administration.UI
 
         private sealed class Menu : SS14Window
         {
-            private readonly AdminAddReagentEui _eui;
+            private readonly AddReagentEui _eui;
             private readonly Label _volumeLabel;
             private readonly LineEdit _reagentIdEdit;
             private readonly LineEdit _amountEdit;
@@ -60,7 +60,7 @@ namespace Content.Client.Administration.UI
             private readonly Button _addButton;
             private readonly Button _addCloseButton;
 
-            public Menu(AdminAddReagentEui eui)
+            public Menu(AddReagentEui eui)
             {
                 _eui = eui;
 
@@ -164,7 +164,7 @@ namespace Content.Client.Administration.UI
                 }
             }
 
-            public void HandleState(AdminAddReagentEuiState state)
+            public void HandleState(AddReagentEuiState state)
             {
                 _volumeLabel.Text = Loc.GetString("admin-add-reagent-eui-current-and-max-volume-label",
                                                   ("currentVolume", state.CurVolume),

@@ -1,5 +1,4 @@
 using Content.Server.Power.Components;
-using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Notification.Managers;
@@ -37,7 +36,7 @@ namespace Content.Server.Weapon.Ranged.Barrels
             if (component.Capacity <= 1 || component.ShotsLeft == 0)
                 return;
 
-            Verb verb = new Verb("revolverspin");
+            Verb verb = new("revolverspin");
             verb.Text = Loc.GetString("spin-revolver-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
             verb.Act = () =>
