@@ -23,6 +23,7 @@ namespace Content.Server.SecurityCamera
 
             SubscribeLocalEvent<SecurityConsoleComponent,InteractHandEvent>(HandleInteract);
             SubscribeLocalEvent<SecurityConsoleComponent, PowerChangedEvent>(HandlePowerChangedEvent);
+            SubscribeLocalEvent<SecurityCameraComponent, SecurityCameraConnectionChangedEvent>(HandleSecurityCameraConnectionChangedEvent);
             SubscribeLocalEvent<SecurityClientComponent, MovementAttemptEvent>(HandleMovementEvent);
             SubscribeNetworkEvent<SecurityCameraDisconnectEvent>(HandleSecurityCameraDisconnectEvent);
         }
@@ -45,6 +46,11 @@ namespace Content.Server.SecurityCamera
                 secClient.active = false;
             }
         }
+        private void HandleSecurityCameraConnectionChangedEvent(EntityUid uid,SecurityCameraComponent component,SecurityCameraConnectionChangedEvent msg)
+        {
+            RaiseNetworkEvent(new SecurityCameraConnectionChangedEvent(msg.Uid,msg.Connected));
+            Logger.Info("Received and relayed Info");
+        }
 
         public void HandleInteract(EntityUid uid, SecurityConsoleComponent component, InteractHandEvent args)
         {
@@ -59,6 +65,12 @@ namespace Content.Server.SecurityCamera
             secClient.connectedComputer = component.Owner.Uid;
             secClient.active = true;   
             RaiseNetworkEvent(new SecurityCameraConnectEvent(user.Uid,cameraList,component.Owner.Uid),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
+        
+            // Sync connection values
+            foreach(var cam in ComponentManager.EntityQuery<SecurityCameraComponent>())
+            {
+                RaiseNetworkEvent(new SecurityCameraConnectionChangedEvent(cam.Owner.Uid,cam.Owner.GetComponent<SecurityCameraComponent>().Connected),user.GetComponent<ActorComponent>().PlayerSession.ConnectedClient);
+            }
         }
 
         public void HandlePowerChangedEvent(EntityUid uid, SecurityConsoleComponent component, PowerChangedEvent args)

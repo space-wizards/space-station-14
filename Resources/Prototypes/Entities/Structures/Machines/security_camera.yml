@@ -1,12 +1,21 @@
 - type: entity
   id: SecurityCamera
+  parent: BaseStructure
   name: security camera
   description: description
   components:
+  - type: InteractionOutline
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart
   - type: SecurityCamera
   - type: Eye
+  - type: Wires
+    BoardName: "Security Camera"
+    LayoutId: SecurityCamera
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
   placement:
     mode: SnapgridCenter

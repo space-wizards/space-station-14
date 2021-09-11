@@ -36,4 +36,16 @@ namespace Content.Shared.SecurityCamera
 
         public PowerChangedDisconnectEvent(EntityUid console){Console = console;}
     }
+    [Serializable, NetSerializable]
+    public class SecurityCameraConnectionChangedEvent : EntityEventArgs
+    {
+        public EntityUid Uid {get;}
+        public bool Connected {get;}
+
+        public SecurityCameraConnectionChangedEvent(EntityUid uid,bool connected)
+        {
+            Uid = uid;
+            Connected = connected;
+        }
+    }
 }
