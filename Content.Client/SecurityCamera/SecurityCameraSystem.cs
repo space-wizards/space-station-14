@@ -24,8 +24,10 @@ namespace Content.Client.SecurityCamera
     public class SecurityCameraSystem : EntitySystem
     {
         //Saved variables
+        //TODO: Move these variables to a component
         private SS14Window currentWindow = new SS14Window{Title = "Temporary"};
         private SecurityClientComponent cameraclient = new SecurityClientComponent();
+        private IResourceCache _resourceCache = IoCManager.Resolve<IResourceCache>();
         private ScalingViewport cameraViewport = new ScalingViewport();
         private TextureRect noSignal = new TextureRect();
         private Dictionary<int,EntityUid> cameraList = new();
@@ -34,11 +36,11 @@ namespace Content.Client.SecurityCamera
 
         private Button nextButton = new Button{Text = Loc.GetString("security-camera-next-button")};
         private Button prevButton = new Button{Text = Loc.GetString("security-camera-prev-button")};
-        
+
         public override void Initialize()
         {
             base.Initialize();
-            
+
             SubscribeNetworkEvent<SecurityCameraConnectEvent>(HandleSecurityCameraConnectEvent);
             SubscribeNetworkEvent<PowerChangedDisconnectEvent>(HandlePowerChangedDisconnectEvent);
             SubscribeNetworkEvent<SecurityCameraConnectionChangedEvent>(HandleConnectionChangedEvent);
@@ -81,14 +83,21 @@ namespace Content.Client.SecurityCamera
             secClient.active = true;
             secClient.connectedComputer = msg.Console;
             secClient.currentCamInt = 1;
-            cameraclient = secClient;        
+            cameraclient = secClient;
 
             // Create new viewport
             var eye = EntityManager.GetEntity(cameraList[1]).GetComponent<EyeComponent>();
-            var viewport = EntitySystem.Get<CameraSystem>().CreateCameraViewport(new Vector2i(450,450),eye,ScalingViewportRenderScaleMode.CeilInt);
-    	    
+            eye.Zoom = new Vector2(0.5f,0.5f);
+            noSignal = new TextureRect
+            {
+                Texture = _resourceCache.GetTexture("/Textures/Interface/Misc/no_signal.rsi/no_signal.png"),
+                MinSize = (450, 450),
+                Stretch = TextureRect.StretchMode.Scale,
+                Visible = true,
+                SetSize = (450, 450)
+            };
             if(currentWindow.Title == "Temporary")
-            {       
+            {
                 // Create new window
                 currentWindow = new SS14Window
                 {
@@ -122,7 +131,7 @@ namespace Content.Client.SecurityCamera
                 currentWindow.Open();
             }
         }
-        
+
         private void OnNextButtonPressed(ButtonEventArgs args)
         {
             UpdateList();
@@ -144,20 +153,13 @@ namespace Content.Client.SecurityCamera
         private void ChangeCam(int camera)
         {
             // Cycle cameras
-            var _resourceCache = IoCManager.Resolve<IResourceCache>();
             var nextcam = EntityManager.GetEntity(cameraList[camera]);
             var eye = nextcam.GetComponent<EyeComponent>();
-            cameraViewport = EntitySystem.Get<CameraSystem>().CreateCameraViewport(new Vector2i(450,450),eye,ScalingViewportRenderScaleMode.CeilInt);
-            noSignal = new TextureRect
-                {
-                    Texture = _resourceCache.GetTexture("/Textures/Interface/Misc/no_signal.rsi/no_signal.png"),
-                    MinSize = (450, 450),
-                    Stretch = TextureRect.StretchMode.Scale,
-                    Visible = true,
-                    SetSize = (450, 450)
-                };
+            eye.Zoom = new Vector2(0.5f,0.5f);
             Logger.Info("Testing connection");
             Logger.Info(nextcam.GetComponent<ClientSecurityCameraComponent>().Connected.ToString());
+            cameraViewport = EntitySystem.Get<CameraSystem>().CreateCameraViewport(new Vector2i(450,450),eye,ScalingViewportRenderScaleMode.CeilInt);
+
             if(nextcam.GetComponent<ClientSecurityCameraComponent>().Connected == false)
             {
                 Logger.Info("Not connected");

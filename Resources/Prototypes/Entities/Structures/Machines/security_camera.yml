@@ -1,14 +1,32 @@
 - type: entity
   id: SecurityCamera
-  parent: BaseStructure
   name: security camera
   description: description
   components:
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+      mass: 50
+      layer:
+        - SmallImpassable
+      mask:
+        - SmallImpassable
+        - MobImpassable
+      hard: false
+  - type: Pullable
   - type: InteractionOutline
   - type: Sprite
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart
+    sprite: Structures/Machines/security_camera.rsi
+    layers:
+    - state: security_camera_directional
   - type: SecurityCamera
+  - type: ClientSecurityCamera
   - type: Eye
   - type: Wires
     BoardName: "Security Camera"
@@ -17,5 +35,8 @@
     interfaces:
     - key: enum.WiresUiKey.Key
       type: WiresBoundUserInterface
+  - type: Construction
+    graph: securityCamera
+    node: start
   placement:
     mode: SnapgridCenter

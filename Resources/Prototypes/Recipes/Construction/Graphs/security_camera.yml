@@ -1,0 +1,23 @@
+- type: constructionGraph
+  id: securityCamera
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: camera
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: camera
+      entity: SecurityCamera
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}

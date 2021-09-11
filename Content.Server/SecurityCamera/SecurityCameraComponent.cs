@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
@@ -39,7 +40,7 @@ namespace Content.Server.SecurityCamera
             {
                 connectionlight = new StatusLightData(Color.Yellow, StatusLightState.BlinkingFast, "CONC");
             }
-            
+
             {
                 connectionlight = new StatusLightData(Color.Red, StatusLightState.On, "CONC");
             }
@@ -48,7 +49,7 @@ namespace Content.Server.SecurityCamera
                 return;
             }
         }
-        
+
         private enum Wires
         {
             /// <summary>
@@ -71,7 +72,7 @@ namespace Content.Server.SecurityCamera
 
             UpdateWiresStatus();
         }
-        
+
         public void WiresUpdate(WiresUpdateEventArgs args)
         {
             if (args.Action == Mend)
