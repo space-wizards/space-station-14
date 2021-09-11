@@ -8,3 +8,5 @@ comp-juke-ui-loop = Loop
 
 comp-juke-ui-no-song-playing = No song playing
 comp-juke-ui-search = Search
+
+comp-juke-midi-now-playing-message = Now playing: {$song}.

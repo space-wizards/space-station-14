@@ -17,6 +17,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -48,8 +49,6 @@ namespace Content.Server.Juke
             SubscribeLocalEvent<MidiJukeComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<MidiJukeComponent, InteractHandEvent>(OnInteractHand);
 
-
-            //TODO: "what you want is [IWritableDirProvider.cs], use UserData in [IResourceManager.cs]" (use this instead of System.IO
             var loaded = 0;
             var failed = 0;
             var start = _gameTiming.RealTime;
@@ -272,7 +271,7 @@ namespace Content.Server.Juke
                 var nextSong = ShuffleSong(component);
                 DirtyUI(component.Owner.Uid);
                 if (nextSong != null)
-                    component.Owner.PopupMessageEveryone($"Now playing: {nextSong}.");
+                    component.Owner.PopupMessageEveryone(Loc.GetString("comp-juke-midi-now-playing-message", ("song", nextSong)));
             });
         }
 

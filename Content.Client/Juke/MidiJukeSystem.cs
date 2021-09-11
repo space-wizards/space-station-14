@@ -143,6 +143,8 @@ namespace Content.Client.Juke
             component.Renderer = null;
         }
 
+        // Resetting the renderer and reusing it later is better than remaking it all the time, because
+        // currently soundfont loading can take a while (like, half a second, which freezes the game interim).
         private void ResetRenderer(MidiJukeComponent component)
         {
             if (!component.IsRendererAlive) return;
@@ -154,12 +156,6 @@ namespace Content.Client.Juke
             if (!component.IsRendererAlive) SetupRenderer(component);
             foreach (var evt in midiEvents)
             {
-                //Keeping this up to date here isn't that important, but might as well do it.
-                if (evt.Type == 192)
-                {
-                    if (evt.Channel > component.ChannelPrograms.Length) return;
-                    component.ChannelPrograms[evt.Channel] = evt.Program;
-                }
                 component.Renderer?.SendMidiEvent(evt); //todo: some kind of buffering?
             }
         }
