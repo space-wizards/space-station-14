@@ -45,7 +45,7 @@ namespace Content.Client.Storage
             base.Initialize();
 
             // Hide stackVisualizer on start
-            ChangeStorageVisualization(SharedBagState.Close);
+            UpdateVisualizerAndNetwork(SharedBagState.Close);
         }
 
         protected override void OnAdd()
@@ -140,12 +140,12 @@ namespace Content.Client.Storage
             if (_window.IsOpen)
             {
                 _window.Close();
-                ChangeStorageVisualization(SharedBagState.Close);
+                UpdateVisualizerAndNetwork(SharedBagState.Close);
             }
             else
             {
                 _window.OpenCentered();
-                ChangeStorageVisualization(SharedBagState.Open);
+                UpdateVisualizerAndNetwork(SharedBagState.Open);
             }
         }
 
@@ -154,11 +154,11 @@ namespace Content.Client.Storage
             if (_window == null) return;
 
             _window.Close();
-            ChangeStorageVisualization(SharedBagState.Close);
+            UpdateVisualizerAndNetwork(SharedBagState.Close);
 
         }
 
-        private void ChangeStorageVisualization(SharedBagState state)
+        private void UpdateVisualizerAndNetwork(SharedBagState state)
         {
             Owner.EntityManager.EntityNetManager?.SendSystemNetworkMessage(new OpenCloseBagEvent(Owner.Uid, state));
         }
