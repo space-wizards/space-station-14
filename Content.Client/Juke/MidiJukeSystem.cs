@@ -1,16 +1,10 @@
-using System;
-using System.Diagnostics.Tracing;
-using System.Linq;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
-using Melanchall.DryWetMidi.Core;
 using Robust.Client.Audio.Midi;
-using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using SharpFont;
 using MidiEvent = Robust.Shared.Audio.Midi.MidiEvent;
 
 namespace Content.Client.Juke
