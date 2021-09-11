@@ -132,7 +132,13 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
         /// </summary>
-        public SpriteSpecifier? Icon;
+        public SpriteSpecifier? Icon
+        {
+            get => _icon ??=
+                IconTexture == null ? null : new SpriteSpecifier.Texture(new ResourcePath(IconTexture));
+            set => _icon = value;
+        }
+        private SpriteSpecifier? _icon;
 
         /// <summary>
         ///     Name of the category this button is under. Used to group verbs in the context menu.
@@ -155,12 +161,9 @@ namespace Content.Shared.Verbs
         public int Priority;
 
         /// <summary>
-        ///     Convenience property to set <see cref="Icon"/> to a raw texture path.
+        ///     Raw texture path used to load the <see cref="Icon"/>, if not set directly.
         /// </summary>
-        public string IconTexture
-        {
-            set => Icon = new SpriteSpecifier.Texture(new ResourcePath(value));
-        }
+        public string? IconTexture;
 
         public Verb(string key)
         {
