@@ -6,7 +6,10 @@ verb-system-no-verbs-text = No verbs!
 # usually just use Entity.Name. But it is a bit odd when targeting yourself
 verb-self-target-pronoun = Yourself
 
-# verb categories. These appear across multiple systems, so they may as well go here.
+
+# verb categories & common verbs. These appear across multiple systems, so they may as well go here.
+
+verb-toggle-light = Toggle light
 
 verb-categories-debug = Debug
 verb-categories-eject = Eject

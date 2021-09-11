@@ -6,9 +6,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Localization;
-using Robust.Shared.Physics;
 using Robust.Shared.Players;
-using System;
 
 namespace Content.Server.Pulling
 {
@@ -48,7 +46,7 @@ namespace Content.Server.Pulling
                 verb.Act = () => component.TryStopPull();
                 args.Verbs.Add(verb);
             }
-            else if (component.CanStartPull(args.User))
+            else if (component.CanStartPull(args.User) && args.Using == null)
             {
                 Verb verb = new("togglepull");
                 verb.Text = Loc.GetString("pulling-verb-get-data-text");

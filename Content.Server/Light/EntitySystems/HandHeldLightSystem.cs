@@ -54,7 +54,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             Verb verb = new Verb("light:toggle");
-            verb.Text = Loc.GetString("toggle-light-verb-get-data-text");
+            verb.Text = Loc.GetString("verb-toggle-light");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = component.Activated ? () => component.TurnOff() : () => component.TurnOn(args.User);
             args.Verbs.Add(verb);

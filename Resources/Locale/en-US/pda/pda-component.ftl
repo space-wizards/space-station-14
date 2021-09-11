@@ -26,12 +26,3 @@ comp-pda-ui-eject-id-button = Eject ID
 comp-pda-ui-eject-pen-button = Eject Pen
 
 comp-pda-ui-toggle-flashlight-button = Toggle Flashlight
-
-# EjectIDVerb
-eject-id-verb-get-data-text = Eject ID
-
-# EjectPenVerb
-eject-pen-verb-get-data-text = Eject Pen
-
-# ToggleFlashlightVerb
-toggle-flashlight-verb-get-data-text = Toggle flashlight

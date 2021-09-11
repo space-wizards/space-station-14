@@ -8,15 +8,11 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.PDA.Managers;
 using Content.Server.UserInterface;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.PDA;
 using Content.Shared.Sound;
 using Content.Shared.Tag;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -37,8 +33,8 @@ namespace Content.Server.PDA
         [Dependency] private readonly IPDAUplinkManager _uplinkManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        [ViewVariables] private ContainerSlot _idSlot = default!;
-        [ViewVariables] private ContainerSlot _penSlot = default!;
+        [ViewVariables] public ContainerSlot IdSlot = default!;
+        [ViewVariables] public ContainerSlot PenSlot = default!;
 
         [ViewVariables] private bool _lightOn;
 
@@ -48,8 +44,8 @@ namespace Content.Server.PDA
         [ViewVariables] public string? OwnerName { get; private set; }
 
         [ViewVariables] public IdCardComponent? ContainedID { get; private set; }
-        [ViewVariables] public bool IdSlotEmpty => _idSlot.ContainedEntity == null;
-        [ViewVariables] public bool PenSlotEmpty => _penSlot.ContainedEntity == null;
+        [ViewVariables] public bool IdSlotEmpty => IdSlot.ContainedEntity == null;
+        [ViewVariables] public bool PenSlotEmpty => PenSlot.ContainedEntity == null;
 
         private UplinkAccount? _syndicateUplinkAccount;
 
@@ -71,8 +67,8 @@ namespace Content.Server.PDA
         protected override void Initialize()
         {
             base.Initialize();
-            _idSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
-            _penSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_pen_slot");
+            IdSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_entity_container");
+            PenSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, "pda_pen_slot");
 
             if (UserInterface != null)
             {
@@ -88,14 +84,14 @@ namespace Content.Server.PDA
             {
                 var idCard = _entityManager.SpawnEntity(_startingIdCard, Owner.Transform.Coordinates);
                 var idCardComponent = idCard.GetComponent<IdCardComponent>();
-                _idSlot.Insert(idCardComponent.Owner);
+                IdSlot.Insert(idCardComponent.Owner);
                 ContainedID = idCardComponent;
             }
 
             if (!string.IsNullOrEmpty(_startingPen))
             {
                 var pen = _entityManager.SpawnEntity(_startingPen, Owner.Transform.Coordinates);
-                _penSlot.Insert(pen);
+                PenSlot.Insert(pen);
             }
         }
 
@@ -150,7 +146,7 @@ namespace Content.Server.PDA
             }
         }
 
-        private void UpdatePDAUserInterface()
+        public void UpdatePDAUserInterface()
         {
             var ownerInfo = new PDAIdInfoText
             {
@@ -187,7 +183,7 @@ namespace Content.Server.PDA
         private bool TryInsertIdCard(InteractUsingEventArgs eventArgs, IdCardComponent idCardComponent)
         {
             var item = eventArgs.Using;
-            if (_idSlot.Contains(item))
+            if (IdSlot.Contains(item))
                 return false;
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
@@ -200,7 +196,7 @@ namespace Content.Server.PDA
             if (!IdSlotEmpty)
             {
                 // Swap
-                swap = _idSlot.ContainedEntities[0];
+                swap = IdSlot.ContainedEntities[0];
             }
 
             if (!hands.Drop(item))
@@ -219,10 +215,10 @@ namespace Content.Server.PDA
             return true;
         }
 
-        private bool TryInsertPen(InteractUsingEventArgs eventArgs)
+        public bool TryInsertPen(InteractUsingEventArgs eventArgs)
         {
             var item = eventArgs.Using;
-            if (_penSlot.Contains(item))
+            if (PenSlot.Contains(item))
                 return false;
 
             if (!eventArgs.User.TryGetComponent(out IHandsComponent? hands))
@@ -235,7 +231,7 @@ namespace Content.Server.PDA
             if (!PenSlotEmpty)
             {
                 // Swap
-                swap = _penSlot.ContainedEntities[0];
+                swap = PenSlot.ContainedEntities[0];
             }
 
             if (!hands.Drop(item))
@@ -249,7 +245,7 @@ namespace Content.Server.PDA
             }
 
             // Insert Pen
-            _penSlot.Insert(item);
+            PenSlot.Insert(item);
 
             UpdatePDAUserInterface();
             return true;
@@ -303,7 +299,7 @@ namespace Content.Server.PDA
 
         public void InsertIdCard(IdCardComponent card)
         {
-            _idSlot.Insert(card.Owner);
+            IdSlot.Insert(card.Owner);
             ContainedID = card;
             SoundSystem.Play(Filter.Pvs(Owner), _insertIdSound.GetSound(), Owner);
         }
@@ -325,7 +321,7 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface();
         }
 
-        private void ToggleLight()
+        public void ToggleLight()
         {
             if (!Owner.TryGetComponent(out PointLightComponent? light))
             {
@@ -338,7 +334,7 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface();
         }
 
-        private void HandleIDEjection(IEntity pdaUser)
+        public void HandleIDEjection(IEntity pdaUser)
         {
             if (ContainedID == null)
             {
@@ -346,7 +342,7 @@ namespace Content.Server.PDA
             }
 
             var cardEntity = ContainedID.Owner;
-            _idSlot.Remove(cardEntity);
+            IdSlot.Remove(cardEntity);
 
             var hands = pdaUser.GetComponent<HandsComponent>();
             var cardItemComponent = cardEntity.GetComponent<ItemComponent>();
@@ -357,86 +353,19 @@ namespace Content.Server.PDA
             UpdatePDAUserInterface();
         }
 
-        private void HandlePenEjection(IEntity pdaUser)
+        public void HandlePenEjection(IEntity pdaUser)
         {
             if (PenSlotEmpty)
                 return;
 
-            var pen = _penSlot.ContainedEntities[0];
-            _penSlot.Remove(pen);
+            var pen = PenSlot.ContainedEntities[0];
+            PenSlot.Remove(pen);
 
             var hands = pdaUser.GetComponent<HandsComponent>();
             var itemComponent = pen.GetComponent<ItemComponent>();
             hands.PutInHandOrDrop(itemComponent);
 
             UpdatePDAUserInterface();
-        }
-
-        [Verb]
-        public sealed class EjectIDVerb : Verb<PDAComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-id-verb-get-data-text");
-                data.Visibility = component.IdSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, PDAComponent component)
-            {
-                component.HandleIDEjection(user);
-            }
-        }
-
-        [Verb]
-        public sealed class EjectPenVerb : Verb<PDAComponent>
-        {
-            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-pen-verb-get-data-text");
-                data.Visibility = component.PenSlotEmpty ? VerbVisibility.Invisible : VerbVisibility.Visible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, PDAComponent component)
-            {
-                component.HandlePenEjection(user);
-            }
-        }
-
-        [Verb]
-        public sealed class ToggleFlashlightVerb : Verb<PDAComponent>
-        {
-            protected override void GetData(IEntity user, PDAComponent component, OldVerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, PDAComponent component)
-            {
-                component.ToggleLight();
-            }
         }
 
         private ISet<string>? GetContainedAccess()
