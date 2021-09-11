@@ -8,10 +8,8 @@ using Content.Server.Items;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Strip.Components;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -135,7 +133,7 @@ namespace Content.Server.Strip
             return dictionary;
         }
 
-        private void OpenUserInterface(IPlayerSession session)
+        public void OpenUserInterface(IPlayerSession session)
         {
             UserInterface?.Open(session);
         }
@@ -429,32 +427,6 @@ namespace Content.Server.Strip
                         }
                     }
                     break;
-            }
-        }
-
-        [Verb]
-        private sealed class StripVerb : Verb<StrippableComponent>
-        {
-            protected override void GetData(IEntity user, StrippableComponent component, OldVerbData data)
-            {
-                if (!component.CanBeStripped(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("strip-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, StrippableComponent component)
-            {
-                if (!user.TryGetComponent(out ActorComponent? actor))
-                {
-                    return;
-                }
-
-                component.OpenUserInterface(actor.PlayerSession);
             }
         }
     }
