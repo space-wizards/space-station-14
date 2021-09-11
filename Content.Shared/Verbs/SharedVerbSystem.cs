@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -14,7 +13,6 @@ namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
 
         /// <summary>
@@ -83,7 +81,6 @@ namespace Content.Shared.Verbs
             contextEntities = entities;
             return true;
         }
-
 
         /// <summary>
         ///     Execute actions associated with the given verb.
