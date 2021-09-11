@@ -10,13 +10,25 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     [DataDefinition]
     public class SpillBehavior : IThresholdBehavior
     {
+        [DataField("solution")]
+        public string? Solution;
+
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(owner, SpillableComponent.SolutionName, out var solution))
+            if (!EntitySystem.TryGet(out SolutionContainerSystem? solutionContainerSystem))
                 return;
 
-            solution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+            if (owner.TryGetComponent(out SpillableComponent? spillableComponent) &&
+                solutionContainerSystem.TryGetSolution(owner.Uid, spillableComponent.SolutionName,
+                    out var compSolution))
+            {
+                compSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+            }
+            else if (Solution != null &&
+                     solutionContainerSystem.TryGetSolution(owner.Uid, Solution, out var thresholdSolution))
+            {
+                thresholdSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+            }
         }
     }
 }

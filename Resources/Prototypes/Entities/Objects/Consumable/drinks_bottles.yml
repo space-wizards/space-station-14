@@ -23,6 +23,7 @@
   - type: DamageOtherOnHit
     amount: 10
   - type: Spillable
+    solution: drink
   - type: Damageable
   - type: Destructible
     thresholds:

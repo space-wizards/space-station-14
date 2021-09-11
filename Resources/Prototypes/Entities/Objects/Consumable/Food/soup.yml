@@ -20,6 +20,7 @@
   - type: DamageOtherOnHit
     amount: 5
   - type: Spillable
+    solution: food
   - type: Damageable
   - type: Destructible
     thresholds:

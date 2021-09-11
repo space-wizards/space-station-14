@@ -16,6 +16,7 @@
   - type: Sprite
     state: icon
   - type: Spillable
+    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
