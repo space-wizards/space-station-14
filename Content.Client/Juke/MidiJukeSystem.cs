@@ -43,7 +43,6 @@ namespace Content.Client.Juke
         private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not MidiJukeComponentState cast) return;
-            Logger.DebugS("MidiJukeSystem", "Handling component state.");
             component.PlaybackStatus = cast.PlaybackStatus;
             switch (component.PlaybackStatus)
             {
