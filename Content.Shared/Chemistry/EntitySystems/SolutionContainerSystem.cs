@@ -94,6 +94,16 @@ namespace Content.Shared.Chemistry.EntitySystems
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
+        public IEnumerable<Solution> AllSolutions(EntityUid uid)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? component))
+            {
+                return Array.Empty<Solution>();
+            }
+
+            return component.Solutions.Values;
+        }
+
         private void UpdateAppearance(EntityUid uid, Solution solution)
         {
             if (!EntityManager.TryGetEntity(uid, out var solutionEntity)

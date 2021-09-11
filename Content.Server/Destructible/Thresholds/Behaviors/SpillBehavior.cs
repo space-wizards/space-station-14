@@ -1,4 +1,5 @@
 using Content.Server.Fluids.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -12,11 +13,15 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     {
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            // TODO see if this is correct
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(owner, SpillableComponent.SolutionName, out var solution))
+            EntitySystem.TryGet(out SolutionContainerSystem? containerSystem);
+            if (!owner.HasComponent<SolutionContainerManagerComponent>() ||
+                containerSystem == null)
                 return;
 
-            solution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+            foreach (var solution in containerSystem.AllSolutions(owner.Uid))
+            {
+                solution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+            }
         }
     }
 }
