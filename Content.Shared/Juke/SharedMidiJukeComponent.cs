@@ -143,4 +143,11 @@ namespace Content.Shared.Juke
             Duration = duration;
         }
     }
+
+    [Serializable, NetSerializable]
+    public enum MidiJukeVisualState
+    {
+        Base,
+        Broken
+    }
 }

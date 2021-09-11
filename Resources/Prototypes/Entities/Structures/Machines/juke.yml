@@ -5,13 +5,18 @@
   parent: BaseMachinePowered
   components:
     - type: MidiJuke
+    - type: Appearance
+      visuals:
+      - type: MidiJukeVisualizer
     - type: Sprite
       netsync: false
       sprite: Structures/Machines/midijuke.rsi
       layers:
-        - state: midijuke
-        - state: midijuke_on
+        - state: icon
+          map: ["enum.MidiJukeVisualizerLayers.Base"]
+        - state: unlit
           shader: unshaded
+          map: ["enum.MidiJukeVisualizerLayers.BaseUnlit"]
     - type: InteractionOutline
     - type: Physics
       fixtures:

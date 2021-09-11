@@ -8,10 +8,10 @@
     "copyright": "Space Station 14",
     "states": [
         {
-            "name": "midijuke",
+            "name": "icon",
         },
         {
-            "name": "midijuke_on",
+            "name": "unlit",
         },
     ]
 }

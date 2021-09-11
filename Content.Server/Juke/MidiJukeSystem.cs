@@ -8,6 +8,7 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Juke;
+using Content.Shared.Power;
 using JetBrains.Annotations;
 using Melanchall.DryWetMidi.Core;
 using Melanchall.DryWetMidi.Interaction;
@@ -218,6 +219,16 @@ namespace Content.Server.Juke
                 if (updateTimestamp)
                     UpdateTimestamp(uid);
             }
+        }
+
+        private void SetAppearance(EntityUid uid, MidiJukeVisualState state)
+        {
+            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent appearanceComponent))
+            {
+                return;
+            }
+
+            appearanceComponent.SetData(PowerDeviceVisuals.Powered, state);
         }
 
         /// <summary>
