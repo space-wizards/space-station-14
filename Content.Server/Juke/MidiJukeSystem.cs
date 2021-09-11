@@ -40,7 +40,6 @@ namespace Content.Server.Juke
         private readonly SortedList<string, (ResourcePath Path, string TrackTitle)> _midiFiles = new();
 
         private static readonly ResourcePath MidiPath = new("/midis");
-        //private const string MidiPath = "data/midis/"; //trailing slash es muchos importante
         private double _updateAccumulator = 0; //there must be a better way
 
         public override void Initialize()
@@ -144,8 +143,8 @@ namespace Content.Server.Juke
             }
             else
             {
-                elapsed = midiJuke.MidiPlayer?.CurrentTime;
-                duration = midiJuke.MidiPlayer?.Duration;
+                elapsed = midiJuke.MidiPlayer?.CurrentTimeSeconds;
+                duration = midiJuke.MidiPlayer?.DurationSeconds;
             }
             ui.SendMessage(new MidiJukeTimestampMessage(elapsed, duration));
         }
@@ -198,6 +197,7 @@ namespace Content.Server.Juke
 
         public override void Update(float frameTime)
         {
+            //We only need to update the timestamp ~once a second instead of every single tick.
             _updateAccumulator += frameTime;
             var updateTimestamp = false;
             if (_updateAccumulator >= 1)
@@ -205,15 +205,16 @@ namespace Content.Server.Juke
                 updateTimestamp = true;
                 _updateAccumulator = 0;
             }
+
             foreach (var component in ComponentManager.EntityQuery<MidiJukeComponent>(true))
             {
                 if (!component.Playing || component.MidiPlayer == null) continue;
                 var midiEvents = component.MidiPlayer?.TickClockAndPopEventBuffer();
                 if (midiEvents == null) continue;
                 var uid = component.Owner.Uid;
-                //RaiseNetworkEvent(new MidiJukeMidiEventsEvent(uid, midiEvents.ToArray()), Filter.Pvs(component.Owner));
                 //TODO: only send this in PVS -- requires some way to figure how to stop ghost notes when client misses
                 //NoteOff event when outside of PVS.
+                //RaiseNetworkEvent(new MidiJukeMidiEventsEvent(uid, midiEvents.ToArray()), Filter.Pvs(component.Owner));
                 RaiseNetworkEvent(new MidiJukeMidiEventsEvent(uid, midiEvents.ToArray()), Filter.Broadcast());
                 if (updateTimestamp)
                     UpdateTimestamp(uid);
@@ -252,14 +253,18 @@ namespace Content.Server.Juke
                 component.MidiFileName = filename;
                 component.MidiPlayer.Finished += (sender, eventArgs) => OnPlaybackFinished(component); //LOW KEY WORRIED ABOUT THE MEMORY SAFETY OF THIS
                 component.MidiPlayer.Loop = component.Loop;
-                component.MidiPlayer.EventPlayed += (sender, eventArgs) =>
-                {
-                    if (eventArgs.Event is ProgramChangeEvent programChangeEvent)
-                    {
-                        component.ChannelPrograms[programChangeEvent.Channel] = programChangeEvent.ProgramNumber;
-                        component.Dirty();
-                    }
-                };
+
+                //We need to keep track of some MIDI events that can affect playback (program changes, note events)
+                //so we can resync clients who move in/out of range during playback.
+                //TODO: uncomment this when (if) we make midi events not global
+                // component.MidiPlayer.EventPlayed += (sender, eventArgs) =>
+                // {
+                //     if (eventArgs.Event is ProgramChangeEvent programChangeEvent)
+                //     {
+                //         component.ChannelPrograms[programChangeEvent.Channel] = programChangeEvent.ProgramNumber;
+                //         //component.Dirty(); //Probably don't actually need to call this since we only want this updated by PVS
+                //     }
+                // };
             }
         }
 

@@ -17,12 +17,15 @@ namespace Content.Shared.Juke
         /// Whether the juke is currently playing a song.
         /// </summary>
         public MidiJukePlaybackStatus PlaybackStatus { get; set; } = MidiJukePlaybackStatus.Stop;
+
         public bool Playing => PlaybackStatus == MidiJukePlaybackStatus.Play;
+
         /// <summary>
         /// Contains the currently selected program for each channel, so we can sync this to clients who join
         /// midway through a song.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
+
         public readonly byte[] ChannelPrograms = new byte[16];
     }
 

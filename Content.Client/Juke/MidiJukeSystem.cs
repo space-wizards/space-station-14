@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.Tracing;
+using System.Linq;
 using Content.Shared.Juke;
 using JetBrains.Annotations;
 using Melanchall.DryWetMidi.Core;
@@ -48,7 +49,7 @@ namespace Content.Client.Juke
         private void OnMidiJukeHandleState(EntityUid uid, MidiJukeComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not MidiJukeComponentState cast) return;
-
+            Logger.DebugS("MidiJukeSystem", "Handling component state.");
             component.PlaybackStatus = cast.PlaybackStatus;
             switch (component.PlaybackStatus)
             {
@@ -62,17 +63,19 @@ namespace Content.Client.Juke
                     break;
             }
 
-            var programs = cast.ChannelPrograms;
-            for (var i = 0; i < programs.Length; i++)
-            {
-                var old = component.ChannelPrograms[i];
-                component.ChannelPrograms[i] = programs[i];
-                if (old != programs[i])
-                {
-                    component.Renderer?.SendMidiEvent(new MidiEvent
-                        { Type = 192, Channel = (byte) i, Program = programs[i] });
-                }
-            }
+            // Apply any program changes we might've missed.
+            // TODO: uncomment this when (if) we make midi effects not global
+            // var programs = cast.ChannelPrograms;
+            // for (byte channel = 0; channel < programs.Length; channel++)
+            // {
+            //     var old = component.ChannelPrograms[channel];
+            //     component.ChannelPrograms[channel] = programs[channel];
+            //     if (old != programs[channel])
+            //     {
+            //         component.Renderer?.SendMidiEvent(new MidiEvent
+            //             { Type = 192, Channel = channel, Program = programs[channel] });
+            //     }
+            // }
         }
 
         private void OnPlaybackFinishedEvent(MidiJukePlaybackFinishedEvent evt)
