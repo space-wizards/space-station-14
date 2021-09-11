@@ -22,7 +22,7 @@
       fixtures:
       - shape:
           !type:PhysShapeAabb
-            bounds: "-0.3, -0.16, 0.3, 0.16"
+            bounds: "-0.3, -0.14, 0.3, 0.14"
         mass: 15
         layer:
         - MobMask
