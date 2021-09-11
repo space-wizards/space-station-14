@@ -39,7 +39,7 @@ namespace Content.Server.Fluids
             if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var solution))
                 return;
 
-            if (solution.DrainAvailable < ReagentUnit.Zero)
+            if (solution.DrainAvailable == ReagentUnit.Zero)
                 return;
 
             Verb verb = new("spill");

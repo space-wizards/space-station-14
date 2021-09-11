@@ -45,19 +45,29 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory Debug =
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
+
         public static readonly VerbCategory Eject =
             new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png", true);
+
         public static readonly VerbCategory Insert =
             new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png", true);
+
         public static readonly VerbCategory Buckle =
             new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png", true);
+
         public static readonly VerbCategory Unbuckle =
             new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png", true);
+
         public static readonly VerbCategory Open =
             new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png", true);
+
         public static readonly VerbCategory Close =
             new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
+
         public static readonly VerbCategory Rotate =
             new("verb-categories-rotate", null, iconsOnly: true);
+
+        public static readonly VerbCategory SetTransferAmount =
+            new("verb-categories-transfer", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
     }
 }

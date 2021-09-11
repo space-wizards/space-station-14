@@ -19,3 +19,4 @@ verb-categories-unbuckle = Unbuckle
 verb-categories-close = Close
 verb-categories-open = Open
 verb-categories-rotate = Rotate
+verb-categories-transfer = Set Transfer Amount
