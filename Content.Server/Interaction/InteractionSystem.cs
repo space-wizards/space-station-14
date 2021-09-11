@@ -4,17 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
-using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Timing;
+using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Notification.Managers;
@@ -49,6 +48,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly VerbSystem _verbSystem = default!;
 
         public override void Initialize()
         {
@@ -373,13 +373,7 @@ namespace Content.Server.Interaction
             {
                 // We are close to the nearby object.
                 if (altInteract)
-                    // We are trying to use alternative interactions. Perform alternative interactions, using context
-                    // menu verbs.
-
-                    // Verbs can be triggered with an item in the hand, but currently there are no verbs that depend on
-                    // the currently held item. Maybe this if statement should be changed to
-                    // (altInteract && (item == null || item == target)).
-                    // Note that item == target will happen when alt-clicking the item currently in your hands.
+                    // Perform alternative interactions, using context menu verbs.
                     AltInteract(user, target);
                 else if (item != null && item != target)
                     // We are performing a standard interaction with an item, and the target isn't the same as the item
@@ -504,36 +498,23 @@ namespace Content.Server.Interaction
         ///     Alternative interactions on an entity. 
         /// </summary>
         /// <remarks>
-        ///     Uses the context menu verb list, and acts out the first verb marked as an alternative interaction. Note
-        ///     that this does not have any checks to see whether this interaction is valid, as these are all done in <see
-        ///     cref="UserInteraction(IEntity, EntityCoordinates, EntityUid, bool)"/>
+        ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
         /// </remarks>
         public void AltInteract(IEntity user, IEntity target)
         {
-            // TODO VERB SYSTEM when ECS-ing verbs and re-writing VerbUtility.GetVerbs, maybe sort verbs by some
-            // priority property, such that which verbs appear first is more predictable?.
+            // Get list of alt-interact verbs
+            GetAlternativeVerbsEvent getVerbEvent = new(user, target);
+            RaiseLocalEvent(target.Uid, getVerbEvent);
 
-            // Iterate through list of verbs that apply to target. We do not include global verbs here. If in the future
-            // alt click should also support global verbs, this needs to be changed.
-            foreach (var (component, verb) in VerbUtility.GetVerbs(target))
+            // Sort by priority
+            getVerbEvent.Verbs.Sort();
+
+            foreach (var verb in getVerbEvent.Verbs)
             {
-                // Check that the verb marked as an alternative interaction?
-                if (!verb.AlternativeInteraction)
+                if (verb.IsDisabled)
                     continue;
 
-                // Can the verb be acted out?
-                if (!VerbUtility.VerbAccessChecks(user, target, verb))
-                    continue;
-
-                // Is the verb currently enabled?
-                var verbData = verb.GetData(user, component);
-                if (verbData.IsInvisible || verbData.IsDisabled)
-                    continue;
-
-                // Act out the verb. Note that, if there is more than one AlternativeInteraction verb, only the first
-                // one is activated. The priority is effectively determined by the order in which VerbUtility.GetVerbs()
-                // returns the verbs.
-                verb.Activate(user, component);
+                _verbSystem.TryExecuteVerb(verb);
                 break;
             }
         }
