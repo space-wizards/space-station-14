@@ -88,7 +88,7 @@ namespace Content.Shared.Pulling.Components
                 {
                     // Pulling a new object : Perform sanity checks.
 
-                    if (!_canStartPull(value))
+                    if (!CanStartPull(value))
                     {
                         return;
                     }
@@ -194,7 +194,7 @@ namespace Content.Shared.Pulling.Components
         /// It might allow an impossible pull (i.e: puller has no PhysicsComponent somehow).
         /// Ultimately this is only used separately to stop TryStartPull from cancelling a pull for no reason.
         /// </summary>
-        private bool _canStartPull(IEntity puller)
+        public bool CanStartPull(IEntity puller)
         {
             if (!puller.HasComponent<SharedPullerComponent>())
             {
@@ -231,7 +231,7 @@ namespace Content.Shared.Pulling.Components
 
         public bool TryStartPull(IEntity puller)
         {
-            if (!_canStartPull(puller))
+            if (!CanStartPull(puller))
             {
                 return false;
             }

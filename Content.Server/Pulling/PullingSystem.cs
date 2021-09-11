@@ -33,23 +33,28 @@ namespace Content.Server.Pulling
 
         private void AddPullVerbs(Robust.Shared.GameObjects.EntityUid uid, PullableComponent component, GetOtherVerbsEvent args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract || !CanPull(args.User, args.Target))
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Are they trying to pull themselves up by their bootstraps?
             if (args.User == args.Target)
                 return;
 
-            Verb verb = new("togglepull");
-            verb.Text = (component.Puller == args.User)
-                ? Loc.GetString("pulling-verb-get-data-text-stop-pulling")
-                : Loc.GetString("pulling-verb-get-data-text");
-            verb.Act = (component.Puller == args.User)
-                ? () => component.TryStopPull()
-                : () => component.TryStartPull(args.User);
             //TODO VERB ICONS add pulling icon
-
-            args.Verbs.Add(verb);
+            if (component.Puller == args.User)
+            {
+                Verb verb = new("togglepull");
+                verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
+                verb.Act = () => component.TryStopPull();
+                args.Verbs.Add(verb);
+            }
+            else if (component.CanStartPull(args.User))
+            {
+                Verb verb = new("togglepull");
+                verb.Text = Loc.GetString("pulling-verb-get-data-text");
+                verb.Act = () => component.TryStartPull(args.User);
+                args.Verbs.Add(verb);
+            }
         }
 
         private void HandleReleasePulledObject(ICommonSession? session)
