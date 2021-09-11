@@ -288,7 +288,8 @@ namespace Content.Server.Juke
             {
                 component.MidiPlayer.Start();
                 component.PlaybackStatus = MidiJukePlaybackStatus.Play;
-                RaiseNetworkEvent(new MidiJukePlayEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                //RaiseNetworkEvent(new MidiJukePlayEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                RaiseNetworkEvent(new MidiJukePlayEvent(component.Owner.Uid), Filter.Broadcast());
             }
         }
 
@@ -303,7 +304,8 @@ namespace Content.Server.Juke
                 component.MidiPlayer.Stop();
                 component.PlaybackStatus = MidiJukePlaybackStatus.Pause;
                 component.MidiPlayer.FlushEventBuffer();
-                RaiseNetworkEvent(new MidiJukePauseEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                //RaiseNetworkEvent(new MidiJukePauseEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                RaiseNetworkEvent(new MidiJukePauseEvent(component.Owner.Uid), Filter.Broadcast());
             }
         }
 
@@ -318,7 +320,8 @@ namespace Content.Server.Juke
                 component.MidiPlayer.Stop();
                 component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
                 component.MidiPlayer.FlushEventBuffer();
-                RaiseNetworkEvent(new MidiJukeStopEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                //RaiseNetworkEvent(new MidiJukeStopEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+                RaiseNetworkEvent(new MidiJukeStopEvent(component.Owner.Uid), Filter.Broadcast());
                 component.MidiPlayer.MoveToStart();
             }
         }
@@ -339,7 +342,8 @@ namespace Content.Server.Juke
             component.PlaybackStatus = MidiJukePlaybackStatus.Stop;
             var nextSong = _robustRandom.Pick(_midiFiles.Keys.ToList());
             OpenMidiFile(component, nextSong);
-            RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            //RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Pvs(component.Owner));
+            RaiseNetworkEvent(new MidiJukePlaybackFinishedEvent(component.Owner.Uid), Filter.Broadcast());
             if (component.MidiPlayer == null)
             {
                 return null;
