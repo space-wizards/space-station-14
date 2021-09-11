@@ -8,10 +8,10 @@
     "copyright": "Space Station 14",
     "states": [
         {
-            "name": "icon",
+            "name": "icon"
         },
         {
-            "name": "unlit",
-        },
+            "name": "unlit"
+        }
     ]
 }
