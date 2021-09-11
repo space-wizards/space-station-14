@@ -1,20 +1,21 @@
-<SS14Window xmlns="https://spacestation14.io" MinSize="400 300">
+<SS14Window xmlns="https://spacestation14.io" MinSize="400 350">
     <BoxContainer Orientation="Vertical" SeparationOverride="5">
         <BoxContainer Orientation="Horizontal" VerticalExpand="False">
-            <Button Name="PlayButton" ToggleMode="True" Text="Play" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-            <Button Name="PauseButton" ToggleMode="True" Text="Pause" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-            <Button Name="StopButton" ToggleMode="False" Text="Stop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-            <Button Name="SkipButton" ToggleMode="False" Text="Skip" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
-            <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="PlayButton" ToggleMode="True" Text="{Loc comp-juke-ui-play}" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="PauseButton" ToggleMode="True" Text="{Loc comp-juke-ui-pause}" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="StopButton" ToggleMode="False" Text="{Loc comp-juke-ui-stop}" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="SkipButton" ToggleMode="False" Text="{Loc comp-juke-ui-skip}" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
+            <Button Name="LoopButton" ToggleMode="True" Text="{Loc comp-juke-ui-loop}" TextAlign="Center" HorizontalExpand="True" SizeFlagsStretchRatio="1"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="False">
-            <Label Name="SongFilename" Text="No song playing" />
+            <Label Name="SongFilename" Text="{Loc comp-juke-ui-no-song-playing}" />
             <Control HorizontalExpand="True"/>
             <Label Name="TimeStamp" Align="Right" Text="--/--"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal" VerticalExpand="False">
             <Label Name="SongTitle" />
         </BoxContainer>
+        <LineEdit Name="SearchBox" PlaceHolder="{Loc comp-juke-ui-search}" HorizontalExpand="True" />
         <ItemList Name="MidiList" SelectMode="Single" VerticalExpand="True"/>
 
     </BoxContainer>
