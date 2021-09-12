@@ -86,6 +86,7 @@ namespace Content.Server.Ghost
                 ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
                 : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));
 
+            args.Message.PushNewLine();
             args.Message.AddMarkup(deathTimeInfo);
         }
 
