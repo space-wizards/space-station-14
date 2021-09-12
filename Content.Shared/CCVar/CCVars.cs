@@ -12,6 +12,12 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
+        ///     Whether the basic 'hum' ambience will be enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
         /// How long we'll wait until re-sampling nearby objects for ambience.
         /// </summary>
         public static readonly CVarDef<float> AmbientCooldown =
@@ -217,6 +223,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.stop_speed", 0.1f);
 
         /// <summary>
+        ///     The speed at which thrown items will 'land' (raise events), as opposed to 0 or sleeping
+        /// </summary>
+        public static readonly CVarDef<float> LandingSpeedThreshold =
+            CVarDef.Create("physics.land_speed_threshold", 1.0f);
+
+        /// <summary>
         /// Whether mobs can push objects like lockers.
         /// </summary>
         /// <remarks>
@@ -224,13 +236,6 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
             CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
-
-        /*
-         * Ambience
-         */
-
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Lobby music

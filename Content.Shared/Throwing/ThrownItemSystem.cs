@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Collections;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,6 +21,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
 
         private const string ThrowingFixture = "throw-fixture";
@@ -43,7 +46,7 @@ namespace Content.Shared.Throwing
             // is transient while the entity is thrown so this shouldn't be too bad.
             foreach (var (thrown, physics) in ComponentManager.EntityQuery<ThrownItemComponent, PhysicsComponent>())
             {
-                if (!physics.LinearVelocity.Equals(Vector2.Zero)) continue;
+                if (physics.LinearVelocity.Length > _cfg.GetCVar(CCVars.LandingSpeedThreshold)) continue;
                 toRemove.Add(thrown);
             }
 
