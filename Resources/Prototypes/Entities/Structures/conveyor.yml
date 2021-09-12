@@ -13,13 +13,13 @@
         !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
       hard: false
-      layer: [Passable]
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: SnapGrid
+      layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/conveyor.rsi

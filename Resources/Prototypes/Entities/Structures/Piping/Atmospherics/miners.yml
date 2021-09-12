@@ -9,7 +9,8 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
-    - type: SnapGrid
+    - type: Transform
+      anchored: true
     - type: Damageable
     - type: Destructible
       thresholds:

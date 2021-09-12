@@ -7,7 +7,7 @@ using Content.Shared.GameTicking;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Damage
+namespace Content.Server.Damage.Systems
 {
     [UsedImplicitly]
     public class GodmodeSystem : EntitySystem

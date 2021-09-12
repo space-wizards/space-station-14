@@ -20,7 +20,8 @@
         state: activated
         shader: unshaded
         map: ["enum.GravityGeneratorVisualLayers.Core"]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: Physics
