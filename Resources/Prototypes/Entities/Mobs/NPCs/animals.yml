@@ -342,9 +342,6 @@
   id: MouseMob_Content
   description: Squeak!
   components:
-  - type: Tag
-    tags:
-    - Grindable
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: mouse
@@ -387,11 +384,14 @@
 # Eek! You can eat them alive for now until someone makes something that detects when
 # a mob is dead or something idk
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: Extractable
+    extractableSolution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: MouseAccent
 
 - type: entity

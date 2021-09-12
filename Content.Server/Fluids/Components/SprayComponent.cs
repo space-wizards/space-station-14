@@ -4,9 +4,9 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
-using Content.Shared.DragDrop;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
@@ -30,6 +30,7 @@ namespace Content.Server.Fluids.Components
     internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
     {
         public const float SprayDistance = 3f;
+        public const string SolutionName = "spray";
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -82,13 +83,18 @@ namespace Content.Server.Fluids.Components
         [DataField("safetySound")]
         public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 
-        public ReagentUnit CurrentVolume => Owner.GetComponentOrNull<SolutionContainerComponent>()?.CurrentVolume ?? ReagentUnit.Zero;
+
+        public ReagentUnit CurrentVolume {
+            get
+            {
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                return solution?.CurrentVolume ?? ReagentUnit.Zero;
+            }
+        }
 
         protected override void Initialize()
         {
             base.Initialize();
-
-            Owner.EnsureComponentWarn(out SolutionContainerComponent _);
 
             if (_hasSafety)
             {
@@ -124,7 +130,7 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
@@ -148,7 +154,7 @@ namespace Content.Server.Fluids.Components
                 if (target.TryDistance(Owner.EntityManager, playerPos, out var distance) && distance > SprayDistance)
                     target = eventArgs.User.Transform.Coordinates.Offset(diffNorm * SprayDistance);
 
-                var solution = contents.SplitSolution(_transferAmount);
+                var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);
 
                 if (solution.TotalVolume <= ReagentUnit.Zero)
                     break;

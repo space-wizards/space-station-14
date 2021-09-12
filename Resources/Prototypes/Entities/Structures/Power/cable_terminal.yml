@@ -18,7 +18,8 @@
           layer:
             - Underplating
     - type: InteractionOutline
-    - type: SnapGrid
+    - type: Transform
+      anchored: true
     - type: Damageable
       resistances: metallicResistances
     - type: Destructible
