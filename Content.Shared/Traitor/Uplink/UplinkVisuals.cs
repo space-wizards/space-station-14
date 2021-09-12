@@ -4,7 +4,7 @@ using System;
 namespace Content.Shared.Traitor.Uplink
 {
     [Serializable, NetSerializable]
-    public enum UplinkUiKey
+    public enum UplinkUiKey : byte
     {
         Key
     }
