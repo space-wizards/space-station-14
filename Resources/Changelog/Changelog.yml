@@ -1953,3 +1953,9 @@ Entries:
   - {message: Audio tweaking/additions, type: Tweak}
   id: 349
   time: '2021-09-10T01:31:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items now land when they stop moving and not when their physics goes
+      to sleep., type: Tweak}
+  id: 350
+  time: '2021-09-10T12:59:50.0000000+00:00'

@@ -13,12 +13,11 @@
         !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
       hard: false
-      layer: [Passable]
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
+      layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
   - type: SnapGrid
   - type: Sprite
     netsync: false
