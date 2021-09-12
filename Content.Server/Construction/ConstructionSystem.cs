@@ -97,6 +97,12 @@ namespace Content.Server.Construction
             // We need a place to hold our construction items!
             var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
 
+            if (user.IsInContainer())
+            {
+                user.PopupMessageCursor(Loc.GetString("construction-system-inside-container"));
+                return null;
+            }
+
             if (existed)
             {
                 user.PopupMessageCursor(Loc.GetString("construction-system-construct-cannot-start-another-construction"));
