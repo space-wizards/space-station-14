@@ -1937,3 +1937,25 @@ Entries:
   - {message: Add ambient sounds coming from objects., type: Add}
   id: 346
   time: '2021-09-07T08:47:24.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
+    type: Fix}
+  id: 347
+  time: '2021-09-09T06:37:20.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Sunglasses now protect you against flashes., type: Tweak}
+  id: 348
+  time: '2021-09-09T14:20:41.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Audio tweaking/additions, type: Tweak}
+  id: 349
+  time: '2021-09-10T01:31:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items now land when they stop moving and not when their physics goes
+      to sleep., type: Tweak}
+  id: 350
+  time: '2021-09-10T12:59:50.0000000+00:00'

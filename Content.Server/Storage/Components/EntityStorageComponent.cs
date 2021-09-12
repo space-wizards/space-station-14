@@ -75,10 +75,10 @@ namespace Content.Server.Storage.Components
         private bool _isWeldedShut;
 
         [DataField("closeSound")]
-        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Machines/closetclose.ogg");
+        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
 
         [DataField("openSound")]
-        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Machines/closetopen.ogg");
+        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
 
         [ViewVariables]
         protected Container Contents = default!;

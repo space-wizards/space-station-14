@@ -1,32 +1,44 @@
 using Content.Server.Flash.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
+using Content.Shared.Flash;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
+using Content.Shared.Inventory;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Flash
 {
-    internal sealed class FlashSystem : EntitySystem
+    internal sealed class FlashSystem : SharedFlashSystem
     {
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnMeleeHit);
-            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnMeleeInteract);
-            SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnUseInHand);
-
-            SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
+            SubscribeLocalEvent<FlashComponent, MeleeInteractEvent>(OnFlashMeleeInteract);
+            SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand);
+            SubscribeLocalEvent<FlashComponent, ExaminedEvent>(OnFlashExamined);
+            SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
+            SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
         }
 
-        public void OnMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
+        private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
         {
             if (!UseFlash(comp, args.User))
             {
@@ -36,11 +48,11 @@ namespace Content.Server.Flash
             args.Handled = true;
             foreach (IEntity e in args.HitEntities)
             {
-                FlashEntity(e, args.User, comp.FlashDuration, comp.SlowTo);
+                Flash(e.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
-        private void OnMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
+        private void OnFlashMeleeInteract(EntityUid uid, FlashComponent comp, MeleeInteractEvent args)
         {
             if (!UseFlash(comp, args.User))
             {
@@ -50,20 +62,20 @@ namespace Content.Server.Flash
             if (args.Entity.HasComponent<FlashableComponent>())
             {
                 args.CanInteract = true;
-                FlashEntity(args.Entity, args.User, comp.FlashDuration, comp.SlowTo);
+                Flash(args.Entity.Uid, args.User.Uid, uid, comp.FlashDuration, comp.SlowTo);
             }
         }
 
-        public void OnUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
+        private void OnFlashUseInHand(EntityUid uid, FlashComponent comp, UseInHandEvent args)
         {
             if (!UseFlash(comp, args.User))
             {
                 return;
             }
 
-            foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
+            foreach (var entity in _entityLookup.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
             {
-                FlashEntity(entity, args.User, comp.AoeFlashDuration, comp.SlowTo);
+                Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
             }
         }
 
@@ -100,33 +112,60 @@ namespace Content.Server.Flash
             return false;
         }
 
-        // TODO: Check if target can be flashed (e.g. things like sunglasses would block a flash)
-        // TODO: Merge with the code in FlashableComponent--raise an event on the target, that FlashableComponent or
-        // another comp will catch
-        private void FlashEntity(IEntity target, IEntity user, float flashDuration, float slowTo)
+        public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true)
         {
-            if (target.TryGetComponent<FlashableComponent>(out var flashable))
+            var attempt = new FlashAttemptEvent(target, user, used);
+            RaiseLocalEvent(target, attempt);
+
+            if (attempt.Cancelled)
+                return;
+
+            if (ComponentManager.TryGetComponent<FlashableComponent>(target, out var flashable))
             {
-                flashable.Flash(flashDuration / 1000d);
+                flashable.LastFlash = _gameTiming.CurTime;
+                flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
+                flashable.Dirty();
             }
 
-            if (target.TryGetComponent<StunnableComponent>(out var stunnableComponent))
+            if (ComponentManager.TryGetComponent<StunnableComponent>(target, out var stunnableComponent))
             {
                 stunnableComponent.Slowdown(flashDuration / 1000f, slowTo, slowTo);
             }
 
-            if (target != user)
+            if (displayPopup && user != null && target != user)
             {
-                user.PopupMessage(target,
+                // TODO Resolving the IEntity here bad.
+                if(EntityManager.TryGetEntity(user.Value, out var userEntity)
+                && EntityManager.TryGetEntity(target, out var targetEntity))
+
+                userEntity.PopupMessage(targetEntity,
                     Loc.GetString(
                         "flash-component-user-blinds-you",
-                        ("user", user)
+                        ("user", userEntity)
                     )
                 );
             }
         }
 
-        private void OnExamined(EntityUid uid, FlashComponent comp, ExaminedEvent args)
+        public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
+        {
+            var transform = ComponentManager.GetComponent<ITransformComponent>(source);
+
+            foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
+            {
+                if (!entity.HasComponent<FlashableComponent>() ||
+                    !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
+
+                Flash(entity.Uid, user, source, duration, slowTo, displayPopup);
+            }
+
+            if (sound != null)
+            {
+                SoundSystem.Play(Filter.Pvs(transform), sound.GetSound(), transform.Coordinates);
+            }
+        }
+
+        private void OnFlashExamined(EntityUid uid, FlashComponent comp, ExaminedEvent args)
         {
             if (!comp.HasUses)
             {
@@ -146,6 +185,33 @@ namespace Content.Server.Flash
                     )
                 );
             }
+        }
+
+        private void OnInventoryFlashAttempt(EntityUid uid, InventoryComponent component, FlashAttemptEvent args)
+        {
+            // Forward the event to the glasses, if any.
+            if(component.TryGetSlotItem(EquipmentSlotDefines.Slots.EYES, out ItemComponent? glasses))
+                RaiseLocalEvent(glasses.Owner.Uid, args);
+        }
+
+        private void OnFlashImmunityFlashAttempt(EntityUid uid, FlashImmunityComponent component, FlashAttemptEvent args)
+        {
+            if(component.Enabled)
+                args.Cancel();
+        }
+    }
+
+    public class FlashAttemptEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid Target;
+        public readonly EntityUid? User;
+        public readonly EntityUid? Used;
+
+        public FlashAttemptEvent(EntityUid target, EntityUid? user, EntityUid? used)
+        {
+            Target = target;
+            User = user;
+            Used = used;
         }
     }
 }
