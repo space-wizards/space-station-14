@@ -19,6 +19,7 @@
         - Impassable
         - MobImpassable
         - VaultImpassable
-    - type: SnapGrid
+    - type: Transform
+      anchored: true
     - type: Pullable
     - type: Clickable

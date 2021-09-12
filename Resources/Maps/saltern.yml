@@ -26511,8 +26511,7 @@ entities:
   type: CableApcExtension
   components:
   - anchored: True
-    rot: 4.371139006309477E-08 rad
-    pos: 0.5,6.5
+    pos: -25.5,19.5
     parent: 853
     type: Transform
 - uid: 2605
@@ -41918,14 +41917,14 @@ entities:
   type: CableApcExtension
   components:
   - anchored: True
-    pos: 0.5,6.5
+    pos: -24.5,19.5
     parent: 853
     type: Transform
 - uid: 4075
   type: CableApcExtension
   components:
   - anchored: True
-    pos: -0.5,6.5
+    pos: -22.5,19.5
     parent: 853
     type: Transform
 - uid: 4076
@@ -49765,28 +49764,21 @@ entities:
   type: CableApcExtension
   components:
   - anchored: True
-    pos: -27.5,14.5
+    pos: -20.5,19.5
     parent: 853
     type: Transform
 - uid: 5023
   type: CableApcExtension
   components:
   - anchored: True
-    pos: -26.5,14.5
+    pos: -21.5,19.5
     parent: 853
     type: Transform
 - uid: 5024
   type: CableApcExtension
   components:
   - anchored: True
-    pos: -25.5,14.5
-    parent: 853
-    type: Transform
-- uid: 5025
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -25.5,15.5
+    pos: -23.5,19.5
     parent: 853
     type: Transform
 - uid: 5026
@@ -49803,72 +49795,6 @@ entities:
     pos: -18.5,19.5
     parent: 853
     type: Transform
-- uid: 5028
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -19.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5029
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -20.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5030
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -21.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5031
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -22.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5032
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -23.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5033
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -23.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 5034
   type: PoweredSmallLight
   components:
@@ -50058,72 +49984,6 @@ entities:
     pos: -25.5,18.5
     parent: 853
     type: Transform
-- uid: 5054
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -24.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5055
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -23.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5056
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -22.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5057
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -21.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5058
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -23.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 5059
-  type: CableApcExtension
-  components:
-  - anchored: True
-    pos: -24.5,18.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 5060
   type: Firelock
   components:

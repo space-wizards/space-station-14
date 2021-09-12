@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Damage
+namespace Content.Server.Damage.Systems
 {
     [UsedImplicitly]
     public class GodmodeSystem : EntitySystem

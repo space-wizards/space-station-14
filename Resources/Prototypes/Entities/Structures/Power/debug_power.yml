@@ -25,7 +25,8 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: wiredmachine
@@ -67,7 +68,8 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: provider
@@ -97,7 +99,8 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: provider
@@ -155,7 +158,8 @@
         !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
       layer: [MobMask, Opaque]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: wirelessmachine

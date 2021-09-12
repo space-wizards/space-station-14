@@ -13,7 +13,8 @@
         layer:
         - Underplating
   - type: InteractionOutline
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     drawdepth: BelowFloor

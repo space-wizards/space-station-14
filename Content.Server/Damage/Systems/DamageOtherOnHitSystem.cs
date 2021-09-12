@@ -4,7 +4,7 @@ using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Damage
+namespace Content.Server.Damage.Systems
 {
     public class DamageOtherOnHitSystem : EntitySystem
     {
