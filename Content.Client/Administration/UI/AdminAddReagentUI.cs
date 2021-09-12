@@ -13,13 +13,13 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Administration.UI
 {
     [UsedImplicitly]
-    public sealed class AddReagentEui : BaseEui
+    public sealed class AdminAddReagentEui : BaseEui
     {
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
         private readonly Menu _window;
 
-        public AddReagentEui()
+        public AdminAddReagentEui()
         {
             _window = new Menu(this);
             _window.OnClose += () => SendMessage(new AdminAddReagentEuiMsg.Close());
@@ -52,7 +52,7 @@ namespace Content.Client.Administration.UI
 
         private sealed class Menu : SS14Window
         {
-            private readonly AddReagentEui _eui;
+            private readonly AdminAddReagentEui _eui;
             private readonly Label _volumeLabel;
             private readonly LineEdit _reagentIdEdit;
             private readonly LineEdit _amountEdit;
@@ -60,7 +60,7 @@ namespace Content.Client.Administration.UI
             private readonly Button _addButton;
             private readonly Button _addCloseButton;
 
-            public Menu(AddReagentEui eui)
+            public Menu(AdminAddReagentEui eui)
             {
                 _eui = eui;
 
