@@ -8,7 +8,7 @@ namespace Content.Shared.Throwing
     ///     Raised when an entity that was thrown lands.
     /// </summary>
     [PublicAPI]
-    public sealed class LandEvent : HandledEntityEventArgs
+    public sealed class LandEvent : EntityEventArgs
     {
         /// <summary>
         ///     Entity that threw the item.

@@ -101,16 +101,8 @@ namespace Content.Shared.Throwing
             var landing = thrownItem.Owner;
             var coordinates = landing.Transform.Coordinates;
 
-            // LandInteraction
-            // TODO: Why is this handleable nani the fuck
             var landMsg = new LandEvent(user, landing, coordinates);
             RaiseLocalEvent(landing.Uid, landMsg);
-
-            if (landMsg.Handled)
-            {
-                return;
-            }
-
             ComponentManager.RemoveComponent(landing.Uid, thrownItem);
         }
 
