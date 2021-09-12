@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Damage
+namespace Content.Server.Damage.Systems
 {
     [UsedImplicitly]
     internal sealed class DamageOnHighSpeedImpactSystem: EntitySystem

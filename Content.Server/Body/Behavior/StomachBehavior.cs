@@ -46,15 +46,13 @@ namespace Content.Server.Body.Behavior
 
             _accumulatedFrameTime -= 1;
 
-            // Note that "Owner" should be the organ that has this behaviour/mechanism, and it should have a dedicated
-            // solution container. "Body.Owner" is something else, and may have more than one solution container.
-            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream)
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SharedBloodstreamComponent.DefaultSolutionName, out var solution))
+            if (!Body.Owner.TryGetComponent(out BloodstreamComponent? bloodstream) ||
+                StomachSolution == null) // Something has gone wrong here.
             {
                 return;
             }
 
-            // Add reagents ready for transfer to bloodstream to transferSolution
+            // Reagents ready to transfer into the bloodstream are added to this solution
             var transferSolution = new Solution();
 
             // Use ToList here to remove entries while iterating
@@ -64,10 +62,10 @@ namespace Content.Server.Body.Behavior
                 delta.Increment(1);
                 if (delta.Lifetime > _digestionDelay)
                 {
-                    // This reagent has been in the somach long enough, TRY to transfer it.
+                    // This reagent has been in the stomach long enough, TRY to transfer it.
                     // But first, check if the reagent still exists, and how much is left.
                     // Some poor spessman may have washed down a potassium snack with some water.
-                    if (solution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity))
+                    if (StomachSolution.ContainsReagent(delta.ReagentId, out ReagentUnit quantity))
                     {
                         if (quantity > delta.Quantity)
                         {
@@ -75,7 +73,7 @@ namespace Content.Server.Body.Behavior
                         }
 
                         EntitySystem.Get<SolutionContainerSystem>()
-                            .TryRemoveReagent(Owner.Uid, solution, delta.ReagentId, quantity);
+                            .TryRemoveReagent(Owner.Uid, StomachSolution, delta.ReagentId, quantity);
                         transferSolution.AddReagent(delta.ReagentId, quantity);
                     }
 
