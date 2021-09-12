@@ -1937,3 +1937,9 @@ Entries:
   - {message: Add ambient sounds coming from objects., type: Add}
   id: 346
   time: '2021-09-07T08:47:24.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
+    type: Fix}
+  id: 347
+  time: '2021-09-09T06:37:20.0000000+00:00'
