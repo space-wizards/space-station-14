@@ -39,7 +39,8 @@
             max: 1
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Pullable
   - type: AMEController
@@ -123,7 +124,8 @@
             max: 2
       - !type:DoActsBehavior
         acts: ["Destruction"]
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: IconSmooth
     mode: CardinalFlags
     base: shield_
