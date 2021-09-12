@@ -34,7 +34,7 @@ namespace Content.Server.Morgue
 
         /// <summary>
         ///     This adds the "remove label" verb to the list of verbs. Yes, this is a stupid function name, but it's
-        ///     consistent. with other get-verb event handlers.
+        ///     consistent with other get-verb event handlers.
         /// </summary>
         private void AddRemoveLabelVerb(EntityUid uid, BodyBagEntityStorageComponent component, GetAlternativeVerbsEvent args)
         {

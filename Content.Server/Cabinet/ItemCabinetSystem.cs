@@ -31,8 +31,6 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
 
-            // TODO METHOD EVENTS These are a bunch of method events. Even worse, some of these are method events that
-            // are exclusively raised by and handled by the same system. wtf, why aren't those just function calls?
             SubscribeLocalEvent<ItemCabinetComponent, TryEjectItemCabinetEvent>(OnTryEjectItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);

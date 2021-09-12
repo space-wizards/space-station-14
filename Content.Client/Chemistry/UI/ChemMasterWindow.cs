@@ -230,7 +230,7 @@ namespace Content.Client.Chemistry.UI
                 {
                     new Label
                     {
-                        Text = Loc.GetString("chem-master-window-bottles-label")
+                        Text = Loc.GetString("cham-master-window-bottles-label")
                     },
 
                 },

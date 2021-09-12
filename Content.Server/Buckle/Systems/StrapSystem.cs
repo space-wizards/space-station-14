@@ -27,17 +27,13 @@ namespace Content.Server.Buckle.Systems
         // functions. Whenever these are fully ECSed, maybe do it in a way that allows for these verbs to be handled in
         // a sensible manner in a single system?
 
-        /// <summary>
-        ///     Unstrap a buckle-able entity from another entity. Similar functionality to unbuckling, except here the
-        ///     targeted entity is the one that the other entity is strapped to (e.g., a hospital bed).
-        /// </summary>
         private void AddStrapVerbs(EntityUid uid, StrapComponent component, GetInteractionVerbsEvent args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
 
             // Note that for whatever bloody reason, buckle component has its own interaction range. Additionally, this
-            // verb can be set per-component, so we have to check a modified InRangeUnobstructed for every verb.
+            // range can be set per-component, so we have to check a modified InRangeUnobstructed for every verb.
 
             // Add unstrap verbs for every strapped entity.
             foreach (var entity in component.BuckledEntities)
@@ -77,13 +73,11 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(usingBuckle) &&
                 _interactionSystem.InRangeUnobstructed(args.Using, args.Target, range: usingBuckle.Range))
             {
-                // Check that the entity is unobstructed from the target (ignoring the user). Note that if the item is
-                // held in hand, this doesn't matter. BUT the user may instead be pulling a person here.
+                // Check that the entity is unobstructed from the target (ignoring the user).
                 bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == args.Using;
                 if (!_interactionSystem.InRangeUnobstructed(args.Using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                // Add a verb to buckle the used entity
                 Verb verb = new("buckle:using");
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;

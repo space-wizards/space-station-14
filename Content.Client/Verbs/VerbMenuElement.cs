@@ -101,7 +101,7 @@ namespace Content.Client.Verbs
             OnPressed += _ =>
             {
                 system.ContextMenuPresenter.CloseAllMenus();
-                system.TryExecuteVerb(verb, true, target, type);
+                system.TryExecuteVerb(verb, target, type);
             };
         }
 

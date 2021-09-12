@@ -27,5 +27,5 @@ chem-master-window-max-pills-volume-text = max 50u/each
 chem-master-window-max-bottle-volume-text = max 30u/each
 chem-master-window-create-pill-button = Create
 chem-master-window-create-bottle-button = Create
-chem-master-window-bottles-label = Bottles:
+cham-master-window-bottles-label = Bottles:
 chem-master-window-unknown-reagent-text = Unknown reagent

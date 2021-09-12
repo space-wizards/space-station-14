@@ -15,15 +15,15 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     Verb objects describe actions that a user can take. The actions can be specified via an Action delegate,
-    ///     local events, or networked events. Verbs also provide text, icons, and categories for displaying in the
+    ///     Verb objects describe actions that a user can take. The actions can be specified via an Action, local
+    ///     events, or networked events. Verbs also provide text, icons, and categories for displaying in the
     ///     context-menu.
     /// </summary>
     [Serializable, NetSerializable]
-    public class Verb : IComparable
+    public sealed class Verb : IComparable
     {
         /// <summary>
-        ///     This is a delegate action that will be run when the verb is "acted" out.
+        ///     This is an action that will be run when the verb is "acted" out.
         /// </summary>
         /// <remarks>
         ///     This delegate probably just points to some function in the system assembling this verb. This delegate

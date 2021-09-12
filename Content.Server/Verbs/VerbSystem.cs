@@ -10,7 +10,7 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Verbs
 {
-    public class VerbSystem : SharedVerbSystem
+    public sealed class VerbSystem : SharedVerbSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 

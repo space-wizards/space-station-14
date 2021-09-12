@@ -69,8 +69,7 @@ namespace Content.Client.ContextMenu.UI
             _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, _contextMenuView.OnGroupingContextMenuChanged, true);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenContextMenu,
-                new PointerInputCmdHandler(HandleOpenContextMenu))
+                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenContextMenu))
                 .Register<ContextMenuPresenter>();
         }
 
@@ -169,6 +168,7 @@ namespace Content.Client.ContextMenu.UI
 
         private void OnMouseEnteredSingle(object? sender, SingleContextElement e)
         {
+            // close other pop-ups after a short delay
             _cancelHover?.Cancel();
             _cancelHover = new();
 
@@ -353,8 +353,7 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in _contextMenuView.Elements.Keys.ToList())
             {
-                if (entity.Deleted ||
-                    !_verbSystem.CanSeeAllContext && !player.InRangeUnOccluded(entity))
+                if (entity.Deleted || !_verbSystem.CanSeeAllContext && !player.InRangeUnOccluded(entity))
                 {
                     _contextMenuView.RemoveEntity(entity);
                     if (_verbSystem.CurrentTarget == entity.Uid)

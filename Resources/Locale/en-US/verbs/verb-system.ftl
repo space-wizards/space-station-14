@@ -1,6 +1,7 @@
 verb-system-waiting-on-server-text = Waiting on Server... 
-verb-system-null-server-response = Entity not in view. You should not see this.
 verb-system-no-verbs-text = No verbs!
+verb-system-null-server-response = Entity not in view. You should not see this.
+
 
 # if verbs have a range of targets (e.g., multiple ejectables) you can
 # usually just use Entity.Name. But it is a bit odd when targeting yourself

@@ -71,6 +71,16 @@ namespace Content.Client.Verbs
             CanSeeAllContext = args.CanSeeAllContext;
         }
 
+        /// <summary>
+        ///     Execute actions associated with the given verb. If there are no defined actions, this will instead ask
+        ///     the server to run the given verb.
+        /// </summary>
+        public void TryExecuteVerb(Verb verb, EntityUid target, VerbType verbType)
+        {
+            if (!TryExecuteVerb(verb))
+                RaiseNetworkEvent(new TryExecuteVerbEvent(target, verb.Key, verbType));
+        }
+
         public void OpenVerbMenu(IEntity target, ScreenCoordinates screenCoordinates)
         {
             if (CurrentVerbPopup != null)

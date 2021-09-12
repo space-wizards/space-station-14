@@ -205,10 +205,6 @@ namespace Content.Client.ContextMenu.UI
             });
         }
 
-        /// <summary>
-        ///     Add a child, with a small border margin.
-        /// </summary>
-        /// <param name="element"></param>
         public void AddToMenu(Control element)
         {
             List.AddChild(new PanelContainer

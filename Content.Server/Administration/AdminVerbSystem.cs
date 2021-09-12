@@ -184,7 +184,7 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => _euiManager.OpenEui(new AddReagentEui(args.Target), player);
+                verb.Act = () => _euiManager.OpenEui(new AdminAddReagentEui(args.Target), player);
 
                 // TODO CHEMISTRY
                 // Add reagent ui broke after solution refactor. Needs fixing

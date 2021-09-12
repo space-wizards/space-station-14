@@ -26,7 +26,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public override void Initialize()
         {
-			base.Initialize();
+            base.Initialize();
 
             SubscribeLocalEvent<SolutionTransferComponent, GetAlternativeVerbsEvent>(AddSetTransferVerbs);
         }

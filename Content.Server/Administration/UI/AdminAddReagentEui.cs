@@ -11,12 +11,12 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.UI
 {
-    public sealed class AddReagentEui : BaseEui
+    public sealed class AdminAddReagentEui : BaseEui
     {
         private readonly IEntity _target;
         [Dependency] private readonly IAdminManager _adminManager = default!;
 
-        public AddReagentEui(IEntity target)
+        public AdminAddReagentEui(IEntity target)
         {
             _target = target;
 
@@ -33,14 +33,14 @@ namespace Content.Server.Administration.UI
             if (EntitySystem.Get<SolutionContainerSystem>()
                 .TryGetSolution(_target, "default", out var container))
             {
-                return new AddReagentEuiState
+                return new AdminAddReagentEuiState
                 {
                     CurVolume = container.CurrentVolume,
                     MaxVolume = container.MaxVolume
                 };
             }
 
-            return new AddReagentEuiState
+            return new AdminAddReagentEuiState
             {
                 CurVolume = ReagentUnit.Zero,
                 MaxVolume = ReagentUnit.Zero
@@ -51,10 +51,10 @@ namespace Content.Server.Administration.UI
         {
             switch (msg)
             {
-                case AddReagentEuiMsg.Close:
+                case AdminAddReagentEuiMsg.Close:
                     Close();
                     break;
-                case AddReagentEuiMsg.DoAdd doAdd:
+                case AdminAddReagentEuiMsg.DoAdd doAdd:
                     // Double check that user wasn't de-adminned in the mean time...
                     // Or the target was deleted.
                     if (!_adminManager.HasAdminFlag(Player, AdminFlags.Fun) || _target.Deleted)

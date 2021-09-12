@@ -9,14 +9,14 @@ using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
-	[UsedImplicitly]
+    [UsedImplicitly]
     public class ChemMasterSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
-			base.Initialize();
+            base.Initialize();
 
             SubscribeLocalEvent<ChemMasterComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<ChemMasterComponent, GetInteractionVerbsEvent>(AddInsertVerb);
@@ -65,11 +65,11 @@ namespace Content.Server.Chemistry.EntitySystems
             verb.Text = args.Using.Name;
             args.Verbs.Add(verb);
         }
-		
+
         private void OnSolutionChange(EntityUid uid, ChemMasterComponent component,
             SolutionChangedEvent solutionChanged)
         {
             component.UpdateUserInterface();
         }
-	}
+    }
 }

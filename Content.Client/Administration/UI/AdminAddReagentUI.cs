@@ -22,7 +22,7 @@ namespace Content.Client.Administration.UI
         public AddReagentEui()
         {
             _window = new Menu(this);
-            _window.OnClose += () => SendMessage(new AddReagentEuiMsg.Close());
+            _window.OnClose += () => SendMessage(new AdminAddReagentEuiMsg.Close());
         }
 
         public override void Opened()
@@ -37,12 +37,12 @@ namespace Content.Client.Administration.UI
 
         public override void HandleState(EuiStateBase state)
         {
-            _window.HandleState((AddReagentEuiState) state);
+            _window.HandleState((AdminAddReagentEuiState) state);
         }
 
         private void DoAdd(bool close, string reagentId, ReagentUnit amount)
         {
-            SendMessage(new AddReagentEuiMsg.DoAdd
+            SendMessage(new AdminAddReagentEuiMsg.DoAdd
             {
                 Amount = amount,
                 ReagentId = reagentId,
@@ -164,7 +164,7 @@ namespace Content.Client.Administration.UI
                 }
             }
 
-            public void HandleState(AddReagentEuiState state)
+            public void HandleState(AdminAddReagentEuiState state)
             {
                 _volumeLabel.Text = Loc.GetString("admin-add-reagent-eui-current-and-max-volume-label",
                                                   ("currentVolume", state.CurVolume),
