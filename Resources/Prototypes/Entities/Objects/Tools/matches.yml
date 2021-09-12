@@ -47,6 +47,9 @@
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
   - type: Matchbox
   - type: Sprite
     netsync: false
@@ -60,8 +63,9 @@
     contents:
       - id: Matchstick
         amount: 6
-  - type: StorageCounter
-    countTag: Matchstick
+  - type: ItemCounter
+    count:
+      tags: [Cigar]
   - type: Appearance
     visuals:
       - type: BagOpenCloseVisualizer

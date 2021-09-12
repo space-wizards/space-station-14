@@ -24,6 +24,7 @@
       - Opaque
       mask:
       - MobImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Pullable

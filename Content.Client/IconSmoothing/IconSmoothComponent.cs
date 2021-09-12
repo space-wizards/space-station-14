@@ -239,7 +239,8 @@ namespace Content.Client.IconSmoothing
                 cornerNW |= CornerFill.Diagonal;
             }
 
-            switch (Owner.Transform.WorldRotation.GetCardinalDir())
+            // Local is fine as we already know it's parented to the grid (due to the way anchoring works).
+            switch (Owner.Transform.LocalRotation.GetCardinalDir())
             {
                 case Direction.North:
                     return (cornerSW, cornerSE, cornerNE, cornerNW);

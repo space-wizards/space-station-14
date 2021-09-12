@@ -34,6 +34,7 @@
     prototype: InflatableWallStack1
     doAfter: 3
   - type: Airtight
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   placement:
     mode: SnapgridCenter

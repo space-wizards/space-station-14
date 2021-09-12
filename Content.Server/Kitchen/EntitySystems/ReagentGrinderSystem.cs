@@ -1,20 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Kitchen.Components;
+using Content.Server.Kitchen.Events;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
-using Content.Server.Kitchen.Events;
-using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Random.Helpers;
-using Content.Shared.Tag;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -30,7 +28,7 @@ namespace Content.Server.Kitchen.EntitySystems
     [UsedImplicitly]
     internal sealed class ReagentGrinderSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
 
         private Queue<ReagentGrinderComponent> _uiUpdateQueue = new();
 
@@ -39,13 +37,14 @@ namespace Content.Server.Kitchen.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<ReagentGrinderComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<ReagentGrinderComponent, PowerChangedEvent>((_, component, _) => EnqueueUiUpdate(component));
+            SubscribeLocalEvent<ReagentGrinderComponent, PowerChangedEvent>((_, component, _) =>
+                EnqueueUiUpdate(component));
             SubscribeLocalEvent<ReagentGrinderComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ReagentGrinderComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<StackComponent, JuiceableScalingEvent>(JuiceableScaling);
+            SubscribeLocalEvent<StackComponent, ExtractableScalingEvent>(ExtractableScaling);
         }
 
-        private void JuiceableScaling(EntityUid uid, StackComponent component, JuiceableScalingEvent args)
+        private void ExtractableScaling(EntityUid uid, StackComponent component, ExtractableScalingEvent args)
         {
             args.Scalar *= component.Count; // multiply scalar by amount of items in stack
         }
@@ -54,19 +53,20 @@ namespace Content.Server.Kitchen.EntitySystems
         {
             if (args.Handled) return;
 
-            if (!args.User.TryGetComponent(out IHandsComponent? hands))
+            if (!args.User.HasComponent<IHandsComponent>())
             {
-                component.Owner.PopupMessage(args.User, Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
+                component.Owner.PopupMessage(args.User,
+                    Loc.GetString("reagent-grinder-component-interact-using-no-hands"));
                 args.Handled = true;
                 return;
             }
 
             IEntity heldEnt = args.Used;
 
-            //First, check if user is trying to insert a beaker.
-            //No promise it will be a beaker right now, but whatever.
-            //Maybe this should whitelist "beaker" in the prototype id of heldEnt?
-            if (heldEnt.TryGetComponent(out SolutionContainerComponent? beaker) && beaker.Capabilities.HasFlag(SolutionContainerCaps.FitsInDispenser))
+            // First, check if user is trying to insert a beaker.
+            // No promise it will be a beaker right now, but whatever.
+            // Maybe this should whitelist "beaker" in the prototype id of heldEnt?
+            if (_solutionsSystem.TryGetFitsInDispenser(heldEnt.Uid, out var beaker))
             {
                 component.BeakerContainer.Insert(heldEnt);
                 component.HeldBeaker = beaker;
@@ -74,15 +74,17 @@ namespace Content.Server.Kitchen.EntitySystems
                 //We are done, return. Insert the beaker and exit!
                 if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(SharedReagentGrinderComponent.ReagentGrinderVisualState.BeakerAttached, component.BeakerContainer.ContainedEntity != null);
+                    appearance.SetData(SharedReagentGrinderComponent.ReagentGrinderVisualState.BeakerAttached,
+                        component.BeakerContainer.ContainedEntity != null);
                 }
+
                 ClickSound(component);
                 args.Handled = true;
                 return;
             }
 
             //Next, see if the user is trying to insert something they want to be ground/juiced.
-            if (!heldEnt.HasTag("Grindable") && !heldEnt.TryGetComponent(out JuiceableComponent? juice))
+            if (!heldEnt.TryGetComponent(out ExtractableComponent? juice))
             {
                 //Entity did NOT pass the whitelist for grind/juice.
                 //Wouldn't want the clown grinding up the Captain's ID card now would you?
@@ -114,8 +116,10 @@ namespace Content.Server.Kitchen.EntitySystems
             {
                 return;
             }
+
             EnqueueUiUpdate(component);
-            component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key)?.Toggle(actor.PlayerSession);
+            component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key)
+                ?.Toggle(actor.PlayerSession);
             args.Handled = true;
         }
 
@@ -130,11 +134,13 @@ namespace Content.Server.Kitchen.EntitySystems
 
             //A slot for the beaker where the grounds/juices will go.
             component.BeakerContainer =
-                ContainerHelpers.EnsureContainer<ContainerSlot>(component.Owner, $"{component.Name}-reagentContainerContainer");
+                ContainerHelpers.EnsureContainer<ContainerSlot>(component.Owner,
+                    $"{component.Name}-reagentContainerContainer");
 
             //A container for the things that WILL be ground/juiced. Useful for ejecting them instead of deleting them from the hands of the user.
             component.Chamber =
-                ContainerHelpers.EnsureContainer<Container>(component.Owner, $"{component.Name}-entityContainerContainer");
+                ContainerHelpers.EnsureContainer<Container>(component.Owner,
+                    $"{component.Name}-entityContainerContainer");
 
             var bui = component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key);
             if (bui != null)
@@ -154,15 +160,19 @@ namespace Content.Server.Kitchen.EntitySystems
             switch (message.Message)
             {
                 case SharedReagentGrinderComponent.ReagentGrinderGrindStartMessage msg:
-                    if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered) break;
+                    if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
+                        !receiver.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity!, SharedReagentGrinderComponent.GrinderProgram.Grind);
+                    DoWork(component, message.Session.AttachedEntity!,
+                        SharedReagentGrinderComponent.GrinderProgram.Grind);
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderJuiceStartMessage msg:
-                    if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver2) || !receiver2.Powered) break;
+                    if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver2) ||
+                        !receiver2.Powered) break;
                     ClickSound(component);
-                    DoWork(component, message.Session.AttachedEntity!, SharedReagentGrinderComponent.GrinderProgram.Juice);
+                    DoWork(component, message.Session.AttachedEntity!,
+                        SharedReagentGrinderComponent.GrinderProgram.Juice);
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderEjectChamberAllMessage msg:
@@ -175,8 +185,10 @@ namespace Content.Server.Kitchen.EntitySystems
                             component.Chamber.Remove(entity);
                             entity.RandomOffset(0.4f);
                         }
+
                         EnqueueUiUpdate(component);
                     }
+
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderEjectChamberContentMessage msg:
@@ -187,6 +199,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         EnqueueUiUpdate(component);
                         ClickSound(component);
                     }
+
                     break;
 
                 case SharedReagentGrinderComponent.ReagentGrinderEjectBeakerMessage msg:
@@ -203,7 +216,7 @@ namespace Content.Server.Kitchen.EntitySystems
 
             while (_uiUpdateQueue.TryDequeue(out var comp))
             {
-                if(comp.Deleted)
+                if (comp.Deleted)
                     continue;
 
                 bool canJuice = false;
@@ -212,23 +225,25 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var entity in comp.Chamber.ContainedEntities)
                     {
-                        if (!canJuice && entity.HasComponent<JuiceableComponent>()) canJuice = true;
-                        if (!canGrind && entity.HasTag("Grindable")) canGrind = true;
-                        if (canJuice && canGrind) break;
+                        if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
+
+                        canJuice = component.GrindableSolution == null;
+                        canGrind = component.GrindableSolution != null;
                     }
                 }
 
-                comp.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key)?.SetState(new ReagentGrinderInterfaceState
-                (
-                    comp.Busy,
-                    comp.BeakerContainer.ContainedEntity != null,
-                    comp.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) && receiver.Powered,
-                    canJuice,
-                    canGrind,
-                    comp.Chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
-                    //Remember the beaker can be null!
-                    comp.HeldBeaker?.Solution.Contents.ToArray()
-                ));
+                comp.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key)?.SetState(
+                    new ReagentGrinderInterfaceState
+                    (
+                        comp.Busy,
+                        comp.BeakerContainer.ContainedEntity != null,
+                        comp.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) && receiver.Powered,
+                        canJuice,
+                        canGrind,
+                        comp.Chamber.ContainedEntities.Select(item => item.Uid).ToArray(),
+                        //Remember the beaker can be null!
+                        comp.HeldBeaker?.Contents.ToArray()
+                    ));
             }
         }
 
@@ -247,7 +262,8 @@ namespace Content.Server.Kitchen.EntitySystems
 
             component.BeakerContainer.Remove(beaker);
 
-            if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) || !component.HeldBeaker.Owner.TryGetComponent<ItemComponent>(out var item))
+            if (user == null || !user.TryGetComponent<HandsComponent>(out var hands) ||
+                !beaker.TryGetComponent<ItemComponent>(out var item))
                 return;
             hands.PutInHandOrDrop(item);
 
@@ -255,7 +271,8 @@ namespace Content.Server.Kitchen.EntitySystems
             EnqueueUiUpdate(component);
             if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                appearance.SetData(SharedReagentGrinderComponent.ReagentGrinderVisualState.BeakerAttached, component.BeakerContainer.ContainedEntity != null);
+                appearance.SetData(SharedReagentGrinderComponent.ReagentGrinderVisualState.BeakerAttached,
+                    component.BeakerContainer.ContainedEntity != null);
             }
         }
 
@@ -263,10 +280,13 @@ namespace Content.Server.Kitchen.EntitySystems
         /// The wzhzhzh of the grinder. Processes the contents of the grinder and puts the output in the beaker.
         /// </summary>
         /// <param name="isJuiceIntent">true for wanting to juice, false for wanting to grind.</param>
-        private void DoWork(ReagentGrinderComponent component, IEntity user, SharedReagentGrinderComponent.GrinderProgram program)
+        private void DoWork(ReagentGrinderComponent component, IEntity user,
+            SharedReagentGrinderComponent.GrinderProgram program)
         {
             //Have power, are  we busy, chamber has anything to grind, a beaker for the grounds to go?
-            if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered || component.Busy || component.Chamber.ContainedEntities.Count <= 0 || component.BeakerContainer.ContainedEntity == null || component.HeldBeaker == null)
+            if (!component.Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || !receiver.Powered ||
+                component.Busy || component.Chamber.ContainedEntities.Count <= 0 ||
+                component.BeakerContainer.ContainedEntity == null || component.HeldBeaker == null)
             {
                 return;
             }
@@ -275,25 +295,31 @@ namespace Content.Server.Kitchen.EntitySystems
 
             var bui = component.Owner.GetUIOrNull(SharedReagentGrinderComponent.ReagentGrinderUiKey.Key);
             bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkStartedMessage(program));
+            var beakerEntity = component.BeakerContainer.ContainedEntity;
             switch (program)
             {
                 case SharedReagentGrinderComponent.GrinderProgram.Grind:
                     SoundSystem.Play(Filter.Pvs(component.Owner), component.GrindSound.GetSound(), component.Owner, AudioParams.Default);
-                    //Get each item inside the chamber and get the reagents it contains. Transfer those reagents to the beaker, given we have one in.
+                    // Get each item inside the chamber and get the reagents it contains.
+                    // Transfer those reagents to the beaker, given we have one in.
                     component.Owner.SpawnTimer(component.WorkTime, (Action) (() =>
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.HasTag("Grindable")) continue;
-                            if (!item.TryGetComponent<SolutionContainerComponent>(out var solution)) continue;
-                            var juiceEvent = new JuiceableScalingEvent(); // default of scalar is always 1.0
-                            RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent, false);
-                            if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
-                            solution.Solution.ScaleSolution(juiceEvent.Scalar);
-                            component.HeldBeaker.TryAddSolution(solution.Solution);
-                            solution.RemoveAllSolution();
+                            if (!item.TryGetComponent(out ExtractableComponent? extract)
+                                || extract.GrindableSolution == null
+                                || !_solutionsSystem.TryGetSolution(item, extract.GrindableSolution, out var solution)) continue;
+
+                            var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
+                            RaiseLocalEvent(item.Uid, juiceEvent, false);
+                            if (component.HeldBeaker.CurrentVolume + solution.CurrentVolume * juiceEvent.Scalar >
+                                component.HeldBeaker.MaxVolume) continue;
+                            solution.ScaleSolution(juiceEvent.Scalar);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, solution);
+                            _solutionsSystem.RemoveAllSolution(beakerEntity.Uid, solution);
                             item.Delete();
                         }
+
                         component.Busy = false;
                         EnqueueUiUpdate(component);
                         bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage());
@@ -306,17 +332,21 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.TryGetComponent<JuiceableComponent>(out var juiceMe)) continue;
-                            var juiceEvent = new JuiceableScalingEvent(); // default of scalar is always 1.0
+                            if (!item.TryGetComponent<ExtractableComponent>(out var juiceMe)) continue;
+                            var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (item.HasComponent<StackComponent>())
                             {
-                                RaiseLocalEvent<JuiceableScalingEvent>(item.Uid, juiceEvent);
+                                RaiseLocalEvent(item.Uid, juiceEvent);
                             }
-                            if (component.HeldBeaker.CurrentVolume + juiceMe.JuiceResultSolution.TotalVolume * juiceEvent.Scalar > component.HeldBeaker.MaxVolume) continue;
-                            juiceMe.JuiceResultSolution.ScaleSolution(juiceEvent.Scalar);  
-                            component.HeldBeaker.TryAddSolution(juiceMe.JuiceResultSolution);
+
+                            if (component.HeldBeaker.CurrentVolume +
+                                juiceMe.ResultSolution.TotalVolume * juiceEvent.Scalar >
+                                component.HeldBeaker.MaxVolume) continue;
+                            juiceMe.ResultSolution.ScaleSolution(juiceEvent.Scalar);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.ResultSolution);
                             item.Delete();
                         }
+
                         bui?.SendMessage(new SharedReagentGrinderComponent.ReagentGrinderWorkCompleteMessage());
                         component.Busy = false;
                         EnqueueUiUpdate(component);
