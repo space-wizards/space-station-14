@@ -177,11 +177,11 @@ namespace Content.Client.ContextMenu.UI
 
     public class ContextMenuPopup : Popup
     {
-        private static readonly Color ButtonColor = Color.FromHex("#1116");
-        private static readonly Color BackgroundColor = Color.FromHex("#222E");
+        public static readonly Color ButtonColor = Color.FromHex("#1119");
+        public static readonly Color BackgroundColor = Color.FromHex("#333E");
 
-        private const int MaxItemsBeforeScroll = 10;
-        private const int MarginSizeBetweenElements = 2;
+        public const int MaxItemsBeforeScroll = 10;
+        public const int MarginSize = 2;
 
         public BoxContainer List { get; }
         public ScrollContainer Scroll { get; }
@@ -189,7 +189,7 @@ namespace Content.Client.ContextMenu.UI
 
         public ContextMenuPopup(int depth = 0)
         {
-            MaxHeight = MaxItemsBeforeScroll * (32 + MarginSizeBetweenElements);
+            MaxHeight = MaxItemsBeforeScroll * (32 + 2*MarginSize);
 
             Depth = depth;
             List = new() { Orientation = LayoutOrientation.Vertical };
@@ -211,16 +211,10 @@ namespace Content.Client.ContextMenu.UI
         /// <param name="element"></param>
         public void AddToMenu(Control element)
         {
-            if (List.ChildCount != 0)
-            {
-                // Add a small separator between elements
-                List.AddChild(new PanelContainer {
-                    MinSize = (0, MarginSizeBetweenElements)
-                });
-            }
             List.AddChild(new PanelContainer
             {
                 Children = { element },
+                Margin = new Thickness(MarginSize, MarginSize, MarginSize, MarginSize),
                 PanelOverride = new StyleBoxFlat { BackgroundColor = ButtonColor }
             });
         }
@@ -243,18 +237,13 @@ namespace Content.Client.ContextMenu.UI
 
             Scroll.Measure(availableSize);
             var size = List.DesiredSize;
-            // TODO QUESTION Why is there no way to get the "DesiredSize" from a ScrollContainer bar?
-            // I'd much rather just use something like:
-            // size = Scroll.DesiredSize()
 
-            // account for scroll bar
+            // account for scroll bar width
             if (size.Y > MaxHeight)
             {
-                // And if there is a good reason, then at the very least let the ScrollContainer expose the size of it's own
-                // scrollbar? Its 10 pixels btw:
+                // Scroll._vScrollBar is private and ScrollContainer gives no size information :/
+                // 10 = Scroll._vScrollBar.DesiredSize
                 size.X += 10;
-                // Then at least I could use:
-                // size.X += Scroll.VScrollBar.DesiredSize
             }
 
             return size;

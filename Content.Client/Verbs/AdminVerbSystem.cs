@@ -25,6 +25,7 @@ namespace Content.Client.Verbs
 
         private void AddAdminVerbs(GetOtherVerbsEvent args)
         {
+            // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {
                 Verb verb = new("ViewVariables");
@@ -35,13 +36,9 @@ namespace Content.Client.Verbs
                 args.Verbs.Add(verb);
             }
 
-            // Then we have some atmos admin verbs that target grid tiles.
-            // We do not have verb click coords, so we just check if there is an applicable grid near the target entity
-
-            // TODO VERBS support verbs when right clicking empty tiles? E.g., can point at a tile via keybind but
-            // not via verbs. Would require assemble verbs event to support a null-able entity and pass map coords?
-            // Then make this verb hidden unless the user is acting on a tile?
-
+            // Then add some atmos admin verbs that target grid tiles.
+            // However, we do not have verb click coords, and the context menu does not target tiles.
+            // So instead, try find a tile at the clicked entities coordinates:
             var coords = args.Target.Transform.MapPosition;
             if (!_mapManager.TryFindGridAt(coords, out var grid))
                 return;

@@ -34,7 +34,6 @@ namespace Content.Server.PDA
         }
 
         // TODO VERBS EJECTABLES Standardize eject/insert verbs into a single system?
-        // TODO QUESTION: I thought component inheritance was a no-no? These two chargers inherit from BaseCharger?
         private void AddEjectVerb(EntityUid uid, PDAComponent component, GetAlternativeVerbsEvent args)
         {
             if (args.Hands == null ||

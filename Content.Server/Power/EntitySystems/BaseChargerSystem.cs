@@ -33,7 +33,6 @@ namespace Content.Server.Power.EntitySystems
         }
 
         // TODO VERBS EJECTABLES Standardize eject/insert verbs into a single system?
-        // TODO QUESTION: I thought component inheritance was a no-no? These two chargers inherit from BaseCharger?
         private void AddEjectVerb(EntityUid uid, BaseCharger component, GetAlternativeVerbsEvent args)
         {
             if (args.Hands == null ||

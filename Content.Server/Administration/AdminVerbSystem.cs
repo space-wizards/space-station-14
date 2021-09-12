@@ -1,4 +1,5 @@
 using Content.Server.Administration.Commands;
+using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
@@ -8,6 +9,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -28,34 +30,13 @@ namespace Content.Server.Administration
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
-            // TODO QUESTION VERBS
-            // if allowing an Assemble-Target and Assemble-Tool/USing
-            // Maybe allow assemble on user?
         }
 
-
-        // TODO VERBS
-        // Maybe this should all be without the 'if can command' checks
-        // Just show the verbs or don't.
-
-
-        // Odd collection of verbs.
-        // Some require components to be present
-        // And maybe should be moved to relevant systems
-        // but also: all of them require IConGroupController.CanCommand(player, "....") checks
-        // and also, all of them are debug-category verbs
-        // Many of then need IServerConsoleHost
-
-        // TODO QUESTION
-        // Maybe these verbs should go into dedicated systems.
-        // E.g., tube verb -> disposal tubes system.
-        // and posses/take-control into mind system
-        // But then where do you put stuff like make sentient
-        // its defining feature is that it's target does NOT have a mind, so no targeted subscriptions
         private void AddDebugVerbs(GetOtherVerbsEvent args)
         {
             if (!args.User.TryGetComponent<ActorComponent>(out var actor))
@@ -183,7 +164,7 @@ namespace Content.Server.Administration
             }
 
             // Add reagent verb
-            if (_groupController.CanAdminMenu(player) &&
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
                 args.Target.HasComponent<SolutionContainerManagerComponent>())
             {
                 Verb verb = new("debug:addreagent");

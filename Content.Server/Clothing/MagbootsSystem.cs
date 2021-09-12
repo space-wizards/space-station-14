@@ -1,16 +1,12 @@
 using Content.Server.Clothing.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Clothing
 {
     public sealed class MagbootsSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-
         public override void Initialize()
         {
             base.Initialize();

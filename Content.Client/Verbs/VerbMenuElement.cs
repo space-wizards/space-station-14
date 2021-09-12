@@ -172,7 +172,7 @@ namespace Content.Client.Verbs
             box.AddChild(new Control { MinSize = (8, 0) });
 
             // Then add the little ">" icon that tells you it's a group of verbs
-            box.AddChild( new TextureRect
+            box.AddChild(new TextureRect
             {
                 Texture = IoCManager.Resolve<IResourceCache>()
                             .GetTexture("/Textures/Interface/VerbIcons/group.svg.192dpi.png"),
@@ -191,7 +191,8 @@ namespace Content.Client.Verbs
         {
             base.Draw(handle);
 
-            if (this == UserInterfaceManager.CurrentlyHovered)
+            if (this == UserInterfaceManager.CurrentlyHovered ||
+                _system.CurrentCategoryPopup == _popup)
             {
                 handle.DrawRect(PixelSizeBox, Color.DarkSlateGray);
             }
@@ -210,7 +211,8 @@ namespace Content.Client.Verbs
             {
                 _system.CurrentCategoryPopup?.Close();
                 _system.CurrentCategoryPopup = _popup;
-                _popup.Open(UIBox2.FromDimensions(GlobalPosition + (Width, 0), (1, 1)), GlobalPosition);
+                var upperRight = GlobalPosition + (Width + ContextMenuPopup.MarginSize, -ContextMenuPopup.MarginSize);
+                _popup.Open(UIBox2.FromDimensions(upperRight, (1, 1)), GlobalPosition);
             }, _openCancel.Token);
         }
 
