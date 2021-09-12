@@ -101,7 +101,8 @@ namespace Content.IntegrationTests.Tests.Disposal
   id: DisposalTrunkDummy
   components:
   - type: DisposalEntry
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
 ";
 
         [Test]
