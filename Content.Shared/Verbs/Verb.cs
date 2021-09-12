@@ -82,10 +82,22 @@ namespace Content.Shared.Verbs
         public VerbCategory? Category;
 
         /// <summary>
-        ///     Whether this verb is disabled. Disabled verbs are still shown in the context menu, but cannot be
-        ///     triggered.
+        ///     Whether this verb is disabled.
         /// </summary>
-        public bool IsDisabled;
+        /// <remarks>
+        ///     Disabled verbs are shown in the context menu with a slightly darker background color, and cannot be
+        ///     executed. It is recommended that a <see cref="Tooltip"/> message be provided outlining why this verb is
+        ///     disabled.
+        /// </remarks>
+        public bool Disabled;
+
+        /// <summary>
+        ///     Optional tooltip to show when hovering over this verb. 
+        /// </summary>
+        /// <remarks>
+        ///     Useful for disabled verbs as a replacement for informative pop-up messages.
+        /// </remarks>
+        public string? Tooltip;
 
         /// <summary>
         ///     Determines the priority of the verb. This affects both how the verb is displayed in the context menu

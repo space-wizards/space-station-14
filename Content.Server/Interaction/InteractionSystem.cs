@@ -511,7 +511,7 @@ namespace Content.Server.Interaction
 
             foreach (var verb in getVerbEvent.Verbs)
             {
-                if (verb.IsDisabled)
+                if (verb.Disabled)
                     continue;
 
                 _verbSystem.TryExecuteVerb(verb);

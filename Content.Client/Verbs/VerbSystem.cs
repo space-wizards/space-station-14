@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.ContextMenu.UI;
@@ -22,14 +21,21 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        public event EventHandler<bool>? ToggleContainerVisibility;
-
         public ContextMenuPresenter ContextMenuPresenter = default!;
 
         public EntityUid CurrentTarget;
         public ContextMenuPopup? CurrentVerbPopup;
         public ContextMenuPopup? CurrentCategoryPopup;
         public Dictionary<VerbType, List<Verb>> CurrentVerbs = new();
+
+        /// <summary>
+        ///     Whether to show all entities on the context menu.
+        /// </summary>
+        /// <remarks>
+        ///     Verb execution will only be affected if the server also agrees that this player can see the target
+        ///     entity.
+        /// </remarks>
+        public bool CanSeeAllContext = false;
 
         // TODO VERBS Move presenter out of the system
         // TODO VERBS Separate the rest of the UI from the logic
@@ -39,33 +45,30 @@ namespace Content.Client.Verbs
 
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<VerbsResponseEvent>(HandleVerbResponse);
-            SubscribeNetworkEvent<PlayerContainerVisibilityMessage>(HandleContainerVisibilityMessage);
+            SubscribeNetworkEvent<SetSeeAllContextEvent>(SetSeeAllContext);
 
             ContextMenuPresenter = new ContextMenuPresenter(this);
-            SubscribeLocalEvent<MoveEvent>(ContextMenuPresenter.HandleMoveEvent);
+        }
+
+        private void Reset(RoundRestartCleanupEvent ev)
+        {
+            ContextMenuPresenter.CloseAllMenus();
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-
             ContextMenuPresenter?.Dispose();
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            ToggleContainerVisibility?.Invoke(this, false);
-        }
-
-        private void HandleContainerVisibilityMessage(PlayerContainerVisibilityMessage ev)
-        {
-            ToggleContainerVisibility?.Invoke(this, ev.CanSeeThrough);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
             ContextMenuPresenter?.Update();
+        }
+        private void SetSeeAllContext(SetSeeAllContextEvent args)
+        {
+            CanSeeAllContext = args.CanSeeAllContext;
         }
 
         public void OpenVerbMenu(IEntity target, ScreenCoordinates screenCoordinates)
@@ -86,8 +89,6 @@ namespace Content.Client.Verbs
             CurrentVerbPopup.OnPopupHide += CloseVerbMenu;
 
             CurrentVerbs = GetVerbs(target, user, VerbType.All);
-
-            
 
             if (!target.Uid.IsClientSide())
             {
@@ -222,8 +223,13 @@ namespace Content.Client.Verbs
 
         public void CloseVerbMenu()
         {
-            CurrentVerbPopup?.Dispose();
-            CurrentVerbPopup = null;
+            if (CurrentVerbPopup != null)
+            {
+                CurrentVerbPopup.OnPopupHide -= CloseVerbMenu;
+                CurrentVerbPopup.Dispose();
+                CurrentVerbPopup = null;
+            }
+
             CurrentCategoryPopup?.Dispose();
             CurrentCategoryPopup = null;
             CurrentTarget = EntityUid.Invalid;

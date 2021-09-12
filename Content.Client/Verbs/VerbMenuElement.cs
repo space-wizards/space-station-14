@@ -56,7 +56,9 @@ namespace Content.Client.Verbs
     {
         public VerbButton(VerbSystem system, Verb verb, VerbType type, EntityUid target, bool drawIcons = true) : base()
         {
-            Disabled = verb.IsDisabled;
+            Disabled = verb.Disabled;
+            ToolTip = verb.Tooltip;
+            TooltipDelay = 0.5f;
 
             var buttonContents = new BoxContainer { Orientation = LayoutOrientation.Horizontal };
 

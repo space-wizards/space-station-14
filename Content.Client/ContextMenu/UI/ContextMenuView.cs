@@ -1,4 +1,4 @@
-﻿
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,7 +73,7 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype!.Name, y.First().Prototype!.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
             AddToUI(orderedStates);
 
             _userInterfaceManager.ModalRoot.AddChild(rootContextMenu);

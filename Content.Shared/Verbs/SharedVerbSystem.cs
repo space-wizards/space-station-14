@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -54,29 +55,44 @@ namespace Content.Shared.Verbs
         }
 
         /// <summary>
-        ///     Get all of the entities relevant for the context menu
+        ///     Get all of the entities in an area for displaying on the context menu.
         /// </summary>
         /// <param name="buffer">Whether we should slightly extend the entity search area.</param>
-        /// <returns></returns>
         public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos,
-            [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
+            [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false, bool ignoreVisibility = false)
         {
             contextEntities = null;
-            var length = buffer ? 1.0f : 0.5f;
 
+            // Check if we have LOS to the clicked-location.
+            if (!ignoreVisibility && !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
+                return false;
+
+            // Get entities
+            var length = buffer ? 1.0f : 0.5f;
             var entities = _entityLookup.GetEntitiesIntersecting(targetPos.MapId,
                 Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
 
             if (entities.Count == 0)
-            {
                 return false;
+
+            if (ignoreVisibility)
+            {
+                contextEntities = entities;
+                return true;
             }
 
-            // Check if we have LOS to the clicked-location.
-            if (!player.InRangeUnOccluded(targetPos, ExamineSystemShared.ExamineRange))
+            // perform visibility checks
+            foreach (var entity in entities.ToList())
             {
-                return false;
+                if (entity.HasTag("HideContextMenu") ||
+                    !player.InRangeUnOccluded(entity, range: ExamineSystemShared.ExamineRange))
+                {
+                    entities.Remove(entity);
+                }
             }
+
+            if (entities.Count == 0)
+                return false;
 
             contextEntities = entities;
             return true;

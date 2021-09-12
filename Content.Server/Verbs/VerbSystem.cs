@@ -14,7 +14,10 @@ namespace Content.Server.Verbs
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        private readonly HashSet<IPlayerSession> _seesThroughContainers = new();
+        /// <summary>
+        ///     List of players that can see all entities on the context menu, ignoring normal visibility rules.
+        /// </summary>
+        public readonly HashSet<IPlayerSession> SeeAllContextPlayers = new();
 
         public override void Initialize()
         {
@@ -29,44 +32,34 @@ namespace Content.Server.Verbs
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
+        }
+
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             if (args.NewStatus == SessionStatus.Disconnected)
             {
-                _seesThroughContainers.Remove(args.Session);
+                SeeAllContextPlayers.Remove(args.Session);
             }
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
         {
-            _seesThroughContainers.Clear();
+            SeeAllContextPlayers.Clear();
         }
 
-        public void AddContainerVisibility(IPlayerSession session)
+        public void ToggleSeeAllContext(IPlayerSession player)
         {
-            if (!_seesThroughContainers.Add(session))
+            if (!SeeAllContextPlayers.Add(player))
             {
-                return;
+                SeeAllContextPlayers.Remove(player);
             }
 
-            var message = new PlayerContainerVisibilityMessage(true);
-            RaiseNetworkEvent(message, session.ConnectedClient);
-        }
-
-        public void RemoveContainerVisibility(IPlayerSession session)
-        {
-            if (!_seesThroughContainers.Remove(session))
-            {
-                return;
-            }
-
-            var message = new PlayerContainerVisibilityMessage(false);
-            RaiseNetworkEvent(message, session.ConnectedClient);
-        }
-
-        public bool HasContainerVisibility(IPlayerSession session)
-        {
-            return _seesThroughContainers.Contains(session);
+            SetSeeAllContextEvent args = new() { CanSeeAllContext = SeeAllContextPlayers.Contains(player) };
+            RaiseNetworkEvent(args, player.ConnectedClient);
         }
 
         /// <summary>
@@ -119,10 +112,15 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            VerbsResponseEvent response;
-
             // Validate input (check that the user can see the entity)
-            if (TryGetContextEntities(user, target.Transform.MapPosition, out var entities, true))
+            TryGetContextEntities(user,
+                target.Transform.MapPosition,
+                out var entities,
+                buffer: true,
+                ignoreVisibility: SeeAllContextPlayers.Contains(player));
+
+            VerbsResponseEvent response;
+            if (entities != null && entities.Contains(target))
             {
                 response = new(args.EntityUid, GetVerbs(target, user, args.Type));
             }

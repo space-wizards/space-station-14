@@ -9,6 +9,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
+using Content.Server.Verbs;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
@@ -28,10 +29,11 @@ namespace Content.Server.Administration
     public class AdminVerbSystem : EntitySystem
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
-        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-        [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
-
+        [Dependency] private readonly EuiManager _euiManager = default!;
+        [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
+        [Dependency] private readonly VerbSystem _verbSystem = default!;
+        
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
@@ -163,6 +165,17 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
+            // Verb to toggle showing all entities on context menu for the target player.
+            if (_groupController.CanCommand(player, "toggleallcontext") &&
+                args.Target.TryGetComponent<ActorComponent>(out var targetActor))
+            {
+                Verb verb = new("toggleallcontext");
+                verb.Category = VerbCategory.Debug;
+                verb.Text = "Toggle All Context Entities";
+                verb.Act = () => _verbSystem.ToggleSeeAllContext(targetActor.PlayerSession);
+                args.Verbs.Add(verb);
+            }
+
             // Add reagent verb
             if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
                 args.Target.HasComponent<SolutionContainerManagerComponent>())
@@ -175,9 +188,9 @@ namespace Content.Server.Administration
 
                 // TODO CHEMISTRY
                 // Add reagent ui broke after solution refactor. Needs fixing
-                verb.Text += " (broken)";
-                verb.IsDisabled = true;
-                verb.Priority = -10;
+                verb.Disabled = true;
+                verb.Tooltip = "Currently non functional after solution refactor.";
+                verb.Priority = -2;
 
                 args.Verbs.Add(verb);
             }

@@ -7,10 +7,8 @@ using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
 using Content.Shared.CCVar;
-using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -47,8 +45,6 @@ namespace Content.Client.ContextMenu.UI
         private readonly IContextMenuView _contextMenuView;
         private readonly VerbSystem _verbSystem;
 
-        private bool _playerCanSeeThroughContainers;
-
         private MapCoordinates _mapCoordinates;
 
         public ContextMenuPresenter(VerbSystem verbSystem)
@@ -56,7 +52,6 @@ namespace Content.Client.ContextMenu.UI
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
-            _verbSystem.ToggleContainerVisibility += SystemOnToggleContainerVisibility;
 
             _contextMenuView = new ContextMenuView();
             _contextMenuView.OnKeyBindDownSingle += OnKeyBindDownSingle;
@@ -268,11 +263,6 @@ namespace Content.Client.ContextMenu.UI
         #endregion
 
         #region Model Updates
-        private void SystemOnToggleContainerVisibility(object? sender, bool args)
-        {
-            _playerCanSeeThroughContainers = args;
-        }
-
         private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             if (args.State != BoundKeyState.Down)
@@ -285,77 +275,86 @@ namespace Content.Client.ContextMenu.UI
                 return false;
             }
 
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null)
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null)
             {
                 return false;
             }
 
             _mapCoordinates = args.Coordinates.ToMap(_entityManager);
-            if (!_verbSystem.TryGetContextEntities(playerEntity, _mapCoordinates, out var entities))
-            {
+
+            if (!_verbSystem.TryGetContextEntities(player, _mapCoordinates, out var entities, ignoreVisibility: _verbSystem.CanSeeAllContext))
                 return false;
+
+            // do we need to do visiblity checks?
+            if (_verbSystem.CanSeeAllContext)
+            {
+                _contextMenuView.AddRootMenu(entities);
+                return true;
             }
 
-            // Only include entities that are able to be shown on the context menu. Also exclude entities that the user
-            // cannot see the center of. This last part is what the sever checks later on, and will help prevent confusing
-            // behavior.
-            entities.RemoveAll(e => !CanSeeOnContextMenu(e) || !playerEntity.InRangeUnOccluded(e, ExamineSystemShared.ExamineRange));
+            //visibility checks
+            player.TryGetContainer(out var playerContainer);
+            foreach (var entity in entities.ToList())
+            {
+                if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) ||
+                    !spriteComponent.Visible ||
+                    !CanSeeContainerCheck(entity, playerContainer))
+                {
+                    entities.Remove(entity);
+                }
+            }
 
             if (entities.Count == 0)
-            {
                 return false;
-            }
 
             _contextMenuView.AddRootMenu(entities);
             return true;
         }
 
         /// <summary>
+        ///     Can the player see the entity through any entity containers?
+        /// </summary>
+        /// <remarks>
+        ///     This is similar to <see cref="ContainerHelpers.IsInSameOrParentContainer()"/>, except that we do not
+        ///     allow the player to be the "parent" container and we allow for see-through containers (display cases). 
+        /// </remarks>
+        private bool CanSeeContainerCheck(IEntity entity, IContainer? playerContainer)
+        {
+            // is the player inside this entity?
+            if (playerContainer?.Owner == entity)
+                return true;
+
+            entity.TryGetContainer(out var entityContainer);
+
+            // are they in the same container (or none?)
+            if (playerContainer == entityContainer)
+                return true;
+
+            // Is the entity in a display case?
+            if (playerContainer == null && entityContainer!.ShowContents)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
         ///     Check that entities in the context menu are still visible. If not, remove them from the context menu.
         /// </summary>
-        public void HandleMoveEvent(ref MoveEvent ev)
+        public void Update()
         {
-            if (_contextMenuView.Elements.Count == 0) return;
-            var movingEntityy = ev.Sender;
+            if (_contextMenuView.Elements.Count == 0)
+                return;
 
             var player = _playerManager.LocalPlayer?.ControlledEntity;
 
             if (player == null)
                 return;
 
-            // Did the player move? if yes, re-check that the user can still see the listed entities
-            if (movingEntityy == player)
-            {
-                foreach (var listedEntity in _contextMenuView.Elements.Keys)
-                {
-                    if (!ExamineSystem.InRangeUnOccluded(player, listedEntity, ExamineSystem.ExamineRange, null))
-                    {
-                        _contextMenuView.RemoveEntity(listedEntity);
-                        if (_verbSystem.CurrentTarget == listedEntity.Uid)
-                            _verbSystem.CloseVerbMenu();
-                    }
-                }
-            }
-            // Did one of the listed entities move out of range?
-            else if (_contextMenuView.Elements.ContainsKey(movingEntityy))
-            {
-                if (!ExamineSystem.InRangeUnOccluded(player, movingEntityy, ExamineSystem.ExamineRange, null))
-                {
-                    _contextMenuView.RemoveEntity(movingEntityy);
-                    if (_verbSystem.CurrentTarget == movingEntityy.Uid)
-                        _verbSystem.CloseVerbMenu();
-                }
-            }
-        }
-
-        public void Update()
-        {
-            if (_contextMenuView.Elements.Count == 0) return;
-
             foreach (var entity in _contextMenuView.Elements.Keys.ToList())
             {
-                if (entity.Deleted || !_playerCanSeeThroughContainers && entity.IsInContainer())
+                if (entity.Deleted ||
+                    !_verbSystem.CanSeeAllContext && !player.InRangeUnOccluded(entity))
                 {
                     _contextMenuView.RemoveEntity(entity);
                     if (_verbSystem.CurrentTarget == entity.Uid)
@@ -365,21 +364,6 @@ namespace Content.Client.ContextMenu.UI
         }
         #endregion
 
-        private bool CanSeeOnContextMenu(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) || !spriteComponent.Visible)
-            {
-                return false;
-            }
-
-            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
-            {
-                return false;
-            }
-
-            return _playerCanSeeThroughContainers || !entity.TryGetContainer(out var container) || container.ShowContents;
-        }
-
         public void CloseAllMenus()
         {
             _contextMenuView.CloseContextPopups();
@@ -388,8 +372,6 @@ namespace Content.Client.ContextMenu.UI
 
         public void Dispose()
         {
-            _verbSystem.ToggleContainerVisibility -= SystemOnToggleContainerVisibility;
-
             _contextMenuView.OnKeyBindDownSingle -= OnKeyBindDownSingle;
             _contextMenuView.OnMouseEnteredSingle -= OnMouseEnteredSingle;
             _contextMenuView.OnMouseExitedSingle -= OnMouseExitedSingle;
