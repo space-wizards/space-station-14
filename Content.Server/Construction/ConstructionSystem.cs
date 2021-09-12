@@ -94,14 +94,14 @@ namespace Content.Server.Construction
 
         private async Task<IEntity?> Construct(IEntity user, string materialContainer, ConstructionGraphPrototype graph, ConstructionGraphEdge edge, ConstructionGraphNode targetNode)
         {
-            // We need a place to hold our construction items!
-            var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
-
             if (user.IsInContainer())
             {
                 user.PopupMessageCursor(Loc.GetString("construction-system-inside-container"));
                 return null;
             }
+
+            // We need a place to hold our construction items!
+            var container = ContainerHelpers.EnsureContainer<Container>(user, materialContainer, out var existed);
 
             if (existed)
             {
