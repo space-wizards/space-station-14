@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using Robust.Server.Player;
@@ -81,17 +80,25 @@ namespace Content.Server.Verbs
                 return;
             }
 
+            // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
+            // the user can perform. In principle, this might waste time checking & preparing unrelated verbs even
+            // though we know precisely which one we want. However, MOST entities will only have 1 or 2 verbs of a given
+            // type. The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs. So maybe
+            // the debug verbs should be made a separate type?
             var verbs = GetVerbs(targetEntity, userEntity, args.Type)[args.Type];
-            var verb = verbs.Where((v) => v.Key == args.VerbKey).FirstOrDefault();
-            if (verb != null)
+
+            // Run the requested verb
+            foreach (var verb in verbs)
             {
-                TryExecuteVerb(verb);
+                if (verb.Key == args.VerbKey)
+                {
+                    TryExecuteVerb(verb);
+                    return;
+                }
             }
-            else
-            {
-                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb key: {args.VerbKey}");
-                return;
-            }
+
+            // 404 Verb not found
+            Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb key: {args.VerbKey}");
         }
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
