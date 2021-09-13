@@ -1,0 +1,14 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Created by Ebnz, rasterized and taken from https://commons.wikimedia.org/wiki/File:Tablero_de_juego_del_parchis.svg",
+    "size": {
+        "x": 548,
+        "y": 548
+    },
+    "states": [
+        {
+            "name": "board"
+        }
+    ]
+}
