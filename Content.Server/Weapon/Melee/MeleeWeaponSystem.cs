@@ -36,7 +36,6 @@ namespace Content.Server.Weapon.Melee
             SubscribeLocalEvent<MeleeWeaponComponent, WideAttackEvent>(OnWideAttack);
             SubscribeLocalEvent<MeleeWeaponComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
-            SubscribeLocalEvent<ExtraDamageAgainstWhitelistComponent, MeleeHitEvent>(OnExtraDamageHit);
         }
 
         private void OnHandSelected(EntityUid uid, MeleeWeaponComponent comp, HandSelectedEvent args)
@@ -264,23 +263,6 @@ namespace Content.Server.Weapon.Melee
                 var individualInjection = solutionToInject.SplitSolution(volPerBloodstream);
                 bloodstream.TryTransferSolution(individualInjection);
             }
-        }
-
-        private void OnExtraDamageHit(EntityUid uid, ExtraDamageAgainstWhitelistComponent component, MeleeHitEvent args)
-        {
-            if (args.Handled)
-                return;
-            foreach (var ent in args.HitEntities)
-            {
-                // TODO this means even if one thing thats hit was valid, if they aren't all valid,
-                // then it doesn't apply extra damage; that shouldn't be the case
-                if (ent == null) continue;
-                if (!component.Whitelist.IsValid(ent))
-                    return;
-            }
-
-            args.Multiplier *= component.DamageMultiplier;
-            args.FlatDamage += component.FlatDamage;
         }
 
         public void SendAnimation(string arc, Angle angle, IEntity attacker, IEntity source, IEnumerable<IEntity> hits, bool textureEffect = false, bool arcFollowAttacker = true)

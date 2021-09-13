@@ -185,6 +185,8 @@
   - type: Construction
     graph: seat
     node: chairWood
+  - type: Damageable
+    resistances: woodResistances
   - type: Destructible
     thresholds:
     - trigger:

@@ -25,7 +25,7 @@
     - ExplosivePassable
     - Wooden
   - type: Damageable
-    resistances: metallicResistances
+    resistances: woodResistances
   - type: Destructible
     thresholds:
     - trigger:

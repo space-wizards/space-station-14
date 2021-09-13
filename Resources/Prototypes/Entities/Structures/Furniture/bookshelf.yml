@@ -19,7 +19,7 @@
       - book-4
       - book-5
   - type: Damageable
-    resistances: metallicResistances
+    resistances: woodResistances
   - type: Destructible
     thresholds:
     - trigger:

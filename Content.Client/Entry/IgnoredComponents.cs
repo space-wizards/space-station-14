@@ -275,7 +275,6 @@ namespace Content.Client.Entry
             "SpawnItemsOnUse",
             "Wieldable",
             "IncreaseDamageOnWield",
-            "ExtraDamageAgainstWhitelist",
             "AmbientOnPowered"
         };
     }
