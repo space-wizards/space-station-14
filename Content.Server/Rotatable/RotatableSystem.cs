@@ -48,6 +48,7 @@ namespace Content.Server.Rotatable
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
             rotateCW.Priority = -2; // show CCW, then CW
+            rotateCW.CloseMenu = false; // allow for easy double rotations.
             args.Verbs.Add(rotateCW);
 
             // rotate counter-clockwise
@@ -56,6 +57,7 @@ namespace Content.Server.Rotatable
             rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
             rotateCCW.Priority = -1;
+            rotateCCW.CloseMenu = false; // allow for easy double rotations.
             args.Verbs.Add(rotateCCW);
         }
 

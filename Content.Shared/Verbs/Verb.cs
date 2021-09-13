@@ -114,6 +114,15 @@ namespace Content.Shared.Verbs
         /// </summary>
         public string? IconTexture;
 
+        /// <summary>
+        ///     Whether or not to close the context menu after using it to run this verb.
+        /// </summary>
+        /// <remarks>
+        ///     Setting this to false may be useful for repeatable actions, like rotating an object or maybe knocking on
+        ///     a window.
+        /// </remarks>
+        public bool CloseMenu = true;
+
         public Verb(string key)
         {
             Key = key;
