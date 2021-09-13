@@ -19,13 +19,13 @@ namespace Content.Server.Destructible
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(Exectute);
+            SubscribeLocalEvent<DestructibleComponent, DamageChangedEvent>(Execute);
         }
 
         /// <summary>
         ///     Check if any thresholds were reached. if they were, execute them.
         /// </summary>
-        public void Exectute(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
+        public void Execute(EntityUid uid, DestructibleComponent component, DamageChangedEvent args)
         {
             foreach (var threshold in component.Thresholds)
             {
