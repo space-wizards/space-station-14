@@ -26,7 +26,7 @@ namespace Content.Server.PDA
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new("pda:togglelight");
+            Verb verb = new("PDA:ToggleLight");
             verb.Text = Loc.GetString("verb-toggle-light");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => component.ToggleLight();
@@ -45,7 +45,7 @@ namespace Content.Server.PDA
             // eject ID
             if (!component.IdSlotEmpty)
             {
-                Verb verb = new("pda:ejectID");
+                Verb verb = new("PDA:EjectID");
                 verb.Text = component.IdSlot.ContainedEntity!.Name;
                 verb.Category = VerbCategory.Eject;
                 verb.Act = () => component.HandleIDEjection(args.User);
@@ -55,7 +55,7 @@ namespace Content.Server.PDA
             // eject pen
             if (!component.PenSlotEmpty)
             {
-                Verb verb = new("pda:ejectPen");
+                Verb verb = new("PDA:EjectPen");
                 verb.Text = component.PenSlot.ContainedEntity!.Name;
                 verb.Category = VerbCategory.Eject;
                 verb.Act = () => component.HandlePenEjection(args.User);
@@ -76,7 +76,7 @@ namespace Content.Server.PDA
             if (component.IdSlotEmpty &&
                 args.Using.TryGetComponent(out IdCardComponent? id))
             {
-                Verb verb = new("pda:insertID");
+                Verb verb = new("PDA:InsertID");
                 verb.Text = args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () =>
@@ -91,7 +91,7 @@ namespace Content.Server.PDA
             if (component.PenSlotEmpty &&
                 args.Using.HasTag("Write"))
             {
-                Verb verb = new("pda:insertPen");
+                Verb verb = new("PDA:InsertPen");
                 verb.Text = args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () =>

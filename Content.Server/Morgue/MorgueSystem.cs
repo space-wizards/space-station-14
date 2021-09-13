@@ -25,7 +25,7 @@ namespace Content.Server.Morgue
             if (!args.CanAccess || !args.CanInteract || component.Cooking || component.Open)
                 return;
 
-            Verb verb = new("morgue:cremate");
+            Verb verb = new("Morgue:Cremate");
             verb.Text = Loc.GetString("cremate-verb-get-data-text");
             // TODO VERB ICON add flame/burn symbol?
             verb.Act = () => component.TryCremate();
@@ -41,7 +41,7 @@ namespace Content.Server.Morgue
             if (args.Hands == null || !args.CanAccess || !args.CanInteract || component.LabelContainer?.ContainedEntity == null)
                 return;
 
-            Verb verb = new("morgue:removelabel");
+            Verb verb = new("Morgue:RemoveLabel");
             verb.Text = Loc.GetString("remove-label-verb-get-data-text");
             // TODO VERB ICON Add cancel/X icon? or maybe just use the pick-up or eject icon?
             verb.Act = () => component.RemoveLabel(args.User);

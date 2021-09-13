@@ -44,7 +44,7 @@ namespace Content.Server.Cabinet
                 return;
 
             // Toggle open verb
-            Verb toggleVerb = new("ItemCabined:toggle");
+            Verb toggleVerb = new("ItemCabinet:Toggle");
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
             toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
             toggleVerb.Priority = -1; // eject/insert takes priority over open/close
@@ -55,7 +55,7 @@ namespace Content.Server.Cabinet
                 component.ItemContainer.ContainedEntity != null &&
                 _actionBlockerSystem.CanPickup(args.User))
             {
-                Verb verb = new("itemcabined:eject");
+                Verb verb = new("ItemCabinet:Eject");
                 verb.Act = () =>
                 {
                     TakeItem(component, args.Hands, component.ItemContainer.ContainedEntity, args.User);
@@ -73,7 +73,7 @@ namespace Content.Server.Cabinet
                 (component.Whitelist?.IsValid(args.Using) ?? true) &&
                 component.ItemContainer.CanInsert(args.Using))
             {
-                Verb verb = new("itemcabined:insert");
+                Verb verb = new("ItemCabinet:Insert");
                 verb.Act = () =>
                 {
                     args.Hands.TryPutEntityIntoContainer(args.Using, component.ItemContainer);

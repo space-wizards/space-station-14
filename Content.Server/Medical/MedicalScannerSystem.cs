@@ -30,7 +30,7 @@ namespace Content.Server.Medical
                 !component.CanInsert(args.Using))
                 return;
 
-            Verb verb = new("medscan:insert");
+            Verb verb = new("MedicalScanner:Insert");
             verb.Act = () => component.InsertBody(args.Using);
             verb.Category = VerbCategory.Insert;
             verb.Text = args.Using.Name;
@@ -45,7 +45,7 @@ namespace Content.Server.Medical
             // Eject verb
             if (component.IsOccupied)
             {
-                Verb verb = new("medscan:eject");
+                Verb verb = new("MedicalScanner:Eject");
                 verb.Act = () => component.EjectBody();
                 verb.Category = VerbCategory.Eject;
                 args.Verbs.Add(verb);
@@ -56,7 +56,7 @@ namespace Content.Server.Medical
                 component.CanInsert(args.User) &&
                 _actionBlockerSystem.CanMove(args.User))
             {
-                Verb verb = new("medscan:enter");
+                Verb verb = new("MedicalScanner:Enter");
                 verb.Act = () => component.InsertBody(args.User);
                 verb.Text = Loc.GetString("enter-verb-get-data-text");
                 // TODO VERN ICON

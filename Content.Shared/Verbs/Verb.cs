@@ -5,7 +5,8 @@ using System;
 
 namespace Content.Shared.Verbs
 {
-    [Flags] public enum VerbType
+    [Flags]
+    public enum VerbType
     {
         Interaction = 1,
         Activation = 2,

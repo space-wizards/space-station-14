@@ -39,7 +39,7 @@ namespace Content.Server.Climbing
                 return;
 
             // Add a climb verb
-            Verb verb = new("climb");
+            Verb verb = new("Climb:Climb");
             verb.Act = () => component.TryClimb(args.User);
             verb.Text = Loc.GetString("comp-climbable-verb-climb");
             // TODO VERBS ICON add a climbing icon?

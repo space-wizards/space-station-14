@@ -43,7 +43,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
-                Verb verb = new("unbuckle:"+entity.Uid.ToString());
+                Verb verb = new("Strap:Unbuckle"+entity.Uid.ToString());
                 verb.Act = () => buckledComp.TryUnbuckle(args.User);
                 verb.Category = VerbCategory.Unbuckle;
                 if (entity == args.User)
@@ -60,7 +60,7 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(buckle) &&
                 _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
-                Verb verb = new("buckle:self");
+                Verb verb = new("Strap:Self");
                 verb.Act = () => buckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
                 verb.Text = Loc.GetString("verb-self-target-pronoun");
@@ -78,7 +78,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.Using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                Verb verb = new("buckle:using");
+                Verb verb = new("Strap:Used");
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
                 verb.Text = args.Using.Name;

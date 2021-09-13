@@ -26,7 +26,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new("disposal:taggerconfig");
+            Verb verb = new("DisposalTube:TaggerConfig");
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);
@@ -42,7 +42,7 @@ namespace Content.Server.Disposal.Tube
                 return;
             var player = actor.PlayerSession;
 
-            Verb verb = new("disposal:routerconfig");
+            Verb verb = new("DisposalTube:RouterConfig");
             verb.Text = Loc.GetString("configure-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
             verb.Act = () => component.OpenUserInterface(actor);

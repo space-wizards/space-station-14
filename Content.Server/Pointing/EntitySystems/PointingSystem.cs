@@ -209,7 +209,7 @@ namespace Content.Server.Pointing.EntitySystems
                 !InRange(args.User, args.Target.Transform.Coordinates))
                 return;
 
-            Verb verb = new("pointing");
+            Verb verb = new("Pointing:Point");
             verb.Text = Loc.GetString("pointing-verb-get-data-text");
             verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
             verb.Act = () => TryPoint(actor.PlayerSession, args.Target.Transform.Coordinates, args.Target.Uid); ;

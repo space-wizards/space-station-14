@@ -42,7 +42,7 @@ namespace Content.Server.Fluids
             if (solution.DrainAvailable == ReagentUnit.Zero)
                 return;
 
-            Verb verb = new("spill");
+            Verb verb = new("Fluid:Spill");
             verb.Text = Loc.GetString("spill-target-verb-get-data-text");
             // TODO VERB ICONS spill icon? pouring out a glass/beaker?
             verb.Act = () => _solutionContainerSystem.SplitSolution(args.Target.Uid,

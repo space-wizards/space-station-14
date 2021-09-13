@@ -42,7 +42,7 @@ namespace Content.Server.Power.EntitySystems
                 !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
-            Verb verb = new("charger:eject");
+            Verb verb = new("BaseCharger:Eject");
             verb.Text = component.Container.ContainedEntity!.Name;
             verb.Category = VerbCategory.Eject;
             verb.Act = () => component.RemoveItem(args.User);
@@ -59,7 +59,7 @@ namespace Content.Server.Power.EntitySystems
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
-            Verb verb = new("charger:Insert");
+            Verb verb = new("BaseCharger:Insert");
             verb.Text = args.Using.Name;
             verb.Category = VerbCategory.Insert;
             verb.Act = () => component.TryInsertItem(args.Using);

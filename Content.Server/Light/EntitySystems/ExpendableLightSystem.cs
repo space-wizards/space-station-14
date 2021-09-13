@@ -33,7 +33,7 @@ namespace Content.Server.Light.EntitySystems
             if (component.CurrentState != ExpendableLightState.BrandNew)
                 return;
 
-            Verb verb = new("light:expendable");
+            Verb verb = new("ExpendableLight:Ignite");
             verb.Text = Loc.GetString("expendable-light-start-verb");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => component.TryActivate();

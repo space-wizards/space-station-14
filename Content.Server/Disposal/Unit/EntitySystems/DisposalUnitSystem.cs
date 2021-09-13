@@ -72,14 +72,14 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // Verbs to flush and eject the unit
             if (component.ContainedEntities.Count != 0)
             {
-                Verb flushVerb = new("disposal:flush");
+                Verb flushVerb = new("DisposalUnit:Flush");
                 flushVerb.Act = () => Engage(component);
                 flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
                 flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 flushVerb.Priority = 1;
                 args.Verbs.Add(flushVerb);
 
-                Verb ejectVerb = new("disposal:eject");
+                Verb ejectVerb = new("DisposalUnit:Eject");
                 ejectVerb.Act = () => TryEjectContents(component);
                 ejectVerb.Category = VerbCategory.Eject;
                 args.Verbs.Add(ejectVerb);
@@ -89,7 +89,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!component.ContainedEntities.Contains(args.User) &&
                 _actionBlockerSystem.CanMove(args.User))
             {
-                Verb verb = new("disposal:enter");
+                Verb verb = new("DisposalUnit:Enter");
                 verb.Act = () => component.TryInsert(args.User, args.User);
                 verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
                 // TODO VERN ICON
