@@ -35,12 +35,12 @@ namespace Content.Server.Tabletop
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
             SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChanged);
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
-            SubscribeLocalEvent<TabletopGameComponent, ActivateEventArgs>(OnTabletopActivate);
+            SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
             SubscribeLocalEvent<TabletopDraggableComponent, ComponentGetState>(GetCompState);
         }
 
-        private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateEventArgs args)
+        private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
             if(_actionBlockerSystem.CanInteract(args.User))
                 OpenTable(args.User, args.Target);
