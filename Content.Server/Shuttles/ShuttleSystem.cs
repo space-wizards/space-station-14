@@ -26,16 +26,20 @@ namespace Content.Server.Shuttles
 
         private void HandleGridFixtureChange(GridFixtureChangeEvent args)
         {
-            var fixture = args.NewFixture;
+            if (args.NewFixtures.Count == 0) return;
 
-            if (fixture == null) return;
+            var body = args.NewFixtures[0].Body;
 
-            fixture.Mass = fixture.Area * TileMassMultiplier;
-
-            if (fixture.Body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            foreach (var fixture in args.NewFixtures)
             {
-                RecalculateSpeedMultiplier(shuttleComponent, fixture.Body);
+                fixture.Mass = fixture.Area * TileMassMultiplier;
             }
+
+            if (body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
+            {
+                RecalculateSpeedMultiplier(shuttleComponent, body);
+            }
+
         }
 
         private void HandleGridInit(GridInitializeEvent ev)
