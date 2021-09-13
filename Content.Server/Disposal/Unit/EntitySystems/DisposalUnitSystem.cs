@@ -61,44 +61,48 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             SubscribeLocalEvent<DisposalUnitComponent, InteractUsingEvent>(HandleInteractUsing);
 
             // Verbs
-            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddDisposalVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetAlternativeVerbsEvent>(AddFlushEjectVerbs);
+            SubscribeLocalEvent<DisposalUnitComponent, GetOtherVerbsEvent>(AddClimbInsideVerb);
         }
-
-        private void AddDisposalVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
+        private void AddFlushEjectVerbs(EntityUid uid, DisposalUnitComponent component, GetAlternativeVerbsEvent args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || component.ContainedEntities.Count == 0)
                 return;
 
-            // Verbs to flush and eject the unit
-            if (component.ContainedEntities.Count != 0)
-            {
-                Verb flushVerb = new("DisposalUnit:Flush");
-                flushVerb.Act = () => Engage(component);
-                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
-                flushVerb.Priority = 1;
-                args.Verbs.Add(flushVerb);
+            // Verbs to flush the unit
+            Verb flushVerb = new("DisposalUnit:Flush");
+            flushVerb.Act = () => Engage(component);
+            flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
+            flushVerb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
+            flushVerb.Priority = 1;
+            args.Verbs.Add(flushVerb);
 
-                Verb ejectVerb = new("DisposalUnit:Eject");
-                ejectVerb.Act = () => TryEjectContents(component);
-                ejectVerb.Category = VerbCategory.Eject;
-                args.Verbs.Add(ejectVerb);
-            }
+            // Verb to eject the contents
+            Verb ejectVerb = new("DisposalUnit:Eject");
+            ejectVerb.Act = () => TryEjectContents(component);
+            ejectVerb.Category = VerbCategory.Eject;
+            args.Verbs.Add(ejectVerb);
+        }
 
-            // Verb to climb inside of the unit, where the average user belongs.
-            if (!component.ContainedEntities.Contains(args.User) &&
-                _actionBlockerSystem.CanMove(args.User))
-            {
-                Verb verb = new("DisposalUnit:Enter");
-                verb.Act = () => component.TryInsert(args.User, args.User);
-                verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
-                // TODO VERN ICON
-                // TODO VERB CATEGORY
-                // create a verb category for "enter"?
-                // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
-                verb.Priority = -1;
-                args.Verbs.Add(verb);
-            }
+        private void AddClimbInsideVerb(EntityUid uid, DisposalUnitComponent component, GetOtherVerbsEvent args)
+        {
+            // This is not an interaction, activation, or alternative verb type because unfortunately most users are
+            // unwilling to accept that this is where they belong and don't want to accidentally climb inside.
+            if (!args.CanAccess ||
+                !args.CanInteract ||
+                component.ContainedEntities.Contains(args.User) ||
+                !_actionBlockerSystem.CanMove(args.User))
+                return;
+
+            // Add verb to climb inside of the unit, 
+            Verb verb = new("DisposalUnit:Enter");
+            verb.Act = () => component.TryInsert(args.User, args.User);
+            verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
+            // TODO VERN ICON
+            // TODO VERB CATEGORY
+            // create a verb category for "enter"?
+            // See also, medical scanner. Also maybe add verbs for entering lockers/body bags?
+            args.Verbs.Add(verb);
         }
 
         public override void Update(float frameTime)

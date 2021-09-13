@@ -18,10 +18,10 @@ namespace Content.Server.PDA
 
             SubscribeLocalEvent<PDAComponent, GetAlternativeVerbsEvent>(AddEjectVerb);
             SubscribeLocalEvent<PDAComponent, GetInteractionVerbsEvent>(AddInsertVerb);
-            SubscribeLocalEvent<PDAComponent, GetOtherVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<PDAComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
         }
 
-        private void AddToggleLightVerb(EntityUid uid, PDAComponent component, GetOtherVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, PDAComponent component, GetActivationVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -30,6 +30,7 @@ namespace Content.Server.PDA
             verb.Text = Loc.GetString("verb-toggle-light");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => component.ToggleLight();
+            verb.Priority = -1; // whenever Open-UI verb is added, that should be higher priority.
             args.Verbs.Add(verb);
         }
 

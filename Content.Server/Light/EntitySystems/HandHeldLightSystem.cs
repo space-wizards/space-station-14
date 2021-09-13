@@ -20,7 +20,7 @@ namespace Content.Server.Light.EntitySystems
             base.Initialize();
             SubscribeLocalEvent<ActivateHandheldLightMessage>(HandleActivate);
             SubscribeLocalEvent<DeactivateHandheldLightMessage>(HandleDeactivate);
-            SubscribeLocalEvent<HandheldLightComponent, GetInteractionVerbsEvent>(AddToggleLightVerb);
+            SubscribeLocalEvent<HandheldLightComponent, GetActivationVerbsEvent>(AddToggleLightVerb);
         }
 
         public override void Shutdown()
@@ -48,7 +48,7 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetActivationVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;

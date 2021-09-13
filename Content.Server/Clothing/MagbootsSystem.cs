@@ -11,10 +11,10 @@ namespace Content.Server.Clothing
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MagbootsComponent, GetInteractionVerbsEvent>(AddToggleVerb);
+            SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
         }
 
-        private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetActivationVerbsEvent args)
         {
             if (args.User == null || !args.CanAccess || !args.CanInteract)
                 return;

@@ -22,10 +22,10 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ExpendableLightComponent, GetInteractionVerbsEvent>(AddInteractionVerb);
+            SubscribeLocalEvent<ExpendableLightComponent, GetActivationVerbsEvent>(AddIgniteVerb);
         }
 
-        private void AddInteractionVerb(EntityUid uid, ExpendableLightComponent component, GetInteractionVerbsEvent args)
+        private void AddIgniteVerb(EntityUid uid, ExpendableLightComponent component, GetActivationVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
@@ -33,6 +33,8 @@ namespace Content.Server.Light.EntitySystems
             if (component.CurrentState != ExpendableLightState.BrandNew)
                 return;
 
+            // Ignite the flare or make the glowstick glow.
+            // Also hot damn, those are some shitty glowsticks, we need to get a refund.
             Verb verb = new("ExpendableLight:Ignite");
             verb.Text = Loc.GetString("expendable-light-start-verb");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";

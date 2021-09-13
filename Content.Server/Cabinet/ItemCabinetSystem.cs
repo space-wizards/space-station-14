@@ -26,7 +26,6 @@ namespace Content.Server.Cabinet
 
             SubscribeLocalEvent<ItemCabinetComponent, MapInitEvent>(OnMapInitialize);
 
-
             SubscribeLocalEvent<ItemCabinetComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemCabinetComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
@@ -35,10 +34,11 @@ namespace Content.Server.Cabinet
             SubscribeLocalEvent<ItemCabinetComponent, TryInsertItemCabinetEvent>(OnTryInsertItemCabinet);
             SubscribeLocalEvent<ItemCabinetComponent, ToggleItemCabinetEvent>(OnToggleItemCabinet);
 
-            SubscribeLocalEvent<ItemCabinetComponent, GetInteractionVerbsEvent>(AddCabinetVerbs);
+            SubscribeLocalEvent<ItemCabinetComponent, GetInteractionVerbsEvent>(AddEjectInsertVerbs);
+            SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
         }
 
-        private void AddCabinetVerbs(EntityUid uid, ItemCabinetComponent component, GetInteractionVerbsEvent args)
+        private void AddToggleOpenVerb(EntityUid uid, ItemCabinetComponent component, GetActivationVerbsEvent args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -46,9 +46,14 @@ namespace Content.Server.Cabinet
             // Toggle open verb
             Verb toggleVerb = new("ItemCabinet:Toggle");
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
-            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
-            toggleVerb.Priority = -1; // eject/insert takes priority over open/close
+            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open; 
             args.Verbs.Add(toggleVerb);
+        }
+
+        private void AddEjectInsertVerbs(EntityUid uid, ItemCabinetComponent component, GetInteractionVerbsEvent args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+                return;
 
             // "Eject" item verb
             if (component.Opened &&

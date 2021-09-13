@@ -24,7 +24,7 @@ namespace Content.Server.Storage.EntitySystems
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
 
             SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
-            SubscribeLocalEvent<ServerStorageComponent, GetInteractionVerbsEvent>(AddOpenUiVerb);
+            SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
         }
 
         /// <inheritdoc />
@@ -50,12 +50,12 @@ namespace Content.Server.Storage.EntitySystems
             args.Verbs.Add(verb);
         }
 
-        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetInteractionVerbsEvent args)
+        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetActivationVerbsEvent args)
         {
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked)
+            if (ComponentManager.TryGetComponent(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             // Get the session for the user
