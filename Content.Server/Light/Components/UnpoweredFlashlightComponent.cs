@@ -28,12 +28,9 @@ namespace Content.Server.Light.Components
         {
             protected override void GetData(IEntity user, UnpoweredFlashlightComponent component, VerbData data)
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
+                var canInteract = EntitySystem.Get<ActionBlockerSystem>().CanInteract(user);
 
+                data.Visibility = canInteract ? VerbVisibility.Visible : VerbVisibility.Invisible;
                 data.Text = Loc.GetString("toggle-flashlight-verb-get-data-text");
                 data.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             }
