@@ -226,7 +226,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var uplink in _entityManager.ComponentManager.EntityQuery<UplinkComponent>())
+            foreach (var uplink in _entityManager.ComponentManager.EntityQuery<UplinkComponent>(true))
             {
                 var uplinkAcc = uplink.UplinkAccount;
                 if (uplinkAcc != null && _allOriginalNames.ContainsKey(uplinkAcc))
