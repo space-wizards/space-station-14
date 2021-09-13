@@ -25,6 +25,7 @@ using System;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Physics;
+using Robust.Server.Physics;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -306,7 +307,7 @@ namespace Content.Server.Physics
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
             var groundEnt = entityManager.SpawnEntity(null, new MapCoordinates(0f, 0f, mapId));
-            var ground = compManager.AddComponent<PhysicsComponent>(groundEnt);
+            compManager.AddComponent<PhysicsComponent>(groundEnt);
 
             var bodyEnt = entityManager.SpawnEntity(null, new MapCoordinates(0f, 10f, mapId));
             var body = compManager.AddComponent<PhysicsComponent>(bodyEnt);
@@ -335,13 +336,15 @@ namespace Content.Server.Physics
             foreach (var fixture in body.Fixtures)
             {
                 fixture.CollisionLayer = (int) CollisionGroup.Impassable;
+                fixture.CollisionMask = (int) CollisionGroup.Impassable;
             }
 
             // TODO: Should Joints be their own entities? Box2D just adds them directly to the world.
             // HMMM
             // At the least it should be its own damn component
-            var revolute = new RevoluteJoint(ground, body)
+            var revolute = new RevoluteJoint(groundEnt.Uid, bodyEnt.Uid)
             {
+                ID = "tumblr",
                 LocalAnchorA = new Vector2(0f, 10f),
                 LocalAnchorB = new Vector2(0f, 0f),
                 ReferenceAngle = 0f,
@@ -349,7 +352,8 @@ namespace Content.Server.Physics
                 MaxMotorTorque = 100000000f,
                 EnableMotor = true
             };
-            body.AddJoint(revolute);
+
+            EntitySystem.Get<JointSystem>().AddJointDeferred(revolute);
 
             // Box2D has this as 800 which is jesus christo.
             // Wouldn't recommend higher than 100 in debug and higher than 300 on release unless
@@ -363,14 +367,14 @@ namespace Content.Server.Physics
                 {
                     if (!mapManager.MapExists(mapId)) return;
                     var ent = entityManager.SpawnEntity(null, new MapCoordinates(0f, 10f, mapId));
-                    var body = compManager.AddComponent<PhysicsComponent>(ent);
-                    body.BodyType = BodyType.Dynamic;
-                    body.FixedRotation = false;
+                    var box = compManager.AddComponent<PhysicsComponent>(ent);
+                    box.BodyType = BodyType.Dynamic;
+                    box.FixedRotation = false;
                     var shape = new PolygonShape();
                     shape.SetAsBox(0.125f, 0.125f);
-                    broadphaseSystem.CreateFixture(body, shape, 0.0625f);
-                    body.Fixtures[0].CollisionMask = (int) CollisionGroup.Impassable;
-                    body.Fixtures[0].CollisionLayer = (int) CollisionGroup.Impassable;
+                    broadphaseSystem.CreateFixture(box, shape, 0.0625f);
+                    box.Fixtures[0].CollisionMask = (int) CollisionGroup.Impassable;
+                    box.Fixtures[0].CollisionLayer = (int) CollisionGroup.Impassable;
                 });
             }
         }
