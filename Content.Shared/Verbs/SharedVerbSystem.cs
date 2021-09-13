@@ -67,28 +67,28 @@ namespace Content.Shared.Verbs
         {
             Dictionary<VerbType, List<Verb>> verbs = new();
 
-            if (verbTypes.HasFlag(VerbType.Activation))
+            if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {
                 GetInteractionVerbsEvent getVerbEvent = new(user, target);
-                RaiseLocalEvent(target.Uid, getVerbEvent);
-                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
-            }
-
-            if (verbTypes.HasFlag(VerbType.Interaction))
-            {
-                GetActivationVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
-            if (verbTypes.HasFlag(VerbType.Alternative))
+            if ((verbTypes & VerbType.Activation) == VerbType.Activation)
+            {
+                GetActivationVerbsEvent getVerbEvent = new(user, target);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
+            }
+
+            if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
                 GetAlternativeVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
-            if (verbTypes.HasFlag(VerbType.Other))
+            if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
                 GetOtherVerbsEvent getVerbEvent = new(user, target);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
