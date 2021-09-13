@@ -2,7 +2,7 @@
   name: fireaxe
   parent: BaseItem
   id: FireAxe
-  description: A large, robust axe. Can pry open doors and skulls alike.
+  description: Truly, the weapon of a madman. Who would think to fight fire with an axe?
   components:
   - type: Tag
     tags:
@@ -12,10 +12,10 @@
     state: icon
   - type: MeleeWeapon
     damage: 14
+    damageType: Slash
   - type: Wieldable
   - type: IncreaseDamageOnWield
     flatDamage: 10
-    damageMultiplier: 8
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
