@@ -48,9 +48,7 @@ namespace Content.Server.Containers.ItemSlots
                 // Try to spawn item inside each slot
                 if (!string.IsNullOrEmpty(slot.StartingItem))
                 {
-                    var entManager = itemSlots.Owner.EntityManager;
-
-                    var item = entManager.SpawnEntity(slot.StartingItem, itemSlots.Owner.Transform.Coordinates);
+                    var item = EntityManager.SpawnEntity(slot.StartingItem, itemSlots.Owner.Transform.Coordinates);
                     slot.ContainerSlot.Insert(item);
 
                     RaiseLocalEvent(uid, new ItemSlotChanged(itemSlots, slotName, slot));
