@@ -36,27 +36,6 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
         }
 
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var toRemove = new RemQueue<ThrownItemComponent>();
-
-            // We can't just use sleeping unfortunately because there's a delay of the sleep timer. ThrownItemComponent
-            // is transient while the entity is thrown so this shouldn't be too bad.
-            foreach (var (thrown, physics) in ComponentManager.EntityQuery<ThrownItemComponent, PhysicsComponent>())
-            {
-                if (physics.LinearVelocity.Length > _cfg.GetCVar(CCVars.LandingSpeedThreshold)) continue;
-                toRemove.Add(thrown);
-            }
-
-            foreach (var comp in toRemove)
-            {
-                if (comp.Deleted) continue;
-                LandComponent(comp);
-            }
-        }
-
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
         {
             if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent) ||
@@ -101,7 +80,7 @@ namespace Content.Shared.Throwing
                 LandComponent(thrownItem);
         }
 
-        private void LandComponent(ThrownItemComponent thrownItem)
+        public void LandComponent(ThrownItemComponent thrownItem)
         {
             if (thrownItem.Owner.Deleted) return;
 
@@ -130,7 +109,7 @@ namespace Content.Shared.Throwing
             // LandInteraction
             // TODO: Refactor these to system messages
             var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landing.Uid, landMsg);
+            RaiseLocalEvent(landing.Uid, landMsg, false);
             if (landMsg.Handled)
             {
                 return;

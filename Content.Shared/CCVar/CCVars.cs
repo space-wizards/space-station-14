@@ -223,12 +223,6 @@ namespace Content.Shared.CCVar
             CVarDef.Create("physics.stop_speed", 0.1f);
 
         /// <summary>
-        ///     The speed at which thrown items will 'land' (raise events), as opposed to 0 or sleeping
-        /// </summary>
-        public static readonly CVarDef<float> LandingSpeedThreshold =
-            CVarDef.Create("physics.land_speed_threshold", 1.0f);
-
-        /// <summary>
         /// Whether mobs can push objects like lockers.
         /// </summary>
         /// <remarks>
