@@ -55,15 +55,14 @@ namespace Content.Server.Juke
             {
                 foreach (var file in _resMan.UserData.GetFiles(MidiPath, false, "*.mid"))
                 {
-                    var stream = _resMan.UserData.OpenRead(file);
                     try
                     {
+                        var stream = _resMan.UserData.OpenRead(file);
                         var midiFile = MidiFile.Read(stream, VirtualMidiPlayer.DefaultReadingSettings);
                         var timedEvents = midiFile.GetTrackChunks().GetTimedEvents();
                         string title = string.Empty;
                         //LINQ ahead, do not tell the authorities
-                        if (timedEvents.First(x => x.Event is SequenceTrackNameEvent).Event is SequenceTrackNameEvent
-                            trackName)
+                        if (timedEvents.First(x => x.Event is SequenceTrackNameEvent).Event is SequenceTrackNameEvent trackName)
                         {
                             title = trackName.Text;
                         }
