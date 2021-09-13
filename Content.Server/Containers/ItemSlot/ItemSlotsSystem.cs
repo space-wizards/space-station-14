@@ -83,7 +83,7 @@ namespace Content.Server.Containers.ItemSlots
                 if (slot.ContainerSlot.Contains(item))
                     continue;
 
-                if (!user.TryGetComponent(out IHandsComponent? hands))
+                if (!user.TryGetComponent(out HandsComponent? hands))
                 {
                     itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
                     return true;
@@ -99,8 +99,8 @@ namespace Content.Server.Containers.ItemSlots
                     return true;
 
                 // swap item in hand and item in slot
-                if (swap != null)
-                    hands.PutInHand(swap.GetComponent<ItemComponent>());
+                if (swap != null && swap.TryGetComponent<ItemComponent>(out var itemComp))
+                    hands.PutInHand(itemComp);
 
                 // insert item
                 slot.ContainerSlot.Insert(item);
@@ -161,14 +161,24 @@ namespace Content.Server.Containers.ItemSlots
             if (slot.ContainerSlot.ContainedEntity == null)
                 return false;
 
-            var item = slot.ContainerSlot.ContainedEntities[0];
-            slot.ContainerSlot.Remove(item);
+            var item = slot.ContainerSlot.ContainedEntity;
+            if (!slot.ContainerSlot.Remove(item))
+                return false;
 
+            // try eject item to users hand
             if (user != null)
             {
-                var hands = user.GetComponent<HandsComponent>();
-                var itemComponent = item.GetComponent<ItemComponent>();
-                hands.PutInHandOrDrop(itemComponent);
+                if (user.TryGetComponent(out HandsComponent? hands))
+                {
+                    if (item.TryGetComponent<ItemComponent>(out var itemComp))
+                    {
+                        hands.PutInHandOrDrop(itemComp);
+                    }
+                }
+                else
+                {
+                    itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
+                }
             }
 
             if (slot.EjectSound != null)
