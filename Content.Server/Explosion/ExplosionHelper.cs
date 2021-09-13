@@ -36,7 +36,7 @@ namespace Content.Server.Explosion
         /// </summary>
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
-        private static SoundSpecifier _explosionSound = new SoundPathSpecifier("/Audio/Effects/explosion.ogg");
+        private static SoundSpecifier _explosionSound = new SoundCollectionSpecifier("explosion");
 
         private static bool IgnoreExplosivePassable(IEntity e) => e.HasTag("ExplosivePassable");
 

@@ -23,7 +23,8 @@
       - VaultImpassable
   - type: Anchorable
   - type: Pullable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

@@ -258,6 +258,7 @@ namespace Content.Client.Entry
             "ReagentTank",
             "UtilityAI",
             "MouseAccent",
+            "FlashImmunity",
             "GhostTakeoverAvailable",
             "GhostRoleMobSpawner",
             "GhostOnMove",
@@ -275,7 +276,8 @@ namespace Content.Client.Entry
             "SpawnItemsOnUse",
             "Wieldable",
             "IncreaseDamageOnWield",
-            "AmbientOnPowered"
+            "AmbientOnPowered",
+            "TabletopGame"
         };
     }
 }
