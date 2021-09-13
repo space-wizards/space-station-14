@@ -65,7 +65,7 @@ namespace Content.Server.Containers.ItemSlots
         }
 
         /// <summary>
-        ///     Tries to insert item in any fiting item slot from users hand
+        ///     Tries to insert item in any fitting item slot from users hand
         /// </summary>
         /// <returns>False if failed to insert item</returns>
         public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, IEntity user)
