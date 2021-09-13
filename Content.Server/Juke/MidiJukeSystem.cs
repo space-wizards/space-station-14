@@ -268,14 +268,11 @@ namespace Content.Server.Juke
         private void OnPlaybackFinished(MidiJukeComponent component)
         {
             Logger.Debug("Playback finished, shuffling song.");
-            component.Owner.SpawnTimer(1000, () =>
-            {
-                var nextSong = ShuffleSong(component);
-                DirtyUI(component.Owner.Uid);
-                if (nextSong != null)
-                    component.Owner.PopupMessageEveryone(Loc.GetString("comp-juke-midi-now-playing-message", ("song", nextSong)));
-            });
-        }
+            var nextSong = ShuffleSong(component);
+            DirtyUI(component.Owner.Uid);
+            if (nextSong != null)
+                component.Owner.PopupMessageEveryone(Loc.GetString("comp-juke-midi-now-playing-message", ("song", nextSong)));
+            }
 
         /// <summary>
         /// Starts playback on the juke.
