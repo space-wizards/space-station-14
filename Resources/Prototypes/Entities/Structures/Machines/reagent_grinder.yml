@@ -5,7 +5,8 @@
   description: From BlenderTech. Will It Blend? Let's find out!
   suffix: grinder/juicer
   components:
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: ReagentGrinder
   - type: UserInterface
     interfaces:
@@ -18,7 +19,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.35,-0.08,0.25,0.15"
+          bounds: "-0.08,-0.35,0.15,0.25"
       layer:
       - SmallImpassable
       mask:

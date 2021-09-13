@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
@@ -9,6 +10,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interaction
 {
@@ -336,6 +338,29 @@ namespace Content.Shared.Interaction
             }
 
             return inRange;
+        }
+    }
+
+    /// <summary>
+    ///     Raised when a player attempts to activate an item in an inventory slot or hand slot
+    /// </summary>
+    [Serializable, NetSerializable]
+    public class InteractInventorySlotEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     Entity that was interacted with.
+        /// </summary>
+        public EntityUid ItemUid { get; }
+
+        /// <summary>
+        ///     Whether the interaction used the alt-modifier to trigger alternative interactions.
+        /// </summary>
+        public bool AltInteract { get; }
+
+        public InteractInventorySlotEvent(EntityUid itemUid, bool altInteract = false)
+        {
+            ItemUid = itemUid;
+            AltInteract = altInteract;
         }
     }
 }

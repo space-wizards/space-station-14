@@ -197,7 +197,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (ShotsLeft == 0)
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
             }
 
@@ -205,7 +205,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
             }
 
@@ -245,7 +245,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException();
             }
 
-            SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner);
 
             _lastFire = _gameTiming.CurTime;
         }
@@ -276,7 +276,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));   
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -399,7 +399,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (!result.HitEntity.TryGetComponent(out IDamageableComponent? damageable))
                     return;
 
-                damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), false, Owner);
+                damageable.TryChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero));
                 //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
                 //even numbers if halfway between two numbers, rather than rounding to nearest
             }

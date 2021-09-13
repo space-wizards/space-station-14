@@ -71,7 +71,8 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe
 
@@ -164,6 +165,11 @@
       - CartridgeLRifleBase
       - CartridgeMagnumBase
       - FirelockElectronics
+      - MicroManipulatorStockPart
+      - ScanningModuleStockPart
+      - MicroLaserStockPart
+      - MatterBinStockPart
+      - CapacitorStockPart
       - DoorElectronics
       - APCElectronics
       - CloningPodMachineCircuitboard
@@ -185,6 +191,7 @@
     visuals:
     - type: ProtolatheVisualizer
     - type: WiresVisualizer
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe

@@ -9,7 +9,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.2, -0.2, 0.2, 0.2"
+          bounds: "-0.2,-0.2,0.2,0.2"
       mass: 25
       mask:
         - MobImpassable
@@ -71,7 +71,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.47,-0.25,0.05,0.25"
+          bounds: "-0.25,-0.47,0.25,0.05"
       mass: 25
       layer:
       - SmallImpassable

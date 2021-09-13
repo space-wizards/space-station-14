@@ -1,28 +1,34 @@
+using Content.Server.Damage.Systems;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Content.Shared.Throwing;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Damage.Components
 {
+    [Friend(typeof(DamageOtherOnHitSystem))]
     [RegisterComponent]
-    public class DamageOtherOnHitComponent : Component, IThrowCollide
+    public class DamageOtherOnHitComponent : Component
     {
         public override string Name => "DamageOtherOnHit";
 
-        [DataField("damageType")]
-        private DamageType _damageType = DamageType.Blunt;
         [DataField("amount")]
-        private int _amount = 1;
+        public int Amount { get; } = 1;
+
         [DataField("ignoreResistances")]
-        private bool _ignoreResistances;
+        public bool IgnoreResistances { get; } = false;
 
-        void IThrowCollide.DoHit(ThrowCollideEventArgs eventArgs)
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")]
+        private readonly string _damageTypeID = "Blunt";
+        public DamageTypePrototype DamageType { get; set; } =  default!;
+        protected override void Initialize()
         {
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable)) return;
-
-            damageable.ChangeDamage(_damageType, _amount, _ignoreResistances, eventArgs.User);
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
         }
     }
 }

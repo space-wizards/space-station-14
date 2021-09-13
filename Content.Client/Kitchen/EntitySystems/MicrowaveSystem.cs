@@ -13,7 +13,7 @@ namespace Content.Client.Kitchen.EntitySystems
             StopSoundLoop(microwave);
 
             microwave.PlayingStream = SoundSystem.Play(Filter.Local(), microwave.LoopingSound.GetSound(), microwave.Owner,
-                AudioParams.Default.WithAttenuation(1).WithMaxDistance(5).WithLoop(true));
+                AudioParams.Default.WithMaxDistance(5).WithLoop(true));
         }
 
         public void StopSoundLoop(MicrowaveComponent microwave)

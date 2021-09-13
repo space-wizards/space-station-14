@@ -115,6 +115,27 @@
 
 - type: entity
   parent: BaseItem
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    QuickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    Slots:
+    - Helmet
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BaseItem
   id: PlushieVox
   name: vox plushie
   description: SKREEEEEEEEEEEE!

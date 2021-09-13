@@ -32,6 +32,7 @@ namespace Content.Server.Interaction
 
             data.Visibility = VerbVisibility.Visible;
             data.Text = Loc.GetString("in-range-unoccluded-verb-get-data-text");
+            data.IconTexture = "/Textures/Interface/VerbIcons/information.svg.192dpi.png";
             data.CategoryData = VerbCategories.Debug;
         }
 

@@ -23,7 +23,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             component.OnAnchorChanged();
         }
 
-        private static void RotateEvent(RotateEvent ev)
+        private static void RotateEvent(ref RotateEvent ev)
         {
             if (ev.Sender.TryGetComponent(out ParticleAcceleratorPartComponent? part))
             {

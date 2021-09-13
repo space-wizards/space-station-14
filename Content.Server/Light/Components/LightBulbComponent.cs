@@ -33,11 +33,8 @@ namespace Content.Server.Light.Components
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
     [RegisterComponent]
-    public class LightBulbComponent : Component, ILand, IBreakAct
+    public class LightBulbComponent : Component, IBreakAct
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
@@ -119,12 +116,6 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
             UpdateColor();
-        }
-
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            PlayBreakSound();
-            State = LightBulbState.Broken;
         }
 
         public void OnBreak(BreakageEventArgs eventArgs)

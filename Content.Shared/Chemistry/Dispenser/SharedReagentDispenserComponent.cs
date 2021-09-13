@@ -36,12 +36,12 @@ namespace Content.Shared.Chemistry.Dispenser
             /// <summary>
             /// A list of the reagents and their amounts within the beaker/reagent container, if applicable.
             /// </summary>
-            public readonly List<Solution.Solution.ReagentQuantity>? ContainerReagents;
+            public readonly List<Components.Solution.ReagentQuantity>? ContainerReagents;
             public readonly string DispenserName;
             public readonly ReagentUnit SelectedDispenseAmount;
 
             public ReagentDispenserBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Solution.Solution.ReagentQuantity>? containerReagents, ReagentUnit selectedDispenseAmount)
+                List<ReagentDispenserInventoryEntry> inventory, string dispenserName, List<Components.Solution.ReagentQuantity>? containerReagents, ReagentUnit selectedDispenseAmount)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;

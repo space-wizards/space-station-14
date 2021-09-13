@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Runtime.CompilerServices;
 using Content.Server.Alert;
 using Content.Server.Pressure;
@@ -7,6 +7,10 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Prototypes;
+using Robust.Shared.IoC;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
@@ -17,6 +21,17 @@ namespace Content.Server.Atmos.Components
     public class BarotraumaComponent : Component
     {
         public override string Name => "Barotrauma";
+
+        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
+        // Also remove Initialize override, if no longer needed.
+        [DataField("damageType")] private readonly string _damageTypeID = "Blunt";
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageTypePrototype DamageType = default!;
+        protected override void Initialize()
+        {
+            base.Initialize();
+            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
+        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update(float airPressure)
@@ -40,11 +55,11 @@ namespace Content.Server.Atmos.Components
                 // Low pressure.
                 case var p when p <= Atmospherics.WarningLowPressure:
                     pressure *= lowPressureMultiplier;
-
-                    if(pressure > Atmospherics.WarningLowPressure)
+                    if (pressure > Atmospherics.WarningLowPressure)
                         goto default;
 
-                    damageable.ChangeDamage(DamageType.Blunt, Atmospherics.LowPressureDamage, false, Owner);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    damageable.TryChangeDamage(DamageType, Atmospherics.LowPressureDamage,true);
 
                     if (status == null) break;
 
@@ -66,7 +81,8 @@ namespace Content.Server.Atmos.Components
 
                     var damage = (int) MathF.Min((pressure / Atmospherics.HazardHighPressure) * Atmospherics.PressureDamageCoefficient, Atmospherics.MaxHighPressureDamage);
 
-                    damageable.ChangeDamage(DamageType.Blunt, damage, false, Owner);
+                    // Deal damage and ignore resistances. Resistance to pressure damage should be done via pressure protection gear.
+                    damageable.TryChangeDamage(DamageType, damage,true);
 
                     if (status == null) break;
 

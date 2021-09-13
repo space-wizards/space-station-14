@@ -552,7 +552,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.4, -0.4, 0.29, 0.4"
+          bounds: "-0.4,-0.4,0.4,0.29"
       mass: 75
       mask:
       - Impassable

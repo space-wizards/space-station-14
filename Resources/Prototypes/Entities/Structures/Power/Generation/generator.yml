@@ -6,6 +6,10 @@
   placement:
     mode: SnapgridCenter
   components:
+  #- type: AmbientSound
+  #  range: 5
+  #  sound:
+  #    path: /Audio/Ambience/Objects/engine_hum.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -13,7 +17,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.5, -0.4, 0.3, 0.4"
+          bounds: "-0.4,-0.5,0.4,0.3"
       mass: 25
       mask:
       - Impassable
@@ -25,7 +29,8 @@
       - MobImpassable
       - VaultImpassable
       - SmallImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator

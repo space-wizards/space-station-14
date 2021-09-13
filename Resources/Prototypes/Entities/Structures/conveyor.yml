@@ -13,20 +13,23 @@
         !type:PhysShapeAabb
           bounds: "-0.49,-0.49,0.49,0.49"
       hard: false
-      layer: [Passable]
-      mask:
-      - Impassable
-      - MobImpassable
-      - VaultImpassable
-      - SmallImpassable
-  - type: SnapGrid
+      layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/conveyor.rsi
     state: conveyor_started_cw
     drawdepth: FloorObjects
   - type: SignalReceiver
-    maxTransmitters: 1
+    inputs:
+      - name: state
+        type: Content.Shared.MachineLinking.TwoWayLeverSignal
+        maxConnections: 1
   - type: ApcPowerReceiver
   - type: Conveyor
   - type: Appearance
@@ -69,6 +72,10 @@
       sprite: Structures/conveyor.rsi
       state: switch-off
     - type: TwoWayLever
+    - type: SignalTransmitter
+      outputs:
+        - name: state
+          type: Content.Shared.MachineLinking.TwoWayLeverSignal
     - type: Appearance
       visuals:
         - type: TwoWayLeverVisualizer

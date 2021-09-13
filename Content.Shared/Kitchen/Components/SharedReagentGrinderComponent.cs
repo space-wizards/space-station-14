@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 

@@ -1,9 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.Collections;
+using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -14,7 +19,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
-        private List<IThrowCollide> _throwCollide = new();
+        [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -25,21 +30,28 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, LandEvent>(LandItem);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
         }
 
-        private void LandItem(EntityUid uid, ThrownItemComponent component, LandEvent args)
+        public override void Update(float frameTime)
         {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+            base.Update(frameTime);
 
-            var fixture = physicsComponent.GetFixture(ThrowingFixture);
-            if (fixture == null)
+            var toRemove = new RemQueue<ThrownItemComponent>();
+
+            // We can't just use sleeping unfortunately because there's a delay of the sleep timer. ThrownItemComponent
+            // is transient while the entity is thrown so this shouldn't be too bad.
+            foreach (var (thrown, physics) in ComponentManager.EntityQuery<ThrownItemComponent, PhysicsComponent>())
             {
-                return;
+                if (!physics.LinearVelocity.Equals(Vector2.Zero)) continue;
+                toRemove.Add(thrown);
             }
 
-            Get<SharedBroadphaseSystem>().DestroyFixture(physicsComponent, fixture);
+            foreach (var comp in toRemove)
+            {
+                if (comp.Deleted) continue;
+                LandComponent(comp);
+            }
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -54,7 +66,7 @@ namespace Content.Shared.Throwing
             }
 
             var shape = physicsComponent.Fixtures[0].Shape;
-            Get<SharedBroadphaseSystem>().CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
+            _broadphaseSystem.CreateFixture(physicsComponent, new Fixture(physicsComponent, shape) {CollisionLayer = (int) CollisionGroup.ThrownItem, Hard = false, ID = ThrowingFixture});
         }
 
         private void HandleCollision(EntityUid uid, ThrownItemComponent component, StartCollideEvent args)
@@ -90,73 +102,41 @@ namespace Content.Shared.Throwing
         {
             if (thrownItem.Owner.Deleted) return;
 
-            var user = thrownItem.Thrower;
             var landing = thrownItem.Owner;
-            var coordinates = landing.Transform.Coordinates;
 
-            // LandInteraction
-            // TODO: Refactor these to system messages
-            var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landing.Uid, landMsg);
-            if (landMsg.Handled)
+            if (!thrownItem.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+            var fixture = physicsComponent.GetFixture(ThrowingFixture);
+
+            if (fixture != null)
             {
+                _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+            }
+
+            // Unfortunately we can't check for hands containers as they have specific names.
+            if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
+                containerManager.Owner.HasComponent<SharedHandsComponent>())
+            {
+                ComponentManager.RemoveComponent(landing.Uid, thrownItem);
                 return;
             }
 
-            var comps = landing.GetAllComponents<ILand>().ToArray();
-            var landArgs = new LandEventArgs(user, coordinates);
+            var user = thrownItem.Thrower;
+            var coordinates = landing.Transform.Coordinates;
 
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                if (landing.Deleted) break;
-                comp.Land(landArgs);
-            }
-
+            var landMsg = new LandEvent(user, landing, coordinates);
+            RaiseLocalEvent(landing.Uid, landMsg);
             ComponentManager.RemoveComponent(landing.Uid, thrownItem);
         }
 
         /// <summary>
-        ///     Calls ThrowCollide on all components that implement the IThrowCollide interface
-        ///     on a thrown entity and the target entity it hit.
+        ///     Raises collision events on the thrown and target entities.
         /// </summary>
         public void ThrowCollideInteraction(IEntity? user, IPhysBody thrown, IPhysBody target)
         {
             // TODO: Just pass in the bodies directly
-            var collideMsg = new ThrowCollideEvent(user, thrown.Owner, target.Owner);
-            RaiseLocalEvent(target.Owner.Uid, collideMsg);
-            if (collideMsg.Handled)
-            {
-                return;
-            }
-
-            var eventArgs = new ThrowCollideEventArgs(user, thrown.Owner, target.Owner);
-
-            foreach (var comp in target.Owner.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (target.Owner.Deleted) break;
-                collide.HitBy(eventArgs);
-            }
-
-            _throwCollide.Clear();
-
-            foreach (var comp in thrown.Owner.GetAllComponents<IThrowCollide>())
-            {
-                _throwCollide.Add(comp);
-            }
-
-            foreach (var collide in _throwCollide)
-            {
-                if (thrown.Owner.Deleted) break;
-                collide.DoHit(eventArgs);
-            }
-
-            _throwCollide.Clear();
+            RaiseLocalEvent(target.Owner.Uid, new ThrowHitByEvent(user, thrown.Owner, target.Owner));
+            RaiseLocalEvent(thrown.Owner.Uid, new ThrowDoHitEvent(user, thrown.Owner, target.Owner));
         }
     }
 }

@@ -26,25 +26,26 @@
     HeldPrefix: box
   - type: StorageFill
     contents:
-      - id: FoodDonutPink
-        amount: 3
-      - id: FoodDonutPlain
-        amount: 3
-  - type: StorageCounter
-    countTag: Donut
+    - id: FoodDonutPink
+      amount: 3
+    - id: FoodDonutPlain
+      amount: 3
+  - type: ItemCounter
+    count:
+      tags: [Donut]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: box-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - box1
-          - pink-box2
-          - box3
-          - pink-box4
-          - box5
-          - pink-box6
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - pink-box2
+      - box3
+      - pink-box4
+      - box5
+      - pink-box6
 
 # Egg
 
@@ -68,29 +69,30 @@
     size: 12
   - type: StorageFill
     contents:
-      - id: FoodEgg
-        amount: 12
-  - type: StorageCounter
-    countTag: Egg
+    - id: FoodEgg
+      amount: 12
+  - type: ItemCounter
+    count:
+      tags: [Egg]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: box-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - box1
-          - box2
-          - box3
-          - box4
-          - box5
-          - box6
-          - box7
-          - box8
-          - box9
-          - box10
-          - box11
-          - box12
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
+      - box7
+      - box8
+      - box9
+      - box10
+      - box11
+      - box12
   # Someday...
   # - type: DamageOnLand
   #   amount: 5
@@ -123,8 +125,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: Eggshells
-        amount: 12
+    - id: Eggshells
+      amount: 12
   - type: Destructible
     thresholds:
     - trigger:
@@ -164,16 +166,16 @@
   #   stackType: PizzaBox
   - type: Appearance
     visuals:
-      - type: StorageVisualizer
-        state_open: box-open
-        state_closed: box
-      # - type: StackVisualizer
-      #   stackLayers:
-      #     - box
-      #     - box1
-      #     - box2
-      #     - box3
-      #     - box4
+    - type: StorageVisualizer
+      state_open: box-open
+      state_closed: box
+    # - type: StackVisualizer
+    #   stackLayers:
+    #     - box
+    #     - box1
+    #     - box2
+    #     - box3
+    #     - box4
 
 - type: entity
   name: pizza box
@@ -236,23 +238,24 @@
     HeldPrefix: box
   - type: StorageFill
     contents:
-      - id: FoodBakedNugget
-        amount: 6
-  - type: StorageCounter
-    countTag: Nugget
+    - id: FoodBakedNugget
+      amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Nugget]
   - type: Appearance
     visuals:
-      - type: BagOpenCloseVisualizer
-        openIcon: box-open
-      - type: StackVisualizer
-        composite: true
-        stackLayers:
-          - box1
-          - box2
-          - box3
-          - box4
-          - box5
-          - box6
+    - type: BagOpenCloseVisualizer
+      openIcon: box-open
+    - type: StackVisualizer
+      composite: true
+      stackLayers:
+      - box1
+      - box2
+      - box3
+      - box4
+      - box5
+      - box6
 
 # Donkpocket
 
@@ -277,8 +280,8 @@
     color: red
   - type: StorageFill
     contents:
-      - id: FoodDonkpocket
-        amount: 6
+    - id: FoodDonkpocket
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -291,8 +294,8 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketSpicy
-        amount: 6
+    - id: FoodDonkpocketSpicy
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -305,8 +308,8 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketTeriyaki
-        amount: 6
+    - id: FoodDonkpocketTeriyaki
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -320,8 +323,8 @@
     color: white
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketPizza
-        amount: 6
+    - id: FoodDonkpocketPizza
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -335,8 +338,8 @@
     color: brown
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketGondola
-        amount: 6
+    - id: FoodDonkpocketGondola
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -349,8 +352,8 @@
     sprite: Objects/Consumable/Food/Baked/donkpocket.rsi
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketBerry
-        amount: 6
+    - id: FoodDonkpocketBerry
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -364,8 +367,8 @@
     color: yellow
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketHonk
-        amount: 6
+    - id: FoodDonkpocketHonk
+      amount: 6
 
 - type: entity
   parent: FoodBoxDonkpocket
@@ -380,5 +383,5 @@
     color: green
   - type: StorageFill
     contents:
-      - id: FoodDonkpocketDink
-        amount: 6
+    - id: FoodDonkpocketDink
+      amount: 6

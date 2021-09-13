@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
-using Content.Server.Placeable;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
@@ -13,6 +12,7 @@ using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Placeable;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Tool;
@@ -75,10 +75,10 @@ namespace Content.Server.Storage.Components
         private bool _isWeldedShut;
 
         [DataField("closeSound")]
-        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Machines/closetclose.ogg");
+        private SoundSpecifier _closeSound = new SoundPathSpecifier("/Audio/Effects/closetclose.ogg");
 
         [DataField("openSound")]
-        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Machines/closetopen.ogg");
+        private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
 
         [ViewVariables]
         protected Container Contents = default!;
@@ -151,9 +151,9 @@ namespace Content.Server.Storage.Components
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                placeableSurfaceComponent.IsPlaceable = Open;
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
             }
 
             UpdateAppearance();
@@ -267,9 +267,9 @@ namespace Content.Server.Storage.Components
                 }
             }
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var placeableSurfaceComponent))
+            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                placeableSurfaceComponent.IsPlaceable = Open;
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
             }
 
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))

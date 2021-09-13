@@ -14,6 +14,9 @@
   id: Matchstick
   description: A simple match stick, used for lighting fine smokables.
   components:
+  - type: Tag
+    tags:
+    - Matchstick
   - type: Sprite
     netsync: false
     sprite: Objects/Tools/matches.rsi
@@ -44,12 +47,32 @@
   id: Matchbox
   description: A small box of Almost But Not Quite Plasma Premium Matches.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/matchbox_drop.ogg
   - type: Matchbox
   - type: Sprite
+    netsync: false
     sprite: Objects/Tools/matches.rsi
     layers:
       - state: matchbox
+  - type: Item
+    sprite: Objects/Tools/matches.rsi
+    HeldPrefix: matchbox
   - type: StorageFill
     contents:
       - id: Matchstick
         amount: 6
+  - type: ItemCounter
+    count:
+      tags: [Cigar]
+  - type: Appearance
+    visuals:
+      - type: BagOpenCloseVisualizer
+        openIcon: matchbox-open
+      - type: StackVisualizer
+        composite: true
+        stackLayers:
+          - matchbox1
+          - matchbox2
+          - matchbox3
