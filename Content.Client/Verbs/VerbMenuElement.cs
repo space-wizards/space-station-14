@@ -67,7 +67,7 @@ namespace Content.Client.Verbs
             {
                 TextureRect icon = new()
                 {
-                    MinSize = (32, 32),
+                    MinSize = (ContextMenuPopup.ButtonHeight, ContextMenuPopup.ButtonHeight),
                     Stretch = TextureRect.StretchMode.KeepCentered,
                     TextureScale = (0.5f, 0.5f)
                 };
@@ -84,12 +84,16 @@ namespace Content.Client.Verbs
             // maybe add a label
             if (verb.Text != string.Empty)
             {
+                // First add a small bit of padding
+                buttonContents.AddChild(new Control { MinSize = (4, ContextMenuPopup.ButtonHeight) });
+
                 var label = new RichTextLabel();
                 label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+                label.VerticalAlignment = VAlignment.Center;
                 buttonContents.AddChild(label);
 
-                // If we added a label, also add some padding
-                buttonContents.AddChild(new Control { MinSize = (8, 0) });
+                // Then also add some padding after the text.
+                buttonContents.AddChild(new Control { MinSize = (4, ContextMenuPopup.ButtonHeight) });
             }
 
             AddChild(buttonContents);
@@ -154,7 +158,7 @@ namespace Content.Client.Verbs
             // First we add the icon for the verb group
             var icon = new TextureRect
             {
-                MinSize = (32, 32),
+                MinSize = (ContextMenuPopup.ButtonHeight, ContextMenuPopup.ButtonHeight),
                 TextureScale = (0.5f, 0.5f),
                 Stretch = TextureRect.StretchMode.KeepCentered,
             };
@@ -164,14 +168,18 @@ namespace Content.Client.Verbs
             }
             box.AddChild(icon);
 
+            // Some padding before the text
+            box.AddChild(new Control { MinSize = (4, ContextMenuPopup.ButtonHeight) });
+
             // Then we add the label
             var label = new RichTextLabel();
             label.SetMessage(FormattedMessage.FromMarkupPermissive(category.Text));
             label.HorizontalExpand = true;
+            label.VerticalAlignment = VAlignment.Center;
             box.AddChild(label);
 
-            // Add horizontal padding
-            box.AddChild(new Control { MinSize = (8, 0) });
+            // Then also add some padding after the text.
+            box.AddChild(new Control { MinSize = (4, ContextMenuPopup.ButtonHeight) });
 
             // Then add the little ">" icon that tells you it's a group of verbs
             box.AddChild(new TextureRect

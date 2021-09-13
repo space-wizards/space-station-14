@@ -182,6 +182,7 @@ namespace Content.Client.ContextMenu.UI
 
         public const int MaxItemsBeforeScroll = 10;
         public const int MarginSize = 2;
+        public const int ButtonHeight = 32;
 
         public BoxContainer List { get; }
         public ScrollContainer Scroll { get; }
@@ -189,7 +190,7 @@ namespace Content.Client.ContextMenu.UI
 
         public ContextMenuPopup(int depth = 0)
         {
-            MaxHeight = MaxItemsBeforeScroll * (32 + 2*MarginSize);
+            MaxHeight = MaxItemsBeforeScroll * (ButtonHeight + 2*MarginSize);
 
             Depth = depth;
             List = new() { Orientation = LayoutOrientation.Vertical };
