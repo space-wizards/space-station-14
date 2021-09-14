@@ -66,7 +66,7 @@ namespace Content.Server.Explosion
 
         private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
         {
-            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
+            component.EnabledVV = component.Enabled;
         }
 
         #region Explosions
@@ -167,7 +167,7 @@ namespace Content.Server.Explosion
             if (entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 var fixture = physics.GetFixture(TriggerOnProximityComponent.FixtureID);
-                if (!remove && fixture != null)
+                if (remove && fixture != null)
                 {
                     broadphase.DestroyFixture(physics, fixture);
                 }
