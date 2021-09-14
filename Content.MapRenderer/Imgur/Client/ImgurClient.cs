@@ -16,9 +16,9 @@ namespace Content.MapRenderer.Imgur.Client
         private const string RefreshTokenUrl = "https://api.imgur.com/oauth2/token";
         private const string UploadUrl = "https://api.imgur.com/3/upload";
 
-        private const string RefreshTokenEnvKey = "REFRESH_TOKEN";
-        private const string ClientIdEnvKey = "CLIENT_ID";
-        private const string ClientSecretEnvKey = "CLIENT_SECRET";
+        private const string RefreshTokenEnvKey = "IMGUR_REFRESH_TOKEN";
+        private const string ClientIdEnvKey = "IMGUR_CLIENT_ID";
+        private const string ClientSecretEnvKey = "IMGUR_CLIENT_SECRET";
 
         private readonly Lazy<HttpClient> _clientLazy = new(CreateClient().Result);
 
