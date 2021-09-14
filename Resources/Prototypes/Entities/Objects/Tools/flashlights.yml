@@ -1,0 +1,52 @@
+- type: entity
+  name: flashlight
+  parent: BaseItem
+  id: FlashlightLantern
+  description: It lights the way to freedom.
+  components:
+  - type: Tag
+    tags:
+    - Flashlight
+  - type: HandheldLight
+  - type: ItemActions
+    actions:
+      - actionType: ToggleLight
+  - type: PowerCellSlot
+    startingCellType: PowerCellSmallHigh
+  - type: Sprite
+    sprite: Objects/Tools/flashlight.rsi
+    layers:
+      - state: flashlight
+      - state: flashlight-overlay
+        shader: unshaded
+        visible: false
+  - type: Item
+    sprite: Objects/Tools/flashlight.rsi
+    HeldPrefix: off
+  - type: PointLight
+    enabled: false
+    radius: 3
+  - type: Appearance
+    visuals:
+      - type: FlashLightVisualizer
+
+- type: entity
+  name: seclite
+  parent: FlashlightLantern
+  id: FlashlightSeclite
+  description: A robust flashlight used by security.
+  components:
+  - type: PowerCellSlot
+    startingCellType: PowerCellSmallSuper
+  - type: Sprite
+    sprite: Objects/Tools/seclite.rsi
+    layers:
+      - state: seclite
+      - state: seclite-overlay
+        shader: unshaded
+        visible: false
+  - type: Item
+    sprite: Objects/Tools/seclite.rsi
+  - type: PointLight
+    enabled: false
+    radius: 4

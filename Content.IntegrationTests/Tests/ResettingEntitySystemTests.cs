@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.Interfaces.GameTicking;
 using Content.Shared.GameTicking;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -10,15 +9,22 @@ using Robust.Shared.Reflection;
 namespace Content.IntegrationTests.Tests
 {
     [TestFixture]
-    [TestOf(typeof(IResettingEntitySystem))]
+    [TestOf(typeof(RoundRestartCleanupEvent))]
     public class ResettingEntitySystemTests : ContentIntegrationTest
     {
         [Reflect(false)]
-        private class TestResettingEntitySystem : EntitySystem, IResettingEntitySystem
+        private class TestRoundRestartCleanupEvent : EntitySystem
         {
             public bool HasBeenReset { get; set; }
 
-            public void Reset()
+            public override void Initialize()
+            {
+                base.Initialize();
+
+                SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            }
+
+            public void Reset(RoundRestartCleanupEvent ev)
             {
                 HasBeenReset = true;
             }
@@ -31,20 +37,20 @@ namespace Content.IntegrationTests.Tests
             {
                 ContentBeforeIoC = () =>
                 {
-                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestResettingEntitySystem>();
+                    IoCManager.Resolve<IEntitySystemManager>().LoadExtraSystemType<TestRoundRestartCleanupEvent>();
                 }
             });
 
             await server.WaitIdleAsync();
 
-            var gameTicker = server.ResolveDependency<IGameTicker>();
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
+            var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(gameTicker.RunLevel, Is.EqualTo(GameRunLevel.InRound));
 
-                var system = entitySystemManager.GetEntitySystem<TestResettingEntitySystem>();
+                var system = entitySystemManager.GetEntitySystem<TestRoundRestartCleanupEvent>();
 
                 system.HasBeenReset = false;
 

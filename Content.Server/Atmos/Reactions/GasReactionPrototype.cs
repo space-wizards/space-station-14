@@ -1,7 +1,6 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Content.Server.Interfaces;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -27,38 +26,38 @@ namespace Content.Server.Atmos.Reactions
     public class GasReactionPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>
         ///     Minimum gas amount requirements.
         /// </summary>
-        [field: DataField("minimumRequirements")]
+        [DataField("minimumRequirements")]
         public float[] MinimumRequirements { get; } = new float[Atmospherics.TotalNumberOfGases];
 
         /// <summary>
         ///     Maximum temperature requirement.
         /// </summary>
-        [field: DataField("maximumTemperature")]
+        [DataField("maximumTemperature")]
         public float MaximumTemperatureRequirement { get; } = float.MaxValue;
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
-        [field: DataField("minimumTemperature")]
+        [DataField("minimumTemperature")]
         public float MinimumTemperatureRequirement { get; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
-        [field: DataField("minimumEnergy")]
+        [DataField("minimumEnergy")]
         public float MinimumEnergyRequirement { get; } = 0f;
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
-        [field: DataField("priority")]
+        [DataField("priority")]
         public int Priority { get; } = int.MinValue;
 
         /// <summary>
@@ -66,13 +65,13 @@ namespace Content.Server.Atmos.Reactions
         /// </summary>
         [DataField("effects")] private List<IGasReactionEffect> _effects = new();
 
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder holder, GridTileLookupSystem gridLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
             var result = ReactionResult.NoReaction;
 
             foreach (var effect in _effects)
             {
-                result |= effect.React(mixture, holder, gridLookup);
+                result |= effect.React(mixture, holder, atmosphereSystem);
             }
 
             return result;

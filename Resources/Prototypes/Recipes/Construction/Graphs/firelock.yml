@@ -53,13 +53,13 @@
             - tag: FirelockElectronics
               name: Firelock Electronics
               icon:
-                sprite: "Constructible/Misc/module.rsi"
+                sprite: "Objects/Misc/module.rsi"
                 state: "mainboard"
 
         - to: frame1
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
               amount: 2
           conditions:
             - !type:EntityAnchored

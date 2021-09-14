@@ -1,14 +1,15 @@
 ﻿#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Body.Behavior;
-using Content.Shared.GameObjects.Components.Body;
-using Content.Shared.GameObjects.Components.Body.Mechanism;
-using Content.Shared.GameObjects.Components.Body.Part;
+using Content.Server.Body.Behavior;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Mechanism;
+using Content.Shared.Body.Part;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 
 namespace Content.IntegrationTests.Tests.Body
 {
@@ -58,42 +59,42 @@ namespace Content.IntegrationTests.Tests.Body
                 ResetRemoved();
             }
 
-            protected override void OnAddedToBody(IBody body)
+            protected override void OnAddedToBody(SharedBodyComponent body)
             {
                 base.OnAddedToBody(body);
 
                 WasAddedToBody = true;
             }
 
-            protected override void OnAddedToPart(IBodyPart part)
+            protected override void OnAddedToPart(SharedBodyPartComponent part)
             {
                 base.OnAddedToPart(part);
 
                 WasAddedToPart = true;
             }
 
-            protected override void OnAddedToPartInBody(IBody body, IBodyPart part)
+            protected override void OnAddedToPartInBody(SharedBodyComponent body, SharedBodyPartComponent part)
             {
                 base.OnAddedToPartInBody(body, part);
 
                 WasAddedToPartInBody = true;
             }
 
-            protected override void OnRemovedFromBody(IBody old)
+            protected override void OnRemovedFromBody(SharedBodyComponent old)
             {
                 base.OnRemovedFromBody(old);
 
                 WasRemovedFromBody = true;
             }
 
-            protected override void OnRemovedFromPart(IBodyPart old)
+            protected override void OnRemovedFromPart(SharedBodyPartComponent old)
             {
                 base.OnRemovedFromPart(old);
 
                 WasRemovedFromPart = true;
             }
 
-            protected override void OnRemovedFromPartInBody(IBody oldBody, IBodyPart oldPart)
+            protected override void OnRemovedFromPartInBody(SharedBodyComponent oldBody, SharedBodyPartComponent oldPart)
             {
                 base.OnRemovedFromPartInBody(oldBody, oldPart);
 
@@ -122,16 +123,15 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var mapManager = IoCManager.Resolve<IMapManager>();
 
-                var mapId = new MapId(0);
-                mapManager.CreateNewMapEntity(mapId);
+                var mapId = mapManager.CreateMap();
 
                 var entityManager = IoCManager.Resolve<IEntityManager>();
-                var human = entityManager.SpawnEntity("HumanBodyDummy", MapCoordinates.Nullspace);
+                var human = entityManager.SpawnEntity("HumanBodyDummy", new MapCoordinates(Vector2.Zero, mapId));
 
-                Assert.That(human.TryGetComponent(out IBody? body));
+                Assert.That(human.TryGetComponent(out SharedBodyComponent? body));
                 Assert.NotNull(body);
 
-                var centerPart = body!.CenterPart();
+                var centerPart = body!.CenterPart;
                 Assert.NotNull(centerPart);
 
                 Assert.That(body.TryGetSlot(centerPart!, out var centerSlot));
@@ -196,7 +196,7 @@ namespace Content.IntegrationTests.Tests.Body
 
                 behavior.ResetAll();
 
-                body.TryAddPart(centerSlot!, centerPart, true);
+                body.SetPart(centerSlot!.Id, centerPart);
 
                 Assert.That(behavior.WasAddedToBody);
                 Assert.False(behavior.WasAddedToPart);

@@ -1,4 +1,6 @@
 using System;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using Content.Server.Database;
 using Content.Shared.Administration;
@@ -6,7 +8,6 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
 
-#nullable enable
 
 namespace Content.Server.Administration.Commands
 {
@@ -51,14 +52,16 @@ namespace Content.Server.Administration.Commands
                     return;
             }
 
-            var resolvedUid = await locator.LookupIdByNameOrIdAsync(target);
-            if (resolvedUid == null)
+            var located = await locator.LookupIdByNameOrIdAsync(target);
+            if (located == null)
             {
                 shell.WriteError("Unable to find a player with that name.");
                 return;
             }
 
-            var targetUid = resolvedUid.Value;
+            var targetUid = located.UserId;
+            var targetHWid = located.LastHWId;
+            var targetAddr = located.LastAddress;
 
             if (player != null && player.UserId == targetUid)
             {
@@ -72,7 +75,29 @@ namespace Content.Server.Administration.Commands
                 expires = DateTimeOffset.Now + TimeSpan.FromMinutes(minutes);
             }
 
-            await dbMan.AddServerBanAsync(new ServerBanDef(null, targetUid, null, DateTimeOffset.Now, expires, reason, player?.UserId, null));
+            (IPAddress, int)? addrRange = null;
+            if (targetAddr != null)
+            {
+                if (targetAddr.IsIPv4MappedToIPv6)
+                    targetAddr = targetAddr.MapToIPv4();
+
+                // Ban /64 for IPv4, /32 for IPv4.
+                var cidr = targetAddr.AddressFamily == AddressFamily.InterNetworkV6 ? 64 : 32;
+                addrRange = (targetAddr, cidr);
+            }
+
+            var banDef = new ServerBanDef(
+                null,
+                targetUid,
+                addrRange,
+                targetHWid,
+                DateTimeOffset.Now,
+                expires,
+                reason,
+                player?.UserId,
+                null);
+
+            await dbMan.AddServerBanAsync(banDef);
 
             var response = new StringBuilder($"Banned {target} with reason \"{reason}\"");
 

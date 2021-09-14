@@ -1,13 +1,14 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Destructible.Thresholds;
-using Content.Server.GameObjects.Components.Destructible.Thresholds.Behaviors;
+using Content.Server.Destructible.Thresholds;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
-using Content.Shared.GameObjects.Components.Damage;
+using Content.Shared.Damage.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
 namespace Content.IntegrationTests.Tests.Destructible
@@ -30,6 +31,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
+            var sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
 
             IEntity sDestructibleEntity = null;
             IDamageableComponent sDamageableComponent = null;
@@ -49,10 +51,11 @@ namespace Content.IntegrationTests.Tests.Destructible
             await server.WaitAssertion(() =>
             {
                 var coordinates = sDestructibleEntity.Transform.Coordinates;
+                var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
 
                 Assert.DoesNotThrow(() =>
                 {
-                    Assert.True(sDamageableComponent.ChangeDamage(DamageClass.Brute, 50, true));
+                    Assert.True(sDamageableComponent.TryChangeDamage(bruteDamageGroup, 50, true));
                 });
 
                 Assert.That(sThresholdListenerComponent.ThresholdsReached.Count, Is.EqualTo(1));
@@ -68,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
                 Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
 
-                var entitiesInRange = sEntityManager.GetEntitiesInRange(coordinates, 2);
+                var entitiesInRange = IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(coordinates, 2);
                 var found = false;
 
                 foreach (var entity in entitiesInRange)

@@ -1,65 +1,65 @@
 - type: reaction
-  id: react.Ammonia
+  id: Ammonia
   reactants:
-    chem.Hydrogen:
+    Hydrogen:
       amount: 3
-    chem.Nitrogen:
+    Nitrogen:
       amount: 1
   products:
-    chem.Ammonia: 4
+    Ammonia: 4
 
 - type: reaction
-  id: react.Diethylamine
+  id: Diethylamine
   reactants:
-    chem.Ammonia:
+    Ammonia:
       amount: 1
-    chem.Ethanol:
+    Ethanol:
       amount: 1
   products:
-    chem.Diethylamine: 2
+    Diethylamine: 2
 
 - type: reaction
-  id: react.FoamingAgent
+  id: FoamingAgent
   reactants:
-    chem.Lithium:
+    Lithium:
       amount: 1
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
   products:
-    chem.FoamingAgent: 2
+    FoamingAgent: 2
 
 - type: reaction
-  id: react.PolytrinicAcid
+  id: PolytrinicAcid
   reactants:
-    chem.SulfuricAcid:
+    SulfuricAcid:
       amount: 1
-    chem.Chlorine:
+    Chlorine:
       amount: 1
-    chem.Potassium:
+    Potassium:
       amount: 1
   products:
-    chem.PolytrinicAcid: 3
+    PolytrinicAcid: 3
 
 - type: reaction
-  id: react.FluorosulfuricAcid
+  id: FluorosulfuricAcid
   reactants:
-    chem.Fluorine:
+    Fluorine:
       amount: 1
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
-    chem.Potassium:
+    Potassium:
       amount: 1
-    chem.SulfuricAcid:
+    SulfuricAcid:
       amount: 1
   products:
-    chem.FluorosulfuricAcid: 4
+    FluorosulfuricAcid: 4
 
 - type: reaction
-  id: react.PotassiumExplosion
+  id: PotassiumExplosion
   reactants:
-    chem.Water:
+    Water:
       amount: 1
-    chem.Potassium:
+    Potassium:
       amount: 1
   effects:
     - !type:ExplosionReactionEffect
@@ -72,13 +72,13 @@
       maxScale: 30 #Explosion strength stops scaling at 30 potassium + 30 water
 
 - type: reaction
-  id: react.Smoke
+  id: Smoke
   reactants:
-    chem.Phosphorus:
+    Phosphorus:
       amount: 1
-    chem.Potassium:
+    Potassium:
       amount: 1
-    chem.Sugar:
+    Sugar:
       amount: 1
   effects:
     - !type:SmokeAreaReactionEffect
@@ -90,14 +90,15 @@
       removeDelay: 0.5
       diluteReagents: false
       prototypeId: Smoke
-      sound: /Audio/Effects/smoke.ogg
+      sound:
+        path: /Audio/Effects/smoke.ogg
 
 - type: reaction
-  id: react.Foam
+  id: Foam
   reactants:
-    chem.Fluorosurfactant:
+    Fluorosurfactant:
       amount: 1
-    chem.Water:
+    Water:
       amount: 1
   effects:
     - !type:FoamAreaReactionEffect
@@ -112,15 +113,17 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
       prototypeId: Foam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
-  id: react.IronMetalFoam
+  id: IronMetalFoam
   reactants:
-    chem.Iron:
+    Iron:
       amount: 3
-    chem.FoamingAgent:
+    FoamingAgent:
       amount: 1
-    chem.FluorosulfuricAcid:
+    FluorosulfuricAcid:
       amount: 1
   effects:
     - !type:FoamAreaReactionEffect
@@ -135,15 +138,17 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: IronMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
-  id: react.AluminiumMetalFoam
+  id: AluminiumMetalFoam
   reactants:
-    chem.Aluminium:
+    Aluminium:
       amount: 3
-    chem.FoamingAgent:
+    FoamingAgent:
       amount: 1
-    chem.FluorosulfuricAcid:
+    FluorosulfuricAcid:
       amount: 1
   effects:
     - !type:FoamAreaReactionEffect
@@ -158,59 +163,101 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: AluminiumMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
-  id: react.TableSalt
+  id: TableSalt
   reactants:
-    chem.Chlorine:
+    Chlorine:
       amount: 1
-    chem.Sodium:
+    Sodium:
       amount: 1
   products:
-    chem.TableSalt: 2
+    TableSalt: 2
 
 - type: reaction
-  id: react.Thermite
+  id: Thermite
   reactants:
-    chem.Iron:
+    Iron:
       amount: 1
-    chem.Aluminium:
+    Aluminium:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.Thermite: 3
+    Thermite: 3
 
 - type: reaction
-  id: react.UnstableMutagen
+  id: UnstableMutagen
   reactants:
-    chem.Radium:
+    Radium:
       amount: 1
-    chem.Phosphorus:
+    Phosphorus:
       amount: 1
-    chem.Chlorine:
+    Chlorine:
       amount: 1
   products:
-    chem.UnstableMutagen: 3
+    UnstableMutagen: 3
 
 - type: reaction
-  id: react.Water
+  id: Water
   reactants:
-    chem.Hydrogen:
+    Hydrogen:
       amount: 1
-    chem.Oxygen:
+    Oxygen:
       amount: 1
   products:
-    chem.Water: 2
+    Water: 2
 
 - type: reaction
-  id: react.Fluorosurfactant
+  id: Oil
   reactants:
-    chem.Carbon:
+    WeldingFuel:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oil: 3
+
+- type: reaction
+  id: Fluorosurfactant
+  reactants:
+    Carbon:
       amount: 2
-    chem.Fluorine:
+    Fluorine:
       amount: 2
-    chem.SulfuricAcid:
+    SulfuricAcid:
       amount: 1
   products:
-    chem.Fluorosurfactant: 5
+    Fluorosurfactant: 5
+
+- type: reaction
+  id: Meth
+  reactants:
+    Ephedrine:
+      amount: 1
+    Carbon:
+      amount: 1
+    Iodine:
+      amount: 1
+    Phosphorus:
+     amount: 1
+  products:
+    Meth: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+
+- type: reaction
+  id: Ephedrine
+  reactants:
+    Oil:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Sugar:
+      amount: 1
+    Diethylamine:
+     amount: 1
+  products:
+    Ephedrine: 4

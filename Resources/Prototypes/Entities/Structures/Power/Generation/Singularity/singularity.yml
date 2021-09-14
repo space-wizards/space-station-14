@@ -1,0 +1,40 @@
+- type: entity
+  id: Singularity
+  name: gravitational singularity
+  description: A mesmerizing swirl of darkness that sucks in everything. If it's moving towards you, run.
+  components:
+  - type: Clickable
+  - type: AmbientSound
+    volume: -10
+    range: 14
+    sound:
+      path: /Audio/Effects/singularity.ogg
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - id: DeleteCircle
+      shape:
+        !type:PhysShapeCircle
+          radius: 0.5
+      restitution: 0.9
+      mask:
+      - AllMask
+      layer:
+      - AllMask
+  - type: Singularity
+  - type: SingularityDistortion
+  - type: RadiationPulse
+    range: 15
+    decay: false
+    dps: 1
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+    state: singularity_1
+    netsync: false
+  - type: Icon
+    sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
+    state: singularity_1
+    drawdepth: Items
+  - type: Appearance
+    visuals:
+    - type: SingularityVisualizer

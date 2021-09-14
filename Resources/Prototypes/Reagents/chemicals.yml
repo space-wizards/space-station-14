@@ -1,5 +1,5 @@
 - type: reagent
-  id: chem.Ammonia
+  id: Ammonia
   name: ammonia
   desc: An effective fertilizer which is better than what is available to the botanist initially, though it isn't as powerful as Diethylamine
   physicalDesc: pungent
@@ -13,7 +13,7 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Diethylamine
+  id: Diethylamine
   name: diethylamine
   desc: A very potent fertilizer.
   physicalDesc: strong-smelling
@@ -35,7 +35,7 @@
     - !type:Diethylamine {}
 
 - type: reagent
-  id: chem.Ethanol
+  id: Ethanol
   name: ethanol
   desc: A simple alcohol, makes you drunk if consumed, flammable.
   physicalDesc: strong-smelling
@@ -47,7 +47,7 @@
       temperatureMultiplier: 1.35
 
 - type: reagent
-  id: chem.FoamingAgent
+  id: FoamingAgent
   name: foaming agent
   desc: Makes foam such as that's required in metal foam grenades.
   physicalDesc: foamy
@@ -56,7 +56,7 @@
   meltingPoint: 7.4 # I made this up
 
 - type: reagent
-  id: chem.Glucose
+  id: Glucose
   name: glucose
   desc: A simple sugar found in many foods.
   physicalDesc: syrupy
@@ -72,7 +72,7 @@
       amount: 2
 
 - type: reagent
-  id: chem.Ice
+  id: Ice
   name: ice
   desc: Frozen water.
   physicalDesc: frosty
@@ -84,14 +84,11 @@
       amount: 1
 
 - type: reagent
-  id: chem.Nutriment
+  id: Nutriment
   name: nutriment
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
   color: "#664330"
-  metabolism:
-    - !type:DefaultFood
-      rate: 1
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 1
@@ -99,7 +96,7 @@
       amount: 0.5
 
 - type: reagent
-  id: chem.Plasma
+  id: Plasma
   name: plasma
   desc: Funky, space-magic pixie dust. You probably shouldn't eat this, but we both know you will anyways.
   physicalDesc: gaseous
@@ -111,7 +108,7 @@
       temperatureMultiplier: 1.5
 
 - type: reagent
-  id: chem.PolytrinicAcid
+  id: PolytrinicAcid
   name: polytrinic acid
   desc: An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
   physicalDesc: strong-smelling
@@ -127,7 +124,7 @@
       amount: -8
 
 - type: reagent
-  id: chem.FluorosulfuricAcid
+  id: FluorosulfuricAcid
   name: fluorosulfuric acid
   desc: An extremely corrosive chemical substance.
   physicalDesc: strong-smelling
@@ -136,7 +133,7 @@
   meltingPoint: -87
 
 - type: reagent
-  id: chem.TableSalt
+  id: TableSalt
   name: table salt
   desc: Commonly known as salt, Sodium Chloride is often used to season food or kill borers instantly.
   physicalDesc: grainy
@@ -158,7 +155,7 @@
       amount: -2
 
 - type: reagent
-  id: chem.Thermite
+  id: Thermite
   name: thermite
   desc: A mixture that becomes extremely hot when ignited, and which can burn straight through walls when applied and ignited. It'll slowly inflict burn damage to anybody dumb enough to ingest it, but can't be ignited inside inside said dumb person.
   physicalDesc: grainy
@@ -170,7 +167,7 @@
       temperatureMultiplier: 1.35
 
 - type: reagent
-  id: chem.Toxin
+  id: Toxin
   name: toxin
   desc: A Toxic chemical.
   color: "#cf3600"
@@ -178,23 +175,11 @@
   plantMetabolism:
     - !type:AdjustToxins
       amount: 10
+    - !type:AdjustHealth
+      amount: -5
 
 - type: reagent
-  id: chem.Sugar
-  name: sugar
-  desc: Sweet.
-  color: "#ffffff"
-  physicalDesc: opaque
-  plantMetabolism:
-    - !type:AdjustNutrition
-      amount: 0.1
-    - !type:AdjustWeeds
-      amount: 2
-    - !type:AdjustPests
-      amount: 2
-
-- type: reagent
-  id: chem.SulfuricAcid
+  id: SulfuricAcid
   name: sulfuric acid
   desc: A highly corrosive, oily, colorless liquid.
   physicalDesc: oily
@@ -207,10 +192,10 @@
     - !type:AdjustWeeds
       amount: -2
     - !type:AdjustHealth
-      amount: -4
+      amount: -5
 
 - type: reagent
-  id: chem.UnstableMutagen
+  id: UnstableMutagen
   name: unstable mutagen
   desc: Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
   physicalDesc: glowing
@@ -223,16 +208,13 @@
       amount: 1
 
 - type: reagent
-  id: chem.Water
+  id: Water
   name: water
   desc: A colorless liquid that humans need in order to survive.
   physicalDesc: translucent
   color: "#c0e0ff20"
   boilingPoint: 100.0
   meltingPoint: 0.0
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
   tileReactions:
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}
@@ -241,7 +223,45 @@
       amount: 1
 
 - type: reagent
-  id: chem.WeldingFuel
+  id: Meth
+  name: meth
+  desc: Methamphetamine, more commonly know as meth, is a potent stimulant, with dangerous side-effects if too much is consumed.
+  physicalDesc: translucent
+  color: "#FAFAFA"
+  boilingPoint: 212.0 #Meth vape when?
+  meltingPoint: 170.0
+
+- type: reagent
+  id: Iodine
+  name: iodine
+  desc: Commonly added to table salt as a nutrient. On its own it tastes far less pleasing.
+  physicalDesc: Dark Brown
+  color: "#BC8A00"
+  boilingPoint: 184.3
+  meltingPoint: 113.7
+
+- type: reagent
+  id: Ephedrine
+  name: ephedrine
+  desc: Increases stun resistance and movement speed, giving you hand cramps. Overdose deals toxin damage and inhibits breathing
+  physicalDesc: Bone white
+  color: "#D2FFFA"
+  boilingPoint: 255.0
+  meltingPoint: 36.0
+
+- type: reagent
+  id: Oil
+  name: oil
+  desc: Used by chefs to cook.
+  physicalDesc: oily
+  color: "#b67823"
+  boilingPoint: 300.0
+  meltingPoint: -16.0
+  tileReactions:
+    - !type:FlammableTileReaction {}
+
+- type: reagent
+  id: WeldingFuel
   name: welding fuel
   desc: Used by welders to weld.
   physicalDesc: oily
@@ -252,11 +272,10 @@
     - !type:FlammableTileReaction {}
 
 - type: reagent
-  id: chem.Fluorosurfactant
+  id: Fluorosurfactant
   name: fluorosurfactant
   desc: A perfluoronated sulfonic acid that forms a foam when mixed with water.
   physicalDesc: opaque
   color: "#9e6b38"
   boilingPoint: 190.0 # Perfluorooctanoic Acid.
   meltingPoint: 45.0
-

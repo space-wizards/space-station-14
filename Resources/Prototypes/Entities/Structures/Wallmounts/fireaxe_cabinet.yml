@@ -1,0 +1,54 @@
+﻿- type: entity
+  id: FireAxeCabinet
+  name: fire axe cabinet
+  description: There is a small label that reads \"For Emergency use only\" along with details for safe use of the axe. As if.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Structures/Wallmounts/fireaxe_cabinet.rsi
+      netsync: false
+      layers:
+      - state: cabinet
+      - state: fireaxe
+        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+        visible: true
+      - state: glass
+        map: ["enum.ItemCabinetVisualLayers.Door"]
+    - type: ItemCabinet
+      doorSound:
+        path: /Audio/Machines/machine_switch.ogg
+      whitelist:
+        tags:
+        - FireAxe
+    - type: Appearance
+      visuals:
+        - type: ItemCabinetVisualizer
+          closedState: glass
+          openState: glass-up
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: FireAxeCabinetOpen
+  parent: FireAxeCabinet
+  suffix: Open
+  components:
+  - type: ItemCabinet
+    opened: true
+
+- type: entity
+  id: FireAxeCabinetFilled
+  parent: FireAxeCabinet
+  suffix: Filled
+  components:
+    - type: ItemCabinet
+      spawnPrototype: FireAxe
+
+- type: entity
+  id: FireAxeCabinetFilledOpen
+  parent: FireAxeCabinetFilled
+  suffix: Filled, Open
+  components:
+  - type: ItemCabinet
+    opened: true

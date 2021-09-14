@@ -1,6 +1,6 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Construction.Steps;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -14,7 +14,7 @@ namespace Content.Shared.Construction
         private List<ConstructionGraphStep> _steps = new();
 
         [DataField("conditions", serverOnly: true)]
-        private List<IEdgeCondition> _conditions = new();
+        private List<IGraphCondition> _conditions = new();
 
         [DataField("completed", serverOnly: true)]
         private List<IGraphAction> _completed = new();
@@ -24,7 +24,7 @@ namespace Content.Shared.Construction
         public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
-        public IReadOnlyList<IEdgeCondition> Conditions => _conditions;
+        public IReadOnlyList<IGraphCondition> Conditions => _conditions;
 
         [ViewVariables]
         public IReadOnlyList<IGraphAction> Completed => _completed;

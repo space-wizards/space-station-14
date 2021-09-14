@@ -1,52 +1,100 @@
 - type: entity
-  id: CrateNPCGoat
-  name: goat crate
-  parent: CrateGenericonimo
+  id: CrateNPCBee
+  name: crate of bees
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - name: GoatMob_Content
-        amount: 1
+      - id: BeeMob_Content
+        amount: 8
+
 
 - type: entity
   id: CrateNPCButterflies
   name: crate of butterflies
-  parent: CrateGenericonimo
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - name: ButterflyMob_Content
-        amount: 10
+      - id: ButterflyMob_Content
+        amount: 5
 
-- type: entity
-  id: CrateNPCCorgi
-  name: corgi crate
-  parent: CrateGenericonimo
-  components:
-  - type: StorageFill
-    contents:
-      - name: CorgiMob_Content
-        amount: 1
 
 - type: entity
   id: CrateNPCCat
   name: cat crate
-  parent: CrateGenericonimo
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - name: CatMob_Content
+      - id: CatMob_Content
+        amount: 1
+
+
+- type: entity
+  id: CrateNPCChicken
+  name: chicken crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: ChickenMob_Content
+        amount: 4
+
+
+- type: entity
+  id: CrateNPCCorgi
+  name: corgi crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: CorgiMob_Content
         amount: 1
 
 - type: entity
-  id: CrateNPCSnake
-  name: snake crate
-  parent: CrateGenericonimo
+  id: CrateNPCCow
+  name: cow crate
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - name: SnakeMob_Content
-        amount: 3
+      - id: CowMob_Content
+        amount: 1
+
+
+- type: entity
+  id: CrateNPCGoat
+  name: goat crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: GoatMob_Content
+        amount: 1
+
+
+- type: entity
+  id: CrateNPCGoose
+  name: goose crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: GooseMob_Content
+        amount: 2
+
+
+- type: entity
+  id: CrateNPCGorilla
+  name: gorilla crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: GorillaMob_Content
+        amount: 1
+
 
 - type: entity
   id: CrateNPCMonkeyCube
@@ -55,15 +103,38 @@
   components:
   - type: StorageFill
     contents:
-      - name: FoodContainerMonkeyCubeBox
+      - id: MonkeyCubeBox
         amount: 1
+
 
 - type: entity
   id: CrateNPCParrot
   name: parrot crate
-  parent: CrateGenericonimo
+  parent: CrateLivestock
   components:
   - type: StorageFill
     contents:
-      - name: ParrotMob_Content
+      - id: ParrotMob_Content
+        amount: 3
+
+
+- type: entity
+  id: CrateNPCPenguin
+  name: penguin crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: PenguinMob_Content
+        amount: 2
+
+
+- type: entity
+  id: CrateNPCSnake
+  name: snake crate
+  parent: CrateLivestock
+  components:
+  - type: StorageFill
+    contents:
+      - id: SnakeMob_Content
         amount: 3

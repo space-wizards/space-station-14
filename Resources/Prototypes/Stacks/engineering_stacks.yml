@@ -1,0 +1,4 @@
+- type: stack
+  id: InflatableWall
+  name: inflatable wall
+  spawn: InflatableWallStack1

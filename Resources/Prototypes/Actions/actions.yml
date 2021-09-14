@@ -1,26 +1,12 @@
 ﻿- type: action
-  actionType: HumanScream
-  icon: Interface/Actions/scream.png
-  name: "Scream"
+  actionType: CombatMode
+  icon: Interface/Actions/harm.png
+  name: "[color=red]Combat Mode[/color]"
+  description: "Enter combat mode."
   filters:
     - human
-  behaviorType: Instant
-  behavior: !type:ScreamAction
-    cooldown: 10
-    male:
-      - /Audio/Voice/Human/malescream_1.ogg
-      - /Audio/Voice/Human/malescream_2.ogg
-      - /Audio/Voice/Human/malescream_3.ogg
-      - /Audio/Voice/Human/malescream_4.ogg
-      - /Audio/Voice/Human/malescream_5.ogg
-      - /Audio/Voice/Human/malescream_6.ogg
-    female:
-      - /Audio/Voice/Human/femalescream_1.ogg
-      - /Audio/Voice/Human/femalescream_2.ogg
-      - /Audio/Voice/Human/femalescream_3.ogg
-      - /Audio/Voice/Human/femalescream_4.ogg
-      - /Audio/Voice/Human/femalescream_5.ogg
-    wilhelm: /Audio/Voice/Human/wilhelm_scream.ogg
+  behaviorType: Toggle
+  behavior: !type:CombatMode
 
 - type: action
   actionType: Disarm
@@ -32,6 +18,38 @@
   behaviorType: TargetEntity
   repeat: true
   behavior: !type:DisarmAction { }
+
+- type: action
+  actionType: HumanScream
+  icon: Interface/Actions/scream.png
+  name: "Scream"
+  filters:
+    - human
+  behaviorType: Instant
+  behavior: !type:ScreamAction
+    cooldown: 10
+    male:
+      collection: MaleScreams
+    female:
+      collection: FemaleScreams
+    wilhelm:
+      path: /Audio/Voice/Human/wilhelm_scream.ogg
+
+- type: action
+  actionType: VoxScream
+  icon: Interface/Actions/scream.png
+  name: "Scream"
+  filters:
+    - vox
+  behaviorType: Instant
+  behavior: !type:ScreamAction
+    cooldown: 10
+    male:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    female:
+      path: /Audio/Voice/Vox/shriek1.ogg
+    wilhelm:
+      path: /Audio/Voice/Human/wilhelm_scream.ogg
 
 - type: action
   actionType: GhostBoo

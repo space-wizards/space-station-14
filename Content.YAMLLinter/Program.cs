@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
+using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
@@ -44,7 +45,10 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateClient()
         {
-            var client = StartClient();
+            var client = StartClient(new ClientContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+            });
 
             await client.WaitIdleAsync();
 
@@ -63,7 +67,11 @@ namespace Content.YAMLLinter
 
         private async Task<Dictionary<string, HashSet<ErrorNode>>> ValidateServer()
         {
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption()
+            {
+                FailureLogLevel = null,
+                CVarOverrides = { {CCVars.GameDummyTicker.Name, "true"} }
+            });
 
             await server.WaitIdleAsync();
 

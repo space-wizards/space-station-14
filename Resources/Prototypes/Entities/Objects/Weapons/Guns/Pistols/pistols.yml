@@ -31,13 +31,20 @@
     angleIncrease: 10
     angleDecay: 60
     magFillPrototype: MagazinePistol
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+    soundBoltOpen:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -160,13 +167,20 @@
     angleIncrease: 10
     angleDecay: 60
     magFillPrototype: MagazinePistol
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/pistol.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
-    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
+    soundBoltOpen:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/pistol_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/pistol_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -201,11 +215,16 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/hpistol_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/hpistol.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/hpistol_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/hpistol_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/hpistol_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -245,7 +264,8 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/silenced.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/silenced.ogg
 
 - type: entity
   name: mk 58

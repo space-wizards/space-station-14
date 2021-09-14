@@ -1,8 +1,8 @@
 ﻿using System;
+using System.Collections.Immutable;
 using System.Net;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {
@@ -11,6 +11,7 @@ namespace Content.Server.Database
         public int? Id { get; }
         public NetUserId? UserId { get; }
         public (IPAddress address, int cidrMask)? Address { get; }
+        public ImmutableArray<byte>? HWId { get; }
 
         public DateTimeOffset BanTime { get; }
         public DateTimeOffset? ExpirationTime { get; }
@@ -22,15 +23,16 @@ namespace Content.Server.Database
             int? id,
             NetUserId? userId,
             (IPAddress, int)? address,
+            ImmutableArray<byte>? hwId,
             DateTimeOffset banTime,
             DateTimeOffset? expirationTime,
             string reason,
             NetUserId? banningAdmin,
             ServerUnbanDef? unban)
         {
-            if (userId == null && address == null)
+            if (userId == null && address == null && hwId ==  null)
             {
-                throw new ArgumentException("Must have a banned user, banned address, or both.");
+                throw new ArgumentException("Must have at least one of banned user, banned address or hardware ID");
             }
 
             if (address is {} addr && addr.Item1.IsIPv4MappedToIPv6)
@@ -43,6 +45,7 @@ namespace Content.Server.Database
             Id = id;
             UserId = userId;
             Address = address;
+            HWId = hwId;
             BanTime = banTime;
             ExpirationTime = expirationTime;
             Reason = reason;

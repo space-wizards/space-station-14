@@ -1,10 +1,9 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Roles
 {
@@ -33,7 +32,7 @@ namespace Content.Shared.Roles
         private Dictionary<string, string> _inHand = new(0);
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         public string GetGear(Slots slot, HumanoidCharacterProfile? profile)

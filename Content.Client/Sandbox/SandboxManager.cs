@@ -1,9 +1,9 @@
-﻿using System;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.UserInterface;
-using Content.Shared.GameObjects.EntitySystems;
+using System;
+using Content.Client.HUD;
+using Content.Client.Markers;
 using Content.Shared.Input;
 using Content.Shared.Sandbox;
+using Content.Shared.SubFloor;
 using Robust.Client.Console;
 using Robust.Client.Debugging;
 using Robust.Client.Graphics;
@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Sandbox
 {
@@ -45,48 +46,52 @@ namespace Content.Client.Sandbox
             Resizable = false;
             _gameHud = IoCManager.Resolve<IGameHud>();
 
-            Title = "Sandbox Panel";
+            Title = Loc.GetString("sandbox-window-title");
 
-            var vBox = new VBoxContainer { SeparationOverride = 4 };
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 4
+            };
             Contents.AddChild(vBox);
 
-            RespawnButton = new Button { Text = Loc.GetString("Respawn") };
+            RespawnButton = new Button { Text = Loc.GetString("sandbox-window-respawn-button") };
             vBox.AddChild(RespawnButton);
 
-            SpawnEntitiesButton = new Button { Text = Loc.GetString("Spawn Entities") };
+            SpawnEntitiesButton = new Button { Text = Loc.GetString("sandbox-window-spawn-entities-button") };
             vBox.AddChild(SpawnEntitiesButton);
 
-            SpawnTilesButton = new Button { Text = Loc.GetString("Spawn Tiles") };
+            SpawnTilesButton = new Button { Text = Loc.GetString("sandbox-window-spawn-tiles-button") };
             vBox.AddChild(SpawnTilesButton);
 
-            GiveFullAccessButton = new Button { Text = Loc.GetString("Grant Full Access") };
+            GiveFullAccessButton = new Button { Text = Loc.GetString("sandbox-window-grant-full-access-button") };
             vBox.AddChild(GiveFullAccessButton);
 
-            GiveAghostButton = new Button { Text = Loc.GetString("Ghost") };
+            GiveAghostButton = new Button { Text = Loc.GetString("sandbox-window-ghost-button") };
             vBox.AddChild(GiveAghostButton);
 
-            ToggleLightButton = new Button { Text = Loc.GetString("Toggle Lights"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().Enabled };
+            ToggleLightButton = new Button { Text = Loc.GetString("sandbox-window-toggle-lights-button"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().Enabled };
             vBox.AddChild(ToggleLightButton);
 
-            ToggleFovButton = new Button { Text = Loc.GetString("Toggle FOV"), ToggleMode = true, Pressed = !IoCManager.Resolve<IEyeManager>().CurrentEye.DrawFov };
+            ToggleFovButton = new Button { Text = Loc.GetString("sandbox-window-toggle-fov-button"), ToggleMode = true, Pressed = !IoCManager.Resolve<IEyeManager>().CurrentEye.DrawFov };
             vBox.AddChild(ToggleFovButton);
 
-            ToggleShadowsButton = new Button { Text = Loc.GetString("Toggle Shadows"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().DrawShadows };
+            ToggleShadowsButton = new Button { Text = Loc.GetString("sandbox-window-toggle-shadows-button"), ToggleMode = true, Pressed = !IoCManager.Resolve<ILightManager>().DrawShadows };
             vBox.AddChild(ToggleShadowsButton);
 
-            ToggleSubfloorButton = new Button { Text = Loc.GetString("Toggle Subfloor"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().ShowAll };
+            ToggleSubfloorButton = new Button { Text = Loc.GetString("sandbox-window-toggle-subfloor-button"), ToggleMode = true, Pressed = EntitySystem.Get<SubFloorHideSystem>().ShowAll };
             vBox.AddChild(ToggleSubfloorButton);
 
-            SuicideButton = new Button { Text = Loc.GetString("Suicide") };
+            SuicideButton = new Button { Text = Loc.GetString("sandbox-window-toggle-suicide-button") };
             vBox.AddChild(SuicideButton);
 
-            ShowMarkersButton = new Button { Text = Loc.GetString("Show Spawns"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
+            ShowMarkersButton = new Button { Text = Loc.GetString("sandbox-window-show-spawns-button"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("Show BB"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
+            ShowBbButton = new Button { Text = Loc.GetString("sandbox-window-show-bb-button"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
             vBox.AddChild(ShowBbButton);
 
-            MachineLinkingButton = new Button { Text = Loc.GetString("Link machines"), ToggleMode = true };
+            MachineLinkingButton = new Button { Text = Loc.GetString("sandbox-window-link-machines-button"), ToggleMode = true };
             vBox.AddChild(MachineLinkingButton);
         }
 
@@ -127,16 +132,15 @@ namespace Content.Client.Sandbox
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgSandboxStatus>(nameof(MsgSandboxStatus),
-                message => SetAllowed(message.SandboxAllowed));
+            _netManager.RegisterNetMessage<MsgSandboxStatus>(message => SetAllowed(message.SandboxAllowed));
 
-            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>(nameof(MsgSandboxGiveAccess));
+            _netManager.RegisterNetMessage<MsgSandboxGiveAccess>();
 
-            _netManager.RegisterNetMessage<MsgSandboxRespawn>(nameof(MsgSandboxRespawn));
+            _netManager.RegisterNetMessage<MsgSandboxRespawn>();
 
-            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>(nameof(MsgSandboxGiveAghost));
+            _netManager.RegisterNetMessage<MsgSandboxGiveAghost>();
 
-            _netManager.RegisterNetMessage<MsgSandboxSuicide>(nameof(MsgSandboxSuicide));
+            _netManager.RegisterNetMessage<MsgSandboxSuicide>();
 
             _gameHud.SandboxButtonToggled = SandboxButtonPressed;
 

@@ -1,7 +1,4 @@
-﻿#nullable enable
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,25 +10,20 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class DieCondition : IObjectiveCondition
     {
-        private Mind? _mind;
+        private Mind.Mind? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             return new DieCondition {_mind = mind};
         }
 
-        public string Title => Loc.GetString("Die a glorius death");
+        public string Title => Loc.GetString("objective-condition-die-title");
 
-        public string Description => Loc.GetString("Die.");
+        public string Description => Loc.GetString("objective-condition-die-description");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Mobs/Ghosts/ghost_human.rsi"), "icon");
 
-        public float Progress => _mind?
-            .OwnedEntity?
-            .GetComponentOrNull<IMobStateComponent>()?
-            .IsDead() ?? false
-            ? 0f
-            : 1f;
+        public float Progress => (_mind?.CharacterDeadIC ?? true) ? 1f : 0f;
 
         public float Difficulty => 1f;
 

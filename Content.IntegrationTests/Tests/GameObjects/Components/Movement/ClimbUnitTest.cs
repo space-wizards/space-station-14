@@ -1,7 +1,7 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Climbing.Components;
 using Content.Shared.Physics;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -29,6 +29,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
   id: TableDummy
   components:
   - type: Climbable
+  - type: Physics
 ";
 
         [Test]

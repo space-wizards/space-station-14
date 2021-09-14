@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components.Chemistry;
+﻿using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

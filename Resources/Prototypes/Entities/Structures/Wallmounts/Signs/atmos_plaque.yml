@@ -1,0 +1,15 @@
+﻿- type: entity
+  parent: BaseSign
+  id: PlaqueAtmos
+  name: atmos plaque
+  components:
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+      layer:
+      - MobImpassable
+  - type: Sprite
+    state: atmosplaque
+  - type: AtmosPlaque

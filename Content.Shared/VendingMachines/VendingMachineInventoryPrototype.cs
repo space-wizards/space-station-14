@@ -1,4 +1,3 @@
-﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
@@ -12,22 +11,19 @@ namespace Content.Shared.VendingMachines
     public class VendingMachineInventoryPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [field: DataField("description")]
-        public string Description { get; } = string.Empty;
-
-        [field: DataField("animationDuration")]
+        [DataField("animationDuration")]
         public double AnimationDuration { get; }
 
-        [field: DataField("spriteName")]
+        [DataField("spriteName")]
         public string SpriteName { get; } = string.Empty;
 
-        [field: DataField("startingInventory")]
+        [DataField("startingInventory")]
         public Dictionary<string, uint> StartingInventory { get; } = new();
     }
 }
