@@ -15,7 +15,7 @@
     size: 10
   - type: SolutionContainerManager
     solutions:
-      fireExtinguisher:
+      spray:
         maxVol: 100
         reagents:
         - ReagentId: Water
