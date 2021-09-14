@@ -48730,4 +48730,3 @@ entities:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
 ...
-
