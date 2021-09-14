@@ -13,10 +13,17 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("solution")]
         public string? Solution;
 
+        /// <summary>
+        /// If there is a SpillableComponent on IEntity owner use it to create a puddle/smear.
+        /// Or whatever solution is specified in the behavior itself.
+        /// If none are available do nothing.
+        /// </summary>
+        /// <param name="owner">Entity on which behavior is executed</param>
+        /// <param name="system">system calling the behavior</param>
         public void Execute(IEntity owner, DestructibleSystem system)
         {
-            if (!EntitySystem.TryGet(out SolutionContainerSystem? solutionContainerSystem))
-                return;
+            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
+
 
             if (owner.TryGetComponent(out SpillableComponent? spillableComponent) &&
                 solutionContainerSystem.TryGetSolution(owner.Uid, spillableComponent.SolutionName,
@@ -25,9 +32,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 compSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
             }
             else if (Solution != null &&
-                     solutionContainerSystem.TryGetSolution(owner.Uid, Solution, out var thresholdSolution))
+                     solutionContainerSystem.TryGetSolution(owner.Uid, Solution, out var behaviorSolution))
             {
-                thresholdSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+                behaviorSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
             }
         }
     }
