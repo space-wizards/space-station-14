@@ -1,1 +1,29 @@
-{"version":1,"size":{"x":32,"y":32},"license":"CC-BY-SA-3.0","copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi","states":[{"name":"chemg","directions":1,"delays":[[1]]},{"name":"chemg_armed","directions":1,"delays":[[0.1,0.2]]},{"name":"chemg_ass","directions":1,"delays":[[1]]},{"name":"chemg_locked","directions":1,"delays":[[1]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "chemg"
+    },
+    {
+      "name": "chemg_armed",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "chemg_ass",
+    },
+    {
+      "name": "chemg_locked",
+    }
+  ]
+}

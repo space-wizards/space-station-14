@@ -1,6 +1,8 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States;
-using Content.Server.GameObjects.Components.Chemistry;
+using Content.Server.Nutrition.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
 {
@@ -10,14 +12,16 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || target.Deleted || !target.TryGetComponent(out SolutionContainerComponent? drink))
+            if (target == null
+                || target.Deleted
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;
             }
 
             var nutritionValue = 0;
 
-            foreach (var reagent in drink.ReagentList)
+            foreach (var reagent in drink.Contents)
             {
                 // TODO
                 nutritionValue += (reagent.Quantity * 30).Int();

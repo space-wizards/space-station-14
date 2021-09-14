@@ -1,0 +1,8 @@
+- type: vendingMachineInventory
+  id: NanoMedPlusInventory
+  name: NanoMed Plus
+  animationDuration: 1.8
+  spriteName: medical
+  startingInventory:
+    Brutepack: 5
+    Ointment: 5

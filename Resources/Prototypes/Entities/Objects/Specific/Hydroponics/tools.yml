@@ -7,6 +7,7 @@
   - type: Tag
     tags:
     - Hoe
+    - BotanyHoe
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hoe.rsi
     state: icon
@@ -14,6 +15,23 @@
   - type: MeleeWeapon
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+
+- type: entity
+  name: plant clippers
+  parent: BaseItem
+  id: HydroponicsToolClippers
+  description: A tool used to take samples from plants.
+  components:
+  - type: Tag
+    tags:
+    - PlantSampleTaker
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/clippers.rsi
 
 - type: entity
   name: scythe
@@ -29,9 +47,12 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
-  - type: Item
+  - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
-
+    size: 20
+    Slots:
+    - back
+    
 - type: entity
   name: hatchet
   parent: BaseItem
@@ -40,6 +61,7 @@
   components:
   - type: Tag
     tags:
+    - BotanyHatchet
     - BotanySharp
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
@@ -58,6 +80,7 @@
   - type: Tag
     tags:
     - Shovel
+    - BotanyShovel
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/spade.rsi
     state: icon

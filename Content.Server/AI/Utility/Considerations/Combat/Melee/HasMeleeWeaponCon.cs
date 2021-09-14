@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Inventory;
-using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.Weapon.Melee.Components;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {

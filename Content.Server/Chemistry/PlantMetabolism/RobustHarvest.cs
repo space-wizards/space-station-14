@@ -1,6 +1,5 @@
-﻿#nullable enable
-using Content.Server.GameObjects.Components.Botany;
-using Content.Shared.Interfaces.Chemistry;
+﻿using Content.Server.Botany.Components;
+using Content.Shared.Botany;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

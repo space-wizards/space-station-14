@@ -4,9 +4,19 @@
   id: SimpleMobBase
   suffix: AI
   components:
-  - type: Tag
-    tags:
-    - Teleportable
+  - type: Reactive
+    reactions:
+      - !type:ExtinguishReaction
+        touch: true
+        reagents:
+          - Water
+      - !type:FlammableReaction
+        touch: true
+        reagents:
+          - WeldingFuel
+          - Thermite
+          - Plasma
+          - Ethanol
   - type: UtilityAI
     behaviorSets:
     - Clothing
@@ -24,8 +34,8 @@
   - type: MovedByPressure
   - type: Barotrauma
   - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/hit_kick.ogg
-  - type: InteractionOutline
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -33,10 +43,10 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Dynamic
-    mass: 50
     fixtures:
     - shape:
         !type:PhysShapeAabb {}
+      mass: 50
       mask:
       - Impassable
 #      - MobImpassable Turns these off for now since humans don't have collisions either.
@@ -44,6 +54,7 @@
       - SmallImpassable
       layer:
       - MobImpassable
+  - type: SolutionContainerManager
   - type: Bloodstream
     max_volume: 100
   - type: Damageable
@@ -58,7 +69,7 @@
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000

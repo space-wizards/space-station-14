@@ -1,7 +1,7 @@
 - type: entity
+  abstract: true
   parent: Clothing
   id: ClothingBeltBase
-  abstract: true
   components:
   - type: Sprite
     state: icon
@@ -9,3 +9,5 @@
     Slots: [belt]
     size: 50
     QuickEquip: false
+    EquipSound:
+      path: /Audio/Items/belt_equip.ogg

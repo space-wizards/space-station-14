@@ -1,6 +1,6 @@
 ﻿using System.IO;
-using Content.Shared.Prototypes;
-using Content.Shared.Utility;
+using Content.Shared.Dataset;
+using Content.Shared.Random.Helpers;
 using NUnit.Framework;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
@@ -26,6 +26,7 @@ namespace Content.Tests.Shared.Utility
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
 
             prototypeManager.LoadFromStream(new StringReader(Prototypes));
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Eui;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Reflection;
@@ -17,9 +17,9 @@ namespace Content.Client.Eui
 
         public void Initialize()
         {
-            _net.RegisterNetMessage<MsgEuiCtl>(MsgEuiCtl.NAME, RxMsgCtl);
-            _net.RegisterNetMessage<MsgEuiState>(MsgEuiState.NAME, RxMsgState);
-            _net.RegisterNetMessage<MsgEuiMessage>(MsgEuiMessage.NAME, RxMsgMessage);
+            _net.RegisterNetMessage<MsgEuiCtl>(RxMsgCtl);
+            _net.RegisterNetMessage<MsgEuiState>(RxMsgState);
+            _net.RegisterNetMessage<MsgEuiMessage>(RxMsgMessage);
         }
 
         private void RxMsgMessage(MsgEuiMessage message)

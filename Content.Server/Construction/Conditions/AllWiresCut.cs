@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -13,7 +14,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class AllWiresCut : IEdgeCondition
+    public class AllWiresCut : IGraphCondition
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 

@@ -1,7 +1,6 @@
-﻿#nullable enable
 using System;
+using Content.Server.Containers;
 using Content.Server.GameObjects;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -19,11 +18,11 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class StealCondition : IObjectiveCondition, ISerializationHooks
     {
-        private Mind? _mind;
+        private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
         [DataField("amount")] private int _amount = 1;
 
-        public IObjectiveCondition GetAssigned(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             return new StealCondition
             {
@@ -46,9 +45,11 @@ namespace Content.Server.Objectives.Conditions
                 ? prototype.Name
                 : "[CANNOT FIND NAME]";
 
-        public string Title => Loc.GetString("Steal {0}{1}", _amount > 1 ? $"{_amount}x " : "", Loc.GetString(PrototypeName));
+        public string Title => Loc.GetString("objective-condition-steal-title",
+                                             ("amount", _amount > 1 ? $"{_amount}x " : string.Empty),
+                                             ("itemName", Loc.GetString(PrototypeName)));
 
-        public string Description => Loc.GetString("We need you to steal {0}. Don't get caught.", Loc.GetString(PrototypeName));
+        public string Description => Loc.GetString("objective-condition-steal-description",("itemName", Loc.GetString(PrototypeName)));
 
         public SpriteSpecifier Icon => new SpriteSpecifier.EntityPrototype(_prototypeId);
 

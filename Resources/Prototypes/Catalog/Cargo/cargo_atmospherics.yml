@@ -1,83 +1,81 @@
-#requires localisation
-
 - type: cargoProduct
   name: "air canister"
-  id: atmosphericsair
+  id: AtmosphericsAir
   description: "Air canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "oxygen canister"
-  id: atmosphericsoxygen
+  id: AtmosphericsOxygen
   description: "Oxygen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "nitrogen canister"
-  id: atmosphericsnitrogen
+  id: AtmosphericsNitrogen
   description: "Nitrogen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "carbon dioxide canister"
-  id: atmosphericscarbondioxide
+  id: AtmosphericsCarbonDioxide
   description: "Carbon dioxide canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "water vapor canister"
-  id: atmosphericswatervapor
+  id: AtmosphericsWaterVapor
   description: "Water vapor canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: water_vapor
   product: WaterVaporCanister
   cost: 1000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "plasma canister"
-  id: atmosphericsplasma
+  id: AtmosphericsPlasma
   description: "Plasma canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
   cost: 2000
   category: Atmospherics
   group: market
-  
+
 - type: cargoProduct
   name: "tritium canister"
-  id: atmosphericstritium
+  id: AtmosphericsTritium
   description: "Tritium canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: green
   product: TritiumCanister
   cost: 2000

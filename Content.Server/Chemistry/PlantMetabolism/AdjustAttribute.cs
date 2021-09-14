@@ -1,7 +1,6 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
-using Content.Server.GameObjects.Components.Botany;
-using Content.Shared.Interfaces.Chemistry;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Server.Botany.Components;
+using Content.Shared.Botany;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;

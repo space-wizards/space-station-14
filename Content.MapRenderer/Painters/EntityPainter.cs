@@ -2,7 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.GameObjects.Components;
+using Content.Shared.SubFloor;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Server.GameObjects;

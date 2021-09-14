@@ -13,7 +13,7 @@ namespace Content.MapRenderer.Painters
 {
     public class TilePainter
     {
-        private const string TilesPath = "/Textures/Constructible/Tiles/";
+        private const string TilesPath = "/Textures/Tiles/";
         private const int TileImageSize = 32;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;

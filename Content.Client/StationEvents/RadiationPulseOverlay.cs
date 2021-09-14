@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components.StationEvents;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -107,7 +106,7 @@ namespace Content.Client.StationEvents
             _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
@@ -124,7 +123,7 @@ namespace Content.Client.StationEvents
                 .EntityQuery<RadiationPulseComponent>(true)
                 .ToList();
 
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
@@ -134,7 +133,7 @@ namespace Content.Client.StationEvents
                     if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
 
                     // TODO: Check if viewport intersects circle
-                    var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
+                    var circlePosition = args.ViewportControl!.WorldToScreen(pulse.Owner.Transform.WorldPosition);
 
                     // change to worldhandle when implemented
                     screenHandle.DrawCircle(

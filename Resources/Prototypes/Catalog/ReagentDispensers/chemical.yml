@@ -1,0 +1,29 @@
+- type: reagentDispenserInventory
+  id: ChemDispenserStandardInventory
+  inventory:
+  - Aluminium
+  - Carbon
+  - Chlorine
+  - Copper
+  - Ethanol
+  - Fluorine
+  - Glucose
+  - Hydrogen
+  - Iodine
+  - Iron
+  - Lithium
+  - Mercury
+  - Nitrogen
+  - Nutriment
+  - Oxygen
+  - Phosphorus
+  - Potassium
+  - Radium
+  - Silicon
+  - Sodium
+  - Sugar
+  - Sulfur
+  - SulfuricAcid
+  - Uranium
+  - Water
+

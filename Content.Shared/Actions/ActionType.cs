@@ -1,4 +1,3 @@
-﻿#nullable enable
 namespace Content.Shared.Actions
 {
     /// <summary>
@@ -8,6 +7,8 @@ namespace Content.Shared.Actions
     {
         Error,
         HumanScream,
+        VoxScream,
+        CombatMode,
         Disarm,
         GhostBoo,
         DebugInstant,
@@ -15,7 +16,8 @@ namespace Content.Shared.Actions
         DebugTargetPoint,
         DebugTargetPointRepeat,
         DebugTargetEntity,
-        DebugTargetEntityRepeat
+        DebugTargetEntityRepeat,
+        SpellPie
     }
 
     /// <summary>

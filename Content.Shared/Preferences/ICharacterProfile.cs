@@ -1,4 +1,5 @@
-#nullable enable
+using Content.Shared.CharacterAppearance;
+
 
 namespace Content.Shared.Preferences
 {

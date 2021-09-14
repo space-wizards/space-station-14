@@ -8,21 +8,47 @@
   components:
   - type: Tag
     tags:
-    - Teleportable
+    - CanPilot
     - FootstepSound
+  - type: Reactive
+    reactions:
+    - !type:ExtinguishReaction
+      touch: true
+      reagents:
+      - Water
+    - !type:FlammableReaction
+      touch: true
+      reagents:
+      - WeldingFuel
+      - Thermite
+      - Plasma
+      - Ethanol
+      - Oil
+    - !type:WashCreamPieReaction
+      touch: true
+      reagents:
+      - Water
+      - SpaceCleaner
   - type: Flashable
   - type: Hands
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
+    damageType: Blunt
   - type: DamageOnHighSpeedImpact
-    soundHit: /Audio/Effects/hit_kick.ogg
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
   - type: Thirst
   # Organs
-  - type: SolutionContainer
-    maxVol: 250
-    caps: Injectable, Drawable
+  - type: SolutionContainerManager
+    solutions:
+      bloodstream:
+        maxVol: 250
+  - type: InjectableSolution
+    solution: bloodstream
+  - type: DrawableSolution
+    solution: bloodstream
   - type: Bloodstream
     max_volume: 100
   # StatusEffects
@@ -115,27 +141,31 @@
       sprite: Mobs/Customization/human_hair.rsi
     - map: [ "enum.Slots.MASK" ]
     - map: [ "enum.Slots.HEAD" ]
+    - map: [ "enum.Slots.POCKET1" ]
+    - map: [ "enum.Slots.POCKET2" ]
   - type: Physics
     bodyType: KinematicController
-    mass: 70
     fixtures: # TODO: This needs a second fixture just for mob collisions.
     - shape:
         !type:PhysShapeCircle
         radius: 0.35
+      mass: 70
       restitution: 0.0
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SmallImpassable
       layer:
       - Opaque
-      - MobImpassable
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
     canResistFire: true
   - type: Temperature
+    heatDamageType: Heat
     heatDamageThreshold: 360
+    coldDamageType: Cold
     coldDamageThreshold: 260
     currentTemperature: 310.15
     specificHeat: 42
@@ -144,10 +174,9 @@
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
-    centerSlot: torso
   - type: Damageable
     damageContainer: biologicalDamageContainer
-  - type: Metabolism
+  - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -170,7 +199,7 @@
     thresholds:
     - trigger:
         !type:DamageTypeTrigger
-        type: Blunt
+        damageType: Blunt
         damage: 400
       behaviors:
       - !type:GibBehavior { }
@@ -186,6 +215,7 @@
       fireStackAlternateState: 3
     - type: CreamPiedVisualizer
       state: creampie_human
+    - type: HandsVisualizer
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -212,6 +242,10 @@
     safe: false
   - type: Speech
   - type: Emoting
+  - type: Grammar
+    attributes:
+      proper: true
+  - type: StandingState
 
 - type: entity
   save: false
@@ -228,6 +262,7 @@
     - type: Sprite
       netsync: false
       drawdepth: Mobs
+      noRot: true
       # TODO BODY Turn these into individual body parts?
       layers:
       - map: ["enum.HumanoidVisualLayers.Chest"]
@@ -296,27 +331,29 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: ["enum.Slots.MASK"]
       - map: ["enum.Slots.HEAD"]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
       - map: ["hand-left"]
       - map: ["hand-right"]
     - type: Physics
       bodyType: Dynamic
-      mass: 85
       fixtures:
       - shape:
           !type:PhysShapeAabb
             bounds: "-0.35,-0.35,0.35,0.35"
+        mass: 70
+        restitution: 0.0
         mask:
         - Impassable
         - MobImpassable
         - VaultImpassable
         - SmallImpassable
         layer:
-        - MobImpassable
+        - Opaque
     - type: HumanoidAppearance
     - type: Body
       template: HumanoidTemplate
       preset: HumanPreset
-      centerSlot: torso
     - type: Damageable
       damageContainer: biologicalDamageContainer
     - type: MobState

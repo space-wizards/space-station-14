@@ -1,0 +1,472 @@
+- type: entity
+  parent: BaseItem
+  id: ProduceBase
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+  - type: Sprite
+    netsync: false
+    state: produce
+  - type: Produce
+  - type: Extractable
+    extractableSolution: food
+
+- type: entity
+  name: wheat bushel
+  description: Sigh... wheat... a-grain?
+  id: WheatBushel
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/wheat.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Flour
+          Quantity: 10
+  - type: Produce
+    seed: wheat
+
+- type: entity
+  name: oat bushel
+  description: Eat oats, do squats.
+  id: OatBushel
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/oat.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Oats
+          Quantity: 10
+  - type: Produce
+    seed: oat
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: MilkOat
+        Quantity: 5
+
+- type: entity
+  name: sugarcane
+  description: Sickly sweet.
+  id: Sugarcane
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/sugarcane.rsi
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Glucose
+          Quantity: 10
+  - type: Produce
+    seed: sugarcane
+
+- type: entity
+  name: tower-cap log
+  description: It's better than bad, it's good!
+  id: Log
+  parent: ProduceBase
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/towercap.rsi
+  - type: SolutionContainerManager
+  - type: MeleeWeapon
+  - type: Produce
+    seed: towercap
+  - type: Log
+
+- type: entity
+  name: banana
+  parent: ProduceBase
+  id: FoodBanana
+  description: Rich in potassium.
+  components:
+  - type: Food
+    trash: TrashBananaPeel
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+  - type: Produce
+    seed: banana
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuiceBanana
+        Quantity: 10
+
+- type: entity
+  name: banana peel
+  parent: BaseItem
+  id: TrashBananaPeel
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    HeldPrefix: peel
+  - type: Slippery
+    intersectPercentage: 0.2
+  - type: CollisionWake
+    enabled: false
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      id: "slips"
+      hard: false
+      layer:
+        - SmallImpassable
+    - shape:
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+        - SmallImpassable
+
+- type: entity
+  name: carrot
+  parent: ProduceBase
+  id: FoodCarrot
+  description: It's good for the eyes!
+  components:
+  - type: Tag
+    tags:
+    - Carrot
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/carrot.rsi
+  - type: Produce
+    seed: carrots
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuiceCarrot
+        Quantity: 10
+
+- type: entity
+  name: lemon
+  parent: ProduceBase
+  id: FoodLemon
+  description: When life gives you lemons, be grateful they aren't limes.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/lemon.rsi
+  - type: Produce
+    seed: lemon
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuiceLime
+        Quantity: 10
+
+- type: entity
+  name: pineapple
+  parent: ProduceBase
+  id: FoodPineapple
+  description: Mmm, tropical.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
+  - type: Produce
+    seed: pineapple
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 10
+  - type: SliceableFood
+    count: 5
+    slice: FoodPineappleSlice
+
+- type: entity
+  name: potato
+  parent: ProduceBase
+  id: FoodPotato
+  description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/potato.rsi
+  - type: Produce
+    seed: potato
+
+- type: entity
+  name: tomato
+  parent: ProduceBase
+  id: FoodTomato
+  description: I say to-mah-to, you say tom-mae-to.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tomato.rsi
+  - type: Produce
+    seed: tomato
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuiceTomato
+        Quantity: 10
+  - type: DamageOnLand
+    amount: 1
+  - type: DamageOtherOnHit
+    amount: 1
+  - type: Damageable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 1
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PuddleTomato:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  name: tomato
+  id: PuddleTomato
+  parent: PuddleBase
+  description: Splat.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/tomato.rsi
+    state: puddle-0
+  - type: Puddle
+    variants: 3
+
+- type: entity
+  name: eggplant
+  parent: ProduceBase
+  id: FoodEggplant
+  description: Maybe there's a chicken inside?
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/eggplant.rsi
+  - type: Produce
+    seed: eggplant
+
+- type: entity
+  name: apple
+  parent: ProduceBase
+  id: FoodApple
+  description: It's a little piece of Eden.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/apple.rsi
+  - type: Produce
+    seed: apple
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuiceApple
+        Quantity: 10
+
+- type: entity
+  name: ear of corn
+  parent: ProduceBase
+  id: FoodCorn
+  description: Needs some butter! And some cooking...
+  components:
+  - type: Food
+    trash: FoodCornTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/corn.rsi
+  - type: Produce
+    seed: corn
+
+- type: entity
+  name: corn cob
+  parent: BaseItem
+  id: FoodCornTrash
+  description: Not a dang kernel left.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/corn.rsi
+    state: cob
+    netsync: false
+  - type: Item
+    size: 1
+
+- type: entity
+  name: onion
+  parent: ProduceBase
+  id: FoodOnion
+  description: Nothing to cry over.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion.rsi
+  - type: Produce
+    seed: onion
+  - type: SliceableFood
+    count: 5
+    slice: FoodOnionSlice
+
+- type: entity
+  name: red onion
+  parent: ProduceBase
+  id: FoodOnionRed
+  description: Purple despite the name.
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion_red.rsi
+  - type: Produce
+    seed: onionred
+  - type: SliceableFood
+    count: 4
+    slice: FoodOnionRedSlice
+
+- type: entity
+  name: chanterelle cluster
+  parent: ProduceBase
+  id: FoodMushroom
+  description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/chanterelle.rsi
+  - type: Produce
+    seed: chanterelle
+
+# Slices
+
+- type: entity
+  parent: BaseItem
+  id: ProduceSliceBase
+  abstract: true
+  components:
+  - type: Food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+  - type: Sprite
+    netsync: false
+    state: slice
+  - type: Extractable
+    extractableSolution: food
+
+- type: entity
+  name: pineapple slice
+  parent: ProduceSliceBase
+  id: FoodPineappleSlice
+  description: Mmm, tropical.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/pineapple.rsi
+  - type: Extractable
+    result:
+      reagents:
+      - ReagentId: JuicePineapple
+        Quantity: 2
+
+- type: entity
+  name: onion slice
+  parent: ProduceSliceBase
+  id: FoodOnionSlice
+  description: Nothing to cry over.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion.rsi
+
+- type: entity
+  name: red onion slice
+  parent: ProduceSliceBase
+  id: FoodOnionRedSlice
+  description: Purple despite the name.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/onion_red.rsi

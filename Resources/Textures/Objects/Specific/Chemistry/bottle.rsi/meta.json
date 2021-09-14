@@ -1,1 +1,169 @@
-{"version":1,"size":{"x":32,"y":32},"license":"CC-BY-SA-3.0","copyright":"Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi","states":[{"name":"bottle","directions":1,"delays":[[1]]},{"name":"bottle-1","directions":1,"delays":[[1]]},{"name":"bottle-2","directions":1,"delays":[[1]]},{"name":"bottle-3","directions":1,"delays":[[1]]},{"name":"bottle-4","directions":1,"delays":[[1]]},{"name":"bottle1","directions":1,"delays":[[1]]},{"name":"bottle10","directions":1,"delays":[[1]]},{"name":"bottle11","directions":1,"delays":[[1]]},{"name":"bottle12","directions":1,"delays":[[1]]},{"name":"bottle13","directions":1,"delays":[[1]]},{"name":"bottle14","directions":1,"delays":[[1]]},{"name":"bottle15","directions":1,"delays":[[1]]},{"name":"bottle16","directions":1,"delays":[[1]]},{"name":"bottle17","directions":1,"delays":[[1]]},{"name":"bottle18","directions":1,"delays":[[1]]},{"name":"bottle19","directions":1,"delays":[[1]]},{"name":"bottle2","directions":1,"delays":[[1]]},{"name":"bottle20","directions":1,"delays":[[1]]},{"name":"bottle3","directions":1,"delays":[[1]]},{"name":"bottle4","directions":1,"delays":[[1]]},{"name":"bottle5","directions":1,"delays":[[1]]},{"name":"bottle6","directions":1,"delays":[[1]]},{"name":"bottle7","directions":1,"delays":[[1]]},{"name":"bottle8","directions":1,"delays":[[1]]},{"name":"bottle9","directions":1,"delays":[[1]]},{"name":"lid_bottle","directions":1,"delays":[[1]]}, {"name": "bottle-1-1", "delays": [[1.0]]}, {"name": "bottle-1-2", "delays": [[1.0]]}, {"name": "bottle-1-3", "delays": [[1.0]]}, {"name": "bottle-1-4", "delays": [[1.0]]}, {"name": "bottle-1-5", "delays": [[1.0]]}, {"name": "bottle-1-6", "delays": [[1.0]]}, {"name": "bottle-2-1", "delays": [[1.0]]}, {"name": "bottle-2-2", "delays": [[1.0]]}, {"name": "bottle-2-3", "delays": [[1.0]]}, {"name": "bottle-2-4", "delays": [[1.0]]}, {"name": "bottle-2-5", "delays": [[1.0]]}, {"name": "bottle-2-6", "delays": [[1.0]]}, {"name": "bottle-3-1", "delays": [[1.0]]}, {"name": "bottle-3-2", "delays": [[1.0]]}, {"name": "bottle-3-3", "delays": [[1.0]]}, {"name": "bottle-3-4", "delays": [[1.0]]}, {"name": "bottle-3-5", "delays": [[1.0]]}, {"name": "bottle-3-6", "delays": [[1.0]]}, {"name": "bottle-4-1", "delays": [[1.0]]}, {"name": "bottle-4-2", "delays": [[1.0]]}, {"name": "bottle-4-3", "delays": [[1.0]]}, {"name": "bottle-4-4", "delays": [[1.0]]}, {"name": "bottle-4-5", "delays": [[1.0]]}, {"name": "bottle-4-6", "delays": [[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bottle"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "bottle-1"
+    },
+    {
+      "name": "bottle-2"
+    },
+    {
+      "name": "bottle-3"
+    },
+    {
+      "name": "bottle-4"
+    },
+    {
+      "name": "bottle1"
+    },
+    {
+      "name": "bottle10"
+    },
+    {
+      "name": "bottle11"
+    },
+    {
+      "name": "bottle12"
+    },
+    {
+      "name": "bottle13"
+    },
+    {
+      "name": "bottle14"
+    },
+    {
+      "name": "bottle15"
+    },
+    {
+      "name": "bottle16"
+    },
+    {
+      "name": "bottle17"
+    },
+    {
+      "name": "bottle18"
+    },
+    {
+      "name": "bottle19"
+    },
+    {
+      "name": "bottle2"
+    },
+    {
+      "name": "bottle20"
+    },
+    {
+      "name": "bottle3"
+    },
+    {
+      "name": "bottle4"
+    },
+    {
+      "name": "bottle5"
+    },
+    {
+      "name": "bottle6"
+    },
+    {
+      "name": "bottle7"
+    },
+    {
+      "name": "bottle8"
+    },
+    {
+      "name": "bottle9"
+    },
+    {
+      "name": "lid_bottle"
+    },
+    {
+      "name": "bottle-1-1"
+    },
+    {
+      "name": "bottle-1-2"
+    },
+    {
+      "name": "bottle-1-3"
+    },
+    {
+      "name": "bottle-1-4"
+    },
+    {
+      "name": "bottle-1-5"
+    },
+    {
+      "name": "bottle-1-6"
+    },
+    {
+      "name": "bottle-2-1"
+    },
+    {
+      "name": "bottle-2-2"
+    },
+    {
+      "name": "bottle-2-3"
+    },
+    {
+      "name": "bottle-2-4"
+    },
+    {
+      "name": "bottle-2-5"
+    },
+    {
+      "name": "bottle-2-6"
+    },
+    {
+      "name": "bottle-3-1"
+    },
+    {
+      "name": "bottle-3-2"
+    },
+    {
+      "name": "bottle-3-3"
+    },
+    {
+      "name": "bottle-3-4"
+    },
+    {
+      "name": "bottle-3-5"
+    },
+    {
+      "name": "bottle-3-6"
+    },
+    {
+      "name": "bottle-4-1"
+    },
+    {
+      "name": "bottle-4-2"
+    },
+    {
+      "name": "bottle-4-3"
+    },
+    {
+      "name": "bottle-4-4"
+    },
+    {
+      "name": "bottle-4-5"
+    },
+    {
+      "name": "bottle-4-6"
+    }
+  ]
+}

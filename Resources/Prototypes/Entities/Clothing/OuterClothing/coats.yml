@@ -8,6 +8,8 @@
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/bomber.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -19,6 +21,8 @@
     sprite: Clothing/OuterClothing/Coats/detective.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/detective.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -30,6 +34,8 @@
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/gentlecoat.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -41,6 +47,8 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -52,6 +60,8 @@
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/insp_coat.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -63,6 +73,8 @@
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/jensencoat.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -74,6 +86,8 @@
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -85,6 +99,8 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_chem.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -96,6 +112,8 @@
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/labcoat_cmo.rsi
+  - type: Storage
+    capacity: 10
 
 - type: entity
   parent: ClothingOuterBase
@@ -107,3 +125,5 @@
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Coats/pirate.rsi
+  - type: Storage
+    capacity: 10
