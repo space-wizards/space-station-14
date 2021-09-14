@@ -41,7 +41,7 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            var alive = playerEntity.TryGetComponent<SharedMobStateComponent>(out var mob) && mob.IsAlive();
+            var alive = playerEntity.TryGetComponent<MobStateComponent>(out var mob) && mob.IsAlive();
             var inRange = playerEntity.InRangeUnobstructed(table);
 
             return alive && inRange;
