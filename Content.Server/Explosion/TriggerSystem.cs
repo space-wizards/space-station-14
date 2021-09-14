@@ -66,7 +66,7 @@ namespace Content.Server.Explosion
 
         private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
         {
-            component.EnabledVV = component.Enabled;
+            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
         }
 
         #region Explosions
