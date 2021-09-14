@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
-using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;

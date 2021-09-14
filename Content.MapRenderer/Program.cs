@@ -24,7 +24,7 @@ namespace Content.MapRenderer
 
         internal static void Main()
         {
-            new Program().Run().ConfigureAwait(false);
+            new Program().Run().Wait();
         }
 
         private async Task Run()
