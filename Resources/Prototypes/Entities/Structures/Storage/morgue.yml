@@ -49,7 +49,8 @@
       light_contents: morgue_nomob_light
       light_mob: morgue_nosoul_light
       light_soul: morgue_soul_light
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
 
 - type: entity
   id: MorgueTray
@@ -128,7 +129,8 @@
       state_closed: crema_closed
       light_contents: crema_contents_light
       light_burning: crema_active_light
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
 
 - type: entity
   id: CrematoriumTray

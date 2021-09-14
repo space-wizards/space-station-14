@@ -1959,3 +1959,9 @@ Entries:
       to sleep., type: Tweak}
   id: 350
   time: '2021-09-10T12:59:50.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
+    type: Add}
+  id: 351
+  time: '2021-09-13T09:58:45.0000000+00:00'

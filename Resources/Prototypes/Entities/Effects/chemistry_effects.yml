@@ -11,7 +11,8 @@
     visuals:
       - type: SmokeVisualizer
   - type: Occluder
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: SmokeSolutionAreaEffect
   - type: SolutionContainerManager
     solutions:
@@ -38,7 +39,8 @@
       - type: FoamVisualizer
         animationTime: 0.6
         animationState: foam-dissolve
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Physics
     fixtures:
     - shape:
@@ -119,7 +121,8 @@
   - type: Occluder
     sizeX: 32
     sizeY: 32
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Airtight
   - type: Damageable
     resistances: metallicResistances
