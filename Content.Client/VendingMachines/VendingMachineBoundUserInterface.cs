@@ -7,9 +7,9 @@ using static Content.Shared.VendingMachines.SharedVendingMachineComponent;
 
 namespace Content.Client.VendingMachines
 {
-    class VendingMachineBoundUserInterface : BoundUserInterface
+    public class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private VendingMachineMenu? _menu;
+        private VendingMachineMenu? _menu;
 
         public SharedVendingMachineComponent? VendingMachine { get; private set; }
 
