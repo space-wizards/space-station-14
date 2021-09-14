@@ -35,7 +35,7 @@ namespace Content.Server.Extinguisher
             var targetEntity = eventArgs.Target;
             if (eventArgs.Target.HasComponent<ReagentTankComponent>()
                 && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
-                && solutionContainerSystem.TryGetSolution(Owner, SprayComponent.SolutionName, out var container))
+                && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
             {
                 var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)

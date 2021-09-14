@@ -21,9 +21,9 @@
         - ReagentId: Water
           Quantity: 100
   - type: RefillableSolution
-    solution: fireExtinguisher
+    solution: spray
   - type: DrainableSolution
-    solution: fireExtinguisher
+    solution: spray
   - type: ItemCooldown
   - type: Spray
     spraySound:
