@@ -13,8 +13,10 @@
   - type: Toilet
   - type: SecretStash
     secretPartName: the toilet cistern
-  - type: SolutionContainer
-    maxVol: 250
+  - type: SolutionContainerManager
+    solutions:
+      toilet:
+        maxVol: 250
   - type: Physics
     fixtures:
     - shape:
@@ -32,10 +34,11 @@
   parent: ToiletEmpty
   suffix: Dirty Water
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Water
-        Quantity: 180
-      - ReagentId: Toxin
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      toilet:
+        reagents:
+        - ReagentId: Water
+          Quantity: 180
+        - ReagentId: Toxin
+          Quantity: 20

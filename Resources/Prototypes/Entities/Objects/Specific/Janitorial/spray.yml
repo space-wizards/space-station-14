@@ -14,9 +14,14 @@
     state: cleaner
   - type: Item
     sprite: Objects/Specific/Janitorial/janitorial.rsi
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable, Drainable
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
   - type: SolutionTransfer
   - type: Spillable
   - type: ItemCooldown
@@ -32,10 +37,11 @@
   suffix: Filled
   parent: SprayBottle
   components:
-  - type: SolutionContainer
-    maxVol: 100
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
         - ReagentId: Water
           Quantity: 100
 
@@ -46,10 +52,11 @@
   parent: SprayBottle
   suffix: ""
   components:
-  - type: SolutionContainer
-    maxVol: 100
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
         - ReagentId: SpaceCleaner
           Quantity: 100
 
@@ -60,27 +67,29 @@
   name: "vapor"
   abstract: true
   components:
-  - type: SolutionContainer
-    maxVol: 50
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
   - type: Vapor
   - type: AnimationPlayer
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
     layers:
-      - state: chempuff
-        map: [ "enum.VaporVisualLayers.Base" ]
+    - state: chempuff
+      map: ["enum.VaporVisualLayers.Base"]
   - type: Physics
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+              !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
-        - Impassable
-        - MobImpassable
-        - SmallImpassable
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
   - type: Appearance
     visuals:
-      - type: VaporVisualizer
+    - type: VaporVisualizer

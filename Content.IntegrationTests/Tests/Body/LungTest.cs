@@ -28,6 +28,7 @@ namespace Content.IntegrationTests.Tests.Body
   components:
   - type: Bloodstream
     max_volume: 100
+  - type: SolutionContainerManager
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset

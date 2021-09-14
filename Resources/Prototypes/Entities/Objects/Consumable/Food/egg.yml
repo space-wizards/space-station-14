@@ -17,12 +17,13 @@
     sprite: Objects/Consumable/Food/egg.rsi
     netsync: false
     size: 1
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Egg
+          Quantity: 5
   - type: DamageOnLand
     amount: 1
   - type: DamageOtherOnHit
@@ -77,12 +78,13 @@
     netsync: false
   - type: Item
     size: 1
-  - type: SolutionContainer
-    maxVol: 1
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Egg
+          Quantity: 1
   - type: Tag
     tags:
     - Egg
