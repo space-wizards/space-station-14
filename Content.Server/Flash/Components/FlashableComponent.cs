@@ -1,20 +1,14 @@
-using System;
 using Content.Shared.Flash;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Physics;
-using Content.Shared.Sound;
-using Robust.Shared.Audio;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Player;
-using Robust.Shared.Players;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent]
+    [ComponentReference(typeof(SharedFlashableComponent))]
+    [RegisterComponent, Friend(typeof(FlashSystem))]
     public sealed class FlashableComponent : SharedFlashableComponent
     {
+<<<<<<< HEAD
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         private double _duration;
@@ -47,5 +41,7 @@ namespace Content.Server.Flash.Components
                 SoundSystem.Play(Filter.Pvs(source), sound.GetSound(), source.Transform.Coordinates);
             }
         }
+=======
+>>>>>>> 22cc42ff502bafbcc3ed8fe924b5d53bdcd9a412
     }
 }

@@ -1,5 +1,6 @@
 using Content.Server.Construction.Components;
 using Content.Server.Explosion.Components;
+using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
@@ -35,6 +36,8 @@ namespace Content.Server.Explosion
     public sealed class TriggerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+        [Dependency] private readonly FlashSystem _flashSystem = default!;
 
         public override void Initialize()
         {
@@ -99,14 +102,11 @@ namespace Content.Server.Explosion
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
-            bool repeatable = component.Repeating && component.LastFlash + TimeSpan.FromSeconds(component.Cooldown) < _gameTiming.CurTime;
+            if (component.Flashed) return;
 
-            if (!component.Flashed || repeatable)
-            {
-                FlashableComponent.FlashAreaHelper(component.Owner, component.Range, component.Duration);
-                component.Flashed = true;
-                component.LastFlash = _gameTiming.CurTime;
-            }
+            // TODO Make flash durations sane ffs.
+            _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
+            component.Flashed = true;
         }
         #endregion
 

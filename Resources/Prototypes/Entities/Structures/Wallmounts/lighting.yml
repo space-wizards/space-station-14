@@ -4,10 +4,6 @@
   description: "An unpowered light."
   suffix: Unpowered
   components:
-  - type: AmbientSound
-    volume: -12
-    sound:
-      path: /Audio/Ambience/Objects/light_hum.ogg
   - type: Clickable
   - type: InteractionOutline
   - type: Construction
@@ -97,6 +93,11 @@
   suffix: Unpowered
   parent: WallLight
   components:
+    - type: AmbientSound
+      volume: -15
+      range: 2
+      sound:
+        path: /Audio/Ambience/Objects/light_hum.ogg
     - type: Sprite
       sprite: Structures/Wallmounts/Lighting/light_small.rsi
       state: on

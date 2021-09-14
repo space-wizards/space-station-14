@@ -36,7 +36,8 @@
     supplyRampRate: 500
   - type: SolarPanel
     supply: 1500
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -75,7 +76,8 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible
@@ -119,7 +121,8 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
     resistances: metallicResistances
   - type: Destructible

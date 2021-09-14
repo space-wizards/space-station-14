@@ -46,7 +46,8 @@
         maxVol: 200
   - type: RefillableSolution
     solution: soil
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction
