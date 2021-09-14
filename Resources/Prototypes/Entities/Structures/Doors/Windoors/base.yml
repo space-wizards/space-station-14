@@ -38,7 +38,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
   - type: Damageable
-    resistances: glassResistances
+    damageContainer: Inorganic
+    resistanceSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,6 +61,9 @@
     openPanelVisible: true
   - type: Door
     weldable: false
+    crushDamage:
+      types:
+        Blunt: 10
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:

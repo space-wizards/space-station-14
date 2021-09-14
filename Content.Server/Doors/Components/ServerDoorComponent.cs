@@ -11,7 +11,6 @@ using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -22,16 +21,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Doors.Components
 {
@@ -47,17 +41,9 @@ namespace Content.Server.Doors.Components
         [DataField("tryOpenDoorSound")]
         private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt";
+        [DataField("crushDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
+        public DamageSpecifier CrushDamage = default!;
 
         public override DoorState State
         {
@@ -90,7 +76,6 @@ namespace Content.Server.Doors.Components
         private CancellationTokenSource? _stateChangeCancelTokenSource;
         private CancellationTokenSource? _autoCloseCancelTokenSource;
 
-        private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
 
         /// <summary>
@@ -537,7 +522,7 @@ namespace Content.Server.Doors.Components
             foreach (var e in collidingentities)
             {
                 if (!e.Owner.TryGetComponent(out StunnableComponent? stun)
-                    || !e.Owner.TryGetComponent(out IDamageableComponent? damage))
+                    || !e.Owner.HasComponent<DamageableComponent>())
                 {
                     continue;
                 }
@@ -550,7 +535,8 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.TryChangeDamage(DamageType, DoorCrushDamage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
+
                 stun.Paralyze(DoorStunTime);
             }
 

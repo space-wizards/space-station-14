@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -9,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Destructible.Thresholds
 {
     [DataDefinition]
-    public class Threshold
+    public class DamageThreshold
     {
         [DataField("behaviors")]
         private List<IThresholdBehavior> _behaviors = new();
@@ -49,7 +49,7 @@ namespace Content.Server.Destructible.Thresholds
         /// </summary>
         [ViewVariables] public IReadOnlyList<IThresholdBehavior> Behaviors => _behaviors;
 
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
         {
             if (Trigger == null)
             {

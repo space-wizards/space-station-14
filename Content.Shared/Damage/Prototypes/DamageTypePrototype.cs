@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Shared.Damage
+namespace Content.Shared.Damage.Prototypes
 {
     /// <summary>
     ///     A single damage type. These types are grouped together in <see cref="DamageGroupPrototype"/>s. 

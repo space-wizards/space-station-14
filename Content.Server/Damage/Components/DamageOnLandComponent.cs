@@ -9,20 +9,13 @@ namespace Content.Server.Damage.Components
     public sealed class DamageOnLandComponent : Component
     {
         public override string Name => "DamageOnLand";
-
-        [DataField("amount")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int Amount = 1;
-
+        
         [DataField("ignoreResistances")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool IgnoreResistances;
+        public bool IgnoreResistances = false;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")] public readonly string DamageTypeId = "Blunt";
-
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
+        public DamageSpecifier Damage = default!;
     }
 }

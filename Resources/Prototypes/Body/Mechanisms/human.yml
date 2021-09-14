@@ -103,6 +103,8 @@
     behaviors:
     - !type:LungBehavior {}
 
+# TODO DAMAGE UNITS. Some of these damage effects were scaled up to integers.
+# Scale back down when damage units are in.
 - type: entity
   id: OrganHumanHeart
   parent: BaseHumanOrgan
@@ -124,36 +126,40 @@
       Arithrazine:
         effects:
         - !type:HealthChange
-          damageGroup: Toxin
-          healthChange: -1
-        - !type:HealthChange
-          damageGroup: Brute
-          healthChange: 0.5
+          damage:
+            groups:
+              Toxin: -2 # -1  Multiplying by 2. pls give damage units
+              Brute: 1  # 0.5
       Bicaridine:
         effects:
         - !type:HealthChange
-          damageGroup: Brute
-          healthChange: -2
+          damage:
+            groups:
+              Brute: -2
       Dermaline:
         effects:
         - !type:HealthChange
-          damageGroup: Burn
-          healthChange: -3
+          damage:
+            groups:
+              Burn: -3
       Dexalin:
         effects:
         - !type:HealthChange
-          damageGroup: Airloss
-          healthChange: -1
+          damage:
+            types:
+              Asphyxiation: -1
       DexalinPlus:
         effects:
         - !type:HealthChange
-          damageGroup: Airloss
-          healthChange: -3
+          damage:
+            types:
+              Asphyxiation: -3
       Dylovene:
         effects:
         - !type:HealthChange
-          damageGroup: Toxin
-          healthChange: -1
+          damage:
+            types:
+              Poison: -1
       Ephedrine:
         effects:
           - !type:MovespeedModifier
@@ -162,45 +168,45 @@
       HeartbreakerToxin:
         effects:
         - !type:HealthChange
-          damageGroup: Airloss
-          healthChange: 4
+          damage:
+            types:
+              Asphyxiation: 4
       Kelotane:
         effects:
-          - !type:HealthChange
-            damageGroup: Burn
-            healthChange: -1
+        - !type:HealthChange
+          damage:
+            groups:
+              Burn: -1
       Lexorin:
         effects:
         - !type:HealthChange
-          damageGroup: Airloss
-          healthChange: 7
+          damage:
+            groups:
+              Airloss: 7
       Meth:
         effects:
-          - !type:HealthChange
-            healthChange: 2.5
-            damageGroup: Toxin
-          - !type:MovespeedModifier
-            walkSpeedModifier: 1.3
-            sprintSpeedModifier: 1.3
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 3 # 2.5
+        - !type:MovespeedModifier
+          walkSpeedModifier: 1.3
+          sprintSpeedModifier: 1.3
       Omnizine:
         effects:
         - !type:HealthChange
-          healthChange: -2
-          damageGroup: Burn
-        - !type:HealthChange
-          healthChange: -2
-          damageGroup: Toxin
-        - !type:HealthChange
-          healthChange: -2
-          damageGroup: Airloss
-        - !type:HealthChange
-          healthChange: -2
-          damageGroup: Brute
+          damage:
+            groups:
+              Burn: -3 # -2. w/o damage units did not divide into 3 types
+              Toxin: -2
+              Airloss: -2
+              Brute: -3 # -2. w/o damage units did not divide into 3 types
       Synaptizine:
         effects:
-          - !type:HealthChange
-            damageGroup: Toxin
-            healthChange: 0.5
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1 # 0.5 pls damage units
 
 - type: entity
   id: OrganHumanStomach
@@ -261,8 +267,9 @@
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
-          damageGroup: Toxin
-          healthChange: 1
+          damage:
+            types:
+              Poison: 1
       JuiceWatermelon:
         effects:
         - !type:SatiateThirst
@@ -306,8 +313,9 @@
         - !type:SatiateThirst
           hydrationFactor: 2
         - !type:HealthChange
-          damageGroup: Toxin
-          healthChange: 1
+          damage:
+            types:
+              Poison: 1
 
 - type: entity
   id: OrganHumanLiver

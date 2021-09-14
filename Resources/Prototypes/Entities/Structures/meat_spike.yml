@@ -11,7 +11,8 @@
     sprite: Structures/meat_spike.rsi
     state: spike
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
