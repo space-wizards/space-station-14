@@ -16,10 +16,5 @@ namespace Content.Server.Flash.Components
         [DataField("duration")] internal float Duration = 8.0f;
 
         internal bool Flashed;
-
-        [DataField("repeating")] internal bool Repeating = false;
-        [DataField("cooldown")] internal int Cooldown = 4;
-
-        internal TimeSpan LastFlash = TimeSpan.Zero;
     }
 }
