@@ -15,7 +15,7 @@ namespace Content.Server.Xenobiology
         public override string Name => "SpecimenDietComponent";
 
         //The diet is defined by a tag fed into it
-        [ViewVariables] [DataField("Diet")] public string[] DietPick { get; set; } = default!;
+        [ViewVariables] [DataField("diet")] public string[] DietPick { get; set; } = default!;
 
         public string SelectedDiet = default!;
 
