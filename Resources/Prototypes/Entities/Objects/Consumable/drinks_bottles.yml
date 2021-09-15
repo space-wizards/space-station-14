@@ -27,6 +27,7 @@
       types:
         Blunt: 10
   - type: Spillable
+    solution: drink
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
