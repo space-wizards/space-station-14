@@ -506,9 +506,6 @@ namespace Content.Server.Interaction
             GetAlternativeVerbsEvent getVerbEvent = new(user, target);
             RaiseLocalEvent(target.Uid, getVerbEvent);
 
-            // Sort by priority
-            getVerbEvent.Verbs.Sort();
-
             foreach (var verb in getVerbEvent.Verbs)
             {
                 if (verb.Disabled)

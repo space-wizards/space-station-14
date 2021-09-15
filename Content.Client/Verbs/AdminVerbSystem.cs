@@ -28,7 +28,7 @@ namespace Content.Client.Verbs
             // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {
-                Verb verb = new("Admin:ViewVariables");
+                Verb verb = new();
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "View Variables";
                 verb.IconTexture = "/Textures/Interface/VerbIcons/vv.svg.192dpi.png";
@@ -47,7 +47,7 @@ namespace Content.Client.Verbs
             // Verb to open Add Gas admin window, with pre-filled coordinates
             if (_clientConGroupController.CanCommand("addgas"))
             {
-                Verb verb = new("Admin:AddGas");
+                Verb verb = new();
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "Add Gas";
                 // TODO VERB ICON Add gas symbol. A gas tank maybe?
@@ -63,7 +63,7 @@ namespace Content.Client.Verbs
             // Verb to open Set temperature admin window, with pre-filled coordinates
             if (_clientConGroupController.CanCommand("settemp"))
             {
-                Verb verb = new("Admin:SetTemp");
+                Verb verb = new();
                 verb.Category = VerbCategory.Debug;
                 verb.Text = "Set Temperature";
                 // TODO VERB ICON add thermometer?

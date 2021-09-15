@@ -44,7 +44,7 @@ namespace Content.Server.Cabinet
                 return;
 
             // Toggle open verb
-            Verb toggleVerb = new("ItemCabinet:Toggle");
+            Verb toggleVerb = new();
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
             toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open; 
             args.Verbs.Add(toggleVerb);
@@ -60,7 +60,7 @@ namespace Content.Server.Cabinet
                 component.ItemContainer.ContainedEntity != null &&
                 _actionBlockerSystem.CanPickup(args.User))
             {
-                Verb verb = new("ItemCabinet:Eject");
+                Verb verb = new();
                 verb.Act = () =>
                 {
                     TakeItem(component, args.Hands, component.ItemContainer.ContainedEntity, args.User);
@@ -78,7 +78,7 @@ namespace Content.Server.Cabinet
                 (component.Whitelist?.IsValid(args.Using) ?? true) &&
                 component.ItemContainer.CanInsert(args.Using))
             {
-                Verb verb = new("ItemCabinet:Insert");
+                Verb verb = new();
                 verb.Act = () =>
                 {
                     args.Hands.TryPutEntityIntoContainer(args.Using, component.ItemContainer);

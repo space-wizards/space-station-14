@@ -41,7 +41,7 @@ namespace Content.Server.Buckle.Systems
             if (!args.CanAccess || !args.CanInteract || !component.Buckled)
                 return;
             
-            Verb verb = new("Buckle:Unbuckle");
+            Verb verb = new();
             verb.Act = () => component.TryUnbuckle(args.User);
             verb.Category = VerbCategory.Unbuckle;
 

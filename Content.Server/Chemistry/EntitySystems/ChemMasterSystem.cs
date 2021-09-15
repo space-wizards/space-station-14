@@ -34,7 +34,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 !_actionBlockerSystem.CanPickup(args.User))
                 return;
 
-            Verb verb = new("ChemMaster:Eject");
+            Verb verb = new();
             verb.Act = () =>
             {
                 component.TryEject(args.User);
@@ -55,7 +55,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
-            Verb verb = new("ChemMaster:Insert");
+            Verb verb = new();
             verb.Act = () =>
             {
                 component.BeakerContainer.Insert(args.Using);

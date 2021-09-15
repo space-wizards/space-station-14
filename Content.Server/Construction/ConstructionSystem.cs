@@ -62,7 +62,7 @@ namespace Content.Server.Construction
                 component.Node?.Name == component.DeconstructionNodeIdentifier)
                 return;
 
-            Verb verb = new("Construction:Deconstruct");
+            Verb verb = new();
             //verb.Category = VerbCategories.Construction;
             //TODO VERBS add more construction verbs? Until then, removing construction category
             verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");

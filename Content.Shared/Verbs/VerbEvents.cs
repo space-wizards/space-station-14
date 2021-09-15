@@ -29,10 +29,19 @@ namespace Content.Shared.Verbs
         public readonly Dictionary<VerbType, List<Verb>>? Verbs;
         public readonly EntityUid Entity;
 
-        public VerbsResponseEvent(EntityUid entity, Dictionary<VerbType, List<Verb>>? verbs)
+        public VerbsResponseEvent(EntityUid entity, Dictionary<VerbType, SortedSet<Verb>>? verbs)
         {
             Entity = entity;
-            Verbs = verbs;
+
+            if (verbs == null)
+                return;
+
+            // Apparently SortedSet is not serlializable. Cast to List<Verb>.
+            Verbs = new();
+            foreach (var entry in verbs)
+            {
+                Verbs.Add(entry.Key, new List<Verb>(entry.Value));
+            }
         }
     }
 
@@ -40,17 +49,17 @@ namespace Content.Shared.Verbs
     public class TryExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
-        public readonly string VerbKey;
+        public readonly Verb RequestedVerb;
 
         /// <summary>
         ///     The type of verb to try execute. Avoids having to get a list of all verbs on the receiving end.
         /// </summary>
         public readonly VerbType Type;
 
-        public TryExecuteVerbEvent(EntityUid target, string verbKey, VerbType type)
+        public TryExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
         {
             Target = target;
-            VerbKey = verbKey;
+            RequestedVerb = requestedVerb;
             Type = type;
         }
     }
@@ -121,9 +130,9 @@ namespace Content.Shared.Verbs
     public class GetVerbsEvent : EntityEventArgs
     {
         /// <summary>
-        ///     Event output. List of verbs that can be executed.
+        ///     Event output. Set of verbs that can be executed.
         /// </summary>
-        public List<Verb> Verbs = new();
+        public SortedSet<Verb> Verbs = new();
 
         /// <summary>
         ///     Can the user physically access the target?

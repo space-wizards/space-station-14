@@ -26,7 +26,7 @@ namespace Content.Client.Verbs
         public EntityUid CurrentTarget;
         public ContextMenuPopup? CurrentVerbPopup;
         public ContextMenuPopup? CurrentCategoryPopup;
-        public Dictionary<VerbType, List<Verb>> CurrentVerbs = new();
+        public Dictionary<VerbType, SortedSet<Verb>> CurrentVerbs = new();
 
         /// <summary>
         ///     Whether to show all entities on the context menu.
@@ -78,7 +78,7 @@ namespace Content.Client.Verbs
         public void TryExecuteVerb(Verb verb, EntityUid target, VerbType verbType)
         {
             if (!TryExecuteVerb(verb))
-                RaiseNetworkEvent(new TryExecuteVerbEvent(target, verb.Key, verbType));
+                RaiseNetworkEvent(new TryExecuteVerbEvent(target, verb, verbType));
         }
 
         public void OpenVerbMenu(IEntity target, ScreenCoordinates screenCoordinates)
@@ -135,11 +135,11 @@ namespace Content.Client.Verbs
             }
 
             // Add the new server-side verbs.
-            foreach (var entry in msg.Verbs)
+            foreach (var (verbType, verbSet) in msg.Verbs)
             {
-                if (!CurrentVerbs.TryAdd(entry.Key, entry.Value))
+                if (!CurrentVerbs.TryAdd(verbType, new SortedSet<Verb>(verbSet)))
                 {
-                    CurrentVerbs[entry.Key].AddRange(entry.Value);
+                    CurrentVerbs[verbType].UnionWith(verbSet);
                 }
             }
 
@@ -158,13 +158,12 @@ namespace Content.Client.Verbs
             types.Sort();
             foreach (var type in types)
             {
-                AddVerbList(popup, type);
+                AddVerbSet(popup, type);
             }
 
             // Were the verb lists empty?
             if (popup.List.ChildCount == 0)
             {
-                
                 var panel = new PanelContainer();
                 panel.AddChild(new Label { Text = Loc.GetString("verb-system-no-verbs-text") });
                 popup.AddChild(panel);
@@ -176,33 +175,30 @@ namespace Content.Client.Verbs
         /// <summary>
         ///     Add a list of verbs to a BoxContainer. Iterates over the given verbs list and creates GUI buttons.
         /// </summary>
-        private void AddVerbList(ContextMenuPopup popup, VerbType type)
+        private void AddVerbSet(ContextMenuPopup popup, VerbType type)
         {
-            if (!CurrentVerbs.TryGetValue(type, out var verbList) || verbList.Count == 0)
+            if (!CurrentVerbs.TryGetValue(type, out var verbSet) || verbSet.Count == 0)
                 return;
-
-            // Sort verbs by priority or name
-            verbList.Sort();
 
             HashSet<string> listedCategories = new();
 
-            foreach (var verb in verbList)
+            foreach (var verb in verbSet)
             {
                 if (verb.Category == null)
                 {
-                    // Lone verb. just create a button for it
+                    // Lone verb without a category. just create a button for it
                     popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget));
                     continue;
                 }
 
                 if (listedCategories.Contains(verb.Category.Text))
                 {
-                    // This verb was already included in a verb-category button
+                    // This verb was already included in a verb-category button added by a previous verb
                     continue;
                 }
 
-                // This is a new verb category. add a button for it
-                var verbsInCategory = verbList.Where(v => v.Category?.Text == verb.Category.Text);
+                // Get the verbs in the category
+                var verbsInCategory = verbSet.Where(v => v.Category?.Text == verb.Category.Text);
 
                 // We add a normal verb category button if either:
                 // a) the category has more than 1 item in it
@@ -219,15 +215,8 @@ namespace Content.Client.Verbs
                 }
 
                 // This category only contains a single verb, and the category is flagged as Contractible/collapsible.
-                // So we add a single modified verb button instead of a verb group button.
-                verb.Icon ??= verb.Category.Icon;
-
-                if (verb.Text == string.Empty)
-                    verb.Text = verb.Category.Text;
-                else
-                    verb.Text = verb.Category.Text + " " + verb.Text;
-
-                popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget));
+                // So we add a single verb button instead.
+                popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget, categoryPrefix: true));
             }
         }
 

@@ -40,7 +40,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return;
             
             // Custom transfer verb
-            Verb custom = new("SolutionTransfer:Custom");
+            Verb custom = new();
             custom.Text = Loc.GetString("comp-solution-transfer-verb-custom-amount");
             custom.Category = VerbCategory.SetTransferAmount;
             custom.Act = () => component.UserInterface?.Open(actor.PlayerSession);
@@ -54,7 +54,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
                     continue;
 
-                Verb verb = new($"SolutionTransfer:{amount}");
+                Verb verb = new();
                 verb.Text = Loc.GetString("comp-solution-transfer-verb-amount", ("amount", amount));
                 verb.Category = VerbCategory.SetTransferAmount;
                 verb.Act = () =>

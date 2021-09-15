@@ -54,7 +54,7 @@ namespace Content.Client.Verbs
 
     public sealed class VerbButton : BaseButton
     {
-        public VerbButton(VerbSystem system, Verb verb, VerbType type, EntityUid target, bool drawIcons = true) : base()
+        public VerbButton(VerbSystem system, Verb verb, VerbType type, EntityUid target, bool drawIcons = true, bool categoryPrefix = false) : base()
         {
             Disabled = verb.Disabled;
             ToolTip = verb.Tooltip;
@@ -76,19 +76,24 @@ namespace Content.Client.Verbs
                 if (verb.Icon != null)
                 {
                     icon.Texture = verb.Icon.Frame0();
+                } else if (categoryPrefix && verb.Category?.Icon != null)
+                {
+                    // we will use the category icon instead
+                    icon.Texture = verb.Category.Icon.Frame0();
                 }
 
                 buttonContents.AddChild(icon);
             }
 
             // maybe add a label
-            if (verb.Text != string.Empty)
+            if (verb.Text != string.Empty || categoryPrefix)
             {
                 // First add a small bit of padding
                 buttonContents.AddChild(new Control { MinSize = (4, ContextMenuPopup.ButtonHeight) });
 
                 var label = new RichTextLabel();
-                label.SetMessage(FormattedMessage.FromMarkupPermissive(verb.Text));
+                var text = categoryPrefix ? verb.Category!.Text + " " + verb.Text : verb.Text;
+                label.SetMessage(FormattedMessage.FromMarkupPermissive(text.Trim()));
                 label.VerticalAlignment = VAlignment.Center;
                 buttonContents.AddChild(label);
 

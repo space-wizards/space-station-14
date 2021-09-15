@@ -31,7 +31,8 @@ namespace Content.Shared.Verbs
         ///     will be run regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="NetworkVerbEventArgs"/>
         ///     are defined.
         /// </remarks>
-        [NonSerialized] public Action? Act;
+        [NonSerialized]
+        public Action? Act;
 
         /// <summary>
         ///     This is local event that will be raised when the verb is executed.
@@ -40,12 +41,14 @@ namespace Content.Shared.Verbs
         ///     This event will be raised regardless of whether <see cref="NetworkVerbEventArgs"/> or <see cref="Act"/>
         ///     are defined.
         /// </remarks>
-        [NonSerialized] public object? LocalVerbEventArgs;
+        [NonSerialized]
+        public object? LocalVerbEventArgs;
 
         /// <summary>
         ///     Where do direct the local event.
         /// </summary>
-        [NonSerialized] public EntityUid LocalEventTarget = EntityUid.Invalid;
+        [NonSerialized]
+        public EntityUid LocalEventTarget = EntityUid.Invalid;
 
         /// <summary>
         ///     This is networked event that will be raised when the verb is executed.
@@ -54,17 +57,13 @@ namespace Content.Shared.Verbs
         ///     This event will be raised regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="Act"/>
         ///     are defined.
         /// </remarks>
-        [NonSerialized] public EntityEventArgs? NetworkVerbEventArgs;
+        [NonSerialized]
+        public EntityEventArgs? NetworkVerbEventArgs;
         
         /// <summary>
         ///     The text that the user sees on the verb button.
         /// </summary>
         public string Text = string.Empty;
-
-        /// <summary>
-        ///     The key used to identify the verb when communicating over the network.
-        /// </summary>
-        public string Key;
 
         /// <summary>
         ///     Sprite of the icon that the user sees on the verb button.
@@ -110,7 +109,7 @@ namespace Content.Shared.Verbs
         public int Priority;
 
         /// <summary>
-        ///     Raw texture path used to load the <see cref="Icon"/>, if not set directly.
+        ///     Raw texture path used to load the <see cref="Icon"/>.
         /// </summary>
         public string? IconTexture;
 
@@ -123,14 +122,22 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public bool CloseMenu = true;
 
-        public Verb(string key)
-        {
-            Key = key;
-        }
-
         /// <summary>
-        ///     Allow verbs to be compared to each other for sorting. Sorting is based on the Priority variable, with alphabetical sorting as fall-back.
+        ///     Compares two verbs based on their <see cref="Priority"/>, <see cref="Category"/>, <see cref="Text"/>,
+        ///     and <see cref="IconTexture"/>.
         /// </summary>
+        /// <remarks>
+        ///     <para>
+        ///     This is comparison is used when storing verbs in a SortedSet. The ordering of verbs determines both how
+        ///     the verbs are displayed in the context menu, and the order in which alternative action verbs are
+        ///     executed when alt-clicking.
+        ///     </para>
+        ///     <para>
+        ///     If two verbs are equal according to this comparison, they cannot both be added to the same sorted set of
+        ///     verbs. This is desirable, given that these verbs would also appear identical in the context menu.
+        ///     Distinct verbs should always have a unique and descriptive combination of text, icon, and category.
+        ///     </para>
+        /// </remarks>
         public int CompareTo(object? obj)
         {
             if (obj is not Verb otherVerb)
@@ -145,9 +152,15 @@ namespace Content.Shared.Verbs
             {
                 return string.Compare(Category?.Text, otherVerb.Category?.Text, StringComparison.CurrentCulture);
             }
+            
+            // Then try use alphabetical verb text.
+            if (Text != otherVerb.Text)
+            {
+                return string.Compare(Text, otherVerb.Text, StringComparison.CurrentCulture);
+            }
 
-            // Finally, use verb text as tie-breaker
-            return string.Compare(Text, otherVerb.Text, StringComparison.CurrentCulture);
+            // Finally, compare icon texture paths. Note that this matters for verbs that don't have any text (e.g., the rotate-verbs)
+            return string.Compare(IconTexture, otherVerb.IconTexture, StringComparison.CurrentCulture);
         }
     }
 }

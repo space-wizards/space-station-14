@@ -26,7 +26,7 @@ namespace Content.Server.PDA
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            Verb verb = new("PDA:ToggleLight");
+            Verb verb = new();
             verb.Text = Loc.GetString("verb-toggle-light");
             verb.IconTexture = "/Textures/Interface/VerbIcons/light.svg.192dpi.png";
             verb.Act = () => component.ToggleLight();
@@ -46,7 +46,7 @@ namespace Content.Server.PDA
             // eject ID
             if (!component.IdSlotEmpty)
             {
-                Verb verb = new("PDA:EjectID");
+                Verb verb = new();
                 verb.Text = component.IdSlot.ContainedEntity!.Name;
                 verb.Category = VerbCategory.Eject;
                 verb.Act = () => component.HandleIDEjection(args.User);
@@ -56,7 +56,7 @@ namespace Content.Server.PDA
             // eject pen
             if (!component.PenSlotEmpty)
             {
-                Verb verb = new("PDA:EjectPen");
+                Verb verb = new();
                 verb.Text = component.PenSlot.ContainedEntity!.Name;
                 verb.Category = VerbCategory.Eject;
                 verb.Act = () => component.HandlePenEjection(args.User);
@@ -77,7 +77,7 @@ namespace Content.Server.PDA
             if (component.IdSlotEmpty &&
                 args.Using.TryGetComponent(out IdCardComponent? id))
             {
-                Verb verb = new("PDA:InsertID");
+                Verb verb = new();
                 verb.Text = args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () =>
@@ -92,7 +92,7 @@ namespace Content.Server.PDA
             if (component.PenSlotEmpty &&
                 args.Using.HasTag("Write"))
             {
-                Verb verb = new("PDA:InsertPen");
+                Verb verb = new();
                 verb.Text = args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () =>

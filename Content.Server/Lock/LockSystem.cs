@@ -139,7 +139,7 @@ namespace Content.Server.Lock
             if (!args.CanAccess || !args.CanInteract || !CanToggleLock(component, args.User))
                 return;
 
-            Verb verb = new("Lock:Toggle");
+            Verb verb = new();
             verb.Act = component.Locked ?
                 () => TryUnlock(component, args.User) :
                 () => TryLock(component, args.User);

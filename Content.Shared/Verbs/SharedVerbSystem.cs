@@ -6,7 +6,6 @@ using Content.Shared.Interaction.Helpers;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -63,9 +62,9 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s)
         /// </summary>
-        public Dictionary<VerbType, List<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
         {
-            Dictionary<VerbType, List<Verb>> verbs = new();
+            Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {

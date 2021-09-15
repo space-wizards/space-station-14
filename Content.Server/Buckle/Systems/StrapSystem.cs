@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using System.Collections.Generic;
 
 namespace Content.Server.Buckle.Systems
 {
@@ -43,13 +44,19 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckledComp.Range))
                     continue;
 
-                Verb verb = new("Strap:Unbuckle"+entity.Uid.ToString());
+                Verb verb = new();
                 verb.Act = () => buckledComp.TryUnbuckle(args.User);
                 verb.Category = VerbCategory.Unbuckle;
                 if (entity == args.User)
                     verb.Text = Loc.GetString("verb-self-target-pronoun");
                 else
                     verb.Text = entity.Name;
+
+                // In the event that you have more than once entity with the same name strapped to the same object,
+                // these two verbs will be identical according to Verb.CompareTo, and only one with actually be added to
+                // the verb list. However this should rarely ever be a problem. If it ever is, it could be fixed by
+                // appending an integer to verb.Text to distinguish the verbs.
+
                 args.Verbs.Add(verb);
             }
 
@@ -60,7 +67,7 @@ namespace Content.Server.Buckle.Systems
                 component.HasSpace(buckle) &&
                 _interactionSystem.InRangeUnobstructed(args.User, args.Target, range: buckle.Range))
             {
-                Verb verb = new("Strap:Self");
+                Verb verb = new();
                 verb.Act = () => buckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
                 verb.Text = Loc.GetString("verb-self-target-pronoun");
@@ -78,7 +85,7 @@ namespace Content.Server.Buckle.Systems
                 if (!_interactionSystem.InRangeUnobstructed(args.Using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 
-                Verb verb = new("Strap:Used");
+                Verb verb = new();
                 verb.Act = () => usingBuckle.TryBuckle(args.User, args.Target);
                 verb.Category = VerbCategory.Buckle;
                 verb.Text = args.Using.Name;

@@ -87,18 +87,12 @@ namespace Content.Server.Verbs
             // the debug verbs should be made a separate type?
             var verbs = GetVerbs(targetEntity, userEntity, args.Type)[args.Type];
 
-            // Run the requested verb
-            foreach (var verb in verbs)
-            {
-                if (verb.Key == args.VerbKey)
-                {
-                    TryExecuteVerb(verb);
-                    return;
-                }
-            }
-
-            // 404 Verb not found
-            Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb key: {args.VerbKey}");
+            // Find the requested verb.
+            if (verbs.TryGetValue(args.RequestedVerb, out var verb))
+                TryExecuteVerb(verb);
+            else
+                // 404 Verb not found
+                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");
         }
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
