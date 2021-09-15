@@ -18,7 +18,8 @@
         - Impassable
         - MobImpassable
         - VaultImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/conveyor.rsi

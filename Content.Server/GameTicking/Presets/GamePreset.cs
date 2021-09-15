@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Ghost;
 using Content.Shared.MobState;
 using Content.Shared.Preferences;
@@ -64,12 +64,10 @@ namespace Content.Server.GameTicking.Presets
                 {
                     canReturn = true;
 
-                    if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        //cry deeply
-                        damageable.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    }
+                    //todo: what if they dont breathe lol
+                    //cry deeply
+                    DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Uid, damage, true);
                 }
             }
 

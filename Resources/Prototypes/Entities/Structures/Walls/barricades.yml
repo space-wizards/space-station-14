@@ -24,7 +24,8 @@
     tags:
     - ExplosivePassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,6 +42,9 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Reactive
     reactions:
       - !type:ExtinguishReaction

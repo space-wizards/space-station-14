@@ -77,6 +77,9 @@
     sprite: Objects/Specific/Hydroponics/towercap.rsi
   - type: SolutionContainerManager
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Produce
     seed: towercap
   - type: Log
@@ -253,10 +256,21 @@
       - ReagentId: JuiceTomato
         Quantity: 10
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
   - type: Damageable
+    damageContainer: Biological
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Destructible
     thresholds:
     - trigger:

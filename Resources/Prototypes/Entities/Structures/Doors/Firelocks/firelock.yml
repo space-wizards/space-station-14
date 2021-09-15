@@ -6,7 +6,8 @@
   components:
     - type: InteractionOutline
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      resistanceSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:
@@ -54,6 +55,9 @@
       startOpen: true
       bumpOpen: false
       inhibitCrush: false
+      crushDamage:
+        types:
+          Blunt: 15
       openSound:
         path: /Audio/Machines/airlock_open.ogg
       closeSound:
@@ -89,6 +93,9 @@
     - type: Door
       occludes: false
       inhibitCrush: false
+      crushDamage:
+        types:
+          Blunt: 15
     - type: Occluder
       enabled: false
     - type: Sprite
@@ -102,6 +109,9 @@
     - type: Door
       occludes: false
       inhibitCrush: false
+      crushDamage:
+        types:
+          Blunt: 15
     - type: Sprite
       sprite: Structures/Doors/edge_door_hazard.rsi
     - type: Airtight

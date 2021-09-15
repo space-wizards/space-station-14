@@ -23,9 +23,11 @@
       - VaultImpassable
   - type: Anchorable
   - type: Pullable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

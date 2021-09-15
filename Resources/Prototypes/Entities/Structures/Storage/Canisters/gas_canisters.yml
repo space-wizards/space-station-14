@@ -42,7 +42,8 @@
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      resistanceSet: Metallic
     - type: Physics
       bodyType: Dynamic
       fixtures:
@@ -362,7 +363,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      resistanceSet: Metallic
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Storage/canister.rsi

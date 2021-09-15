@@ -23,8 +23,8 @@
       type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
-
   - type: Spillable
+    solution: drink
 
 - type: entity
   parent: DrinkCanBaseFull

@@ -38,6 +38,9 @@
       - SmallImpassable
   - type: Door
     board: DoorElectronics
+    crushDamage:
+      types:
+        Blunt: 15
     openSound:
       path: /Audio/Machines/airlock_open.ogg
     closeSound:
@@ -61,7 +64,8 @@
     fixVacuum: true
   - type: Occluder
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

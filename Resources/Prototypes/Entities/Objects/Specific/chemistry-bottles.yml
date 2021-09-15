@@ -34,6 +34,7 @@
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
+    solution: drink
 
 - type: entity
   name: bottle

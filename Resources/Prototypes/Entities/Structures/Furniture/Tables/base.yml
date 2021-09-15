@@ -6,7 +6,8 @@
   abstract: true
   components:
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: PlaceableSurface
   - type: Sprite
     netsync: false

@@ -9,8 +9,11 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Anchorable
   - type: Rotatable
   - type: Pullable
