@@ -65,7 +65,7 @@ namespace Content.Client.Construction
         {
             if (component.Prototype == null) return;
 
-            args.Message.AddMarkup(Loc.GetString(
+            args.PushMarkup(Loc.GetString(
                 "construction-ghost-examine-message",
                 ("name", component.Prototype.Name)));
 

@@ -32,7 +32,7 @@ namespace Content.Server.Fluids
         {
             if (ComponentManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
             {
-                args.Message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
+                args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
         }
 

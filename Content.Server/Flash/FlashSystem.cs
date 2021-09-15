@@ -169,15 +169,13 @@ namespace Content.Server.Flash
         {
             if (!comp.HasUses)
             {
-                args.Message.AddText("\n");
-                args.Message.AddText(Loc.GetString("flash-component-examine-empty"));
+                args.PushText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
             if (args.IsInDetailsRange)
             {
-                args.Message.AddText("\n");
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "flash-component-examine-detail-count",
                         ("count", comp.Uses),
