@@ -69,6 +69,7 @@ namespace Content.Server.Storage.EntitySystems
             Verb verb = new();
             verb.Act = () => component.OpenStorageUI(args.User);
             verb.Category = uiOpen ? VerbCategory.Close : VerbCategory.Open;
+            // TODO VERBS create a Open-UI verb category? Avoid clashes with other open verbs?
             args.Verbs.Add(verb);
         }
 

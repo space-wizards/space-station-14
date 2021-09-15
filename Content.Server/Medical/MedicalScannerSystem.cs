@@ -48,6 +48,7 @@ namespace Content.Server.Medical
                 Verb verb = new();
                 verb.Act = () => component.EjectBody();
                 verb.Category = VerbCategory.Eject;
+                verb.Text = Loc.GetString("medical-scanner-verb-noun-occupant");
                 args.Verbs.Add(verb);
             }
 
@@ -58,7 +59,7 @@ namespace Content.Server.Medical
             {
                 Verb verb = new();
                 verb.Act = () => component.InsertBody(args.User);
-                verb.Text = Loc.GetString("enter-verb-get-data-text");
+                verb.Text = Loc.GetString("medical-scanner-verb-enter");
                 // TODO VERN ICON
                 // TODO VERB CATEGORY
                 // create a verb category for "enter"?

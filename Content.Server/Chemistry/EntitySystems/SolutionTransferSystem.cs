@@ -1,11 +1,7 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Robust.Shared.IoC;
-using Content.Shared.ActionBlocker;
 using Robust.Shared.Localization;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
@@ -17,8 +13,6 @@ namespace Content.Server.Chemistry.EntitySystems
 	[UsedImplicitly]
     public class SolutionTransferSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.
         /// </summary>
@@ -48,7 +42,7 @@ namespace Content.Server.Chemistry.EntitySystems
             args.Verbs.Add(custom);
 
             // Add specific transfer verbs according to the container's size
-            int priority = 0;
+            var priority = 0;
             foreach (var amount in DefaultTransferAmounts)
             {
                 if ( amount < component.MinimumTransferAmount.Int() || amount > component.MaximumTransferAmount.Int())
@@ -63,7 +57,7 @@ namespace Content.Server.Chemistry.EntitySystems
                     args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
                 };
 
-                // sort by size, not by alphabetical
+                // we want to sort by size, not alphabetically by the verb text.
                 verb.Priority = priority;
                 priority--;
                 

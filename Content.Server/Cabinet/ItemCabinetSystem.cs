@@ -46,7 +46,7 @@ namespace Content.Server.Cabinet
             // Toggle open verb
             Verb toggleVerb = new();
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
-            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open; 
+            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
             args.Verbs.Add(toggleVerb);
         }
 
