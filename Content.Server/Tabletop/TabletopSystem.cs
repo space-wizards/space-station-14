@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -33,6 +36,22 @@ namespace Content.Server.Tabletop
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
             SubscribeLocalEvent<TabletopDraggableComponent, ComponentGetState>(GetCompState);
+            SubscribeLocalEvent<TabletopGameComponent, GetActivationVerbsEvent>(AddPlayGameVerb);
+        }
+
+        /// <summary>
+        /// Add a verb that allows the player to start playing a tabletop game.
+        /// </summary>
+        private void AddPlayGameVerb(EntityUid uid, TabletopGameComponent component, GetActivationVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            Verb verb = new();
+            verb.Text = Loc.GetString("tabletop-verb-play-game");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
+            verb.Act = () => OpenTable(args.User, component.Owner);
+            args.Verbs.Add(verb);
         }
 
         private void GetCompState(EntityUid uid, TabletopDraggableComponent component, ref ComponentGetState args)

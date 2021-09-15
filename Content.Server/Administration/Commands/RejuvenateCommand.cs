@@ -3,7 +3,7 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Administration;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.MobState;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
@@ -51,12 +51,16 @@ namespace Content.Server.Administration.Commands
 
         public static void PerformRejuvenate(IEntity target)
         {
-            target.GetComponentOrNull<IDamageableComponent>()?.TrySetAllDamage(0);
             target.GetComponentOrNull<IMobStateComponent>()?.UpdateState(0);
             target.GetComponentOrNull<HungerComponent>()?.ResetFood();
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
             target.GetComponentOrNull<StunnableComponent>()?.ResetStuns();
             target.GetComponentOrNull<FlammableComponent>()?.Extinguish();
+
+            if (target.TryGetComponent(out DamageableComponent? damageable))
+            {
+                EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
+            }
 
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
