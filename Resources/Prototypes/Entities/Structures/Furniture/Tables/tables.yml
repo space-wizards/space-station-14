@@ -228,7 +228,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/wood.rsi
   - type: Damageable
-    resistances: Wood
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -263,7 +263,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Damageable
-    resistances: Wood
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
