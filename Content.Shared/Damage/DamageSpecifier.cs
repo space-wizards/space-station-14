@@ -184,6 +184,24 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
+        ///     Reduce (or increase) damages by applying multiple modifier sets.
+        /// </summary>
+        /// <param name="damageSpec"></param>
+        /// <param name="modifierSets"></param>
+        /// <returns></returns>
+        public static DamageSpecifier ApplyModifierSets(DamageSpecifier damageSpec, IEnumerable<DamageModifierSet> modifierSets)
+        {
+            DamageSpecifier newDamage = new(damageSpec);
+            foreach (var set in modifierSets)
+            {
+                // this is probably really inefficient. just don't call this in a hot path I guess.
+                newDamage = ApplyModifierSet(newDamage, set);
+            }
+
+            return newDamage;
+        }
+
+        /// <summary>
         ///     Remove any damage entries with zero damage.
         /// </summary>
         public void TrimZeros()

@@ -90,7 +90,7 @@ namespace Content.Server.Weapon.Melee
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
                     _damageableSystem.TryChangeDamage(target.Uid,
-                            comp.Damage * hitEvent.Multiplier + hitEvent.FlatDamage);
+                        DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -156,7 +156,7 @@ namespace Content.Server.Weapon.Melee
                 foreach (var entity in hitEntities)
                 {
                     _damageableSystem.TryChangeDamage(entity.Uid,
-                            comp.Damage * hitEvent.Multiplier + hitEvent.FlatDamage);
+                            DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                 }
             }
 
@@ -278,12 +278,10 @@ namespace Content.Server.Weapon.Melee
     public class MeleeHitEvent : HandledEntityEventArgs
     {
         /// <summary>
-        ///     An amount to multiply damage by, so other systems
-        ///     can give feedback.
-        ///     TODO MIRROR change this, make resistance use this, make armor use this?? use resistanceset instead of just
-        ///     multiplier so you can do flat/multiplicative as well?
+        ///     Modifier sets to apply to the hit event when it's all said and done.
+        ///     This should be modified by adding a new entry to the list.
         /// </summary>
-        public int Multiplier = 1;
+        public List<DamageModifierSet> ModifiersList = new();
 
         /// <summary>
         ///     A flat amount of damage to add. Same reason as above with Multiplier.

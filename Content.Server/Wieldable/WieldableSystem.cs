@@ -213,8 +213,8 @@ namespace Content.Server.Wieldable
             }
             if (args.Handled)
                 return;
-            args.Multiplier *= component.DamageMultiplier;
-            args.FlatDamage += component.FlatDamage;
+
+            args.ModifiersList.Add(component.Modifiers);
         }
     }
 

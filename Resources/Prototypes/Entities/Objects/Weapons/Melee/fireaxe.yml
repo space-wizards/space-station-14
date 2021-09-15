@@ -13,11 +13,15 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 7
+        # axes are kinda like sharp hammers, you know?
+        Blunt: 7
         Slash: 7
   - type: Wieldable
   - type: IncreaseDamageOnWield
-    flatDamage: 10
+    modifiers:
+      flatReductions:
+        Blunt: -5 # negative reductions = increases
+        Slash: -5
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
