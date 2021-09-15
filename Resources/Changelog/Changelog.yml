@@ -1978,3 +1978,8 @@ Entries:
   - {message: bottles filled with drinks now spill as expected, type: Fix}
   id: 353
   time: '2021-09-15T10:46:43.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: FireExtinguisher interactions, type: Fix}
+  id: 354
+  time: '2021-09-15T10:48:08.0000000+00:00'
