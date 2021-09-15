@@ -38,8 +38,9 @@
     impulse: 50.0
   - type: FireExtinguisher
   - type: MeleeWeapon
-    damage: 10
-    damageType: Blunt
+    damage: 
+      types:
+        Blunt: 10
     hitSound:
       path: /Audio/Weapons/smash.ogg
   - type: Appearance

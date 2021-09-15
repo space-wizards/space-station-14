@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -183,13 +182,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 if (energyRatio < 1.0)
                 {
-                    var newDamages = new Dictionary<string, int>(projectileComponent.Damages.Count);
-                    foreach (var (damageType, damage) in projectileComponent.Damages)
-                    {
-                        newDamages.Add(damageType, (int) (damage * energyRatio));
-                    }
-
-                    projectileComponent.Damages = newDamages;
+                    projectileComponent.Damage *= energyRatio;
                 }
             } else if (entity.TryGetComponent(out HitscanComponent? hitscanComponent))
             {

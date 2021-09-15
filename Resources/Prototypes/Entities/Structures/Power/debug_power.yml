@@ -38,7 +38,8 @@
   - type: PowerConsumer
     drawRate: 50
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

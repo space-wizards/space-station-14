@@ -18,7 +18,8 @@
   - type: Icon
     state: full
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Physics
     bodyType: Static
     fixtures:

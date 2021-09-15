@@ -20,6 +20,9 @@
     HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: ItemStatus
   - type: RefillableSolution
     solution: welder

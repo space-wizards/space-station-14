@@ -45,7 +45,8 @@
         !type:CableDeviceNode
         nodeGroupID: MVPower
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
       - trigger:

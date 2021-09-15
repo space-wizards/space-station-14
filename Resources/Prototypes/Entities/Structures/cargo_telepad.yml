@@ -19,7 +19,8 @@
     state: offline
     drawdepth: FloorObjects
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

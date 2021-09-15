@@ -10,7 +10,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Temperature;
@@ -20,8 +19,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Components
 {
@@ -45,17 +42,9 @@ namespace Content.Server.Atmos.Components
         [DataField("canResistFire")]
         public bool CanResistFire { get; private set; } = false;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Heat"!;
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
+        public DamageSpecifier Damage = default!;
 
         public void Extinguish()
         {
@@ -102,12 +91,9 @@ namespace Content.Server.Atmos.Components
                     temp.ReceiveHeat(200 * FireStacks);
                 }
 
-                if (Owner.TryGetComponent(out IDamageableComponent? damageable))
-                {
-                    // TODO ATMOS Fire resistance from armor
-                    var damage = Math.Min((int) (FireStacks * 2.5f), 10);
-                    damageable.TryChangeDamage(DamageType, damage, false);
-                }
+                // TODO ATMOS Fire resistance from armor
+                var damageScale = Math.Min((int) (FireStacks * 2.5f), 10);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * damageScale);
 
                 AdjustFireStacks(-0.1f * (_resisting ? 10f : 1f));
             }

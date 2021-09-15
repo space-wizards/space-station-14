@@ -9,7 +9,8 @@
   - type: Icon
     sprite: Structures/Windows/plasma_window.rsi
   - type: Damageable
-    resistances: glassResistances
+    damageContainer: Inorganic
+    resistanceSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -26,7 +27,6 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-    resistances: glassResistances
   - type: Window
     base: pwindow
   - type: Construction

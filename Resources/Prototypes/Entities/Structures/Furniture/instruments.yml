@@ -12,7 +12,8 @@
   - type: Sprite
     sprite: Structures/Furniture/instruments.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
