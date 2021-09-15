@@ -29,7 +29,8 @@
     lockOnClick: true # toggle lock just by clicking on barrier
   - type: DeployableBarrier     
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

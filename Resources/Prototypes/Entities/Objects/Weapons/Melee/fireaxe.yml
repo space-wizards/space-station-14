@@ -11,8 +11,10 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 14
-    damageType: Slash
+    damage:
+      types:
+        Piercing: 7
+        Slash: 7
   - type: Wieldable
   - type: IncreaseDamageOnWield
     flatDamage: 10

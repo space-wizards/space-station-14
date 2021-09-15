@@ -24,7 +24,8 @@
     position: Stand
   - type: Pullable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -186,7 +187,7 @@
     graph: seat
     node: chairWood
   - type: Damageable
-    resistances: woodResistances
+    resistances: Wood
   - type: Destructible
     thresholds:
     - trigger:

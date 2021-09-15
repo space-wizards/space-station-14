@@ -25,7 +25,8 @@
     - ExplosivePassable
     - Wooden
   - type: Damageable
-    resistances: woodResistances
+    resistances: Wood
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
@@ -42,6 +43,9 @@
   - type: AtmosExposed
   - type: Flammable
     fireSpread: true
+    damage:
+      types:
+        Heat : 1 #per second, scales with number of fire 'stacks'
   - type: Reactive
     reactions:
       - !type:ExtinguishReaction

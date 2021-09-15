@@ -32,6 +32,8 @@
       - Opaque
       - MobImpassable
   - type: Damageable
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -81,6 +83,7 @@
         - Opaque
         - MobImpassable
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

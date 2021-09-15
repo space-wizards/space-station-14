@@ -9,7 +9,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,7 +42,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -226,7 +228,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/wood.rsi
   - type: Damageable
-    resistances: woodResistances
+    resistances: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -261,7 +263,7 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Damageable
-    resistances: woodResistances
+    resistances: Wood
   - type: Destructible
     thresholds:
     - trigger:

@@ -29,6 +29,8 @@
   - type: Drink
     isOpen: true
   - type: Damageable
+    damageContainer: Inorganic
+    resistanceSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -47,9 +49,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOtherOnHit
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
 
 # Transformable container - normal glass
 - type: entity

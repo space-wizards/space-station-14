@@ -35,7 +35,8 @@
       - key: enum.SignalReceiverUiKey.Key
         type: SignalPortSelectorBoundUserInterface
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    resistanceSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -68,6 +69,9 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+    damage:
+      types:
+        Heat: 20
   - type: ApcPowerReceiver
   - type: Appearance
     visuals:
@@ -85,6 +89,9 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: False
+    damage:
+      types:
+        Heat: 20
 
 - type: entity
   name: small light
@@ -107,6 +114,7 @@
       softness: 1.1
       enabled: true
     - type: Damageable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:
@@ -146,6 +154,9 @@
       layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
+    damage:
+      types:
+        Heat: 20
   - type: ApcPowerReceiver
   - type: Appearance
     visuals:
@@ -160,3 +171,6 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: False
+    damage:
+      types:
+        Heat: 20

@@ -5,7 +5,6 @@ using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -17,18 +16,20 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.MobState.Components
 {
     /// <summary>
-    ///     When attached to an <see cref="IDamageableComponent"/>,
+    ///     When attached to an <see cref="DamageableComponent"/>,
     ///     this component will handle critical and death behaviors for mobs.
     ///     Additionally, it handles sending effects to clients
     ///     (such as blur effect for unconsciousness) and managing the health HUD.
     /// </summary>
+    [RegisterComponent]
+    [ComponentReference(typeof(IMobStateComponent))]
     [NetworkedComponent()]
-    public abstract class SharedMobStateComponent : Component, IMobStateComponent, IActionBlocker
+    public class MobStateComponent : Component, IMobStateComponent, IActionBlocker
     {
         public override string Name => "MobState";
 
         /// <summary>
-        ///     States that this <see cref="SharedMobStateComponent"/> mapped to
+        ///     States that this <see cref="MobStateComponent"/> mapped to
         ///     the amount of damage at which they are triggered.
         ///     A threshold is reached when the total damage of an entity is equal
         ///     to or higher than the int key, but lower than the next threshold.
@@ -36,7 +37,7 @@ namespace Content.Shared.MobState.Components
         /// </summary>
         [ViewVariables]
         [DataField("thresholds")]
-        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
+        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = new();
 
         // TODO Remove Nullability?
         [ViewVariables]
@@ -53,7 +54,13 @@ namespace Content.Shared.MobState.Components
 
             if (CurrentState != null && CurrentThreshold != null)
             {
-                UpdateState(null, (CurrentState, CurrentThreshold.Value));
+                // Initialize with given states
+                SetMobState(null, (CurrentState, CurrentThreshold.Value));
+            }
+            else
+            {
+                // Initialize with some amount of damage, defaulting to 0.
+                UpdateState(Owner.GetComponentOrNull<DamageableComponent>()?.TotalDamage ?? 0);
             }
         }
 
@@ -88,29 +95,11 @@ namespace Content.Shared.MobState.Components
 
             if (state.CurrentThreshold == null)
             {
-                RemoveState(true);
+                RemoveState();
             }
             else
             {
-                UpdateState(state.CurrentThreshold.Value, true);
-            }
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case DamageChangedMessage msg:
-                    if (msg.Damageable.Owner != Owner)
-                    {
-                        break;
-                    }
-
-                    UpdateState(msg.Damageable.TotalDamage);
-
-                    break;
+                UpdateState(state.CurrentThreshold.Value);
             }
         }
 
@@ -136,7 +125,7 @@ namespace Content.Shared.MobState.Components
 
         public (IMobState state, int threshold)? GetState(int damage)
         {
-            foreach (var (threshold, state) in _lowestToHighestStates.Reverse())
+            foreach (var (threshold, state) in _highestToLowestStates)
             {
                 if (damage >= threshold)
                 {
@@ -273,36 +262,32 @@ namespace Content.Shared.MobState.Components
             return TryGetState(earliestState, out state, out threshold);
         }
 
-        private void RemoveState(bool syncing = false)
+        private void RemoveState()
         {
             var old = CurrentState;
             CurrentState = null;
             CurrentThreshold = null;
 
-            UpdateState(old, null);
-
-            if (!syncing)
-            {
-                Dirty();
-            }
+            SetMobState(old, null);
         }
 
-        public void UpdateState(int damage, bool syncing = false)
+        /// <summary>
+        ///     Updates the mob state..
+        /// </summary>
+        public void UpdateState(int damage)
         {
             if (!TryGetState(damage, out var newState, out var threshold))
             {
                 return;
             }
 
-            UpdateState(CurrentState, (newState, threshold));
-
-            if (!syncing)
-            {
-                Dirty();
-            }
+            SetMobState(CurrentState, (newState, threshold));
         }
 
-        private void UpdateState(IMobState? old, (IMobState state, int threshold)? current)
+        /// <summary>
+        ///     Sets the mob state and marks the component as dirty.
+        /// </summary>
+        private void SetMobState(IMobState? old, (IMobState state, int threshold)? current)
         {
             if (!current.HasValue)
             {
@@ -328,9 +313,10 @@ namespace Content.Shared.MobState.Components
             state.UpdateState(Owner, threshold);
 
             var message = new MobStateChangedMessage(this, old, state);
-
             SendMessage(message);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
+
+            Dirty();
         }
 
         bool IActionBlocker.CanInteract()

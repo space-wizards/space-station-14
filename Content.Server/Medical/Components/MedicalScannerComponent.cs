@@ -8,7 +8,6 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
@@ -99,8 +98,7 @@ namespace Content.Server.Medical.Components
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =
             new(
                 null,
-                new Dictionary<string, int>(),
-                new Dictionary<string, int>(),
+                null,
                 false);
 
         private MedicalScannerBoundUserInterfaceState GetUserInterfaceState()
@@ -116,18 +114,14 @@ namespace Content.Server.Medical.Components
                 return EmptyUIState;
             }
 
-            if (!body.TryGetComponent(out IDamageableComponent? damageable))
+            if (!body.TryGetComponent(out DamageableComponent? damageable))
             {
                 return EmptyUIState;
             }
 
-            // Get dictionaries of damage, by fully supported damage groups and types
-            var groups = new Dictionary<string, int>(damageable.GetDamagePerFullySupportedGroupIDs);
-            var types = new Dictionary<string, int>(damageable.GetDamagePerTypeIDs);
-
             if (_bodyContainer.ContainedEntity?.Uid == null)
             {
-                return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, true);
+                return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, true);
             }
 
             var cloningSystem = EntitySystem.Get<CloningSystem>();
@@ -135,7 +129,7 @@ namespace Content.Server.Medical.Components
                          mindComponent.Mind != null &&
                          cloningSystem.HasDnaScan(mindComponent.Mind);
 
-            return new MedicalScannerBoundUserInterfaceState(body.Uid, groups, types, scanned);
+            return new MedicalScannerBoundUserInterfaceState(body.Uid, damageable, scanned);
         }
 
         private void UpdateUserInterface()

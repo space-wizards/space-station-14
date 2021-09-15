@@ -1965,3 +1965,11 @@ Entries:
     type: Add}
   id: 351
   time: '2021-09-13T09:58:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Many components have had damage values & types adjusted. E.g., knives
+      are no longer dull and actually deal slash damage.', type: Tweak}
+  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
+      instead of only when they land.', type: Tweak}
+  id: 352
+  time: '2021-09-14T17:07:38.0000000+00:00'

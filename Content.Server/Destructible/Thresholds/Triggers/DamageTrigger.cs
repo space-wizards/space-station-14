@@ -1,5 +1,5 @@
 using System;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
@@ -18,7 +18,7 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         [DataField("damage", required: true)]
         public int Damage { get; set; } = default!;
 
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
         {
             return damageable.TotalDamage >= Damage;
         }

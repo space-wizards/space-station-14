@@ -19,7 +19,8 @@
       - book-4
       - book-5
   - type: Damageable
-    resistances: woodResistances
+    resistances: Wood
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

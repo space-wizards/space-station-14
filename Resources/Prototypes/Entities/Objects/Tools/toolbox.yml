@@ -12,7 +12,9 @@
     size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Blunt: 10
     hitSound:
       path: "/Audio/Weapons/smash.ogg"
 
@@ -76,7 +78,9 @@
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Blunt: 15
 
 - type: entity
   name: golden toolbox
