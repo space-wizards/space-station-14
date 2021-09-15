@@ -9,7 +9,7 @@ namespace Content.Client.VendingMachines
 {
     public class VendingMachineBoundUserInterface : BoundUserInterface
     {
-        private VendingMachineMenu? _menu;
+        [ViewVariables] private VendingMachineMenu? _menu;
 
         public SharedVendingMachineComponent? VendingMachine { get; private set; }
 
