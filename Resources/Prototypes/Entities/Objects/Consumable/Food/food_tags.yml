@@ -1,0 +1,27 @@
+## Put tags in alphabetical order
+## Type-based tags
+- type: Tag
+  id: Raw
+
+- type: Tag
+  id: Cooked
+
+- type: Tag
+  id: Cutlet
+  
+- type: Tag
+  id: Flesh
+
+- type: Tag
+  id: JunkFood
+  
+- type: Tag
+  id: Meat
+
+- type: Tag
+  id: PowderedCheese
+  
+## Unqie item tags
+- type: Tag
+  id: RawMeat
+  
