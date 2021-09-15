@@ -14,6 +14,7 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Notification.Managers;
@@ -50,6 +51,59 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+            SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        private void HandleConstructionExamined(EntityUid uid, ConstructionComponent component, ExaminedEvent args)
+        {
+            if (component.Target != null)
+            {
+                args.Message.AddMarkup(
+                    Loc.GetString(
+                        "construction-component-to-create-header",
+                        ("targetName", component.Target.Name)) + "\n");
+            }
+
+            if (component.Edge == null && component.TargetNextEdge != null)
+            {
+                var preventStepExamine = false;
+
+                foreach (var condition in component.TargetNextEdge.Conditions)
+                {
+                    preventStepExamine |= condition.DoExamine(args);
+                }
+
+                if (!preventStepExamine)
+                    component.TargetNextEdge.Steps[0].DoExamine(args);
+                return;
+            }
+
+            if (component.Edge != null)
+            {
+                var preventStepExamine = false;
+
+                foreach (var condition in component.Edge.Conditions)
+                {
+                    preventStepExamine |= condition.DoExamine(args);
+                }
+
+                if (preventStepExamine) return;
+            }
+
+            if (component.EdgeNestedStepProgress == null)
+            {
+                if (component.EdgeStep < component.Edge?.Steps.Count)
+                    component.Edge.Steps[component.EdgeStep].DoExamine(args);
+                return;
+            }
+
+            foreach (var list in component.EdgeNestedStepProgress)
+            {
+                if(list.Count == 0) continue;
+
+                list[0].DoExamine(args);
+            }
+
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
