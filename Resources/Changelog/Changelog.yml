@@ -1973,3 +1973,8 @@ Entries:
       instead of only when they land.', type: Tweak}
   id: 352
   time: '2021-09-14T17:07:38.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: bottles filled with drinks now spill as expected, type: Fix}
+  id: 353
+  time: '2021-09-15T10:46:43.0000000+00:00'
