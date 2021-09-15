@@ -8,6 +8,12 @@
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 10
   - type: Puddle
     spill_sound:
       path: /Audio/Effects/Fluids/splat.ogg
