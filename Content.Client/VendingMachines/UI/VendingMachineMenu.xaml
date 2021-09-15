@@ -1,6 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
-            SetSize="250 450"
-            Resizable="False">
+﻿<SS14Window xmlns="https://spacestation14.io">
     <ItemList Name="VendingContents"
               SizeFlagsStretchRatio="8"
               VerticalExpand="True">

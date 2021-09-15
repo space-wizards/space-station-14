@@ -41,21 +41,17 @@ namespace Content.Client.VendingMachines.UI
             {
                 var itemName = _prototypeManager.Index<EntityPrototype>(entry.ID).Name;
                 if (itemName.Length > longestEntry.Length)
-                {
                     longestEntry = itemName;
-                }
 
                 Texture? icon = null;
                 if(_prototypeManager.TryIndex(entry.ID, out EntityPrototype? prototype))
-                {
                     icon = SpriteComponent.GetPrototypeIcon(prototype, _resourceCache).Default;
-                }
 
                 VendingContents.AddItem($"{itemName} [{entry.Amount}]", icon);
             }
 
-            SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 300, 400),
-                Math.Clamp(VendingContents.Count * 45, 200, 500));
+            SetSize = (Math.Clamp((longestEntry.Length + 2) * 12, 250, 300),
+                Math.Clamp(VendingContents.Count * 30, 150, 350));
         }
 
         public void ItemSelected(ItemList.ItemListSelectedEventArgs args)
