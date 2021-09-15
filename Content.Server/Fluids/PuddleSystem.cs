@@ -1,7 +1,10 @@
 using Content.Server.Fluids.Components;
+using Content.Shared.Examine;
+using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids
@@ -15,12 +18,22 @@ namespace Content.Server.Fluids
         {
             base.Initialize();
             _mapManager.TileChanged += HandleTileChanged;
+
+            SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
             _mapManager.TileChanged -= HandleTileChanged;
+        }
+
+        private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
+        {
+            if (ComponentManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
+            {
+                args.Message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
+            }
         }
 
         //TODO: Replace all this with an Unanchored event that deletes the puddle
