@@ -41,7 +41,7 @@ namespace Content.Server.Xenobiology
             SubscribeLocalEvent<SpecimenDietComponent, FeedEvent>(OnSpecimenFed);
         }
 
-        private void OnInitialize(EntityUid uid, SpecimenDietComponent comp, ComponentInit args)
+        private void OnInitialize(EntityUid uid, SpecimenDietComponent comp, ref ComponentInit args)
         {
             comp.SelectedDiet = _random.Pick(comp.DietPick);
         }
