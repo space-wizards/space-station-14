@@ -1,4 +1,4 @@
-- type: resistanceSet
+- type: damageModifierSet
   id: Metallic
   coefficients:
     Blunt: 0.7
@@ -8,7 +8,7 @@
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Inflatable
   coefficients:
     Blunt: 0.5
@@ -18,7 +18,7 @@
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Glass
   coefficients:
     Blunt: 0.5
@@ -28,22 +28,13 @@
     Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 0
-    Piercing: 5
-    Heat: 0
-    Shock: 0
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Wood
   coefficients:
     Blunt: 0.5
     Slash: 2.0
     Piercing: 1.0
     Heat: 2.0
-    Shock: 0
   flatReductions:
     Blunt: 5
-    Slash: 0
-    Piercing: 0
-    Heat: 0
-    Shock: 0

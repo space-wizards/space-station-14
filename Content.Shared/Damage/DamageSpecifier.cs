@@ -41,7 +41,7 @@ namespace Content.Shared.Damage
             {
                 if (_damageDict == null)
                     DeserializeDamage();
-                return _damageDict!; 
+                return _damageDict!;
             }
             set => _damageDict = value;
         }
@@ -120,7 +120,7 @@ namespace Content.Shared.Damage
                     // This can happen if deserialized before prototypes are loaded.
                     Logger.Error($"Unknown damage group given to DamageSpecifier: {entry.Key}");
                     continue;
-                }    
+                }
 
                 // Simply distribute evenly (except for rounding).
                 // We do this by reducing remaining the # of types and damage every loop.
@@ -141,12 +141,12 @@ namespace Content.Shared.Damage
         }
 
         /// <summary>
-        ///     Reduce (or increase) damages by applying a resistance set.
+        ///     Reduce (or increase) damages by applying a damage modifier set.
         /// </summary>
         /// <remarks>
         ///     Only applies resistance to a damage type if it is dealing damage, not healing.
         /// </remarks>
-        public static DamageSpecifier ApplyResistanceSet(DamageSpecifier damageSpec, ResistanceSetPrototype resistanceSet)
+        public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet)
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
             // duller as you hit walls. Neat, but not intended. And confusing, when you realize your fists don't work no
@@ -159,9 +159,9 @@ namespace Content.Shared.Damage
 
                 float newValue = entry.Value;
 
-                if (resistanceSet.FlatReduction.TryGetValue(entry.Key, out var reduction))
+                if (modifierSet.FlatReduction.TryGetValue(entry.Key, out var reduction))
                 {
-                    newValue -= reduction; 
+                    newValue -= reduction;
                     if (newValue <= 0)
                     {
                         // flat reductions cannot heal you
@@ -170,7 +170,7 @@ namespace Content.Shared.Damage
                     }
                 }
 
-                if (resistanceSet.Coefficients.TryGetValue(entry.Key, out var coefficient))
+                if (modifierSet.Coefficients.TryGetValue(entry.Key, out var coefficient))
                 {
                     // negative coefficients **can** heal you.
                     newValue = MathF.Round(newValue*coefficient, MidpointRounding.AwayFromZero);

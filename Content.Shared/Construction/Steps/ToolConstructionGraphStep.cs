@@ -1,3 +1,4 @@
+using Content.Shared.Examine;
 using Content.Shared.Tool;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -14,15 +15,15 @@ namespace Content.Shared.Construction.Steps
 
         [DataField("examine")] public string ExamineOverride { get; } = string.Empty;
 
-        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        public override void DoExamine(ExaminedEvent examinedEvent)
         {
             if (!string.IsNullOrEmpty(ExamineOverride))
             {
-                message.AddMarkup(Loc.GetString(ExamineOverride));
+                examinedEvent.Message.AddMarkup(Loc.GetString(ExamineOverride));
                 return;
             }
 
-            message.AddMarkup(Loc.GetString("construction-use-tool-entity", ("toolName", Tool.GetToolName())));
+            examinedEvent.Message.AddMarkup(Loc.GetString("construction-use-tool-entity", ("toolName", Tool.GetToolName())));
         }
     }
 }

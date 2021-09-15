@@ -59,10 +59,8 @@ namespace Content.Server.Dice
         private void OnExamined(EntityUid uid, DiceComponent dice, ExaminedEvent args)
         {
             //No details check, since the sprite updates to show the side.
-            args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
-            args.Message.PushNewline();
-            args.Message.AddMarkup(Loc.GetString("dice-component-on-examine-message-part-2", ("currentSide", dice.CurrentSide)));
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-1", ("sidesAmount", dice.Sides)));
+            args.PushMarkup(Loc.GetString("dice-component-on-examine-message-part-2", ("currentSide", dice.CurrentSide)));
         }
     }
 }

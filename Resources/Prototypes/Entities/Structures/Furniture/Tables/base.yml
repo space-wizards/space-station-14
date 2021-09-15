@@ -7,7 +7,7 @@
   components:
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: PlaceableSurface
   - type: Sprite
     netsync: false

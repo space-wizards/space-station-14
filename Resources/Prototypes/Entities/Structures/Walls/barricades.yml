@@ -25,7 +25,7 @@
     - ExplosivePassable
     - Wooden
   - type: Damageable
-    resistances: Wood
+    damageModifierSet: Wood
     damageContainer: Inorganic
   - type: Destructible
     thresholds:
