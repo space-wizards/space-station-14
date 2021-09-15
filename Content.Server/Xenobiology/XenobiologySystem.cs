@@ -36,12 +36,12 @@ namespace Content.Server.Xenobiology
             SubscribeLocalEvent<SpecimenContainmentComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnTubeFeed);
             SubscribeLocalEvent<SpecimenContainmentComponent, ExaminedEvent>(OnContainmentExamined);
-            SubscribeLocalEvent<SpecimenDietComponent, ComponentInit>(OnInitialize);
+            SubscribeLocalEvent<SpecimenDietComponent, ComponentInit>(Initialize);
             SubscribeLocalEvent<SpecimenDietComponent, ExaminedEvent>(OnSpecimenExamined);
             SubscribeLocalEvent<SpecimenDietComponent, FeedEvent>(OnSpecimenFed);
         }
 
-        private void OnInitialize(EntityUid uid, SpecimenDietComponent comp, ref ComponentInit args)
+        private void Initialize(EntityUid uid, SpecimenDietComponent comp, ComponentInit args)
         {
             comp.SelectedDiet = _random.Pick(comp.DietPick);
         }
