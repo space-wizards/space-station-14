@@ -1,4 +1,4 @@
-- type: resistanceSet
+- type: damageModifierSet
   id: Metallic
   coefficients:
     Blunt: 0.7
@@ -8,7 +8,7 @@
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Inflatable
   coefficients:
     Blunt: 0.5
@@ -18,7 +18,7 @@
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Glass
   coefficients:
     Blunt: 0.5

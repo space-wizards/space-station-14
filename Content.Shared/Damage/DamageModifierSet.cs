@@ -1,27 +1,22 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using Robust.Shared.Prototypes;
+using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
-using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Damage.Prototypes
+namespace Content.Shared.Damage
 {
     /// <summary>
-    ///     Prototype of damage resistance sets. Can be applied to <see cref="DamageSpecifier"/> using <see
-    ///     cref="DamageSpecifier.ApplyResistanceSet(ResistanceSetPrototype)"/>. This can be done several times as the
+    ///     A set of coefficients or flat modifiers to damage types.. Can be applied to <see cref="DamageSpecifier"/> using <see
+    ///     cref="DamageSpecifier.ApplyModifierSet(DamageSpecifier, DamageModifierSet)"/>. This can be done several times as the
     ///     <see cref="DamageSpecifier"/> is passed to it's final target. By default the receiving <see cref="DamageableComponent"/>, will
-    ///     also apply it's own <see cref="ResistanceSetPrototype"/>.
+    ///     also apply it's own <see cref="DamageModifierSet"/>.
     /// </summary>
-    [Prototype("resistanceSet")]
+    [DataDefinition]
     [Serializable, NetSerializable]
-    public class ResistanceSetPrototype : IPrototype
+    public class DamageModifierSet
     {
-        [ViewVariables]
-        [DataField("id", required: true)]
-        public string ID { get; } = default!;
-
         [DataField("coefficients", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, DamageTypePrototype>))]
         public Dictionary<string, float> Coefficients = new();
 

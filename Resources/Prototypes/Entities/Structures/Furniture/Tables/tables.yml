@@ -10,7 +10,7 @@
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -43,7 +43,7 @@
     sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
