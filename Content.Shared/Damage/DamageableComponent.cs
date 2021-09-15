@@ -19,7 +19,7 @@ namespace Content.Shared.Damage
     /// </summary>
     /// <remarks>
     ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. DamageContainers
-    ///     may also have resistances to certain damage types, defined via a <see cref="ResistanceSetPrototype"/>.
+    ///     may also have resistances to certain damage types, defined via a <see cref="DamageModifierSetPrototype"/>.
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent()]
@@ -36,12 +36,16 @@ namespace Content.Shared.Damage
         public string? DamageContainerID;
 
         /// <summary>
-        ///     This <see cref="ResistanceSetPrototype"/> will be applied to any damage that is dealt to this container,
+        ///     This <see cref="DamageModifierSetPrototype"/> will be applied to any damage that is dealt to this container,
         ///     unless the damage explicitly ignores resistances.
         /// </summary>
+        /// <remarks>
+        ///     Though DamageModifierSets can be deserialized directly, we only want to use the prototype version here
+        ///     to reduce duplication.
+        /// </remarks>
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("resistanceSet", customTypeSerializer: typeof(PrototypeIdSerializer<ResistanceSetPrototype>))]
-        public string? ResistanceSetID;
+        [DataField("damageModifierSet", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
+        public string? DamageModifierSetId;
 
         /// <summary>
         ///     All the damage information is stored in this <see cref="DamageSpecifier"/>.
@@ -116,14 +120,14 @@ namespace Content.Shared.Damage
     public class DamageableComponentState : ComponentState
     {
         public readonly Dictionary<string, int> DamageDict;
-        public readonly string? ResistanceSetID;
+        public readonly string? ModifierSetId;
 
         public DamageableComponentState(
             Dictionary<string, int> damageDict,
-            string? resistanceSetID) 
+            string? modifierSetId)
         {
             DamageDict = damageDict;
-            ResistanceSetID = resistanceSetID;
+            ModifierSetId = modifierSetId;
         }
     }
 }

@@ -39,7 +39,7 @@
     drawRate: 50
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
