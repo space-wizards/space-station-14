@@ -1,10 +1,8 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
             SetSize="250 450"
             Resizable="False">
-    <BoxContainer Orientation="Vertical">
-        <ItemList Name="VendingContents"
-                  SizeFlagsStretchRatio="8"
-                  VerticalExpand="true">
-        </ItemList>
-    </BoxContainer>
+    <ItemList Name="VendingContents"
+              SizeFlagsStretchRatio="8"
+              VerticalExpand="True">
+    </ItemList>
 </SS14Window>
