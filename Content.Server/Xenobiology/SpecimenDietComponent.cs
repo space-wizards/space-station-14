@@ -10,8 +10,7 @@ namespace Content.Server.Xenobiology
     [RegisterComponent]
     public class SpecimenDietComponent : Component
     {
-        [Dependency]
-        private readonly IRobustRandom _random = default!;
+
         public override string Name => "SpecimenDietComponent";
 
         //The diet is defined by a tag fed into it
@@ -22,19 +21,7 @@ namespace Content.Server.Xenobiology
         public int GrowthState = 0; //0 for embryo, 5 for mature specimen. Anything in-between is embryo state.
         protected override void Initialize()
         {
-            IoCManager.Resolve<IRobustRandom>();
             base.Initialize();
-            SelectDiet();
-        }
-
-        public void SelectDiet()
-        {
-            IoCManager.Resolve<IRobustRandom>();
-            //Picks a random diet, if can pick one
-            if (DietPick is not null)
-            { 
-               SelectedDiet = _random.Pick(DietPick);
-            }
         }
     }
 }

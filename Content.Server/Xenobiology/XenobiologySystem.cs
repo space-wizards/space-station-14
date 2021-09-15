@@ -12,6 +12,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Content.Shared.Audio;
 using Robust.Shared.Containers;
+using Robust.Shared.Random;
 
 namespace Content.Server.Xenobiology
 {
@@ -27,6 +28,7 @@ namespace Content.Server.Xenobiology
 
     public class XenobiologySystem : EntitySystem
     {
+        private readonly IRobustRandom _random = default!;
 
         public override void Initialize()
         {
@@ -34,11 +36,15 @@ namespace Content.Server.Xenobiology
             SubscribeLocalEvent<SpecimenContainmentComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<SpecimenContainmentComponent, InteractUsingEvent>(OnTubeFeed);
             SubscribeLocalEvent<SpecimenContainmentComponent, ExaminedEvent>(OnContainmentExamined);
+            SubscribeLocalEvent<SpecimenDietComponent, ComponentInit>(OnInitialize);
             SubscribeLocalEvent<SpecimenDietComponent, ExaminedEvent>(OnSpecimenExamined);
             SubscribeLocalEvent<SpecimenDietComponent, FeedEvent>(OnSpecimenFed);
         }
 
-       
+        private void OnInitialize(EntityUid uid, SpecimenDietComponent comp, ComponentInit args)
+        {
+            comp.SelectedDiet = _random.Pick(comp.DietPick);
+        }
 
         /// <summary>
         /// Builds a dynamic specimen examination
@@ -72,7 +78,7 @@ namespace Content.Server.Xenobiology
                 {
                     specimen.PopupMessageEveryone(Loc.GetString("specimen-humanlike-fed"));
                     EntityManager.QueueDeleteEntity(usedItem.Uid); //Delete the food
-                    comp.SelectDiet(); //Set a new random diet
+                    comp.SelectedDiet = _random.Pick(comp.DietPick); //Pick a new random diet from the component
                     comp.GrowthState++;
                     if (comp.GrowthState >= 5)
                     {
