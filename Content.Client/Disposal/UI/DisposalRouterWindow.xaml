@@ -12,7 +12,7 @@
                       ToolTip="{Loc 'disposal-router-window-tag-input-tooltip'}" />
             <Control MinSize="10 0" />
             <Button Name="ConfirmProtected"
-                    Text="{Loc 'disposal-router-window-tag-confirm-button'}" />
+                    Text="{Loc 'disposal-router-window-tag-input-confirm-button'}" />
         </BoxContainer>
     </BoxContainer>
 </SS14Window>
