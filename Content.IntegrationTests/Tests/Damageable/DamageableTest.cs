@@ -53,10 +53,6 @@ namespace Content.IntegrationTests.Tests.Damageable
     - TestDamage3b
     - TestDamage3c
 
-- type: damageModifierSet
-  id: testResistances
-# this space is intentionally left blank
-
 # This container should not support TestDamage1 or TestDamage2b
 - type: damageContainer
   id: testDamageContainer
