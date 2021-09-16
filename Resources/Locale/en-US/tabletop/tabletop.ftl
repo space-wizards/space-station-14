@@ -1,6 +1,6 @@
 ﻿## TabletopGameComponent
 tabletop-verb-play-game = Play Game
-tabletop-default-board-name = Generic Board
+tabletop-default-board-name = Board Game
 
 ## Chess
 tabletop-chess-board-name = Chess
