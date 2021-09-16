@@ -24,13 +24,18 @@ namespace Content.Server.Jobs
 
         public override void AfterEquip(IEntity mob)
         {
-            if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype)) return;
-            if (!IoCManager.Resolve<IHolidayManager>().IsCurrentlyHoliday(Holiday)) return;
+            if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
+                return;
 
-            var item = mob.EntityManager.SpawnEntity(Prototype, mob.Transform.Coordinates);
-            if (!item.TryGetComponent(out ItemComponent? itemComp)) return;
-            if (!mob.TryGetComponent(out HandsComponent? handsComponent)) return;
-            handsComponent.PutInHand(itemComp, false);
+            if (!IoCManager.Resolve<IHolidayManager>().IsCurrentlyHoliday(Holiday))
+                return;
+
+            var entity = mob.EntityManager.SpawnEntity(Prototype, mob.Transform.Coordinates);
+
+            if (!entity.TryGetComponent(out ItemComponent? item) || !mob.TryGetComponent(out HandsComponent? hands))
+                return;
+
+            hands.PutInHand(item, false);
         }
     }
 }
