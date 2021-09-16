@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.EffectBlocker;
 
 namespace Content.Shared.ActionBlocker
@@ -11,9 +10,6 @@ namespace Content.Shared.ActionBlocker
     [Obsolete("Use events instead")]
     public interface IActionBlocker
     {
-        [Obsolete("Use MoveAttemptEvent instead")]
-        bool CanMove() => true;
-
         [Obsolete("Use InteractAttemptEvent instead")]
         bool CanInteract() => true;
 

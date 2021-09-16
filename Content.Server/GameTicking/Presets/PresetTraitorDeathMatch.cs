@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Hands.Components;
@@ -14,7 +15,6 @@ using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.PDA;
@@ -22,10 +22,12 @@ using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -37,6 +39,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -162,10 +165,12 @@ namespace Content.Server.GameTicking.Presets
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             foreach (var entity in ents)
             {
-                if (!entity.Transform.Coordinates.IsTileAirProbablySafe())
+                if (!atmosphereSystem.IsTileMixtureProbablySafe(entity.Transform.Coordinates))
                     continue;
+
                 var distanceFromNearest = float.PositiveInfinity;
                 foreach (var existing in existingPlayerPoints)
                 {
@@ -189,13 +194,10 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamagableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
-                    }
-                }
+                    // TODO BODY SYSTEM KILL
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
+                } 
                 else if (!mobState.IsDead())
                 {
                     if (entity.HasComponent<HandsComponent>())

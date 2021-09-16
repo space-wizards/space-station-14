@@ -16,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Credits
 {
@@ -71,8 +72,9 @@ namespace Content.Client.Credits
 
         private void PopulateLicenses(ScrollContainer licensesList)
         {
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
@@ -93,8 +95,9 @@ namespace Content.Client.Credits
 
         private void PopulatePatronsList(Control patronsList)
         {
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
             var patrons = LoadPatrons();
@@ -152,13 +155,15 @@ namespace Content.Client.Credits
         {
             Button contributeButton;
 
-            var vBox = new VBoxContainer
+            var vBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Margin = new Thickness(2, 2, 0, 0)
             };
 
-            vBox.AddChild(new HBoxContainer
+            vBox.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalAlignment = HAlignment.Center,
                 SeparationOverride = 20,
                 Children =

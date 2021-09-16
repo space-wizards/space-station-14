@@ -1,4 +1,4 @@
-#nullable enable
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Audio;
@@ -9,12 +9,11 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public class ChemicalReactionSystem : SharedChemicalReactionSystem
     {
-        protected override void OnReaction(ReactionPrototype reaction, IEntity owner, ReagentUnit unitReactions)
+        protected override void OnReaction(Solution solution, ReactionPrototype reaction, IEntity owner, ReagentUnit unitReactions)
         {
-            base.OnReaction(reaction, owner, unitReactions);
+            base.OnReaction(solution, reaction, owner, unitReactions);
 
-            if (reaction.Sound != null)
-                SoundSystem.Play(Filter.Pvs(owner), reaction.Sound, owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(owner), reaction.Sound.GetSound(), owner);
         }
     }
 }

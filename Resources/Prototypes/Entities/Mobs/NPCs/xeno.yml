@@ -24,7 +24,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-1,-0.4,-0.2,0.4"
+          bounds: "-0.4,-1,0.4,-0.2"
       mass: 85
       mask:
       - Impassable
@@ -38,12 +38,20 @@
       0: !type:NormalMobState {}
       150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
-  - type: Metabolism
+  - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1 
+    damageRecovery:
+      types:
+        Asphyxiation: -1 
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: claw
-    damage: 10
+    damage:
+      groups:
+        Brute: 10
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

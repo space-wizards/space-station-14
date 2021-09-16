@@ -1,25 +1,31 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
     [RegisterComponent]
     public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
-        public override string Name => "DamageOnToolInteract";
 
-        [DataField("damage")]
-        protected int Damage;
+        public override string Name => "DamageOnToolInteract";
 
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
+
+        [DataField("weldingDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier WeldingDamage = default!;
+
+        [DataField("defaultDamage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DefaultDamage = default!;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -29,31 +35,21 @@ namespace Content.Server.Damage.Components
                 {
                     if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder))
+                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
                         {
-                            if (welder.WelderLit) return CallDamage(eventArgs, tool);
+                            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, WeldingDamage);
+                            return true;
                         }
                         break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
                     }
 
-                    if (tool.HasQuality(toolQuality)) return CallDamage(eventArgs, tool);
+                    if (tool.HasQuality(toolQuality))
+                    {
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, DefaultDamage);
+                        return true;
+                    }
                 }
             }
-            return false;
-        }
-
-        protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
-        {
-            if (eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
-            {
-                damageable.ChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                        ? DamageType.Heat
-                        : DamageType.Blunt,
-                    Damage, false, eventArgs.User);
-
-                return true;
-            }
-
             return false;
         }
     }

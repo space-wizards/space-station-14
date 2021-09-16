@@ -17,11 +17,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NodeContainer.EntitySystems
 {
+    /// <summary>
+    ///     Entity system that manages <see cref="NodeGroupSystem"/> and <see cref="Node"/> updating.
+    /// </summary>
+    /// <seealso cref="NodeContainerSystem"/>
     [UsedImplicitly]
     public class NodeGroupSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly INodeGroupFactory _nodeGroupFactory = default!;

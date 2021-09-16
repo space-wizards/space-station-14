@@ -1,6 +1,6 @@
-#nullable enable
 using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -8,6 +8,7 @@ using Robust.Shared.Physics.Collision;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -15,7 +16,7 @@ namespace Content.Server.Singularity.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSingularityComponent))]
-    public class ServerSingularityComponent : SharedSingularityComponent, IStartCollide
+    public class ServerSingularityComponent : SharedSingularityComponent
     {
         private SharedSingularitySystem _singularitySystem = default!;
 
@@ -61,6 +62,8 @@ namespace Content.Server.Singularity.Components
                 _ => 0
             };
 
+        public float MoveAccumulator;
+
         // This is an interesting little workaround.
         // See, two singularities queuing deletion of each other at the same time will annihilate.
         // This is undesirable behaviour, so this flag allows the imperatively first one processed to take priority.
@@ -68,6 +71,9 @@ namespace Content.Server.Singularity.Components
         public bool BeingDeletedByAnotherSingularity { get; set; }
 
         private IPlayingAudioStream? _playingSound;
+
+        [DataField("singularityFormingSound")] private SoundSpecifier _singularityFormingSound = new SoundPathSpecifier("/Audio/Effects/singularity_form.ogg");
+        [DataField("singularityCollapsingSound")] private SoundSpecifier _singularityCollapsingSound = new SoundPathSpecifier("/Audio/Effects/singularity_collapse.ogg");
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -84,61 +90,15 @@ namespace Content.Server.Singularity.Components
             audioParams.Loop = true;
             audioParams.MaxDistance = 20f;
             audioParams.Volume = 5;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_form.ogg", Owner);
-            Timer.Spawn(5200,() => _playingSound = SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity.ogg", Owner, audioParams));
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityFormingSound.GetSound(), Owner);
 
             _singularitySystem.ChangeSingularityLevel(this, 1);
-        }
-
-        public void Update(int seconds)
-        {
-            Energy -= EnergyDrain * seconds;
-        }
-
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            // If we're being deleted by another singularity, this call is probably for that singularity.
-            // Even if not, just don't bother.
-            if (BeingDeletedByAnotherSingularity)
-                return;
-
-            var otherEntity = otherFixture.Body.Owner;
-
-            if (otherEntity.TryGetComponent<IMapGridComponent>(out var mapGridComponent))
-            {
-                foreach (var tile in mapGridComponent.Grid.GetTilesIntersecting(ourFixture.Body.GetWorldAABB()))
-                {
-                    mapGridComponent.Grid.SetTile(tile.GridIndices, Robust.Shared.Map.Tile.Empty);
-                    Energy++;
-                }
-                return;
-            }
-
-            if (otherEntity.HasComponent<ContainmentFieldComponent>() ||
-                (otherEntity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var component) && component.CanRepell(Owner)))
-            {
-                return;
-            }
-
-            if (otherEntity.IsInContainer())
-                return;
-
-            // Singularity priority management / etc.
-            if (otherEntity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
-                otherSingulo.BeingDeletedByAnotherSingularity = true;
-
-            otherEntity.QueueDelete();
-
-            if (otherEntity.TryGetComponent<SinguloFoodComponent>(out var singuloFood))
-                Energy += singuloFood.Energy;
-            else
-                Energy++;
         }
 
         protected override void OnRemove()
         {
             _playingSound?.Stop();
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/singularity_collapse.ogg", Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
             base.OnRemove();
         }
     }

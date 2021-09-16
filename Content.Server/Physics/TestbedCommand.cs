@@ -21,6 +21,7 @@
 // SOFTWARE.
 
 
+using System;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Physics;
@@ -33,9 +34,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
+using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Timing;
 
-#nullable enable
 
 namespace Content.Server.Physics
 {
@@ -51,7 +52,7 @@ namespace Content.Server.Physics
     public class TestbedCommand : IConsoleCommand
     {
         public string Command => "testbed";
-        public string Description => "Loads a physics testbed and teleports your player there";
+        public string Description => "Loads a physics testbed on the specified map.";
         public string Help => $"{Command} <mapid> <test>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -98,6 +99,10 @@ namespace Content.Server.Physics
                     SetupPlayer(mapId, shell, player, mapManager);
                     CreatePyramid(mapId);
                     break;
+                case "tumbler":
+                    SetupPlayer(mapId, shell, player, mapManager);
+                    CreateTumbler(mapId);
+                    break;
                 default:
                     shell.WriteLine($"testbed {args[0]} not found!");
                     return;
@@ -108,9 +113,10 @@ namespace Content.Server.Physics
 
         private void SetupPlayer(MapId mapId, IConsoleShell shell, IPlayerSession? player, IMapManager mapManager)
         {
+            if (mapId == MapId.Nullspace) return;
             var pauseManager = IoCManager.Resolve<IPauseManager>();
             pauseManager.SetMapPaused(mapId, false);
-            var map = EntitySystem.Get<SharedPhysicsSystem>().Maps[mapId].Gravity = new Vector2(0, -4.9f);
+            IoCManager.Resolve<IMapManager>().GetMapEntity(mapId).GetComponent<SharedPhysicsMapComponent>().Gravity = new Vector2(0, -4.9f);
 
             return;
         }
@@ -128,7 +134,10 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(horizontalFixture);
+
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
             var verticalFixture = new Fixture(ground, vertical)
@@ -137,7 +146,8 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(verticalFixture);
+
+            broadphase.CreateFixture(ground, verticalFixture);
 
             var xs = new[]
             {
@@ -158,7 +168,6 @@ namespace Content.Server.Physics
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
-                    box.SleepingAllowed = false;
                     shape = new PolygonShape();
                     shape.SetAsBox(0.5f, 0.5f);
                     box.FixedRotation = false;
@@ -170,7 +179,8 @@ namespace Content.Server.Physics
                         CollisionLayer = (int) CollisionGroup.Impassable,
                         Hard = true,
                     };
-                    box.AddFixture(fixture);
+
+                    broadphase.CreateFixture(box, fixture);
                 }
             }
         }
@@ -188,7 +198,9 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(horizontalFixture);
+
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             var vertical = new EdgeShape(new Vector2(10, 0), new Vector2(10, 10));
             var verticalFixture = new Fixture(ground, vertical)
@@ -197,7 +209,8 @@ namespace Content.Server.Physics
                 CollisionMask = (int) CollisionGroup.Impassable,
                 Hard = true
             };
-            ground.AddFixture(verticalFixture);
+
+            broadphase.CreateFixture(ground, verticalFixture);
 
             var xs = new[]
             {
@@ -218,7 +231,6 @@ namespace Content.Server.Physics
                         new MapCoordinates(new Vector2(xs[j] + x, 0.55f + 2.1f * i), mapId)).AddComponent<PhysicsComponent>();
 
                     box.BodyType = BodyType.Dynamic;
-                    box.SleepingAllowed = false;
                     shape = new PhysShapeCircle {Radius = 0.5f};
                     box.FixedRotation = false;
                     // TODO: Need to detect shape and work out if we need to use fixedrotation
@@ -229,7 +241,8 @@ namespace Content.Server.Physics
                         CollisionLayer = (int) CollisionGroup.Impassable,
                         Hard = true,
                     };
-                    box.AddFixture(fixture);
+
+                    broadphase.CreateFixture(box, fixture);
                 }
             }
         }
@@ -250,7 +263,8 @@ namespace Content.Server.Physics
                 Hard = true
             };
 
-            ground.AddFixture(horizontalFixture);
+            var broadphase = EntitySystem.Get<SharedBroadphaseSystem>();
+            broadphase.CreateFixture(ground, horizontalFixture);
 
             // Setup boxes
             float a = 0.5f;
@@ -271,17 +285,93 @@ namespace Content.Server.Physics
                     var box = entityManager.SpawnEntity(null, new MapCoordinates(0, 0, mapId)).AddComponent<PhysicsComponent>();
                     box.BodyType = BodyType.Dynamic;
                     box.Owner.Transform.WorldPosition = y;
-                    box.AddFixture(
+                    broadphase.CreateFixture(box,
                         new Fixture(box, shape) {
-                            CollisionLayer = (int) CollisionGroup.Impassable,
-                            CollisionMask = (int) CollisionGroup.Impassable,
-                            Hard = true,
-                            Mass = 5.0f,
-                        });
+                        CollisionLayer = (int) CollisionGroup.Impassable,
+                        CollisionMask = (int) CollisionGroup.Impassable,
+                        Hard = true,
+                        Mass = 5.0f,
+                    });
                     y += deltaY;
                 }
 
                 x += deltaX;
+            }
+        }
+
+        private void CreateTumbler(MapId mapId)
+        {
+            var broadphaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+            var compManager = IoCManager.Resolve<IComponentManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+
+            var groundEnt = entityManager.SpawnEntity(null, new MapCoordinates(0f, 0f, mapId));
+            var ground = compManager.AddComponent<PhysicsComponent>(groundEnt);
+
+            var bodyEnt = entityManager.SpawnEntity(null, new MapCoordinates(0f, 10f, mapId));
+            var body = compManager.AddComponent<PhysicsComponent>(bodyEnt);
+
+            body.BodyType = BodyType.Dynamic;
+            body.SleepingAllowed = false;
+            body.FixedRotation = false;
+
+            // TODO: Box2D just derefs, bleh shape structs someday
+            var shape1 = new PolygonShape();
+            shape1.SetAsBox(0.5f, 10.0f, new Vector2(10.0f, 0.0f), 0.0f);
+            broadphaseSystem.CreateFixture(body, shape1, 20.0f);
+
+            var shape2 = new PolygonShape();
+            shape2.SetAsBox(0.5f, 10.0f, new Vector2(-10.0f, 0.0f), 0f);
+            broadphaseSystem.CreateFixture(body, shape2, 20.0f);
+
+            var shape3 = new PolygonShape();
+            shape3.SetAsBox(10.0f, 0.5f, new Vector2(0.0f, 10.0f), 0f);
+            broadphaseSystem.CreateFixture(body, shape3, 20.0f);
+
+            var shape4 = new PolygonShape();
+            shape4.SetAsBox(10.0f, 0.5f, new Vector2(0.0f, -10.0f), 0f);
+            broadphaseSystem.CreateFixture(body, shape4, 20.0f);
+
+            foreach (var fixture in body.Fixtures)
+            {
+                fixture.CollisionLayer = (int) CollisionGroup.Impassable;
+            }
+
+            // TODO: Should Joints be their own entities? Box2D just adds them directly to the world.
+            // HMMM
+            // At the least it should be its own damn component
+            var revolute = new RevoluteJoint(ground, body)
+            {
+                LocalAnchorA = new Vector2(0f, 10f),
+                LocalAnchorB = new Vector2(0f, 0f),
+                ReferenceAngle = 0f,
+                MotorSpeed = 0.05f * MathF.PI,
+                MaxMotorTorque = 100000000f,
+                EnableMotor = true
+            };
+            body.AddJoint(revolute);
+
+            // Box2D has this as 800 which is jesus christo.
+            // Wouldn't recommend higher than 100 in debug and higher than 300 on release unless
+            // you really want a profile.
+            var count = 200;
+            var mapManager = IoCManager.Resolve<IMapManager>();
+
+            for (var i = 0; i < count; i++)
+            {
+                Timer.Spawn(i * 20, () =>
+                {
+                    if (!mapManager.MapExists(mapId)) return;
+                    var ent = entityManager.SpawnEntity(null, new MapCoordinates(0f, 10f, mapId));
+                    var body = compManager.AddComponent<PhysicsComponent>(ent);
+                    body.BodyType = BodyType.Dynamic;
+                    body.FixedRotation = false;
+                    var shape = new PolygonShape();
+                    shape.SetAsBox(0.125f, 0.125f);
+                    broadphaseSystem.CreateFixture(body, shape, 0.0625f);
+                    body.Fixtures[0].CollisionMask = (int) CollisionGroup.Impassable;
+                    body.Fixtures[0].CollisionLayer = (int) CollisionGroup.Impassable;
+                });
             }
         }
     }

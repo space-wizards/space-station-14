@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Shared.GameObjects;
+﻿using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.MobState.State
@@ -36,11 +35,6 @@ namespace Content.Shared.MobState.State
         public virtual void UpdateState(IEntity entity, int threshold) { }
 
         public virtual bool CanInteract()
-        {
-            return true;
-        }
-
-        public virtual bool CanMove()
         {
             return true;
         }

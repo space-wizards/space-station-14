@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Pointing.Components;
+﻿using Content.Shared.Pointing.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

@@ -1,26 +1,26 @@
 <SS14Window xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client">
-    <VBoxContainer SeparationOverride="5">
-        <HBoxContainer VerticalExpand="True">
+    <BoxContainer Orientation="Vertical" SeparationOverride="5">
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="InputButton" ToggleMode="True" Text="MIDI Input" TextAlign="Center"
                     HorizontalExpand="True" SizeFlagsStretchRatio="1" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
             <Button Name="FileButton" Text="Play MIDI File" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
-        </HBoxContainer>
-        <HBoxContainer VerticalExpand="True">
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Button Name="LoopButton" ToggleMode="True" Text="Loop" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
             <Button Name="StopButton" Text="Stop" TextAlign="Center" HorizontalExpand="True"
                     SizeFlagsStretchRatio="1" />
-        </HBoxContainer>
-        <HBoxContainer VerticalExpand="True">
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" VerticalExpand="True">
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
-        </HBoxContainer>
-    </VBoxContainer>
+        </BoxContainer>
+    </BoxContainer>
     <PanelContainer Name="UnavailableOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
             <gfx:StyleBoxFlat BackgroundColor="#000000E5" />

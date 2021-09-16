@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -10,11 +9,11 @@ using Content.Shared.Body.Preset;
 using Content.Shared.Body.Slot;
 using Content.Shared.Body.Template;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
@@ -26,13 +25,13 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Body.Components
 {
     // TODO BODY Damage methods for collections of IDamageableComponents
+
+    [NetworkedComponent()]
     public abstract class SharedBodyComponent : Component, IBodyPartContainer, ISerializationHooks
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Body";
-
-        public override uint? NetID => ContentNetIDs.BODY;
 
         [ViewVariables]
         [DataField("template", required: true)]
@@ -95,8 +94,6 @@ namespace Content.Shared.Body.Components
                     SlotIds[slotId].SetConnectionsInternal(connections);
                 }
             }
-
-            CalculateSpeed();
         }
 
         protected override void OnRemove()
@@ -192,13 +189,11 @@ namespace Content.Shared.Body.Components
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
             }
 
-            // creadth: immediately kill entity if last vital part removed
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
+            if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
             {
-                if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)
-                {
-                    damageable.ChangeDamage(DamageType.Bloodloss, 300, true); // TODO BODY KILL
-                }
+                // TODO BODY SYSTEM KILL : Find a more elegant way of killing em than just dumping bloodloss damage.
+                var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Bloodloss"), 300);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(part.Owner.Uid, damage);
             }
 
             OnBodyChanged();
@@ -475,51 +470,9 @@ namespace Content.Shared.Body.Components
             }
         }
 
-        private void CalculateSpeed()
-        {
-            if (!Owner.TryGetComponent(out MovementSpeedModifierComponent? playerMover))
-            {
-                return;
-            }
-
-            var legs = GetPartsWithProperty<LegComponent>().ToArray();
-            float speedSum = 0;
-
-            foreach (var leg in legs)
-            {
-                var footDistance = DistanceToNearestFoot(leg.part);
-
-                if (Math.Abs(footDistance - float.MinValue) <= 0.001f)
-                {
-                    continue;
-                }
-
-                speedSum += leg.property.Speed * (1 + (float) Math.Log(footDistance, 1024.0));
-            }
-
-            if (speedSum <= 0.001f)
-            {
-                playerMover.BaseWalkSpeed = 0.8f;
-                playerMover.BaseSprintSpeed = 2.0f;
-            }
-            else
-            {
-                // Extra legs stack diminishingly.
-                playerMover.BaseWalkSpeed =
-                    speedSum / (legs.Length - (float) Math.Log(legs.Length, 4.0));
-
-                playerMover.BaseSprintSpeed = playerMover.BaseWalkSpeed * 1.75f;
-            }
-        }
 
         private void OnBodyChanged()
         {
-            // Calculate move speed based on this body.
-            if (Owner.HasComponent<MovementSpeedModifierComponent>())
-            {
-                CalculateSpeed();
-            }
-
             Dirty();
         }
 
@@ -711,7 +664,7 @@ namespace Content.Shared.Body.Components
 
         public readonly (string slot, EntityUid partId)[] PartIds;
 
-        public BodyComponentState((string slot, EntityUid partId)[] partIds) : base(ContentNetIDs.BODY)
+        public BodyComponentState((string slot, EntityUid partId)[] partIds)
         {
             PartIds = partIds;
         }

@@ -1,7 +1,7 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -87,7 +87,7 @@ namespace Content.Server.Mind.Components
                 {
                     if (visiting.TryGetComponent(out GhostComponent? ghost))
                     {
-                        ghost.CanReturnToBody = false;
+                        EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
                     }
 
                     Mind!.TransferTo(visiting);
@@ -109,7 +109,7 @@ namespace Content.Server.Mind.Components
 
                         var ghost = Owner.EntityManager.SpawnEntity("MobObserver", spawnPosition);
                         var ghostComponent = ghost.GetComponent<GhostComponent>();
-                        ghostComponent.CanReturnToBody = false;
+                        EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, false);
 
                         if (Mind != null)
                         {

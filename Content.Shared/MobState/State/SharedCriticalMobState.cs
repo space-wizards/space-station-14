@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Alert;
+﻿using Content.Shared.Alert;
 using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
@@ -38,11 +37,6 @@ namespace Content.Shared.MobState.State
         }
 
         public override bool CanInteract()
-        {
-            return false;
-        }
-
-        public override bool CanMove()
         {
             return false;
         }

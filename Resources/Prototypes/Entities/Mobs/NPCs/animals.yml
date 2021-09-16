@@ -21,7 +21,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.25,0.40,0.25"
+          bounds: "-0.25,-0.30,0.25,0.40"
       mass: 50
       mask:
       - Impassable
@@ -56,7 +56,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.90,-0.50,0.05,0.50"
+          bounds: "-0.50,-0.90,0.50,0.05"
       mass: 90
       mask:
       - Impassable
@@ -87,7 +87,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.20,0.10,0.20"
+          bounds: "-0.20,-0.45,0.20,0.10"
       mass: 20
       mask:
       - Impassable
@@ -162,7 +162,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.60,-0.50,0.05,0.50"
+          bounds: "-0.50,-0.60,0.50,0.05"
       mass: 20
       mask:
       - Impassable
@@ -225,7 +225,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.60,-0.50,0.05,0.50"
+          bounds: "-0.50,-0.60,0.50,0.05"
       mass: 20
       mask:
       - Impassable
@@ -257,7 +257,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.35,0.45,0.35"
+          bounds: "-0.35,-0.45,0.35,0.45"
       mass: 20
       mask:
       - Impassable
@@ -288,7 +288,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.35,0.35,0.35"
+          bounds: "-0.35,-0.30,0.35,0.35"
       mass: 20
       mask:
       - Impassable
@@ -319,7 +319,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.30,0.25,0.30"
+          bounds: "-0.30,-0.30,0.30,0.25"
       mass: 10
       mask:
       - Impassable
@@ -342,9 +342,6 @@
   id: MouseMob_Content
   description: Squeak!
   components:
-  - type: Tag
-    tags:
-    - Grindable
   - type: GhostTakeoverAvailable
     makeSentient: true
     name: mouse
@@ -367,7 +364,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.40,0.45,0.40"
+          bounds: "-0.40,-0.30,0.40,0.45"
       mass: 10
       mask:
       - Impassable
@@ -387,12 +384,14 @@
 # Eek! You can eat them alive for now until someone makes something that detects when
 # a mob is dead or something idk
   - type: Food
-  - type: LoopingSound
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: Extractable
+    extractableSolution: food
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: MouseAccent
 
 - type: entity
@@ -456,7 +455,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.40,-0.35,0.20,0.35"
+          bounds: "-0.35,-0.40,0.35,0.20"
       mass: 10
       mask:
       - Impassable
@@ -487,7 +486,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
+          bounds: "-0.30,-0.50,0.30,0.35"
       mass: 10
       mask:
       - Impassable
@@ -518,7 +517,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.30,0.35,0.30"
+          bounds: "-0.30,-0.50,0.30,0.35"
       mass: 10
       mask:
       - Impassable
@@ -552,7 +551,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.30,-0.40,0.45,0.40"
+          bounds: "-0.40,-0.30,0.40,0.45"
       mass: 10
       mask:
       - Impassable

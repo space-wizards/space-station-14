@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.Body.Components;
@@ -17,25 +16,24 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly Dictionary<DamageClass, int> DamageClasses;
-            public readonly Dictionary<DamageType, int> DamageTypes;
+            public readonly IReadOnlyDictionary<string, int> DamagePerGroup;
+            public readonly IReadOnlyDictionary<string, int> DamagePerType;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                Dictionary<DamageClass, int> damageClasses,
-                Dictionary<DamageType, int> damageTypes,
+                DamageableComponent? damageable,
                 bool isScanned)
             {
                 Entity = entity;
-                DamageClasses = damageClasses;
-                DamageTypes = damageTypes;
+                DamagePerGroup = damageable?.DamagePerGroup ?? new();
+                DamagePerType = damageable?.Damage?.DamageDict ?? new();
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamageClasses.Count > 0 || DamageTypes.Count > 0;
+                return DamagePerType.Count > 0;
             }
         }
 

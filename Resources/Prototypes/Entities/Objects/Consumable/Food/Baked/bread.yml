@@ -9,25 +9,26 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/bread.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 - type: entity
   parent: FoodBreadBase
   id: FoodBreadSliceBase
   abstract: true
   components:
-  - type: SolutionContainer
-    maxVol: 7
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 7
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
 
 # Custom Bread Example
 
@@ -318,6 +319,9 @@
   id: FoodBreadBaguette
   description: Bon appétit!
   components:
+  - type: Tag
+    tags:
+    - Baguette
   - type: Sprite
     state: baguette
 # Tastes like France.

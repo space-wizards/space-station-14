@@ -1,15 +1,16 @@
-#nullable enable
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Text;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Damage.Commands
 {
@@ -20,26 +21,28 @@ namespace Content.Server.Damage.Commands
         public string Description => "Ouch";
         public string Help => $"Usage: {Command} <type/?> <amount> (<entity uid/_>) (<ignoreResistances>)";
 
+        private readonly IPrototypeManager _prototypeManager = default!;
+        public HurtCommand() {
+            _prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+        }
+
         private string DamageTypes()
         {
             var msg = new StringBuilder();
-            foreach (var dClass in Enum.GetNames(typeof(DamageClass)))
+
+            foreach (var damageGroup in _prototypeManager.EnumeratePrototypes<DamageGroupPrototype>())
             {
-                msg.Append($"\n{dClass}");
-
-                var types = Enum.Parse<DamageClass>(dClass).ToTypes();
-
-                if (types.Count > 0)
+                msg.Append($"\n{damageGroup.ID}");
+                if (damageGroup.DamageTypes.Any())
                 {
                     msg.Append(": ");
-                    msg.AppendJoin('|', types);
+                    msg.AppendJoin('|', damageGroup.DamageTypes);
                 }
             }
-
             return $"Damage Types:{msg}";
         }
 
-        private delegate void Damage(IDamageableComponent damageable, bool ignoreResistances);
+        private delegate void Damage(IEntity entity, bool ignoreResistances);
 
         private bool TryParseEntity(IConsoleShell shell, IPlayerSession? player, string arg,
             [NotNullWhen(true)] out IEntity? entity)
@@ -82,10 +85,12 @@ namespace Content.Server.Damage.Commands
 
         private bool TryParseDamageArgs(
             IConsoleShell shell,
-            IPlayerSession? player,
+            IEntity target,
             string[] args,
             [NotNullWhen(true)] out Damage? func)
         {
+
+
             if (!int.TryParse(args[1], out var amount))
             {
                 shell.WriteLine($"{args[1]} is not a valid damage integer.");
@@ -94,52 +99,31 @@ namespace Content.Server.Damage.Commands
                 return false;
             }
 
-            if (Enum.TryParse<DamageClass>(args[0], true, out var damageClass))
+            if (_prototypeManager.TryIndex<DamageGroupPrototype>(args[0], out var damageGroup))
             {
-                func = (damageable, ignoreResistances) =>
+                func = (entity, ignoreResistances) =>
                 {
-                    if (!damageable.DamageClasses.ContainsKey(damageClass))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageClass}");
+                    var damage = new DamageSpecifier(damageGroup, amount);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
-                        return;
-                    }
-
-                    if (!damageable.ChangeDamage(damageClass, amount, ignoreResistances))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
-
-                        return;
-                    }
-
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageClass} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
+                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageGroup} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
 
                 return true;
             }
             // Fall back to DamageType
-            else if (Enum.TryParse<DamageType>(args[0], true, out var damageType))
+            else if (_prototypeManager.TryIndex<DamageTypePrototype>(args[0], out var damageType))
             {
-                func = (damageable, ignoreResistances) =>
+                func = (entity, ignoreResistances) =>
                 {
-                    if (!damageable.DamageTypes.ContainsKey(damageType))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} can not be damaged with damage class {damageType}");
+                    var damage = new DamageSpecifier(damageType, amount);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, ignoreResistances);
 
-                        return;
-                    }
+                    shell.WriteLine($"Damaged entity {entity.Name} with id {entity.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
 
-                    if (!damageable.ChangeDamage(damageType, amount, ignoreResistances))
-                    {
-                        shell.WriteLine($"Entity {damageable.Owner.Name} with id {damageable.Owner.Uid} received no damage.");
-
-                        return;
-                    }
-
-                    shell.WriteLine($"Damaged entity {damageable.Owner.Name} with id {damageable.Owner.Uid} for {amount} {damageType} damage{(ignoreResistances ? ", ignoring resistances." : ".")}");
                 };
-
                 return true;
+
             }
             else
             {
@@ -179,10 +163,6 @@ namespace Content.Server.Damage.Commands
                     shell.WriteLine($"Invalid number of arguments ({args.Length}).\n{Help}");
                     return;
                 case var n when n >= 2 && n <= 4:
-                    if (!TryParseDamageArgs(shell, player, args, out damageFunc))
-                    {
-                        return;
-                    }
 
                     var entityUid = n == 2 ? "_" : args[2];
 
@@ -192,6 +172,11 @@ namespace Content.Server.Damage.Commands
                     }
 
                     entity = parsedEntity;
+
+                    if (!TryParseDamageArgs(shell, entity, args, out damageFunc))
+                    {
+                        return;
+                    }
 
                     if (n == 4)
                     {
@@ -212,13 +197,13 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            if (!entity.TryGetComponent(out IDamageableComponent? damageable))
+            if (!entity.TryGetComponent(out DamageableComponent? damageable))
             {
-                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(IDamageableComponent)}.");
+                shell.WriteLine($"Entity {entity.Name} with id {entity.Uid} does not have a {nameof(DamageableComponent)}.");
                 return;
             }
 
-            damageFunc(damageable, ignoreResistances);
+            damageFunc(entity, ignoreResistances);
         }
     }
 }

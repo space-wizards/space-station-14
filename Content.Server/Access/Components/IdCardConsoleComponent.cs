@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -257,6 +256,8 @@ namespace Content.Server.Access.Components
         [Verb]
         public sealed class EjectPrivilegedIDVerb : Verb<IdCardConsoleComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
@@ -282,6 +283,8 @@ namespace Content.Server.Access.Components
 
         public sealed class EjectTargetIDVerb : Verb<IdCardConsoleComponent>
         {
+            public override bool AlternativeInteraction => true;
+
             protected override void GetData(IEntity user, IdCardConsoleComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))

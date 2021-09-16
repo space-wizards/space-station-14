@@ -1,21 +1,18 @@
-﻿#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.NetIDs;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Cuffs.Components
 {
+    [NetworkedComponent()]
     public class SharedCuffableComponent : Component, IActionBlocker
     {
         public override string Name => "Cuffable";
-        public override uint? NetID => ContentNetIDs.CUFFED;
-
-        [ComponentDependency] private readonly SharedPullableComponent? _pullable = default!;
 
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;
@@ -29,8 +26,6 @@ namespace Content.Shared.Cuffs.Components
         bool IActionBlocker.CanAttack() => CanStillInteract;
         bool IActionBlocker.CanEquip() => CanStillInteract;
         bool IActionBlocker.CanUnequip() => CanStillInteract;
-        bool IActionBlocker.CanMove() => _pullable == null || !_pullable.BeingPulled || CanStillInteract;
-
         #endregion
 
         [Serializable, NetSerializable]
@@ -42,7 +37,7 @@ namespace Content.Shared.Cuffs.Components
             public string IconState { get; }
             public Color Color { get; }
 
-            public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string iconState, Color color) : base(ContentNetIDs.CUFFED)
+            public CuffableComponentState(int numHandsCuffed, bool canStillInteract, string? rsiPath, string iconState, Color color)
             {
                 NumHandsCuffed = numHandsCuffed;
                 CanStillInteract = canStillInteract;

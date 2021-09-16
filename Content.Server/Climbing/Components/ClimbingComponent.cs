@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
@@ -42,7 +41,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        protected override bool OwnerIsTransitioning
+        public override bool OwnerIsTransitioning
         {
             get => base.OwnerIsTransitioning;
             set

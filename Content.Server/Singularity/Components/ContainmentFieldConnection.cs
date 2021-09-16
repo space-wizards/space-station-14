@@ -83,53 +83,6 @@ namespace Content.Server.Singularity.Components
             return _sharedEnergyPool > powerNeeded;
         }
 
-        /// <summary>
-        /// Tries to repell a Entity. This deletes the connection if the repelling fails!
-        /// </summary>
-        /// <param name="repellFrom">Entity to repell from. Should be a field, otherwise return will be false.</param>
-        /// <param name="toRepell">Entity to repell.</param>
-        public void TryRepell(IEntity repellFrom, IEntity toRepell)
-        {
-            // TODO: Fix this also it's fucking repel
-            if (!_fields.Contains(repellFrom) || !toRepell.TryGetComponent<IPhysBody>(out var collidableComponent)) return;
-
-            return;
-            var speed = 5;
-            //var containmentFieldRepellController = collidableComponent.EnsureController<ContainmentFieldRepellController>();
-
-            if (!CanRepell(toRepell))
-            {
-                Dispose();
-                return;
-            }
-
-            if (Math.Abs(repellFrom.Transform.WorldRotation.Degrees + 90f) < 0.1f ||
-                Math.Abs(repellFrom.Transform.WorldRotation.Degrees - 90f) < 0.1f)
-            {
-                if (repellFrom.Transform.WorldPosition.X.CompareTo(toRepell.Transform.WorldPosition.X) > 0)
-                {
-                    //containmentFieldRepellController.Repell(Direction.West, speed);
-                }
-                else
-                {
-                    //containmentFieldRepellController.Repell(Direction.East, speed);
-                }
-            }
-            else
-            {
-                if (repellFrom.Transform.WorldPosition.Y.CompareTo(toRepell.Transform.WorldPosition.Y) > 0)
-                {
-                    //containmentFieldRepellController.Repell(Direction.South, speed);
-                }
-                else
-                {
-                    //containmentFieldRepellController.Repell(Direction.North, speed);
-                }
-            }
-
-            return;
-        }
-
         public void Dispose()
         {
             _powerDecreaseCancellationTokenSource.Cancel();

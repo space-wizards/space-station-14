@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -138,7 +137,7 @@ namespace Content.Server.Construction.Components
                 TargetPathfinding.Dequeue();
 
             // If we went the wrong way, we stop pathfinding.
-            if (Edge != null && TargetNextEdge != Edge)
+            if (Edge != null && TargetNextEdge != Edge && EdgeStep >= Edge.Steps.Count)
             {
                 ClearTarget();
                 return;
@@ -446,7 +445,7 @@ namespace Content.Server.Construction.Components
                 otherPhysics.BodyType = physics.BodyType;
             }
 
-            Owner.Delete();
+            Owner.QueueDelete();
 
             foreach (var action in node.Actions)
             {

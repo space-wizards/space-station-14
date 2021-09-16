@@ -1,14 +1,13 @@
-#nullable enable
 using System;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Notification;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Rounding;
+using Content.Shared.Sound;
 using Content.Shared.Window;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -31,28 +30,17 @@ namespace Content.Server.Window
 
         [ViewVariables(VVAccess.ReadWrite)] private TimeSpan _lastKnockTime;
 
-        [DataField("knockDelay")] [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("knockDelay")]
+        [ViewVariables(VVAccess.ReadWrite)]
         private TimeSpan _knockDelay = TimeSpan.FromSeconds(0.5);
 
         [DataField("rateLimitedKnocking")]
         [ViewVariables(VVAccess.ReadWrite)] private bool _rateLimitedKnocking = true;
 
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
+        [DataField("knockSound")]
+        private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
-            switch (message)
-            {
-                case DamageChangedMessage msg:
-                {
-                    var current = msg.Damageable.TotalDamage;
-                    UpdateVisuals(current);
-                    break;
-                }
-            }
-        }
-
-        private void UpdateVisuals(int currentDamage)
+        public void UpdateVisuals(int currentDamage)
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
                 Owner.TryGetComponent(out DestructibleComponent? destructible))
@@ -71,7 +59,7 @@ namespace Content.Server.Window
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable) ||
+            if (!Owner.TryGetComponent(out DamageableComponent? damageable) ||
                 !Owner.TryGetComponent(out DestructibleComponent? destructible))
             {
                 return;
@@ -130,7 +118,8 @@ namespace Content.Server.Window
                 return false;
             }
 
-            SoundSystem.Play(Filter.Pvs(eventArgs.Target), "/Audio/Effects/glass_knock.ogg",
+            SoundSystem.Play(
+                Filter.Pvs(eventArgs.Target), _knockSound.GetSound(),
                 eventArgs.Target.Transform.Coordinates, AudioHelpers.WithVariation(0.05f));
             eventArgs.Target.PopupMessageEveryone(Loc.GetString("comp-window-knock"));
 

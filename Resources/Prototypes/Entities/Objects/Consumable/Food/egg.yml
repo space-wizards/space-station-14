@@ -1,8 +1,5 @@
 # Base
 
-- type: Tag
-  id: Egg
-
 - type: entity
   parent: BaseItem
   id: FoodEggBase
@@ -20,26 +17,38 @@
     sprite: Objects/Consumable/Food/egg.rsi
     netsync: false
     size: 1
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 5
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Egg
+          Quantity: 5
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           Eggshells:
@@ -66,7 +75,7 @@
   - type: Puddle
     variants: 4
     state: egg
-    
+
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -80,12 +89,16 @@
     netsync: false
   - type: Item
     size: 1
-  - type: SolutionContainer
-    maxVol: 1
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 1
+        reagents:
+        - ReagentId: Egg
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
 
 # Egg
 

@@ -1,13 +1,12 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.DoAfter;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -23,38 +22,37 @@ namespace Content.Server.Fluids.Components
     public class BucketComponent : Component, IInteractUsing
     {
         public override string Name => "Bucket";
+        public const string SolutionName = "bucket";
 
         private List<EntityUid> _currentlyUsing = new();
 
         public ReagentUnit MaxVolume
         {
-            get => Owner.TryGetComponent(out SolutionContainerComponent? solution) ? solution.MaxVolume : ReagentUnit.Zero;
+            get =>
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+                    ? solution.MaxVolume
+                    : ReagentUnit.Zero;
             set
             {
-                if (Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => Owner.TryGetComponent(out SolutionContainerComponent? solution)
+        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
         [DataField("sound")]
-        private string? _sound = "/Audio/Effects/Fluids/watersplash.ogg";
+        private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
 
-        /// <inheritdoc />
-        protected override void Initialize()
-        {
-            base.Initialize();
-            Owner.EnsureComponentWarn<SolutionContainerComponent>();
-        }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? contents) ||
+            var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
                 !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
@@ -101,23 +99,20 @@ namespace Content.Server.Fluids.Components
                 return false;
             }
 
-            var mopContents = mopComponent.Contents;
+            var mopContents = mopComponent.MopSolution;
 
             if (mopContents == null)
             {
                 return false;
             }
 
-            var solution = contents.SplitSolution(transferAmount);
-            if (!mopContents.TryAddSolution(solution))
+            var solution = solutionsSys.SplitSolution(Owner.Uid, contents, transferAmount);
+            if (!solutionsSys.TryAddSolution(mopComponent.Owner.Uid, mopContents, solution))
             {
                 return false;
             }
 
-            if (_sound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _sound, Owner);
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner);
 
             return true;
         }

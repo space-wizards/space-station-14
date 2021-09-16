@@ -234,7 +234,7 @@ namespace Content.Client.Viewport
                 entityToClick = GetEntityUnderPosition(mousePosWorld)?.Uid ?? EntityUid.Invalid;
 
                 coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(EntityManager, MapManager, mousePosWorld);
+                    EntityCoordinates.FromMap(MapManager, mousePosWorld);
             }
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, kArgs.State,

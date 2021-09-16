@@ -1,12 +1,16 @@
-﻿- type: entity
+- type: entity
   name: wirecutter
   parent: BaseItem
   id: Wirecutter
   description: This kills the wire.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wirecutter_drop.ogg
   - type: Tag
     tags:
     - PlantSampleTaker
+    - Wirecutter
   - type: Sprite
     sprite: Objects/Tools/wirecutters.rsi
     layers:
@@ -14,10 +18,14 @@
     - state: cutters-cutty-thingy
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
       - Cutting
-    useSound: /Audio/Items/wirecutter.ogg
+    useSound:
+      path: /Audio/Items/wirecutter.ogg
   - type: RandomSpriteColor
     state: cutters
     colors:
@@ -37,6 +45,12 @@
   id: Screwdriver
   description: Industrial grade torque in a small screwdriving package.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/screwdriver_drop.ogg
+  - type: Tag
+    tags:
+    - Screwdriver
   - type: Sprite
     sprite: Objects/Tools/screwdriver.rsi
     layers:
@@ -46,10 +60,14 @@
     sprite: Objects/Tools/screwdriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
   - type: Tool
     qualities:
       - Screwing
-    useSoundCollection: Screwdriver
+    useSound:
+      collection: Screwdriver
   - type: RandomSpriteColor
     state: screwdriver
     colors:
@@ -67,6 +85,12 @@
   id: Wrench
   description: A common tool for assembly and disassembly, righty tighty lefty loosey.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/wrench_drop.ogg
+  - type: Tag
+    tags:
+    - Wrench
   - type: Sprite
     sprite: Objects/Tools/wrench.rsi
     state: icon
@@ -74,10 +98,14 @@
     sprite: Objects/Tools/wrench.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
       - Anchoring
-    useSound: /Audio/Items/ratchet.ogg
+    useSound:
+      path: /Audio/Items/ratchet.ogg
 
 - type: entity
   name: crowbar
@@ -85,6 +113,12 @@
   id: Crowbar
   description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/crowbar_drop.ogg
+  - type: Tag
+    tags:
+    - Crowbar
   - type: Sprite
     sprite: Objects/Tools/crowbar.rsi
     state: icon
@@ -93,31 +127,32 @@
     size: 10
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
       - Prying
-    useSound: /Audio/Items/crowbar.ogg
+    useSound:
+      path: /Audio/Items/crowbar.ogg
   - type: TilePrying
 
 - type: entity
   name: emergency crowbar
-  parent: BaseItem
+  parent: Crowbar
   id: CrowbarRed
-  description: A multipurpose tool to pry open doors and fight interdimensional invaders.
   components:
+  - type: Tag
+    tags:
+    - Crowbar
+    - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar_red.rsi
-    state: icon
+    sprite: Objects/Tools/crowbar.rsi
+    state: red-icon
   - type: Item
-    sprite: Objects/Tools/crowbar_red.rsi
-    size: 5
-  - type: ItemCooldown
-  - type: MeleeWeapon
-  - type: Tool
-    qualities:
-      - Prying
-    useSound: /Audio/Items/crowbar.ogg
-  - type: TilePrying
+    sprite: Objects/Tools/crowbar.rsi
+    size: 10
+    HeldPrefix: red
 
 - type: entity
   name: multitool
@@ -125,6 +160,9 @@
   id: Multitool
   description: An advanced tool to copy, store, and send electrical pulses and signals through wires and machines
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/multitool_drop.ogg
   - type: Sprite
     sprite: Objects/Tools/multitool.rsi
     layers:
@@ -148,26 +186,33 @@
   id: PowerDrill
   description: A simple powered hand drill.
   components:
-    - type: Sprite
-      sprite: Objects/Tools/drill.rsi
-      state: drill_screw
-    - type: Item
-      sprite: Objects/Tools/drill.rsi
-      size: 20
-    - type: Tool
-      qualities:
-        - Screwing
-      statusShowBehavior: true
-    - type: MultiTool
-      tools:
-        - behavior: Screwing
-          state: drill_screw
-          useSound: /Audio/Items/drill_use.ogg
-          changeSound: /Audio/Items/change_drill.ogg
-        - behavior: Anchoring
-          state: drill_bolt
-          useSound: /Audio/Items/drill_use.ogg
-          changeSound: /Audio/Items/change_drill.ogg
+  - type: Tag
+    tags:
+    - Powerdrill
+  - type: Sprite
+    sprite: Objects/Tools/drill.rsi
+    state: drill_screw
+  - type: Item
+    sprite: Objects/Tools/drill.rsi
+    size: 20
+  - type: Tool
+    qualities:
+      - Screwing
+    statusShowBehavior: true
+  - type: MultiTool
+    tools:
+      - behavior: Screwing
+        state: drill_screw
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
+      - behavior: Anchoring
+        state: drill_bolt
+        useSound:
+          path: /Audio/Items/drill_use.ogg
+        changeSound:
+          path: /Audio/Items/change_drill.ogg
 
 - type: entity
   name: RCD
@@ -194,10 +239,13 @@
   id: RCDAmmo
   description: Ammo cartridge for an RCD.
   components:
-    - type: RCDAmmo
-    - type: Sprite
-      sprite: Objects/Tools/rcd.rsi
-      state: rcd_ammo
+  - type: RCDAmmo
+  - type: Sprite
+    sprite: Objects/Tools/rcd.rsi
+    state: ammo
+  - type: Item
+    sprite: Objects/Tools/rcd.rsi
+    HeldPrefix: ammo
 
 - type: entity
   name: shovel
@@ -205,13 +253,16 @@
   id: Shovel
   description: A large tool for digging and moving dirt.
   components:
-    - type: Tag
-      tags:
-      - Shovel
-    - type: Sprite
-      sprite: Objects/Tools/shovel.rsi
-      state: icon
-    - type: ItemCooldown
-    - type: MeleeWeapon
-    - type: Item
-      sprite: Objects/Tools/shovel.rsi
+  - type: Tag
+    tags:
+    - Shovel
+  - type: Sprite
+    sprite: Objects/Tools/shovel.rsi
+    state: icon
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+  - type: Item
+    sprite: Objects/Tools/shovel.rsi

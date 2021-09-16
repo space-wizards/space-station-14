@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Shared.Movement.Components;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Reflection;
 using Robust.Shared.Serialization;
@@ -13,13 +13,13 @@ using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Shared.Inventory
 {
+    [NetworkedComponent()]
     public abstract class SharedInventoryComponent : Component, IMoveSpeedModifier
     {
         [Dependency] protected readonly IReflectionManager ReflectionManager = default!;
         [Dependency] protected readonly IDynamicTypeFactory DynamicTypeFactory = default!;
 
         public sealed override string Name => "Inventory";
-        public sealed override uint? NetID => ContentNetIDs.STORAGE;
 
         [ViewVariables]
         protected Inventory InventoryInstance { get; private set; } = default!;
@@ -52,7 +52,7 @@ namespace Content.Shared.Inventory
             public List<KeyValuePair<Slots, EntityUid>> Entities { get; }
             public KeyValuePair<Slots, (EntityUid entity, bool fits)>? HoverEntity { get; }
 
-            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null) : base(ContentNetIDs.STORAGE)
+            public InventoryComponentState(List<KeyValuePair<Slots, EntityUid>> entities, KeyValuePair<Slots, (EntityUid entity, bool fits)>? hoverEntity = null)
             {
                 Entities = entities;
                 HoverEntity = hoverEntity;

@@ -1,6 +1,7 @@
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 
 namespace Content.Shared.Stacks
@@ -12,6 +13,8 @@ namespace Content.Shared.Stacks
         {
             base.Initialize();
 
+            SubscribeLocalEvent<SharedStackComponent, ComponentGetState>(OnStackGetState);
+            SubscribeLocalEvent<SharedStackComponent, ComponentHandleState>(OnStackHandleState);
             SubscribeLocalEvent<SharedStackComponent, ComponentStartup>(OnStackStarted);
             SubscribeLocalEvent<SharedStackComponent, ExaminedEvent>(OnStackExamined);
         }
@@ -57,7 +60,39 @@ namespace Content.Shared.Stacks
             if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
                 appearance.SetData(StackVisuals.Actual, component.Count);
 
-            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count));
+            RaiseLocalEvent(uid, new StackCountChangedEvent(old, component.Count), false);
+        }
+
+        /// <summary>
+        ///     Try to use an amount of items on this stack. Returns whether this succeeded.
+        /// </summary>
+        public bool Use(EntityUid uid, SharedStackComponent stack, int amount)
+        {
+            // Check if we have enough things in the stack for this...
+            if (stack.Count < amount)
+            {
+                // Not enough things in the stack, return false.
+                return false;
+            }
+
+            // We do have enough things in the stack, so remove them and change.
+            SetCount(uid, stack, stack.Count - amount);
+            return true;
+        }
+
+        private void OnStackGetState(EntityUid uid, SharedStackComponent component, ref ComponentGetState args)
+        {
+            args.State = new StackComponentState(component.Count, component.MaxCount);
+        }
+
+        private void OnStackHandleState(EntityUid uid, SharedStackComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not StackComponentState cast)
+                return;
+
+            // This will change the count and call events.
+            SetCount(uid, component, cast.Count);
+            component.MaxCount = cast.MaxCount;
         }
 
         private void OnStackExamined(EntityUid uid, SharedStackComponent component, ExaminedEvent args)

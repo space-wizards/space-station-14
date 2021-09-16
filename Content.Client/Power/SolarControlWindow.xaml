@@ -1,8 +1,8 @@
 ﻿<SS14Window xmlns="https://spacestation14.io"
-            xmlns:scc="clr-namespace:Content.Client.GameObjects.Components.Power"
+            xmlns:power="clr-namespace:Content.Client.Power"
             Title="{Loc 'solar-control-window-title'}"
             Resizable="False">
-    <HBoxContainer>
+    <BoxContainer Orientation="Horizontal">
         <GridContainer Columns="2">
             <!--
                 little secret: the reason I put the values
@@ -26,7 +26,7 @@
 
             <Label Text="{Loc 'solar-control-window-press-enter-to-confirm'}"/><Label Text=""/>
         </GridContainer>
-        <scc:SolarControlNotARadar Name="NotARadar"/>
-    </HBoxContainer>
+        <power:SolarControlNotARadar Name="NotARadar"/>
+    </BoxContainer>
 </SS14Window>
 

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Actions.Behaviors;
+﻿using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Module;
 using Robust.Shared.IoC;

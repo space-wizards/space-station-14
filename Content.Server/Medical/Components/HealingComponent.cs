@@ -1,15 +1,13 @@
-﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
 {
@@ -18,7 +16,9 @@ namespace Content.Server.Medical.Components
     {
         public override string Name => "Healing";
 
-        [DataField("heal")] public Dictionary<DamageType, int> Heal { get; private set; } = new();
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -27,7 +27,7 @@ namespace Content.Server.Medical.Components
                 return false;
             }
 
-            if (!eventArgs.Target.TryGetComponent(out IDamageableComponent? damageable))
+            if (!eventArgs.Target.HasComponent<DamageableComponent>())
             {
                 return true;
             }
@@ -48,10 +48,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            foreach (var (type, amount) in Heal)
-            {
-                damageable.ChangeDamage(type, -amount, true);
-            }
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
 
             return true;
         }

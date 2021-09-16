@@ -28,6 +28,7 @@ namespace Content.Tests.Shared.Alert
         {
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));
             var alertManager = IoCManager.Resolve<AlertManager>();
             alertManager.Initialize();

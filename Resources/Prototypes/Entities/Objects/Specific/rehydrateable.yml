@@ -4,13 +4,15 @@
   name: monkey cube
   description: Just add water!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-    maxVol: 11 # needs room for water
-    caps: Refillable
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: RefillableSolution
+    solution: cube
   - type: Sprite
     sprite: Objects/Misc/monkeycube.rsi
     state: cube
@@ -31,14 +33,14 @@
     fixtures: # TODO: Make a second fixture.
     - shape:
         !type:PhysShapeAabb
-        bounds: "-0.3,-0.4,0.3,0.4"
+        bounds: "-0.4,-0.3,0.4,0.3"
       mass: 2.5
       hard: false
       layer:
-        - SmallImpassable
+      - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - Impassable
+      - MobImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -46,13 +48,15 @@
   name: dehydrated space carp
   description: Looks like a plush toy carp, but just add water and it becomes a real-life space carp!
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
-    maxVol: 11 # needs room for water
-    caps: Refillable
+  - type: SolutionContainerManager
+    solutions:
+      plushie:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: RefillableSolution
+    solution: cube
   - type: Reactive
     reactions:
     - !type:AddToSolutionReaction
@@ -60,7 +64,7 @@
       ingestion: true
       injection: true
       reagents:
-        - Water
+      - Water
   - type: Rehydratable
     target: CarpMob_Content
   - type: CollisionWake
@@ -74,7 +78,7 @@
       mass: 2.5
       hard: false
       layer:
-        - SmallImpassable
+      - SmallImpassable
       mask:
-        - Impassable
-        - MobImpassable
+      - Impassable
+      - MobImpassable

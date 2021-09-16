@@ -14,6 +14,10 @@ namespace Content.Client.Changelog
             IoCManager.InjectDependencies(this);
 
             OnPressed += OnOnPressed;
+
+            // So that measuring before opening returns a correct height,
+            // and the window has the correct size when opened.
+            Text = " ";
         }
 
         protected override void EnteredTree()

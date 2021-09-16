@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Disposal.Unit.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

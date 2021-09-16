@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -176,6 +175,7 @@ namespace Content.Server.StationEvents
                 if (type.IsAbstract) continue;
 
                 var stationEvent = (StationEvent) typeFactory.CreateInstance(type);
+                IoCManager.InjectDependencies(stationEvent);
                 _stationEvents.Add(stationEvent);
             }
 

@@ -11,7 +11,11 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 25
-  - type: Item
+    damage:
+      groups:
+        Brute: 25
+  - type: Clothing
+    size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi
-    prefix: inhand
+    Slots:
+    - back

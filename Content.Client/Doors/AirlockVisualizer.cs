@@ -1,8 +1,8 @@
 using System;
-using Content.Client.Wires;
 using Content.Client.Wires.Visualizers;
 using Content.Shared.Audio;
 using Content.Shared.Doors;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -17,17 +17,25 @@ namespace Content.Client.Doors
     {
         private const string AnimationKey = "airlock_animation";
 
-        [DataField("open_sound", required: true)]
-        private string _openSound = default!;
-
-        [DataField("close_sound", required: true)]
-        private string _closeSound = default!;
-
-        [DataField("deny_sound", required: true)]
-        private string _denySound = default!;
-
-        [DataField("animation_time")]
+        [DataField("animationTime")]
         private float _delay = 0.8f;
+
+        [DataField("denyAnimationTime")]
+        private float _denyDelay = 0.3f;
+
+        /// <summary>
+        ///     Whether the maintenance panel is animated or stays static.
+        ///     False for windoors.
+        /// </summary>
+        [DataField("animatedPanel")]
+        private bool _animatedPanel = true;
+
+        /// <summary>
+        ///     Whether the BaseUnlit layer should still be visible when the airlock
+        ///     is opened.
+        /// </summary>
+        [DataField("openUnlitVisible")]
+        private bool _openUnlitVisible = false;
 
         private Animation CloseAnimation = default!;
         private Animation OpenAnimation = default!;
@@ -47,17 +55,12 @@ namespace Content.Client.Doors
                 flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
                 flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing_unlit", 0f));
 
-                var flickMaintenancePanel = new AnimationTrackSpriteFlick();
-                CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
-                flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
-
-                var sound = new AnimationTrackPlaySound();
-                CloseAnimation.AnimationTracks.Add(sound);
-
-                if (_closeSound != null)
+                if (_animatedPanel)
                 {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_closeSound, 0));
+                    var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                    CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                    flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                    flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
                 }
             }
 
@@ -73,34 +76,21 @@ namespace Content.Client.Doors
                 flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
                 flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening_unlit", 0f));
 
-                var flickMaintenancePanel = new AnimationTrackSpriteFlick();
-                OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
-                flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
-
-                var sound = new AnimationTrackPlaySound();
-                OpenAnimation.AnimationTracks.Add(sound);
-
-                if (_openSound != null)
+                if (_animatedPanel)
                 {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_openSound, 0));
+                    var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                    OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                    flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                    flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
                 }
             }
 
-            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(0.3f)};
+            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(_denyDelay)};
             {
                 var flick = new AnimationTrackSpriteFlick();
                 DenyAnimation.AnimationTracks.Add(flick);
                 flick.LayerKey = DoorVisualLayers.BaseUnlit;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny_unlit", 0f));
-
-                var sound = new AnimationTrackPlaySound();
-                DenyAnimation.AnimationTracks.Add(sound);
-
-                if (_denySound != null)
-                {
-                    sound.KeyFrames.Add(new AnimationTrackPlaySound.KeyFrame(_denySound, 0, () => AudioHelpers.WithVariation(0.05f)));
-                }
             }
         }
 
@@ -135,13 +125,16 @@ namespace Content.Client.Doors
             {
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
-                    unlitVisible = false;
+                    unlitVisible = _openUnlitVisible;
+                    if (_openUnlitVisible)
+                    {
+                        sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
+                    }
                     break;
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
                     sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
                     sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
-                    sprite.LayerSetState(WiresVisualizer.WiresVisualLayers.MaintenancePanel, "panel_open");
                     break;
                 case DoorVisualState.Opening:
                     animPlayer.Play(OpenAnimation, AnimationKey);

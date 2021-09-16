@@ -97,7 +97,7 @@ namespace Content.Server.Gravity.EntitySystems
             status.ClearAlert(AlertType.Weightless);
         }
 
-        private void EntParentChanged(EntParentChangedMessage ev)
+        private void EntParentChanged(ref EntParentChangedMessage ev)
         {
             if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
             {

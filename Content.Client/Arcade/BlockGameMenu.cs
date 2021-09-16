@@ -14,6 +14,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Arcade
 {
@@ -28,7 +29,7 @@ namespace Content.Client.Arcade
 
         private readonly PanelContainer _mainPanel;
 
-        private VBoxContainer _gameRootContainer;
+        private BoxContainer _gameRootContainer;
         private GridContainer _gameGrid = default!;
         private GridContainer _nextBlockGrid = default!;
         private GridContainer _holdBlockGrid = default!;
@@ -68,7 +69,10 @@ namespace Content.Client.Arcade
 
             #region Game Menu
             // building the game container
-            _gameRootContainer = new VBoxContainer();
+            _gameRootContainer = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             _levelLabel = new Label
             {
@@ -92,7 +96,10 @@ namespace Content.Client.Arcade
                 MinSize = new Vector2(1,10)
             });
 
-            var gameBox = new HBoxContainer();
+            var gameBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             gameBox.AddChild(SetupHoldBox(backgroundTexture));
             gameBox.AddChild(new Control
             {
@@ -152,8 +159,9 @@ namespace Content.Client.Arcade
 
             _menuRootContainer.AddChild(pauseMenuInnerPanel);
 
-            var pauseMenuContainer = new VBoxContainer
+            var pauseMenuContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -224,8 +232,9 @@ namespace Content.Client.Arcade
 
             _gameOverRootContainer.AddChild(gameOverMenuInnerPanel);
 
-            var gameOverMenuContainer = new VBoxContainer
+            var gameOverMenuContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -282,8 +291,9 @@ namespace Content.Client.Arcade
 
             _highscoresRootContainer.AddChild(menuInnerPanel);
 
-            var menuContainer = new VBoxContainer()
+            var menuContainer = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 HorizontalAlignment = HAlignment.Center,
                 VerticalAlignment = VAlignment.Center
             };
@@ -291,7 +301,10 @@ namespace Content.Client.Arcade
             menuContainer.AddChild(new Label{Text = Loc.GetString("blockgame-menu-label-highscores")});
             menuContainer.AddChild(new Control{MinSize = new Vector2(1,10)});
 
-            var highScoreBox = new HBoxContainer();
+            var highScoreBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
 
             _localHighscoresLabel = new Label
             {

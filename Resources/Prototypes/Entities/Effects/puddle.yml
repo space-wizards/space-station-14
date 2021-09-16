@@ -3,14 +3,15 @@
   id: PuddleBase
   abstract: true
   components:
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     drawdepth: FloorObjects
-  - type: SolutionContainer
+  - type: SolutionContainerManager
   - type: Puddle
-    spill_sound: /Audio/Effects/Fluids/splat.ogg
+    spill_sound:
+      path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
-  - type: LoopingSound
   - type: Clickable
   - type: Slippery
   - type: Physics
