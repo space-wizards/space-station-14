@@ -1983,3 +1983,8 @@ Entries:
   - {message: FireExtinguisher interactions, type: Fix}
   id: 354
   time: '2021-09-15T10:48:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some issues with station rotation, type: Fix}
+  id: 355
+  time: '2021-09-16T03:02:10.0000000+00:00'
