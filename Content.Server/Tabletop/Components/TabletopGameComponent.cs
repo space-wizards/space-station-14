@@ -22,7 +22,7 @@ namespace Content.Server.Tabletop.Components
         public TabletopSetup Setup { get; } = new TabletopChessSetup();
 
         [DataField("size")]
-        public Vector2i Size { get; } = (274 + 64, 274);
+        public Vector2i Size { get; } = (300, 300);
 
         [DataField("cameraZoom")]
         public Vector2 CameraZoom { get; } = Vector2.One;

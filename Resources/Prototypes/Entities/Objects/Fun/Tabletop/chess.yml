@@ -10,6 +10,7 @@
     state: chessboard
   - type: TabletopGame
     boardName: tabletop-chess-board-name
+    size: 338, 274
     setup: !type:TabletopChessSetup
 
 # Chessboard tabletop item (item only visible in tabletop game)
