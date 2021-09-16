@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fix bug which prevented players from equipping most items in their pockets.

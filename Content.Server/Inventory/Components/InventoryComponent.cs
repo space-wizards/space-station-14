@@ -20,6 +20,7 @@ using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.Console;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -27,6 +28,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
@@ -260,6 +262,13 @@ namespace Content.Server.Inventory.Components
             {
                 reason = Loc.GetString("inventory-component-on-equip-cannot");
                 return false;
+            }
+
+            // TODO: Make clothing component not inherit ItemComponent, for fuck's sake.
+            // TODO: Make clothing component not required for playing a sound on equip... Move it to its own component.
+            if (item is ClothingComponent { EquipSound: {} equipSound })
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), equipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }
 
             _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedInteraction(Owner, item.Owner, slot);
@@ -520,10 +529,14 @@ namespace Content.Server.Inventory.Components
                     var hands = Owner.GetComponent<HandsComponent>();
                     var activeHand = hands.ActiveHand;
                     var activeItem = hands.GetActiveHand;
-                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ClothingComponent? clothing))
+                    if (activeHand != null && activeItem != null && activeItem.Owner.TryGetComponent(out ItemComponent? item))
                     {
                         hands.TryDropNoInteraction();
-                        clothing.TryEquip(this, msg.Inventoryslot, Owner);
+                        if (!Equip(msg.Inventoryslot, item, true, out var reason))
+                        {
+                            hands.PutInHand(item);
+                            Owner.PopupMessageCursor(reason);
+                        }
                     }
 
                     break;
