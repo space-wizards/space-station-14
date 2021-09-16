@@ -6,6 +6,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Camera;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Interaction;
@@ -221,9 +222,12 @@ namespace Content.Server.PneumaticCannon
 
             ent.TryThrow(data.Direction, data.Strength, data.User, GetPushbackRatioFromPower(comp.Power));
 
+            // lasagna, anybody?
+            ent.EnsureComponent<ForcefeedOnCollideComponent>();
+
             if(data.User.TryGetComponent<StunnableComponent>(out var stunnable)
-                && comp.Power == PneumaticCannonPower.High
-                && !stunnable.Stunned)
+               && comp.Power == PneumaticCannonPower.High
+               && !stunnable.Stunned)
             {
                 stunnable.Paralyze(comp.HighPowerStunTime);
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",

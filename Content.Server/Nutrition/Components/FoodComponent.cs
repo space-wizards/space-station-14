@@ -197,7 +197,7 @@ namespace Content.Server.Nutrition.Components
 
             if (string.IsNullOrEmpty(TrashPrototype))
             {
-                Owner.Delete();
+                Owner.QueueDelete();
                 return true;
             }
 
@@ -205,8 +205,6 @@ namespace Content.Server.Nutrition.Components
 
             return true;
         }
-
-
 
         private void DeleteAndSpawnTrash(IEntity user)
         {
