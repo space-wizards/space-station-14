@@ -11,7 +11,9 @@
     sprite: Objects/Weapons/Melee/fireaxe.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 25
+    damage:
+      groups:
+        Brute: 25
   - type: Clothing
     size: 20
     sprite: Objects/Weapons/Melee/fireaxe.rsi

@@ -6,7 +6,6 @@ using Content.Server.Power.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Notification.Managers;
@@ -16,7 +15,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -81,16 +79,13 @@ namespace Content.Server.Light.Components
 
         [ViewVariables] private ContainerSlot _lightBulbContainer = default!;
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Heat";
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
+        public DamageSpecifier Damage = default!;
 
         protected override void Initialize()
         {
             base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
             _lightBulbContainer = Owner.EnsureContainer<ContainerSlot>("light_bulb");
         }
 
@@ -116,7 +111,7 @@ namespace Content.Server.Light.Components
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out IDamageableComponent? damageableComponent))
+            if (!eventArgs.User.HasComponent<DamageableComponent>())
             {
                 Eject();
                 return false;
@@ -143,7 +138,7 @@ namespace Content.Server.Light.Components
             void Burn()
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("powered-light-component-burn-hand"));
-                damageableComponent.TryChangeDamage(DamageType, 20);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.User.Uid, Damage);
                 SoundSystem.Play(Filter.Pvs(Owner), _burnHandSound.GetSound(), Owner);
             }
 
@@ -285,17 +280,11 @@ namespace Content.Server.Light.Components
                 case PowerChangedMessage:
                     UpdateLight();
                     break;
-                case DamageChangedMessage msg:
-                    TryDestroyBulb(msg);
-                    break;
             }
         }
 
-        private void TryDestroyBulb(DamageChangedMessage msg)
+        public void TryDestroyBulb()
         {
-            if (!msg.TookDamage)
-                return;
-
             if (LightBulb == null || LightBulb.State == LightBulbState.Broken)
                 return;
 

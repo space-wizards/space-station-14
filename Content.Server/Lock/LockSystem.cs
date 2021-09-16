@@ -52,11 +52,10 @@ namespace Content.Server.Lock
 
         private void OnExamined(EntityUid eUI, LockComponent lockComp, ExaminedEvent args)
         {
-            args.Message.AddText("\n");
-            args.Message.AddText(Loc.GetString(lockComp.Locked
-                                                   ? "lock-comp-on-examined-is-locked"
-                                                   : "lock-comp-on-examined-is-unlocked",
-                                               ("entityName", lockComp.Owner.Name)));
+            args.PushText(Loc.GetString(lockComp.Locked
+                    ? "lock-comp-on-examined-is-locked"
+                    : "lock-comp-on-examined-is-unlocked",
+                ("entityName", lockComp.Owner.Name)));
         }
 
         public void DoLock(LockComponent lockComp, ActivateInWorldEvent args)
@@ -72,7 +71,7 @@ namespace Content.Server.Lock
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
-            
+
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, true);
@@ -96,7 +95,7 @@ namespace Content.Server.Lock
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
             }
-            
+
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearanceComp))
             {
                 appearanceComp.SetData(StorageVisuals.Locked, false);
