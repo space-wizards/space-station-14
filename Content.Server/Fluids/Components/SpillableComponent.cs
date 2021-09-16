@@ -55,9 +55,9 @@ namespace Content.Server.Fluids.Components
                         }
 
                         // Need this as when we split the component's owner may be deleted
-                        EntitySystem.Get<SolutionContainerSystem>()
-                            .Drain(component.Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
-                            .SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
+                        var solution = EntitySystem.Get<SolutionContainerSystem>()
+                            .Drain(component.Owner.Uid, solutionComponent, solutionComponent.DrainAvailable);
+                        EntitySystem.Get<EntitySystems.PuddleSystem>().SpillAt(solution, component.Owner.Transform.Coordinates, "PuddleSmear");
                     }
                     else
                     {
@@ -74,9 +74,9 @@ namespace Content.Server.Fluids.Components
             if (!eventArgs.Intentional
                 && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionComponent))
             {
-                EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
-                    .SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
+                var solution = EntitySystem.Get<SolutionContainerSystem>()
+                    .Drain(Owner.Uid, solutionComponent, solutionComponent.DrainAvailable);
+                EntitySystem.Get<EntitySystems.PuddleSystem>().SpillAt(solution, Owner.Transform.Coordinates, "PuddleSmear");
             }
         }
     }

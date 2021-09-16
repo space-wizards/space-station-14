@@ -1,11 +1,14 @@
-﻿using Content.Server.Fluids.Components;
+﻿using Content.Server.Fluids;
+using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Slippery;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Chemistry.TileReactions
 {
@@ -22,8 +25,8 @@ namespace Content.Server.Chemistry.TileReactions
         {
             if (reactVolume < 5) return ReagentUnit.Zero;
 
-            // TODO Make this not puddle smear.
-            var puddle = tile.SpillAt(new Solution(reagent.ID, reactVolume), "PuddleSmear", _overflow, false);
+            var puddle = EntitySystem.Get<PuddleSystem>()
+                .SpillAt(tile, new Solution(reagent.ID, reactVolume), "PuddleSmear", _overflow, false);
 
             if (puddle != null)
             {

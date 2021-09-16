@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
+using Content.Server.Fluids;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -21,6 +22,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Nutrition.Components
 {
@@ -207,7 +209,7 @@ namespace Content.Server.Nutrition.Components
                 if (Owner.EntityManager.TryGetEntity(Owner.Uid, out var interactionEntity)
                     && !interactionEntity.HasComponent<RefillableSolutionComponent>())
                 {
-                    drain.SpillAt(target, "PuddleSmear");
+                    EntitySystem.Get<PuddleSystem>().SpillAt(drain, target, "PuddleSmear");
                     return false;
                 }
 

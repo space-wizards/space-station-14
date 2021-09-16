@@ -1,4 +1,4 @@
-using Content.Server.Fluids.Components;
+using Content.Server.Fluids;
 using Content.Server.Notification;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Audio;
@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -20,6 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public class CreamPieSystem : SharedCreamPieSystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
 
         protected override void SplattedCreamPie(EntityUid uid, CreamPieComponent creamPie)
         {
@@ -27,7 +29,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_solutionsSystem.TryGetSolution(creamPie.Owner, FoodComponent.SolutionName, out var solution))
             {
-                solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
+                _puddleSystem.SpillAt(solution, creamPie.Owner, "PuddleSmear", false);
             }
         }
 

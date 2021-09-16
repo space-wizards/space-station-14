@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -51,7 +52,6 @@ namespace Content.Server.Fluids.Components
                 }
             }
         }
-
         public ReagentUnit CurrentVolume => MopSolution?.CurrentVolume ?? ReagentUnit.Zero;
 
         // Currently there's a separate amount for pickup and dropoff so
@@ -94,8 +94,8 @@ namespace Content.Server.Fluids.Components
                 if (currentVolume > 0)
                 {
                     // Drop the liquid on the mop on to the ground
-                    EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, CurrentVolume)
-                        .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                    var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, CurrentVolume);
+                    EntitySystem.Get<PuddleSystem>().SpillAt(splitSolution,eventArgs.ClickLocation, "PuddleSmear");
                     return true;
                 }
 
@@ -137,12 +137,11 @@ namespace Content.Server.Fluids.Components
             // Annihilate the puddle
             var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, CurrentVolume);
             var puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
+            var puddleSystem = EntitySystem.Get<PuddleSystem>();
 
             if (transferAmount == 0)
             {
-                if (
-                    puddleComponent
-                        .EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleComponent.EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
@@ -155,14 +154,13 @@ namespace Content.Server.Fluids.Components
             }
             else
             {
-                puddleComponent.SplitSolution(transferAmount);
+                puddleSystem.SplitSolution(puddleComponent.Owner.Uid, puddleComponent, transferAmount);
             }
 
-            if (
-                puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
+            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount)
-                    .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
+                var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount);
+                EntitySystem.Get<PuddleSystem>().SpillAt(splitSolution,eventArgs.ClickLocation, "PuddleSmear");
             }
             else
             {

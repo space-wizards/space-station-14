@@ -1,4 +1,5 @@
-﻿using Content.Server.Fluids.Components;
+﻿using Content.Server.Fluids;
+using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -9,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -17,6 +19,8 @@ namespace Content.Server.Nutrition.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private readonly PuddleSystem _puddleSystem = default!;
+
 
         public override void Initialize()
         {
@@ -39,7 +43,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 var entity = EntityManager.GetEntity(uid);
 
                 var solution = _solutionContainerSystem.Drain(uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(entity, "PuddleSmear");
+                _puddleSystem.SpillAt(solution, entity, "PuddleSmear");
 
                 SoundSystem.Play(Filter.Pvs(entity), component.BurstSound.GetSound(), entity, AudioParams.Default.WithVolume(-4));
             }

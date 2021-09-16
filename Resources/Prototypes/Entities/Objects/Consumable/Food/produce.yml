@@ -295,10 +295,12 @@
   description: Splat.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/tomato.rsi
+    sprite: Fluids/tomato_splat.rsi
     state: puddle-0
   - type: Puddle
-    variants: 3
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: eggplant

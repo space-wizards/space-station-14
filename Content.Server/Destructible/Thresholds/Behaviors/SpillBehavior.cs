@@ -1,8 +1,10 @@
+using Content.Server.Fluids;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
 {
@@ -23,18 +25,18 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         public void Execute(IEntity owner, DestructibleSystem system)
         {
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
-
+            var puddleSystem = EntitySystem.Get<PuddleSystem>();
 
             if (owner.TryGetComponent(out SpillableComponent? spillableComponent) &&
                 solutionContainerSystem.TryGetSolution(owner.Uid, spillableComponent.SolutionName,
                     out var compSolution))
             {
-                compSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+                puddleSystem.SpillAt(compSolution, owner.Transform.Coordinates, "PuddleSmear", false);
             }
             else if (Solution != null &&
                      solutionContainerSystem.TryGetSolution(owner.Uid, Solution, out var behaviorSolution))
             {
-                behaviorSolution.SpillAt(owner.Transform.Coordinates, "PuddleSmear", false);
+                puddleSystem.SpillAt(behaviorSolution, owner.Transform.Coordinates, "PuddleSmear", false);
             }
         }
     }

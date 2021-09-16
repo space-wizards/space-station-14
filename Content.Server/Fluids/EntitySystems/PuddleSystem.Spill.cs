@@ -1,18 +1,35 @@
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
-namespace Content.Server.Fluids.Components
+namespace Content.Server.Fluids.EntitySystems
 {
-    public static class SpillExtensions
+    public partial class PuddleSystem
     {
+        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+
+        /// <summary>
+        ///     Whether adding this solution to this puddle would overflow.
+        /// </summary>
+        /// <param name="puddle">Puddle to which we are adding solution</param>
+        /// <param name="solution">Solution we intend to add</param>
+        /// <returns></returns>
+        private bool WouldOverflow(PuddleComponent puddle, Solution solution)
+        {
+            return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
+        }
+
         /// <summary>
         ///     Spills the specified solution at the entity's location if possible.
         /// </summary>
@@ -23,10 +40,10 @@ namespace Content.Server.Fluids.Components
         /// <param name="prototype">The prototype to use.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, IEntity entity, string prototype,
+        public PuddleComponent? SpillAt(Solution solution, IEntity entity, string prototype,
             bool sound = true)
         {
-            return solution.SpillAt(entity.Transform.Coordinates, prototype, sound);
+            return SpillAt(solution, entity.Transform.Coordinates, prototype, sound);
         }
 
         /// <summary>
@@ -40,10 +57,10 @@ namespace Content.Server.Fluids.Components
         /// <param name="puddle">The puddle if one was created, null otherwise.</param>
         /// <param name="sound">Play the spill sound.</param>
         /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, IEntity entity, string prototype,
+        public bool TrySpillAt(Solution solution, IEntity entity, string prototype,
             [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
         {
-            puddle = solution.SpillAt(entity, prototype, sound);
+            puddle = SpillAt(solution, entity, prototype, sound);
             return puddle != null;
         }
 
@@ -53,39 +70,23 @@ namespace Content.Server.Fluids.Components
         /// <param name="solution">Initial solution for the prototype.</param>
         /// <param name="coordinates">The coordinates to spill the solution at.</param>
         /// <param name="prototype">The prototype to use.</param>
+        /// <param name="overflow"></param>
         /// <param name="sound">Whether or not to play the spill sound.</param>
         /// <returns>The puddle if one was created, null otherwise.</returns>
-        public static PuddleComponent? SpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
+        public PuddleComponent? SpillAt(Solution solution, EntityCoordinates coordinates, string prototype,
             bool overflow = true, bool sound = true)
         {
             if (solution.TotalVolume == 0) return null;
 
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!mapManager.TryGetGrid(coordinates.GetGridId(entityManager), out var mapGrid))
+
+            if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var mapGrid))
                 return null; // Let's not spill to space.
 
             return SpillAt(mapGrid.GetTileRef(coordinates), solution, prototype, overflow, sound);
         }
 
-        /// <summary>
-        ///     Spills the specified solution at the entity's location if possible.
-        /// </summary>
-        /// <param name="coordinates">The coordinates to spill the solution at.</param>
-        /// <param name="solution">Initial solution for the prototype.</param>
-        /// <param name="prototype">The prototype to use.</param>
-        /// <param name="puddle">The puddle if one was created, null otherwise.</param>
-        /// <param name="sound">Play the spill sound.</param>
-        /// <returns>True if a puddle was created, false otherwise.</returns>
-        public static bool TrySpillAt(this Solution solution, EntityCoordinates coordinates, string prototype,
-            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
-        {
-            puddle = solution.SpillAt(coordinates, prototype, sound);
-            return puddle != null;
-        }
-
-        public static bool TryGetPuddle(this TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem,
+        public bool TryGetPuddle(TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem,
             [NotNullWhen(true)] out PuddleComponent? puddle)
         {
             foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
@@ -101,20 +102,19 @@ namespace Content.Server.Fluids.Components
             return false;
         }
 
-        public static PuddleComponent? SpillAt(this TileRef tileRef, Solution solution, string prototype,
+        public PuddleComponent? SpillAt(TileRef tileRef, Solution solution, string prototype,
             bool overflow = true, bool sound = true)
         {
-            if (solution.TotalVolume <= 0) return null;
-
-            var mapManager = IoCManager.Resolve<IMapManager>();
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var serverEntityManager = IoCManager.Resolve<IServerEntityManager>();
+            if (solution.TotalVolume <= 0)
+                return null;
 
             // If space return early, let that spill go out into the void
-            if (tileRef.Tile.IsEmpty) return null;
+            if (tileRef.Tile.IsEmpty)
+                return null;
 
             var gridId = tileRef.GridIndex;
-            if (!mapManager.TryGetGrid(gridId, out var mapGrid)) return null; // Let's not spill to invalid grids.
+            if (!_mapManager.TryGetGrid(gridId, out var mapGrid))
+                return null; // Let's not spill to invalid grids.
 
             // Get normalized co-ordinate for spill location and spill it in the centre
             // TODO: Does SnapGrid or something else already do this?
@@ -123,14 +123,15 @@ namespace Content.Server.Fluids.Components
             PuddleComponent? puddle = null;
             var spilt = false;
 
-            var spillEntities = IoCManager.Resolve<IEntityLookup>()
+            var spillEntities = _entityLookup
                 .GetEntitiesIntersecting(mapGrid.ParentMapId, spillGridCoords.Position).ToArray();
+            var solutionsSystem = Get<SolutionContainerSystem>();
+
             foreach (var spillEntity in spillEntities)
             {
-                if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
+                if (solutionsSystem.TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
                 {
-                    EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity.Uid, solutionContainerComponent,
+                    solutionsSystem.Refill(spillEntity.Uid, solutionContainerComponent,
                         solution.SplitSolution(ReagentUnit.Min(
                             solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))
@@ -142,9 +143,9 @@ namespace Content.Server.Fluids.Components
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
 
-                if (!overflow && puddleComponent.WouldOverflow(solution)) return null;
+                if (!overflow && WouldOverflow(puddleComponent, solution)) return null;
 
-                if (!puddleComponent.TryAddSolution(solution, sound)) continue;
+                if (!TryAddSolution(puddleComponent, solution, sound)) continue;
 
                 puddle = puddleComponent;
                 spilt = true;
@@ -154,12 +155,48 @@ namespace Content.Server.Fluids.Components
             // Did we add to an existing puddle
             if (spilt) return puddle;
 
-            var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
+            var puddleEnt = _serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
 
-            newPuddleComponent.TryAddSolution(solution, sound);
+            TryAddSolution(newPuddleComponent, solution, sound);
 
             return newPuddleComponent;
+        }
+
+        // Flow rate should probably be controlled globally so this is it for now
+        private bool TryAddSolution(PuddleComponent puddleComponent, Solution solution,
+            bool sound = true,
+            bool checkForOverflow = true)
+        {
+            if (solution.TotalVolume == 0)
+            {
+                return false;
+            }
+
+            var puddleSolution = _solutionContainerSystem
+                .GetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName);
+            var result = _solutionContainerSystem
+                .TryAddSolution(puddleComponent.Owner.Uid, puddleSolution, solution);
+            if (!result)
+            {
+                return false;
+            }
+
+            RaiseLocalEvent(puddleComponent.Owner.Uid, new SolutionChangedEvent());
+
+            if (checkForOverflow)
+            {
+                CheckOverflow(puddleComponent);
+            }
+
+            if (!sound)
+            {
+                return true;
+            }
+
+            SoundSystem.Play(Filter.Pvs(puddleComponent.Owner), puddleComponent.SpillSound.GetSound(),
+                puddleComponent.Owner);
+            return true;
         }
     }
 }

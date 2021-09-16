@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using Content.Server.Fluids;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -8,6 +10,7 @@ using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
+using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.IntegrationTests.Tests.Fluids
 {
@@ -25,6 +28,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
             var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
+            var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
 
             EntityCoordinates coordinates = default;
 
@@ -57,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
-                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+                var puddle = puddleSystem.SpillAt(solution, coordinates, "PuddleSmear");
                 Assert.NotNull(puddle);
             });
 
@@ -72,6 +76,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
             var mapManager = server.ResolveDependency<IMapManager>();
             var pauseManager = server.ResolveDependency<IPauseManager>();
+            var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
             IMapGrid grid = null;
 
             // Build up test environment
@@ -95,7 +100,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 var coordinates = grid.ToCoordinates();
                 var solution = new Solution("water", ReagentUnit.New(20));
-                var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+                var puddle = puddleSystem.SpillAt(solution, coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
 
@@ -114,6 +119,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             var sTileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
+            var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
+
 
             MapId sMapId = default;
             IMapGrid sGrid;
@@ -148,28 +155,31 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             float sEvaporateTime = default;
             PuddleComponent sPuddle = null;
+            EvaporationComponent sEvaporation = null;
             ReagentUnit sPuddleStartingVolume = default;
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
-                sPuddle = solution.SpillAt(sCoordinates, "PuddleSmear");
+                sPuddle= puddleSystem.SpillAt(solution, sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
                 Assert.NotNull(sPuddle);
+
+                sEvaporation = sPuddle.Owner.GetComponent<EvaporationComponent>();
 
                 sPuddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
                 Assert.True(sPuddle.Owner.Paused);
 
                 // Check that the puddle is going to evaporate
-                Assert.Positive(sPuddle.EvaporateTime);
+                Assert.Positive(sEvaporation.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
                 Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
 
-                sEvaporateTime = sPuddle.EvaporateTime;
+                sEvaporateTime = sEvaporation.EvaporateTime;
                 sPuddleStartingVolume = sPuddle.CurrentVolume;
             });
 
