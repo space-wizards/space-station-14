@@ -8,6 +8,7 @@
     snap:
     - Disposal
   components:
+  - type: SubFloorHide
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
