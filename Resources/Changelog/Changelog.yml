@@ -1988,3 +1988,9 @@ Entries:
   - {message: Fix some issues with station rotation, type: Fix}
   id: 355
   time: '2021-09-16T03:02:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug which prevented players from equipping most items in their pockets.,
+    type: Fix}
+  id: 356
+  time: '2021-09-16T10:18:08.191474+00:00'
