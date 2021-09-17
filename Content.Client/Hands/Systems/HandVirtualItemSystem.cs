@@ -3,16 +3,16 @@ using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Hands
+namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
-    public sealed class HandVirtualPullSystem : EntitySystem
+    public sealed class HandVirtualItemSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            Subs.ItemStatus<HandVirtualPullComponent>(_ => new HandVirtualPullItemStatus());
+            Subs.ItemStatus<HandVirtualItemComponent>(_ => new HandVirtualItemStatus());
         }
     }
 }

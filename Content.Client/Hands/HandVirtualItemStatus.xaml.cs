@@ -3,9 +3,9 @@ using Robust.Client.UserInterface.XAML;
 
 namespace Content.Client.Hands
 {
-    public sealed class HandVirtualPullItemStatus : Control
+    public sealed class HandVirtualItemStatus : Control
     {
-        public HandVirtualPullItemStatus()
+        public HandVirtualItemStatus()
         {
             RobustXamlLoader.Load(this);
         }
