@@ -31,10 +31,10 @@
         - SmallImpassable
         - MobImpassable
       hard: false
-    - type: Appearance
-      visuals:
-      - type: PuddleVisualizer
-        recolor: true
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: puddle
