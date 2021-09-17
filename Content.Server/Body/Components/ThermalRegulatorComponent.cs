@@ -1,19 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Alert;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Body.Behavior;
-using Content.Server.Body.Components;
-using Content.Server.Body.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
-using Content.Shared.Atmos;
-using Content.Shared.Body.Components;
-using Content.Shared.Damage;
-using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -28,21 +16,12 @@ namespace Content.Server.Body.Components
     [RegisterComponent]
     public class ThermalRegulatorComponent : Component
     {
-        [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
-
         public override string Name => "ThermalRegulator";
 
         public float AccumulatedFrametime;
 
         public bool IsShivering;
         public bool IsSweating;
-
-        // TODO MIRROR move to bloodstream
-        [ViewVariables] [DataField("needsGases")] public Dictionary<Gas, float> NeedsGases { get; set; } = new();
-
-        [ViewVariables] [DataField("producesGases")] public Dictionary<Gas, float> ProducesGases { get; set; } = new();
-
-        [ViewVariables] [DataField("deficitGases")] public Dictionary<Gas, float> DeficitGases { get; set; } = new();
 
         /// <summary>
         /// Heat generated due to metabolism. It's generated via metabolism
@@ -92,207 +71,70 @@ namespace Content.Server.Body.Components
         [DataField("thermalRegulationTemperatureThreshold")]
         public float ThermalRegulationTemperatureThreshold { get; private set; }
 
-        // TODO MIRROR move to bloodstream
-        [ViewVariables] public bool Suffocating { get; private set; }
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
-
-        [DataField("damageRecovery", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier DamageRecovery = default!;
-
-        private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
+        public void ProcessThermalRegulation(float frameTime)
         {
-            var needs = new Dictionary<Gas, float>(NeedsGases);
-            foreach (var (gas, amount) in DeficitGases)
+            if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
+            temperatureComponent.ReceiveHeat(MetabolismHeat);
+            temperatureComponent.RemoveHeat(RadiatedHeat);
+
+            // implicit heat regulation
+            var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
+            var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                var newAmount = (needs.GetValueOrDefault(gas) + amount) * frameTime;
-                needs[gas] = newAmount;
+                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+            }
+            else
+            {
+                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
             }
 
-            return needs;
-        }
+            // recalc difference and target heat
+            tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
+            targetHeat = tempDiff * temperatureComponent.HeatCapacity;
 
-        private void ClampDeficit()
-        {
-            var deficitGases = new Dictionary<Gas, float>(DeficitGases);
-
-            foreach (var (gas, deficit) in deficitGases)
+            // if body temperature is not within comfortable, thermal regulation
+            // processes starts
+            if (tempDiff < ThermalRegulationTemperatureThreshold)
             {
-                if (!NeedsGases.TryGetValue(gas, out var need))
+                if (IsShivering || IsSweating)
                 {
-                    DeficitGases.Remove(gas);
-                    continue;
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-comfortable"));
                 }
 
-                if (deficit > need)
-                {
-                    DeficitGases[gas] = need;
-                }
-            }
-        }
-
-        private float SuffocatingPercentage()
-        {
-            var total = 0f;
-
-            foreach (var (gas, deficit) in DeficitGases)
-            {
-                var lack = 1f;
-                if (NeedsGases.TryGetValue(gas, out var needed))
-                {
-                    lack = deficit / needed;
-                }
-
-                total += lack / Atmospherics.TotalNumberOfGases;
-            }
-
-            return total;
-        }
-
-        private float GasProducedMultiplier(Gas gas, float usedAverage)
-        {
-            if (!ProducesGases.TryGetValue(gas, out var produces))
-            {
-                return 0;
-            }
-
-            if (!NeedsGases.TryGetValue(gas, out var needs))
-            {
-                needs = 1;
-            }
-
-            return needs * produces * usedAverage;
-        }
-
-        private Dictionary<Gas, float> GasProduced(float usedAverage)
-        {
-            return ProducesGases.ToDictionary(pair => pair.Key, pair => GasProducedMultiplier(pair.Key, usedAverage));
-        }
-
-        private void ProcessGases(float frameTime)
-        {
-            if (!Owner.TryGetComponent(out BloodstreamComponent? bloodstream))
-            {
+                IsShivering = false;
+                IsSweating = false;
                 return;
             }
 
-            if (_body == null)
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+
+            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                return;
-            }
-
-            // TODO MIRROR remove
-            var lungs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<RespiratorComponent>(_body);
-
-            var needs = NeedsAndDeficit(frameTime);
-            var used = 0f;
-            foreach (var (gas, amountNeeded) in needs)
-            {
-                var bloodstreamAmount = bloodstream.Air.GetMoles(gas);
-                var deficit = 0f;
-
-                if (bloodstreamAmount < amountNeeded)
+                if (!actionBlocker.CanSweat(Owner)) return;
+                if (!IsSweating)
                 {
-                    if (!Owner.GetComponent<IMobStateComponent>().IsCritical())
-                    {
-                        // Panic inhale
-                        foreach (var lung in lungs)
-                        {
-                            lung.Gasp();
-                        }
-                    }
-
-                    bloodstreamAmount = bloodstream.Air.GetMoles(gas);
-
-                    deficit = Math.Max(0, amountNeeded - bloodstreamAmount);
-
-                    if (deficit > 0)
-                    {
-                        bloodstream.Air.SetMoles(gas, 0);
-                    }
-                    else
-                    {
-                        bloodstream.Air.AdjustMoles(gas, -amountNeeded);
-                    }
-                }
-                else
-                {
-                    bloodstream.Air.AdjustMoles(gas, -amountNeeded);
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
+                    IsSweating = true;
                 }
 
-                DeficitGases[gas] = deficit;
-
-
-                used += (amountNeeded - deficit) / amountNeeded;
-            }
-
-            var produced = GasProduced(used / needs.Count);
-
-            foreach (var (gas, amountProduced) in produced)
-            {
-                bloodstream.Air.AdjustMoles(gas, amountProduced);
-            }
-
-            ClampDeficit();
-        }
-
-        private void TakeSuffocationDamage()
-        {
-            Suffocating = true;
-
-            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ShowAlert(AlertType.LowOxygen);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage);
-        }
-
-        private void StopSuffocation()
-        {
-            Suffocating = false;
-
-            if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
-            {
-                alertsComponent.ClearAlert(AlertType.LowOxygen);
-            }
-
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery);
-        }
-
-        public GasMixture Clean(BloodstreamComponent bloodstream)
-        {
-            var gasMixture = new GasMixture(bloodstream.Air.Volume)
-            {
-                Temperature = bloodstream.Air.Temperature
-            };
-
-            for (Gas gas = 0; gas < (Gas) Atmospherics.TotalNumberOfGases; gas++)
-            {
-                float amount;
-                var molesInBlood = bloodstream.Air.GetMoles(gas);
-
-                if (!NeedsGases.TryGetValue(gas, out var needed))
+                // creadth: sweating does not help in airless environment
+                if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    amount = molesInBlood;
+                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
                 }
-                else
+            }
+            else
+            {
+                if (!actionBlocker.CanShiver(Owner)) return;
+                if (!IsShivering)
                 {
-                    var overflowThreshold = needed * 5f;
-
-                    amount = molesInBlood > overflowThreshold
-                        ? molesInBlood - overflowThreshold
-                        : 0;
+                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
+                    IsShivering = true;
                 }
 
-                gasMixture.AdjustMoles(gas, amount);
-                bloodstream.Air.AdjustMoles(gas, -amount);
+                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
             }
-
-            return gasMixture;
         }
     }
 }

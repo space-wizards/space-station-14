@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

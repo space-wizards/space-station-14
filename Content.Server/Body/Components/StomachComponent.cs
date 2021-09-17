@@ -1,11 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Server.Body.EntitySystems;
-using Content.Server.Chemistry.Components;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
-using Content.Shared.Chemistry.Solution.Components;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -30,6 +27,10 @@ namespace Content.Server.Body.Components
 
         [DataField("updateFrequency")]
         public float UpdateFrequency = 1.0f;
+
+        [DataField("solutionName")]
+        public string StomachSolutionName = "stomach";
+        public Solution StomachSolution = default!;
 
         /// <summary>
         ///     Time in seconds between reagents being ingested and them being

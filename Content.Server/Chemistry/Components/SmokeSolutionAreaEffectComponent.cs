@@ -1,5 +1,4 @@
-﻿using Content.Server.Body.Circulatory;
-using Content.Server.Body.Respiratory;
+﻿using Content.Server.Body.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
@@ -39,7 +38,7 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
+            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.InternalSolution.AvailableVolume  );
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())

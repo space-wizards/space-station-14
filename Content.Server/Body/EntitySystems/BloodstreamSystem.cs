@@ -1,38 +1,44 @@
 ﻿using Content.Server.Body.Components;
 using Content.Shared.MobState;
-using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Body.EntitySystems
 {
-    [UsedImplicitly]
-    public class ThermalRegulatorSystem : EntitySystem
+    public class BloodstreamSystem : EntitySystem
     {
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
 
-            foreach (var thermal in ComponentManager.EntityQuery<ThermalRegulatorComponent>(false))
+            foreach (var blood in ComponentManager.EntityQuery<BloodstreamComponent>(false))
             {
-                var Owner = thermal.Owner;
                 // TODO MIRROR BODY events
+                var Owner = blood.Owner;
                 if (Owner.TryGetComponent<IMobStateComponent>(out var state) &&
                     state.IsDead())
                 {
                     return;
                 }
 
-                thermal.AccumulatedFrametime += frameTime;
+                blood.AccumulatedFrametime += frameTime;
 
                 // TODO unhardcode
-                if (thermal.AccumulatedFrametime < 1)
+                if (blood.AccumulatedFrametime < 1)
                 {
                     return;
                 }
 
-                thermal.ProcessThermalRegulation(thermal.AccumulatedFrametime);
+                blood.ProcessGases(blood.AccumulatedFrametime);
 
-                thermal.AccumulatedFrametime -= 1;
+                blood.AccumulatedFrametime -= 1;
+
+                if (blood.SuffocatingPercentage() > 0)
+                {
+                    blood.TakeSuffocationDamage();
+                    return;
+                }
+
+                blood.StopSuffocation();
             }
         }
     }

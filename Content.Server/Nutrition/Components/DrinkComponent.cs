@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Body.Behavior;
+using Content.Server.Body.Components;
+using Content.Server.Body.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
@@ -183,7 +184,6 @@ namespace Content.Server.Nutrition.Components
             // TODO MIRROR events
             if (!target.TryGetComponent(out SharedBodyComponent? body))
             {
-
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
                 return false;
             }
@@ -195,10 +195,11 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
+            var stomachs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<StomachComponent>(body);
             var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             var transferAmount = ReagentUnit.Min(TransferAmount, interactions.DrainAvailable);
             var drain = solutionContainerSystem.Drain(Owner.Uid, interactions, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.StomachSolution.AvailableVolume > drain.CurrentVolume);
 
             // All stomach are full or can't handle whatever solution we have.
             if (firstStomach == null)
@@ -225,7 +226,8 @@ namespace Content.Server.Nutrition.Components
 
             drain.DoEntityReaction(target, ReactionMethod.Ingestion);
 
-            firstStomach.TryTransferSolution(drain);
+            EntitySystem.Get<SolutionContainerSystem>()
+                .TryAddSolution(firstStomach.Owner.Uid, firstStomach.StomachSolution, drain);
 
             return true;
         }

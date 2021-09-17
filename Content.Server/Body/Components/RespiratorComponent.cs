@@ -22,7 +22,9 @@ namespace Content.Server.Body.Components
 
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private float _accumulatedFrameTime;
+        public SharedBodyComponent? Body;
+
+        public float AccumulatedFrametime;
 
         [ViewVariables] private TimeSpan _lastGaspPopupTime;
 
@@ -44,10 +46,12 @@ namespace Content.Server.Body.Components
         [ViewVariables]
         public float CycleDelay { get; set; } = 2;
 
-        protected override void OnAddedToBody(SharedBodyComponent body)
+        protected override void Initialize()
         {
-            base.OnAddedToBody(body);
-            Inhale(CycleDelay);
+            base.Initialize();
+
+            // TODO oh god
+            Body = Owner.GetComponent<MechanismComponent>().Body;
         }
 
         public void Gasp()
@@ -83,52 +87,6 @@ namespace Content.Server.Body.Components
 
             EntitySystem.Get<AtmosphereSystem>().Merge(to, mixture);
             mixture.Clear();
-        }
-
-        public override void Update(float frameTime)
-        {
-            // TODO MIRROR instead of explicitly checking for critical, just make lung behavior not run if the heart
-            // isn't pumping blood, and have the heart stop pumping when you die (?)
-            if (Body != null && Body.Owner.TryGetComponent(out IMobStateComponent? mobState) && mobState.IsCritical())
-            {
-                return;
-            }
-
-            if (Status == LungStatus.None)
-            {
-                Status = LungStatus.Inhaling;
-            }
-
-            _accumulatedFrameTime += Status switch
-            {
-                LungStatus.Inhaling => frameTime,
-                LungStatus.Exhaling => -frameTime,
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            var absoluteTime = Math.Abs(_accumulatedFrameTime);
-            var delay = CycleDelay;
-
-            if (absoluteTime < delay)
-            {
-                return;
-            }
-
-            switch (Status)
-            {
-                case LungStatus.Inhaling:
-                    Inhale(absoluteTime);
-                    Status = LungStatus.Exhaling;
-                    break;
-                case LungStatus.Exhaling:
-                    Exhale(absoluteTime);
-                    Status = LungStatus.Inhaling;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            _accumulatedFrameTime = absoluteTime - delay;
         }
 
         public void Inhale(float frameTime)

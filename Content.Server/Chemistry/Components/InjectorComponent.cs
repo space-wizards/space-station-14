@@ -181,7 +181,7 @@ namespace Content.Server.Chemistry.Components
                 return;
 
             // Get transfer amount. May be smaller than _transferAmount if not enough room
-            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetBloodstream.EmptyVolume);
+            var realTransferAmount = ReagentUnit.Min(_transferAmount, targetBloodstream.InternalSolution.AvailableVolume);
 
             if (realTransferAmount <= 0)
             {

@@ -2,7 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Body.Behavior;
+using Content.Server.Body.Components;
+using Content.Server.Body.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
@@ -119,11 +120,12 @@ namespace Content.Server.Nutrition.Components
             var trueTarget = target ?? user;
 
             // TODO MIRROR events
-            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body) ||
-                !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
+            if (!trueTarget.TryGetComponent(out SharedBodyComponent? body))
             {
                 return false;
             }
+
+            var stomachs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<StomachComponent>(body);
 
             // holy mother of overengineered batman
             var utensils = utensilUsed != null
@@ -164,7 +166,7 @@ namespace Content.Server.Nutrition.Components
 
             var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
-            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
+            var firstStomach = stomachs.FirstOrDefault(stomach => stomach.StomachSolution.AvailableVolume > split.CurrentVolume);
 
             if (firstStomach == null)
             {
@@ -177,7 +179,8 @@ namespace Content.Server.Nutrition.Components
 
             split.DoEntityReaction(trueTarget, ReactionMethod.Ingestion);
 
-            firstStomach.TryTransferSolution(split);
+            EntitySystem.Get<SolutionContainerSystem>()
+                .TryAddSolution(firstStomach.Owner.Uid, firstStomach.StomachSolution, split);
 
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 

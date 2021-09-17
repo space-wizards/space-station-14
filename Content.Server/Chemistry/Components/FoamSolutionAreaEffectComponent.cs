@@ -1,4 +1,4 @@
-﻿using Content.Server.Body.Circulatory;
+﻿using Content.Server.Body.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry;
@@ -58,7 +58,7 @@ namespace Content.Server.Chemistry.Components
 
             var cloneSolution = solution.Clone();
             var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction * (1 - protection),
-                bloodstream.EmptyVolume);
+                bloodstream.InternalSolution.AvailableVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             bloodstream.TryTransferSolution(transferSolution);
