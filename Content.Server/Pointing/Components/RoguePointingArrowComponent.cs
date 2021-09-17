@@ -42,7 +42,7 @@ namespace Content.Server.Pointing.Components
         private float _chasingTime = 1;
 
         [DataField("explosionSound")]
-        private SoundSpecifier _explosionSound = new SoundPathSpecifier("/Audio/Effects/explosion.ogg");
+        private SoundSpecifier _explosionSound = new SoundCollectionSpecifier("explosion");
 
         private IEntity? RandomNearbyPlayer()
         {

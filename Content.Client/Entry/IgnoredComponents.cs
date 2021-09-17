@@ -258,6 +258,7 @@ namespace Content.Client.Entry
             "ReagentTank",
             "UtilityAI",
             "MouseAccent",
+            "FlashImmunity",
             "GhostTakeoverAvailable",
             "GhostRoleMobSpawner",
             "GhostOnMove",
@@ -273,8 +274,11 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
-            "PneumaticCannon",
-            "AmbientOnPowered"
+            "AmbientOnPowered",
+            "Wieldable",
+            "IncreaseDamageOnWield",
+            "TabletopGame",
+            "PneumaticCannon"
         };
     }
 }

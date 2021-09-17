@@ -24,7 +24,8 @@
     position: Stand
   - type: Pullable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -185,6 +186,8 @@
   - type: Construction
     graph: seat
     node: chairWood
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -201,6 +204,9 @@
           MaterialWoodPlank:
             min: 1
             max: 1
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   name: pilot seat

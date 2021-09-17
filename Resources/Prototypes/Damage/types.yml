@@ -1,0 +1,38 @@
+- type: damageType
+  id: Blunt
+
+- type: damageType
+  id: Slash
+
+- type: damageType
+  id: Piercing
+
+- type: damageType
+  id: Heat
+
+- type: damageType
+  id: Shock
+
+- type: damageType
+  id: Cold
+
+# Poison damage. Generally caused by various reagents being metabolised.
+- type: damageType
+  id: Poison
+
+- type: damageType
+  id: Radiation
+
+# Damage due to being unable to breathe.
+# Represents not enough oxygen (or equivalent) getting to the blood.
+# Usually healed automatically if entity can breathe
+- type: damageType
+  id: Asphyxiation
+
+# Damage representing not having enough blood.
+# Represents there not enough blood to supply oxygen (or equivalent).
+- type: damageType
+  id: Bloodloss
+
+- type: damageType
+  id: Cellular

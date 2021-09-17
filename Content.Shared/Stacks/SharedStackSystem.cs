@@ -100,8 +100,7 @@ namespace Content.Shared.Stacks
             if (!args.IsInDetailsRange)
                 return;
 
-            args.Message.AddText("\n");
-            args.Message.AddMarkup(
+            args.PushMarkup(
                 Loc.GetString("comp-stack-examine-detail-count",
                     ("count", component.Count),
                     ("markupCountColor", "lightgray")

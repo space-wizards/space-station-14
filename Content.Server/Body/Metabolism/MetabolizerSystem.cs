@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;

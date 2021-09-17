@@ -18,7 +18,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public class SharedInteractionSystem : EntitySystem
+    public abstract class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly SharedBroadphaseSystem _sharedBroadphaseSystem = default!;
 
@@ -131,6 +131,7 @@ namespace Content.Shared.Interaction
 
             if (rayResults.Count == 0) return true;
 
+            // TODO: Wot? This should just be in the predicate.
             if (!ignoreInsideBlocker) return false;
 
             foreach (var result in rayResults)

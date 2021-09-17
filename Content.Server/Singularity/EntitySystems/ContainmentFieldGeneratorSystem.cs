@@ -51,8 +51,6 @@ namespace Content.Server.Singularity.EntitySystems
                 EntityManager.QueueDeleteEntity(uid);
                 return;
             }
-
-            component.Parent.TryRepell(component.Owner, args.OtherFixture.Body.Owner);
         }
 
         private static void BodyTypeChanged(

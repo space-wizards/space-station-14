@@ -66,12 +66,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName, out _))
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName,
+                out var vaporSolution))
             {
                 return false;
             }
 
-            return true;
+            return _solutionContainerSystem.TryAddSolution(vapor.Owner.Uid, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)

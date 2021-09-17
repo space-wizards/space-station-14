@@ -3,7 +3,8 @@
   id: PuddleBase
   abstract: true
   components:
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     drawdepth: FloorObjects
   - type: SolutionContainerManager

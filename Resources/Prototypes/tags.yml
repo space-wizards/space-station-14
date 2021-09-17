@@ -212,4 +212,7 @@
   id: Write
 
 - type: Tag
+  id: Wooden # just like our atmos
+
+- type: Tag
   id: EmitterBolt
