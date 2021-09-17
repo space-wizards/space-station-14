@@ -26,14 +26,14 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Components
 {
     /// <summary>
-    ///     Handles lung behavior.
+    ///     Handles body temperature
     /// </summary>
     [RegisterComponent]
     public class ThermalRegulatorComponent : Component
     {
         [ComponentDependency] private readonly SharedBodyComponent? _body = default!;
 
-        public override string Name => "Respirator";
+        public override string Name => "ThermalRegulator";
 
         public float AccumulatedFrametime;
 
@@ -196,7 +196,7 @@ namespace Content.Server.Body.Components
             }
 
             // TODO MIRROR remove
-            var lungs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<ThermalRegulatorComponent>(_body);
+            var lungs = EntitySystem.Get<BodySystem>().GetComponentsOnMechanisms<RespiratorComponent>(_body);
 
             var needs = NeedsAndDeficit(frameTime);
             var used = 0f;
@@ -248,88 +248,6 @@ namespace Content.Server.Body.Components
             }
 
             ClampDeficit();
-        }
-
-        /// <summary>
-        /// Process thermal regulation
-        /// </summary>
-        /// <param name="frameTime"></param>
-        private void ProcessThermalRegulation(float frameTime)
-        {
-            if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
-            temperatureComponent.ReceiveHeat(MetabolismHeat);
-            temperatureComponent.RemoveHeat(RadiatedHeat);
-
-            // implicit heat regulation
-            var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
-            var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
-            {
-                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
-            }
-            else
-            {
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
-            }
-
-            // recalc difference and target heat
-            tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
-            targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-
-            // if body temperature is not within comfortable, thermal regulation
-            // processes starts
-            if (tempDiff < ThermalRegulationTemperatureThreshold)
-            {
-                if (_isShivering || _isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-comfortable"));
-                }
-
-                _isShivering = false;
-                _isSweating = false;
-                return;
-            }
-
-
-            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
-
-            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
-            {
-                if (!actionBlocker.CanSweat(Owner)) return;
-                if (!_isSweating)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-sweating"));
-                    _isSweating = true;
-                }
-
-                // creadth: sweating does not help in airless environment
-                if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
-                {
-                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
-                }
-            }
-            else
-            {
-                if (!actionBlocker.CanShiver(Owner)) return;
-                if (!_isShivering)
-                {
-                    Owner.PopupMessage(Loc.GetString("metabolism-component-is-shivering"));
-                    _isShivering = true;
-                }
-
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
-            }
-        }
-
-        /// <summary>
-        ///     Processes gases in the bloodstream.
-        /// </summary>
-        /// <param name="frameTime">
-        ///     The time since the last metabolism tick in seconds.
-        /// </param>
-        public void Update(float frameTime)
-        {
-
         }
 
         private void TakeSuffocationDamage()
