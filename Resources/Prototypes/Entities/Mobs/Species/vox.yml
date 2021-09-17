@@ -84,7 +84,7 @@
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
-  - type: Respirator
+  - type: Bloodstream
     needsGases:
       Nitrogen: 0.00060763888
     producesGases:
@@ -92,10 +92,11 @@
       CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1 
+        Asphyxiation: 1
     damageRecovery:
       types:
-        Asphyxiation: -1 
+        Asphyxiation: -1
+  - type: ThermalRegulator
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer

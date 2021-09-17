@@ -275,7 +275,13 @@ namespace Content.Client.Entry
             "BatteryCharger",
             "SpawnItemsOnUse",
             "AmbientOnPowered",
-            "TabletopGame"
+            "TabletopGame",
+            "Brain",
+            "Circulator",
+            "Stomach",
+            "BodyPart",
+            "Mechanism",
+            "ThermalRegulator"
         };
     }
 }

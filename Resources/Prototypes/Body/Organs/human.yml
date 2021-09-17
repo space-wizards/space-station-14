@@ -28,12 +28,11 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:BrainBehavior {}
   - type: Input
     context: "ghost"
   - type: DummyInputMover
   - type: GhostOnMove
+  - type: Brain
 
 - type: entity
   id: OrganHumanEyes
@@ -100,8 +99,7 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:LungBehavior {}
+  - type: Respirator
 
 # TODO DAMAGE UNITS. Some of these damage effects were scaled up to integers.
 # Scale back down when damage units are in.
@@ -219,17 +217,12 @@
   - type: Mechanism
     size: 1
     compatibility: Biological
-    behaviors:
-    - !type:StomachBehavior
-      max_volume: 250
-      digestionDelay: 20
+  - type: Stomach
   - type: SolutionContainerManager
     solutions:
       stomach:
         maxVol: 250
   # The stomach metabolizes stuff like foods and drinks.
-  # TODO: Have it work off of the ent's solution container, and move this
-  # to intestines instead.
   - type: Metabolizer # Release me from this hell called 1 reagent for every drink
     # TODO please make every drink their own base thing
     metabolisms:

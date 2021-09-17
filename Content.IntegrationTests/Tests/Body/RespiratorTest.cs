@@ -25,14 +25,12 @@ namespace Content.IntegrationTests.Tests.Body
   name: HumanBodyAndBloodstreamDummy
   id: HumanBodyAndBloodstreamDummy
   components:
-  - type: Bloodstream
-    max_volume: 100
   - type: SolutionContainerManager
   - type: Body
     template: HumanoidTemplate
     preset: HumanPreset
     centerSlot: torso
-  - type: Respirator
+  - type: ThermalRegulator
     metabolismHeat: 5000
     radiatedHeat: 400
     implicitHeatRegulation: 5000
@@ -40,11 +38,19 @@ namespace Content.IntegrationTests.Tests.Body
     shiveringHeatRegulation: 5000
     normalBodyTemperature: 310.15
     thermalRegulationTemperatureThreshold: 25
+  - type: Bloodstream
+    max_volume: 100
     needsGases:
       Oxygen: 0.00060763888
     producesGases:
       Oxygen: 0.00045572916
       CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
 ";
 
         [Test]

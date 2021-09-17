@@ -38,13 +38,13 @@
       0: !type:NormalMobState {}
       150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
-  - type: Respirator
+  - type: Bloodstream
     damage:
       types:
-        Asphyxiation: 1 
+        Asphyxiation: 1
     damageRecovery:
       types:
-        Asphyxiation: -1 
+        Asphyxiation: -1
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
