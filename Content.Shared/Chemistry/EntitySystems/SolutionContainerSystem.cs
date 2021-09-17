@@ -258,6 +258,17 @@ namespace Content.Shared.Chemistry.EntitySystems
             return solutionsMgr.Solutions[name];
         }
 
+        /// <summary>
+        /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
+        /// </summary>
+        /// <param name="ownerUid">EntityUid to which to add solution</param>
+        /// <param name="name">name for the solution</param>
+        /// <returns>solution</returns>
+        public Solution EnsureSolution(EntityUid ownerUid, string name)
+        {
+            return EnsureSolution(EntityManager.GetEntity(ownerUid), name);
+        }
+
         public string[] RemoveEachReagent(Solution solution, ReagentUnit quantity)
         {
             var removedReagent = new string[solution.Contents.Count];

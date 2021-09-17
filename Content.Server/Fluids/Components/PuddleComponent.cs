@@ -1,6 +1,7 @@
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -11,6 +12,7 @@ namespace Content.Server.Fluids.Components
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
+    [Friend(typeof(PuddleSystem))]
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
@@ -31,8 +33,7 @@ namespace Content.Server.Fluids.Components
         // to check for low volumes for evaporation or whatever
 
 
-        [DataField("slip_threshold")]
-        public ReagentUnit SlipThreshold = ReagentUnit.New(3);
+        [DataField("slip_threshold")] public ReagentUnit SlipThreshold = ReagentUnit.New(3);
 
         [DataField("spill_sound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
@@ -42,7 +43,8 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         public bool Overflown;
 
-        [ViewVariables] public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(this);
+        [ViewVariables(VVAccess.ReadOnly)]
+        public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(this);
 
         [ViewVariables] [DataField("overflow_volume")]
         public ReagentUnit OverflowVolume = ReagentUnit.New(20);
@@ -51,7 +53,6 @@ namespace Content.Server.Fluids.Components
 
         public bool EmptyHolder => EntitySystem.Get<PuddleSystem>().EmptyHolder(this);
 
-        [DataField("solution")]
-        public string SolutionName { get; set; } = DefaultSolutionName;
+        [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
     }
 }

@@ -73,6 +73,7 @@
     sprite: Fluids/egg_splat.rsi
     state: egg-0
   - type: Puddle
+  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

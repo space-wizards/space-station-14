@@ -1,4 +1,4 @@
-﻿using Content.Shared.Chemistry.Components;
+﻿using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -12,53 +12,48 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
-
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<EvaporationComponent, ComponentInit>(OnComponentInit);
         }
 
-        public void CheckEvaporate(EntityUid ownerUid, Solution solution)
+        private void OnComponentInit(EntityUid uid, EvaporationComponent component, ComponentInit args)
         {
-            if (solution.CurrentVolume == 0)
-            {
-                EntityManager.QueueDeleteEntity(ownerUid);
-            }
+            component.Accumulator = 0f;
+            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         }
 
-        public void Evaporate(EntityUid ownerUid, Solution solution)
+        public override void Update(float frameTime)
         {
-            _solutionContainerSystem.SplitSolution(ownerUid, solution,
-                ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
+            base.Update(frameTime);
 
-            if (solution.CurrentVolume == 0)
+            foreach (var evaporationComponent in ComponentManager.EntityQuery<EvaporationComponent>())
             {
-                EntityManager.QueueDeleteEntity(ownerUid);
-            }
-            else
-            {
-                //TODO Raise event
-                //UpdateStatus();
+                UpdateEvaporation(evaporationComponent, frameTime);
             }
         }
 
-        // public void UpdateStatus(PuddleComponent puddleComponent)
-        // {
-        //     if (puddleComponent.Owner.Deleted) return;
-        //
-        //     // UpdateAppearance();
-        //     UpdateSlip(puddleComponent);
-        //
-        //     // if (EvaporateThreshold == ReagentUnit.New(-1) || CurrentVolume > EvaporateThreshold)
-        //     // {
-        //     //     return;
-        //     // }
-        //     //
-        //     // _evaporationToken = new CancellationTokenSource();
-        //     //
-        //     // // KYS to evaporate
-        //     // Owner.SpawnTimer(TimeSpan.FromSeconds(EvaporateTime), Evaporate, _evaporationToken.Token);
-        // }
+        private void UpdateEvaporation(EvaporationComponent evaporationComponent, float frameTime)
+        {
+            evaporationComponent.Accumulator += frameTime;
+            if (evaporationComponent.Accumulator >= evaporationComponent.EvaporateTime)
+            {
+                var uid = evaporationComponent.Owner.Uid;
+                var solution = _solutionContainerSystem.GetSolution(uid, evaporationComponent.SolutionName);
+                _solutionContainerSystem.SplitSolution(uid, solution,
+                    ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
+
+                RaiseLocalEvent(uid, new SolutionChangedEvent());
+
+                if (solution.CurrentVolume == 0)
+                {
+                    EntityManager.QueueDeleteEntity(uid);
+                }
+
+                evaporationComponent.Accumulator = 0;
+            }
+        }
     }
 }

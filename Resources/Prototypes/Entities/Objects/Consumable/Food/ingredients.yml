@@ -13,6 +13,7 @@
     state: powder
     color: white
   - type: Puddle
+  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

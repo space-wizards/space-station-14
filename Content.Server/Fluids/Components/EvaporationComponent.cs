@@ -1,10 +1,13 @@
-﻿using Content.Shared.Chemistry.Reagent;
+﻿using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
+    [Friend(typeof(EvaporationSystem))]
     public sealed class EvaporationComponent : Component
     {
         public override string Name => "Evaporation";
@@ -13,12 +16,18 @@ namespace Content.Server.Fluids.Components
         ///     The time that it will take this puddle to evaporate, in seconds.
         /// </summary>
         [DataField("evaporate_time")]
-        public float EvaporateTime { get; private set; } = 5f;
+        public float EvaporateTime { get; set; } = 5f;
+
+        [DataField("solution")] public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
+
+        /// <summary>
+        ///     The time accumulated since the start. Shouldn't be modified outside of EvaporationSystem.
+        /// </summary>
+        public float Accumulator = 0f;
 
         /// <summary>
         ///      How few <see cref="ReagentUnit"/> we can hold prior to self-destructing
         /// </summary>
-        [DataField("evaporate_threshold")]
-        public ReagentUnit EvaporateThreshold = ReagentUnit.New(20);
+        [DataField("evaporate_threshold")] public ReagentUnit EvaporateThreshold = ReagentUnit.New(20);
     }
 }

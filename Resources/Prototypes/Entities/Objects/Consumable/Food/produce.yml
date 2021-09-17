@@ -298,6 +298,7 @@
     sprite: Fluids/tomato_splat.rsi
     state: puddle-0
   - type: Puddle
+  - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
