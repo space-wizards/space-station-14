@@ -19,7 +19,6 @@
         name: cuffs
       - material: Steel
         amount: 6
-        name: cigarette filter
         doAfter: 10
   - node: cannon
     entity: ImprovisedPneumaticCannon
