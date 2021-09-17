@@ -13,9 +13,6 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 using Content.Shared.MobState;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.GameObjects;
@@ -98,21 +95,13 @@ namespace Content.Server.Body.Components
         // TODO MIRROR move to bloodstream
         [ViewVariables] public bool Suffocating { get; private set; }
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamage")] public int SuffocationDamage = 1;
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("suffocationDamageRecovery")] public int DamageRecovery = 1;
-
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Asphyxiation"!;
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
+        public DamageSpecifier Damage = default!;
+
+        [DataField("damageRecovery", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier DamageRecovery = default!;
 
         private Dictionary<Gas, float> NeedsAndDeficit(float frameTime)
         {
@@ -259,27 +248,19 @@ namespace Content.Server.Body.Components
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }
 
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                return;
-            }
-
-            damageable.TryChangeDamage(DamageType, _damage, false);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage);
         }
 
         private void StopSuffocation()
         {
             Suffocating = false;
 
-            if (Owner.TryGetComponent(out IDamageableComponent? damageable))
-            {
-                damageable.TryChangeDamage(DamageType, -_damageRecovery, false);
-            }
-
             if (Owner.TryGetComponent(out ServerAlertsComponent? alertsComponent))
             {
                 alertsComponent.ClearAlert(AlertType.LowOxygen);
             }
+
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery);
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)

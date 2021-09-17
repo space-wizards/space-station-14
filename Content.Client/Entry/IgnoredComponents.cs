@@ -177,7 +177,6 @@ namespace Content.Client.Entry
             "Firelock",
             "AtmosPlaque",
             "Spillable",
-            "StorageCounter",
             "SpaceVillainArcade",
             "Flammable",
             "Smoking",
@@ -225,8 +224,7 @@ namespace Content.Client.Entry
             "DebugEquip",
             "InnateActions",
             "ReagentGrinder",
-            "Grindable",
-            "Juiceable",
+            "Extractable",
             "WelderRefinable",
             "ConveyorAssembly",
             "TwoWayLever",
@@ -260,6 +258,7 @@ namespace Content.Client.Entry
             "ReagentTank",
             "UtilityAI",
             "MouseAccent",
+            "FlashImmunity",
             "GhostTakeoverAvailable",
             "GhostRoleMobSpawner",
             "GhostOnMove",
@@ -274,7 +273,9 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
-            "SpawnItemsOnUse"
+            "SpawnItemsOnUse",
+            "AmbientOnPowered",
+            "TabletopGame"
         };
     }
 }

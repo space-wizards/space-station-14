@@ -19,7 +19,7 @@
       - book-4
       - book-5
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:

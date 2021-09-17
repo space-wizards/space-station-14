@@ -19,6 +19,7 @@
       layer:
       - Passable
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
       - trigger:

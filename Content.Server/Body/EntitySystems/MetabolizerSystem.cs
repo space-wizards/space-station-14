@@ -1,20 +1,34 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Content.Server.Body.Components;
-using Content.Server.Body.Metabolism;
-using Content.Server.Chemistry.Components;
+using System.Collections.Generic;
+using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Body.EntitySystems
 {
     public class MetabolizerSystem : EntitySystem
     {
+        [Dependency]
+        private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
+
+        public override void Initialize()
+        {
+            base.Initialize();
+
+            SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
+        }
+
+        private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
+        {
+            _solutionContainerSystem.EnsureSolution(EntityManager.GetEntity(uid), component.SolutionName);
+        }
+
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -35,36 +49,33 @@ namespace Content.Server.Body.EntitySystems
         private void TryMetabolize(MetabolizerComponent comp)
         {
             var owner = comp.Owner;
-            var reagentList = new List<Solution.ReagentQuantity>();
-            SolutionContainerComponent? solution = null;
+            IReadOnlyList<Solution.ReagentQuantity> reagentList = new List<Solution.ReagentQuantity>();
+            Solution? solution = null;
             SharedBodyComponent? body = null;
+            var solutionsSys = Get<SolutionContainerSystem>();
 
             // if this field is passed we should try and take from the bloodstream over anything else
-            if (comp.TakeFromBloodstream && owner.TryGetComponent<SharedMechanismComponent>(out var mech))
+            if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
             {
                 body = mech.Body;
                 if (body != null)
                 {
-                    if (body.Owner.TryGetComponent<BloodstreamComponent>(out var bloodstream)
-                        && bloodstream.InternalSolution.CurrentVolume >= ReagentUnit.Zero)
+                    if (body.Owner.HasComponent<BloodstreamComponent>()
+                        && solutionsSys.TryGetSolution(body.Owner, comp.SolutionName, out solution)
+                        && solution.CurrentVolume >= ReagentUnit.Zero)
                     {
-                        solution = bloodstream.InternalSolution;
-                        reagentList = bloodstream.InternalSolution.ReagentList.ToList();
+                        reagentList = solution.Contents;
                     }
                 }
             }
-            else if (owner.TryGetComponent<SolutionContainerComponent>(out var sol))
-            {
-                // if we have no mechanism/body but a solution container instead,
-                // we'll just use that to metabolize from
-                solution = sol;
-                reagentList = sol.ReagentList.ToList();
-            }
+
             if (solution == null || reagentList.Count == 0)
             {
                 // We're all outta ideas on where to metabolize from
                 return;
             }
+
+            List<Solution.ReagentQuantity> removeReagents = new(5);
 
             // Run metabolism for each reagent, remove metabolized reagents
             foreach (var reagent in reagentList)
@@ -100,8 +111,10 @@ namespace Content.Server.Body.EntitySystems
                     effect.Metabolize(ent, reagent);
                 }
 
-                solution.TryRemoveReagent(reagent.ReagentId, metabolism.MetabolismRate);
+                removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
             }
+
+            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
         }
     }
 }

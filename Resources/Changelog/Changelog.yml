@@ -1891,3 +1891,106 @@ Entries:
   - {message: Fix grav gen losing power after only a bit, type: Fix}
   id: 337
   time: '2021-08-24T15:36:50.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Removed the ability for chairs to catch items thrown by people sitting
+      on them., type: Fix}
+  id: 338
+  time: '2021-08-25T10:35:37.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed deconstruction verb on partially deconstructed windows., type: Fix}
+  id: 339
+  time: '2021-08-25T11:45:33.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix admin events UI tab, type: Fix}
+  id: 340
+  time: '2021-08-26T09:45:06.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Adds unique screen for NTBlockGame, type: Add}
+  id: 341
+  time: '2021-08-30T22:25:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Thrown items no longer land if they're caught., type: Tweak}
+  id: 342
+  time: '2021-08-31T12:46:11.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Stop lobby UI from crashing, type: Fix}
+  id: 343
+  time: '2021-09-01T23:39:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Mob pulling no longer locked to server tickrate, type: Fix}
+  id: 344
+  time: '2021-09-02T02:35:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Some engineering items now play sounds when landing, type: Add}
+  id: 345
+  time: '2021-09-03T20:45:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Add ambient sounds coming from objects., type: Add}
+  id: 346
+  time: '2021-09-07T08:47:24.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'In Saltern, removed some duplicate APC wires and unbridged two APCs',
+    type: Fix}
+  id: 347
+  time: '2021-09-09T06:37:20.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Sunglasses now protect you against flashes., type: Tweak}
+  id: 348
+  time: '2021-09-09T14:20:41.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Audio tweaking/additions, type: Tweak}
+  id: 349
+  time: '2021-09-10T01:31:55.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items now land when they stop moving and not when their physics goes
+      to sleep., type: Tweak}
+  id: 350
+  time: '2021-09-10T12:59:50.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
+    type: Add}
+  id: 351
+  time: '2021-09-13T09:58:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Many components have had damage values & types adjusted. E.g., knives
+      are no longer dull and actually deal slash damage.', type: Tweak}
+  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
+      instead of only when they land.', type: Tweak}
+  id: 352
+  time: '2021-09-14T17:07:38.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: bottles filled with drinks now spill as expected, type: Fix}
+  id: 353
+  time: '2021-09-15T10:46:43.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: FireExtinguisher interactions, type: Fix}
+  id: 354
+  time: '2021-09-15T10:48:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some issues with station rotation, type: Fix}
+  id: 355
+  time: '2021-09-16T03:02:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug which prevented players from equipping most items in their pockets.,
+    type: Fix}
+  id: 356
+  time: '2021-09-16T10:18:08.191474+00:00'

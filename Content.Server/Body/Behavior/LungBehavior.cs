@@ -11,6 +11,7 @@ using Content.Shared.MobState;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -18,7 +19,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Body.Behavior
 {
     [DataDefinition]
-    public class LungBehavior : MechanismBehavior
+    public class LungBehavior : MechanismBehavior, ISerializationHooks
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
@@ -44,7 +45,7 @@ namespace Content.Server.Body.Behavior
         [ViewVariables]
         public float CycleDelay { get; set; } = 2;
 
-        public LungBehavior()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }

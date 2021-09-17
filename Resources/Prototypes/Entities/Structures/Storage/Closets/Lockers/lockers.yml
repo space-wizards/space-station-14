@@ -10,6 +10,11 @@
       state: cabinet
   - type: AccessReader
     access: [["Bar"]]
+  - type: EntityStorage
+    closeSound:
+      path: /Audio/Effects/woodenclosetclose.ogg
+    openSound:
+      path: /Audio/Effects/woodenclosetopen.ogg
 
 # Cargo
 - type: entity
@@ -264,13 +269,10 @@
 # Detective
 - type: entity
   id: LockerDetective
-  parent: LockerBase
+  parent: LockerBooze
   name: detective's cabinet
+  description: Usually cold and empty... like your heart.
   components:
-  - type: Appearance
-    visuals:
-    - type: StorageVisualizer
-      state: cabinet
   - type: AccessReader
     access: [["Service"]] # TODO access [["Detective"]]
 

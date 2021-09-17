@@ -5,7 +5,8 @@ using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
 using Content.Shared.Physics;
@@ -16,7 +17,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -25,7 +25,8 @@ namespace Content.Server.Weapon.Melee
     public sealed class MeleeWeaponSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;
-
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
 
         public override void Initialize()
         {
@@ -87,12 +88,7 @@ namespace Content.Server.Weapon.Melee
                 {
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
-
-                    if (target.TryGetComponent(out IDamageableComponent? damageableComponent))
-                    {
-                        damageableComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
-
+                    _damageableSystem.TryChangeDamage(target.Uid, comp.Damage);
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
                 }
             }
@@ -133,7 +129,7 @@ namespace Content.Server.Weapon.Melee
                 if (!entity.Transform.IsMapTransform || entity == args.User)
                     continue;
 
-                if (ComponentManager.HasComponent<IDamageableComponent>(entity.Uid))
+                if (ComponentManager.HasComponent<DamageableComponent>(entity.Uid))
                 {
                     hitEntities.Add(entity);
                 }
@@ -157,10 +153,7 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
-                    if (entity.TryGetComponent<IDamageableComponent>(out var damageComponent))
-                    {
-                        damageComponent.TryChangeDamage(comp.DamageType, comp.Damage);
-                    }
+                    _damageableSystem.TryChangeDamage(entity.Uid, comp.Damage);
                 }
             }
 
@@ -219,7 +212,7 @@ namespace Content.Server.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(mapId,
+                var res = Get<SharedBroadphaseSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
 
@@ -234,7 +227,8 @@ namespace Content.Server.Weapon.Melee
 
         private void OnChemicalInjectorHit(EntityUid uid, MeleeChemicalInjectorComponent comp, MeleeHitEvent args)
         {
-            if (!ComponentManager.TryGetComponent<SolutionContainerComponent>(uid, out var solutionContainer))
+            IEntity owner = EntityManager.GetEntity(uid);
+            if (!_solutionsSystem.TryGetInjectableSolution(owner.Uid, out var solutionContainer))
                 return;
 
             var hitBloodstreams = new List<BloodstreamComponent>();
@@ -250,7 +244,7 @@ namespace Content.Server.Weapon.Melee
             if (hitBloodstreams.Count < 1)
                 return;
 
-            var removedSolution = solutionContainer.Solution.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
+            var removedSolution = solutionContainer.SplitSolution(comp.TransferAmount * hitBloodstreams.Count);
             var removedVol = removedSolution.TotalVolume;
             var solutionToInject = removedSolution.SplitSolution(removedVol * comp.TransferEfficiency);
             var volPerBloodstream = solutionToInject.TotalVolume * (1 / hitBloodstreams.Count);

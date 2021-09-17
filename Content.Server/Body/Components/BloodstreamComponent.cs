@@ -4,8 +4,9 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chemistry.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -27,13 +28,7 @@ namespace Content.Server.Body.Components
         /// <summary>
         ///     Internal solution for reagent storage
         /// </summary>
-        public SolutionContainerComponent InternalSolution = default!;
-
-        /// <summary>
-        ///     Empty volume of internal solution
-        /// </summary>
-        public ReagentUnit EmptyVolume => InternalSolution.EmptyVolume;
-
+        public Solution InternalSolution = default!;
 
 
         [ViewVariables]
@@ -44,7 +39,7 @@ namespace Content.Server.Body.Components
         {
             base.Initialize();
 
-            InternalSolution = Owner.EnsureComponent<SolutionContainerComponent>();
+            InternalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
             InternalSolution.MaxVolume = MaxVolume;
         }
 
@@ -57,12 +52,14 @@ namespace Content.Server.Body.Components
         public override bool TryTransferSolution(Solution solution)
         {
             // For now doesn't support partial transfers
-            if (solution.TotalVolume + InternalSolution.CurrentVolume > InternalSolution.MaxVolume)
+            var current = InternalSolution.CurrentVolume;
+            var max = InternalSolution.MaxVolume;
+            if (solution.TotalVolume + current > max)
             {
                 return false;
             }
 
-            InternalSolution.TryAddSolution(solution);
+            EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, InternalSolution, solution);
             return true;
         }
 
