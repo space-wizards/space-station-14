@@ -40,7 +40,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
+                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
                         spawned.RandomOffset(0.5f);
                     }
                 }
