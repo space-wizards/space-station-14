@@ -15,6 +15,7 @@
       visible: false
   - type: Item
     size: 40
+    sprite: Objects/Weapons/Guns/pneumatic_cannon.rsi
   - type: PneumaticCannon
   - type: Storage
     # todo mirror pneum replace with ecs/evnts
