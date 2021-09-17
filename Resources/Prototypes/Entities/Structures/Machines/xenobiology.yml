@@ -1,13 +1,13 @@
 ﻿- type: entity
   id: XenobioSpecimenTube
-  parent: BaseConstructibleDynamic
+  parent: BaseMachinePowered
   name: "Specimen Chamber"
   description: 'Science was preoccupied with whether it could, not whether it should.'
   components:
   - type: Sprite
     state: tube-powered
     netsync: false
-    sprite: Constructible/Power/specimen_tube.rsi
+    sprite: Structures/Machines/specimen_tube.rsi
   - type: Appearance
     visuals:
     - type: XenobioTubeVisualiser
@@ -37,8 +37,6 @@
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
-      - !type:PlaySoundBehavior
-        sound: /Audio/Effects/metalbreak.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           SheetSteel1:

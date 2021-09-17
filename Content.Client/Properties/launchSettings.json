@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Content.Client": {
+      "commandName": "Project",
+      "commandLineArgs": "--cvar display.renderer=3"
+    }
+  }
+}

@@ -174,7 +174,6 @@ namespace Content.Server.Power.Components
         private void OnNewPowerState()
         {
             SendMessage(new PowerChangedMessage(Powered));
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
 
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {

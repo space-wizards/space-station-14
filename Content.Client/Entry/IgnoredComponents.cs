@@ -276,7 +276,9 @@ namespace Content.Client.Entry
             "BatteryCharger",
             "SpawnItemsOnUse",
             "AmbientOnPowered",
-            "TabletopGame"
+            "TabletopGame",
+            "SpecimenDiet",
+            "SpecimenContainment"
         };
     }
 }

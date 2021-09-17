@@ -25,12 +25,6 @@
 # "Snacks" means food in a packet. Down the line this stuff can have multiple
 # reagents and shit for healing or different effects.
 
-- type: Tag
-  id: JunkFood
-  
-- type: Tag
-  id: PowderedCheese
-
 - type: entity
   name: boritos
   parent: FoodSnackBase

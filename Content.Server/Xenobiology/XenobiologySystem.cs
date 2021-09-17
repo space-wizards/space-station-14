@@ -41,6 +41,17 @@ namespace Content.Server.Xenobiology
             SubscribeLocalEvent<SpecimenDietComponent, FeedEvent>(OnSpecimenFed);
         }
 
+        /// <summary>
+        /// Called when the specimen containment loses power
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnPowerChanged(EntityUid uid, SpecimenContainmentComponent comp, PowerChangedEvent args)
+        {
+            comp.UpdateAppearance();
+        }
+
         private void Initialize(EntityUid uid, SpecimenDietComponent comp, ComponentInit args)
         {
             comp.SelectedDiet = _random.Pick(comp.DietPick);
@@ -91,18 +102,6 @@ namespace Content.Server.Xenobiology
                 }
                
             }
-        }
-
-        /// <summary>
-        /// Called when the power current is cut or restored
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="component"></param>
-        /// <param name="args"></param>
-        private void OnPowerChanged(EntityUid uid, SpecimenContainmentComponent component, PowerChangedEvent args)
-        {
-            component.Powered = args.Powered;
-            component.UpdateAppearance();
         }
 
         /// <summary>

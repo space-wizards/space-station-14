@@ -1,11 +1,11 @@
 - type: entity
   name: Crude homunculus
   parent: CatMob_Content
-  id: specimen_basic
+  id: Specimen_basic
   description: You've seen worse internships
   components:
-  - type: SpecimenDietComponent
-    Diet:
+  - type: SpecimenDiet
+    diet:
     - Flesh
     - JunkFood
     - PowderedCheese
