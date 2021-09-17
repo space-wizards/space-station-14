@@ -5,7 +5,7 @@
     <BoxContainer Orientation="Vertical"
                   SeparationOverride="4">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'apc-menu-breaker-label'}"/><Label Text=" "/>
+            <Label Text="{Loc 'apc-menu-breaker-label'}"/>
             <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}"></Button>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">

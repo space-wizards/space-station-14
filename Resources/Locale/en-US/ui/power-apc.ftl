@@ -1,5 +1,4 @@
 apc-menu-title = APC
-apc-menu-status-label = Power Status:
 apc-menu-breaker-label = Main Breaker:
 apc-menu-breaker-button = Toggle
 apc-menu-external-label = External Power:
