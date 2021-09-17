@@ -2,7 +2,7 @@
   name: improvised pneumatic cannon
   parent: BaseItem
   id: ImprovisedPneumaticCannon
-  description: Is this even legal?
+  description: Improvised using nothing but a pipe, some zipties, and a pneumatic cannon.
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/pneumatic_cannon.rsi
@@ -24,3 +24,6 @@
   - type: Appearance
     visuals:
     - type: PneumaticCannonVisualizer
+  - type: Construction
+    graph: PneumaticCannon
+    node: cannon

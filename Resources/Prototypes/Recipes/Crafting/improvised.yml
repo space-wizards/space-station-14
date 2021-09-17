@@ -29,4 +29,8 @@
   startNode: start
   targetNode: cannon
   category: Weapons
-  description: This baby can fire anything that fits in it using just a little gas.
+  objectType: Item
+  description: This son of a gun can fire anything that fits in it using just a little gas.
+  icon:
+    sprite: Objects/Weapons/Guns/pneumatic_cannon.rsi
+    state: pneumaticCannon
