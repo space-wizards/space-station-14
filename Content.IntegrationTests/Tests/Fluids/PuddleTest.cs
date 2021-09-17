@@ -177,7 +177,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.Positive(sEvaporation.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
+                Assert.That(sEvaporation.Accumulator, Is.EqualTo(0f));
 
                 sEvaporateTime = sEvaporation.EvaporateTime;
                 sPuddleStartingVolume = sPuddle.CurrentVolume;
@@ -191,7 +191,6 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 Assert.True(sPuddle.Owner.Paused);
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
 
                 // Check that the puddle still exists
                 Assert.False(sPuddle.Owner.Deleted);
