@@ -9,11 +9,11 @@
             <Button Name="BreakerButton" Text="{Loc 'apc-menu-breaker-button'}"></Button>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'apc-menu-external-label'}"/><Label Text=" "/>
+            <Label Text="{Loc 'apc-menu-external-label'}"/>
             <Label Name="ExternalPowerStateLabel" Text="{Loc 'apc-menu-power-state-good'}"/>
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Label Text="{Loc 'apc-menu-charge-label'}"/><Label Text=" "/>
+            <Label Text="{Loc 'apc-menu-charge-label'}"/>
             <ProgressBar Name="ChargeBar"
                          HorizontalExpand="True"
                          MinValue="0"
