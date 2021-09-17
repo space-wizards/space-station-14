@@ -69,7 +69,12 @@ namespace Content.Server.PneumaticCannon
         [ViewVariables(VVAccess.ReadWrite)]
         public float HighPowerStunTime = 3.0f;
 
+        [DataField("gasTankRequired")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool GasTankRequired = true;
+
         [DataField("fireSound")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Effects/thunk.ogg");
 
         [Verb]
@@ -79,7 +84,7 @@ namespace Content.Server.PneumaticCannon
 
             protected override void GetData(IEntity user, PneumaticCannonComponent component, VerbData data)
             {
-                if (component.GasTankSlot.ContainedEntities.Count == 0)
+                if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
                 {
                     data.Visibility = VerbVisibility.Disabled;
                 }

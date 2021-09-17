@@ -104,10 +104,6 @@
     - state: tin
     - state: plain
   - type: CreamPie
-  - type: Ammo
-    caliber: CreamPie
-    caseless: true
-    projectile: BulletCreampie
 # Tastes like pie, cream, banana.
 
 - type: entity

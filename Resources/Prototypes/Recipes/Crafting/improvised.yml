@@ -32,5 +32,5 @@
   objectType: Item
   description: This son of a gun can fire anything that fits in it using just a little gas.
   icon:
-    sprite: Objects/Weapons/Guns/pneumatic_cannon.rsi
+    sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     state: pneumaticCannon

@@ -90,7 +90,9 @@ namespace Content.Server.PneumaticCannon
         private void OnInteractUsing(EntityUid uid, PneumaticCannonComponent component, InteractUsingEvent args)
         {
             args.Handled = true;
-            if (args.Used.HasComponent<GasTankComponent>() && component.GasTankSlot.CanInsert(args.Used))
+            if (args.Used.HasComponent<GasTankComponent>()
+                && component.GasTankSlot.CanInsert(args.Used)
+                && component.GasTankRequired)
             {
                 component.GasTankSlot.Insert(args.Used);
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-gas-tank-insert",
@@ -149,10 +151,11 @@ namespace Content.Server.PneumaticCannon
         private void OnAfterInteract(EntityUid uid, PneumaticCannonComponent component, AfterInteractEvent args)
         {
             args.Handled = true;
-            if (!HasGas(component))
+            if (!HasGas(component) && component.GasTankRequired)
             {
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", component.Owner)));
+                // whizz sound
                 return;
             }
             AddToQueue(component, args.User, args.ClickLocation);
@@ -163,7 +166,11 @@ namespace Content.Server.PneumaticCannon
             if (!comp.Owner.TryGetComponent<ServerStorageComponent>(out var storage))
                 return;
             if (storage.StoredEntities == null) return;
-            if (storage.StoredEntities.Count == 0) return;
+            if (storage.StoredEntities.Count == 0)
+            {
+                // click sound
+                return;
+            }
 
             _currentlyFiring.Add(comp);
 
@@ -194,11 +201,11 @@ namespace Content.Server.PneumaticCannon
 
         public void Fire(PneumaticCannonComponent comp, PneumaticCannonComponent.FireData data)
         {
-            if (!HasGas(comp))
+            if (!HasGas(comp) && comp.GasTankRequired)
             {
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", comp.Owner)));
-                // click sound
+                // whizz sound
                 return;
             }
 
@@ -234,7 +241,7 @@ namespace Content.Server.PneumaticCannon
                     ("cannon", comp.Owner)));
             }
 
-            if (comp.GasTankSlot.ContainedEntity != null)
+            if (comp.GasTankSlot.ContainedEntity != null && comp.GasTankRequired)
             {
                 // we checked for this earlier in HasGas so a GetComp is okay
                 var gas = comp.GasTankSlot.ContainedEntity.GetComponent<GasTankComponent>();
