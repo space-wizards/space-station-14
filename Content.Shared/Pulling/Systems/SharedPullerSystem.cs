@@ -1,10 +1,11 @@
 ﻿using Content.Shared.Alert;
+using Content.Shared.Hands;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Pulling
+namespace Content.Shared.Pulling.Systems
 {
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
@@ -15,6 +16,21 @@ namespace Content.Shared.Pulling
 
             SubscribeLocalEvent<SharedPullerComponent, PullStartedMessage>(PullerHandlePullStarted);
             SubscribeLocalEvent<SharedPullerComponent, PullStoppedMessage>(PullerHandlePullStopped);
+            SubscribeLocalEvent<SharedPullerComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
+        }
+
+        private void OnVirtualItemDeleted(EntityUid uid, SharedPullerComponent component, VirtualItemDeletedEvent args)
+        {
+            if (component.Pulling == null)
+                return;
+
+            if (component.Pulling == EntityManager.GetEntity(args.BlockingEntity));
+            {
+                if (ComponentManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
+                {
+                    comp.TryStopPull(EntityManager.GetEntity(uid));
+                }
+            }
         }
 
         private static void PullerHandlePullStarted(

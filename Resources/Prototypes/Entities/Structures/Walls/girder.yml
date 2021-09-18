@@ -28,7 +28,8 @@
     tags:
     - ExplosivePassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

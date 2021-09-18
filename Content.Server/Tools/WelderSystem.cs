@@ -28,16 +28,16 @@ namespace Content.Server.Tools
         {
             if (component.WelderLit)
             {
-                args.Message.AddMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message") + "\n");
+                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message"));
             }
             else
             {
-                args.Message.AddText(Loc.GetString("welder-component-on-examine-welder-not-lit-message") + "\n");
+                args.PushMarkup(Loc.GetString("welder-component-on-examine-welder-not-lit-message"));
             }
 
             if (args.IsInDetailsRange)
             {
-                args.Message.AddMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
+                args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
                     ("colorName", component.Fuel < component.FuelCapacity / 4f ? "darkorange" : "orange"),
                     ("fuelLeft", Math.Round(component.Fuel)),
                     ("fuelCapacity", component.FuelCapacity)));

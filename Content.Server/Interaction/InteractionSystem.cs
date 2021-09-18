@@ -347,7 +347,7 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            // Verify user has a hand, and find what object he is currently holding in his active hand
+            // Verify user has a hand, and find what object they are currently holding in their active hand
             if (!user.TryGetComponent<IHandsComponent>(out var hands))
                 return;
 
@@ -393,11 +393,11 @@ namespace Content.Server.Interaction
 
         private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
         {
-            // Verify user is on the same map as the entity he clicked on
+            // Verify user is on the same map as the entity they clicked on
             if (coordinates.GetMapId(_entityManager) != user.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on a map he isn't located on");
+                    $"User entity named {user.Name} clicked on a map they aren't located on");
                 return false;
             }
 
@@ -873,7 +873,7 @@ namespace Content.Server.Interaction
                     return;
             }
 
-            // Verify user has a hand, and find what object he is currently holding in his active hand
+            // Verify user has a hand, and find what object they are currently holding in their active hand
             if (user.TryGetComponent<IHandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;

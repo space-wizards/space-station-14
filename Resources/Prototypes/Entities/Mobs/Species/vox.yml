@@ -90,6 +90,12 @@
     producesGases:
       Nitrogen: 0.00045572916
       CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1 
+    damageRecovery:
+      types:
+        Asphyxiation: -1 
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer

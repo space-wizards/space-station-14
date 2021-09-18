@@ -122,6 +122,8 @@ namespace Content.Shared.Pulling.Components
                         }
                     }
 
+                    valuePuller.Pulling = Owner;
+
                     // Continue with pulling process.
 
                     var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
@@ -241,7 +243,7 @@ namespace Content.Shared.Pulling.Components
 
             Puller = puller;
 
-            if (Puller != puller)
+            if(Puller != puller)
             {
                 return false;
             }
@@ -264,6 +266,11 @@ namespace Content.Shared.Pulling.Components
             if (_physics != null && _pullJoint != null)
             {
                 _physics.RemoveJoint(_pullJoint);
+            }
+
+            if (user != null && user.TryGetComponent<SharedPullerComponent>(out var puller))
+            {
+                puller.Pulling = null;
             }
 
             _pullJoint = null;

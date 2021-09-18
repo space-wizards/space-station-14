@@ -1959,3 +1959,46 @@ Entries:
       to sleep., type: Tweak}
   id: 350
   time: '2021-09-10T12:59:50.0000000+00:00'
+- author: Visne
+  changes:
+  - {message: 'Added chess! To play, right click on a chessboard and press "Play Game".',
+    type: Add}
+  id: 351
+  time: '2021-09-13T09:58:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Many components have had damage values & types adjusted. E.g., knives
+      are no longer dull and actually deal slash damage.', type: Tweak}
+  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
+      instead of only when they land.', type: Tweak}
+  id: 352
+  time: '2021-09-14T17:07:38.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: bottles filled with drinks now spill as expected, type: Fix}
+  id: 353
+  time: '2021-09-15T10:46:43.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: FireExtinguisher interactions, type: Fix}
+  id: 354
+  time: '2021-09-15T10:48:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some issues with station rotation, type: Fix}
+  id: 355
+  time: '2021-09-16T03:02:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug which prevented players from equipping most items in their pockets.,
+    type: Fix}
+  id: 356
+  time: '2021-09-16T10:18:08.191474+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Items like fireaxes can now actually be wielded, which increases their
+      damage.', type: Add}
+  - {message: The fireaxe now deals increased damage to objects like windows or wooden
+      furniture., type: Add}
+  id: 357
+  time: '2021-09-17T14:16:13.0000000+00:00'
