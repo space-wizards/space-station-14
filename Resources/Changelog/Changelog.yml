@@ -2007,3 +2007,8 @@ Entries:
   - {message: replace being able to construct out of a container, type: Fix}
   id: 358
   time: '2021-09-18T08:38:42.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Added parch\xEDs game board. A great way to lose your friends!", type: Add}
+  id: 359
+  time: '2021-09-18T08:40:38.0000000+00:00'
