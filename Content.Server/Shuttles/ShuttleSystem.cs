@@ -26,6 +26,7 @@ namespace Content.Server.Shuttles
 
         private void HandleGridFixtureChange(GridFixtureChangeEvent args)
         {
+            // Look this is jank but it's a placeholder until we design it.
             if (args.NewFixtures.Count == 0) return;
 
             var body = args.NewFixtures[0].Body;
