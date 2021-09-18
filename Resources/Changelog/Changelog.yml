@@ -2002,3 +2002,8 @@ Entries:
       furniture., type: Add}
   id: 357
   time: '2021-09-17T14:16:13.0000000+00:00'
+- author: boiled-water-tsar
+  changes:
+  - {message: replace being able to construct out of a container, type: Fix}
+  id: 358
+  time: '2021-09-18T08:38:42.0000000+00:00'
