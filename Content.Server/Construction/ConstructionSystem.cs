@@ -395,6 +395,7 @@ namespace Content.Server.Construction
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
+
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
@@ -414,6 +415,12 @@ namespace Content.Server.Construction
             if (user == null)
             {
                 Logger.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
+            if (user.IsInContainer())
+            {
+                user.PopupMessageCursor(Loc.GetString("construction-system-inside-container"));
                 return;
             }
 
