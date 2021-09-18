@@ -4,9 +4,7 @@
             SetSize="270 130">
 <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="Status"
-                   Text="{Loc 'gravity-generator-window-status-label'}" />
-            <RichTextLabel Name="OnOff" />
+            <RichTextLabel Name="Status" />
         </BoxContainer>
         <Button Name="SwitchProtected"
                 TextAlign="Center"

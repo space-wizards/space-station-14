@@ -27,9 +27,11 @@ namespace Content.Client.Gravity.UI
 
         public void UpdateButton()
         {
-            OnOff.SetMarkup(Loc.GetString(_owner.IsOn
+            string status = Loc.GetString(_owner.IsOn
                                               ? "gravity-generator-window-is-on"
-                                              : "gravity-generator-window-is-off"));
+                                              : "gravity-generator-window-is-off");
+
+            Status.SetMarkup(Loc.GetString("gravity-generator-window-status-label", ("status", status)));
 
             Switch.Text = Loc.GetString(_owner.IsOn
                                             ? "gravity-generator-window-turn-off-button"
