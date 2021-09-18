@@ -41,6 +41,9 @@ namespace Content.Server.Tabletop
             return UlamSpiral(_tabletops++) * TabletopSeparation;
         }
 
+        /// <summary>
+        ///     Ensures that the tabletop map exists. Creates it if it doesn't.
+        /// </summary>
         private void EnsureTabletopMap()
         {
             if (TabletopMap != MapId.Nullspace && _mapManager.MapExists(TabletopMap))
@@ -91,6 +94,8 @@ namespace Content.Server.Tabletop
 
             // This will usually *not* be the case, but better make sure.
             _mapManager.DeleteMap(TabletopMap);
+
+            // Reset tabletop count.
             _tabletops = 0;
         }
     }

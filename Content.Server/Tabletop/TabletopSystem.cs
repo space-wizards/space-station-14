@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using Content.Server.Tabletop.Components;
+﻿using Content.Server.Tabletop.Components;
 using Content.Shared.ActionBlocker;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
@@ -11,11 +8,8 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Server.Tabletop
 {
@@ -50,14 +44,14 @@ namespace Content.Server.Tabletop
                 OpenSessionFor(actor.PlayerSession, uid);
         }
 
-        private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
-        {
-            CloseSessionFor((IPlayerSession)args.SenderSession, msg.TableUid);
-        }
-
         private void OnGameShutdown(EntityUid uid, TabletopGameComponent component, ComponentShutdown args)
         {
             CleanupSession(uid);
+        }
+
+        private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
+        {
+            CloseSessionFor((IPlayerSession)args.SenderSession, msg.TableUid);
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)
