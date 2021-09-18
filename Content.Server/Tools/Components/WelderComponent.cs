@@ -308,7 +308,7 @@ namespace Content.Server.Tools.Components
                     .TryGetDrainableSolution(eventArgs.Target.Uid, out var targetSolution)
                 && WelderSolution != null)
             {
-                if (WelderLit)
+                if (WelderLit && targetSolution.DrainAvailable > 0)
                 {
                     // Oh no no
                     eventArgs.Target.SpawnExplosion();
@@ -323,6 +323,11 @@ namespace Content.Server.Tools.Components
                     SoundSystem.Play(Filter.Pvs(Owner), WelderRefill.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,
                         Loc.GetString("welder-component-after-interact-refueled-message"));
+                }
+                else
+                {
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("welder-component-no-fuel-in-tank", ("owner", eventArgs.Target)));
                 }
             }
 
