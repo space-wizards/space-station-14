@@ -76,6 +76,7 @@
         sound:
           collection: desecration
       - !type:SpawnEntitiesBehavior
+        useEntityCoordinates: true
         spawn:
           PuddleFlour:
             min: 1
@@ -118,6 +119,7 @@
         sound:
           collection: desecration
       - !type:SpawnEntitiesBehavior
+        useEntityCoordinates: true
         spawn:
           PuddleFlour:
             min: 1

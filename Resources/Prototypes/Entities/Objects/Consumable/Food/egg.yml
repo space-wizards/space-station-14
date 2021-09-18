@@ -50,6 +50,7 @@
         sound:
           collection: desecration
       - !type:SpawnEntitiesBehavior
+        useEntityCoordinates: true
         spawn:
           Eggshells:
             min: 1
