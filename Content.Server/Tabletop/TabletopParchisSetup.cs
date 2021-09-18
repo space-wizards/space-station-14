@@ -34,28 +34,28 @@ namespace Content.Server.Tabletop
             var center = session.Position;
 
             // Red pieces.
-            entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y1));
-            entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y2));
-            entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y1));
-            entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y2));
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y2)).Uid);
 
             // Green pieces.
-            entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y1));
-            entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y2));
-            entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y1));
-            entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y2));
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y2)).Uid);
 
             // Yellow pieces.
-            entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y1));
-            entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y2));
-            entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y1));
-            entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y2));
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y2)).Uid);
 
             // Blue pieces.
-            entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y1));
-            entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y2));
-            entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y1));
-            entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y2));
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y2)).Uid);
         }
     }
 }
