@@ -13,6 +13,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Sound
 {
@@ -21,9 +22,6 @@ namespace Content.Shared.Sound
         ITypeReader<SoundSpecifier, MappingDataNode>,
         ITypeReader<SoundSpecifier, ValueDataNode>
     {
-        private readonly ResourcePathSerializer _resourcePathSerializer = new();
-        private readonly PrototypeIdSerializer<SoundCollectionPrototype> _prototypeIdSerializer = new();
-
         private Type GetType(MappingDataNode node)
         {
             var hasPath = node.Has(SoundPathSpecifier.Node);
@@ -73,8 +71,8 @@ namespace Content.Shared.Sound
         public ValidationNode Validate(ISerializationManager serializationManager, ValueDataNode node,
             IDependencyCollection dependencies, ISerializationContext? context = null)
         {
-            if (_resourcePathSerializer.Validate(serializationManager, node, dependencies, context) is not ErrorNode
-                || _prototypeIdSerializer.Validate(serializationManager, node, dependencies, context) is not ErrorNode)
+            if (serializationManager.ValidateNode<ResourcePath>(node, context) is not ErrorNode
+                || serializationManager.ValidateNodeWith<string, PrototypeIdSerializer<SoundCollectionPrototype>, ValueDataNode>(node, context) is not ErrorNode)
                 return new ValidatedValueNode(node);
 
             return new ErrorNode(node, "SoundSpecifier value is neither a valid resource path nor an existing sound collection identifier!");
