@@ -1,0 +1,15 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'gravity-generator-window-title'}"
+            MinSize="270 130"
+            SetSize="270 130">
+<BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="Status"
+                   Text="{Loc 'gravity-generator-window-status-label'}" />
+            <RichTextLabel Name="OnOff" />
+        </BoxContainer>
+        <Button Name="SwitchProtected"
+                TextAlign="Center"
+                MinHeight="60" />
+    </BoxContainer>
+</SS14Window>

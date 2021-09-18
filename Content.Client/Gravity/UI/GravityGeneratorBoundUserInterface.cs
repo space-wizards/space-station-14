@@ -25,7 +25,7 @@ namespace Content.Client.Gravity.UI
 
             _window = new GravityGeneratorWindow(this);
 
-            _window.Switch.OnPressed += (_) =>
+            _window.Switch.OnPressed += _ =>
             {
                 SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
                 SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
