@@ -157,7 +157,7 @@ namespace Content.Client.Ghost
                     ClipText = true,
                 };
 
-                currentButtonRef.OnPressed += (_) =>
+                currentButtonRef.OnPressed += _ =>
                 {
                     var msg = new GhostWarpToLocationRequestEvent(name);
                     _netManager.SendSystemNetworkMessage(msg);
