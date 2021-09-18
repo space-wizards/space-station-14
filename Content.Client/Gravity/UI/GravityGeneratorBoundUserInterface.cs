@@ -1,10 +1,9 @@
-using Content.Client.Gravity.UI;
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Gravity
+namespace Content.Client.Gravity.UI
 {
     [UsedImplicitly]
     public class GravityGeneratorBoundUserInterface : BoundUserInterface
