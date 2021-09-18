@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Ghost
+namespace Content.Client.Ghost.UI
 {
     public class GhostGui : Control
     {
