@@ -1,3 +1,4 @@
+using Content.Client.Message;
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -60,7 +61,7 @@ namespace Content.Client.Gravity
 
     public class GravityGeneratorWindow : SS14Window
     {
-        public Label Status;
+        public RichTextLabel Status = new();
 
         public Button Switch;
 
@@ -79,28 +80,22 @@ namespace Content.Client.Gravity
                 Orientation = LayoutOrientation.Vertical,
                 MinSize = new Vector2(250, 100)
             };
-            Status = new Label
-            {
-                Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "gravity-generator-window-is-on" : "gravity-generator-window-is-off")}",
-                FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red
-            };
-            Switch = new Button
-            {
-                Text = Loc.GetString(Owner.IsOn ? "gravity-generator-window-turn-off-button" : "gravity-generator-window-turn-on-button"),
-                TextAlign = Label.AlignMode.Center,
-                MinSize = new Vector2(150, 60)
-            };
 
             vBox.AddChild(Status);
-            vBox.AddChild(Switch);
+            vBox.AddChild(Switch = new Button
+            {
+                TextAlign = Label.AlignMode.Center,
+                MinSize = new Vector2(150, 60)
+            });
 
             Contents.AddChild(vBox);
+
+            UpdateButton();
         }
 
         public void UpdateButton()
         {
-            Status.Text = $"{Loc.GetString("gravity-generator-window-status-label")} {Loc.GetString(Owner.IsOn ? "gravity-generator-window-is-on" : "gravity-generator-window-is-off")}";
-            Status.FontColorOverride = Owner.IsOn ? Color.ForestGreen : Color.Red;
+            Status.SetMarkup($"{Loc.GetString("gravity-generator-window-status-label")}{Loc.GetString(Owner.IsOn ? "gravity-generator-window-is-on" : "gravity-generator-window-is-off")}");
             Switch.Text = Loc.GetString(Owner.IsOn ? "gravity-generator-window-turn-off-button" : "gravity-generator-window-turn-on-button");
         }
     }
