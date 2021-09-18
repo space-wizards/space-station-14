@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Content.Server.Tabletop.Components;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
 using Content.Shared.Tabletop.Events;
 using JetBrains.Annotations;
@@ -8,6 +10,7 @@ using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
@@ -19,6 +22,7 @@ namespace Content.Server.Tabletop
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         /// <summary>
         /// All tabletop games currently in progress. Sessions are associated with an entity UID, which acts as a
@@ -31,8 +35,15 @@ namespace Content.Server.Tabletop
             SubscribeNetworkEvent<TabletopMoveEvent>(OnTabletopMove);
             SubscribeNetworkEvent<TabletopDraggingPlayerChangedEvent>(OnDraggingPlayerChanged);
             SubscribeNetworkEvent<TabletopStopPlayingEvent>(OnStopPlaying);
+            SubscribeLocalEvent<TabletopGameComponent, ActivateInWorldEvent>(OnTabletopActivate);
             SubscribeLocalEvent<TabletopGameComponent, ComponentShutdown>(OnGameShutdown);
             SubscribeLocalEvent<TabletopDraggableComponent, ComponentGetState>(GetCompState);
+        }
+
+        private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
+        {
+            if(_actionBlockerSystem.CanInteract(args.User))
+                OpenTable(args.User, args.Target);
         }
 
         private void GetCompState(EntityUid uid, TabletopDraggableComponent component, ref ComponentGetState args)
@@ -47,19 +58,19 @@ namespace Content.Server.Tabletop
         /// <param name="table">The entity with which the tabletop game session will be associated.</param>
         public void OpenTable(IEntity user, IEntity table)
         {
-            if (user.PlayerSession() is not { } playerSession) return;
+            if (user.PlayerSession() is not { } playerSession
+                || !table.TryGetComponent(out TabletopGameComponent? tabletop)) return;
 
             // Make sure we have a session, and add the player to it
-            var session = EnsureSession(table.Uid);
+            var session = EnsureSession(table.Uid, tabletop);
             session.StartPlaying(playerSession);
 
             // Create a camera for the user to use
             // TODO: set correct coordinates, depending on the piece the game was started from
-            IEntity camera = CreateCamera(user, new MapCoordinates(0, 0, session.MapId));
+            IEntity camera = CreateCamera(tabletop, user, new MapCoordinates(0, 0, session.MapId));
 
             // Tell the client to open a viewport for the tabletop game
-            // TODO: use actual title/size from prototype, for now we assume its chess
-            RaiseNetworkEvent(new TabletopPlayEvent(table.Uid, camera.Uid, "Chess", (274 + 64, 274)), playerSession.ConnectedClient);
+            RaiseNetworkEvent(new TabletopPlayEvent(table.Uid, camera.Uid, Loc.GetString(tabletop.BoardName), tabletop.Size), playerSession.ConnectedClient);
         }
 
         /// <summary>
@@ -67,7 +78,7 @@ namespace Content.Server.Tabletop
         /// </summary>
         /// <param name="uid">The entity UID to ensure a session for.</param>
         /// <returns>The created/stored tabletop game session.</returns>
-        private TabletopSession EnsureSession(EntityUid uid)
+        private TabletopSession EnsureSession(EntityUid uid, TabletopGameComponent tabletop)
         {
             // We already have a session, return it
             // TODO: if tables are connected, treat them as a single entity
@@ -88,8 +99,7 @@ namespace Content.Server.Tabletop
             var session = _gameSessions[uid];
 
             // Since this is the first time opening this session, set up the game
-            // TODO: don't assume we're playing chess
-            SetupChessBoard(session.MapId);
+            tabletop.Setup.SetupTabletop(session.MapId, EntityManager);
 
             return session;
         }
@@ -169,10 +179,11 @@ namespace Content.Server.Tabletop
         /// <summary>
         /// Create a camera entity for a user to control, and add the user to the view subscribers.
         /// </summary>
+        /// <param name="tabletop">The tabletop to create the camera for.</param>
         /// <param name="user">The user entity to create this camera for and add to the view subscribers.</param>
         /// <param name="coordinates">The map coordinates to spawn this camera at.</param>
         // TODO: this can probably be generalized into a "CctvSystem" or whatever
-        private IEntity CreateCamera(IEntity user, MapCoordinates coordinates)
+        private IEntity CreateCamera(TabletopGameComponent tabletop, IEntity user, MapCoordinates coordinates)
         {
             // Spawn an empty entity at the coordinates
             var camera = EntityManager.SpawnEntity(null, coordinates);
@@ -180,6 +191,7 @@ namespace Content.Server.Tabletop
             // Add an eye component and disable FOV
             var eyeComponent = camera.EnsureComponent<EyeComponent>();
             eyeComponent.DrawFov = false;
+            eyeComponent.Zoom = tabletop.CameraZoom;
 
             // Add the user to the view subscribers. If there is no player session, just skip this step
             if (user.PlayerSession() is { } playerSession)
