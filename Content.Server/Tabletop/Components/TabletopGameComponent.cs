@@ -1,16 +1,19 @@
 ﻿using Content.Shared.ActionBlocker;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tabletop.Components
 {
     /// <summary>
     /// A component that makes an object playable as a tabletop game.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, Friend(typeof(TabletopSystem))]
     public class TabletopGameComponent : Component
     {
         public override string Name => "TabletopGame";
@@ -27,6 +30,9 @@ namespace Content.Server.Tabletop.Components
         [DataField("cameraZoom")]
         public Vector2 CameraZoom { get; } = Vector2.One;
 
+        [ViewVariables]
+        public TabletopSession? Session { get; set; } = null;
+
         /// <summary>
         /// A verb that allows the player to start playing a tabletop game.
         /// </summary>
@@ -35,7 +41,7 @@ namespace Content.Server.Tabletop.Components
         {
             protected override void GetData(IEntity user, TabletopGameComponent component, VerbData data)
             {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+                if (!user.HasComponent<ActorComponent>() || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -47,7 +53,8 @@ namespace Content.Server.Tabletop.Components
 
             protected override void Activate(IEntity user, TabletopGameComponent component)
             {
-                EntitySystem.Get<TabletopSystem>().OpenTable(user, component.Owner);
+                if(user.TryGetComponent(out ActorComponent? actor))
+                    EntitySystem.Get<TabletopSystem>().OpenSessionFor(actor.PlayerSession, component.Owner.Uid);
             }
         }
     }

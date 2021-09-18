@@ -11,12 +11,11 @@ namespace Content.Server.Tabletop
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.
 
-        public override void SetupTabletop(MapId mapId, IEntityManager entityManager)
+        public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var chessboard = entityManager.SpawnEntity(ChessBoardPrototype, new MapCoordinates(-1, 0, mapId));
-            chessboard.Transform.Anchored = true;
+            var chessboard = entityManager.SpawnEntity(ChessBoardPrototype, session.Position.Offset(-1, 0));
 
-            SpawnPieces(entityManager, new MapCoordinates(-4.5f, 3.5f, mapId));
+            SpawnPieces(entityManager, session.Position.Offset(-4.5f, 3.5f));
         }
 
         private void SpawnPieces(IEntityManager entityManager, MapCoordinates topLeft, float separation = 1f)
