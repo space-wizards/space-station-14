@@ -1,9 +1,10 @@
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Tabletop
 {
+    [UsedImplicitly]
     public class TabletopParchisSetup : TabletopSetup
     {
         [DataField("boardPrototype")]
@@ -21,10 +22,9 @@ namespace Content.Server.Tabletop
         [DataField("bluePiecePrototype")]
         public string BluePiecePrototype { get; } = "BlueParchisPiece";
 
-        public override void SetupTabletop(MapId mapId, IEntityManager entityManager)
+        public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var board = entityManager.SpawnEntity(ParchisBoardPrototype, new MapCoordinates(0, 0, mapId));
-            board.Transform.Anchored = true;
+            var board = entityManager.SpawnEntity(ParchisBoardPrototype, session.Position);
 
             const float x1 = 6.25f;
             const float x2 = 4.25f;
@@ -32,29 +32,31 @@ namespace Content.Server.Tabletop
             const float y1 = 6.25f;
             const float y2 = 4.25f;
 
+            var center = session.Position;
+
             // Red pieces.
-            entityManager.SpawnEntity(RedPiecePrototype, new MapCoordinates(-x1, -y1, mapId));
-            entityManager.SpawnEntity(RedPiecePrototype, new MapCoordinates(-x1, -y2, mapId));
-            entityManager.SpawnEntity(RedPiecePrototype, new MapCoordinates(-x2, -y1, mapId));
-            entityManager.SpawnEntity(RedPiecePrototype, new MapCoordinates(-x2, -y2, mapId));
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x1, -y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(RedPiecePrototype, center.Offset(-x2, -y2)).Uid);
 
             // Green pieces.
-            entityManager.SpawnEntity(GreenPiecePrototype, new MapCoordinates(x1, -y1, mapId));
-            entityManager.SpawnEntity(GreenPiecePrototype, new MapCoordinates(x1, -y2, mapId));
-            entityManager.SpawnEntity(GreenPiecePrototype, new MapCoordinates(x2, -y1, mapId));
-            entityManager.SpawnEntity(GreenPiecePrototype, new MapCoordinates(x2, -y2, mapId));
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x1, -y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(GreenPiecePrototype, center.Offset(x2, -y2)).Uid);
 
             // Yellow pieces.
-            entityManager.SpawnEntity(YellowPiecePrototype, new MapCoordinates(x1, y1, mapId));
-            entityManager.SpawnEntity(YellowPiecePrototype, new MapCoordinates(x1, y2, mapId));
-            entityManager.SpawnEntity(YellowPiecePrototype, new MapCoordinates(x2, y1, mapId));
-            entityManager.SpawnEntity(YellowPiecePrototype, new MapCoordinates(x2, y2, mapId));
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x1, y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(YellowPiecePrototype, center.Offset(x2, y2)).Uid);
 
             // Blue pieces.
-            entityManager.SpawnEntity(BluePiecePrototype, new MapCoordinates(-x1, y1, mapId));
-            entityManager.SpawnEntity(BluePiecePrototype, new MapCoordinates(-x1, y2, mapId));
-            entityManager.SpawnEntity(BluePiecePrototype, new MapCoordinates(-x2, y1, mapId));
-            entityManager.SpawnEntity(BluePiecePrototype, new MapCoordinates(-x2, y2, mapId));
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x1, y2)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y1)).Uid);
+            session.Entities.Add(entityManager.SpawnEntity(BluePiecePrototype, center.Offset(-x2, y2)).Uid);
         }
     }
 }
