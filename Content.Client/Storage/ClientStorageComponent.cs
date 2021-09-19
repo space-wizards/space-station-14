@@ -158,7 +158,7 @@ namespace Content.Client.Storage
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-           
+
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
@@ -200,8 +200,9 @@ namespace Content.Client.Storage
             entity.TryGetComponent(out ISpriteComponent? sprite);
             entity.TryGetComponent(out ItemComponent? item);
 
-            button.AddChild(new HBoxContainer
+            button.AddChild(new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 2,
                 Children =
                 {
