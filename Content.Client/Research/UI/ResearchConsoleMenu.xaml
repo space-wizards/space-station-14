@@ -13,7 +13,7 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="Unlocked technologies" />
+                <Label Text="{Loc 'research-console-menu-unlocked-technologies-label'}" />
                 <ItemList Name="UnlockedTechnologies"
                           SelectMode="Button"
                           HorizontalExpand="True"
@@ -24,7 +24,7 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="Unlockable technologies" />
+                <Label Text="{Loc 'research-console-menu-unlockable-technologies-label'}" />
                 <ItemList Name="UnlockableTechnologies"
                           SelectMode="Button"
                           HorizontalExpand="True"
@@ -35,7 +35,7 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           VerticalExpand="True">
-                <Label Text="Future technologies" />
+                <Label Text="{Loc 'research-console-menu-future-technologies-label'}" />
                 <ItemList Name="FutureTechnologies"
                           SelectMode="Button"
                           HorizontalExpand="True"
