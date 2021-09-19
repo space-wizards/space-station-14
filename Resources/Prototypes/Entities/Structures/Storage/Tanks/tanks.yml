@@ -17,6 +17,7 @@
   id: WeldingFuelTankFull
   parent: WeldingFuelTank
   name: fuel tank
+  suffix: Full
   description: A storage tank containing welding fuel.
   components:
   - type: Explosive
