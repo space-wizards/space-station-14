@@ -73,7 +73,7 @@ namespace Content.Server.Tabletop
         {
             base.Update(frameTime);
 
-            foreach (var gamer in ComponentManager.EntityQuery<TabletopGamerComponent>())
+            foreach (var gamer in ComponentManager.EntityQuery<TabletopGamerComponent>(true))
             {
                 if (!EntityManager.TryGetEntity(gamer.Tabletop, out var table))
                     continue;
