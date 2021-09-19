@@ -19,13 +19,13 @@ namespace Content.IntegrationTests.Tests.Disposal
     [TestOf(typeof(DisposalUnitComponent))]
     public class DisposalUnitTest : ContentIntegrationTest
     {
-        private void UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private async Task UnitInsert(DisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
             foreach (var entity in entities)
             {
                 var insertTask = unit.TryInsert(entity);
                 Assert.That(EntitySystem.Get<DisposalUnitSystem>().CanInsert(unit, entity), Is.EqualTo(result));
-                insertTask.ContinueWith(task =>
+                await insertTask.ContinueWith(task =>
                 {
                     Assert.That(task.Result, Is.EqualTo(result));
                     if (result)
@@ -45,9 +45,9 @@ namespace Content.IntegrationTests.Tests.Disposal
             }
         }
 
-        private void UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
+        private async Task UnitInsertContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)
         {
-            UnitInsert(unit, result, entities);
+            await UnitInsert(unit, result, entities);
             UnitContains(unit, result, entities);
         }
 
@@ -128,7 +128,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 var physics = disposalUnit.GetComponent<IPhysBody>();
                 physics.BodyType = BodyType.Dynamic;
                 Assert.False(unit.Owner.Transform.Anchored);
-                UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
+                await UnitInsertContains(unit, false, human, wrench, disposalUnit, disposalTrunk);
 
                 // Anchor the disposal unit
                 physics.BodyType = BodyType.Static;
@@ -137,10 +137,10 @@ namespace Content.IntegrationTests.Tests.Disposal
                 Assert.False(unit.Powered);
 
                 // Can't insert the trunk or the unit into itself
-                UnitInsertContains(unit, false, disposalUnit, disposalTrunk);
+                await UnitInsertContains(unit, false, disposalUnit, disposalTrunk);
 
                 // Can insert mobs and items
-                UnitInsertContains(unit, true, human, wrench);
+                await UnitInsertContains(unit, true, human, wrench);
 
                 // Move the disposal trunk away
                 disposalTrunk.Transform.WorldPosition += (1, 0);

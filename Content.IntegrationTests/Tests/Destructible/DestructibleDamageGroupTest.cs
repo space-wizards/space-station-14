@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
@@ -40,9 +41,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var mapId = new MapId(1);
+                var mapId = sMapManager.GetAllMapIds().First();
                 var coordinates = new MapCoordinates(0, 0, mapId);
-                sMapManager.CreateMap(mapId);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<IDamageableComponent>();

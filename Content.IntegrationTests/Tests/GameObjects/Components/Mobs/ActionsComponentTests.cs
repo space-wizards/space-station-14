@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Actions;
 using Content.Client.Actions.UI;
-using Content.Client.UserInterface;
 using Content.Server.Actions;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
@@ -13,11 +12,11 @@ using Content.Shared.Actions.Prototypes;
 using Content.Shared.Cooldown;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
 namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 {
@@ -244,7 +243,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
 
                 // spawn and give them an item that has actions
                 serverFlashlight = serverEntManager.SpawnEntity("TestFlashlight",
-                    new EntityCoordinates(new EntityUid(1), (0, 0)));
+                    new EntityCoordinates(serverPlayerEnt.Uid, (0, 0)));
                 Assert.That(serverFlashlight.TryGetComponent<ItemActionsComponent>(out var itemActions));
                 // we expect this only to have a toggle light action initially
                 var actionConfigs = itemActions.ActionConfigs.ToList();

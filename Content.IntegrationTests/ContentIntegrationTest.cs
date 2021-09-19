@@ -14,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
 
 namespace Content.IntegrationTests
@@ -27,6 +28,8 @@ namespace Content.IntegrationTests
             {
                 FailureLogLevel = LogLevel.Warning
             };
+
+            options.Pool = ShouldPool(options);
 
             // Load content resources, but not config and user data.
             options.Options = new GameControllerOptions()
@@ -69,8 +72,9 @@ namespace Content.IntegrationTests
             options ??= new ServerContentIntegrationOption()
             {
                 FailureLogLevel = LogLevel.Warning,
-                Pool = true
             };
+
+            options.Pool = ShouldPool(options);
 
             // Load content resources, but not config and user data.
             options.Options = new ServerOptions()
@@ -119,10 +123,8 @@ namespace Content.IntegrationTests
 
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerContentIntegrationOption
-            {
-                Pool = true
-            };
+            return StartServer(options);
+            options ??= new ServerContentIntegrationOption();
 
             // Load content resources, but not config and user data.
             options.Options = new ServerOptions()
@@ -163,18 +165,84 @@ namespace Content.IntegrationTests
             return (client, server);
         }
 
-        protected override async Task TearDown(ServerIntegrationInstance server)
+        private bool ShouldPool(IntegrationOptions options)
         {
+            if (options is ClientContentIntegrationOption {ContentBeforeIoC: { }} ||
+                options is ServerContentIntegrationOption {ContentBeforeIoC: { }})
+            {
+                return false;
+            }
+
+            return options.InitIoC == null &&
+                   options.BeforeStart == null &&
+                   options.ContentAssemblies == null;
+        }
+
+        protected override async Task OnClientReturn(ClientIntegrationInstance client)
+        {
+            await base.OnClientReturn(client);
+
+            await client.WaitIdleAsync();
+
+            var net = client.ResolveDependency<IClientNetManager>();
+            var prototypes = client.ResolveDependency<IPrototypeManager>();
+
+            await client.WaitPost(() =>
+            {
+                net.ClientDisconnect("Test pooling disconnect");
+
+                if (client.PreviousOptions?.ExtraPrototypes is { } oldExtra)
+                {
+                    prototypes.RemoveString(oldExtra);
+                }
+
+                if (client.Options?.ExtraPrototypes is { } extra)
+                {
+                    prototypes.LoadString(extra, true);
+                    prototypes.Resync();
+                }
+            });
+
+            await WaitUntil(client, () => !net.IsConnected);
+        }
+
+        protected override async Task OnServerReturn(ServerIntegrationInstance server)
+        {
+            await base.OnServerReturn(server);
+
             await server.WaitIdleAsync();
 
             var systems = server.ResolveDependency<IEntitySystemManager>();
+            var prototypes = server.ResolveDependency<IPrototypeManager>();
+            var net = server.ResolveDependency<IServerNetManager>();
+
+            var gameTicker = systems.GetEntitySystem<GameTicker>();
 
             await server.WaitPost(() =>
             {
-                systems.GetEntitySystem<GameTicker>().RestartRound();
+                foreach (var channel in net.Channels)
+                {
+                    net.DisconnectChannel(channel, "Test pooling disconnect");
+                }
+
+                gameTicker.RestartRound();
+
+                if (server.PreviousOptions?.ExtraPrototypes is { } oldExtra)
+                {
+                    prototypes.RemoveString(oldExtra);
+                }
+
+                if (server.Options?.ExtraPrototypes is { } extra)
+                {
+                    prototypes.LoadString(extra, true);
+                    prototypes.Resync();
+                }
             });
 
-            await server.WaitRunTicks(3);
+            if (!gameTicker.DummyTicker)
+            {
+                await WaitUntil(server, () => gameTicker.RunLevel == GameRunLevel.InRound);
+            }
         }
 
         protected async Task WaitUntil(IntegrationInstance instance, Func<bool> func, int maxTicks = 600,

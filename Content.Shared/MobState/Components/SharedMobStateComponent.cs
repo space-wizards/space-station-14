@@ -35,8 +35,8 @@ namespace Content.Shared.MobState.Components
         ///     Ordered from lowest to highest.
         /// </summary>
         [ViewVariables]
-        [DataField("thresholds")]
-        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = default!;
+        [DataField("thresholds", required: true)]
+        private readonly SortedDictionary<int, IMobState> _lowestToHighestStates = new();
 
         // TODO Remove Nullability?
         [ViewVariables]

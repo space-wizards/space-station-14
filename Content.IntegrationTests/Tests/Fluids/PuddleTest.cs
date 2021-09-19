@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
@@ -23,41 +24,15 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
-            var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-
-            EntityCoordinates coordinates = default;
-
-            // Build up test environment
-            server.Post(() =>
-            {
-                // Create a one tile grid to spill onto
-                var mapId = mapManager.CreateMap();
-
-                pauseManager.AddUninitializedMap(mapId);
-
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out var grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
-
-                var tileDefinition = tileDefinitionManager["underplating"];
-                var tile = new Tile(tileDefinition.TileId);
-                coordinates = grid.ToCoordinates();
-
-                grid.SetTile(coordinates, tile);
-
-                pauseManager.DoMapInitialize(mapId);
-            });
-
-            await server.WaitIdleAsync();
 
             server.Assert(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
+                var grid = mapManager.GetAllGrids().First();
+                var (x, y) = grid.GetAllTiles().First().GridIndices;
+                var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
+
                 Assert.NotNull(puddle);
             });
 
@@ -70,22 +45,19 @@ namespace Content.IntegrationTests.Tests.Fluids
             var server = StartServerDummyTicker();
 
             await server.WaitIdleAsync();
+
             var mapManager = server.ResolveDependency<IMapManager>();
-            var pauseManager = server.ResolveDependency<IPauseManager>();
+
             IMapGrid grid = null;
 
-            // Build up test environment
+            // Remove all tiles
             server.Post(() =>
             {
-                var mapId = mapManager.CreateMap();
+                grid = mapManager.GetAllGrids().First();
 
-                pauseManager.AddUninitializedMap(mapId);
-
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out grid))
+                foreach (var tile in grid.GetAllTiles())
                 {
-                    grid = mapManager.CreateGrid(mapId, gridId);
+                    grid.SetTile(tile.GridIndices, Tile.Empty);
                 }
             });
 

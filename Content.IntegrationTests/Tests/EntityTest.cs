@@ -224,7 +224,8 @@ namespace Content.IntegrationTests.Tests
             var server = StartServerDummyTicker(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = testEntity,
-                FailureLogLevel = LogLevel.Error
+                FailureLogLevel = LogLevel.Error,
+                Pool = false
             });
             await server.WaitIdleAsync();
 
