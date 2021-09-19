@@ -158,7 +158,6 @@ namespace Content.Client.Storage
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
