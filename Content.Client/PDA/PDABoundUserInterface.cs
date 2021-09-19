@@ -246,7 +246,7 @@ namespace Content.Client.PDA
 
             public BoxContainer UplinkTabContainer { get; }
 
-            protected readonly HSplitContainer CategoryAndListingsContainer;
+            protected readonly SplitContainer CategoryAndListingsContainer;
 
             private readonly IPrototypeManager _prototypeManager;
 
@@ -374,8 +374,9 @@ namespace Content.Client.PDA
                 };
 
                 //This contains both the panel of the category buttons and the listings box.
-                CategoryAndListingsContainer = new HSplitContainer
+                CategoryAndListingsContainer = new SplitContainer
                 {
+                    Orientation = SplitContainer.SplitOrientation.Horizontal,
                     VerticalExpand = true,
                 };
 
