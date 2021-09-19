@@ -12,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -128,7 +129,7 @@ namespace Content.Server.Weapon.Melee
             var hitEntities = new List<IEntity>();
             foreach (var entity in entities)
             {
-                if (!entity.Transform.IsMapTransform || entity == args.User)
+                if (entity.IsInContainer() || entity == args.User)
                     continue;
 
                 if (ComponentManager.HasComponent<DamageableComponent>(entity.Uid))
