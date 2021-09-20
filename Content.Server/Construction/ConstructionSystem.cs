@@ -225,7 +225,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = _stackSystem.Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
+                            var splitStack = _stackSystem.Split(entity.Uid, materialStep.Amount, user.ToCoordinates(), stack);
 
                             if (splitStack == null)
                                 continue;
