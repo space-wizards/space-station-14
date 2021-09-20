@@ -1,6 +1,5 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Physics;
-using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
