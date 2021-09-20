@@ -23,7 +23,6 @@ namespace Content.Server.MachineLinking.System
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        [Dependency] private IComponentManager _componentManager = default!;
         private InteractionSystem _interaction = default!;
 
         private SignalLinkCollection _linkCollection = new();
