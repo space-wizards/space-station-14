@@ -2019,3 +2019,8 @@ Entries:
       explode., type: Fix}
   id: 360
   time: '2021-09-19T05:15:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now have accurate boundaries., type: Add}
+  id: 361
+  time: '2021-09-20T11:08:10.0000000+00:00'
