@@ -436,7 +436,8 @@ namespace Content.Client.Verbs
 
                         (_label = new Label
                         {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand
+                            HorizontalExpand = true,
+                            HorizontalAlignment = HAlignment.Stretch,
                         }),
 
                         // Padding

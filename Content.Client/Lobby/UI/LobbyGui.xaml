@@ -85,7 +85,7 @@
                                 <info:ServerInfo Name="CServerInfo" />
                             </MarginContainer>
                         </BoxContainer>
-                        <MarginContainer SizeFlagsHorizontal="ShrinkEnd" MarginTopOverride="8" MarginRightOverride="8">
+                        <MarginContainer HorizontalAlignment="Right" MarginTopOverride="8" MarginRightOverride="8">
                             <BoxContainer Orientation="Vertical" Name="CVoteContainer" />
                         </MarginContainer>
                     </Control>

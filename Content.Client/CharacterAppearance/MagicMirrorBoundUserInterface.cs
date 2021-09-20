@@ -348,7 +348,11 @@ namespace Content.Client.CharacterAppearance
             _facialHairStylePicker.OnHairStylePicked += newStyle => owner.HairSelected(newStyle, true);
             _facialHairStylePicker.OnHairColorPicked += newColor => owner.HairColorSelected(newColor, true);
 
-            _eyeColorPicker = new EyeColorPicker {SizeFlagsHorizontal = SizeFlags.FillExpand};
+            _eyeColorPicker = new EyeColorPicker
+            {
+                HorizontalExpand = true,
+                HorizontalAlignment = HAlignment.Stretch,
+            };
             _eyeColorPicker.OnEyeColorPicked += newColor => owner.EyeColorSelected(newColor);
 
             Contents.AddChild(new BoxContainer
