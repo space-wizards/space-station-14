@@ -119,7 +119,7 @@ namespace Content.Server.Fluids.EntitySystems
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (puddleComponent.Owner.EntityManager.ComponentManager.TryGetComponent(entity,
+                if (ComponentManager.TryGetComponent(entity,
                         out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
@@ -127,7 +127,7 @@ namespace Content.Server.Fluids.EntitySystems
                     return false;
                 }
 
-                if (puddleComponent.Owner.EntityManager.ComponentManager.TryGetComponent(entity,
+                if (ComponentManager.TryGetComponent(entity,
                     out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle.Overflown)

@@ -16,7 +16,6 @@ namespace Content.Server.Fluids.EntitySystems
 {
     public partial class PuddleSystem
     {
-        [Dependency] private readonly IServerEntityManager _serverEntityManager = default!;
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
 
         /// <summary>
@@ -155,7 +154,7 @@ namespace Content.Server.Fluids.EntitySystems
             // Did we add to an existing puddle
             if (spilt) return puddle;
 
-            var puddleEnt = _serverEntityManager.SpawnEntity(prototype, spillGridCoords);
+            var puddleEnt = EntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
 
             TryAddSolution(newPuddleComponent, solution, sound);
