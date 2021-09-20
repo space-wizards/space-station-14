@@ -13,7 +13,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Fluids
 {
     [UsedImplicitly]
-    internal sealed class FluidSystem : EntitySystem
+    internal sealed class PuddleSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
