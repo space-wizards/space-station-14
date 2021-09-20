@@ -31,7 +31,7 @@
       - VaultImpassable
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Glass
+    damageModifierSet: Glass
   - type: Repairable
   - type: Destructible
     thresholds:

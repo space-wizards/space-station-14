@@ -53,14 +53,9 @@ namespace Content.IntegrationTests.Tests.Damageable
     - TestDamage3b
     - TestDamage3c
 
-- type: resistanceSet
-  id: testResistances
-# this space is intentionally left blank
-
 # This container should not support TestDamage1 or TestDamage2b
 - type: damageContainer
   id: testDamageContainer
-  defaultResistanceSet: testResistances
   supportedGroups:
     - TestGroup3
   supportedTypes:
@@ -189,9 +184,9 @@ namespace Content.IntegrationTests.Tests.Damageable
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(damageToDeal));
                 Assert.That(sDamageableComponent.DamagePerGroup[group3.ID], Is.EqualTo(damageToDeal));
                 // integer rounding. In this case, first member gets 1 less than others.
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(damageToDeal / types.Count())); 
+                Assert.That(sDamageableComponent.Damage.DamageDict[type3a.ID], Is.EqualTo(damageToDeal / types.Count()));
                 Assert.That(sDamageableComponent.Damage.DamageDict[type3b.ID], Is.EqualTo(1 + damageToDeal / types.Count()));
-                Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(1 + damageToDeal / types.Count())); 
+                Assert.That(sDamageableComponent.Damage.DamageDict[type3c.ID], Is.EqualTo(1 + damageToDeal / types.Count()));
 
                 // Heal
                 sDamageableSystem.TryChangeDamage(uid, -damage);

@@ -24,6 +24,7 @@
       types:
         Blunt: 5
   - type: Spillable
+    solution: food
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible

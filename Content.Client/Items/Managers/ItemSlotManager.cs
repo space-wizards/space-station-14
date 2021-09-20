@@ -48,8 +48,8 @@ namespace Content.Client.Items.Managers
             else
             {
                 ISpriteComponent? sprite;
-                if (entity.TryGetComponent(out HandVirtualPullComponent? virtPull)
-                    && _componentManager.TryGetComponent(virtPull.PulledEntity, out ISpriteComponent pulledSprite))
+                if (entity.TryGetComponent(out HandVirtualItemComponent? virtPull)
+                    && _componentManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }

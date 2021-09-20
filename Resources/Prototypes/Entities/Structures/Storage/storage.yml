@@ -27,7 +27,7 @@
   - type: Anchorable
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

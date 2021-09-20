@@ -16,6 +16,7 @@
   - type: Sprite
     state: icon
   - type: Spillable
+    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
@@ -30,7 +31,7 @@
     isOpen: true
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Glass
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -8,7 +9,9 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
-        public const string SolutionName = "puddle";
+
+        [DataField("solution")]
+        public string SolutionName = "puddle";
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {

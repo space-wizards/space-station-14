@@ -24,6 +24,7 @@
     solution: spray
   - type: SolutionTransfer
   - type: Spillable
+    solution: spray
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10

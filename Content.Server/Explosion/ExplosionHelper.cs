@@ -84,7 +84,7 @@ namespace Content.Server.Explosion
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if (entity.Deleted || !entity.Transform.IsMapTransform)
+                if (entity.Deleted || entity.IsInContainer())
                 {
                     continue;
                 }

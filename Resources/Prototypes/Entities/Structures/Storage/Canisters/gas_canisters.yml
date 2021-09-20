@@ -43,7 +43,7 @@
               acts: [ "Destruction" ]
     - type: Damageable
       damageContainer: Inorganic
-      resistanceSet: Metallic
+      damageModifierSet: Metallic
     - type: Physics
       bodyType: Dynamic
       fixtures:
@@ -364,7 +364,7 @@
           acts: [ "Destruction" ]
     - type: Damageable
       damageContainer: Inorganic
-      resistanceSet: Metallic
+      damageModifierSet: Metallic
     - type: InteractionOutline
     - type: Sprite
       sprite: Structures/Storage/canister.rsi

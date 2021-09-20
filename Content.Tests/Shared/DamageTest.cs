@@ -11,7 +11,7 @@ namespace Content.Tests.Shared
     // Basic tests of various damage prototypes and classes.
     [TestFixture]
     [TestOf(typeof(DamageSpecifier))]
-    [TestOf(typeof(ResistanceSetPrototype))]
+    [TestOf(typeof(DamageModifierSetPrototype))]
     [TestOf(typeof(DamageGroupPrototype))]
     public class DamageTest : ContentUnitTest
     {
@@ -26,7 +26,7 @@ namespace Content.Tests.Shared
 
         static private Dictionary<string, float> _resistanceReductionDict = new()
         {
-            { "Blunt", - 5 }, 
+            { "Blunt", - 5 },
             // "missing" piercing entry
             { "Slash", 8 },
             { "Radiation", 0.5f },  // Fractional adjustment
@@ -132,13 +132,13 @@ namespace Content.Tests.Shared
 
         //Check that DamageSpecifier will be properly adjusted by a resistance set
         [Test]
-        public void ResistanceSetTest()
+        public void ModifierSetTest()
         {
             // Create a copy of the damage data
             DamageSpecifier damageSpec = 10 * new DamageSpecifier(_damageSpec);
 
-            // Create a resistance set
-            ResistanceSetPrototype resistanceSet = new()
+            // Create a modifier set
+            DamageModifierSetPrototype modifierSet = new()
             {
                 Coefficients = _resistanceCoefficientDict,
                 FlatReduction = _resistanceReductionDict
@@ -149,14 +149,14 @@ namespace Content.Tests.Shared
             //then multiply by       1 / -2 /  3 /  1.06
 
             // Apply once
-            damageSpec = DamageSpecifier.ApplyResistanceSet(damageSpec, resistanceSet);
+            damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(25));
             Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // became healing
             Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(6));
             Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(31)); // would be 32 w/o fraction adjustment
 
             // And again, checking for some other behavior
-            damageSpec = DamageSpecifier.ApplyResistanceSet(damageSpec, resistanceSet);
+            damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
             Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(30));
             Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // resistances don't apply to healing
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
@@ -241,7 +241,7 @@ namespace Content.Tests.Shared
   damageTypes:
     - Cellular
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Metallic
   coefficients:
     Blunt: 0.7
@@ -251,7 +251,7 @@ namespace Content.Tests.Shared
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Inflatable
   coefficients:
     Blunt: 0.5
@@ -261,7 +261,7 @@ namespace Content.Tests.Shared
   flatReductions:
     Blunt: 5
 
-- type: resistanceSet
+- type: damageModifierSet
   id: Glass
   coefficients:
     Blunt: 0.5

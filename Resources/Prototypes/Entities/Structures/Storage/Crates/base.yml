@@ -5,7 +5,10 @@
   name: crate
   description: A large container for items.
   components:
+  - type: Transform
+    noRot: true
   - type: Sprite
+    noRot: true
     netsync: false
     sprite: Structures/Storage/Crates/generic.rsi
     layers:
@@ -36,7 +39,7 @@
   - type: PlaceableSurface
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -19,7 +19,7 @@
     state: full
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Metallic
+    damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
     fixtures:

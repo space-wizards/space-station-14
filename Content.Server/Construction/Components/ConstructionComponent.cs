@@ -9,24 +9,21 @@ using Content.Server.Tools.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Physics;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public partial class ConstructionComponent : Component, IExamine, IInteractUsing
+    public partial class ConstructionComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -45,7 +42,7 @@ namespace Content.Server.Construction.Components
         [ViewVariables]
         private HashSet<string> _containers = new();
         [ViewVariables]
-        private List<List<ConstructionGraphStep>>? _edgeNestedStepProgress = null;
+        public List<List<ConstructionGraphStep>>? EdgeNestedStepProgress = null;
 
         private ConstructionGraphNode? _target = null;
 
@@ -298,14 +295,14 @@ namespace Content.Server.Construction.Components
                     break;
 
                 case NestedConstructionGraphStep nestedStep:
-                    if(_edgeNestedStepProgress == null)
-                        _edgeNestedStepProgress = new List<List<ConstructionGraphStep>>(nestedStep.Steps);
+                    if(EdgeNestedStepProgress == null)
+                        EdgeNestedStepProgress = new List<List<ConstructionGraphStep>>(nestedStep.Steps);
 
-                    foreach (var list in _edgeNestedStepProgress.ToArray())
+                    foreach (var list in EdgeNestedStepProgress.ToArray())
                     {
                         if (list.Count == 0)
                         {
-                            _edgeNestedStepProgress.Remove(list);
+                            EdgeNestedStepProgress.Remove(list);
                             continue;
                         }
 
@@ -315,10 +312,10 @@ namespace Content.Server.Construction.Components
 
                         // We check again...
                         if (list.Count == 0)
-                            _edgeNestedStepProgress.Remove(list);
+                            EdgeNestedStepProgress.Remove(list);
                     }
 
-                    if (_edgeNestedStepProgress.Count == 0)
+                    if (EdgeNestedStepProgress.Count == 0)
                         handled = true;
 
                     break;
@@ -390,7 +387,7 @@ namespace Content.Server.Construction.Components
 
         public void ResetEdge()
         {
-            _edgeNestedStepProgress = null;
+            EdgeNestedStepProgress = null;
             TargetNextEdge = null;
             Edge = null;
             EdgeStep = 0;
@@ -530,52 +527,6 @@ namespace Content.Server.Construction.Components
             }
 
             await HandleEntityChange(graphNode);
-        }
-
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if(Target != null)
-                message.AddMarkup(Loc.GetString("construction-component-to-create-header",("targetName", Target.Name)) + "\n");
-
-            if (Edge == null && TargetNextEdge != null)
-            {
-                var preventStepExamine = false;
-
-                foreach (var condition in TargetNextEdge.Conditions)
-                {
-                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
-                }
-
-                if(!preventStepExamine)
-                    TargetNextEdge.Steps[0].DoExamine(message, inDetailsRange);
-                return;
-            }
-
-            if (Edge != null)
-            {
-                var preventStepExamine = false;
-
-                foreach (var condition in Edge.Conditions)
-                {
-                    preventStepExamine |= condition.DoExamine(Owner, message, inDetailsRange);
-                }
-
-                if (preventStepExamine) return;
-            }
-
-            if (_edgeNestedStepProgress == null)
-            {
-                if(EdgeStep < Edge?.Steps.Count)
-                    Edge.Steps[EdgeStep].DoExamine(message, inDetailsRange);
-                return;
-            }
-
-            foreach (var list in _edgeNestedStepProgress)
-            {
-                if(list.Count == 0) continue;
-
-                list[0].DoExamine(message, inDetailsRange);
-            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Movement.Components;
 using Robust.Shared.GameObjects;
+using Robust.Shared.ViewVariables;
 using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.Pulling.Components
@@ -11,14 +12,15 @@ namespace Content.Shared.Pulling.Components
 
         private IEntity? _pulling;
 
-        public float WalkSpeedModifier => Pulling == null ? 1.0f : 0.75f;
+        public float WalkSpeedModifier => _pulling == null ? 1.0f : 0.75f;
 
-        public float SprintSpeedModifier => Pulling == null ? 1.0f : 0.75f;
+        public float SprintSpeedModifier => _pulling == null ? 1.0f : 0.75f;
 
+        [ViewVariables]
         public IEntity? Pulling
         {
             get => _pulling;
-            private set
+            set
             {
                 if (_pulling == value)
                 {

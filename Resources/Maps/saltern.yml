@@ -6984,8 +6984,7 @@ entities:
 - uid: 760
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 5.5,-21.5
+  - pos: 5.5,-21.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7006,8 +7005,7 @@ entities:
 - uid: 762
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -23.5,11.5
+  - pos: -23.5,11.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7019,8 +7017,7 @@ entities:
 - uid: 763
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 24.5,13.5
+  - pos: 24.5,13.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7052,8 +7049,7 @@ entities:
 - uid: 766
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -2.5,30.5
+  - pos: -2.5,30.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7065,8 +7061,7 @@ entities:
 - uid: 767
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 9.5,30.5
+  - pos: 9.5,30.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7188,8 +7183,7 @@ entities:
 - uid: 778
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 12.5,21.5
+  - pos: 12.5,21.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7214,8 +7208,7 @@ entities:
 - uid: 780
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 43.5,9.5
+  - pos: 43.5,9.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7253,8 +7246,7 @@ entities:
 - uid: 783
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 8.5,-18.5
+  - pos: 8.5,-18.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7279,8 +7271,7 @@ entities:
 - uid: 785
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -15.5,-17.5
+  - pos: -15.5,-17.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7292,8 +7283,7 @@ entities:
 - uid: 786
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -7.5,-25.5
+  - pos: -7.5,-25.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7305,8 +7295,7 @@ entities:
 - uid: 787
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 26.5,12.5
+  - pos: 26.5,12.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7318,8 +7307,7 @@ entities:
 - uid: 788
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 23.5,1.5
+  - pos: 23.5,1.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7344,8 +7332,7 @@ entities:
 - uid: 790
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -11.5,-10.5
+  - pos: -11.5,-10.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7357,8 +7344,7 @@ entities:
 - uid: 791
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -37.5,-7.5
+  - pos: -37.5,-7.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7370,8 +7356,7 @@ entities:
 - uid: 792
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -39.5,2.5
+  - pos: -39.5,2.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -7383,8 +7368,7 @@ entities:
 - uid: 793
   type: ClosetEmergencyFilledRandom
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -34.5,10.5
+  - pos: -34.5,10.5
     parent: 853
     type: Transform
   - isPlaceable: False
