@@ -4,14 +4,11 @@ using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Movement;
-using Content.Shared.Notification;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,7 +16,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
@@ -28,16 +24,14 @@ namespace Content.Server.Disposal.Tube.Components
 {
     public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent, IBreakAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
-        private static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
-        private TimeSpan _lastClang;
+        public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
+        public TimeSpan LastClang;
 
         private bool _connected;
         private bool _broken;
-        [DataField("clangSound")]
-        private SoundSpecifier _clangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
+        [DataField("clangSound")] public SoundSpecifier ClangSound = new SoundPathSpecifier("/Audio/Effects/clang.ogg");
 
         /// <summary>
         ///     Container of entities that are currently inside this tube
@@ -251,24 +245,6 @@ namespace Content.Server.Disposal.Tube.Components
             base.OnRemove();
 
             Disconnect();
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RelayMovementEntityMessage _:
-                    if (_gameTiming.CurTime < _lastClang + ClangDelay)
-                    {
-                        break;
-                    }
-
-                    _lastClang = _gameTiming.CurTime;
-                    SoundSystem.Play(Filter.Pvs(Owner), _clangSound.GetSound(), Owner);
-                    break;
-            }
         }
 
         void IBreakAct.OnBreak(BreakageEventArgs eventArgs)

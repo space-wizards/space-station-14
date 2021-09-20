@@ -2,14 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Hands.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Body.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Movement;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
 using Content.Shared.Placeable;
@@ -27,7 +25,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -37,14 +34,12 @@ namespace Content.Server.Storage.Components
     [ComponentReference(typeof(IStorageComponent))]
     public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override string Name => "EntityStorage";
 
         private const float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
 
-        private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
-        private TimeSpan _lastInternalOpenAttempt;
+        public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
+        public TimeSpan LastInternalOpenAttempt;
 
         private const int OpenMask = (int) (
             CollisionGroup.MobImpassable |
@@ -227,7 +222,7 @@ namespace Content.Server.Storage.Components
 
             ModifyComponents();
                 SoundSystem.Play(Filter.Pvs(Owner), _closeSound.GetSound(), Owner);
-            _lastInternalOpenAttempt = default;
+            LastInternalOpenAttempt = default;
         }
 
         protected virtual void OpenStorage()
@@ -310,29 +305,6 @@ namespace Content.Server.Storage.Components
                         physics.CanCollide = true;
                     }
                 }
-            }
-        }
-
-        /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RelayMovementEntityMessage msg:
-                    if (msg.Entity.HasComponent<HandsComponent>())
-                    {
-                        if (_gameTiming.CurTime <
-                            _lastInternalOpenAttempt + InternalOpenAttemptDelay)
-                        {
-                            break;
-                        }
-
-                        _lastInternalOpenAttempt = _gameTiming.CurTime;
-                        TryOpenStorage(msg.Entity);
-                    }
-                    break;
             }
         }
 
