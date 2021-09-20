@@ -7,5 +7,4 @@ pointing-system-point-at-self-others = {$otherName} points at {$other}}.
 pointing-system-point-at-other-others = {$otherName} points at {$other}}.
 pointing-system-point-at-other-others = {$otherName} points at {$other}}.
 pointing-system-point-at-you-other = {$otherName} points at you.
-pointing-system-point-at-tile  = You point at {$tileName}
-pointing-system-point-at-tile-others = {$otherName} points at {$tileName}
+pointing-system-other-point-at-tile = {$otherName} points at {$tileName}

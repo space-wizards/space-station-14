@@ -66,6 +66,7 @@ namespace Content.Client.Verbs
             base.Update(frameTime);
             ContextMenuPresenter?.Update();
         }
+
         private void SetSeeAllContext(SetSeeAllContextEvent args)
         {
             CanSeeAllContext = args.CanSeeAllContext;

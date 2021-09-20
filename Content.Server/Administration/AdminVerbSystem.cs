@@ -165,17 +165,6 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
-            // Verb to toggle showing all entities on context menu for the target player.
-            if (_groupController.CanCommand(player, "toggleallcontext") &&
-                args.Target.TryGetComponent<ActorComponent>(out var targetActor))
-            {
-                Verb verb = new();
-                verb.Category = VerbCategory.Debug;
-                verb.Text = "Toggle All Context Entities";
-                verb.Act = () => _verbSystem.ToggleSeeAllContext(targetActor.PlayerSession);
-                args.Verbs.Add(verb);
-            }
-
             // Add reagent verb
             if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
                 args.Target.HasComponent<SolutionContainerManagerComponent>())

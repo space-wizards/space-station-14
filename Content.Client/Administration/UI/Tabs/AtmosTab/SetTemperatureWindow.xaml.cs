@@ -17,23 +17,13 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
     {
         private IEnumerable<IMapGrid>? _data;
 
-        /// <summary>
-        ///     Function to fill in the UI's x, y, and grid fields with some default values.
-        /// </summary>
-        public void FillCoords(GridId gridId, int x, int y)
-        {
-            GridOptions.TrySelectId((int) gridId);
-            TileXSpin.Value = x;
-            TileYSpin.Value = y;
-        }
-
         protected override void EnteredTree()
         {
             _data = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
-            var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
             foreach (var grid in _data)
             {
-                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}", id: (int) grid.Index);
+                var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
+                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
@@ -44,7 +34,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
         {
             if (_data == null)
                 return;
-            GridId selectedGrid = new(GridOptions.SelectedId);
+            var dataList = _data.ToList();
+            var selectedGrid = dataList[GridOptions.SelectedId].Index;
             IoCManager.Resolve<IClientConsoleHost>()
                 .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {selectedGrid} {TemperatureSpin.Value}");
         }

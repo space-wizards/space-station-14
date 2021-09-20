@@ -22,24 +22,14 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
         private IEnumerable<IMapGrid>? _gridData;
         private IEnumerable<GasPrototype>? _gasData;
 
-        /// <summary>
-        ///     Function to fill in the UI's x, y, and grid fields with some default values.
-        /// </summary>
-        public void FillCoords(GridId gridId, int x, int y)
-        {
-            GridOptions.TrySelectId((int) gridId);
-            TileXSpin.Value = x;
-            TileYSpin.Value = y;
-        }
-
         protected override void EnteredTree()
         {
             // Fill out grids
             _gridData = IoCManager.Resolve<IMapManager>().GetAllGrids().Where(g => (int) g.Index != 0);
-            var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
             foreach (var grid in _gridData)
             {
-                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}", id: (int) grid.Index );
+                var playerGrid = IoCManager.Resolve<IPlayerManager>().LocalPlayer?.ControlledEntity?.Transform.GridID;
+                GridOptions.AddItem($"{grid.Index} {(playerGrid == grid.Index ? " (Current)" : "")}");
             }
 
             GridOptions.OnItemSelected += eventArgs => GridOptions.SelectId(eventArgs.Id);
@@ -61,7 +51,8 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
             if (_gridData == null || _gasData == null)
                 return;
 
-            GridId gridIndex = new(GridOptions.SelectedId);
+            var gridList = _gridData.ToList();
+            var gridIndex = gridList[GridOptions.SelectedId].Index;
 
             var gasList = _gasData.ToList();
             var gasId = gasList[GasOptions.SelectedId].ID;
