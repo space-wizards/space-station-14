@@ -1,4 +1,4 @@
-﻿using Content.Server.Tabletop.Components;
+using Content.Server.Tabletop.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Tabletop;
@@ -43,10 +43,13 @@ namespace Content.Server.Tabletop
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
+            if (!args.User.TryGetComponent<ActorComponent>(out var actor))
+                return;
+
             Verb verb = new();
             verb.Text = Loc.GetString("tabletop-verb-play-game");
             verb.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
-            verb.Act = () => OpenTable(args.User, component.Owner);
+            verb.Act = () => OpenSessionFor(actor.PlayerSession, uid);
             args.Verbs.Add(verb);
         }
 

@@ -13,7 +13,7 @@ namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
+        [Dependency] private readonly IEntityLookup _lookup = default!;
 
         /// <summary>
         ///     Get all of the entities in an area for displaying on the context menu.
@@ -30,11 +30,12 @@ namespace Content.Shared.Verbs
 
             // Get entities
             var length = buffer ? 1.0f : 0.5f;
-            var entities = _entityLookup.GetEntitiesIntersecting(targetPos.MapId,
-                Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
+            var entities = _lookup.GetEntitiesIntersecting(
+                    targetPos.MapId,
+                    Box2.CenteredAround(targetPos.Position, (length, length)))
+                .ToList();
 
-            if (entities.Count == 0)
-                return false;
+            if (entities.Count == 0) return false;
 
             if (ignoreVisibility)
             {
@@ -43,10 +44,20 @@ namespace Content.Shared.Verbs
             }
 
             // perform visibility checks
+            var playerPos = player.Transform.MapPosition;
             foreach (var entity in entities.ToList())
             {
-                if (entity.HasTag("HideContextMenu") ||
-                    !player.InRangeUnOccluded(entity, range: ExamineSystemShared.ExamineRange))
+                if (entity.HasTag("HideContextMenu"))
+                {
+                    entities.Remove(entity);
+                    continue;
+                }
+
+                if (!ExamineSystemShared.InRangeUnOccluded(
+                        playerPos,
+                        entity.Transform.MapPosition,
+                        ExamineSystemShared.ExamineRange,
+                        null) )
                 {
                     entities.Remove(entity);
                 }
