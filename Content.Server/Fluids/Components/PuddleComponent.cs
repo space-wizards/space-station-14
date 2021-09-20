@@ -55,6 +55,5 @@ namespace Content.Server.Fluids.Components
         public bool EmptyHolder => EntitySystem.Get<PuddleSystem>().EmptyHolder(this);
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
-        [DataField("defaultContent")] public Solution? DefaultSolutionContent;
     }
 }

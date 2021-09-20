@@ -13,10 +13,12 @@
     state: powder
     color: white
   - type: Puddle
-    defaultContent:
-      reagents:
-      - ReagentId: Flour
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Flour
+          Quantity: 10
   - type: Evaporation
   - type: Appearance
     visuals:

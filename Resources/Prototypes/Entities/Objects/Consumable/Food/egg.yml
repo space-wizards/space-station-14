@@ -74,10 +74,12 @@
     sprite: Fluids/egg_splat.rsi
     state: egg-0
   - type: Puddle
-    defaultContent:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Egg
+          Quantity: 2
   - type: Evaporation
   - type: Appearance
     visuals:

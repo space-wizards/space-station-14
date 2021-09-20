@@ -43,9 +43,12 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
   - type: Puddle
-    defaultReagent:
-      ReagentId: Water
-      Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -60,7 +63,6 @@
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
   - type: Puddle
-
   - type: Evaporation
   - type: Appearance
     visuals:
@@ -92,12 +94,14 @@
     sprite: Fluids/vomit.rsi
     state: vomit-0
   - type: Puddle
-    defaultContent:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
-      - ReagentId: Water
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -112,12 +116,14 @@
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
   - type: Puddle
-    defaultContent:
-      reagents:
-      - ReagentId: Toxin
-        Quantity: 5
-      - ReagentId: Water
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

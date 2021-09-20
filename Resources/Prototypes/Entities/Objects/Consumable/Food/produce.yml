@@ -299,10 +299,12 @@
     sprite: Fluids/tomato_splat.rsi
     state: puddle-0
   - type: Puddle
-    defaultContent:
-      reagents:
-      - ReagentId: JuiceTomato
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 10
   - type: Evaporation
   - type: Appearance
     visuals:
