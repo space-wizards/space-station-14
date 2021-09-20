@@ -1,8 +1,4 @@
 using System;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
-using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -17,7 +13,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pulling.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedPullableComponent : Component, IRelayMoveInput
+    public abstract class SharedPullableComponent : Component
     {
         public override string Name => "Pullable";
 
@@ -347,14 +343,6 @@ namespace Content.Shared.Pulling.Components
             MovingTo = null;
 
             base.OnRemove();
-        }
-
-        // TODO: Need a component bus relay so all entities can use this and not just players
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
-        {
-            var entity = session.AttachedEntity;
-            if (entity == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity)) return;
-            TryStopPull();
         }
     }
 
