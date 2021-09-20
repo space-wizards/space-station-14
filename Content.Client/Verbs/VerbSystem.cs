@@ -201,23 +201,11 @@ namespace Content.Client.Verbs
                 // Get the verbs in the category
                 var verbsInCategory = verbSet.Where(v => v.Category?.Text == verb.Category.Text);
 
-                // We add a normal verb category button if either:
-                // a) the category has more than 1 item in it
-                // b) the category cannot be contracted down
-                // c) it can be contracted, but would result in extremely long verb text.
-                if (verbsInCategory.Count() > 1 ||
-                    !verb.Category.Contractible ||
-                    verb.Category.Text.Length + verb.Text.Length > VerbCategory.MaxContract)
-                {
-                    popup.AddToMenu(
-                        new VerbCategoryButton(this, verb.Category, verbsInCategory, type, CurrentTarget));
-                    listedCategories.Add(verb.Category.Text);
-                    continue;
-                }
-
-                // This category only contains a single verb, and the category is flagged as Contractible/collapsible.
-                // So we add a single verb button instead.
-                popup.AddToMenu(new VerbButton(this, verb, type, CurrentTarget, categoryPrefix: true));
+                popup.AddToMenu(
+                    new VerbCategoryButton(this, verb.Category, verbsInCategory, type, CurrentTarget));
+                listedCategories.Add(verb.Category.Text);
+                continue;
+             
             }
         }
 

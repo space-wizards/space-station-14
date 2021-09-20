@@ -16,31 +16,6 @@ namespace Content.Shared.Verbs
         public readonly SpriteSpecifier? Icon;
 
         /// <summary>
-        ///     If true, and this verb is the lone member of a verb category, then this a single modified verb is added
-        ///     to the popup, instead of a verb-category.
-        /// </summary>
-        /// <remarks>
-        ///     For example, the ID console has two id slots. So you may have two verbs in the "Eject" category, with
-        ///     individual verbs with text "Privileged ID" and "Target ID". If this option is set to true, and only the
-        ///     target ID is present, then this verb category will instead become a single verb with the text "Eject
-        ///     Target ID". The verb icon will default to the verb category icon, if it isn't null;
-        /// </remarks>
-        public readonly bool Contractible;
-
-        /// <summary>
-        ///     Maximum verb text length allowed when contracting.
-        /// </summary>
-        /// <remarks>
-        ///     <par> Sometimes contracting verb categories can result in extremely long verbs. For example: "Insert
-        ///     Valerie Schaeffer's ID card (assistant)". In order to avoid extremely long verb text, and consequently,
-        ///     large context menu popups, this limits the length when contracting. </par>
-        ///
-        ///     <para>With this option, the above example would not be contracted, but something like "Eject pen" could
-        ///     still be contracted down to a single verb, instead of a verb category.</para> 
-        /// </remarks>
-        public const int MaxContract = 20;
-
-        /// <summary>
         ///     If true, this verb category is shown in the context menu as a row of icons without any text.
         /// </summary>
         /// <remarks>
@@ -48,10 +23,9 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public readonly bool IconsOnly;
 
-        public VerbCategory(string text, string? icon, bool contractible = false, bool iconsOnly = false)
+        public VerbCategory(string text, string? icon, bool iconsOnly = false)
         {
             Text = Loc.GetString(text);
-            Contractible = contractible;
             Icon = icon == null ? null : new SpriteSpecifier.Texture(new ResourcePath(icon));
             IconsOnly = iconsOnly;
         }
@@ -60,22 +34,22 @@ namespace Content.Shared.Verbs
             new("verb-categories-debug", "/Textures/Interface/VerbIcons/debug.svg.192dpi.png");
 
         public static readonly VerbCategory Eject =
-            new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png", true);
+            new("verb-categories-eject", "/Textures/Interface/VerbIcons/eject.svg.192dpi.png");
 
         public static readonly VerbCategory Insert =
-            new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png", true);
+            new("verb-categories-insert", "/Textures/Interface/VerbIcons/insert.svg.192dpi.png");
 
         public static readonly VerbCategory Buckle =
-            new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png", true);
+            new("verb-categories-buckle", "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png");
 
         public static readonly VerbCategory Unbuckle =
-            new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png", true);
+            new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png");
 
         public static readonly VerbCategory Open =
-            new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png", true);
+            new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png");
 
         public static readonly VerbCategory Close =
-            new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png", true);
+            new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png");
 
         public static readonly VerbCategory Rotate =
             new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true);
