@@ -2014,7 +2014,6 @@ Entries:
   time: '2021-09-18T08:40:38.0000000+00:00'
 - author: Ygg01
   changes:
-  - {message: Fix welder tank suffix for admins, type: Fix}
   - {message: Welder and tank interaction now shows fuel tank is empty and doesn't
       explode., type: Fix}
   id: 360
