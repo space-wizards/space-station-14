@@ -57,6 +57,10 @@ namespace Content.Server.Fluids.EntitySystems
         {
             var puddleSolution =
                 _solutionContainerSystem.EnsureSolution(component.Owner, PuddleComponent.DefaultSolutionName);
+            if (component.DefaultSolutionContent != null)
+            {
+                puddleSolution.AddSolution(component.DefaultSolutionContent);
+            }
 
             // Smaller than 1m^3 for now but realistically this shouldn't be hit
             puddleSolution.MaxVolume = ReagentUnit.New(1000);
@@ -75,12 +79,10 @@ namespace Content.Server.Fluids.EntitySystems
 
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
-            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float()
-                * 0.75f + 0.25f;
-            var cappedScale = Math.Min(1.0f, volumeScale);
+            var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float();
             var puddleSolution = _solutionContainerSystem.GetSolution(uid, puddleComponent.SolutionName);
 
-            appearanceComponent.SetData(PuddleVisual.PuddleCappedScale, cappedScale);
+            appearanceComponent.SetData(PuddleVisual.VolumeScale, volumeScale);
             appearanceComponent.SetData(PuddleVisual.SolutionColor, puddleSolution.Color);
         }
 

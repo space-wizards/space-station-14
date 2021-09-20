@@ -43,9 +43,10 @@ namespace Content.Client.Fluids
         {
             base.OnChangeData(component);
 
-            if (component.TryGetData<float>(PuddleVisual.PuddleCappedScale, out var cappedScale) &&
+            if (component.TryGetData<float>(PuddleVisual.VolumeScale, out var volumeScale) &&
                 component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
             {
+                var cappedScale = Math.Min(1.0f, volumeScale * 0.75f +0.25f);
                 UpdateVisual(component, spriteComponent, cappedScale);
             }
         }

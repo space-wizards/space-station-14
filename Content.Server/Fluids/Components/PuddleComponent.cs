@@ -1,4 +1,5 @@
 using Content.Server.Fluids.EntitySystems;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
@@ -54,5 +55,6 @@ namespace Content.Server.Fluids.Components
         public bool EmptyHolder => EntitySystem.Get<PuddleSystem>().EmptyHolder(this);
 
         [DataField("solution")] public string SolutionName { get; set; } = DefaultSolutionName;
+        [DataField("defaultContent")] public Solution? DefaultSolutionContent;
     }
 }

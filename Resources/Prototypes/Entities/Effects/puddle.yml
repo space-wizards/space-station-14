@@ -7,14 +7,6 @@
     anchored: true
   - type: Sprite
     drawdepth: FloorObjects
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: JuiceTomato
-          Quantity: 10
-  - type: Evaporation
   - type: Puddle
     spill_sound:
       path: /Audio/Effects/Fluids/splat.ogg
@@ -51,7 +43,9 @@
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
   - type: Puddle
-  - type: Evaporation
+    defaultReagent:
+      ReagentId: Water
+      Quantity: 10
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -66,10 +60,12 @@
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
   - type: Puddle
+
   - type: Evaporation
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: puddle
@@ -96,6 +92,12 @@
     sprite: Fluids/vomit.rsi
     state: vomit-0
   - type: Puddle
+    defaultContent:
+      reagents:
+      - ReagentId: Nutriment
+        Quantity: 5
+      - ReagentId: Water
+        Quantity: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -110,6 +112,12 @@
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
   - type: Puddle
+    defaultContent:
+      reagents:
+      - ReagentId: Toxin
+        Quantity: 5
+      - ReagentId: Water
+        Quantity: 5
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
@@ -125,6 +133,7 @@
     state: writing-0
   - type: Puddle
   - type: Evaporation
+    evaporate_time: 10
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

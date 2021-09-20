@@ -6,7 +6,7 @@ namespace Content.Shared.Fluids
     [Serializable, NetSerializable]
     public enum PuddleVisual
     {
-        PuddleCappedScale,
+        VolumeScale,
         SolutionColor
     }
 }
