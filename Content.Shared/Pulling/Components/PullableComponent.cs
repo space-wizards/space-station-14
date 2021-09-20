@@ -13,7 +13,8 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pulling.Components
 {
     [NetworkedComponent()]
-    public abstract class PullableComponent : Component
+    [RegisterComponent]
+    public class PullableComponent : Component
     {
         public override string Name => "Pullable";
 

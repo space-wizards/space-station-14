@@ -70,6 +70,7 @@ namespace Content.Server.Medical
                 // create a verb category for "enter"?
                 // See also, disposal unit.  Also maybe add verbs for entering lockers/body bags?
                 args.Verbs.Add(verb);
+            }
         }
 
         private void OnRelayMovement(EntityUid uid, MedicalScannerComponent component, RelayMovementEntityEvent args)

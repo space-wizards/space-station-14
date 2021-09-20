@@ -13,10 +13,10 @@ namespace Content.Shared.Pulling.Systems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedPullableComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+            SubscribeLocalEvent<PullableComponent, RelayMoveInputEvent>(OnRelayMoveInput);
         }
 
-        private void OnRelayMoveInput(EntityUid uid, SharedPullableComponent component, RelayMoveInputEvent args)
+        private void OnRelayMoveInput(EntityUid uid, PullableComponent component, RelayMoveInputEvent args)
         {
             var entity = args.Session.AttachedEntity;
             if (entity == null || !_blocker.CanMove(entity)) return;
