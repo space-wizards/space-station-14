@@ -265,7 +265,7 @@ namespace Content.Server.Construction.Components
                             if (materialStep.EntityValid(eventArgs.Using, out var stack)
                                 && await doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Finished)
                             {
-                                var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, stack, materialStep.Amount, eventArgs.User.Transform.Coordinates);
+                                var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, materialStep.Amount, eventArgs.User.Transform.Coordinates, stack);
 
                                 if (splitStack != null)
                                 {

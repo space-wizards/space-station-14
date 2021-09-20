@@ -59,7 +59,7 @@ namespace Content.Server.Construction.Components
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
                 if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
-                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, stack, 1);
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid,1, stack);
             }
 
             return true;

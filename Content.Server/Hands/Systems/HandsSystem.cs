@@ -238,7 +238,7 @@ namespace Content.Server.Hands.Systems
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
+                var splitStack = _stackSystem.Split(throwEnt.Uid, 1, playerEnt.Transform.Coordinates, stack);
 
                 if (splitStack == null)
                     return false;
