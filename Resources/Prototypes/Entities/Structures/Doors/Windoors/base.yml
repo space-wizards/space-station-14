@@ -39,7 +39,7 @@
   - type: ApcPowerReceiver
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Glass
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:

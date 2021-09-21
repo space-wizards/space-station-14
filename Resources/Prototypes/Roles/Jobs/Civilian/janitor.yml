@@ -10,7 +10,7 @@
   - Janitor
   - Maintenance
   special:
-    !type:JanitorSpecial
+  - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: RevolverInspector
 

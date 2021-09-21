@@ -647,7 +647,7 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(HBoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
                 {
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),

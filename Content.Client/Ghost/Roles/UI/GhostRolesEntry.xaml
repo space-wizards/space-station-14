@@ -1,6 +1,5 @@
-<BoxContainer Orientation="Vertical"
-    xmlns="https://spacestation14.io">
-
+<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical">
     <RichTextLabel Name="Title" />
     <BoxContainer Orientation="Horizontal" SeparationOverride="10">
         <RichTextLabel Name="Description" HorizontalExpand="True" />

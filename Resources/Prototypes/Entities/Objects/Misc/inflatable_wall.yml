@@ -22,7 +22,7 @@
       - SmallImpassable
   - type: Damageable
     damageContainer: Inorganic
-    resistanceSet: Inflatable
+    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:

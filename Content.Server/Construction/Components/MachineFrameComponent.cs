@@ -313,7 +313,7 @@ namespace Content.Server.Construction.Components
                         return true;
                     }
 
-                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, stack, needed, Owner.Transform.Coordinates);
+                    var splitStack = EntitySystem.Get<StackSystem>().Split(eventArgs.Using.Uid, needed, Owner.Transform.Coordinates, stack);
 
                     if (splitStack == null)
                         return false;

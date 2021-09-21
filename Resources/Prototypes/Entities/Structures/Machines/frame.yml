@@ -32,7 +32,7 @@
       node: missingWires
     - type: Damageable
       damageContainer: Inorganic
-      resistanceSet: Metallic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:
@@ -80,7 +80,7 @@
       node: machineFrame
     - type: Damageable
       damageContainer: Inorganic
-      resistanceSet: Metallic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
       - trigger:
