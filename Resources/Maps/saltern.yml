@@ -1359,8 +1359,7 @@ entities:
 - uid: 161
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 16.5,-1.5
+  - pos: 16.5,-1.5
     parent: 853
     type: Transform
   - visible: False
@@ -16270,8 +16269,7 @@ entities:
 - uid: 1105
   type: DisposalUnit
   components:
-  - rot: 3.141592653589793 rad
-    pos: 12.5,-3.5
+  - pos: 14.5,-2.5
     parent: 853
     type: Transform
   - containers:
@@ -48145,6 +48143,16 @@ entities:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 4832
+  type: DisposalUnit
+  components:
+  - pos: 12.5,-3.5
+    parent: 853
+    type: Transform
+  - containers:
+      DisposalUnit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4835
   type: CableHV
   components:
@@ -50349,17 +50357,6 @@ entities:
     type: Physics
   - containers:
       DisposalEntry: !type:Container
-        ents: []
-    type: ContainerContainer
-- uid: 5127
-  type: DisposalUnit
-  components:
-  - rot: 3.141592653589793 rad
-    pos: 14.5,-2.5
-    parent: 853
-    type: Transform
-  - containers:
-      DisposalUnit: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 5128
