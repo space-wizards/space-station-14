@@ -1,5 +1,0 @@
-author: Zumorica
-changes:
-  - type: Tweak # One of the following: Add, Remove, Tweak, Fix
-    message: Dice now show a popup with the number they rolled when used.
-    

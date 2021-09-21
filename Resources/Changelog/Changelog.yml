@@ -2039,3 +2039,8 @@ Entries:
     type: Fix}
   id: 364
   time: '2021-09-21T04:50:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
+  id: 365
+  time: '2021-09-21T15:05:28.382048+00:00'
