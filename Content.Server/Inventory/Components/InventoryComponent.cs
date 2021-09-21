@@ -266,7 +266,7 @@ namespace Content.Server.Inventory.Components
 
             // TODO: Make clothing component not inherit ItemComponent, for fuck's sake.
             // TODO: Make clothing component not required for playing a sound on equip... Move it to its own component.
-            if (item is ClothingComponent { EquipSound: {} equipSound })
+            if (mobCheck && item is ClothingComponent { EquipSound: {} equipSound })
             {
                 SoundSystem.Play(Filter.Pvs(Owner), equipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }
