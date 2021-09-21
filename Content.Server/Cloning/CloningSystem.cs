@@ -21,7 +21,6 @@ namespace Content.Server.Cloning
         public readonly Dictionary<Mind.Mind, int> MindToId = new();
         public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
         private int _nextAllocatedMindId = 0;
-        private float _quickAndDirtyUserUpdatePreventerTimer = 0.0f;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()

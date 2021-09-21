@@ -43,7 +43,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
+            if (Owner.TryGetComponent<SharedStackComponent>(out var stack) && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
             {
                 return true;
             }

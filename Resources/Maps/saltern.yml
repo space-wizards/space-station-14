@@ -818,6 +818,10 @@ entities:
     pos: 3.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -1376,6 +1380,10 @@ entities:
     pos: 34.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1387,6 +1395,10 @@ entities:
     pos: 24.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1409,6 +1421,10 @@ entities:
     pos: 12.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1420,6 +1436,10 @@ entities:
     pos: 2.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1431,6 +1451,10 @@ entities:
     pos: 2.5,11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1442,6 +1466,10 @@ entities:
     pos: -10.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1453,6 +1481,10 @@ entities:
     pos: -17.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1475,6 +1507,10 @@ entities:
     pos: -27.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1486,6 +1522,10 @@ entities:
     pos: -28.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1497,6 +1537,10 @@ entities:
     pos: -22.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1508,6 +1552,10 @@ entities:
     pos: -12.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1519,6 +1567,10 @@ entities:
     pos: 0.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1530,6 +1582,10 @@ entities:
     pos: 2.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1541,6 +1597,10 @@ entities:
     pos: 3.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -1563,6 +1623,10 @@ entities:
     pos: -17.5,-13.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1574,6 +1638,10 @@ entities:
     pos: -17.5,-12.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1585,6 +1653,10 @@ entities:
     pos: -17.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1596,6 +1668,10 @@ entities:
     pos: -17.5,-22.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -1603,8 +1679,7 @@ entities:
 - uid: 184
   type: DisposalUnit
   components:
-  - rot: 4.71238902409608 rad
-    pos: -17.5,-22.5
+  - pos: -17.5,-22.5
     parent: 853
     type: Transform
   - containers:
@@ -1629,6 +1704,10 @@ entities:
     pos: -28.5,5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1651,6 +1730,10 @@ entities:
     pos: -28.5,7.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1662,6 +1745,10 @@ entities:
     pos: -28.5,8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1673,6 +1760,10 @@ entities:
     pos: -28.5,9.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1704,6 +1795,10 @@ entities:
     pos: -8.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -1726,6 +1821,10 @@ entities:
     pos: 0.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1737,6 +1836,10 @@ entities:
     pos: -0.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1748,6 +1851,10 @@ entities:
     pos: -1.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1759,6 +1866,10 @@ entities:
     pos: -2.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1770,6 +1881,10 @@ entities:
     pos: -3.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1792,6 +1907,10 @@ entities:
     pos: -5.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -1814,6 +1933,10 @@ entities:
     pos: -17.5,-17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1825,6 +1948,10 @@ entities:
     pos: 4.5,11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1847,6 +1974,10 @@ entities:
     pos: 6.5,11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -1868,6 +1999,10 @@ entities:
     pos: -17.5,-18.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1879,6 +2014,10 @@ entities:
     pos: 24.5,5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1912,6 +2051,10 @@ entities:
     pos: 24.5,8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -1958,6 +2101,10 @@ entities:
     pos: -17.5,-19.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1975,6 +2122,10 @@ entities:
     pos: -17.5,-20.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -1997,6 +2148,10 @@ entities:
     pos: 34.5,0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2008,6 +2163,10 @@ entities:
     pos: 34.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2019,6 +2178,10 @@ entities:
     pos: 34.5,-1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2030,6 +2193,10 @@ entities:
     pos: 34.5,-2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2041,6 +2208,10 @@ entities:
     pos: 34.5,-3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2052,6 +2223,10 @@ entities:
     pos: 34.5,-4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -2073,6 +2248,10 @@ entities:
     pos: 30.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2084,6 +2263,10 @@ entities:
     pos: 36.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2095,6 +2278,10 @@ entities:
     pos: 35.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2106,6 +2293,10 @@ entities:
     pos: 34.5,2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2117,6 +2308,10 @@ entities:
     pos: 33.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2128,6 +2323,10 @@ entities:
     pos: 32.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2139,6 +2338,10 @@ entities:
     pos: 31.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2150,6 +2353,10 @@ entities:
     pos: 37.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -2161,6 +2368,10 @@ entities:
     pos: 37.5,4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2172,6 +2383,10 @@ entities:
     pos: 37.5,5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2183,6 +2398,10 @@ entities:
     pos: 37.5,6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -2205,6 +2424,10 @@ entities:
     pos: 2.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -2216,6 +2439,10 @@ entities:
     pos: 2.5,5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2227,6 +2454,10 @@ entities:
     pos: 2.5,6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2238,6 +2469,10 @@ entities:
     pos: 2.5,7.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2249,6 +2484,10 @@ entities:
     pos: 2.5,8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2260,6 +2499,10 @@ entities:
     pos: 2.5,9.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2271,6 +2514,10 @@ entities:
     pos: 2.5,10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2282,6 +2529,10 @@ entities:
     pos: 3.5,11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2293,6 +2544,10 @@ entities:
     pos: 2.5,12.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2304,6 +2559,10 @@ entities:
     pos: 2.5,13.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2315,6 +2574,10 @@ entities:
     pos: 2.5,14.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2326,6 +2589,10 @@ entities:
     pos: 2.5,15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2337,6 +2604,10 @@ entities:
     pos: 2.5,16.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2348,6 +2619,10 @@ entities:
     pos: 1.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2359,6 +2634,10 @@ entities:
     pos: 2.5,18.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2370,6 +2649,10 @@ entities:
     pos: 2.5,19.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2381,6 +2664,10 @@ entities:
     pos: 2.5,20.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2392,6 +2679,10 @@ entities:
     pos: 2.5,21.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2403,6 +2694,10 @@ entities:
     pos: 2.5,22.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2414,6 +2709,10 @@ entities:
     pos: 2.5,23.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2425,6 +2724,10 @@ entities:
     pos: 2.5,24.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2436,6 +2739,10 @@ entities:
     pos: 2.5,25.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2447,6 +2754,10 @@ entities:
     pos: 2.5,26.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2458,6 +2769,10 @@ entities:
     pos: 2.5,27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2476,6 +2791,10 @@ entities:
     pos: 2.5,28.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2487,6 +2806,10 @@ entities:
     pos: -17.5,-21.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2498,6 +2821,10 @@ entities:
     pos: 1.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2509,6 +2836,10 @@ entities:
     pos: 0.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2520,6 +2851,10 @@ entities:
     pos: -0.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2531,6 +2866,10 @@ entities:
     pos: -1.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2542,6 +2881,10 @@ entities:
     pos: -2.5,29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -2574,6 +2917,10 @@ entities:
     pos: 3.5,-8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2585,6 +2932,10 @@ entities:
     pos: 3.5,-7.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2596,6 +2947,10 @@ entities:
     pos: 3.5,-6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2607,6 +2962,10 @@ entities:
     pos: 3.5,-5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2618,6 +2977,10 @@ entities:
     pos: 3.5,-4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2629,6 +2992,10 @@ entities:
     pos: 3.5,-3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2640,6 +3007,10 @@ entities:
     pos: 3.5,-2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2651,6 +3022,10 @@ entities:
     pos: 3.5,-1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2662,6 +3037,10 @@ entities:
     pos: 3.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2673,6 +3052,10 @@ entities:
     pos: 3.5,0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2684,6 +3067,10 @@ entities:
     pos: 3.5,1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2695,6 +3082,10 @@ entities:
     pos: 3.5,2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2706,6 +3097,10 @@ entities:
     pos: 3.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2713,8 +3108,7 @@ entities:
 - uid: 287
   type: CableHV
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-20.5
+  - pos: 3.5,-20.5
     parent: 853
     type: Transform
   - visible: False
@@ -2739,6 +3133,10 @@ entities:
     pos: 6.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2750,6 +3148,10 @@ entities:
     pos: 7.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2761,6 +3163,10 @@ entities:
     pos: 8.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2772,6 +3178,10 @@ entities:
     pos: 4.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2783,6 +3193,10 @@ entities:
     pos: 9.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2794,6 +3208,10 @@ entities:
     pos: 10.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2805,6 +3223,10 @@ entities:
     pos: 11.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -2837,6 +3259,10 @@ entities:
     pos: 12.5,1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2848,6 +3274,10 @@ entities:
     pos: 12.5,0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2870,6 +3300,10 @@ entities:
     pos: 13.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2901,6 +3335,10 @@ entities:
     pos: 5.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2912,6 +3350,10 @@ entities:
     pos: 6.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2923,6 +3365,10 @@ entities:
     pos: 7.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2934,6 +3380,10 @@ entities:
     pos: 8.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2945,6 +3395,10 @@ entities:
     pos: 9.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2956,6 +3410,10 @@ entities:
     pos: 10.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2967,6 +3425,10 @@ entities:
     pos: 11.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -2989,6 +3451,10 @@ entities:
     pos: 13.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3000,6 +3466,10 @@ entities:
     pos: 14.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3011,6 +3481,10 @@ entities:
     pos: 15.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3022,6 +3496,10 @@ entities:
     pos: 16.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3033,6 +3511,10 @@ entities:
     pos: 17.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3044,6 +3526,10 @@ entities:
     pos: 18.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3055,6 +3541,10 @@ entities:
     pos: 19.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3066,6 +3556,10 @@ entities:
     pos: 20.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3077,6 +3571,10 @@ entities:
     pos: 21.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3088,6 +3586,10 @@ entities:
     pos: 22.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3099,6 +3601,10 @@ entities:
     pos: 23.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3110,6 +3616,10 @@ entities:
     pos: 24.5,4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3129,6 +3639,10 @@ entities:
     pos: 26.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3140,6 +3654,10 @@ entities:
     pos: 27.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3151,6 +3669,10 @@ entities:
     pos: 28.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3162,6 +3684,10 @@ entities:
     pos: 29.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3173,6 +3699,10 @@ entities:
     pos: 4.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3184,6 +3714,10 @@ entities:
     pos: 3.5,-9.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3195,6 +3729,10 @@ entities:
     pos: 2.5,4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3217,6 +3755,10 @@ entities:
     pos: 0.5,1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -3250,6 +3792,10 @@ entities:
     pos: -27.5,-8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -3261,6 +3807,10 @@ entities:
     pos: -21.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3283,6 +3833,10 @@ entities:
     pos: -12.5,1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -3294,6 +3848,10 @@ entities:
     pos: -22.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3327,6 +3885,10 @@ entities:
     pos: -32.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -3338,6 +3900,10 @@ entities:
     pos: -22.5,4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3349,6 +3915,10 @@ entities:
     pos: -22.5,5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3360,6 +3930,10 @@ entities:
     pos: -22.5,6.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -3382,6 +3956,10 @@ entities:
     pos: -7.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3393,6 +3971,10 @@ entities:
     pos: -6.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3404,6 +3986,10 @@ entities:
     pos: -5.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3415,6 +4001,10 @@ entities:
     pos: -4.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3426,6 +4016,10 @@ entities:
     pos: -3.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3437,6 +4031,10 @@ entities:
     pos: -2.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3448,6 +4046,10 @@ entities:
     pos: -1.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3459,6 +4061,10 @@ entities:
     pos: -0.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3481,6 +4087,10 @@ entities:
     pos: 1.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3492,6 +4102,10 @@ entities:
     pos: -8.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3503,6 +4117,10 @@ entities:
     pos: -9.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3514,6 +4132,10 @@ entities:
     pos: -10.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3525,6 +4147,10 @@ entities:
     pos: -11.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3547,6 +4173,10 @@ entities:
     pos: -13.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3558,6 +4188,10 @@ entities:
     pos: -14.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3569,6 +4203,10 @@ entities:
     pos: -15.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3580,6 +4218,10 @@ entities:
     pos: -16.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3591,6 +4233,10 @@ entities:
     pos: -17.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3602,6 +4248,10 @@ entities:
     pos: -18.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3613,6 +4263,10 @@ entities:
     pos: -19.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3624,6 +4278,10 @@ entities:
     pos: -20.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3635,6 +4293,10 @@ entities:
     pos: -21.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3656,6 +4318,10 @@ entities:
     pos: -23.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3667,6 +4333,10 @@ entities:
     pos: -24.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3678,6 +4348,10 @@ entities:
     pos: -25.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3689,6 +4363,10 @@ entities:
     pos: -26.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3700,6 +4378,10 @@ entities:
     pos: -27.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3711,6 +4393,10 @@ entities:
     pos: -28.5,4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3722,6 +4408,10 @@ entities:
     pos: -29.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3733,6 +4423,10 @@ entities:
     pos: -30.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3744,6 +4438,10 @@ entities:
     pos: -31.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3755,6 +4453,10 @@ entities:
     pos: -32.5,2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3788,6 +4490,10 @@ entities:
     pos: -32.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3799,6 +4505,10 @@ entities:
     pos: -32.5,-1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3810,6 +4520,10 @@ entities:
     pos: -32.5,-2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3821,6 +4535,10 @@ entities:
     pos: -32.5,-3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3832,6 +4550,10 @@ entities:
     pos: -32.5,-4.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3843,6 +4565,10 @@ entities:
     pos: -32.5,-5.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3865,6 +4591,10 @@ entities:
     pos: -32.5,-7.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3876,6 +4606,10 @@ entities:
     pos: -32.5,-8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3887,6 +4621,10 @@ entities:
     pos: -32.5,-9.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3898,6 +4636,10 @@ entities:
     pos: -32.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -3909,6 +4651,10 @@ entities:
     pos: -31.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3920,6 +4666,10 @@ entities:
     pos: -30.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3931,6 +4681,10 @@ entities:
     pos: -29.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3942,6 +4696,10 @@ entities:
     pos: -28.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3963,6 +4721,10 @@ entities:
     pos: -26.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3974,6 +4736,10 @@ entities:
     pos: -25.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -3985,6 +4751,10 @@ entities:
     pos: -24.5,-10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -5993,8 +6763,7 @@ entities:
 - uid: 638
   type: CableHV
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-23.5
+  - pos: 3.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -6558,8 +7327,7 @@ entities:
 - uid: 703
   type: CableHV
   components:
-  - rot: 3.141592653589793 rad
-    pos: 3.5,-21.5
+  - pos: 3.5,-21.5
     parent: 853
     type: Transform
   - visible: False
@@ -6977,6 +7745,10 @@ entities:
     pos: 12.5,-1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7812,6 +8584,10 @@ entities:
     pos: -29.5,11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -7823,6 +8599,10 @@ entities:
     pos: -29.5,10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -7834,6 +8614,10 @@ entities:
     pos: -28.5,10.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -7845,6 +8629,10 @@ entities:
     pos: -8.5,-14.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -7856,6 +8644,10 @@ entities:
     pos: -7.5,-14.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7878,6 +8670,10 @@ entities:
     pos: -5.5,-14.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -7900,6 +8696,10 @@ entities:
     pos: -9.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7911,6 +8711,10 @@ entities:
     pos: -15.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7922,6 +8726,10 @@ entities:
     pos: -13.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7933,6 +8741,10 @@ entities:
     pos: -14.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7944,6 +8756,10 @@ entities:
     pos: -12.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -7955,6 +8771,10 @@ entities:
     pos: -11.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -12130,42 +12950,6 @@ entities:
     fixtures:
     - shape: !type:PolygonShape
         vertices:
-        - 0,-16
-        - 0,0
-        - -16,0
-        - -16,-16
-      id: grid_chunk--1--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,0
-        - 0,16
-        - -16,16
-        - -16,0
-      id: grid_chunk--1-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,-16
-        - 16,0
-        - 0,0
-        - 0,-16
-      id: grid_chunk-0--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-    - shape: !type:PolygonShape
-        vertices:
         - 16,0
         - 16,16
         - 0,16
@@ -12178,11 +12962,11 @@ entities:
       mass: 256
     - shape: !type:PolygonShape
         vertices:
-        - 32,0
-        - 32,16
-        - 16,16
-        - 16,0
-      id: grid_chunk-1-0
+        - 0,-16
+        - 0,0
+        - -16,0
+        - -16,-16
+      id: grid_chunk--16--16
       mask:
       - MapGrid
       layer:
@@ -12190,23 +12974,119 @@ entities:
       mass: 256
     - shape: !type:PolygonShape
         vertices:
-        - 16,16
-        - 16,32
-        - 0,32
+        - 0,0
         - 0,16
-      id: grid_chunk-0-1
+        - -16,16
+        - -16,0
+      id: grid_chunk--16-0
       mask:
       - MapGrid
       layer:
       - MapGrid
       mass: 256
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-16
+        - 16,0
+        - 0,0
+        - 0,-16
+      id: grid_chunk-0--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 256
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,0
+        - 32,15
+        - 16,15
+        - 16,0
+      id: grid_chunk-16-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 240
+    - shape: !type:PolygonShape
+        vertices:
+        - 18,15
+        - 18,16
+        - 16,16
+        - 16,15
+      id: grid_chunk-16-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,15
+        - 32,16
+        - 30,16
+        - 30,15
+      id: grid_chunk-30-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,16
+        - 16,17
+        - 0,17
+        - 0,16
+      id: grid_chunk-0-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 16
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,17
+        - 15,26
+        - 0,26
+        - 0,17
+      id: grid_chunk-0-17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 135
+    - shape: !type:PolygonShape
+        vertices:
+        - 14,26
+        - 14,28
+        - 0,28
+        - 0,26
+      id: grid_chunk-0-26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+    - shape: !type:PolygonShape
+        vertices:
+        - 11,28
+        - 11,32
+        - 0,32
+        - 0,28
+      id: grid_chunk-0-28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 44
     - shape: !type:PolygonShape
         vertices:
         - -16,0
         - -16,16
         - -32,16
         - -32,0
-      id: grid_chunk--2-0
+      id: grid_chunk--32-0
       mask:
       - MapGrid
       layer:
@@ -12214,35 +13094,71 @@ entities:
       mass: 256
     - shape: !type:PolygonShape
         vertices:
-        - 32,-16
+        - 29,-16
+        - 29,-9
+        - 16,-9
+        - 16,-16
+      id: grid_chunk-16--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 91
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,-9
         - 32,0
         - 16,0
-        - 16,-16
-      id: grid_chunk-1--1
+        - 16,-9
+      id: grid_chunk-16--9
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 144
     - shape: !type:PolygonShape
         vertices:
-        - 16,-32
-        - 16,-16
-        - 0,-16
-        - 0,-32
-      id: grid_chunk-0--2
+        - 14,-32
+        - 14,-29
+        - 1,-29
+        - 1,-32
+      id: grid_chunk-1--32
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 39
+    - shape: !type:PolygonShape
+        vertices:
+        - 14,-29
+        - 14,-27
+        - 0,-27
+        - 0,-29
+      id: grid_chunk-0--29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,-27
+        - 16,-16
+        - 0,-16
+        - 0,-27
+      id: grid_chunk-0--27
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 176
     - shape: !type:PolygonShape
         vertices:
         - 29,-27
         - 29,-16
         - 16,-16
         - 16,-27
-      id: grid_chunk-1--2
+      id: grid_chunk-16--27
       mask:
       - MapGrid
       layer:
@@ -12251,34 +13167,94 @@ entities:
     - shape: !type:PolygonShape
         vertices:
         - 0,16
-        - 0,32
-        - -16,32
+        - 0,26
+        - -16,26
         - -16,16
-      id: grid_chunk--1-1
+      id: grid_chunk--16-16
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 160
+    - shape: !type:PolygonShape
+        vertices:
+        - -6,26
+        - -6,27
+        - -16,27
+        - -16,26
+      id: grid_chunk--16-26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 10
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,26
+        - 0,32
+        - -4,32
+        - -4,26
+      id: grid_chunk--4-26
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,16
+        - -16,22
+        - -28,22
+        - -28,16
+      id: grid_chunk--28-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 72
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,22
+        - -16,27
+        - -20,27
+        - -20,22
+      id: grid_chunk--20-22
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 20
     - shape: !type:PolygonShape
         vertices:
         - 0,32
-        - 0,34
-        - -3,34
+        - 0,33
+        - -3,33
         - -3,32
-      id: grid_chunk--1-2
+      id: grid_chunk--3-32
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 6
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,33
+        - 0,34
+        - -2,34
+        - -2,33
+      id: grid_chunk--2-33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
     - shape: !type:PolygonShape
         vertices:
         - 18,16
         - 18,17
         - 16,17
         - 16,16
-      id: grid_chunk-1-1
+      id: grid_chunk-16-16
       mask:
       - MapGrid
       layer:
@@ -12287,58 +13263,34 @@ entities:
     - shape: !type:PolygonShape
         vertices:
         - 10,32
-        - 10,34
-        - 0,34
+        - 10,33
+        - 0,33
         - 0,32
-      id: grid_chunk-0-2
+      id: grid_chunk-0-32
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 20
+      mass: 10
+    - shape: !type:PolygonShape
+        vertices:
+        - 9,33
+        - 9,34
+        - 0,34
+        - 0,33
+      id: grid_chunk-0-33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 9
     - shape: !type:PolygonShape
         vertices:
         - 48,0
-        - 48,16
-        - 32,16
-        - 32,0
-      id: grid_chunk-2-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-    - shape: !type:PolygonShape
-        vertices:
-        - 52,0
-        - 52,15
         - 48,15
-        - 48,0
-      id: grid_chunk-3-0
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 60
-    - shape: !type:PolygonShape
-        vertices:
-        - 48,-16
-        - 48,0
+        - 32,15
         - 32,0
-        - 32,-16
-      id: grid_chunk-2--1
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 256
-    - shape: !type:PolygonShape
-        vertices:
-        - 0,-31
-        - 0,-16
-        - -16,-16
-        - -16,-31
-      id: grid_chunk--1--2
+      id: grid_chunk-32-0
       mask:
       - MapGrid
       layer:
@@ -12346,124 +13298,1000 @@ entities:
       mass: 240
     - shape: !type:PolygonShape
         vertices:
+        - 37,15
+        - 37,16
+        - 32,16
+        - 32,15
+      id: grid_chunk-32-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 5
+    - shape: !type:PolygonShape
+        vertices:
+        - 52,0
+        - 52,15
+        - 48,15
+        - 48,0
+      id: grid_chunk-48-0
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 60
+    - shape: !type:PolygonShape
+        vertices:
+        - 44,-16
+        - 44,-15
+        - 43,-15
+        - 43,-16
+      id: grid_chunk-43--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 47,-16
+        - 47,-15
+        - 46,-15
+        - 46,-16
+      id: grid_chunk-46--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-15
+        - 48,-8
+        - 43,-8
+        - 43,-15
+      id: grid_chunk-43--15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 35
+    - shape: !type:PolygonShape
+        vertices:
+        - 40,-9
+        - 40,-6
+        - 32,-6
+        - 32,-9
+      id: grid_chunk-32--9
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-8
+        - 48,-1
+        - 46,-1
+        - 46,-8
+      id: grid_chunk-46--8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 14
+    - shape: !type:PolygonShape
+        vertices:
+        - 45,-6
+        - 45,0
+        - 32,0
+        - 32,-6
+      id: grid_chunk-32--6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 78
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-1
+        - 48,0
+        - 47,0
+        - 47,-1
+      id: grid_chunk-47--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - -6,-31
+        - -6,-29
+        - -11,-29
+        - -11,-31
+      id: grid_chunk--11--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 10
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-29
+        - 0,-28
+        - -13,-28
+        - -13,-29
+      id: grid_chunk--13--29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 13
+    - shape: !type:PolygonShape
+        vertices:
+        - 0,-28
+        - 0,-16
+        - -16,-16
         - -16,-28
+      id: grid_chunk--16--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 192
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-28
+        - -16,-17
+        - -19,-17
+        - -19,-28
+      id: grid_chunk--19--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 33
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-17
         - -16,-16
         - -26,-16
-        - -26,-28
-      id: grid_chunk--2--2
+        - -26,-17
+      id: grid_chunk--26--17
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 120
+      mass: 10
     - shape: !type:PolygonShape
         vertices:
         - -16,-16
-        - -16,0
-        - -32,0
-        - -32,-16
-      id: grid_chunk--2--1
+        - -16,-13
+        - -26,-13
+        - -26,-16
+      id: grid_chunk--26--16
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 256
+      mass: 30
+    - shape: !type:PolygonShape
+        vertices:
+        - -16,-13
+        - -16,0
+        - -32,0
+        - -32,-13
+      id: grid_chunk--32--13
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 208
     - shape: !type:PolygonShape
         vertices:
         - -32,0
-        - -32,16
-        - -42,16
-        - -42,0
-      id: grid_chunk--3-0
+        - -32,1
+        - -39,1
+        - -39,0
+      id: grid_chunk--39-0
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 160
+      mass: 7
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,1
+        - -32,3
+        - -41,3
+        - -41,1
+      id: grid_chunk--41-1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 18
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,3
+        - -32,6
+        - -42,6
+        - -42,3
+      id: grid_chunk--42-3
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 30
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,6
+        - -32,7
+        - -41,7
+        - -41,6
+      id: grid_chunk--41-6
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 9
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,7
+        - -32,10
+        - -42,10
+        - -42,7
+      id: grid_chunk--42-7
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 30
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,10
+        - -32,12
+        - -41,12
+        - -41,10
+      id: grid_chunk--41-10
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 18
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,12
+        - -32,16
+        - -34,16
+        - -34,12
+      id: grid_chunk--34-12
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
     - shape: !type:PolygonShape
         vertices:
         - -32,-13
-        - -32,0
-        - -40,0
-        - -40,-13
-      id: grid_chunk--3--1
+        - -32,-9
+        - -35,-9
+        - -35,-13
+      id: grid_chunk--35--13
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 104
+      mass: 12
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,-9
+        - -32,-5
+        - -39,-5
+        - -39,-9
+      id: grid_chunk--39--9
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 28
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,-5
+        - -32,-2
+        - -40,-2
+        - -40,-5
+      id: grid_chunk--40--5
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 24
+    - shape: !type:PolygonShape
+        vertices:
+        - -32,-2
+        - -32,0
+        - -39,0
+        - -39,-2
+      id: grid_chunk--39--2
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 14
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-16
+        - 50,-15
+        - 49,-15
+        - 49,-16
+      id: grid_chunk-49--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-16
+        - 53,-15
+        - 52,-15
+        - 52,-16
+      id: grid_chunk-52--16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
     - shape: !type:PolygonShape
         vertices:
         - 56,-16
-        - 56,0
-        - 48,0
-        - 48,-16
-      id: grid_chunk-3--1
+        - 56,-15
+        - 55,-15
+        - 55,-16
+      id: grid_chunk-55--16
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 128
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 56,-15
+        - 56,-8
+        - 48,-8
+        - 48,-15
+      id: grid_chunk-48--15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 56
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-8
+        - 53,-1
+        - 48,-1
+        - 48,-8
+      id: grid_chunk-48--8
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 35
+    - shape: !type:PolygonShape
+        vertices:
+        - 52,-1
+        - 52,0
+        - 48,0
+        - 48,-1
+      id: grid_chunk-48--1
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 4
     - shape: !type:PolygonShape
         vertices:
         - 48,-32
-        - 48,-16
-        - 40,-16
-        - 40,-32
-      id: grid_chunk-2--2
+        - 48,-31
+        - 42,-31
+        - 42,-32
+      id: grid_chunk-42--32
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 128
+      mass: 6
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-32
+        - 41,-29
+        - 40,-29
+        - 40,-32
+      id: grid_chunk-40--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-31
+        - 43,-29
+        - 42,-29
+        - 42,-31
+      id: grid_chunk-42--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,-31
+        - 46,-29
+        - 45,-29
+        - 45,-31
+      id: grid_chunk-45--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-29
+        - 48,-28
+        - 40,-28
+        - 40,-29
+      id: grid_chunk-40--29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-28
+        - 41,-25
+        - 40,-25
+        - 40,-28
+      id: grid_chunk-40--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-28
+        - 43,-25
+        - 42,-25
+        - 42,-28
+      id: grid_chunk-42--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,-28
+        - 46,-25
+        - 45,-25
+        - 45,-28
+      id: grid_chunk-45--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-25
+        - 48,-24
+        - 40,-24
+        - 40,-25
+      id: grid_chunk-40--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-24
+        - 41,-21
+        - 40,-21
+        - 40,-24
+      id: grid_chunk-40--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-24
+        - 43,-21
+        - 42,-21
+        - 42,-24
+      id: grid_chunk-42--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,-24
+        - 46,-21
+        - 45,-21
+        - 45,-24
+      id: grid_chunk-45--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-21
+        - 48,-20
+        - 40,-20
+        - 40,-21
+      id: grid_chunk-40--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+    - shape: !type:PolygonShape
+        vertices:
+        - 41,-20
+        - 41,-18
+        - 40,-18
+        - 40,-20
+      id: grid_chunk-40--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 43,-20
+        - 43,-18
+        - 42,-18
+        - 42,-20
+      id: grid_chunk-42--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,-20
+        - 46,-18
+        - 45,-18
+        - 45,-20
+      id: grid_chunk-45--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 48,-18
+        - 48,-17
+        - 40,-17
+        - 40,-18
+      id: grid_chunk-40--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 8
+    - shape: !type:PolygonShape
+        vertices:
+        - 44,-17
+        - 44,-16
+        - 43,-16
+        - 43,-17
+      id: grid_chunk-43--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 47,-17
+        - 47,-16
+        - 46,-16
+        - 46,-17
+      id: grid_chunk-46--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 57,-32
+        - 57,-31
+        - 48,-31
+        - 48,-32
+      id: grid_chunk-48--32
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 9
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-31
+        - 50,-29
+        - 49,-29
+        - 49,-31
+      id: grid_chunk-49--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 54,-31
+        - 54,-29
+        - 53,-29
+        - 53,-31
+      id: grid_chunk-53--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 57,-31
+        - 57,-29
+        - 56,-29
+        - 56,-31
+      id: grid_chunk-56--31
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
     - shape: !type:PolygonShape
         vertices:
         - 59,-32
-        - 59,-16
-        - 48,-16
-        - 48,-32
-      id: grid_chunk-3--2
+        - 59,-29
+        - 58,-29
+        - 58,-32
+      id: grid_chunk-58--32
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 176
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-29
+        - 59,-28
+        - 48,-28
+        - 48,-29
+      id: grid_chunk-48--29
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-28
+        - 50,-25
+        - 49,-25
+        - 49,-28
+      id: grid_chunk-49--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 54,-28
+        - 54,-25
+        - 53,-25
+        - 53,-28
+      id: grid_chunk-53--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 57,-28
+        - 57,-25
+        - 56,-25
+        - 56,-28
+      id: grid_chunk-56--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-28
+        - 59,-25
+        - 58,-25
+        - 58,-28
+      id: grid_chunk-58--28
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-25
+        - 59,-24
+        - 48,-24
+        - 48,-25
+      id: grid_chunk-48--25
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-24
+        - 50,-21
+        - 49,-21
+        - 49,-24
+      id: grid_chunk-49--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 54,-24
+        - 54,-21
+        - 53,-21
+        - 53,-24
+      id: grid_chunk-53--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 57,-24
+        - 57,-21
+        - 56,-21
+        - 56,-24
+      id: grid_chunk-56--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-24
+        - 59,-21
+        - 58,-21
+        - 58,-24
+      id: grid_chunk-58--24
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-21
+        - 59,-20
+        - 48,-20
+        - 48,-21
+      id: grid_chunk-48--21
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-20
+        - 50,-18
+        - 49,-18
+        - 49,-20
+      id: grid_chunk-49--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 54,-20
+        - 54,-18
+        - 53,-18
+        - 53,-20
+      id: grid_chunk-53--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 57,-20
+        - 57,-18
+        - 56,-18
+        - 56,-20
+      id: grid_chunk-56--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-20
+        - 59,-18
+        - 58,-18
+        - 58,-20
+      id: grid_chunk-58--20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 2
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-18
+        - 59,-17
+        - 48,-17
+        - 48,-18
+      id: grid_chunk-48--18
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-17
+        - 50,-16
+        - 49,-16
+        - 49,-17
+      id: grid_chunk-49--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 53,-17
+        - 53,-16
+        - 52,-16
+        - 52,-17
+      id: grid_chunk-52--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 56,-17
+        - 56,-16
+        - 55,-16
+        - 55,-17
+      id: grid_chunk-55--17
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
     - shape: !type:PolygonShape
         vertices:
         - 59,-34
+        - 59,-33
+        - 48,-33
+        - 48,-34
+      id: grid_chunk-48--34
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 11
+    - shape: !type:PolygonShape
+        vertices:
+        - 50,-33
+        - 50,-32
+        - 49,-32
+        - 49,-33
+      id: grid_chunk-49--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 54,-33
+        - 54,-32
+        - 53,-32
+        - 53,-33
+      id: grid_chunk-53--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 59,-33
         - 59,-32
-        - 48,-32
-        - 48,-34
-      id: grid_chunk-3--3
+        - 58,-32
+        - 58,-33
+      id: grid_chunk-58--33
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 22
+      mass: 1
     - shape: !type:PolygonShape
         vertices:
         - 48,-34
-        - 48,-32
-        - 40,-32
+        - 48,-33
+        - 40,-33
         - 40,-34
-      id: grid_chunk-2--3
+      id: grid_chunk-40--34
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 16
+      mass: 8
     - shape: !type:PolygonShape
         vertices:
-        - -16,16
-        - -16,27
-        - -28,27
-        - -28,16
-      id: grid_chunk--2-1
+        - 41,-33
+        - 41,-32
+        - 40,-32
+        - 40,-33
+      id: grid_chunk-40--33
       mask:
       - MapGrid
       layer:
       - MapGrid
-      mass: 132
+      mass: 1
+    - shape: !type:PolygonShape
+        vertices:
+        - 46,-33
+        - 46,-32
+        - 45,-32
+        - 45,-33
+      id: grid_chunk-45--33
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 1
     bodyType: Dynamic
     type: Physics
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -13351,8 +15179,7 @@ entities:
 - uid: 974
   type: PlushieSlime
   components:
-  - rot: 3.141592653589793 rad
-    pos: -9.151907,-25.740355
+  - pos: -9.117588,-25.708118
     parent: 853
     type: Transform
   - canCollide: False
@@ -13686,6 +15513,10 @@ entities:
     pos: 12.5,-2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -14428,6 +16259,10 @@ entities:
     pos: 12.5,-3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -21682,6 +23517,10 @@ entities:
     pos: 3.5,-13.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -21693,6 +23532,10 @@ entities:
     pos: 3.5,-12.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -21704,6 +23547,10 @@ entities:
     pos: 3.5,-11.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -22458,8 +24305,7 @@ entities:
 - uid: 2145
   type: CableApcExtension
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -8.5,8.5
+  - pos: -8.5,8.5
     parent: 853
     type: Transform
   - visible: False
@@ -24479,6 +26325,10 @@ entities:
     pos: -10.5,-17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -39338,6 +41188,10 @@ entities:
     pos: 25.5,3.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -41061,8 +42915,7 @@ entities:
 - uid: 4181
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 9.5,-26.5
+  - pos: 9.5,-26.5
     parent: 853
     type: Transform
 - uid: 4182
@@ -41786,29 +43639,25 @@ entities:
 - uid: 4275
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,-26.5
+  - pos: 10.5,-26.5
     parent: 853
     type: Transform
 - uid: 4276
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,-26.5
+  - pos: 8.5,-26.5
     parent: 853
     type: Transform
 - uid: 4277
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 10.5,-24.5
+  - pos: 10.5,-24.5
     parent: 853
     type: Transform
 - uid: 4278
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 9.5,-24.5
+  - pos: 9.5,-24.5
     parent: 853
     type: Transform
 - uid: 4279
@@ -45179,8 +47028,7 @@ entities:
 - uid: 4715
   type: Bookshelf
   components:
-  - rot: 3.141592653589793 rad
-    pos: 8.5,-24.5
+  - pos: 8.5,-24.5
     parent: 853
     type: Transform
 - uid: 4716
@@ -45496,6 +47344,10 @@ entities:
   - pos: 3.5,-21.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -45583,6 +47435,10 @@ entities:
   - pos: 3.5,-20.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -45624,8 +47480,7 @@ entities:
 - uid: 4770
   type: SpaceVillainArcadeComputerCircuitboard
   components:
-  - rot: 3.141592653589793 rad
-    pos: -9.558157,-25.271605
+  - pos: -9.628004,-25.280737
     parent: 853
     type: Transform
   - canCollide: False
@@ -45652,6 +47507,10 @@ entities:
   - pos: 3.5,-24.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -45662,6 +47521,10 @@ entities:
   - pos: 3.5,-23.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -45672,6 +47535,10 @@ entities:
   - pos: 3.5,-22.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -45759,8 +47626,7 @@ entities:
 - uid: 4785
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-23.5
+  - pos: 10.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -45770,8 +47636,7 @@ entities:
 - uid: 4786
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-24.5
+  - pos: 8.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -45781,8 +47646,7 @@ entities:
 - uid: 4787
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-24.5
+  - pos: 9.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -45792,8 +47656,7 @@ entities:
 - uid: 4788
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-25.5
+  - pos: 9.5,-29.5
     parent: 853
     type: Transform
   - visible: False
@@ -45803,8 +47666,7 @@ entities:
 - uid: 4789
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-25.5
+  - pos: 11.5,-29.5
     parent: 853
     type: Transform
   - visible: False
@@ -45814,8 +47676,7 @@ entities:
 - uid: 4790
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-26.5
+  - pos: 11.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -45825,8 +47686,7 @@ entities:
 - uid: 4791
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-26.5
+  - pos: 12.5,-23.5
     parent: 853
     type: Transform
   - visible: False
@@ -45847,8 +47707,7 @@ entities:
 - uid: 4793
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-27.5
+  - pos: 12.5,-24.5
     parent: 853
     type: Transform
   - visible: False
@@ -45876,8 +47735,7 @@ entities:
 - uid: 4796
   type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 11.5,-29.5
+  - pos: 12.5,-25.5
     parent: 853
     type: Transform
   - visible: False
@@ -45892,32 +47750,29 @@ entities:
     parent: 853
     type: Transform
 - uid: 4798
-  type: CableApcExtension
+  type: DisposalUnit
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 9.5,-29.5
+  - pos: 6.5,-30.5
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      DisposalUnit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4799
-  type: CableApcExtension
+  type: DisposalUnit
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-23.5
+  - pos: 12.5,-27.5
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
+  - containers:
+      DisposalUnit: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4800
-  type: CableApcExtension
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 11.5,-23.5
+  - pos: 3.5,-24.5
     parent: 853
     type: Transform
   - visible: False
@@ -45925,10 +47780,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4801
-  type: CableApcExtension
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 10.5,-23.5
+  - pos: 3.5,-26.5
     parent: 853
     type: Transform
   - visible: False
@@ -45936,10 +47790,9 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4802
-  type: CableApcExtension
+  type: CableHV
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 9.5,-23.5
+  - pos: 3.5,-25.5
     parent: 853
     type: Transform
   - visible: False
@@ -46013,16 +47866,15 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 4812
-  type: DisposalUnit
+  type: CableApcExtension
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 12.5,-27.5
+  - pos: 12.5,-26.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 4813
   type: DisposalTrunk
   components:
@@ -46030,6 +47882,10 @@ entities:
     pos: 12.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -46041,6 +47897,10 @@ entities:
     pos: 11.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46052,6 +47912,10 @@ entities:
     pos: 10.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46063,6 +47927,10 @@ entities:
     pos: 9.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46074,6 +47942,10 @@ entities:
     pos: 6.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
@@ -46085,6 +47957,10 @@ entities:
     pos: 6.5,-28.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46096,21 +47972,24 @@ entities:
     pos: 6.5,-29.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
 - uid: 4820
-  type: DisposalUnit
+  type: CableApcExtension
   components:
-  - rot: 3.141592653589793 rad
-    pos: 6.5,-30.5
+  - pos: 12.5,-27.5
     parent: 853
     type: Transform
-  - containers:
-      DisposalUnit: !type:Container
-        ents: []
-    type: ContainerContainer
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 4821
   type: DisposalTrunk
   components:
@@ -46118,6 +47997,10 @@ entities:
     pos: 6.5,-30.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -46129,6 +48012,10 @@ entities:
     pos: 8.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46140,6 +48027,10 @@ entities:
     pos: 7.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46162,6 +48053,10 @@ entities:
     pos: 4.5,-27.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46172,6 +48067,10 @@ entities:
   - pos: 3.5,-16.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46182,6 +48081,10 @@ entities:
   - pos: 3.5,-14.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46192,6 +48095,10 @@ entities:
   - pos: 3.5,-15.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46202,6 +48109,10 @@ entities:
   - pos: 3.5,-18.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46212,6 +48123,10 @@ entities:
   - pos: 3.5,-17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46222,40 +48137,14 @@ entities:
   - pos: 3.5,-19.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
     type: ContainerContainer
-- uid: 4832
-  type: CableHV
-  components:
-  - pos: 3.5,-24.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 4833
-  type: CableHV
-  components:
-  - pos: 3.5,-25.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 4834
-  type: CableHV
-  components:
-  - pos: 3.5,-26.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 4835
   type: CableHV
   components:
@@ -46282,6 +48171,10 @@ entities:
   - pos: 3.5,-26.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46292,6 +48185,10 @@ entities:
   - pos: 3.5,-25.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -46423,26 +48320,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 4855
-  type: CableApcExtension
-  components:
-  - pos: 8.5,-23.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
-- uid: 4856
-  type: CableApcExtension
-  components:
-  - pos: 7.5,-23.5
-    parent: 853
-    type: Transform
-  - visible: False
-    type: Sprite
-  - canCollide: False
-    type: Physics
 - uid: 4857
   type: SignLibrary
   components:
@@ -48466,6 +50343,10 @@ entities:
     pos: 14.5,-2.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalEntry: !type:Container
         ents: []
@@ -48488,6 +50369,10 @@ entities:
     pos: 14.5,-1.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalTransit: !type:Container
         ents: []
@@ -48498,6 +50383,10 @@ entities:
   - pos: 14.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalBend: !type:Container
         ents: []
@@ -48509,6 +50398,10 @@ entities:
     pos: 12.5,-0.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
   - containers:
       DisposalJunction: !type:Container
         ents: []
