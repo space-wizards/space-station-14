@@ -239,6 +239,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                     var otherPhysics = ComponentManager.GetComponent<IPhysBody>(uid);
 
+                    // TODO: Sloth, please save our souls!
                     if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))
                     {
                         flammable.Collided.Remove(otherUid);
