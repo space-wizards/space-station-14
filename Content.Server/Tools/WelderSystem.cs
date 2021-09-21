@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Tools.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Examine;
+using Content.Shared.Temperature;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
@@ -21,7 +22,13 @@ namespace Content.Server.Tools
             base.Initialize();
 
             SubscribeLocalEvent<WelderComponent, SolutionChangedEvent>(OnSolutionChange);
+            SubscribeLocalEvent<WelderComponent, IsHotEvent>(OnIsHotEvent);
             SubscribeLocalEvent<WelderComponent, ExaminedEvent>(OnExamine);
+        }
+
+        private void OnIsHotEvent(EntityUid uid, WelderComponent component, IsHotEvent args)
+        {
+            args.IsHot = component.WelderLit;
         }
 
         private void OnExamine(EntityUid uid, WelderComponent component, ExaminedEvent args)

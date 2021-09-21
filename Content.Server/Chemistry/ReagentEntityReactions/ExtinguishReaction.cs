@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -20,8 +21,9 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         {
             if (!entity.TryGetComponent(out FlammableComponent? flammable) || !_reagents.Contains(reagent.ID)) return;
 
-            flammable.Extinguish();
-            flammable.AdjustFireStacks(-1.5f);
+            var flammableSystem = EntitySystem.Get<FlammableSystem>();
+            flammableSystem.Extinguish(entity.Uid, flammable);
+            flammableSystem.AdjustFireStacks(entity.Uid, -1.5f, flammable);
         }
     }
 }

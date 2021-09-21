@@ -5,12 +5,12 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
+    // TODO: Kill this. With fire.
     /// <summary>
     /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
-    public class AtmosExposedComponent
-    : Component
+    public class AtmosExposedComponent : Component
     {
         public override string Name => "AtmosExposed";
 
@@ -19,9 +19,6 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent = null;
-
-        [ViewVariables]
-        [ComponentDependency] private readonly FlammableComponent? _flammableComponent = null;
 
         public void Update(GasMixture air, float frameDelta, AtmosphereSystem atmosphereSystem)
         {
@@ -35,8 +32,6 @@ namespace Content.Server.Atmos.Components
             }
 
             _barotraumaComponent?.Update(air.Pressure);
-
-            _flammableComponent?.Update(air);
         }
     }
 }
