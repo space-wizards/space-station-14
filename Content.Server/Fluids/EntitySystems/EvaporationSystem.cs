@@ -38,22 +38,33 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateEvaporation(EvaporationComponent evaporationComponent, float frameTime)
         {
             evaporationComponent.Accumulator += frameTime;
-            if (evaporationComponent.Accumulator >= evaporationComponent.EvaporateTime)
+
+            if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
+                return;
+
+            evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
+
+            var uid = evaporationComponent.Owner.Uid;
+            var solution = _solutionContainerSystem.GetSolution(uid, evaporationComponent.SolutionName);
+
+            if (evaporationComponent.EvaporationLimit >= solution.CurrentVolume)
             {
-                var uid = evaporationComponent.Owner.Uid;
-                var solution = _solutionContainerSystem.GetSolution(uid, evaporationComponent.SolutionName);
-                _solutionContainerSystem.SplitSolution(uid, solution,
-                    ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
-
-                RaiseLocalEvent(uid, new SolutionChangedEvent());
-
-                if (solution.CurrentVolume == 0)
-                {
-                    EntityManager.QueueDeleteEntity(uid);
-                }
-
-                evaporationComponent.Accumulator = 0;
+                ComponentManager.RemoveComponent<EvaporationComponent>(uid);
+                return;
             }
+
+
+            _solutionContainerSystem.SplitSolution(uid, solution,
+                ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
+
+            RaiseLocalEvent(uid, new SolutionChangedEvent());
+
+            if (solution.CurrentVolume == 0)
+            {
+                EntityManager.QueueDeleteEntity(uid);
+            }
+
+
         }
     }
 }
