@@ -45,7 +45,7 @@ namespace Content.Server.Explosion.Components
         }
 
         [DataField("cooldown")]
-        public float Cooldown { get; set; } = 2;
+        public float Cooldown { get; set; } = 10;
 
         /// <summary>
         /// If this proximity is triggered should we continually repeat it?
