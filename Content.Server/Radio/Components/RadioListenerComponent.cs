@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Content.Server.Radio.Components;
 using Content.Server.Radio.EntitySystems;
 using Content.Shared.Chat;
 using Content.Shared.Examine;
@@ -13,12 +12,10 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Headset
+namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IRadio))]
-    [ComponentReference(typeof(IListen))]
-    public class HeadsetComponent : Component, IListen, IRadio, IExamine
+    public class RadioListenerComponent : Component, IListen, IRadio, IExamine
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
 
@@ -35,23 +32,9 @@ namespace Content.Server.Headset
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
-        public int ListenRange { get; private set; }
+        public int ListenRange { get; private set; } = 1;
 
         public IReadOnlyList<int> Channels => _channels;
-
-        public bool RadioRequested { get; set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _radioSystem = EntitySystem.Get<RadioSystem>();
-        }
-
-        public bool CanListen(string message, IEntity source)
-        {
-            return RadioRequested;
-        }
 
         public void Receive(string message, int channel, IEntity source)
         {

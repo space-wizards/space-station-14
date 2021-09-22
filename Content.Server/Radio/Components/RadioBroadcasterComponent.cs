@@ -16,35 +16,21 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Radio.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IRadio))]
-    [ComponentReference(typeof(IListen))]
-    public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+    public class RadioBroadcasterComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         public override string Name => "Radio";
 
         private RadioSystem _radioSystem = default!;
 
-        private bool _radioOn;
+        public bool RadioOn = false;
+
         [DataField("channels")]
         private List<int> _channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
         private int BroadcastFrequency { get; set; } = 1459;
-
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("listenRange")] public int ListenRange { get; private set; } = 7;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool RadioOn
-        {
-            get => _radioOn;
-            private set
-            {
-                _radioOn = value;
-                Dirty();
-            }
-        }
 
         [ViewVariables] public IReadOnlyList<int> Channels => _channels;
 
@@ -53,8 +39,6 @@ namespace Content.Server.Radio.Components
             base.Initialize();
 
             _radioSystem = EntitySystem.Get<RadioSystem>();
-
-            RadioOn = false;
         }
 
         public void Speak(string message)

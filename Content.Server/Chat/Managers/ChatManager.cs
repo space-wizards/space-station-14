@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost.Components;
-using Content.Server.Headset;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.MoMMI;
