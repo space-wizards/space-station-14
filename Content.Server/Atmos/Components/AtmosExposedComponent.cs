@@ -17,11 +17,9 @@ namespace Content.Server.Atmos.Components
         [ViewVariables]
         [ComponentDependency] private readonly TemperatureComponent? _temperatureComponent = null;
 
-        [ViewVariables]
-        [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent = null;
-
         public void Update(GasMixture air, float frameDelta, AtmosphereSystem atmosphereSystem)
         {
+            // TODO: I'm coming for you next, TemperatureComponent... Fear me for I am death, destroyer of shitcode.
             if (_temperatureComponent != null)
             {
                 var temperatureDelta = air.Temperature - _temperatureComponent.CurrentTemperature;
@@ -30,8 +28,6 @@ namespace Content.Server.Atmos.Components
                 _temperatureComponent.ReceiveHeat(heat);
                 _temperatureComponent.Update();
             }
-
-            _barotraumaComponent?.Update(air.Pressure);
         }
     }
 }
