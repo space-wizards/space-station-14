@@ -30,6 +30,13 @@ namespace Content.Server.Explosion.Components
         [DataField("shape", required: true)]
         public IPhysShape Shape { get; set; } = default!;
 
+        /// <summary>
+        /// Whether the entity needs to be anchored for the proximity to work.
+        /// </summary>
+        [ViewVariables]
+        [DataField("requiresAnchored")]
+        public bool RequiresAnchored { get; set; } = true;
+
         [DataField("enabled")]
         public bool Enabled = true;
 
