@@ -52,6 +52,11 @@ namespace Content.Server.Singularity.EntitySystems
 
             // NOTE FROM THE FUTURE: The above decision caused particles to regularly miss the singularity once it was put on a cooldown.
             // Once HandleCollide actually does deletion, Update doesn't need to be run every frame anymore.
+
+            // Because singularity field generators do collide and *stop* the singularity, they should have deletion run on collision regardless for good behaviour.
+            // This also conveniently is what the code would more or less look like anyway if removing DestroyEntities.
+            // Keep in mind, though, *none of this will work unless the layers and masks are setup right.*
+            HandleDestroy(component, args.OtherFixture.Body.Owner);
         }
 
         public override void Update(float frameTime)
@@ -113,17 +118,22 @@ namespace Content.Server.Singularity.EntitySystems
 
         private bool CanDestroy(SharedSingularityComponent component, IEntity entity)
         {
-            return entity == component.Owner ||
+            if (entity == component.Owner ||
                    entity.HasComponent<IMapGridComponent>() ||
                    entity.HasComponent<GhostComponent>() ||
-                   entity.HasComponent<ContainmentFieldComponent>() ||
-                   entity.HasComponent<ContainmentFieldGeneratorComponent>();
+                   entity.HasComponent<ContainmentFieldComponent>())
+                return false;
+            // Don't bother checking if the field itself can repel for now, we still can't destroy it.
+            if (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var field))
+                if (field.CanRepell(component.Owner))
+                    return false;
+            return true;
         }
 
         private void HandleDestroy(ServerSingularityComponent component, IEntity entity)
         {
             // TODO: Need singuloimmune tag
-            if (CanDestroy(component, entity)) return;
+            if (!CanDestroy(component, entity)) return;
 
             // Singularity priority management / etc.
             if (entity.TryGetComponent<ServerSingularityComponent>(out var otherSingulo))
