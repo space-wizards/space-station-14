@@ -1,9 +1,8 @@
-using Content.Server.Flash;
 using Content.Shared.Flash;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 
-namespace Content.Client.Flash
+namespace Content.Server.Flash.Components
 {
     [ComponentReference(typeof(SharedFlashableComponent))]
     [RegisterComponent, Friend(typeof(FlashSystem))]

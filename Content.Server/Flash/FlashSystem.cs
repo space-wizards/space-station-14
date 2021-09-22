@@ -1,4 +1,3 @@
-using Content.Client.Flash;
 using Content.Server.Flash.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;

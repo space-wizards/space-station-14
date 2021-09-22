@@ -4,6 +4,8 @@ using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
+using System.Collections.Generic;
+using System.Threading;
 
 namespace Content.Server.Explosion.Components
 {
@@ -12,35 +14,43 @@ namespace Content.Server.Explosion.Components
     /// Raises a <see cref="TriggerEvent"/> whenever an entity collides with a fixture attached to the owner of this component.
     /// </summary>
     [RegisterComponent]
-    public class TriggerOnProximityComponent : Component
+    public sealed class TriggerOnProximityComponent : Component
     {
         public override string Name => "TriggerOnProximity";
-        public TimeSpan LastTrigger = TimeSpan.Zero;
+        public TimeSpan NextTrigger = TimeSpan.Zero;
         public const string FixtureID  = "trigger-on-proximity-fixture";
 
+        public HashSet<EntityUid> Colliding = new();
+
+        /// <summary>
+        /// Token that's used for the repeating proximity timer.
+        /// </summary>
+        public CancellationTokenSource? RepeatCancelTokenSource;
 
         [DataField("shape", required: true)]
         public IPhysShape Shape { get; set; } = default!;
 
         [DataField("enabled")]
         public bool Enabled = true;
-        
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool EnabledVV
         {
+            get => Enabled;
             set
             {
-                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value && Owner.Transform.Anchored);
-                Enabled = value;
+                if (Enabled == value) return;
+                EntitySystem.Get<TriggerSystem>().SetProximityFixture(Owner.Uid, this, value);
             }
-            get => Enabled;
         }
 
         [DataField("cooldown")]
-        public int Cooldown { get; set; } = 2;
+        public float Cooldown { get; set; } = 2;
 
+        /// <summary>
+        /// If this proximity is triggered should we continually repeat it?
+        /// </summary>
         [DataField("repeating")]
         internal bool Repeating = true;
-
     }
 }

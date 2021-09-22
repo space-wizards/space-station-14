@@ -1,4 +1,4 @@
-using Content.Server.Construction.Components;
+﻿using Content.Server.Construction.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -14,6 +14,9 @@ using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System;
+using System.Threading;
+using Robust.Shared.Log;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Explosion
 {
@@ -36,14 +39,15 @@ namespace Content.Server.Explosion
     public sealed class TriggerSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-
+        [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
         [Dependency] private readonly FlashSystem _flashSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(HandleCollide);
-            SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<TriggerOnCollideComponent, StartCollideEvent>(OnTriggerCollide);
+            SubscribeLocalEvent<TriggerOnProximityComponent, StartCollideEvent>(OnProximityStartCollide);
+            SubscribeLocalEvent<TriggerOnProximityComponent, EndCollideEvent>(OnProximityEndCollide);
 
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
@@ -51,25 +55,17 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
-            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentInit>(CheckEnable);
+            SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnStartup);
+            /*
             SubscribeLocalEvent<TriggerOnProximityComponent, UnanchoredEvent>(HandleAnchor);
             SubscribeLocalEvent<TriggerOnProximityComponent, AnchoredEvent>(HandleAnchor);
+            */
 
         }
 
-        private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, UnanchoredEvent args)
+        private void OnStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
         {
-            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
-        }
-
-        private void HandleAnchor(EntityUid uid, TriggerOnProximityComponent component, AnchoredEvent args)
-        {
-            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
-        }
-
-        private void CheckEnable(EntityUid uid, TriggerOnProximityComponent component, ComponentInit args)
-        {
-            SetProximityFixture(uid, component, component.Enabled && component.Owner.Transform.Anchored);
+            SetProximityFixture(uid, component, component.Enabled, true);
         }
 
         #region Explosions
@@ -102,11 +98,8 @@ namespace Content.Server.Explosion
         #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
-            if (component.Flashed) return;
-
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User?.Uid, component.Range, component.Duration * 1000f);
-            component.Flashed = true;
         }
         #endregion
 
@@ -121,22 +114,87 @@ namespace Content.Server.Explosion
             EntityManager.QueueDeleteEntity(uid);
         }
 
-        private void HandleCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
+        private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)
         {
             Trigger(component.Owner);
         }
 
-        private void HandleCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
+        #region Proximity
+
+        private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, StartCollideEvent args)
         {
+            if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID) return;
+
             var curTime = _gameTiming.CurTime;
-            if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID)
-                return;
-            if (component.LastTrigger + TimeSpan.FromSeconds(component.Cooldown) >= curTime || !component.Repeating)
-                return;
+
+            if (component.NextTrigger > curTime ||
+                !component.Colliding.Add(uid)) return;
 
             Trigger(component.Owner);
-            component.LastTrigger = curTime;
+            component.NextTrigger = TimeSpan.FromSeconds(curTime.TotalSeconds + component.Cooldown);
+
+            SetRepeating(uid, component);
         }
+
+        private void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
+        {
+            component.Colliding.Remove(uid);
+
+            if (component.Colliding.Count == 0)
+            {
+                component.RepeatCancelTokenSource?.Cancel();
+            }
+        }
+
+        private void SetRepeating(EntityUid uid, TriggerOnProximityComponent component)
+        {
+            // Setup the proximity timer to re-trigger in cooldown seconds. Also pass in a token in case we need to cancel it.
+            component.RepeatCancelTokenSource?.Cancel();
+
+            if (!component.Repeating || !(component.Cooldown > 0f)) return;
+
+            component.RepeatCancelTokenSource = new CancellationTokenSource();
+
+            Timer.Spawn((int) (component.Cooldown * 1000), () =>
+            {
+                if (component.Colliding.Count == 0 ||
+                    !EntityManager.TryGetEntity(uid, out var entity) ||
+                    component.Deleted) return;
+
+                Trigger(entity);
+                SetRepeating(uid, component);
+            }, component.RepeatCancelTokenSource.Token);
+        }
+
+        public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool value, bool force = false)
+        {
+            if (component.Enabled == value && !force ||
+                !ComponentManager.TryGetComponent(uid, out PhysicsComponent? body)) return;
+
+            component.Enabled = true;
+
+            if (value)
+            {
+                // Already has it so don't worry about it.
+                if (body.GetFixture(TriggerOnProximityComponent.FixtureID) != null) return;
+
+                _broadphaseSystem.CreateFixture(body, new Fixture(body, component.Shape)
+                {
+                    // TODO: Should probably have these settable via datafield but I'm lazy and it's a pain
+                    CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID
+                });
+            }
+            else
+            {
+                var fixture = body.GetFixture(TriggerOnProximityComponent.FixtureID);
+
+                if (fixture == null) return;
+
+                _broadphaseSystem.DestroyFixture(fixture);
+            }
+        }
+
+        #endregion
 
         public void Trigger(IEntity trigger, IEntity? user = null)
         {
@@ -157,25 +215,6 @@ namespace Content.Server.Explosion
                 if (triggered.Deleted) return;
                 Trigger(triggered, user);
             });
-        }
-
-        public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool remove)
-        {
-            var entity = EntityManager.GetEntity(uid);
-            var broadphase = Get<SharedBroadphaseSystem>();
-
-            if (entity.TryGetComponent(out PhysicsComponent? physics))
-            {
-                var fixture = physics.GetFixture(TriggerOnProximityComponent.FixtureID);
-                if (remove && fixture != null)
-                {
-                    broadphase.DestroyFixture(physics, fixture);
-                }
-                else
-                {
-                    broadphase.CreateFixture(physics, new Fixture(physics, component.Shape) { CollisionLayer = (int) (CollisionGroup.MobImpassable | CollisionGroup.SmallImpassable | CollisionGroup.SmallImpassable), Hard = false, ID = TriggerOnProximityComponent.FixtureID });
-                }
-            }
         }
     }
 }
