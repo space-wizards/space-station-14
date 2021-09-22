@@ -7,7 +7,6 @@ using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Server.Pressure;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
@@ -38,7 +37,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -60,52 +59,6 @@ namespace Content.Server.Inventory.Components
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float HighPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.HighPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float LowPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.LowPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
             }
         }
 
