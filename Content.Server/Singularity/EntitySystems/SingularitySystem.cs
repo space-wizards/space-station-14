@@ -49,6 +49,9 @@ namespace Content.Server.Singularity.EntitySystems
             // Using this to also get smooth deletions is hard because we need to be hard for good bounce
             // off of containment but also we need to be non-hard so we can freely move through the station.
             // For now I've just made it so only the lookup does deletions and collision is just for fields.
+
+            // NOTE FROM THE FUTURE: The above decision caused particles to regularly miss the singularity once it was put on a cooldown.
+            // Once HandleCollide actually does deletion, Update doesn't need to be run every frame anymore.
         }
 
         public override void Update(float frameTime)
@@ -67,25 +70,34 @@ namespace Content.Server.Singularity.EntitySystems
                 }
             }
 
+            var gravityUpdateMultiplier = 0;
             while (_gravityAccumulator > GravityCooldown)
             {
                 _gravityAccumulator -= GravityCooldown;
+                gravityUpdateMultiplier += 1;
+            }
 
-                foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
-                {
-                    Update(singularity, GravityCooldown);
-                }
+            // It's important to note that updates must occur even if gravityUpdateMultiplier == 0.
+            // Otherwise, fast-moving objects such as particles can and do miss the singularity.
+
+            foreach (var singularity in ComponentManager.EntityQuery<ServerSingularityComponent>())
+            {
+                Update(singularity, gravityUpdateMultiplier);
             }
         }
 
-        private void Update(ServerSingularityComponent component, float frameTime)
+        private void Update(ServerSingularityComponent component, int gravityUpdateMultiplier)
         {
             if (component.BeingDeletedByAnotherSingularity) return;
 
             var worldPos = component.Owner.Transform.WorldPosition;
+            // This particular bit must run every frame to avoid missing particles
             DestroyEntities(component, worldPos);
-            DestroyTiles(component, worldPos);
-            PullEntities(component, worldPos);
+            if (gravityUpdateMultiplier != 0)
+            {
+                DestroyTiles(component, worldPos);
+                PullEntities(component, worldPos, gravityUpdateMultiplier);
+            }
         }
 
         private float PullRange(ServerSingularityComponent component)
@@ -155,7 +167,7 @@ namespace Content.Server.Singularity.EntitySystems
                    entity.IsInContainer());
         }
 
-        private void PullEntities(ServerSingularityComponent component, Vector2 worldPos)
+        private void PullEntities(ServerSingularityComponent component, Vector2 worldPos, int gravityUpdateMultiplier)
         {
             // TODO: When we split up dynamic and static trees we might be able to make items always on the broadphase
             // in which case we can just query dynamictree directly for brrt
@@ -178,7 +190,7 @@ namespace Content.Server.Singularity.EntitySystems
                 var speed = vec.Length * component.Level * collidableComponent.Mass;
 
                 // Because tile friction is so high we'll just multiply by mass so stuff like closets can even move.
-                collidableComponent.ApplyLinearImpulse(vec.Normalized * speed);
+                collidableComponent.ApplyLinearImpulse(vec.Normalized * speed * gravityUpdateMultiplier);
             }
         }
 
