@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -81,7 +82,7 @@ namespace Content.Server.Damage
 
             if (target.TryGetComponent(out FlammableComponent? flammable))
             {
-                flammable.Extinguish();
+                EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
             }
 
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))

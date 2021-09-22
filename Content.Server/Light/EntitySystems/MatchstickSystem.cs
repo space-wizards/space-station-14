@@ -24,6 +24,7 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<MatchstickComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<MatchstickComponent, IsHotEvent>(OnIsHotEvent);
         }
 
         public override void Update(float frameTime)
@@ -40,14 +41,22 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, MatchstickComponent component, InteractUsingEvent args)
         {
-            if (!args.Handled
-                && args.Used.TryGetComponent<IHotItem>(out var hotItem)
-                && hotItem.IsCurrentlyHot()
-                && component.CurrentState == SharedBurningStates.Unlit)
-            {
-                Ignite(component, args.User);
-                args.Handled = true;
-            }
+            if (args.Handled || component.CurrentState != SharedBurningStates.Unlit)
+                return;
+
+            var isHotEvent = new IsHotEvent();
+            RaiseLocalEvent(args.Used.Uid, isHotEvent, false);
+
+            if (!isHotEvent.IsHot)
+                return;
+
+            Ignite(component, args.User);
+            args.Handled = true;
+        }
+
+        private void OnIsHotEvent(EntityUid uid, MatchstickComponent component, IsHotEvent args)
+        {
+            args.IsHot = component.CurrentState == SharedBurningStates.Lit;
         }
 
         public void Ignite(MatchstickComponent component, IEntity user)
