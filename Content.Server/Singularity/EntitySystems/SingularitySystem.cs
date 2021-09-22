@@ -209,8 +209,10 @@ namespace Content.Server.Singularity.EntitySystems
         /// </summary>
         private void DestroyTiles(ServerSingularityComponent component, Vector2 worldPos)
         {
-            // The - 0.01f here is a margin of error to stop a singularity from eating the tiles under force field equipment.
-            var radius = DestroyTileRange(component) - 0.01f;
+            // The - 0.05f here is a margin of error to stop a singularity from eating force field equipment.
+            // Raised to 0.05f because 0.01f wasn't enough (it's around certain internal physics margins).
+            // Note that it has to be a margin like this because if the singularity *envelopes* a target, it should still be eating it regardless.
+            var radius = DestroyTileRange(component) - 0.05f;
 
             var circle = new Circle(worldPos, radius);
             var box = new Box2(worldPos - radius, worldPos + radius);
