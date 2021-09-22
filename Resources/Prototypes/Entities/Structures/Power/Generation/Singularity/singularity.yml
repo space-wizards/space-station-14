@@ -17,9 +17,9 @@
         !type:PhysShapeCircle
           radius: 0.5
       restitution: 0.9
-      mask:
-      - AllMask
       layer:
+      - SingularityImpassable
+      mask:
       - AllMask
   - type: Singularity
   - type: SingularityDistortion

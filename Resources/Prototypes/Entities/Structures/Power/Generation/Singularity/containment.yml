@@ -18,11 +18,13 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SingularityImpassable
       - Opaque
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SingularityImpassable
   - type: Transform
     anchored: true
   - type: Sprite
@@ -60,11 +62,13 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SingularityImpassable
       - Opaque
       mask:
       - Impassable
       - MobImpassable
       - VaultImpassable
+      - SingularityImpassable
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
