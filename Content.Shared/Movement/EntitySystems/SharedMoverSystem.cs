@@ -41,7 +41,7 @@ namespace Content.Shared.Movement.EntitySystems
             base.Shutdown();
         }
 
-        private static void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
+        private void HandleDirChange(ICommonSession? session, Direction dir, ushort subTick, bool state)
         {
             if (!TryGetAttachedComponent<IMoverComponent>(session, out var moverComp))
                 return;
@@ -50,19 +50,13 @@ namespace Content.Shared.Movement.EntitySystems
 
             if (owner != null && session != null)
             {
-                foreach (var comp in owner.GetAllComponents<IRelayMoveInput>().ToArray())
-                {
-                    comp.MoveInputPressed(session);
-                }
+                EntityManager.EventBus.RaiseLocalEvent(owner.Uid, new RelayMoveInputEvent(session));
 
                 // For stuff like "Moving out of locker" or the likes
                 if (owner.IsInContainer() &&
                     (!owner.TryGetComponent(out IMobStateComponent? mobState) ||
                      mobState.IsAlive()))
                 {
-                    var relayEntityMoveMessage = new RelayMovementEntityMessage(owner);
-                    owner.Transform.Parent!.Owner.SendMessage(owner.Transform, relayEntityMoveMessage);
-
                     var relayMoveEvent = new RelayMovementEntityEvent(owner);
                     owner.EntityManager.EventBus.RaiseLocalEvent(owner.Transform.ParentUid, relayMoveEvent);
                 }
@@ -114,7 +108,7 @@ namespace Content.Shared.Movement.EntitySystems
                     return false;
                 }
 
-                HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
+                Get<SharedMoverSystem>().HandleDirChange(session, _dir, message.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
         }
@@ -131,6 +125,16 @@ namespace Content.Shared.Movement.EntitySystems
                 HandleRunChange(session, full.SubTick, full.State == BoundKeyState.Down);
                 return false;
             }
+        }
+    }
+
+    public sealed class RelayMoveInputEvent : EntityEventArgs
+    {
+        public ICommonSession Session { get; }
+
+        public RelayMoveInputEvent(ICommonSession session)
+        {
+            Session = session;
         }
     }
 }

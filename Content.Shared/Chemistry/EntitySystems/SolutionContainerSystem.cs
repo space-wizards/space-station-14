@@ -69,7 +69,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             if (solutionHolder.Contents.Count == 0)
             {
-                args.Message.AddText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
+                args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
                 return;
             }
 
@@ -86,7 +86,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
             var messageString = "shared-solution-container-component-on-examine-main-text";
 
-            args.Message.AddMarkup(Loc.GetString(messageString,
+            args.PushMarkup(Loc.GetString(messageString,
                 ("color", colorHex),
                 ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                     ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"

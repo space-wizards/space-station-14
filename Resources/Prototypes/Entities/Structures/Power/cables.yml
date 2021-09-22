@@ -19,7 +19,8 @@
     netsync: false
     drawdepth: BelowFloor
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

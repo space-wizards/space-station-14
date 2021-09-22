@@ -25,6 +25,7 @@
   - togglehardfov
   - togglelight
   - toggleshadows
+  - testbed
 
 - Flags: MAPPING
   Commands:

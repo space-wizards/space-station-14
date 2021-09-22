@@ -1,5 +1,4 @@
 using System;
-using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
@@ -8,9 +7,7 @@ using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
@@ -27,8 +24,6 @@ using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
-using Robust.Shared.Prototypes;
-using System.Collections.Generic;
 
 namespace Content.Server.Weapon.Ranged
 {
@@ -57,17 +52,10 @@ namespace Content.Server.Weapon.Ranged
 
         [DataField("clumsyWeaponShotSound")]
         private SoundSpecifier _clumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
-		
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // This also requires changing the dictionary type and modifying TryFire(), which uses it.
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("clumsyDamage")]
-        public Dictionary<string, int> ClumsyDamage { get;  set; } = new()
-        {
-            { "Blunt", 10 },
-            { "Heat", 5 }
-        };
+        public DamageSpecifier? ClumsyDamage;
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -179,16 +167,10 @@ namespace Content.Server.Weapon.Ranged
 
             _lastFireTime = curTime;
 
-            if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
+            if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 //Wound them
-                if (user.TryGetComponent(out IDamageableComponent? health))
-                {
-                    foreach (KeyValuePair<string, int> damage in ClumsyDamage)
-                    {
-                        health.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damage.Key), damage.Value);
-                    }
-                }
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
 
                 // Knock them down
                 if (user.TryGetComponent(out StunnableComponent? stun))
@@ -197,14 +179,14 @@ namespace Content.Server.Weapon.Ranged
                 }
 
                 // Apply salt to the wound ("Honk!")
-				SoundSystem.Play(
+                SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
                     Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 SoundSystem.Play(
                     Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
                     Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
-					
+
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
                 Owner.Delete();

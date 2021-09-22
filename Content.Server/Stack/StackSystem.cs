@@ -31,15 +31,18 @@ namespace Content.Server.Stack
         /// <summary>
         ///     Try to split this stack into two. Returns a non-null <see cref="IEntity"/> if successful.
         /// </summary>
-        public IEntity? Split(EntityUid uid, SharedStackComponent stack, int amount, EntityCoordinates spawnPosition)
+        public IEntity? Split(EntityUid uid, int amount, EntityCoordinates spawnPosition, SharedStackComponent? stack = null)
         {
+            if (!Resolve(uid, ref stack))
+                return null;
+
             // Get a prototype ID to spawn the new entity. Null is also valid, although it should rarely be picked...
             var prototype = _prototypeManager.TryIndex<StackPrototype>(stack.StackTypeId, out var stackType)
                 ? stackType.Spawn
                 : stack.Owner.Prototype?.ID ?? null;
 
             // Try to remove the amount of things we want to split from the original stack...
-            if (!Use(uid, stack, amount))
+            if (!Use(uid, amount, stack))
                 return null;
 
             // Set the output parameter in the event instance to the newly split stack.
@@ -48,7 +51,7 @@ namespace Content.Server.Stack
             if (ComponentManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
             {
                 // Set the split stack's count.
-                SetCount(entity.Uid, stackComp, amount);
+                SetCount(entity.Uid, amount, stackComp);
             }
 
             return entity;
@@ -64,7 +67,7 @@ namespace Content.Server.Stack
             var stack = ComponentManager.GetComponent<StackComponent>(entity.Uid);
 
             // And finally, set the correct amount!
-            SetCount(entity.Uid, stack, amount);
+            SetCount(entity.Uid, amount, stack);
             return entity;
         }
 
@@ -77,8 +80,8 @@ namespace Content.Server.Stack
                 return;
 
             var toTransfer = Math.Min(stack.Count, otherStack.AvailableSpace);
-            SetCount(uid, stack, stack.Count - toTransfer);
-            SetCount(args.Used.Uid, otherStack, otherStack.Count + toTransfer);
+            SetCount(uid, stack.Count - toTransfer, stack);
+            SetCount(args.Used.Uid, otherStack.Count + toTransfer, otherStack);
 
             var popupPos = args.ClickLocation;
             if (!popupPos.IsValid(EntityManager))

@@ -56,7 +56,7 @@ namespace Content.Client.CharacterInfo.Components
             }
         }
 
-        private sealed class CharacterInfoControl : VBoxContainer
+        private sealed class CharacterInfoControl : BoxContainer
         {
             public SpriteView SpriteView { get; }
             public Label NameLabel { get; }
@@ -67,6 +67,8 @@ namespace Content.Client.CharacterInfo.Components
             public CharacterInfoControl(IResourceCache resourceCache)
             {
                 IoCManager.InjectDependencies(this);
+
+                Orientation = LayoutOrientation.Vertical;
 
                 AddChild(new BoxContainer
                 {

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.Interaction.Helpers;
+using Content.Shared.Interaction;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,6 +12,8 @@ namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityLookup _lookup = default!;
+
         /// <summary>
         ///     Get all of the entities relevant for the contextmenu
         /// </summary>
@@ -25,17 +27,20 @@ namespace Content.Shared.Verbs
             contextEntities = null;
             var length = buffer ? 1.0f: 0.5f;
 
-            var entities = IoCManager.Resolve<IEntityLookup>().
-                GetEntitiesIntersecting(targetPos.MapId, Box2.CenteredAround(targetPos.Position, (length, length))).ToList();
+            var entities = _lookup.GetEntitiesIntersecting(
+                    targetPos.MapId,
+                    Box2.CenteredAround(targetPos.Position, (length, length)))
+                .ToList();
 
-            if (entities.Count == 0)
-            {
-                return false;
-            }
+            if (entities.Count == 0) return false;
+
+            // TODO: Can probably do a faster distance check with EntityCoordinates given we don't need to get map stuff.
 
             // Check if we have LOS to the clicked-location, otherwise no popup.
-            var vectorDiff = player.Transform.MapPosition.Position - targetPos.Position;
+            var playerPos = player.Transform.MapPosition;
+            var vectorDiff = playerPos.Position - targetPos.Position;
             var distance = vectorDiff.Length + 0.01f;
+
             bool Ignored(IEntity entity)
             {
                 return entities.Contains(entity) ||
@@ -48,7 +53,7 @@ namespace Content.Shared.Verbs
                 ? CollisionGroup.Opaque
                 : CollisionGroup.None;
 
-            var result = player.InRangeUnobstructed(targetPos, distance, mask, Ignored);
+            var result = Get<SharedInteractionSystem>().InRangeUnobstructed(playerPos, targetPos, distance, mask, Ignored);
 
             if (!result)
             {

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -13,6 +14,28 @@ namespace Content.Server.DoAfter
         // We cache these lists as to not allocate them every update tick...
         private readonly List<DoAfter> _cancelled = new();
         private readonly List<DoAfter> _finished = new();
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<DoAfterComponent, DamageChangedEvent>(HandleDamage);
+        }
+
+        public void HandleDamage(EntityUid _, DoAfterComponent component, DamageChangedEvent args)
+        {
+            if (component.DoAfters.Count == 0 || !args.DamageIncreased)
+            {
+                return;
+            }
+
+            foreach (var doAfter in component.DoAfters)
+            {
+                if (doAfter.EventArgs.BreakOnDamage)
+                {
+                    doAfter.TookDamage = true;
+                }
+            }
+        }
 
         public override void Update(float frameTime)
         {

@@ -9,12 +9,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Info
 {
-    public class ServerInfo : VBoxContainer
+    public class ServerInfo : BoxContainer
     {
         private readonly RichTextLabel _richTextLabel;
 
         public ServerInfo()
         {
+            Orientation = LayoutOrientation.Vertical;
+
             _richTextLabel = new RichTextLabel
             {
                 VerticalExpand = true

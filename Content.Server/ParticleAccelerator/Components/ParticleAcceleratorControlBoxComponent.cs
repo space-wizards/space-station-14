@@ -337,7 +337,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
             var powerBlock = _wirePowerBlocked;
-            var keyboardLight = new StatusLightData(Color.Green,
+            var keyboardLight = new StatusLightData(Color.LimeGreen,
                 _wireInterfaceBlocked
                     ? StatusLightState.BlinkingFast
                     : StatusLightState.On,

@@ -9,21 +9,16 @@
          xmlns:chatUi="clr-namespace:Content.Client.Chat.UI"
          xmlns:lobbyUi="clr-namespace:Content.Client.Lobby.UI"
          xmlns:info="clr-namespace:Content.Client.Info">
-
     <Control>
         <!-- Parallax background -->
         <parallax:ParallaxControl />
 
-        <!-- One day I'll code a Margin property for controls. -->
-        <MarginContainer MarginBottomOverride="20" MarginLeftOverride="20" MarginRightOverride="20"
-                         MarginTopOverride="20">
+        <Control Margin="20 20 20 20">
             <PanelContainer StyleClasses="AngleRect" />
             <BoxContainer Orientation="Vertical">
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40">
-                    <MarginContainer MarginLeftOverride="8">
-                        <Label StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
-                    </MarginContainer>
+                    <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
                     <Label Name="CServerName" StyleClasses="LabelHeadingBigger" VAlign="Center" />
                     <ui:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
                     <Button Name="COptionsButton" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
@@ -41,23 +36,16 @@
                     <!-- Left panel -->
                     <BoxContainer Orientation="Vertical" Name="CLeftPanelContainer" HorizontalExpand="True">
                         <hudUi:StripeBack>
-                            <MarginContainer MarginLeftOverride="3" MarginRightOverride="3" MarginBottomOverride="3"
-                                             MarginTopOverride="3">
-                                <BoxContainer Orientation="Horizontal" SeparationOverride="6">
-                                    <Button Name="CObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig" />
-                                    <Label Name="CStartTime" Align="Right"
-                                           FontColorOverride="{x:Static maths:Color.DarkGray}"
-                                           StyleClasses="LabelBig" HorizontalExpand="True" />
-                                    <Button Name="CReadyButton" ToggleMode="True" Text="{Loc 'Ready Up'}"
-                                            StyleClasses="ButtonBig" />
-                                </BoxContainer>
-                            </MarginContainer>
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
+                                <Button Name="CObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig" />
+                                <Label Name="CStartTime" Align="Right"
+                                       FontColorOverride="{x:Static maths:Color.DarkGray}"
+                                       StyleClasses="LabelBig" HorizontalExpand="True" />
+                                <Button Name="CReadyButton" ToggleMode="True" Text="{Loc 'Ready Up'}"
+                                        StyleClasses="ButtonBig" />
+                            </BoxContainer>
                         </hudUi:StripeBack>
-                        <MarginContainer VerticalExpand="True" MarginLeftOverride="3" MarginRightOverride="3"
-                                         MarginBottomOverride="3"
-                                         MarginTopOverride="3">
-                            <chatUi:ChatBox Name="CChat" />
-                        </MarginContainer>
+                        <chatUi:ChatBox Name="CChat" VerticalExpand="True" Margin="3 3 3 3"/>
                     </BoxContainer>
                     <!-- Gold line -->
                     <PanelContainer MinSize="2 0">
@@ -70,28 +58,21 @@
                         <BoxContainer Orientation="Vertical">
                             <!-- Player list -->
                             <hudUi:NanoHeading Text="{Loc 'Online Players'}" />
-                            <MarginContainer VerticalExpand="True"
-                                             MarginRightOverride="3" MarginLeftOverride="3"
-                                             MarginBottomOverride="3" MarginTopOverride="3">
-                                <lobbyUi:LobbyPlayerList Name="COnlinePlayerList"
+                            <lobbyUi:LobbyPlayerList Name="COnlinePlayerList"
                                                      HorizontalExpand="True"
-                                                     VerticalExpand="True" />
-                            </MarginContainer>
+                                                     VerticalExpand="True"
+                                                     Margin="3 3 3 3" />
                             <!-- Server info -->
                             <hudUi:NanoHeading Text="{Loc 'Server Info'}" />
-                            <MarginContainer VerticalExpand="True"
-                                             MarginRightOverride="3" MarginLeftOverride="3"
-                                             MarginBottomOverride="2" MarginTopOverride="3">
-                                <info:ServerInfo Name="CServerInfo" />
-                            </MarginContainer>
+                            <info:ServerInfo Name="CServerInfo" VerticalExpand="True" Margin="3 3 3 3"/>
                         </BoxContainer>
-                        <MarginContainer SizeFlagsHorizontal="ShrinkEnd" MarginTopOverride="8" MarginRightOverride="8">
-                            <BoxContainer Orientation="Vertical" Name="CVoteContainer" />
-                        </MarginContainer>
+                        <BoxContainer Orientation="Vertical"
+                                      Name="CVoteContainer"
+                                      HorizontalAlignment="Right"
+                                      Margin="0 8 8 0" />
                     </Control>
                 </BoxContainer>
             </BoxContainer>
-        </MarginContainer>
-
+        </Control>
     </Control>
 </Control>

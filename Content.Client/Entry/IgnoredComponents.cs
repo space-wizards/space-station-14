@@ -275,6 +275,8 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
+            "Wieldable",
+            "IncreaseDamageOnWield",
             "AmbientOnPowered",
             "TabletopGame"
         };

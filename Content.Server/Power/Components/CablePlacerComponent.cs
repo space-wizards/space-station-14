@@ -47,7 +47,7 @@ namespace Content.Server.Power.Components
             }
 
             if (Owner.TryGetComponent<StackComponent>(out var stack)
-                && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
+                && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
                 return true;
 
             Owner.EntityManager.SpawnEntity(_cablePrototypeID, grid.GridTileToLocal(snapPos));
