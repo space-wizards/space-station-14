@@ -65,8 +65,6 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: Transform
-    anchored: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/containment_field.rsi
     state: field
