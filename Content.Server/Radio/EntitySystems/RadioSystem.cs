@@ -7,6 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Radio.EntitySystems
 {
+    /// <summary>
+    ///     Handles broadcasting radio message events and keeping track of
+    ///     listeners on each channel.
+    /// </summary>
     [UsedImplicitly]
     public class RadioSystem : EntitySystem
     {
@@ -79,6 +83,7 @@ namespace Content.Server.Radio.EntitySystems
 
     public class RadioMessageEvent : EntityEventArgs
     {
+        // funny tip: these can both be modified by any listener that's programmed to do so
         public string Message;
         public int Channel;
 

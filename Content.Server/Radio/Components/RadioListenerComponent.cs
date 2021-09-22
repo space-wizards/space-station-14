@@ -17,24 +17,23 @@ namespace Content.Server.Radio.Components
     [RegisterComponent]
     public class RadioListenerComponent : Component, IListen, IRadio, IExamine
     {
-        [Dependency] private readonly IServerNetManager _netManager = default!;
-
         public override string Name => "Headset";
 
-        private RadioSystem _radioSystem = default!;
-
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        public List<int> Channels = new(){ 1459 };
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
+        public int BroadcastFrequency { get; set; } = 1459;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("listenRange")]
         public int ListenRange { get; private set; } = 1;
 
-        public IReadOnlyList<int> Channels => _channels;
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("enabled")]
+        public bool Enabled = true;
 
         public void Receive(string message, int channel, IEntity source)
         {
