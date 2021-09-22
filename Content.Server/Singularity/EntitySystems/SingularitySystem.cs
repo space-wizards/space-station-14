@@ -121,12 +121,12 @@ namespace Content.Server.Singularity.EntitySystems
             if (entity == component.Owner ||
                    entity.HasComponent<IMapGridComponent>() ||
                    entity.HasComponent<GhostComponent>() ||
-                   entity.HasComponent<ContainmentFieldComponent>())
+                   entity.HasComponent<ContainmentFieldComponent>() ||
+                   (
+                       entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var field) &&
+                       field.CanRepell(component.Owner)
+                   ))
                 return false;
-            // Don't bother checking if the field itself can repel for now, we still can't destroy it.
-            if (entity.TryGetComponent<ContainmentFieldGeneratorComponent>(out var field))
-                if (field.CanRepell(component.Owner))
-                    return false;
             return true;
         }
 
