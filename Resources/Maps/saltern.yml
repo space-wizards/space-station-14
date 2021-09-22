@@ -14574,8 +14574,7 @@ entities:
 - uid: 889
   type: GravityGenerator
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,-4.5
+  - pos: 49.5,-4.5
     parent: 853
     type: Transform
   - enabled: False
