@@ -2044,3 +2044,8 @@ Entries:
   - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
   id: 365
   time: '2021-09-21T15:05:28.382048+00:00'
+- author: 20kdc
+  changes:
+  - {message: Un-rotated gravity generator, type: Fix}
+  id: 366
+  time: '2021-09-22T10:55:00.0000000+00:00'
