@@ -2049,3 +2049,20 @@ Entries:
   - {message: Un-rotated gravity generator, type: Fix}
   id: 366
   time: '2021-09-22T10:55:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix pulling permanently decreasing your speed., type: Fix}
+  id: 367
+  time: '2021-09-23T22:43:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Can no longer throw items while in a container., type: Tweak}
+  id: 368
+  time: '2021-09-23T22:44:25.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Chairs, stools, etc. no longer rotate to unusual angles.', type: Fix}
+  - {message: Metal chairs are properly anchored and so don't need to be re-anchored
+      and unanchored again., type: Fix}
+  id: 369
+  time: '2021-09-23T22:45:00.0000000+00:00'
