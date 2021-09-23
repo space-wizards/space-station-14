@@ -15,31 +15,22 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Radio.Components
 {
+    /// <summary>
+    ///     Marks an entity as something that can broadcast a radio message over a given frequency.
+    /// </summary>
     [RegisterComponent]
-    public class RadioBroadcasterComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+    public class RadioBroadcasterComponent : Component
     {
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        public override string Name => "Radio";
+        public override string Name => "RadioBroadcaster";
 
-        private RadioSystem _radioSystem = default!;
-
-        public bool RadioOn = false;
+        public bool Enabled = false;
 
         [DataField("channels")]
-        private List<int> _channels = new(){1459};
+        public List<int> Channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
         private int BroadcastFrequency { get; set; } = 1459;
-
-        [ViewVariables] public IReadOnlyList<int> Channels => _channels;
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            _radioSystem = EntitySystem.Get<RadioSystem>();
-        }
 
         public void Speak(string message)
         {

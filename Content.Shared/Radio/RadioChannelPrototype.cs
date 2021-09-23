@@ -2,8 +2,12 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Radio
+namespace Content.Shared.Radio
 {
+    /// <summary>
+    ///     Used to define a static radio channel with a certain name, color, frequency, etc..
+    ///     The client uses this to determine what the color and prefix for a certain chat message should be.
+    /// </summary>
     [Prototype("radioChannel")]
     public class RadioChannelPrototype : IPrototype
     {

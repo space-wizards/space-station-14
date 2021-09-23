@@ -40,7 +40,6 @@ namespace Content.Shared.Chat
         /// </summary>
         public Color MessageColorOverride { get; set; } = Color.Transparent;
 
-
         public override void ReadFromBuffer(NetIncomingMessage buffer)
         {
             Channel = (ChatChannel) buffer.ReadInt16();

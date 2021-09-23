@@ -11,6 +11,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
 using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
@@ -134,9 +135,11 @@ namespace Content.Server.Chat.Managers
 
             var mapPos = source.Transform.MapPosition;
 
+            // TODO: Rather than InRangeUnOccluded, which checks 'sight' there could probably be a better way
+            // to check 'hearing'
             var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
                     && (x.AttachedEntity.HasComponent<GhostComponent>()
-                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
+                    && mapPos.InRangeUnOccluded(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
                 .Select(p => p.ConnectedClient).ToList();
 
             if (message.StartsWith(';'))
@@ -166,8 +169,8 @@ namespace Content.Server.Chat.Managers
                           message.Remove(0, 1);
             }
 
-            var listeners = EntitySystem.Get<ListeningSystem>();
-            listeners.PingListeners(source, message);
+            var listen = EntitySystem.Get<ListenerSystem>();
+            listen.SendToListeners(source, message);
 
             message = FormattedMessage.EscapeText(message);
 
