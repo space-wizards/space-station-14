@@ -20,6 +20,7 @@
       - SmallImpassable
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    noRot: true
   - type: Strap
     position: Stand
   - type: Pullable
@@ -43,13 +44,14 @@
   id: Chair
   parent: SeatBase
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
-    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -174,6 +176,7 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
+  - type: Rotatable
   - type: Physics
     fixtures:
     - shape:
