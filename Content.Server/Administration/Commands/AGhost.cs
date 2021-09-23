@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
 
             if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
             {
-                shell.WriteLine("Aren't you a ghost already?");
+                player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
