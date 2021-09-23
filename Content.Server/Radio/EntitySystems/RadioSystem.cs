@@ -22,15 +22,18 @@ namespace Content.Server.Radio.EntitySystems
         /// <summary>
         ///     Sends a new radio message over a channel from a source.
         /// </summary>
-        public void BroadcastRadioMessage(EntityUid source, string message, int channel)
+        public void TryBroadcastRadioMessage(EntityUid source, string message, RadioBroadcasterComponent? broadcaster = null)
         {
-            // no listeners on this channel, so who cares?
-            if (!_cachedListeners.ContainsKey(channel))
+            if (!Resolve(source, ref broadcaster))
                 return;
 
-            foreach (var listener in _cachedListeners[channel])
+            // no listeners on this channel, so who cares?
+            if (!_cachedListeners.ContainsKey(broadcaster.BroadcastFrequency))
+                return;
+
+            foreach (var listener in _cachedListeners[broadcaster.BroadcastFrequency])
             {
-                var msg = new RadioMessageEvent(message, channel, source);
+                var msg = new RadioMessageEvent(message, broadcaster.BroadcastFrequency, source);
 
                 // Raised broadcast as well; some events, like ion storms, may wish to
                 // alter every message that comes in on a channel, regardless of who is
@@ -43,7 +46,7 @@ namespace Content.Server.Radio.EntitySystems
         ///     Rebroadcasts a radio message, first checking if the source has already
         ///     broadcasted it once before.
         /// </summary>
-        public void RebroadcastRadioMessage(EntityUid source, RadioMessageEvent ev)
+        public void TryRebroadcastRadioMessage(EntityUid source, RadioMessageEvent ev)
         {
             // Bad! No loops!
             if (ev.Sources.Contains(source))

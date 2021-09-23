@@ -35,5 +35,11 @@ namespace Content.Server.Radio.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]
         public bool Enabled = true;
+
+        /// <summary>
+        ///     Whether this receiver should speak any radio messages it receives.
+        /// </summary>
+        [DataField("speakMessage")]
+        public bool SpeakMessage = false;
     }
 }

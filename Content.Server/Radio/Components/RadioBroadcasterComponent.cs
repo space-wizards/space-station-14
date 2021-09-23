@@ -25,17 +25,13 @@ namespace Content.Server.Radio.Components
 
         public bool Enabled = false;
 
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("channels")]
         public List<int> Channels = new(){1459};
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("broadcastChannel")]
-        private int BroadcastFrequency { get; set; } = 1459;
-
-        public void Speak(string message)
-        {
-            _chatManager.EntitySay(Owner, message);
-        }
+        public int BroadcastFrequency { get; set; } = 1459;
 
         public bool Use(IEntity user)
         {
@@ -53,38 +49,10 @@ namespace Content.Server.Radio.Components
             return Use(eventArgs.User);
         }
 
-        public bool CanListen(string message, IEntity source)
-        {
-            return RadioOn &&
-                   Owner.InRangeUnobstructed(source.Transform.Coordinates, range: ListenRange);
-        }
-
-        public void Receive(string message, int channel, IEntity speaker)
-        {
-            if (RadioOn)
-            {
-                Speak(message);
-            }
-        }
-
-        public void Listen(string message, IEntity speaker)
-        {
-            Broadcast(message, speaker);
-        }
-
-        public void Broadcast(string message, IEntity speaker)
-        {
-            _radioSystem.SpreadMessage(this, speaker, message, BroadcastFrequency);
-        }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             Use(eventArgs.User);
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            message.AddText(Loc.GetString("handheld-radio-component-on-examine",("frequency", BroadcastFrequency)));
         }
     }
 }

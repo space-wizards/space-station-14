@@ -170,7 +170,7 @@ namespace Content.Server.Chat.Managers
             }
 
             var listen = EntitySystem.Get<ListenerSystem>();
-            listen.SendToListeners(source, message);
+            listen.SendToListeners(source, message, VoiceRange);
 
             message = FormattedMessage.EscapeText(message);
 
