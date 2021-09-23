@@ -137,7 +137,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-transfer-message",
-                            ("owner", eventArgs.User)));
+                            ("target", targetEntity)));
                 }
             }
             else if (ToggleState == InjectorToggleMode.Draw)
@@ -150,7 +150,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-draw-message",
-                            ("owner", eventArgs.User)));
+                            ("target", targetEntity)));
                 }
             }
 
@@ -181,7 +181,7 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("injector-component-cannot-inject-message", ("owner", targetBloodstream.Owner)));
+                    Loc.GetString("injector-component-cannot-inject-message", ("target", targetBloodstream.Owner)));
                 return;
             }
 
