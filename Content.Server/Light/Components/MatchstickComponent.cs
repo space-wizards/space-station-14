@@ -21,7 +21,7 @@ namespace Content.Server.Light.Components
         /// Current state to matchstick. Can be <code>Unlit</code>, <code>Lit</code> or <code>Burnt</code>.
         /// </summary>
         [ViewVariables]
-        public SharedBurningStates CurrentState = SharedBurningStates.Unlit;
+        public SmokableState CurrentState = SmokableState.Unlit;
 
         /// <summary>
         /// How long will matchstick last in seconds.
