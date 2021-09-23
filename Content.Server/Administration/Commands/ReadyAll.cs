@@ -24,7 +24,6 @@ namespace Content.Server.Administration.Commands
             }
 
             var gameTicker = EntitySystem.Get<GameTicker>();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
 
 
             if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
@@ -33,10 +32,10 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            foreach (var p in playerManager.GetAllPlayers())
+            foreach (var (player, status) in gameTicker.PlayersInLobby)
             {
-                if(gameTicker.PlayersInLobby[p] != LobbyPlayerStatus.Observer)
-                    gameTicker.ToggleReady(p, ready);
+                if(status != LobbyPlayerStatus.Observer)
+                    gameTicker.ToggleReady(player, ready);
             }
         }
     }
