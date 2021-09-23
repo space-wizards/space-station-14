@@ -12,8 +12,8 @@ namespace Content.Server.Explosion.Components
     ///     <list type="bullet">
     ///         <item>Reaching a damage threshold that causes a <see cref="ExplodeBehavior"/></item>
     ///         <item>Being triggered via the <see cref="ExplodeOnTriggerComponent"/></item>
-    ///         <item>Manually by some other system via functions in <see cref="ExplosionHelper"/> (for example, see
-    ///         <see cref="WelderComponent"/>'s interaction with fuel tanks).</item>
+    ///         <item>Manually by some other system via functions in <see cref="ExplosionHelper"/> (for example, chemistry's
+    ///         <see cref="ExplosionReactionEffect"/>).</item>
     ///     </list>
     /// </remarks>
     [RegisterComponent]

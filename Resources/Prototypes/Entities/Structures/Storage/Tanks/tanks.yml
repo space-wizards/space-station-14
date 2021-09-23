@@ -12,10 +12,15 @@
     state: fueltank
   - type: ReagentTank
     tankType: Fuel
+  - type: DamageOnToolInteract
+    tools:
+    - 16 # welding
+    weldingDamage:
+      types:
+        Heat: 10
   - type: Explosive
     # The explosive component is independent of the stored liquid :/
     # I dream of a day where all grenades/explosives will be reagent dependent.
-    # For now let's pretend it is left over fuel vapours or something, so empty tanks can still explode.
     devastationRange: 0
     heavyImpactRange: 2
     lightImpactRange: 6
