@@ -13,4 +13,4 @@
 #    layers:
 #      - state: blue
   placement:
-    mode: AlignTileAny
+    mode: SnapgridCenter
