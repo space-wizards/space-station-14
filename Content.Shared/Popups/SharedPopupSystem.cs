@@ -6,12 +6,39 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Popups
 {
+    /// <summary>
+    ///     System for displaying small text popups on users' screens.
+    /// </summary>
     public abstract class SharedPopupSystem : EntitySystem
     {
+        /// <summary>
+        ///     Shows a popup on the users' cursors.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
         public abstract void PopupCursor(string message, Filter filter);
+
+        /// <summary>
+        ///     Shows a popup at a world location.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="coordinates">The coordinates where to display the message.</param>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
         public abstract void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter);
+
+        /// <summary>
+        ///     Shows a popup above an entity.
+        /// </summary>
+        /// <param name="message">The message to display.</param>
+        /// <param name="uid">The UID of the entity.</param>
+        /// <param name="filter">Filter for the players that will see the popup.</param>
         public abstract void PopupEntity(string message, EntityUid uid, Filter filter);
 
+        /// <summary>
+        ///     Given an <see cref="IEntity"/>, returns a <see cref="Filter"/> that is either empty or contains the
+        ///     player attached to the entity.
+        /// </summary>
+        /// <remarks>Using this method is NOT recommended, please use one of the other methods instead.</remarks>
         public abstract Filter GetFilterFromEntity(IEntity entity);
     }
 
@@ -41,7 +68,7 @@ namespace Content.Shared.Popups
     }
 
     /// <summary>
-    ///     Network event for displaying a popup on a world position.
+    ///     Network event for displaying a popup at a world location.
     /// </summary>
     [Serializable, NetSerializable]
     public class PopupCoordinatesEvent : PopupEvent
