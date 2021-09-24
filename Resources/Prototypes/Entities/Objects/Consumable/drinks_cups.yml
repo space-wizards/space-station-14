@@ -13,7 +13,7 @@
     solution: drink
   - type: DrawableSolution
     solution: drink
-  - type: InjectableSolution
+  - type: RefillableSolution
     solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true

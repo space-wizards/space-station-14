@@ -127,7 +127,11 @@ namespace Content.Server.Chemistry.Components
             {
                 if (solutionsSys.TryGetInjectableSolution(targetEntity.Uid, out var injectableSolution))
                 {
-                    TryInject(targetEntity, injectableSolution, eventArgs.User);
+                    TryInject(targetEntity, injectableSolution, eventArgs.User, false);
+                }
+                else if (solutionsSys.TryGetRefillableSolution(targetEntity.Uid, out var refillableSolution))
+                {
+                    TryInject(targetEntity, refillableSolution, eventArgs.User, true);
                 }
                 else if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream))
                 {
@@ -210,7 +214,7 @@ namespace Content.Server.Chemistry.Components
             AfterInject();
         }
 
-        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user)
+        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user, bool asRefill)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 || solution.CurrentVolume == 0)
@@ -233,8 +237,16 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(targetEntity, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>()
-                .Inject(targetEntity.Uid, targetSolution, removedSolution);
+            if (!asRefill)
+            {
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .Inject(targetEntity.Uid, targetSolution, removedSolution);
+            }
+            else
+            {
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .Refill(targetEntity.Uid, targetSolution, removedSolution);
+            }
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-transfer-success-message",
