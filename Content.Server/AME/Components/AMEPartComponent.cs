@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;

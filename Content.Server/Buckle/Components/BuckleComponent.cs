@@ -9,7 +9,7 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
