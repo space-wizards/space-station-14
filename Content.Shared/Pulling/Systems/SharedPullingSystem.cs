@@ -241,6 +241,31 @@ namespace Content.Shared.Pulling
 
         public bool CanPull(IEntity puller, IEntity pulled)
         {
+            if (!puller.HasComponent<SharedPullerComponent>())
+            {
+                return false;
+            }
+
+            if (!pulled.TryGetComponent<IPhysBody>(out var _physics))
+            {
+                return false;
+            }
+
+            if (_physics.BodyType == BodyType.Static)
+            {
+                return false;
+            }
+
+            if (puller == pulled)
+            {
+                return false;
+            }
+
+            if (!puller.IsInSameOrNoContainer(pulled))
+            {
+                return false;
+            }
+
             var startPull = new StartPullAttemptEvent(puller, pulled);
             RaiseLocalEvent(puller.Uid, startPull);
             return !startPull.Cancelled;

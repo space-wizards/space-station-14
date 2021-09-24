@@ -19,18 +19,15 @@ namespace Content.Shared.Pulling.Components
 
         [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
-        /// <summary>
-        /// Only set in Puller->set! Only set in unison with _pullerPhysics!
-        /// </summary>
-        private IEntity? _puller;
-
-        public IPhysBody? PullerPhysics { get; private set; }
-
-        private DistanceJoint? _pullJoint;
-
         public float? MaxDistance => _pullJoint?.MaxLength;
 
         private MapCoordinates? _movingTo;
+
+        // This isn't cleanly cut off yet because Puller gets set and that is supposed to trigger state stuff.
+        // So right now it keeps the "private" name as things get shuffled to a more ECSy approach.
+        // FRIENDZONE THESE W/ SHAREDPULLINGSYSTEM, OR EVEN MORE FINE-GRAINED THAN THAT
+        public IEntity? _puller;
+        public DistanceJoint? _pullJoint;
 
         /// <summary>
         /// The current entity pulling this component.
@@ -41,135 +38,15 @@ namespace Content.Shared.Pulling.Components
             get => _puller;
             set
             {
-                if (_puller == value)
-                {
-                    return;
-                }
-
-                var eventBus = Owner.EntityManager.EventBus;
-                // TODO: JESUS
-
-                // New value. Abandon being pulled by any existing object.
-                if (_puller != null)
-                {
-                    var oldPuller = _puller;
-                    var oldPullerPhysics = PullerPhysics;
-
-                    if (_puller.TryGetComponent(out SharedPullerComponent? puller))
-                    {
-                        puller.Pulling = null;
-                    }
-
-                    _puller = null;
-                    Dirty();
-                    PullerPhysics = null;
-
-                    if (_physics != null && oldPullerPhysics != null)
-                    {
-                        var message = new PullStoppedMessage(oldPullerPhysics, _physics);
-
-                        eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-
-                        if (Owner.LifeStage <= EntityLifeStage.MapInitialized)
-                            eventBus.RaiseLocalEvent(Owner.Uid, message);
-
-                        _physics.WakeBody();
-                    }
-
-                    // else-branch warning is handled below
-                }
-
-                // Now that is settled, prepare to be pulled by a new object.
-                if (_physics == null)
-                {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? SharedPullableComponent on {0} didn't have an IPhysBody.", Owner);
-                    return;
-                }
-
+                // Bit of a disparity here, because of how TryStopPull is handled
                 if (value == null)
                 {
-                    MovingTo = null;
+                    SharedPullingStateManagementSystem.ForceRelationship(null, this);
                 }
                 else
                 {
-                    // Pulling a new object : Perform sanity checks.
-
-                    if (!_canStartPull(value))
-                    {
-                        return;
-                    }
-
-                    if (!value.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
-                    {
-                        return;
-                    }
-
-                    if (!value.TryGetComponent<SharedPullerComponent>(out var valuePuller))
-                    {
-                        return;
-                    }
-
-                    // Ensure that the puller is not currently pulling anything.
-                    // If this isn't done, then it happens too late, and the start/stop messages go out of order,
-                    //  and next thing you know it thinks it's not pulling anything even though it is!
-
-                    var oldPulling = valuePuller.Pulling;
-                    if (oldPulling != null)
-                    {
-                        if (oldPulling.TryGetComponent(out SharedPullableComponent? pullable))
-                        {
-                            pullable.TryStopPull();
-                        }
-                        else
-                        {
-                            Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling to this component (on {0}) while presently pulling something that has no Pullable component (on {1})!", Owner, oldPulling);
-                            return;
-                        }
-                    }
-
-                    // Continue with pulling process.
-
-                    var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
-
-                    eventBus.RaiseLocalEvent(value.Uid, pullAttempt, broadcast: false);
-
-                    if (pullAttempt.Cancelled)
-                    {
-                        return;
-                    }
-
-                    eventBus.RaiseLocalEvent(Owner.Uid, pullAttempt);
-
-                    if (pullAttempt.Cancelled)
-                    {
-                        return;
-                    }
-
-                    // Pull start confirm
-
-                    valuePuller.Pulling = Owner;
-                    _puller = value;
-                    Dirty();
-                    PullerPhysics = pullerPhysics;
-
-                    var message = new PullStartedMessage(PullerPhysics, _physics);
-
-                    eventBus.RaiseLocalEvent(_puller.Uid, message, broadcast: false);
-                    eventBus.RaiseLocalEvent(Owner.Uid, message);
-
-                    var union = PullerPhysics.GetWorldAABB().Union(_physics.GetWorldAABB());
-                    var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
-
-                    _physics.WakeBody();
-                    _pullJoint = EntitySystem.Get<SharedJointSystem>().CreateDistanceJoint(Owner.Uid, _puller.Uid, id:$"pull-joint-{_physics.Owner.Uid}");
-                    // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
-                    _pullJoint.CollideConnected = false;
-                    _pullJoint.Length = length * 0.75f;
-                    _pullJoint.MinLength = 0f;
-                    _pullJoint.MaxLength = length;
-                    _pullJoint.Stiffness = 1f;
+                    SharedPullingStateManagementSystem.StartPulling(value.GetComponent<SharedPullerComponent>(), this);
                 }
-                // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
         }
 
@@ -198,49 +75,9 @@ namespace Content.Shared.Pulling.Components
             }
         }
 
-        /// <summary>
-        /// Sanity-check pull. This is called from Puller setter, so it will never deny a pull that's valid by setting Puller.
-        /// It might allow an impossible pull (i.e: puller has no PhysicsComponent somehow).
-        /// Ultimately this is only used separately to stop TryStartPull from cancelling a pull for no reason.
-        /// </summary>
-        private bool _canStartPull(IEntity puller)
-        {
-            if (!puller.HasComponent<SharedPullerComponent>())
-            {
-                return false;
-            }
-
-            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller, Owner))
-            {
-                return false;
-            }
-
-            if (_physics == null)
-            {
-                return false;
-            }
-
-            if (_physics.BodyType == BodyType.Static)
-            {
-                return false;
-            }
-
-            if (puller == Owner)
-            {
-                return false;
-            }
-
-            if (!puller.IsInSameOrNoContainer(Owner))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
         public bool TryStartPull(IEntity puller)
         {
-            if (!_canStartPull(puller))
+            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller, Owner))
             {
                 return false;
             }
@@ -269,17 +106,11 @@ namespace Content.Shared.Pulling.Components
 
             if (msg.Cancelled) return false;
 
-            if (_physics != null && _pullJoint != null)
-            {
-                EntitySystem.Get<SharedJointSystem>().RemoveJoint(_pullJoint);
-            }
-
             if (user != null && user.TryGetComponent<SharedPullerComponent>(out var puller))
             {
                 puller.Pulling = null;
             }
 
-            _pullJoint = null;
             Puller = null;
             return true;
         }

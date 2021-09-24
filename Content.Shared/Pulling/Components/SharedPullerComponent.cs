@@ -10,31 +10,12 @@ namespace Content.Shared.Pulling.Components
     {
         public override string Name => "Puller";
 
-        private IEntity? _pulling;
+        public float WalkSpeedModifier => Pulling == null ? 1.0f : 0.75f;
 
-        public float WalkSpeedModifier => _pulling == null ? 1.0f : 0.75f;
-
-        public float SprintSpeedModifier => _pulling == null ? 1.0f : 0.75f;
+        public float SprintSpeedModifier => Pulling == null ? 1.0f : 0.75f;
 
         [ViewVariables]
-        public IEntity? Pulling
-        {
-            get => _pulling;
-            set
-            {
-                if (_pulling == value)
-                {
-                    return;
-                }
-
-                _pulling = value;
-
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? speed))
-                {
-                    speed.RefreshMovementSpeedModifiers();
-                }
-            }
-        }
+        public IEntity? Pulling { get; set; }
 
         protected override void OnRemove()
         {
