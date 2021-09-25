@@ -61,17 +61,17 @@ namespace Content.Server.Alert
                         break;
                     }
 
-                    if (!IsShowingAlert(msg.AlertType))
+                    if (!IsShowingAlert(msg.Type))
                     {
                         Logger.DebugS("alert", "user {0} attempted to" +
                                               " click alert {1} which is not currently showing for them",
-                            player.Name, msg.AlertType);
+                            player.Name, msg.Type);
                         break;
                     }
 
-                    if (!AlertManager.TryGet(msg.AlertType, out var alert))
+                    if (!AlertManager.TryGet(msg.Type, out var alert))
                     {
-                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.AlertType);
+                        Logger.WarningS("alert", "unrecognized encoded alert {0}", msg.Type);
                         break;
                     }
 

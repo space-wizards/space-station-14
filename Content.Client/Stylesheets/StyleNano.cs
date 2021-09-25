@@ -375,7 +375,7 @@ namespace Content.Client.Stylesheets
             sliderForeBox.SetPatchMargin(StyleBox.Margin.All, 12);
             sliderGrabBox.SetPatchMargin(StyleBox.Margin.All, 12);
 
-            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Green};
+            var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
 
@@ -647,7 +647,7 @@ namespace Content.Client.Stylesheets
                     new StyleProperty(TextureRect.StylePropertyTexture, checkBoxTextureChecked),
                 }),
 
-                new StyleRule(new SelectorElement(typeof(HBoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
+                new StyleRule(new SelectorElement(typeof(BoxContainer), new [] { CheckBox.StyleClassCheckBox }, null, null), new[]
                 {
                     new StyleProperty(BoxContainer.StylePropertySeparation, 10),
                 }),

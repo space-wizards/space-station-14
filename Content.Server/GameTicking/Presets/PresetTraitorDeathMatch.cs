@@ -14,7 +14,6 @@ using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Robust.Server.Player;
@@ -31,6 +30,7 @@ using Content.Shared.Traitor.Uplink;
 using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Systems;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -202,13 +202,10 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamageableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
-                    }
-                }
+                    // TODO BODY SYSTEM KILL
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
+                } 
                 else if (!mobState.IsDead())
                 {
                     if (entity.HasComponent<HandsComponent>())

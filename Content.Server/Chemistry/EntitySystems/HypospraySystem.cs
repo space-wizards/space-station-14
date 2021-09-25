@@ -1,10 +1,13 @@
 ﻿using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
+    [UsedImplicitly]
     public class HypospraySystem : EntitySystem
     {
         public override void Initialize()
@@ -13,6 +16,12 @@ namespace Content.Server.Chemistry.EntitySystems
 
             SubscribeLocalEvent<HyposprayComponent, AfterInteractEvent>(OnAfterInteract);
             SubscribeLocalEvent<HyposprayComponent, ClickAttackEvent>(OnClickAttack);
+            SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
+        }
+
+        private void OnSolutionChange(EntityUid uid, HyposprayComponent component, SolutionChangedEvent args)
+        {
+            component.Dirty();
         }
 
         public void OnAfterInteract(EntityUid uid, HyposprayComponent comp, AfterInteractEvent args)

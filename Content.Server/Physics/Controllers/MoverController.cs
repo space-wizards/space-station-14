@@ -33,12 +33,8 @@ namespace Content.Server.Physics.Controllers
 {
     public class MoverController : SharedMoverController
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        private AudioSystem _audioSystem = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -50,7 +46,6 @@ namespace Content.Server.Physics.Controllers
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystem.Get<AudioSystem>();
 
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);

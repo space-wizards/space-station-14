@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
+using Content.Server.Hands.Systems;
 using Content.Server.Interaction;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -16,6 +17,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -26,13 +28,14 @@ using Robust.Shared.Players;
 using Robust.Shared.Utility;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
 
-namespace Content.Server.Hands
+namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
     internal sealed class HandsSystem : SharedHandsSystem
     {
         [Dependency] private readonly InteractionSystem _interactionSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
 
         public override void Initialize()
         {
@@ -68,21 +71,10 @@ namespace Content.Server.Hands
 
         private void HandlePullStarted(EntityUid uid, HandsComponent component, PullStartedMessage args)
         {
-            foreach (var handName in component.ActivePriorityEnumerable())
+            if (!_virtualItemSystem.TrySpawnVirtualItemInHand(args.Pulled.Owner.Uid, uid))
             {
-                var hand = component.GetHand(handName);
-                if (!hand.IsEmpty)
-                    continue;
-
-                var pos = component.Owner.Transform.Coordinates;
-                var virtualPull = EntityManager.SpawnEntity("HandVirtualPull", pos);
-                var virtualPullComp = virtualPull.GetComponent<HandVirtualPullComponent>();
-                virtualPullComp.PulledEntity = args.Pulled.Owner.Uid;
-                component.PutEntityIntoHand(hand, virtualPull);
-                return;
+                DebugTools.Assert("Unable to find available hand when starting pulling??");
             }
-
-            DebugTools.Assert("Unable to find available hand when starting pulling??");
         }
 
         private void HandlePullStopped(EntityUid uid, HandsComponent component, PullStoppedMessage args)
@@ -92,8 +84,8 @@ namespace Content.Server.Hands
             foreach (var hand in component.Hands)
             {
                 if (hand.HeldEntity == null
-                    || !hand.HeldEntity.TryGetComponent(out HandVirtualPullComponent? virtualPull)
-                    || virtualPull.PulledEntity != args.Pulled.Owner.Uid)
+                    || !hand.HeldEntity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
+                    || virtualItem.BlockingEntity != args.Pulled.Owner.Uid)
                     continue;
 
                 hand.HeldEntity.Delete();
@@ -192,7 +184,7 @@ namespace Content.Server.Hands
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
-                args.Message.AddText($"\n{Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner))}");
+                args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
             }
         }
 
@@ -236,18 +228,17 @@ namespace Content.Server.Hands
 
             var playerEnt = playerSession.AttachedEntity;
 
-            if (playerEnt == null || !playerEnt.IsValid() || !playerEnt.TryGetComponent(out SharedHandsComponent? hands))
-                return false;
-
-            if (!hands.TryGetActiveHeldEntity(out var throwEnt))
-                return false;
-
-            if (!_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
+            if (playerEnt == null ||
+                !playerEnt.IsValid() ||
+                playerEnt.IsInContainer() ||
+                !playerEnt.TryGetComponent(out SharedHandsComponent? hands) ||
+                !hands.TryGetActiveHeldEntity(out var throwEnt) ||
+                !_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
             {
-                var splitStack = _stackSystem.Split(throwEnt.Uid, stack, 1, playerEnt.Transform.Coordinates);
+                var splitStack = _stackSystem.Split(throwEnt.Uid, 1, playerEnt.Transform.Coordinates, stack);
 
                 if (splitStack == null)
                     return false;

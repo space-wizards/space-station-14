@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.CCVar;
+using Content.Shared.Collections;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -17,6 +21,7 @@ namespace Content.Shared.Throwing
     /// </summary>
     public class ThrownItemSystem : EntitySystem
     {
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
 
         private const string ThrowingFixture = "throw-fixture";
@@ -28,21 +33,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
-            SubscribeLocalEvent<ThrownItemComponent, LandEvent>(LandItem);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-        }
-
-        private void LandItem(EntityUid uid, ThrownItemComponent component, LandEvent args)
-        {
-            if (!component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-            var fixture = physicsComponent.GetFixture(ThrowingFixture);
-            if (fixture == null)
-            {
-                return;
-            }
-
-            _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -79,10 +70,6 @@ namespace Content.Shared.Throwing
 
         private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
-            // Unfortunately we can't check for hands containers as they have specific names.
-            if (EntityManager.GetEntity(uid).TryGetContainerMan(out var manager) &&
-                manager.Owner.HasComponent<SharedHandsComponent>()) return;
-
             LandComponent(thrownItem);
         }
 
@@ -93,32 +80,34 @@ namespace Content.Shared.Throwing
                 LandComponent(thrownItem);
         }
 
-        private void LandComponent(ThrownItemComponent thrownItem)
+        public void LandComponent(ThrownItemComponent thrownItem)
         {
             if (thrownItem.Owner.Deleted) return;
 
-            var user = thrownItem.Thrower;
             var landing = thrownItem.Owner;
-            var coordinates = landing.Transform.Coordinates;
 
-            // LandInteraction
-            // TODO: Refactor these to system messages
-            var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landing.Uid, landMsg);
-            if (landMsg.Handled)
+            if (!thrownItem.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
+
+            var fixture = physicsComponent.GetFixture(ThrowingFixture);
+
+            if (fixture != null)
             {
+                _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+            }
+
+            // Unfortunately we can't check for hands containers as they have specific names.
+            if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
+                containerManager.Owner.HasComponent<SharedHandsComponent>())
+            {
+                ComponentManager.RemoveComponent(landing.Uid, thrownItem);
                 return;
             }
 
-            var comps = landing.GetAllComponents<ILand>().ToArray();
-            var landArgs = new LandEventArgs(user, coordinates);
+            var user = thrownItem.Thrower;
+            var coordinates = landing.Transform.Coordinates;
 
-            // Call Land on all components that implement the interface
-            foreach (var comp in comps)
-            {
-                if (landing.Deleted) break;
-                comp.Land(landArgs);
-            }
+            var landMsg = new LandEvent(user, landing, coordinates);
+            RaiseLocalEvent(landing.Uid, landMsg, false);
 
             ComponentManager.RemoveComponent(landing.Uid, thrownItem);
         }

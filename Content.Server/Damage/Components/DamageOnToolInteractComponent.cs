@@ -2,13 +2,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
@@ -19,28 +16,16 @@ namespace Content.Server.Damage.Components
 
         public override string Name => "DamageOnToolInteract";
 
-        [DataField("damage")]
-        protected int Damage;
-
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
-        // TODO PROTOTYPE Replace these datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("weldingDamageType")]
-        private readonly string _weldingDamageTypeID = "Heat";
+        [DataField("weldingDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype WeldingDamageType = default!;
-        [DataField("defaultDamageType")]
-        private readonly string _defaultDamageTypeID = "Blunt";
+        public DamageSpecifier WeldingDamage = default!;
+
+        [DataField("defaultDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DefaultDamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            WeldingDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_weldingDamageTypeID);
-            DefaultDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_defaultDamageTypeID);
-        }
+        public DamageSpecifier DefaultDamage = default!;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -50,30 +35,22 @@ namespace Content.Server.Damage.Components
                 {
                     if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder))
+                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
                         {
-                            if (welder.WelderLit) return CallDamage(eventArgs, tool);
+                            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, WeldingDamage);
+                            return true;
                         }
                         break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
                     }
 
-                    if (tool.HasQuality(toolQuality)) return CallDamage(eventArgs, tool);
+                    if (tool.HasQuality(toolQuality))
+                    {
+                        EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, DefaultDamage);
+                        return true;
+                    }
                 }
             }
             return false;
-        }
-
-        protected bool CallDamage(InteractUsingEventArgs eventArgs, ToolComponent tool)
-        {
-            if (!eventArgs.Target.TryGetComponent<IDamageableComponent>(out var damageable))
-                return false;
-
-            damageable.TryChangeDamage(tool.HasQuality(ToolQuality.Welding)
-                    ? WeldingDamageType
-                    : DefaultDamageType,
-                Damage);
-
-            return true;
         }
     }
 }

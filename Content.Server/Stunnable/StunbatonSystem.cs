@@ -108,11 +108,10 @@ namespace Content.Server.Stunnable
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
-            args.Message.AddText("\n");
             var msg = comp.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
-            args.Message.AddMarkup(msg);
+            args.PushMarkup(msg);
         }
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)

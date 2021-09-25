@@ -1,21 +1,15 @@
-using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Mind.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Slot;
-using Content.Shared.MobState;
-using Content.Shared.Movement.Components;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Body
@@ -23,7 +17,7 @@ namespace Content.Server.Body
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(IGhostOnMove))]
-    public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
+    public class BodyComponent : SharedBodyComponent, IGhostOnMove
     {
         private Container _partContainer = default!;
 
@@ -86,17 +80,6 @@ namespace Content.Server.Body
             foreach (var (part, _) in Parts)
             {
                 part.Dirty();
-            }
-        }
-
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
-        {
-            if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
-                mobState.IsDead() &&
-                Owner.TryGetComponent(out MindComponent? mind) &&
-                mind.HasMind)
-            {
-                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind.Mind!, true);
             }
         }
 

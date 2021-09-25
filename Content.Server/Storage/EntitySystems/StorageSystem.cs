@@ -1,16 +1,22 @@
 using System.Collections.Generic;
+using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
+using Content.Shared.Movement;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems
 {
     [UsedImplicitly]
     internal sealed class StorageSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
         private readonly List<IPlayerSession> _sessionCache = new();
 
         /// <inheritdoc />
@@ -20,6 +26,22 @@ namespace Content.Server.Storage.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+            SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
+        }
+
+        private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
+        {
+            if (ComponentManager.HasComponent<HandsComponent>(uid))
+            {
+                if (_gameTiming.CurTime <
+                    component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
+                {
+                    return;
+                }
+
+                component.LastInternalOpenAttempt = _gameTiming.CurTime;
+                component.TryOpenStorage(args.Entity);
+            }
         }
 
         /// <inheritdoc />
@@ -39,11 +61,6 @@ namespace Content.Server.Storage.EntitySystems
             {
                 storageComp.HandleEntityMaybeRemoved(message);
             }
-
-            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
-            {
-                newStorageComp.ContainerUpdateAppearance(message.Container);
-            }
         }
 
         private static void HandleEntityInsertedIntoContainer(EntInsertedIntoContainerMessage message)
@@ -53,11 +70,6 @@ namespace Content.Server.Storage.EntitySystems
             if (oldParentEntity.TryGetComponent(out ServerStorageComponent? storageComp))
             {
                 storageComp.HandleEntityMaybeInserted(message);
-            }
-
-            if (oldParentEntity.TryGetComponent<StorageCounterComponent>(out var newStorageComp))
-            {
-                newStorageComp.ContainerUpdateAppearance(message.Container);
             }
         }
 

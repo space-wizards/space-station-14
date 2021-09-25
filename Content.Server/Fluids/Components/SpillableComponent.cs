@@ -1,13 +1,13 @@
 using Content.Shared.ActionBlocker;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
-using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Notification.Managers;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -15,6 +15,9 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
+
+        [DataField("solution")]
+        public string SolutionName = "puddle";
 
         /// <summary>
         ///     Transfers solution from the held container to the floor.
@@ -25,8 +28,8 @@ namespace Content.Server.Fluids.Components
             protected override void GetData(IEntity user, SpillableComponent component, VerbData data)
             {
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                    !component.Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent) ||
-                    !solutionComponent.CanDrain)
+                    !EntitySystem.Get<SolutionContainerSystem>()
+                            .TryGetDrainableSolution(component.Owner.Uid, out var solutionComponent))
                 {
                     data.Visibility = VerbVisibility.Invisible;
                     return;
@@ -40,30 +43,40 @@ namespace Content.Server.Fluids.Components
 
             protected override void Activate(IEntity user, SpillableComponent component)
             {
-                if (component.Owner.TryGetComponent<ISolutionInteractionsComponent>(out var solutionComponent))
+                var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
+                if (component.Owner.HasComponent<SolutionContainerManagerComponent>())
                 {
-                    if (!solutionComponent.CanDrain)
+                    if (solutionsSys.TryGetDrainableSolution(component.Owner.Uid, out var solutionComponent))
+                    {
+                        if (solutionComponent.DrainAvailable <= 0)
+                        {
+                            user.PopupMessage(user,
+                                Loc.GetString("spill-target-verb-activate-is-empty-message", ("owner", component.Owner)));
+                        }
+
+                        // Need this as when we split the component's owner may be deleted
+                        EntitySystem.Get<SolutionContainerSystem>()
+                            .Drain(component.Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
+                            .SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
+                    }
+                    else
                     {
                         user.PopupMessage(user,
-                            Loc.GetString("spill-target-verb-activate-cannot-drain-message",("owner", component.Owner)));
+                            Loc.GetString("spill-target-verb-activate-cannot-drain-message",
+                                ("owner", component.Owner)));
                     }
-
-                    if (solutionComponent.DrainAvailable <= 0)
-                    {
-                        user.PopupMessage(user, Loc.GetString("spill-target-verb-activate-is-empty-message",("owner", component.Owner)));
-                    }
-
-                    // Need this as when we split the component's owner may be deleted
-                    solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(component.Owner.Transform.Coordinates, "PuddleSmear");
                 }
             }
         }
 
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
-            if (!eventArgs.Intentional && Owner.TryGetComponent(out ISolutionInteractionsComponent? solutionComponent))
+            if (!eventArgs.Intentional
+                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionComponent))
             {
-                solutionComponent.Drain(solutionComponent.DrainAvailable).SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .Drain(Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)
+                    .SpillAt(Owner.Transform.Coordinates, "PuddleSmear");
             }
         }
     }
