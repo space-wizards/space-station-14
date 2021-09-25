@@ -77,8 +77,8 @@ namespace Content.IntegrationTests.Tests.PDA
                 var pdaComponent = dummyPda.GetComponent<PDAComponent>();
                 var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
 
-                var itemSlots = dummyPda.GetComponent<ItemSlotsComponent>();
-                sEntityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>()
+                var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
+                sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
                     .TryInsertContent(itemSlots, pdaIdCard, PDAComponent.IDSlotName);
                 var pdaContainedId = pdaComponent.ContainedID;
 
