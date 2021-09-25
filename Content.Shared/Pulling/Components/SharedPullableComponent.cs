@@ -13,25 +13,23 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Pulling.Components
 {
+    // Before you try to add another type than SharedPullingStateManagementSystem, consider the can of worms you may be opening!
     [NetworkedComponent()]
+    [Friend(typeof(SharedPullingStateManagementSystem))]
     public abstract class SharedPullableComponent : Component
     {
         public override string Name => "Pullable";
 
+        // At this point this field exists solely for the component dependency (which is mandatory).
         [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
         public float? MaxDistance => PullJoint?.MaxLength;
-
-        private MapCoordinates? _movingTo;
-
-        // Temporary until Friend can be applied (it applies to methods, so.)
-        public void UpdatePullerFromSharedPullingStateManagementSystem(IEntity? v) { Puller = v; }
 
         /// <summary>
         /// The current entity pulling this component.
         /// Ideally, alter using TryStartPull and TryStopPull.
         /// </summary>
-        public IEntity? Puller { get; private set; }
+        public IEntity? Puller { get; set; }
         /// <summary>
         /// The pull joint.
         /// SharedPullingStateManagementSystem should be writing this. This means probably not you.
@@ -40,44 +38,7 @@ namespace Content.Shared.Pulling.Components
 
         public bool BeingPulled => Puller != null;
 
-        public MapCoordinates? MovingTo
-        {
-            get => _movingTo;
-            set
-            {
-                if (_movingTo == value)
-                {
-                    return;
-                }
-
-                _movingTo = value;
-
-                if (value == null)
-                {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableStopMovingMessage());
-                }
-                else
-                {
-                    Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableMoveMessage());
-                }
-            }
-        }
-
-        public bool TryMoveTo(MapCoordinates to)
-        {
-            if (Puller == null)
-            {
-                return false;
-            }
-
-            if (_physics == null)
-            {
-                return false;
-            }
-
-            MovingTo = to;
-            return true;
-        }
+        public MapCoordinates? MovingTo { get; set; }
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -108,11 +69,19 @@ namespace Content.Shared.Pulling.Components
             Puller = entity;
         }
 
-        protected override void OnRemove()
+        protected override void Shutdown()
         {
             EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
-            MovingTo = null;
+            base.Shutdown();
+        }
 
+        protected override void OnRemove()
+        {
+            if (Puller != null)
+            {
+                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
+                Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLABLE {0} - OnRemove called when Puller is set!", Owner);
+            }
             base.OnRemove();
         }
     }

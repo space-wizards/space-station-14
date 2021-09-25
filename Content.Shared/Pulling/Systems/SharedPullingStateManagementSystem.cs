@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameTicking;
 using Content.Shared.Input;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling.Events;
@@ -29,8 +28,36 @@ namespace Content.Shared.Pulling
     public class SharedPullingStateManagementSystem : EntitySystem
     {
         // A WARNING:
-        // The following function is the most internal part of the pulling system's relationship management.
-        // It does not expect to be cancellable.
+        // The following 2 functions are the most internal part of the pulling system's relationship management.
+        // They do not expect to be cancellable.
+        private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
+        {
+            var eventBus = pullable.Owner.EntityManager.EventBus;
+
+            var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
+            var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
+
+            // MovingTo shutdown
+            ForceSetMovingTo(pullable, null);
+
+            // Joint shutdown
+            pullerPhysics.RemoveJoint(pullable.PullJoint!);
+            pullable.PullJoint = null;
+
+            // State shutdown
+            puller.Pulling = null;
+            pullable.Puller = null;
+
+            // Messaging
+            var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
+
+            eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
+            eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+
+            // Networking
+            puller.Dirty();
+            pullable.Dirty();
+        }
 
         public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
@@ -40,106 +67,92 @@ namespace Content.Shared.Pulling
                 return;
             }
 
-            var eventBus = (pullable?.Owner ?? puller?.Owner)!.EntityManager.EventBus;
+            // Start by disconnecting the pullable from whatever it is currently connected to.
+            var pullableOldPullerE = pullable?.Puller;
+            if (pullableOldPullerE != null)
+            {
+                ForceDisconnect(pullableOldPullerE.GetComponent<SharedPullerComponent>(), pullable!);
+            }
 
-            var pullerPhysics = puller?.Owner.GetComponentOrNull<PhysicsComponent>();
-            var pullablePhysics = pullable?.Owner.GetComponentOrNull<PhysicsComponent>();
-
-            // Start by disconnecting the puller from whatever it is currently connected to.
+            // Continue with the puller.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
-                // It's important to note: This *can* return null if we're doing this because the component is being removed.
-                // Therefore, parts that rely on this component must be skippable.
-                pullerOldPullableE.TryGetComponent<SharedPullableComponent>(out var pullerOldPullable);
-
-                // Joint shutdown
-                if (pullerOldPullable?.PullJoint != null)
-                {
-                    pullerPhysics?.RemoveJoint(pullerOldPullable.PullJoint);
-                    pullerOldPullable.PullJoint = null;
-                }
-
-                // State shutdown
-                puller!.Pulling = null;
-                pullerOldPullable?.UpdatePullerFromSharedPullingStateManagementSystem(null);
-
-                // Messaging
-                var message = new PullStoppedMessage(pullerPhysics!, pullerOldPullableE.GetComponent<IPhysBody>());
-
-                eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-                // TODO: FIGURE OUT WHY THIS CRASHES IF THE COMPONENT IS BEING REMOVED.
-                // TODO: Work out why. Monkey + meat spike is a good test for this,
-                //  assuming you're still pulling the monkey when it gets gibbed.
-                if (pullerOldPullable != null)
-                {
-                    eventBus.RaiseLocalEvent(pullerOldPullableE.Uid, message);
-                }
-
-                // Networking
-                pullerOldPullable?.Dirty();
-            }
-
-            // Continue by doing that with the pullable.
-            if (pullable?.Puller != null)
-            {
-                ForceRelationship(pullable.Puller.GetComponent<SharedPullerComponent>(), null);
+                ForceDisconnect(puller!, pullerOldPullableE.GetComponent<SharedPullableComponent>());
             }
 
             // And now for the actual connection (if any).
 
             if ((puller != null) && (pullable != null))
             {
-                // Physics final sanity check
-                DebugTools.AssertNotNull(pullerPhysics);
-                DebugTools.AssertNotNull(pullablePhysics);
+                var eventBus = pullable.Owner.EntityManager.EventBus;
+
+                var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
+                var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
 
                 // State startup
                 puller.Pulling = pullable.Owner;
-                pullable.UpdatePullerFromSharedPullingStateManagementSystem(puller.Owner);
-
-                // Messaging
-                var message = new PullStartedMessage(pullerPhysics!, pullablePhysics!);
-
-                eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-                eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+                pullable.Puller = puller.Owner;
 
                 // Joint startup
-                var union = pullerPhysics!.GetWorldAABB().Union(pullablePhysics!.GetWorldAABB());
+                var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                 pullable.PullJoint = pullerPhysics.CreateDistanceJoint(pullablePhysics, $"pull-joint-{pullablePhysics.Owner.Uid}");
                 pullable.PullJoint.CollideConnected = false;
                 pullable.PullJoint.Length = length * 0.75f;
                 pullable.PullJoint.MaxLength = length;
+
+                // Messaging
+                var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
+
+                eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
+                eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+
+                // Networking
+                puller.Dirty();
+                pullable.Dirty();
             }
-
-            // Update puller state.
-            // This might be better suited to an event handler somewhere, not sure.
-
-            if (puller != null)
-            {
-                if (puller.Owner.TryGetComponent<MovementSpeedModifierComponent>(out var speed))
-                {
-                    speed.RefreshMovementSpeedModifiers();
-                }
-            }
-
-            // Networking
-            puller?.Dirty();
-            pullable?.Dirty();
         }
 
         // For OnRemove use only.
         public void ForceDisconnectPuller(SharedPullerComponent puller)
         {
+            // DO NOT ADD ADDITIONAL LOGIC IN THIS FUNCTION. Do it in ForceRelationship.
             ForceRelationship(puller, null);
         }
 
         // For OnRemove use only.
         public void ForceDisconnectPullable(SharedPullableComponent pullable)
         {
+            // DO NOT ADD ADDITIONAL LOGIC IN THIS FUNCTION. Do it in ForceRelationship.
             ForceRelationship(null, pullable);
+        }
+
+        public void ForceSetMovingTo(SharedPullableComponent pullable, MapCoordinates? movingTo)
+        {
+            if (pullable.MovingTo == movingTo)
+            {
+                return;
+            }
+
+            // Don't allow setting a MovingTo if there's no puller.
+            // The other half of this guarantee (shutting down a MovingTo if the puller goes away) is enforced in ForceRelationship.
+            if ((pullable.Puller == null) && (movingTo != null))
+            {
+                return;
+            }
+
+            pullable.MovingTo = movingTo;
+
+            if (movingTo == null)
+            {
+                pullable.Owner.EntityManager.EventBus.RaiseLocalEvent(pullable.Owner.Uid, new PullableStopMovingMessage());
+            }
+            else
+            {
+                pullable.Owner.EntityManager.EventBus.RaiseLocalEvent(pullable.Owner.Uid, new PullableMoveMessage());
+            }
         }
     }
 }

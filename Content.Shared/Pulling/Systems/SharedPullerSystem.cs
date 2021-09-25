@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Alert;
 using Content.Shared.Hands;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
@@ -46,6 +47,8 @@ namespace Content.Shared.Pulling.Systems
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulling);
+
+            RefreshMovementSpeed(component);
         }
 
         private static void PullerHandlePullStopped(
@@ -58,6 +61,17 @@ namespace Content.Shared.Pulling.Systems
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulling);
+
+            RefreshMovementSpeed(component);
+        }
+
+        private static void RefreshMovementSpeed(SharedPullerComponent component)
+        {
+            // Before changing how this is updated, please see SharedPullerComponent
+            if (component.Owner.TryGetComponent<MovementSpeedModifierComponent>(out var speed))
+            {
+                speed.RefreshMovementSpeedModifiers();
+            }
         }
     }
 }

@@ -173,5 +173,26 @@ namespace Content.Shared.Pulling
             _pullSm.ForceRelationship(puller, pullable);
             return true;
         }
+
+        public bool TryMoveTo(SharedPullableComponent pullable, MapCoordinates to)
+        {
+            if (pullable.Puller == null)
+            {
+                return false;
+            }
+
+            if (!pullable.Owner.HasComponent<PhysicsComponent>())
+            {
+                return false;
+            }
+
+            _pullSm.ForceSetMovingTo(pullable, to);
+            return true;
+        }
+
+        public void StopMoveTo(SharedPullableComponent pullable)
+        {
+            _pullSm.ForceSetMovingTo(pullable, null);
+        }
     }
 }

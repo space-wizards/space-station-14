@@ -150,7 +150,7 @@ namespace Content.Shared.Pulling
 
             if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.MovingTo = null;
+                _pullSm.ForceSetMovingTo(pullable, null);
             }
         }
 
@@ -194,7 +194,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            pullable.TryMoveTo(coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords.ToMap(EntityManager));
 
             return false;
         }
