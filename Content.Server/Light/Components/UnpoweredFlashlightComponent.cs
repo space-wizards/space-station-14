@@ -19,7 +19,7 @@ namespace Content.Server.Light.Components
         public override string Name => "UnpoweredFlashlight";
 
         [DataField("toggleFlashlightSound")]
-        public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");
 
         [ViewVariables] public bool LightOn = false;
 
