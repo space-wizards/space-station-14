@@ -77,7 +77,7 @@ namespace Content.Server.PDA
             if (args.SlotName == PDAComponent.IDSlotName)
             {
                 var item = args.ContainedItem;
-                if (item == null || !item.TryGetComponent(out IdCardComponent? idCard))
+                if (item == null || !ComponentManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
                     pda.ContainedID = null;
                 else
                     pda.ContainedID = idCard;
