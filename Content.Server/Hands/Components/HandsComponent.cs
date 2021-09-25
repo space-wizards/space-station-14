@@ -166,7 +166,7 @@ namespace Content.Server.Hands.Components
                 || puller.Pulling == null || !puller.Pulling.TryGetComponent(out PullableComponent? pullable))
                 return false;
 
-            return pullable.TryStopPull();
+            return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
         }
 
         #endregion

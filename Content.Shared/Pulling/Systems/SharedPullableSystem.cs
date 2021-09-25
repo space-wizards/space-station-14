@@ -9,6 +9,7 @@ namespace Content.Shared.Pulling.Systems
     public class SharedPullableSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
 
         public override void Initialize()
         {
@@ -20,7 +21,7 @@ namespace Content.Shared.Pulling.Systems
         {
             var entity = args.Session.AttachedEntity;
             if (entity == null || !_blocker.CanMove(entity)) return;
-            component.TryStopPull();
+            _pullSystem.TryStopPull(component);
         }
     }
 }

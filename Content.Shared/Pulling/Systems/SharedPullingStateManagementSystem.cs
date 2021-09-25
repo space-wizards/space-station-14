@@ -20,6 +20,10 @@ using Robust.Shared.Log;
 
 namespace Content.Shared.Pulling
 {
+    /// <summary>
+    /// This is the core of pulling state management.
+    /// Because pulling state is such a mess to get right, all writes to pulling state must go through this class.
+    /// </summary>
     [UsedImplicitly]
     public class SharedPullingStateManagementSystem : EntitySystem
     {
@@ -27,7 +31,7 @@ namespace Content.Shared.Pulling
         // The following function is the most internal part of the pulling system's relationship management.
         // It does not expect to be cancellable.
 
-        public static void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
+        public void ForceRelationship(SharedPullerComponent? puller, SharedPullableComponent? pullable)
         {
             if ((puller != null) && (puller.Pulling == pullable))
             {
@@ -46,21 +50,23 @@ namespace Content.Shared.Pulling
             {
                 // Joint shutdown
                 var pullerOldPullable = pullerOldPullableE.GetComponent<SharedPullableComponent>();
-                if (pullerOldPullable._pullJoint != null)
+                if (pullerOldPullable.PullJoint != null)
                 {
-                    pullerPhysics!.RemoveJoint(pullerOldPullable._pullJoint);
+                    pullerPhysics!.RemoveJoint(pullerOldPullable.PullJoint);
                 }
-                pullerOldPullable._pullJoint = null;
+                pullerOldPullable.PullJoint = null;
 
                 // State shutdown
                 puller!.Pulling = null;
-                pullerOldPullable._puller = null;
+                pullerOldPullable.UpdatePullerFromSharedPullingStateManagementSystem(null);
 
                 // Messaging
                 var message = new PullStoppedMessage(pullerPhysics!, pullerOldPullableE.GetComponent<IPhysBody>());
 
                 eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
                 eventBus.RaiseLocalEvent(pullerOldPullableE.Uid, message);
+
+                pullerOldPullable.Dirty();
             }
 
             // Continue by doing that with the pullable.
@@ -75,7 +81,7 @@ namespace Content.Shared.Pulling
             {
                 // State startup
                 puller.Pulling = pullable.Owner;
-                pullable._puller = puller.Owner;
+                pullable.UpdatePullerFromSharedPullingStateManagementSystem(puller.Owner);
 
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics!, pullablePhysics!);
@@ -87,10 +93,10 @@ namespace Content.Shared.Pulling
                 var union = pullerPhysics!.GetWorldAABB().Union(pullablePhysics!.GetWorldAABB());
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable._pullJoint = pullerPhysics.CreateDistanceJoint(pullablePhysics, $"pull-joint-{pullablePhysics.Owner.Uid}");
-                pullable._pullJoint.CollideConnected = false;
-                pullable._pullJoint.Length = length * 0.75f;
-                pullable._pullJoint.MaxLength = length;
+                pullable.PullJoint = pullerPhysics.CreateDistanceJoint(pullablePhysics, $"pull-joint-{pullablePhysics.Owner.Uid}");
+                pullable.PullJoint.CollideConnected = false;
+                pullable.PullJoint.Length = length * 0.75f;
+                pullable.PullJoint.MaxLength = length;
             }
 
             if (puller != null)
@@ -105,83 +111,16 @@ namespace Content.Shared.Pulling
             pullable?.Dirty();
         }
 
-        // The main "start pulling" function.
-        public static void StartPulling(SharedPullerComponent puller, SharedPullableComponent pullable)
+        // For OnRemove use only.
+        public void ForceDisconnectPuller(SharedPullerComponent puller)
         {
-            if (puller.Pulling == pullable)
-                return;
+            ForceRelationship(puller, null);
+        }
 
-            var eventBus = pullable.Owner.EntityManager.EventBus;
-
-            // Pulling a new object : Perform sanity checks.
-
-            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller.Owner, pullable.Owner))
-            {
-                return;
-            }
-
-            if (!puller.Owner.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
-            {
-                return;
-            }
-
-            if (!pullable.Owner.TryGetComponent<PhysicsComponent>(out var pullablePhysics))
-            {
-                return;
-            }
-
-            // Ensure that the puller is not currently pulling anything.
-            // If this isn't done, then it happens too late, and the start/stop messages go out of order,
-            //  and next thing you know it thinks it's not pulling anything even though it is!
-
-            var oldPullable = puller.Pulling;
-            if (oldPullable != null)
-            {
-                if (oldPullable.TryGetComponent<SharedPullableComponent>(out var oldPullableComp))
-                {
-                    if (!oldPullableComp.TryStopPull())
-                    {
-                        return;
-                    }
-                }
-                else
-                {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling (onto {0}) while presently pulling something that has no Pullable component (on {1})!", pullable.Owner, oldPullable);
-                    return;
-                }
-            }
-
-            // Ensure that the pullable is not currently being pulled.
-            // Same sort of reasons as before.
-
-            var oldPuller = pullable.Puller;
-            if (oldPuller != null)
-            {
-                if (!pullable.TryStopPull())
-                {
-                    return;
-                }
-            }
-
-            // Continue with pulling process.
-
-            var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
-
-            eventBus.RaiseLocalEvent(puller.Owner.Uid, pullAttempt, broadcast: false);
-
-            if (pullAttempt.Cancelled)
-            {
-                return;
-            }
-
-            eventBus.RaiseLocalEvent(pullable.Owner.Uid, pullAttempt);
-
-            if (pullAttempt.Cancelled)
-            {
-                return;
-            }
-
-            ForceRelationship(puller, pullable);
+        // For OnRemove use only.
+        public void ForceDisconnectPullable(SharedPullableComponent pullable)
+        {
+            ForceRelationship(null, pullable);
         }
     }
 }

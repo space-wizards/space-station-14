@@ -1,4 +1,6 @@
-﻿using Content.Shared.Movement.Components;
+﻿using Content.Shared.Pulling;
+using Content.Shared.Movement.Components;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using Component = Robust.Shared.GameObjects.Component;
@@ -6,6 +8,7 @@ using Component = Robust.Shared.GameObjects.Component;
 namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
+    [Friend(typeof(SharedPullingStateManagementSystem))]
     public class SharedPullerComponent : Component, IMoveSpeedModifier
     {
         public override string Name => "Puller";
@@ -19,12 +22,7 @@ namespace Content.Shared.Pulling.Components
 
         protected override void OnRemove()
         {
-            if (Pulling != null &&
-                Pulling.TryGetComponent(out SharedPullableComponent? pullable))
-            {
-                pullable.TryStopPull();
-            }
-
+            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
             base.OnRemove();
         }
     }

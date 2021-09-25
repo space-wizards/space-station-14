@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -19,36 +20,23 @@ namespace Content.Shared.Pulling.Components
 
         [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
 
-        public float? MaxDistance => _pullJoint?.MaxLength;
+        public float? MaxDistance => PullJoint?.MaxLength;
 
         private MapCoordinates? _movingTo;
 
-        // This isn't cleanly cut off yet because Puller gets set and that is supposed to trigger state stuff.
-        // So right now it keeps the "private" name as things get shuffled to a more ECSy approach.
-        // FRIENDZONE THESE W/ SHAREDPULLINGSYSTEM, OR EVEN MORE FINE-GRAINED THAN THAT
-        public IEntity? _puller;
-        public DistanceJoint? _pullJoint;
+        // Temporary until Friend can be applied (it applies to methods, so.)
+        public void UpdatePullerFromSharedPullingStateManagementSystem(IEntity? v) { Puller = v; }
 
         /// <summary>
         /// The current entity pulling this component.
-        /// Setting this performs the entire setup process for pulling.
+        /// Ideally, alter using TryStartPull and TryStopPull.
         /// </summary>
-        public virtual IEntity? Puller
-        {
-            get => _puller;
-            set
-            {
-                // Bit of a disparity here, because of how TryStopPull is handled
-                if (value == null)
-                {
-                    SharedPullingStateManagementSystem.ForceRelationship(null, this);
-                }
-                else
-                {
-                    SharedPullingStateManagementSystem.StartPulling(value.GetComponent<SharedPullerComponent>(), this);
-                }
-            }
-        }
+        public IEntity? Puller { get; private set; }
+        /// <summary>
+        /// The pull joint.
+        /// SharedPullingStateManagementSystem should be writing this. This means probably not you.
+        /// </summary>
+        public DistanceJoint? PullJoint { get; set; }
 
         public bool BeingPulled => Puller != null;
 
@@ -73,64 +61,6 @@ namespace Content.Shared.Pulling.Components
                     Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PullableMoveMessage());
                 }
             }
-        }
-
-        public bool TryStartPull(IEntity puller)
-        {
-            if (!EntitySystem.Get<SharedPullingSystem>().CanPull(puller, Owner))
-            {
-                return false;
-            }
-
-            TryStopPull();
-
-            Puller = puller;
-
-            if(Puller != puller)
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TryStopPull(IEntity? user = null)
-        {
-            if (!BeingPulled)
-            {
-                return false;
-            }
-
-            var msg = new StopPullingEvent(user?.Uid);
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, msg);
-
-            if (msg.Cancelled) return false;
-
-            if (user != null && user.TryGetComponent<SharedPullerComponent>(out var puller))
-            {
-                puller.Pulling = null;
-            }
-
-            Puller = null;
-            return true;
-        }
-
-        public bool TogglePull(IEntity puller)
-        {
-            if (BeingPulled)
-            {
-                if (Puller == puller)
-                {
-                    return TryStopPull();
-                }
-                else
-                {
-                    TryStopPull();
-                    return TryStartPull(puller);
-                }
-            }
-
-            return TryStartPull(puller);
         }
 
         public bool TryMoveTo(MapCoordinates to)
@@ -180,7 +110,7 @@ namespace Content.Shared.Pulling.Components
 
         protected override void OnRemove()
         {
-            TryStopPull();
+            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
             MovingTo = null;
 
             base.OnRemove();

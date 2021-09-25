@@ -4,12 +4,15 @@ using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling.Systems
 {
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,7 +31,7 @@ namespace Content.Shared.Pulling.Systems
             {
                 if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
-                    comp.TryStopPull(EntityManager.GetEntity(uid));
+                    _pullSystem.TryStopPull(comp, EntityManager.GetEntity(uid));
                 }
             }
         }

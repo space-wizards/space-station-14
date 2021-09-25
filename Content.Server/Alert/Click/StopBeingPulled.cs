@@ -1,6 +1,8 @@
 using Content.Shared.Alert;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling;
 using JetBrains.Annotations;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Alert.Click
@@ -14,7 +16,12 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
-            args.Player.GetComponentOrNull<SharedPullableComponent>()?.TryStopPull(args.Player);
+            var ps = EntitySystem.Get<SharedPullingSystem>();
+            var playerPullable = args.Player.GetComponentOrNull<SharedPullableComponent>();
+            if (playerPullable != null)
+            {
+                ps.TryStopPull(playerPullable);
+            }
         }
     }
 }
