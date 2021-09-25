@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.GameTicking;
@@ -41,7 +42,10 @@ namespace Content.Shared.Pulling
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            pullerPhysics.RemoveJoint(pullable.PullJoint!);
+            if (pullerPhysics.Joints.Contains(pullable.PullJoint!))
+            {
+                pullerPhysics.RemoveJoint(pullable.PullJoint!);
+            }
             pullable.PullJoint = null;
 
             // State shutdown
