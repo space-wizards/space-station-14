@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Access.Components;
-using Content.Server.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
