@@ -33,7 +33,7 @@ namespace Content.Benchmarks
             // Initialize component manager.
             IoCManager.InitThread();
 
-            IoCManager.Register<IComponentManager, ComponentManager>();
+            IoCManager.Register<IComponentManager, EntityManager>();
             IoCManager.Register<IRuntimeLog, RuntimeLog>();
             IoCManager.Register<ILogManager, LogManager>();
             IoCManager.Register<IDynamicTypeFactory, DynamicTypeFactory>();
