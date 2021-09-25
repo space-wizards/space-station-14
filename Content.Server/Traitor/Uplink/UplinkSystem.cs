@@ -134,8 +134,7 @@ namespace Content.Server.Traitor.Uplink.Systems
             }
 
             var uplink = uplinkEntity.EnsureComponent<UplinkComponent>();
-            uplinkEntity.EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
-                .SetAccount(uplink, account);
+            SetAccount(uplink, account);
 
             return true;
         }
