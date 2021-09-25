@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Access.Components;
-using Content.Server.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.ActionBlocker;
 using Content.Shared.PDA;
 using Content.Shared.Verbs;
@@ -62,13 +62,13 @@ namespace Content.Server.PDA
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                if (!component.Owner.TryGetComponent(out SharedItemSlotsComponent? slots))
                     return;
 
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return;
 
-                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, PenSlotName);
+                var item = EntitySystem.Get<SharedItemSlotsSystem>().PeekItemInSlot(slots, PenSlotName);
                 if (item == null)
                     return;
 
@@ -80,9 +80,9 @@ namespace Content.Server.PDA
             protected override void Activate(IEntity user, PDAComponent pda)
             {
                 var entityManager = pda.Owner.EntityManager;
-                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                 {
-                    entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                    entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
                         TryEjectContent(itemSlots, PenSlotName, user);
                 }
             }
@@ -97,13 +97,13 @@ namespace Content.Server.PDA
             {
                 data.Visibility = VerbVisibility.Invisible;
 
-                if (!component.Owner.TryGetComponent(out ItemSlotsComponent? slots))
+                if (!component.Owner.TryGetComponent(out SharedItemSlotsComponent? slots))
                     return;
 
                 if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
                     return;
 
-                var item = EntitySystem.Get<ItemSlotsSystem>().PeekItemInSlot(slots, IDSlotName);
+                var item = EntitySystem.Get<SharedItemSlotsSystem>().PeekItemInSlot(slots, IDSlotName);
                 if (item == null)
                     return;
 
@@ -115,9 +115,9 @@ namespace Content.Server.PDA
             protected override void Activate(IEntity user, PDAComponent pda)
             {
                 var entityManager = pda.Owner.EntityManager;
-                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                 {
-                    entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                    entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
                         TryEjectContent(itemSlots, IDSlotName, user);
                 }
             }

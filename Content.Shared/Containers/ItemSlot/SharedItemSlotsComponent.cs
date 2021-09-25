@@ -9,14 +9,14 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 
-namespace Content.Server.Containers.ItemSlots
+namespace Content.Shared.Containers.ItemSlots
 {
     /// <summary>
     ///     Used for entities that can hold items in different slots
     ///     Allows basic insert/eject interaction
     /// </summary>
     [RegisterComponent]
-    public class ItemSlotsComponent : Component
+    public class SharedItemSlotsComponent : Component
     {
         public override string Name => "ItemSlots";
 

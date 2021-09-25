@@ -1,6 +1,6 @@
 using System.Linq;
 using Content.Server.Access.Components;
-using Content.Server.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -135,9 +135,9 @@ namespace Content.Server.Sandbox
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                         {
-                            _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
+                            _entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
                                 TryInsertContent(itemSlots, newID, PDAComponent.IDSlotName);
                         }
                     }

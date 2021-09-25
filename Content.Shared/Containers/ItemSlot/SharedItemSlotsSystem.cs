@@ -1,7 +1,6 @@
-using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Shared.ActionBlocker;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Content.Shared.Notification.Managers;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -9,20 +8,20 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
-namespace Content.Server.Containers.ItemSlots
+namespace Content.Shared.Containers.ItemSlots
 {
-    public class ItemSlotsSystem : EntitySystem
+    public class SharedItemSlotsSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<ItemSlotsComponent, MapInitEvent>(OnMapInit);
-            SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<SharedItemSlotsComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<SharedItemSlotsComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<SharedItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
         }
 
-        private void OnComponentInit(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
+        private void OnComponentInit(EntityUid uid, SharedItemSlotsComponent itemSlots, ComponentInit args)
         {
             // create container for each slot 
             foreach (var pair in itemSlots.Slots)
@@ -34,7 +33,7 @@ namespace Content.Server.Containers.ItemSlots
             }
         }
 
-        private void OnMapInit(EntityUid uid, ItemSlotsComponent itemSlots, MapInitEvent args)
+        private void OnMapInit(EntityUid uid, SharedItemSlotsComponent itemSlots, MapInitEvent args)
         {
             foreach (var pair in itemSlots.Slots)
             {
@@ -56,7 +55,7 @@ namespace Content.Server.Containers.ItemSlots
             }
         }
 
-        private void OnInteractUsing(EntityUid uid, ItemSlotsComponent itemSlots, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, SharedItemSlotsComponent itemSlots, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
@@ -68,7 +67,7 @@ namespace Content.Server.Containers.ItemSlots
         ///     Tries to insert item in any fitting item slot from users hand
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, IEntity user)
+        public bool TryInsertContent(SharedItemSlotsComponent itemSlots, IEntity item, IEntity user)
         {
             foreach (var pair in itemSlots.Slots)
             {
@@ -83,7 +82,7 @@ namespace Content.Server.Containers.ItemSlots
                 if (slot.ContainerSlot.Contains(item))
                     continue;
 
-                if (!user.TryGetComponent(out HandsComponent? hands))
+                if (!user.TryGetComponent(out SharedHandsComponent? hands))
                 {
                     itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
                     return true;
@@ -95,12 +94,12 @@ namespace Content.Server.Containers.ItemSlots
                     swap = slot.ContainerSlot.ContainedEntity;
 
                 // return if user can't drop active item in hand
-                if (!hands.Drop(item))
+                if (!hands.TryDropEntityToFloor(item))
                     return true;
 
                 // swap item in hand and item in slot
-                if (swap != null && swap.TryGetComponent<ItemComponent>(out var itemComp))
-                    hands.PutInHand(itemComp);
+                if (swap != null)
+                    hands.TryPutInAnyHand(swap);
 
                 // insert item
                 slot.ContainerSlot.Insert(item);
@@ -120,7 +119,7 @@ namespace Content.Server.Containers.ItemSlots
         ///     Tries to insert item in known slot. Doesn't interact with user
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertContent(ItemSlotsComponent itemSlots, IEntity item, string slotName)
+        public bool TryInsertContent(SharedItemSlotsComponent itemSlots, IEntity item, string slotName)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return false;
@@ -141,7 +140,7 @@ namespace Content.Server.Containers.ItemSlots
         ///     Check if slot has some content in it (without ejecting item)
         /// </summary>
         /// <returns>Null if doesn't have any content</returns>
-        public IEntity? PeekItemInSlot(ItemSlotsComponent itemSlots, string slotName)
+        public IEntity? PeekItemInSlot(SharedItemSlotsComponent itemSlots, string slotName)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return null;
@@ -153,7 +152,7 @@ namespace Content.Server.Containers.ItemSlots
         /// <summary>
         ///     Try to eject item from slot to users hands
         /// </summary>
-        public bool TryEjectContent(ItemSlotsComponent itemSlots, string slotName, IEntity? user)
+        public bool TryEjectContent(SharedItemSlotsComponent itemSlots, string slotName, IEntity? user)
         {
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return false;
@@ -168,12 +167,9 @@ namespace Content.Server.Containers.ItemSlots
             // try eject item to users hand
             if (user != null)
             {
-                if (user.TryGetComponent(out HandsComponent? hands))
+                if (user.TryGetComponent(out SharedHandsComponent? hands))
                 {
-                    if (item.TryGetComponent<ItemComponent>(out var itemComp))
-                    {
-                        hands.PutInHandOrDrop(itemComp);
-                    }
+                    hands.TryPutInAnyHand(item);
                 }
                 else
                 {

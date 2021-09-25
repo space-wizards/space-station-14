@@ -1,5 +1,5 @@
 using Content.Server.Access.Components;
-using Content.Server.Containers.ItemSlots;
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
@@ -17,7 +17,7 @@ namespace Content.Server.PDA
 {
     public class PDASystem : EntitySystem
     {
-        [Dependency] private readonly ItemSlotsSystem _slotsSystem = default!;
+        [Dependency] private readonly SharedItemSlotsSystem _slotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 
@@ -51,7 +51,7 @@ namespace Content.Server.PDA
             {
                 // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
-                if (ComponentManager.TryGetComponent(uid, out ItemSlotsComponent? itemSlots))
+                if (ComponentManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
                     _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlotName);
             }
         }
@@ -161,13 +161,13 @@ namespace Content.Server.PDA
 
                 case PDAEjectIDMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                             _slotsSystem.TryEjectContent(itemSlots, PDAComponent.IDSlotName, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                             _slotsSystem.TryEjectContent(itemSlots, PDAComponent.PenSlotName, msg.Session.AttachedEntity);
                         break;
                     }

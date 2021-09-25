@@ -1,18 +1,18 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Containers.ItemSlots
+namespace Content.Shared.Containers.ItemSlots
 {
     /// <summary>
-    ///     Item was placed in or removed from one of the slots in <see cref="ItemSlotsComponent"/> 
+    ///     Item was placed in or removed from one of the slots in <see cref="SharedItemSlotsComponent"/> 
     /// </summary>
     public class ItemSlotChanged : EntityEventArgs
     {
-        public ItemSlotsComponent SlotsComponent;
+        public SharedItemSlotsComponent SlotsComponent;
         public string SlotName;
         public ItemSlot Slot;
         public readonly EntityUid? ContainedItem;
 
-        public ItemSlotChanged(ItemSlotsComponent slotsComponent, string slotName, ItemSlot slot)
+        public ItemSlotChanged(SharedItemSlotsComponent slotsComponent, string slotName, ItemSlot slot)
         {
             SlotsComponent = slotsComponent;
             SlotName = slotName;
