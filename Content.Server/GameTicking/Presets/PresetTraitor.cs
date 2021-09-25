@@ -12,6 +12,7 @@ using Content.Server.Players;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Inventory;
@@ -126,7 +127,8 @@ namespace Content.Server.GameTicking.Presets
                 var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
                 _uplinkManager.AddNewAccount(uplinkAccount);
 
-                if (!UplinkExtensions.AddUplink(mind.OwnedEntity, uplinkAccount))
+                if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
 
                 var traitorRole = new TraitorRole(mind);

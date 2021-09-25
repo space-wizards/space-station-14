@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Traitor.Uplink;
@@ -45,6 +46,7 @@ namespace Content.Server.Traitor.Uplink.Commands
 
             // Get target item
             IEntity? uplinkEntity = null;
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             if (args.Length >= 2)
             {
                 if (!int.TryParse(args[1], out var itemID))
@@ -53,7 +55,6 @@ namespace Content.Server.Traitor.Uplink.Commands
                     return;
                 }
 
-                var entityManager = IoCManager.Resolve<IEntityManager>();
                 var eUid = new EntityUid(itemID);
                 if (!eUid.IsValid() || !entityManager.EntityExists(eUid))
                 {
@@ -81,7 +82,8 @@ namespace Content.Server.Traitor.Uplink.Commands
             }
 
             // Finally add uplink
-            if (!UplinkExtensions.AddUplink(user, uplinkAccount!, uplinkEntity))
+            if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                .AddUplink(user, uplinkAccount!, uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("Failed to add uplink to the player"));
                 return;

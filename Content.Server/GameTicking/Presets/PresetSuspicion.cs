@@ -9,6 +9,7 @@ using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Roles;
@@ -120,7 +121,8 @@ namespace Content.Server.GameTicking.Presets
                 _uplinkManager.AddNewAccount(uplinkAccount);
 
                 // try to place uplink
-                if (!UplinkExtensions.AddUplink(mind.OwnedEntity, uplinkAccount))
+                if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
             }
 

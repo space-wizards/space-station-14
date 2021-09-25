@@ -30,6 +30,7 @@ using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Traitor.Uplink;
 using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Systems;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -107,7 +108,8 @@ namespace Content.Server.GameTicking.Presets
                 // Like normal traitors, they need access to a traitor account.
                 var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
                 _uplinkManager.AddNewAccount(uplinkAccount);
-                UplinkExtensions.AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
+                _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
 
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
