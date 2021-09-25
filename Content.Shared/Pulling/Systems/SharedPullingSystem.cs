@@ -125,7 +125,16 @@ namespace Content.Shared.Pulling
         private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
+
             if (!TryGetPulled(ev.Sender, out var pulled))
+            {
+                return;
+            }
+
+            // The pulled object may have already been deleted.
+            // TODO: Work out why. Monkey + meat spike is a good test for this,
+            //  assuming you're still pulling the monkey when it gets gibbed.
+            if (pulled.Deleted)
             {
                 return;
             }

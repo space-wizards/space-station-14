@@ -51,6 +51,10 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var pullable in _pullableSystem.Moving)
             {
+                // There's a 1-frame delay between stopping moving something and it leaving the Moving set.
+                // This can include if leaving the Moving set due to not being pulled anymore,
+                //  or due to being deleted.
+
                 if (pullable.Deleted)
                 {
                     continue;
@@ -61,7 +65,12 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                DebugTools.AssertNotNull(pullable.Puller);
+                if (pullable.Puller == null)
+                {
+                    continue;
+                }
+
+                // Now that's over with...
 
                 var pullerPosition = pullable.Puller!.Transform.MapPosition;
                 if (pullable.MovingTo.Value.MapId != pullerPosition.MapId)

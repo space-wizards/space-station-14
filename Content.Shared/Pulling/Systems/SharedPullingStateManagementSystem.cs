@@ -11,12 +11,13 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics.Joints;
 using Robust.Shared.Players;
-using Robust.Shared.Log;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Pulling
 {
@@ -41,32 +42,42 @@ namespace Content.Shared.Pulling
 
             var eventBus = (pullable?.Owner ?? puller?.Owner)!.EntityManager.EventBus;
 
-            var pullerPhysics = puller?.Owner.GetComponent<PhysicsComponent>();
-            var pullablePhysics = pullable?.Owner.GetComponent<PhysicsComponent>();
+            var pullerPhysics = puller?.Owner.GetComponentOrNull<PhysicsComponent>();
+            var pullablePhysics = pullable?.Owner.GetComponentOrNull<PhysicsComponent>();
 
             // Start by disconnecting the puller from whatever it is currently connected to.
             var pullerOldPullableE = puller?.Pulling;
             if (pullerOldPullableE != null)
             {
+                // It's important to note: This *can* return null if we're doing this because the component is being removed.
+                // Therefore, parts that rely on this component must be skippable.
+                pullerOldPullableE.TryGetComponent<SharedPullableComponent>(out var pullerOldPullable);
+
                 // Joint shutdown
-                var pullerOldPullable = pullerOldPullableE.GetComponent<SharedPullableComponent>();
-                if (pullerOldPullable.PullJoint != null)
+                if (pullerOldPullable?.PullJoint != null)
                 {
-                    pullerPhysics!.RemoveJoint(pullerOldPullable.PullJoint);
+                    pullerPhysics?.RemoveJoint(pullerOldPullable.PullJoint);
+                    pullerOldPullable.PullJoint = null;
                 }
-                pullerOldPullable.PullJoint = null;
 
                 // State shutdown
                 puller!.Pulling = null;
-                pullerOldPullable.UpdatePullerFromSharedPullingStateManagementSystem(null);
+                pullerOldPullable?.UpdatePullerFromSharedPullingStateManagementSystem(null);
 
                 // Messaging
                 var message = new PullStoppedMessage(pullerPhysics!, pullerOldPullableE.GetComponent<IPhysBody>());
 
                 eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-                eventBus.RaiseLocalEvent(pullerOldPullableE.Uid, message);
+                // TODO: FIGURE OUT WHY THIS CRASHES IF THE COMPONENT IS BEING REMOVED.
+                // TODO: Work out why. Monkey + meat spike is a good test for this,
+                //  assuming you're still pulling the monkey when it gets gibbed.
+                if (pullerOldPullable != null)
+                {
+                    eventBus.RaiseLocalEvent(pullerOldPullableE.Uid, message);
+                }
 
-                pullerOldPullable.Dirty();
+                // Networking
+                pullerOldPullable?.Dirty();
             }
 
             // Continue by doing that with the pullable.
@@ -79,6 +90,10 @@ namespace Content.Shared.Pulling
 
             if ((puller != null) && (pullable != null))
             {
+                // Physics final sanity check
+                DebugTools.AssertNotNull(pullerPhysics);
+                DebugTools.AssertNotNull(pullablePhysics);
+
                 // State startup
                 puller.Pulling = pullable.Owner;
                 pullable.UpdatePullerFromSharedPullingStateManagementSystem(puller.Owner);
@@ -99,6 +114,9 @@ namespace Content.Shared.Pulling
                 pullable.PullJoint.MaxLength = length;
             }
 
+            // Update puller state.
+            // This might be better suited to an event handler somewhere, not sure.
+
             if (puller != null)
             {
                 if (puller.Owner.TryGetComponent<MovementSpeedModifierComponent>(out var speed))
@@ -107,6 +125,7 @@ namespace Content.Shared.Pulling
                 }
             }
 
+            // Networking
             puller?.Dirty();
             pullable?.Dirty();
         }
