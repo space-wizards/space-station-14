@@ -17,7 +17,6 @@ namespace Content.Server.PDA
 {
     public class PDASystem : EntitySystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ItemSlotsSystem _slotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
@@ -51,8 +50,8 @@ namespace Content.Server.PDA
             if (!string.IsNullOrEmpty(pda.StartingIdCard))
             {
                 // if pda prototype doesn't have slots, ID will drop down on ground 
-                var idCard = _entityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
-                if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
+                var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
+                if (ComponentManager.TryGetComponent(uid, out ItemSlotsComponent? itemSlots))
                     _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlotName);
             }
         }
