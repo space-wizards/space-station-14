@@ -25,7 +25,7 @@ namespace Content.Shared.Damage
         /// </summary>
         private void DamageableInit(EntityUid uid, DamageableComponent component, ComponentInit _)
         {
-            if (component.DamageContainerID != null && 
+            if (component.DamageContainerID != null &&
                 _prototypeManager.TryIndex<DamageContainerPrototype>(component.DamageContainerID,
                 out var damageContainerPrototype))
             {
@@ -118,11 +118,11 @@ namespace Content.Shared.Damage
             }
 
             // Apply resistances
-            if (!ignoreResistances && damageable.ResistanceSetID != null)
+            if (!ignoreResistances && damageable.DamageModifierSetId != null)
             {
-                if (_prototypeManager.TryIndex<ResistanceSetPrototype>(damageable.ResistanceSetID, out var resistanceSet))
+                if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
-                    damage = DamageSpecifier.ApplyResistanceSet(damage, resistanceSet);
+                    damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
 
                 if (damage.Empty)
@@ -174,7 +174,7 @@ namespace Content.Shared.Damage
 
         private void DamageableGetState(EntityUid uid, DamageableComponent component, ref ComponentGetState args)
         {
-            args.State = new DamageableComponentState(component.Damage.DamageDict, component.ResistanceSetID);
+            args.State = new DamageableComponentState(component.Damage.DamageDict, component.DamageModifierSetId);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -184,7 +184,7 @@ namespace Content.Shared.Damage
                 return;
             }
 
-            component.ResistanceSetID = state.ResistanceSetID;
+            component.DamageModifierSetId = state.ModifierSetId;
 
             // Has the damage actually changed?
             DamageSpecifier newDamage = new() { DamageDict = state.DamageDict };
@@ -202,7 +202,7 @@ namespace Content.Shared.Damage
     public class DamageChangedEvent : EntityEventArgs
     {
         /// <summary>
-        ///     This is the component whose damage was changed.  
+        ///     This is the component whose damage was changed.
         /// </summary>
         /// <remarks>
         ///     Given that nearly every component that cares about a change in the damage, needs to know the

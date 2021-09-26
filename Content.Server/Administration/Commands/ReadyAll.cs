@@ -1,5 +1,6 @@
 ﻿using Content.Server.GameTicking;
 using Content.Shared.Administration;
+using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -11,7 +12,7 @@ namespace Content.Server.Administration.Commands
     public class ReadyAll : IConsoleCommand
     {
         public string Command => "readyall";
-        public string Description => "Readies up all players in the lobby.";
+        public string Description => "Readies up all players in the lobby, except for observers.";
         public string Help => $"{Command} | ̣{Command} <ready>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -23,7 +24,6 @@ namespace Content.Server.Administration.Commands
             }
 
             var gameTicker = EntitySystem.Get<GameTicker>();
-            var playerManager = IoCManager.Resolve<IPlayerManager>();
 
 
             if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
@@ -32,9 +32,10 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            foreach (var p in playerManager.GetAllPlayers())
+            foreach (var (player, status) in gameTicker.PlayersInLobby)
             {
-                gameTicker.ToggleReady(p, ready);
+                if(status != LobbyPlayerStatus.Observer)
+                    gameTicker.ToggleReady(player, ready);
             }
         }
     }

@@ -12,9 +12,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Light.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IHotItem))]
     [Friend(typeof(MatchstickSystem))]
-    public class MatchstickComponent : Component, IHotItem
+    public class MatchstickComponent : Component
     {
         public override string Name => "Matchstick";
 
@@ -41,10 +40,5 @@ namespace Content.Server.Light.Components
         /// </summary>
         [ComponentDependency]
         public readonly PointLightComponent? PointLightComponent = default!;
-
-        bool IHotItem.IsCurrentlyHot()
-        {
-            return CurrentState == SharedBurningStates.Lit;
-        }
     }
 }
