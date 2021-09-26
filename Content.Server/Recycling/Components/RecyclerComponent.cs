@@ -13,6 +13,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Recycling;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -27,27 +28,24 @@ namespace Content.Server.Recycling.Components
 {
     // TODO: Add sound and safe beep
     [RegisterComponent]
+    [Friend(typeof(RecyclerSystem))]
     public class RecyclerComponent : Component, ISuicideAct
     {
         public override string Name => "Recycler";
 
-        public List<IEntity> Intersecting { get; set; } = new();
-
         /// <summary>
         ///     Whether or not sentient beings will be recycled
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("safe")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("safe")]
         internal bool Safe = true;
 
         /// <summary>
         ///     The percentage of material that will be recovered
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("efficiency")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("efficiency")]
         internal float Efficiency = 0.25f;
-
-        internal bool Powered =>
-            !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) ||
-            receiver.Powered;
 
         private void Clean()
         {
@@ -55,53 +53,6 @@ namespace Content.Server.Recycling.Components
             {
                 appearance.SetData(RecyclerVisuals.Bloody, false);
             }
-        }
-
-        public bool CanRun()
-        {
-            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
-                !receiver.Powered)
-            {
-                return false;
-            }
-
-            if (Owner.HasComponent<ItemComponent>())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool CanMove(IEntity entity)
-        {
-            if (entity == Owner)
-            {
-                return false;
-            }
-
-            if (!entity.TryGetComponent(out IPhysBody? physics) ||
-                physics.BodyType == BodyType.Static)
-            {
-                return false;
-            }
-
-            if (entity.HasComponent<ConveyorComponent>())
-            {
-                return false;
-            }
-
-            if (entity.HasComponent<IMapGridComponent>())
-            {
-                return false;
-            }
-
-            if (entity.IsInContainer())
-            {
-                return false;
-            }
-
-            return true;
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

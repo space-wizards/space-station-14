@@ -1,5 +1,4 @@
-using Content.Server.Chemistry.Components;
-using Content.Shared.Interaction;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.Sound;
 using Robust.Shared.Containers;
@@ -9,7 +8,6 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Kitchen.Components
 {
-
     /// <summary>
     /// The combo reagent grinder/juicer. The reason why grinding and juicing are seperate is simple,
     /// think of grinding as a utility to break an object down into its reagents. Think of juicing as
@@ -24,7 +22,7 @@ namespace Content.Server.Kitchen.Components
         /// <summary>
         /// Can be null since we won't always have a beaker in the grinder.
         /// </summary>
-        [ViewVariables] public SolutionContainerComponent? HeldBeaker = default!;
+        [ViewVariables] public Solution? HeldBeaker = default!;
 
         /// <summary>
         /// Contains the things that are going to be ground or juiced.

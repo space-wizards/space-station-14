@@ -3,6 +3,8 @@
   name: extinguisher cabinet
   description: A small wall mounted cabinet designed to hold a fire extinguisher.
   components:
+    - type: Transform
+      anchored: true
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite

@@ -52,6 +52,8 @@ namespace Content.Server.VendingMachines
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
 
+        public bool Broken => _broken;
+
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
             if(!eventArgs.User.TryGetComponent(out ActorComponent? actor))
@@ -129,18 +131,6 @@ namespace Content.Server.VendingMachines
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
-
-            // Pause/resume advertising if advertising component exists and not broken
-            if (!Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent) || _broken) return;
-
-            if (Powered)
-            {
-                advertiseComponent.Resume();
-            }
-            else
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -250,11 +240,6 @@ namespace Content.Server.VendingMachines
         {
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
-
-            if (Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent))
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         public enum Wires

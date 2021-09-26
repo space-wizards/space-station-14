@@ -50,8 +50,8 @@ namespace Content.Shared.Roles
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        [DataField("special")]
-        public JobSpecial? Special { get; private set; }
+        [DataField("special", serverOnly:true)]
+        public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();

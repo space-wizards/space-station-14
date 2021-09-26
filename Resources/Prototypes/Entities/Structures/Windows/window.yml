@@ -30,7 +30,8 @@
       mask:
       - VaultImpassable
   - type: Damageable
-    resistances: glassResistances
+    damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: Repairable
   - type: Destructible
     thresholds:

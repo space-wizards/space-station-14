@@ -96,4 +96,20 @@ namespace Content.Shared.Hands
             HandName = handName;
         }
     }
+
+    /// <summary>
+    ///     Raised directed on both the blocking entity and user when
+    ///     a virtual hand item is deleted.
+    /// </summary>
+    public class VirtualItemDeletedEvent : EntityEventArgs
+    {
+        public EntityUid BlockingEntity;
+        public EntityUid User;
+
+        public VirtualItemDeletedEvent(EntityUid blockingEntity, EntityUid user)
+        {
+            BlockingEntity = blockingEntity;
+            User = user;
+        }
+    }
 }

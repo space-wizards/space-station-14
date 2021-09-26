@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -36,14 +37,16 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
 
-        [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ushort Count;
 
         protected override void Initialize()
         {
             base.Initialize();
             Count = _totalCount;
             Owner.EnsureComponent<FoodComponent>();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, FoodComponent.SolutionName);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -52,10 +55,12 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, FoodComponent.SolutionName, out var solution))
             {
                 return false;
             }
+
             if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
@@ -79,7 +84,9 @@ namespace Content.Server.Nutrition.Components
                 Owner.Delete();
                 return true;
             }
-            solution.TryRemoveReagent("Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
+
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(Owner.Uid, solution, "Nutriment",
+                solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }
 

@@ -8,7 +8,9 @@
     sprite: Objects/Weapons/Melee/gohei.rsi
     state: gohei
   - type: MeleeWeapon
-    damage: 3 ##You'd be better off punching people
+    damage:
+      types:
+        Blunt: 3 #You'd be better off punching people
   - type: Item
     size: 12
     sprite: Objects/Weapons/Melee/gohei.rsi

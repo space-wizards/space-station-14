@@ -3,51 +3,57 @@
   name: smoke
   abstract: true
   components:
-    - type: Sprite
-      drawdepth: Effects
-      sprite: Effects/chemsmoke.rsi
-      state: chemsmoke
-    - type: Appearance
-      visuals:
-        - type: SmokeVisualizer
-    - type: Occluder
-    - type: SnapGrid
-    - type: SmokeSolutionAreaEffect
-    - type: SolutionContainer
-      maxVol: 600
+  - type: Sprite
+    drawdepth: Effects
+    sprite: Effects/chemsmoke.rsi
+    state: chemsmoke
+  - type: Appearance
+    visuals:
+      - type: SmokeVisualizer
+  - type: Occluder
+  - type: Transform
+    anchored: true
+  - type: SmokeSolutionAreaEffect
+  - type: SolutionContainerManager
+    solutions:
+      smoke:
+        maxVol: 600
 
 - type: entity
   id: Foam
   name: foam
   abstract: true
   components:
-    - type: Sprite
-      netsync: false
-      drawdepth: Effects
-      color: "#ffffffcc" #Add some transparency
-      sprite: Effects/foam.rsi
-      state: foam
-      layers:
-        - state: foam
-          map: ["enum.FoamVisualLayers.Base"]
-    - type: AnimationPlayer
-    - type: Appearance
-      visuals:
-        - type: FoamVisualizer
-          animationTime: 0.6
-          animationState: foam-dissolve
-    - type: SnapGrid
-    - type: Physics
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-        layer:
-        - MobImpassable
-    - type: FoamSolutionAreaEffect
-    - type: SolutionContainer
-      maxVol: 600
-    - type: Slippery
+  - type: Sprite
+    netsync: false
+    drawdepth: Effects
+    color: "#ffffffcc" #Add some transparency
+    sprite: Effects/foam.rsi
+    state: foam
+    layers:
+      - state: foam
+        map: ["enum.FoamVisualLayers.Base"]
+  - type: AnimationPlayer
+  - type: Appearance
+    visuals:
+      - type: FoamVisualizer
+        animationTime: 0.6
+        animationState: foam-dissolve
+  - type: Transform
+    anchored: true
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+      layer:
+      - MobImpassable
+  - type: FoamSolutionAreaEffect
+  - type: SolutionContainerManager
+    solutions:
+      foam:
+        maxVol: 600
+  - type: Slippery
 
 - type: entity
   id: IronMetalFoam
@@ -55,18 +61,18 @@
   abstract: true
   parent: Foam
   components:
-    - type: Sprite
-      state: mfoam
-      layers:
-        - state: mfoam
-          map: ["enum.FoamVisualLayers.Base"]
-    - type: Appearance
-      visuals:
-        - type: FoamVisualizer
-          animationTime: 0.6
-          animationState: mfoam-dissolve
-    - type: FoamSolutionAreaEffect
-      foamedMetalPrototype: FoamedIronMetal
+  - type: Sprite
+    state: mfoam
+    layers:
+    - state: mfoam
+      map: ["enum.FoamVisualLayers.Base"]
+  - type: Appearance
+    visuals:
+    - type: FoamVisualizer
+      animationTime: 0.6
+      animationState: mfoam-dissolve
+  - type: FoamSolutionAreaEffect
+    foamedMetalPrototype: FoamedIronMetal
 
 - type: entity
   id: AluminiumMetalFoam
@@ -74,18 +80,18 @@
   abstract: true
   parent: Foam
   components:
-    - type: Sprite
-      state: mfoam
-      layers:
-        - state: mfoam
-          map: ["enum.FoamVisualLayers.Base"]
-    - type: Appearance
-      visuals:
-        - type: FoamVisualizer
-          animationTime: 0.6
-          animationState: mfoam-dissolve
-    - type: FoamSolutionAreaEffect
-      foamedMetalPrototype: FoamedAluminiumMetal
+  - type: Sprite
+    state: mfoam
+    layers:
+      - state: mfoam
+        map: ["enum.FoamVisualLayers.Base"]
+  - type: Appearance
+    visuals:
+      - type: FoamVisualizer
+        animationTime: 0.6
+        animationState: mfoam-dissolve
+  - type: FoamSolutionAreaEffect
+    foamedMetalPrototype: FoamedAluminiumMetal
 
 - type: entity
   id: BaseFoamedMetal
@@ -96,37 +102,39 @@
     snap:
       - Wall
   components:
-    - type: RCDDeconstructWhitelist
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Sprite
-      netsync: false
-      drawdepth: Walls
-    - type: Physics
-      fixtures:
-      - shape:
-          !type:PhysShapeAabb {}
-        layer:
-          - Opaque
-          - Impassable
-          - MobImpassable
-          - VaultImpassable
-          - SmallImpassable
-    - type: Occluder
-      sizeX: 32
-      sizeY: 32
-    - type: SnapGrid
-    - type: Airtight
-    - type: Damageable
-      resistances: metallicResistances
-    - type: Destructible
-      thresholds:
-      - trigger:
-          !type:DamageTrigger
-          damage: 50
-        behaviors:
-        - !type:DoActsBehavior
-          acts: [ "Destruction" ]
+  - type: RCDDeconstructWhitelist
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    netsync: false
+    drawdepth: Walls
+  - type: Physics
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb {}
+      layer:
+        - Opaque
+        - Impassable
+        - MobImpassable
+        - VaultImpassable
+        - SmallImpassable
+  - type: Occluder
+    sizeX: 32
+    sizeY: 32
+  - type: Transform
+    anchored: true
+  - type: Airtight
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   id: FoamedIronMetal
@@ -134,9 +142,9 @@
   description: "For sealing hull breaches."
   parent: BaseFoamedMetal
   components:
-    - type: Sprite
-      sprite: Effects/foam.rsi
-      state: ironfoam
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: ironfoam
 
 - type: entity
   id: FoamedAluminiumMetal
@@ -144,6 +152,6 @@
   description: "For sealing hull breaches."
   parent: BaseFoamedMetal
   components:
-    - type: Sprite
-      sprite: Effects/foam.rsi
-      state: metalfoam
+  - type: Sprite
+    sprite: Effects/foam.rsi
+    state: metalfoam
