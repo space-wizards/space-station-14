@@ -49,7 +49,7 @@ namespace Content.Server.Stack
             // Set the output parameter in the event instance to the newly split stack.
             var entity = EntityManager.SpawnEntity(prototype, spawnPosition);
 
-            if (ComponentManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
+            if (EntityManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
             {
                 // Set the split stack's count.
                 SetCount(entity.Uid, amount, stackComp);
@@ -65,7 +65,7 @@ namespace Content.Server.Stack
         {
             // Set the output result parameter to the new stack entity...
             var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
-            var stack = ComponentManager.GetComponent<StackComponent>(entity.Uid);
+            var stack = EntityManager.GetComponent<StackComponent>(entity.Uid);
 
             // And finally, set the correct amount!
             SetCount(entity.Uid, amount, stack);
