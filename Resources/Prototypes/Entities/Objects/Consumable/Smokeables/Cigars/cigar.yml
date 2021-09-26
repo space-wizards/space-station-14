@@ -3,12 +3,10 @@
 
 - type: entity
   id: Cigar
-  parent: BaseSmokeable
+  parent: BaseCigar
   name: cigar
   description: "A brown roll of tobacco and... well, you're not quite sure."
   components:
-  - type: Smoking
-    duration: 70
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigars/cigar.rsi
     netsync: false

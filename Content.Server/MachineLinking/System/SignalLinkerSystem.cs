@@ -7,15 +7,12 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Exceptions;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
