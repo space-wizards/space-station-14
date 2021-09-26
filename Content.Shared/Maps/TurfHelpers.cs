@@ -181,7 +181,7 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = EntitySystem.Get<SharedBroadphaseSystem>();
+            var physics = EntitySystem.Get<SharedPhysicsSystem>();
 
             var worldBox = GetWorldTileBox(turf);
 
