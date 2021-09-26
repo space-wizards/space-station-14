@@ -34,7 +34,7 @@ namespace Content.Client.HealthOverlay.UI
             {
                 Visible = false,
                 VerticalAlignment = VAlignment.Center,
-                Color = Color.Green
+                Color = Color.LimeGreen
             };
 
             AddChild(Panel = new PanelContainer

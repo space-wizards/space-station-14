@@ -111,7 +111,7 @@ namespace Content.Client.Suspicion
             buttonText = Loc.GetString(buttonText);
 
             RoleButton.Text = buttonText;
-            RoleButton.ModulateSelfOverride = _previousAntagonist ? Color.Red : Color.Green;
+            RoleButton.ModulateSelfOverride = _previousAntagonist ? Color.Red : Color.LimeGreen;
 
             Visible = true;
         }

@@ -23,7 +23,7 @@ namespace Content.Server.Nutrition.Components
     /// TODO: Allow suicide via excessive Smoking
     /// </summary>
     [RegisterComponent]
-    public class SmokingComponent : Component, IInteractUsing, IHotItem
+    public class SmokingComponent : Component, IInteractUsing
     {
         public override string Name => "Smoking";
 
@@ -50,7 +50,7 @@ namespace Content.Server.Nutrition.Components
         //private float _temperature = 673.15f;
 
         [ViewVariables]
-        private SharedBurningStates CurrentState
+        public SharedBurningStates CurrentState
         {
             get => _currentState;
             set
@@ -76,25 +76,23 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
+        // TODO: ECS this method and component.
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            if (eventArgs.Using.TryGetComponent(out IHotItem? lighter)
-                && lighter.IsCurrentlyHot()
-                && CurrentState == SharedBurningStates.Unlit
-            )
-            {
-                CurrentState = SharedBurningStates.Lit;
-                // TODO More complex handling of cigar consumption
-                Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
-                return true;
-            }
+            if (CurrentState != SharedBurningStates.Unlit)
+                return false;
 
-            return false;
-        }
+            var isHotEvent = new IsHotEvent();
+            Owner.EntityManager.EventBus.RaiseLocalEvent(eventArgs.Using.Uid, isHotEvent, false);
 
-        bool IHotItem.IsCurrentlyHot()
-        {
-            return _currentState == SharedBurningStates.Lit;
+            if (!isHotEvent.IsHot)
+                return false;
+
+            CurrentState = SharedBurningStates.Lit;
+            // TODO More complex handling of cigar consumption
+            Owner.SpawnTimer(_duration * 1000, () => CurrentState = SharedBurningStates.Burnt);
+            return true;
+
         }
     }
 }

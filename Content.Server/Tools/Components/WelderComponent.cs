@@ -33,9 +33,8 @@ namespace Content.Server.Tools.Components
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    [ComponentReference(typeof(IHotItem))]
     [NetworkedComponent()]
-    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IHotItem, IAfterInteract
+    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -96,11 +95,6 @@ namespace Content.Server.Tools.Components
                 _welderLit = value;
                 Dirty();
             }
-        }
-
-        bool IHotItem.IsCurrentlyHot()
-        {
-            return WelderLit;
         }
 
         protected override void Initialize()

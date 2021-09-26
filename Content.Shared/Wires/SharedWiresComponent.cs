@@ -208,7 +208,7 @@ namespace Content.Shared.Wires
             {
                 WireColor.Red => Color.Red,
                 WireColor.Blue => Color.Blue,
-                WireColor.Green => Color.Green,
+                WireColor.Green => Color.LimeGreen,
                 WireColor.Orange => Color.Orange,
                 WireColor.Brown => Color.Brown,
                 WireColor.Gold => Color.Gold,

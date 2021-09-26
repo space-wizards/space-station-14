@@ -102,7 +102,7 @@ namespace Content.Client.StationEvents
             }
 
             _transitions[entity] = (!easingIn, transitionTime);
-            _colors[entity] = Color.Green.WithAlpha(0.0f);
+            _colors[entity] = Color.LimeGreen.WithAlpha(0.0f);
             _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
         }
 

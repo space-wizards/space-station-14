@@ -2,6 +2,8 @@
   id: MarkerBase
   abstract: true
   components:
+  - type: Transform
+    anchored: true
   - type: Marker
   - type: Clickable
   - type: InteractionOutline
@@ -11,4 +13,4 @@
 #    layers:
 #      - state: blue
   placement:
-    mode: AlignTileAny
+    mode: SnapgridCenter

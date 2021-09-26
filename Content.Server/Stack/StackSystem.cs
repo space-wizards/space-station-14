@@ -73,6 +73,9 @@ namespace Content.Server.Stack
 
         private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!args.Used.TryGetComponent<StackComponent>(out var otherStack))
                 return;
 

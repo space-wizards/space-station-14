@@ -1,8 +1,6 @@
 using System;
-using System.CodeDom;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Hands.Components;
@@ -17,7 +15,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -74,19 +71,21 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             return true;
         }
 
-        private void DirtyUI(EntityUid uid)
+        private void DirtyUI(EntityUid uid,
+            GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null,
+            ContainerManagerComponent? containerManager = null, IMetaDataComponent? metadata = null)
         {
-            if (!ComponentManager.TryGetComponent(uid, out IMetaDataComponent? metadata)
-            || !ComponentManager.TryGetComponent(uid, out GasCanisterComponent? canister)
-            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode))
+            if (!Resolve(uid, ref metadata, ref canister, ref nodeContainer, ref containerManager))
                 return;
 
+            var portStatus = false;
             string? tankLabel = null;
             var tankPressure = 0f;
 
-            if (ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
-                && containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
+            if (nodeContainer.TryGetNode(canister.PortName, out PipeNode? portNode) && portNode.NodeGroup?.Nodes.Count > 1)
+                portStatus = true;
+
+            if (containerManager.TryGetContainer(canister.ContainerName, out var tankContainer)
                 && tankContainer.ContainedEntities.Count > 0)
             {
                 var tank = tankContainer.ContainedEntities[0];
@@ -95,10 +94,10 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 tankPressure = tankComponent.Air.Pressure;
             }
 
-            _userInterfaceSystem.TrySetUiState(uid, GasCanisterUiKey.Key, new GasCanisterBoundUserInterfaceState(metadata.EntityName, canister.Air.Pressure,
-                portNode.NodeGroup?.Nodes.Count > 1, tankLabel, tankPressure,
-                canister.ReleasePressure, canister.ReleaseValve,
-                canister.MinReleasePressure, canister.MaxReleasePressure));
+            _userInterfaceSystem.TrySetUiState(uid, GasCanisterUiKey.Key,
+                new GasCanisterBoundUserInterfaceState(metadata.EntityName,
+                    canister.Air.Pressure, portStatus, tankLabel, tankPressure, canister.ReleasePressure,
+                    canister.ReleaseValve, canister.MinReleasePressure, canister.MaxReleasePressure));
         }
 
         private void OnHoldingTankEjectMessage(EntityUid uid, GasCanisterComponent canister, GasCanisterHoldingTankEjectMessage args)
@@ -124,7 +123,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var pressure = Math.Clamp(args.Pressure, canister.MinReleasePressure, canister.MaxReleasePressure);
 
             canister.ReleasePressure = pressure;
-            DirtyUI(uid);
+            DirtyUI(uid, canister);
         }
 
         private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
@@ -133,7 +132,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             canister.ReleaseValve = args.Valve;
-            DirtyUI(uid);
+            DirtyUI(uid, canister);
         }
 
         private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
@@ -163,10 +162,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 canister.Air.Multiply(canister.Air.Volume / buffer.Volume);
             }
 
+            ContainerManagerComponent? containerManager = null;
+
             // Release valve is open, release gas.
             if (canister.ReleaseValve)
             {
-                if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+                if (!ComponentManager.TryGetComponent(uid, out containerManager)
                     || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                     return;
 
@@ -182,7 +183,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 }
             }
 
-            DirtyUI(uid);
+            DirtyUI(uid, canister, nodeContainer, containerManager);
 
             // If last pressure is very close to the current pressure, do nothing.
             if (MathHelper.CloseTo(canister.Air.Pressure, canister.LastPressure))
@@ -258,7 +259,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (args.Container.ID != component.ContainerName)
                 return;
 
-            DirtyUI(uid);
+            DirtyUI(uid, component);
 
             if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
@@ -271,7 +272,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (args.Container.ID != component.ContainerName)
                 return;
 
-            DirtyUI(uid);
+            DirtyUI(uid, component);
 
             if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;

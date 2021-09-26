@@ -191,18 +191,22 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 case 0:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, false);
                     break;
                 case 1:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 2:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 3:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
             }
         }
