@@ -1,12 +1,13 @@
 using System;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Stack
@@ -19,6 +20,7 @@ namespace Content.Server.Stack
     public class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -86,34 +88,29 @@ namespace Content.Server.Stack
             SetCount(args.Used.Uid, otherStack.Count + toTransfer, otherStack);
 
             var popupPos = args.ClickLocation;
+
             if (!popupPos.IsValid(EntityManager))
             {
                 popupPos = args.User.Transform.Coordinates;
             }
 
+            var filter = _popupSystem.GetFilterFromEntity(args.User);
+
             switch (toTransfer)
             {
                 case > 0:
-                    popupPos.PopupMessage(args.User, $"+{toTransfer}");
+                    _popupSystem.PopupCoordinates($"+{toTransfer}", popupPos, filter);
 
                     if (otherStack.AvailableSpace == 0)
                     {
-                        args.Used.SpawnTimer(
-                            300,
-                            () => popupPos.PopupMessage(
-                                args.User,
-                                Loc.GetString("comp-stack-becomes-full")
-                            )
-                        );
+                        _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                            popupPos.Offset(new Vector2(0, -0.5f)) , filter);
                     }
 
                     break;
 
                 case 0 when otherStack.AvailableSpace == 0:
-                    popupPos.PopupMessage(
-                        args.User,
-                        Loc.GetString("comp-stack-already-full")
-                    );
+                    _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, filter);
                     break;
             }
 
