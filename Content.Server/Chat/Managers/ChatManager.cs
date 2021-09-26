@@ -144,7 +144,7 @@ namespace Content.Server.Chat.Managers
 
                 if (playerPos.MapId != mapPos.MapId ||
                     !player.AttachedEntity.HasComponent<GhostComponent>() &&
-                    (mapPos.Position - playerPos.Position).Length < VoiceRange) continue;
+                    (mapPos.Position - playerPos.Position).Length > VoiceRange) continue;
 
                 clients.Add(player.ConnectedClient);
             }
