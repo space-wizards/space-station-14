@@ -2,7 +2,7 @@ using Content.Server.Access.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;

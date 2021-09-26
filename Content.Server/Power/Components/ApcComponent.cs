@@ -4,7 +4,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

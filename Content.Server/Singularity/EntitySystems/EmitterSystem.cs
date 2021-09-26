@@ -6,7 +6,7 @@ using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
 using Content.Shared.Audio;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Singularity.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;

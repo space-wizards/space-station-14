@@ -4,7 +4,7 @@ using Content.Server.Power.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Shuttles;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
