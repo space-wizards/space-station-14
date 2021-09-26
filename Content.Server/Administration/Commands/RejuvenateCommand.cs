@@ -1,4 +1,5 @@
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
@@ -55,7 +56,8 @@ namespace Content.Server.Administration.Commands
             target.GetComponentOrNull<HungerComponent>()?.ResetFood();
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
             target.GetComponentOrNull<StunnableComponent>()?.ResetStuns();
-            target.GetComponentOrNull<FlammableComponent>()?.Extinguish();
+
+            EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid);
 
             if (target.TryGetComponent(out DamageableComponent? damageable))
             {
