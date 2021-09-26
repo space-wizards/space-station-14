@@ -135,10 +135,19 @@ namespace Content.Server.Chat.Managers
 
             var mapPos = source.Transform.MapPosition;
 
-            var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
-                    && (x.AttachedEntity.HasComponent<GhostComponent>()
-                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
-                .Select(p => p.ConnectedClient).ToList();
+            var clients = new List<INetChannel>();
+
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (player.AttachedEntity == null) continue;
+                var playerPos = player.AttachedEntity.Transform.MapPosition;
+
+                if (playerPos.MapId != mapPos.MapId ||
+                    !player.AttachedEntity.HasComponent<GhostComponent>() &&
+                    (mapPos.Position - playerPos.Position).Length < VoiceRange) continue;
+
+                clients.Add(player.ConnectedClient);
+            }
 
             if (message.StartsWith(';'))
             {
