@@ -47,12 +47,18 @@ namespace Content.Shared.Pulling.Components
                 }
 
                 var eventBus = Owner.EntityManager.EventBus;
+                // TODO: JESUS
 
                 // New value. Abandon being pulled by any existing object.
                 if (_puller != null)
                 {
                     var oldPuller = _puller;
                     var oldPullerPhysics = PullerPhysics;
+
+                    if (_puller.TryGetComponent(out SharedPullerComponent? puller))
+                    {
+                        puller.Pulling = null;
+                    }
 
                     _puller = null;
                     Dirty();
@@ -67,6 +73,7 @@ namespace Content.Shared.Pulling.Components
 
                         _physics.WakeBody();
                     }
+
                     // else-branch warning is handled below
                 }
 

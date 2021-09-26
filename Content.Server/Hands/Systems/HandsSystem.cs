@@ -17,6 +17,7 @@ using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
 using JetBrains.Annotations;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -227,13 +228,12 @@ namespace Content.Server.Hands.Systems
 
             var playerEnt = playerSession.AttachedEntity;
 
-            if (playerEnt == null || !playerEnt.IsValid() || !playerEnt.TryGetComponent(out SharedHandsComponent? hands))
-                return false;
-
-            if (!hands.TryGetActiveHeldEntity(out var throwEnt))
-                return false;
-
-            if (!_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
+            if (playerEnt == null ||
+                !playerEnt.IsValid() ||
+                playerEnt.IsInContainer() ||
+                !playerEnt.TryGetComponent(out SharedHandsComponent? hands) ||
+                !hands.TryGetActiveHeldEntity(out var throwEnt) ||
+                !_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)
