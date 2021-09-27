@@ -50,7 +50,7 @@ namespace Content.Client.Inventory
         {
         }
 
-        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity entity, bool fits)
+        public virtual void HoverInSlot(EquipmentSlotDefines.Slots slot, IEntity? entity, bool fits)
         {
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.HUD;
+using Content.Client.Inventory;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
@@ -46,6 +47,11 @@ namespace Content.Client.Hands
         {
             if (ev.Hands.Owner == _playerManager.LocalPlayer?.ControlledEntity)
                 GuiStateUpdated?.Invoke();
+
+            if (ev.Hands.Owner.TryGetComponent(out ClientInventoryComponent? inventory))
+            {
+               inventory.SendHoverMessage();
+            }
         }
 
         protected override void HandleContainerModified(EntityUid uid, SharedHandsComponent component, ContainerModifiedMessage args)

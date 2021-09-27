@@ -521,6 +521,14 @@ namespace Content.Server.Inventory.Components
 
                         Dirty();
                     }
+                    else
+                    {
+                        _hoverEntity =
+                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
+                                (EntityUid.Invalid, false));
+
+                        Dirty();
+                    }
 
                     break;
                 }

@@ -184,7 +184,7 @@ namespace Content.Client.Inventory
             }
         }
 
-        public override void HoverInSlot(Slots slot, IEntity entity, bool fits)
+        public override void HoverInSlot(Slots slot, IEntity? entity, bool fits)
         {
             base.HoverInSlot(slot, entity, fits);
 

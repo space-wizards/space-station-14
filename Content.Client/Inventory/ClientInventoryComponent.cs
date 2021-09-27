@@ -32,6 +32,7 @@ namespace Content.Client.Inventory
         private ISpriteComponent? _sprite;
 
         private bool _playerAttached = false;
+        private Slots _lastHoverSlot = Slots.NONE;
 
         [ViewVariables]
         [DataField("speciesId")] public string? SpeciesId { get; set; }
@@ -147,7 +148,9 @@ namespace Content.Client.Inventory
             if (state.HoverEntity != null)
             {
                 var (slot, (entityUid, fits)) = state.HoverEntity.Value;
-                var entity = Owner.EntityManager.GetEntity(entityUid);
+                var entity = entityUid == EntityUid.Invalid ? null : Owner.EntityManager.GetEntity(entityUid);
+
+                _lastHoverSlot = slot;
 
                 InterfaceController?.HoverInSlot(slot, entity, fits);
             }
@@ -239,6 +242,16 @@ namespace Content.Client.Inventory
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
             SendNetworkMessage(equipmessage);
+        }
+
+        public void SendHoverMessage()
+        {
+            if (_lastHoverSlot == Slots.NONE)
+            {
+                return;
+            }
+
+            SendNetworkMessage(new ClientInventoryMessage(_lastHoverSlot, ClientInventoryUpdate.Hover));
         }
 
         public void SendHoverMessage(Slots slot)
