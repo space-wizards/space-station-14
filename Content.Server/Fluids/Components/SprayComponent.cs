@@ -9,7 +9,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Vapor;
 using Robust.Server.GameObjects;

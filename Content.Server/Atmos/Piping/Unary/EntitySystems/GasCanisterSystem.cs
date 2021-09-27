@@ -73,9 +73,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void DirtyUI(EntityUid uid,
             GasCanisterComponent? canister = null, NodeContainerComponent? nodeContainer = null,
-            ContainerManagerComponent? containerManager = null, IMetaDataComponent? metadata = null)
+            ContainerManagerComponent? containerManager = null)
         {
-            if (!Resolve(uid, ref metadata, ref canister, ref nodeContainer, ref containerManager))
+            if (!Resolve(uid, ref canister, ref nodeContainer, ref containerManager))
                 return;
 
             var portStatus = false;
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             _userInterfaceSystem.TrySetUiState(uid, GasCanisterUiKey.Key,
-                new GasCanisterBoundUserInterfaceState(metadata.EntityName,
+                new GasCanisterBoundUserInterfaceState(canister.Owner.Name,
                     canister.Air.Pressure, portStatus, tankLabel, tankPressure, canister.ReleasePressure,
                     canister.ReleaseValve, canister.MinReleasePressure, canister.MaxReleasePressure));
         }
