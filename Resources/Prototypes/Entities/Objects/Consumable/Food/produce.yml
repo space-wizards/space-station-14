@@ -281,7 +281,7 @@
         sound:
           collection: desecration
       - !type:SpawnEntitiesBehavior
-        useEntityCoordinates: true
+#        useEntityCoordinates: true
         spawn:
           PuddleTomato:
             min: 1
