@@ -2074,3 +2074,8 @@ Entries:
   - {message: Blunts now contain THC., type: Tweak}
   id: 370
   time: '2021-09-26T13:19:00.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes pointing localization, type: Fix}
+  id: 371
+  time: '2021-09-27T06:03:10.0000000+00:00'
