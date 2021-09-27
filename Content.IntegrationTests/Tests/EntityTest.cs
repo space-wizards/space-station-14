@@ -267,10 +267,6 @@ namespace Content.IntegrationTests.Tests
             // Split components into groups, ensuring that their references don't conflict
             foreach (var type in componentFactory.AllRegisteredTypes)
             {
-                if (type == typeof(PowerCellComponent) || type == typeof(BatteryComponent))
-                {
-
-                }
                 var registration = componentFactory.GetRegistration(type);
 
                 for (var i = 0; i < distinctComponents.Count; i++)
