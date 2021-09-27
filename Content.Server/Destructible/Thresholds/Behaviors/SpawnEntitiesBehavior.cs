@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Content.Server.Stack;
 using Content.Shared.Prototypes;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -17,12 +18,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         /// </summary>
         [DataField("spawn")]
         public Dictionary<string, MinMax> Spawn { get; set; } = new();
-
-
-        /// <summary>
-        ///     Should spawn behavior use EntityCoordinates. False by default
-        /// </summary>
-        [DataField("useEntityCoordinates")] public bool UseEntityCoordinates { get; set; }
 
         public void Execute(IEntity owner, DestructibleSystem system)
         {
@@ -45,11 +40,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     for (var i = 0; i < count; i++)
                     {
-                        var spawned = UseEntityCoordinates switch
-                        {
-                            true => owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates),
-                            false => owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition)
-                        };
+                        var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.Coordinates);
                         spawned.RandomOffset(0.5f);
                     }
                 }
