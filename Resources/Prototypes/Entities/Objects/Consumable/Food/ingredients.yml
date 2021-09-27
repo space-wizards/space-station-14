@@ -12,6 +12,7 @@
     sprite: Fluids/powder.rsi
     state: powder
     color: white
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:

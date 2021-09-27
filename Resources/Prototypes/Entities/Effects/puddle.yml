@@ -41,6 +41,7 @@
   - type: Sprite
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -61,6 +62,7 @@
   - type: Sprite
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
+    netsync: false
   - type: Puddle
   - type: Evaporation
   - type: Appearance
@@ -77,6 +79,7 @@
   - type: Sprite
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
+    netsync: false
   - type: Puddle
   - type: Evaporation
   - type: Appearance
@@ -92,6 +95,7 @@
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -114,6 +118,7 @@
   - type: Sprite
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -136,6 +141,7 @@
   - type: Sprite
     sprite: Fluids/writing.rsi # Placeholder
     state: writing-0
+    netsync: false
   - type: Puddle
   - type: Evaporation
     evaporate_time: 10

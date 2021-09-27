@@ -233,13 +233,6 @@ namespace Content.Shared.Chemistry.EntitySystems
             return solutionsMgr.Solutions.TryGetValue(name, out solution);
         }
 
-
-        public Solution GetSolution(EntityUid uid, string solutionName)
-        {
-            var solutionManager = ComponentManager.GetComponent<SolutionContainerManagerComponent>(uid);
-            return solutionManager.Solutions[solutionName];
-        }
-
         /// <summary>
         /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
         /// </summary>

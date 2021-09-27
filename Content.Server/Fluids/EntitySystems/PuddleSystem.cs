@@ -12,14 +12,12 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Slippery;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Random;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -27,7 +25,6 @@ namespace Content.Server.Fluids.EntitySystems
     public partial class PuddleSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public override void Initialize()
@@ -37,16 +34,9 @@ namespace Content.Server.Fluids.EntitySystems
 
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnPuddleInit);
-            SubscribeLocalEvent<PuddleComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnPuddleUpdate);
         }
-
-        private void OnMapInit(EntityUid uid, PuddleComponent component, MapInitEvent args)
-        {
-            var spriteComponent = ComponentManager.GetComponent<SpriteComponent>(uid);
-            spriteComponent.Rotation = Angle.FromDegrees(_random.Next(0, 359));
-        }
-
+        
         private void OnPuddleUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
         {
             UpdateSlip(uid, component);
@@ -76,7 +66,7 @@ namespace Content.Server.Fluids.EntitySystems
             // Opacity based on level of fullness to overflow
             // Hard-cap lower bound for visibility reasons
             var volumeScale = puddleComponent.CurrentVolume.Float() / puddleComponent.OverflowVolume.Float();
-            var puddleSolution = _solutionContainerSystem.GetSolution(uid, puddleComponent.SolutionName);
+            var puddleSolution = _solutionContainerSystem.EnsureSolution(uid, puddleComponent.SolutionName);
 
             appearanceComponent.SetData(PuddleVisual.VolumeScale, volumeScale);
             appearanceComponent.SetData(PuddleVisual.SolutionColor, puddleSolution.Color);
@@ -119,16 +109,14 @@ namespace Content.Server.Fluids.EntitySystems
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (ComponentManager.TryGetComponent(entity,
-                        out IPhysBody? physics) &&
-                    (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
+                if (ComponentManager.TryGetComponent(entity, out IPhysBody? physics) &&
+                    (physics.CollisionLayer & (int)CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
                 }
 
-                if (ComponentManager.TryGetComponent(entity,
-                    out PuddleComponent? existingPuddle))
+                if (ComponentManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle.Overflown)
                     {
@@ -139,13 +127,10 @@ namespace Content.Server.Fluids.EntitySystems
                 }
             }
 
-            if (puddle == default)
-            {
-                puddle = () =>
-                    puddleComponent.Owner.EntityManager.SpawnEntity(puddleComponent.Owner.Prototype?.ID,
-                            mapGrid.DirectionToGrid(coords, direction))
-                        .GetComponent<PuddleComponent>();
-            }
+            puddle ??= () =>
+                puddleComponent.Owner.EntityManager.SpawnEntity(puddleComponent.Owner.Prototype?.ID,
+                        mapGrid.DirectionToGrid(coords, direction))
+                    .GetComponent<PuddleComponent>();
 
             return true;
         }
@@ -160,14 +145,17 @@ namespace Content.Server.Fluids.EntitySystems
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
-                var newSlippery = EntityManager.GetEntity(entityUid).EnsureComponent<SlipperyComponent>();
+                var newSlippery =
+                    ComponentManager.EnsureComponent<SlipperyComponent>(EntityManager.GetEntity(entityUid));
                 newSlippery.Slippery = true;
             }
         }
 
         public void SplitSolution(EntityUid entityUid, PuddleComponent puddleComponent, ReagentUnit quantity)
         {
-            var solution = _solutionContainerSystem.GetSolution(entityUid, puddleComponent.SolutionName);
+            if (!_solutionContainerSystem.TryGetSolution(entityUid, puddleComponent.SolutionName, out var solution))
+                return;
+
             _solutionContainerSystem.SplitSolution(entityUid, solution, quantity);
 
             RaiseLocalEvent(entityUid, new SolutionChangedEvent());
@@ -211,7 +199,7 @@ namespace Content.Server.Fluids.EntitySystems
                     {
                         var adjacentPuddle = adjacent();
                         var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
-                        var puddleSolution = _solutionContainerSystem.GetSolution(puddleComponent.Owner.Uid,
+                        var puddleSolution = _solutionContainerSystem.EnsureSolution(puddleComponent.Owner.Uid,
                             puddleComponent.SolutionName);
                         var spillAmount = _solutionContainerSystem.SplitSolution(puddleComponent.Owner.Uid,
                             puddleSolution, quantity);
@@ -281,15 +269,17 @@ namespace Content.Server.Fluids.EntitySystems
 
         public bool EmptyHolder(PuddleComponent puddleComponent)
         {
-            return _solutionContainerSystem
-                .GetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName)
-                .Contents.Count == 0;
+            return !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
+                           out var solution)
+                   || solution.Contents.Count == 0;
         }
 
         public ReagentUnit CurrentVolume(PuddleComponent puddleComponent)
         {
-            return _solutionContainerSystem
-                .GetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName).CurrentVolume;
+            return _solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
+                out var solution)
+                ? solution.CurrentVolume
+                : ReagentUnit.Zero;
         }
     }
 }

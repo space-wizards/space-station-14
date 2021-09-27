@@ -46,24 +46,6 @@ namespace Content.Server.Fluids.EntitySystems
         }
 
         /// <summary>
-        ///     Spills the specified solution at the entity's location if possible.
-        /// </summary>
-        /// <param name="entity">
-        ///     The entity to use as a location to spill the solution at.
-        /// </param>
-        /// <param name="solution">Initial solution for the prototype.</param>
-        /// <param name="prototype">The prototype to use.</param>
-        /// <param name="puddle">The puddle if one was created, null otherwise.</param>
-        /// <param name="sound">Play the spill sound.</param>
-        /// <returns>True if a puddle was created, false otherwise.</returns>
-        public bool TrySpillAt(Solution solution, IEntity entity, string prototype,
-            [NotNullWhen(true)] out PuddleComponent? puddle, bool sound = true)
-        {
-            puddle = SpillAt(solution, entity, prototype, sound);
-            return puddle != null;
-        }
-
-        /// <summary>
         ///     Spills solution at the specified grid coordinates.
         /// </summary>
         /// <param name="solution">Initial solution for the prototype.</param>
@@ -75,9 +57,8 @@ namespace Content.Server.Fluids.EntitySystems
         public PuddleComponent? SpillAt(Solution solution, EntityCoordinates coordinates, string prototype,
             bool overflow = true, bool sound = true)
         {
-            if (solution.TotalVolume == 0) return null;
-
-
+            if (solution.TotalVolume == 0) 
+                return null;
 
             if (!_mapManager.TryGetGrid(coordinates.GetGridId(EntityManager), out var mapGrid))
                 return null; // Let's not spill to space.
@@ -167,13 +148,13 @@ namespace Content.Server.Fluids.EntitySystems
             bool sound = true,
             bool checkForOverflow = true)
         {
-            if (solution.TotalVolume == 0)
+            if (solution.TotalVolume == 0 || 
+                !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName, out var puddleSolution))
             {
                 return false;
             }
 
-            var puddleSolution = _solutionContainerSystem
-                .GetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName);
+      
             var result = _solutionContainerSystem
                 .TryAddSolution(puddleComponent.Owner.Uid, puddleSolution, solution);
             if (!result)

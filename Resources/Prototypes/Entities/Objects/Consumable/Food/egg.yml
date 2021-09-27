@@ -73,6 +73,7 @@
   - type: Sprite
     sprite: Fluids/egg_splat.rsi
     state: egg-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:

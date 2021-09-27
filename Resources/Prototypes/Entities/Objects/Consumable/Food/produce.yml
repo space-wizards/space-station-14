@@ -298,6 +298,7 @@
   - type: Sprite
     sprite: Fluids/tomato_splat.rsi
     state: puddle-0
+    netsync: false
   - type: Puddle
   - type: SolutionContainerManager
     solutions:
@@ -306,6 +307,7 @@
         - ReagentId: JuiceTomato
           Quantity: 10
   - type: Evaporation
+    evaporation_limit: 2
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

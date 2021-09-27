@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Shared.Fluids;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -28,15 +27,13 @@ namespace Content.Client.Fluids
             IoCManager.InjectDependencies(this);
 
             var spriteComponent = entity.EnsureComponent<SpriteComponent>();
-            var maxStates = spriteComponent.BaseRSI?.ToArray() ?? Array.Empty<RSI.State>();
+            var maxStates = spriteComponent.BaseRSI?.ToArray();
 
-            var variant = maxStates.Length switch
-            {
-                > 1 => _random.Next(0, maxStates.Length - 1),
-                1 => 0,
-                _ => 0,
-            };
+            if (maxStates is not { Length: > 0 }) return;
+            
+            var variant = _random.Next(0, maxStates.Length - 1);
             spriteComponent.LayerSetState(0, maxStates[variant].StateId);
+            spriteComponent.Rotation = Angle.FromDegrees(_random.Next(0, 359));
         }
 
         public override void OnChangeData(AppearanceComponent component)

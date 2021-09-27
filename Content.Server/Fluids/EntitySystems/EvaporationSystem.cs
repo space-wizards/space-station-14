@@ -4,6 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Fluids.EntitySystems
 {
@@ -21,37 +22,37 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void OnComponentInit(EntityUid uid, EvaporationComponent component, ComponentInit args)
         {
-            component.Accumulator = 0f;
             _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         }
 
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-
+            var queueDelete = new RemQueue<EvaporationComponent>();
             foreach (var evaporationComponent in ComponentManager.EntityQuery<EvaporationComponent>())
             {
-                UpdateEvaporation(evaporationComponent, frameTime);
+                UpdateEvaporation(evaporationComponent, frameTime, ref queueDelete);
+            }
+
+            foreach (var evaporationComponent in queueDelete)
+            {
+                ComponentManager.RemoveComponent(evaporationComponent.Owner.Uid, evaporationComponent);
             }
         }
 
-        private void UpdateEvaporation(EvaporationComponent evaporationComponent, float frameTime)
+        private void UpdateEvaporation(EvaporationComponent evaporationComponent, float frameTime,
+            ref RemQueue<EvaporationComponent> queueDelete)
         {
+            var uid = evaporationComponent.Owner.Uid;
             evaporationComponent.Accumulator += frameTime;
+
+            if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
+                return;
 
             if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
                 return;
 
             evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
-
-            var uid = evaporationComponent.Owner.Uid;
-            var solution = _solutionContainerSystem.GetSolution(uid, evaporationComponent.SolutionName);
-
-            if (evaporationComponent.EvaporationLimit >= solution.CurrentVolume)
-            {
-                ComponentManager.RemoveComponent<EvaporationComponent>(uid);
-                return;
-            }
 
 
             _solutionContainerSystem.SplitSolution(uid, solution,
@@ -63,8 +64,10 @@ namespace Content.Server.Fluids.EntitySystems
             {
                 EntityManager.QueueDeleteEntity(uid);
             }
-
-
+            else if (solution.CurrentVolume <= evaporationComponent.EvaporationLimit)
+            {
+                queueDelete.Add(evaporationComponent);
+            }
         }
     }
 }

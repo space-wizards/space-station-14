@@ -1,5 +1,4 @@
 ﻿using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -19,9 +18,11 @@ namespace Content.Server.Fluids.Components
         [DataField("evaporate_time")]
         public float EvaporateTime { get; set; } = 5f;
 
-        [DataField("solution")] public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
+        [DataField("solution")] 
+        public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
 
-        [DataField("evaporation_limit")] public ReagentUnit EvaporationLimit = ReagentUnit.Zero;
+        [DataField("evaporation_limit")]
+        public ReagentUnit EvaporationLimit = ReagentUnit.Zero;
 
         /// <summary>
         ///     The time accumulated since the start. Shouldn't be modified outside of EvaporationSystem.
