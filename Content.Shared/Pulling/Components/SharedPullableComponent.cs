@@ -69,7 +69,9 @@ namespace Content.Shared.Pulling.Components
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
                         eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-                        eventBus.RaiseLocalEvent(Owner.Uid, message);
+
+                        if (Owner.LifeStage <= EntityLifeStage.MapInitialized)
+                            eventBus.RaiseLocalEvent(Owner.Uid, message);
 
                         _physics.WakeBody();
                     }
@@ -160,7 +162,7 @@ namespace Content.Shared.Pulling.Components
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
-                    _pullJoint = EntitySystem.Get<SharedJointSystem>().CreateDistanceJoint(_physics, (PhysicsComponent) PullerPhysics, id:$"pull-joint-{_physics.Owner.Uid}");
+                    _pullJoint = EntitySystem.Get<SharedJointSystem>().CreateDistanceJoint(Owner.Uid, _puller.Uid, id:$"pull-joint-{_physics.Owner.Uid}");
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = false;
                     _pullJoint.Length = length * 0.75f;
