@@ -8,8 +8,8 @@ using Content.Shared.Flash;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -169,15 +169,13 @@ namespace Content.Server.Flash
         {
             if (!comp.HasUses)
             {
-                args.Message.AddText("\n");
-                args.Message.AddText(Loc.GetString("flash-component-examine-empty"));
+                args.PushText(Loc.GetString("flash-component-examine-empty"));
                 return;
             }
 
             if (args.IsInDetailsRange)
             {
-                args.Message.AddText("\n");
-                args.Message.AddMarkup(
+                args.PushMarkup(
                     Loc.GetString(
                         "flash-component-examine-detail-count",
                         ("count", comp.Uses),

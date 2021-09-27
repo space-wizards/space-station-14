@@ -1,4 +1,5 @@
-﻿using Content.Client.HUD;
+﻿using Content.Client.Ghost.UI;
+using Content.Client.HUD;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;

@@ -1965,3 +1965,112 @@ Entries:
     type: Add}
   id: 351
   time: '2021-09-13T09:58:45.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Many components have had damage values & types adjusted. E.g., knives
+      are no longer dull and actually deal slash damage.', type: Tweak}
+  - {message: 'Eggs, tomatoes, and beakers are now destroyed on impact when thrown,
+      instead of only when they land.', type: Tweak}
+  id: 352
+  time: '2021-09-14T17:07:38.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: bottles filled with drinks now spill as expected, type: Fix}
+  id: 353
+  time: '2021-09-15T10:46:43.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: FireExtinguisher interactions, type: Fix}
+  id: 354
+  time: '2021-09-15T10:48:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some issues with station rotation, type: Fix}
+  id: 355
+  time: '2021-09-16T03:02:10.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug which prevented players from equipping most items in their pockets.,
+    type: Fix}
+  id: 356
+  time: '2021-09-16T10:18:08.191474+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Items like fireaxes can now actually be wielded, which increases their
+      damage.', type: Add}
+  - {message: The fireaxe now deals increased damage to objects like windows or wooden
+      furniture., type: Add}
+  id: 357
+  time: '2021-09-17T14:16:13.0000000+00:00'
+- author: boiled-water-tsar
+  changes:
+  - {message: replace being able to construct out of a container, type: Fix}
+  id: 358
+  time: '2021-09-18T08:38:42.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: "Added parch\xEDs game board. A great way to lose your friends!", type: Add}
+  id: 359
+  time: '2021-09-18T08:40:38.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Welder and tank interaction now shows fuel tank is empty and doesn't
+      explode., type: Fix}
+  id: 360
+  time: '2021-09-19T05:15:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttles now have accurate boundaries., type: Add}
+  id: 361
+  time: '2021-09-20T11:08:10.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: The librarian visited and cleaned up the library, type: Fix}
+  id: 362
+  time: '2021-09-21T02:50:56.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Most green text/buttons now looks better, type: Tweak}
+  id: 363
+  time: '2021-09-21T04:50:02.0000000+00:00'
+- author: TimrodDX
+  changes:
+  - {message: Fixes disposal outlets in Chemistry which had been erroneously rotated.,
+    type: Fix}
+  id: 364
+  time: '2021-09-21T04:50:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Dice now show a popup with the number they rolled when used., type: Tweak}
+  id: 365
+  time: '2021-09-21T15:05:28.382048+00:00'
+- author: 20kdc
+  changes:
+  - {message: Un-rotated gravity generator, type: Fix}
+  id: 366
+  time: '2021-09-22T10:55:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix pulling permanently decreasing your speed., type: Fix}
+  id: 367
+  time: '2021-09-23T22:43:59.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Can no longer throw items while in a container., type: Tweak}
+  id: 368
+  time: '2021-09-23T22:44:25.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Chairs, stools, etc. no longer rotate to unusual angles.', type: Fix}
+  - {message: Metal chairs are properly anchored and so don't need to be re-anchored
+      and unanchored again., type: Fix}
+  id: 369
+  time: '2021-09-23T22:45:00.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Smoking actually makes you inhale reagents now., type: Add}
+  - {message: You can put out a cigar or cigarette by "activating" it., type: Add}
+  - {message: Cigars and cigarettes now contain nicotine., type: Tweak}
+  - {message: Blunts now contain THC., type: Tweak}
+  id: 370
+  time: '2021-09-26T13:19:00.0000000+00:00'

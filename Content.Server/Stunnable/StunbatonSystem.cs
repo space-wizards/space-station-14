@@ -7,8 +7,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -108,11 +107,10 @@ namespace Content.Server.Stunnable
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
-            args.Message.AddText("\n");
             var msg = comp.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
-            args.Message.AddMarkup(msg);
+            args.PushMarkup(msg);
         }
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)

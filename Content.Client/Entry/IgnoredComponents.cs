@@ -179,7 +179,8 @@ namespace Content.Client.Entry
             "Spillable",
             "SpaceVillainArcade",
             "Flammable",
-            "Smoking",
+            "Smokable",
+            "Cigar",
             "Matchstick",
             "Matchbox",
             "BlockGameArcade",
@@ -274,6 +275,8 @@ namespace Content.Client.Entry
             "PowerNetworkBattery",
             "BatteryCharger",
             "SpawnItemsOnUse",
+            "Wieldable",
+            "IncreaseDamageOnWield",
             "AmbientOnPowered",
             "TabletopGame"
         };

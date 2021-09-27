@@ -4,12 +4,10 @@ using Content.Server.Items;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -105,11 +103,6 @@ namespace Content.Server.Clothing.Components
                     Owner.PopupMessage(user, reason);
 
                 return false;
-            }
-
-            if (EquipSound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), EquipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }
 
             return true;

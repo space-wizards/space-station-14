@@ -7,7 +7,6 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Directions;
-using Content.Shared.Examine;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Slippery;
@@ -16,14 +15,12 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Fluids.Components
@@ -32,7 +29,7 @@ namespace Content.Server.Fluids.Components
     /// Puddle on a floor
     /// </summary>
     [RegisterComponent]
-    public class PuddleComponent : Component, IExamine, IMapInit
+    public class PuddleComponent : Component, IMapInit
     {
         // Current design: Something calls the SpillHelper.Spill, that will either
         // A) Add to an existing puddle at the location (normalised to tile-center) or
@@ -120,8 +117,6 @@ namespace Content.Server.Fluids.Components
 
         [DataField("state")] private string _spriteState = "puddle";
 
-        private bool Slippery => Owner.TryGetComponent(out SlipperyComponent? slippery) && slippery.Slippery;
-
         private Solution? PuddleSolution => EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
 
         protected override void Initialize()
@@ -150,14 +145,6 @@ namespace Content.Server.Fluids.Components
         {
             var robustRandom = IoCManager.Resolve<IRobustRandom>();
             _spriteComponent.Rotation = Angle.FromDegrees(robustRandom.Next(0, 359));
-        }
-
-        void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (Slippery)
-            {
-                message.AddText(Loc.GetString("puddle-component-examine-is-slipper-text"));
-            }
         }
 
         /// <summary>

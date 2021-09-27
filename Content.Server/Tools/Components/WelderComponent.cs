@@ -6,16 +6,15 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Server.Items;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Temperature;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -33,9 +32,8 @@ namespace Content.Server.Tools.Components
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    [ComponentReference(typeof(IHotItem))]
     [NetworkedComponent()]
-    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IHotItem, IAfterInteract
+    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -96,11 +94,6 @@ namespace Content.Server.Tools.Components
                 _welderLit = value;
                 Dirty();
             }
-        }
-
-        bool IHotItem.IsCurrentlyHot()
-        {
-            return WelderLit;
         }
 
         protected override void Initialize()
@@ -308,7 +301,7 @@ namespace Content.Server.Tools.Components
                     .TryGetDrainableSolution(eventArgs.Target.Uid, out var targetSolution)
                 && WelderSolution != null)
             {
-                if (WelderLit)
+                if (WelderLit && targetSolution.DrainAvailable > 0)
                 {
                     // Oh no no
                     eventArgs.Target.SpawnExplosion();
@@ -323,6 +316,11 @@ namespace Content.Server.Tools.Components
                     SoundSystem.Play(Filter.Pvs(Owner), WelderRefill.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,
                         Loc.GetString("welder-component-after-interact-refueled-message"));
+                }
+                else
+                {
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("welder-component-no-fuel-in-tank", ("owner", eventArgs.Target)));
                 }
             }
 

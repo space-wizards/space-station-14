@@ -97,7 +97,11 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
-            jobPrototype.Special?.AfterEquip(mob);
+
+            foreach (var jobSpecial in jobPrototype.Special)
+            {
+                jobSpecial.AfterEquip(mob);
+            }
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }

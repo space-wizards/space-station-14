@@ -43,4 +43,6 @@
     range: 1.5
     arcwidth: 0
     arc: fist
-    damage: 90
+    damage:
+      types:
+        Blunt: 90

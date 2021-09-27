@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
@@ -337,7 +337,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
             var powerBlock = _wirePowerBlocked;
-            var keyboardLight = new StatusLightData(Color.Green,
+            var keyboardLight = new StatusLightData(Color.LimeGreen,
                 _wireInterfaceBlocked
                     ? StatusLightState.BlinkingFast
                     : StatusLightState.On,

@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Content.Server.Weapon.Melee.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Mining;
 using Robust.Server.GameObjects;
@@ -24,16 +23,9 @@ namespace Content.Server.Mining.Components
         public override string Name => "AsteroidRock";
         private static readonly string[] SpriteStates = {"0", "1", "2", "3", "4"};
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt"!;
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-
         protected override void Initialize()
         {
             base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(AsteroidRockVisuals.State, _random.Pick(SpriteStates));
@@ -46,7 +38,7 @@ namespace Content.Server.Mining.Components
             if (!item.TryGetComponent(out MeleeWeaponComponent? meleeWeaponComponent))
                 return false;
 
-            Owner.GetComponent<IDamageableComponent>().TryChangeDamage(DamageType, meleeWeaponComponent.Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, meleeWeaponComponent.Damage);
 
             if (!item.TryGetComponent(out PickaxeComponent? pickaxeComponent))
                 return true;

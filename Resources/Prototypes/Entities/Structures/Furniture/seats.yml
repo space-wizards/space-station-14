@@ -20,11 +20,13 @@
       - SmallImpassable
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    noRot: true
   - type: Strap
     position: Stand
   - type: Pullable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -42,13 +44,14 @@
   id: Chair
   parent: SeatBase
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
-    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -173,6 +176,7 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
+  - type: Rotatable
   - type: Physics
     fixtures:
     - shape:
@@ -185,6 +189,8 @@
   - type: Construction
     graph: seat
     node: chairWood
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -201,6 +207,9 @@
           MaterialWoodPlank:
             min: 1
             max: 1
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   name: pilot seat

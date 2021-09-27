@@ -3,10 +3,11 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Fluids.Components
 {
@@ -14,7 +15,9 @@ namespace Content.Server.Fluids.Components
     public class SpillableComponent : Component, IDropped
     {
         public override string Name => "Spillable";
-        public const string SolutionName = "puddle";
+
+        [DataField("solution")]
+        public string SolutionName = "puddle";
 
         /// <summary>
         ///     Transfers solution from the held container to the floor.
