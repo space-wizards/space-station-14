@@ -12,11 +12,11 @@ namespace Content.Server.NodeContainer.Nodes
     /// </summary>
     public static class NodeHelpers
     {
-        public static IEnumerable<Node> GetNodesInTile(IComponentManager compMgr, IMapGrid grid, Vector2i coords)
+        public static IEnumerable<Node> GetNodesInTile(IEntityManager entMan, IMapGrid grid, Vector2i coords)
         {
             foreach (var entityUid in grid.GetAnchoredEntities(coords))
             {
-                if (!compMgr.TryGetComponent(entityUid, out NodeContainerComponent? container))
+                if (!entMan.TryGetComponent(entityUid, out NodeContainerComponent? container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -27,14 +27,14 @@ namespace Content.Server.NodeContainer.Nodes
         }
 
         public static IEnumerable<(Direction dir, Node node)> GetCardinalNeighborNodes(
-            IComponentManager compMgr,
+            IEntityManager entMan,
             IMapGrid grid,
             Vector2i coords,
             bool includeSameTile = true)
         {
             foreach (var (dir, entityUid) in GetCardinalNeighborCells(grid, coords, includeSameTile))
             {
-                if (!compMgr.TryGetComponent(entityUid, out NodeContainerComponent? container))
+                if (!entMan.TryGetComponent(entityUid, out NodeContainerComponent? container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)

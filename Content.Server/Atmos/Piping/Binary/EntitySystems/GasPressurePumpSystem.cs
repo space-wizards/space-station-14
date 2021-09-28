@@ -27,7 +27,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             var appearance = pump.Owner.GetComponentOrNull<AppearanceComponent>();
 
             if (!pump.Enabled
-                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)
                 || !nodeContainer.TryGetNode(pump.OutletName, out PipeNode? outlet))
             {
@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnPumpLeaveAtmosphere(EntityUid uid, GasPressurePumpComponent component, AtmosDeviceDisabledEvent args)
         {
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(PressurePumpVisuals.Enabled, false);
             }

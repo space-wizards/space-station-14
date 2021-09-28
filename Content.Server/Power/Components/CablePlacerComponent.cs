@@ -40,7 +40,7 @@ namespace Content.Server.Power.Components
                 return true;
             foreach (var anchored in grid.GetAnchoredEntities(snapPos))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent<CableComponent>(anchored, out var wire) && wire.CableType == _blockingCableType)
+                if (Owner.EntityManager.TryGetComponent<CableComponent>(anchored, out var wire) && wire.CableType == _blockingCableType)
                 {
                     return true;
                 }

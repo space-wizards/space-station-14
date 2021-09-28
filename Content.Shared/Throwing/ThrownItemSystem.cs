@@ -104,7 +104,7 @@ namespace Content.Shared.Throwing
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
                 containerManager.Owner.HasComponent<SharedHandsComponent>())
             {
-                ComponentManager.RemoveComponent(landing.Uid, thrownItem);
+                EntityManager.RemoveComponent(landing.Uid, thrownItem);
                 return;
             }
 

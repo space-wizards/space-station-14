@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.EntitySystems
     {
         public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
         {
-            if (!ComponentManager.HasComponent<RefillableSolutionComponent>(targetUid))
+            if (!EntityManager.HasComponent<RefillableSolutionComponent>(targetUid))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
         {
-            if (!ComponentManager.HasComponent<InjectableSolutionComponent>(targetUid))
+            if (!EntityManager.HasComponent<InjectableSolutionComponent>(targetUid))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
@@ -26,7 +26,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount)
         {
-            if (!ComponentManager.HasComponent<DrawableSolutionComponent>(targetUid))
+            if (!EntityManager.HasComponent<DrawableSolutionComponent>(targetUid))
             {
                 return new Solution();
             }
@@ -36,7 +36,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount)
         {
-            if (!ComponentManager.HasComponent<DrainableSolutionComponent>(targetUid))
+            if (!EntityManager.HasComponent<DrainableSolutionComponent>(targetUid))
             {
                 return new Solution();
             }
@@ -47,8 +47,8 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetInjectableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (ComponentManager.TryGetComponent(targetUid, out InjectableSolutionComponent? injectable) &&
-                ComponentManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
+            if (EntityManager.TryGetComponent(targetUid, out InjectableSolutionComponent? injectable) &&
+                EntityManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
                 return true;
@@ -61,8 +61,8 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetRefillableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (ComponentManager.TryGetComponent(targetUid, out RefillableSolutionComponent? refillable) &&
-                ComponentManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
+            if (EntityManager.TryGetComponent(targetUid, out RefillableSolutionComponent? refillable) &&
+                EntityManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
                 manager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
             {
                 solution = refillableSolution;
@@ -76,9 +76,9 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetDrainableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (ComponentManager.TryGetComponent(targetUid,out DrainableSolutionComponent? drainable) &&
-                 ComponentManager.TryGetComponent(targetUid,out SolutionContainerManagerComponent? manager) &&
-                  manager.Solutions.TryGetValue(drainable.Solution, out solution))
+            if (EntityManager.TryGetComponent(targetUid,out DrainableSolutionComponent? drainable) &&
+                EntityManager.TryGetComponent(targetUid,out SolutionContainerManagerComponent? manager) &&
+                manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
                 return true;
             }

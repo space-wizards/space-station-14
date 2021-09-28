@@ -28,7 +28,6 @@ namespace Content.Client.Items.Managers
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiMgr = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IComponentManager _componentManager = default!;
 
         private readonly HashSet<EntityUid> _highlightEntities = new();
 
@@ -45,7 +44,7 @@ namespace Content.Client.Items.Managers
             {
                 ISpriteComponent? sprite;
                 if (entity.TryGetComponent(out HandVirtualItemComponent? virtPull)
-                    && _componentManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
+                    && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }

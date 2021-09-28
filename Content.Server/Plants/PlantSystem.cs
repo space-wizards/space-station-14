@@ -12,7 +12,6 @@ namespace Content.Server.Plants
     [UsedImplicitly]
     public class PlantSystem : EntitySystem
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private int _nextUid = 0;
@@ -69,7 +68,7 @@ namespace Content.Server.Plants
 
             _timer = 0f;
 
-            foreach (var plantHolder in _componentManager.EntityQuery<PlantHolderComponent>(true))
+            foreach (var plantHolder in EntityManager.EntityQuery<PlantHolderComponent>(true))
             {
                 plantHolder.Update();
             }

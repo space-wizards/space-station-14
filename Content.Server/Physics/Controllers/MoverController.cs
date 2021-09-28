@@ -56,20 +56,20 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var (pilot, mover) in ComponentManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
                 if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleShuttleMovement(mover);
             }
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
@@ -209,7 +209,7 @@ namespace Content.Server.Physics.Controllers
             string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
                     soundToPlay = footstep.SoundCollection.GetSound();
                     break;
