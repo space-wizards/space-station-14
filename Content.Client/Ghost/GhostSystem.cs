@@ -1,4 +1,5 @@
-﻿using Content.Client.HUD;
+﻿using Content.Client.Ghost.UI;
+using Content.Client.HUD;
 using Content.Shared.Ghost;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Client.Ghost
 
                 _ghostVisibility = value;
 
-                foreach (var ghost in ComponentManager.GetAllComponents(typeof(GhostComponent), true))
+                foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
                 {
                     if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
                     {

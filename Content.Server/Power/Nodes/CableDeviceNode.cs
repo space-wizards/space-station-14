@@ -15,11 +15,11 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            var compMgr = IoCManager.Resolve<IComponentManager>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(compMgr, grid, gridIndex))
+            foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, gridIndex))
             {
                 if (node is CableNode)
                     yield return node;

@@ -12,14 +12,14 @@ namespace Content.Server.Power.Nodes
     {
         public override IEnumerable<Node> GetReachableNodes()
         {
-            var compMgr = IoCManager.Resolve<IComponentManager>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
             var dir = Owner.Transform.LocalRotation.GetDir();
             var targetIdx = gridIndex + NodeHelpers.TileOffsetForDir(dir);
 
-            foreach (var node in NodeHelpers.GetNodesInTile(compMgr, grid, targetIdx))
+            foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, targetIdx))
             {
                 if (node is CableTerminalPortNode)
                     yield return node;

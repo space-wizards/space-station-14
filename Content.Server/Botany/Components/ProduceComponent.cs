@@ -1,8 +1,9 @@
-using Content.Server.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -15,9 +16,9 @@ namespace Content.Server.Botany.Components
     public class ProduceComponent : Component, ISerializationHooks
     {
         public override string Name => "Produce";
+        public const string SolutionName = "produce";
 
-        [DataField("seed")]
-        private string? _seedName;
+        [DataField("seed")] private string? _seedName;
 
         [ViewVariables]
         public Seed? Seed
@@ -39,18 +40,22 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            var solutionContainer = Owner.EnsureComponent<SolutionContainerComponent>();
-
-            solutionContainer.RemoveAllSolution();
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid);
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            if (solutionContainer == null)
+            {
+                Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");
+                return;
+            }
 
             foreach (var (chem, quantity) in Seed.Chemicals)
             {
                 var amount = ReagentUnit.New(quantity.Min);
-                if(quantity.PotencyDivisor > 0 && Potency > 0)
-                    amount += ReagentUnit.New(Potency/quantity.PotencyDivisor);
+                if (quantity.PotencyDivisor > 0 && Potency > 0)
+                    amount += ReagentUnit.New(Potency / quantity.PotencyDivisor);
                 amount = ReagentUnit.New((int) MathHelper.Clamp(amount.Float(), quantity.Min, quantity.Max));
                 solutionContainer.MaxVolume += amount;
-                solutionContainer.Solution.AddReagent(chem, amount);
+                solutionContainer.AddReagent(chem, amount);
             }
         }
     }

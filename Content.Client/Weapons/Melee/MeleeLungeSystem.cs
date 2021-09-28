@@ -11,7 +11,7 @@ namespace Content.Client.Weapons.Melee
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var meleeLungeComponent in EntityManager.ComponentManager.EntityQuery<MeleeLungeComponent>(true))
+            foreach (var meleeLungeComponent in EntityManager.EntityQuery<MeleeLungeComponent>(true))
             {
                 meleeLungeComponent.Update(frameTime);
             }

@@ -36,7 +36,7 @@ namespace Content.Server.Explosion
         /// </summary>
         private static readonly float LightBreakChance = 0.3f;
         private static readonly float HeavyBreakChance = 0.8f;
-        private static SoundSpecifier _explosionSound = new SoundPathSpecifier("/Audio/Effects/explosion.ogg");
+        private static SoundSpecifier _explosionSound = new SoundCollectionSpecifier("explosion");
 
         private static bool IgnoreExplosivePassable(IEntity e) => e.HasTag("ExplosivePassable");
 
@@ -84,7 +84,7 @@ namespace Content.Server.Explosion
             // and splitted into two lists based on if they are Impassable or not
             foreach (var entity in entitiesInRange)
             {
-                if (entity.Deleted || !entity.Transform.IsMapTransform)
+                if (entity.Deleted || entity.IsInContainer())
                 {
                     continue;
                 }

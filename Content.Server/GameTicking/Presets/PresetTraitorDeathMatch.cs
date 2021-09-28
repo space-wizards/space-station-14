@@ -15,7 +15,6 @@ using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
 using Content.Shared.PDA;
@@ -28,6 +27,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -161,7 +161,7 @@ namespace Content.Server.GameTicking.Presets
             // On failure, the returned target is the location that we're already at.
             var bestTargetDistanceFromNearest = -1.0f;
             // Need the random shuffle or it stuffs the first person into Atmospherics pretty reliably
-            var ents = _entityManager.ComponentManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
+            var ents = _entityManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
@@ -194,12 +194,9 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamageableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        damageable.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100, true);
-                    }
+                    // TODO BODY SYSTEM KILL
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
                 }
                 else if (!mobState.IsDead())
                 {
@@ -220,7 +217,7 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var pda in _entityManager.ComponentManager.EntityQuery<PDAComponent>())
+            foreach (var pda in _entityManager.EntityQuery<PDAComponent>())
             {
                 var uplink = pda.SyndicateUplinkAccount;
                 if (uplink != null && _allOriginalNames.ContainsKey(uplink))

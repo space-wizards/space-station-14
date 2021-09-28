@@ -1,3 +1,4 @@
+using Content.Client.Ghost.UI;
 using Content.Shared.Ghost;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;

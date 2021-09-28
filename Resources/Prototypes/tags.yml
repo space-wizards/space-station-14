@@ -113,9 +113,6 @@
   id: GlassBeaker
 
 - type: Tag
-  id: Grindable
-
-- type: Tag
   id: Hoe
 
 - type: Tag
@@ -207,6 +204,9 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: Wooden # just like our atmos
 
 - type: Tag
   id: EmitterBolt

@@ -1,7 +1,10 @@
 using Content.Server.Fluids.Components;
+using Content.Shared.Examine;
+using Content.Shared.Slippery;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 
 namespace Content.Server.Fluids
@@ -15,6 +18,8 @@ namespace Content.Server.Fluids
         {
             base.Initialize();
             _mapManager.TileChanged += HandleTileChanged;
+
+            SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
         }
 
         public override void Shutdown()
@@ -23,11 +28,19 @@ namespace Content.Server.Fluids
             _mapManager.TileChanged -= HandleTileChanged;
         }
 
+        private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
+        {
+            if (EntityManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
+            {
+                args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
+            }
+        }
+
         //TODO: Replace all this with an Unanchored event that deletes the puddle
         private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
         {
             // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            foreach (var puddle in ComponentManager.EntityQuery<PuddleComponent>(true))
+            foreach (var puddle in EntityManager.EntityQuery<PuddleComponent>(true))
             {
                 // If the tile becomes space then delete it (potentially change by design)
                 var puddleTransform = puddle.Owner.Transform;

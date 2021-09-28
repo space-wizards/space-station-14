@@ -8,9 +8,8 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
@@ -46,9 +45,9 @@ namespace Content.Server.Light.Components
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
         [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_toggle.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off.ogg");
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 

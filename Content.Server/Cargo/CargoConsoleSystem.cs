@@ -199,7 +199,7 @@ namespace Content.Server.Cargo
 
         private void SyncComponentsWithId(int id)
         {
-            foreach (var comp in ComponentManager.EntityQuery<CargoOrderDatabaseComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<CargoOrderDatabaseComponent>(true))
             {
                 if (comp.Database == null || comp.Database.Id != id)
                     continue;

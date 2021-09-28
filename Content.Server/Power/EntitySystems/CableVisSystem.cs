@@ -37,9 +37,9 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var uid in _toUpdate)
             {
-                if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                    || !ComponentManager.TryGetComponent(uid, out CableVisComponent? cableVis)
-                    || !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+                if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                    || !EntityManager.TryGetComponent(uid, out CableVisComponent? cableVis)
+                    || !EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 {
                     continue;
                 }
@@ -49,7 +49,7 @@ namespace Content.Server.Power.EntitySystems
 
                 var mask = WireVisDirFlags.None;
 
-                var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+                var transform = EntityManager.GetComponent<ITransformComponent>(uid);
                 var grid = _mapManager.GetGrid(transform.GridID);
                 var tile = grid.TileIndicesFor(transform.Coordinates);
                 var node = nodeContainer.GetNode<CableNode>(cableVis.Node);

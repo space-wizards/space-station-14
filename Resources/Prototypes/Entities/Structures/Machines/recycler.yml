@@ -15,16 +15,23 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     netsync: false
     sprite: Structures/Machines/recycling.rsi
     layers:
-    - state: grinder-o1
-      map: ["enum.RecyclerVisualLayers.Bloody"]
+    - state: grinder-o0
+      map: ["enum.RecyclerVisualLayers.Main"]
   - type: Appearance
     visuals:
     - type: RecyclerVisualizer
-      state_clean: grinder-o1
-      state_bloody: grinder-o1bld
+      state_on: grinder-o1
+      state_off: grinder-o0
   - type: Recycler
+  - type: Conveyor
+  - type: SignalReceiver
+    inputs:
+      - name: state
+        type: Content.Shared.MachineLinking.TwoWayLeverSignal
+        maxConnections: 1

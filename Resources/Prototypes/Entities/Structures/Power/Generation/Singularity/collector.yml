@@ -23,7 +23,8 @@
       - Impassable
       - MobImpassable
       - VaultImpassable
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
     layers:

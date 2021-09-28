@@ -40,14 +40,14 @@ namespace Content.Server.Power.Components
                 return true;
             foreach (var anchored in grid.GetAnchoredEntities(snapPos))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent<CableComponent>(anchored, out var wire) && wire.CableType == _blockingCableType)
+                if (Owner.EntityManager.TryGetComponent<CableComponent>(anchored, out var wire) && wire.CableType == _blockingCableType)
                 {
                     return true;
                 }
             }
 
             if (Owner.TryGetComponent<StackComponent>(out var stack)
-                && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, stack, 1))
+                && !EntitySystem.Get<StackSystem>().Use(Owner.Uid, 1, stack))
                 return true;
 
             Owner.EntityManager.SpawnEntity(_cablePrototypeID, grid.GridTileToLocal(snapPos));
