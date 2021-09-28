@@ -134,6 +134,8 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
+            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
+            // Downside is it may potentially convert to MapPosition unnecessarily.
             var sourceMapId = source.Transform.MapID;
             var sourceCoords = source.Transform.Coordinates;
 
