@@ -40,6 +40,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -133,18 +134,19 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            var mapPos = source.Transform.MapPosition;
+            var sourceMapId = source.Transform.MapID;
+            var sourceCoords = source.Transform.Coordinates;
 
             var clients = new List<INetChannel>();
 
             foreach (var player in _playerManager.GetAllPlayers())
             {
                 if (player.AttachedEntity == null) continue;
-                var playerPos = player.AttachedEntity.Transform.MapPosition;
+                var transform = player.AttachedEntity.Transform;
 
-                if (playerPos.MapId != mapPos.MapId ||
+                if (transform.MapID != sourceMapId ||
                     !player.AttachedEntity.HasComponent<GhostComponent>() &&
-                    (mapPos.Position - playerPos.Position).Length > VoiceRange) continue;
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange)) continue;
 
                 clients.Add(player.ConnectedClient);
             }
