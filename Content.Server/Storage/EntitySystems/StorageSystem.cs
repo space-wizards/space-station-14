@@ -77,7 +77,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (ComponentManager.TryGetComponent(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
             // Get the session for the user
