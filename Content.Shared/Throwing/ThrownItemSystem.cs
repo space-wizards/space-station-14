@@ -69,29 +69,30 @@ namespace Content.Shared.Throwing
 
         private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
-            StopThrow(uid);
+            StopThrow(uid, thrownItem);
         }
 
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (message.Pulled.Owner.HasComponent<ThrownItemComponent>())
-                StopThrow(message.Pulled.Owner.Uid);
+            if (EntityManager.TryGetComponent(message.Pulled.Owner.Uid, out ThrownItemComponent? thrownItemComponent))
+                StopThrow(message.Pulled.Owner.Uid, thrownItemComponent);
         }
 
-        private void StopThrow(EntityUid uid)
+        private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
-            if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent)) return;
-
-            var fixture = physicsComponent.GetFixture(ThrowingFixture);
-
-            if (fixture != null)
+            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
             {
-                _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+                var fixture = physicsComponent.GetFixture(ThrowingFixture);
+
+                if (fixture != null)
+                {
+                    _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+                }
             }
 
-            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent());
-            ComponentManager.RemoveComponent<ThrownItemComponent>(uid);
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower?.Uid});
+            EntityManager.RemoveComponent<ThrownItemComponent>(uid);
         }
 
         public void LandComponent(ThrownItemComponent thrownItem)
@@ -108,7 +109,7 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            var landMsg = new LandEvent();
+            var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
             RaiseLocalEvent(landing.Uid, landMsg, false);
         }
 
