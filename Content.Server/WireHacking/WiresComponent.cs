@@ -9,7 +9,7 @@ using Content.Server.VendingMachines;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Content.Shared.Wires;

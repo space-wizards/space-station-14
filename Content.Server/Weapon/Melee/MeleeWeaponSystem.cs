@@ -132,7 +132,7 @@ namespace Content.Server.Weapon.Melee
                 if (entity.IsInContainer() || entity == args.User)
                     continue;
 
-                if (ComponentManager.HasComponent<DamageableComponent>(entity.Uid))
+                if (EntityManager.HasComponent<DamageableComponent>(entity.Uid))
                 {
                     hitEntities.Add(entity);
                 }

@@ -78,7 +78,7 @@
   suffix: Full
   components:
   - type: Stack
-    stackType: DiamondOre
+    stackType: DiamondRaw
   - type: Sprite
     state: diamond
 

@@ -4,11 +4,9 @@ using Content.Client.Chat.Managers;
 using Content.Client.Clickable;
 using Content.Client.EscapeMenu;
 using Content.Client.Eui;
-using Content.Client.GameTicking.Managers;
 using Content.Client.HUD;
 using Content.Client.Items.Managers;
 using Content.Client.Module;
-using Content.Client.Notifications.Managers;
 using Content.Client.Parallax.Managers;
 using Content.Client.Preferences;
 using Content.Client.Sandbox;
@@ -20,8 +18,6 @@ using Content.Client.Voting;
 using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Module;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
 using Robust.Shared.IoC;
 
 namespace Content.Client.IoC
@@ -31,8 +27,6 @@ namespace Content.Client.IoC
         public static void Register()
         {
             IoCManager.Register<IGameHud, GameHud>();
-            IoCManager.Register<IClientNotifyManager, ClientNotifyManager>();
-            IoCManager.Register<ISharedNotifyManager, ClientNotifyManager>();
             IoCManager.Register<IParallaxManager, ParallaxManager>();
             IoCManager.Register<IChatManager, ChatManager>();
             IoCManager.Register<IEscapeMenuOwner, EscapeMenuOwner>();

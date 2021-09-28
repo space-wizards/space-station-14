@@ -5,10 +5,8 @@ using Content.Server.Items;
 using Content.Server.Weapon.Melee;
 using Content.Server.Wieldable.Components;
 using Content.Shared.Hands;
-using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
-using Content.Shared.Throwing;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -48,7 +46,7 @@ namespace Content.Server.Wieldable
         public bool CanWield(EntityUid uid, WieldableComponent component, IEntity user, bool quiet=false)
         {
             // Do they have enough hands free?
-            if (!ComponentManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
+            if (!EntityManager.TryGetComponent<HandsComponent>(user.Uid, out var hands))
             {
                 if(!quiet)
                     user.PopupMessage(Loc.GetString("wieldable-component-no-hands"));
@@ -140,7 +138,7 @@ namespace Content.Server.Wieldable
             if (!CanWield(uid, component, args.User) || component.Wielded)
                 return;
 
-            if (ComponentManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
             {
                 component.OldInhandPrefix = item.EquippedPrefix;
                 item.EquippedPrefix = component.WieldedInhandPrefix;
@@ -169,7 +167,7 @@ namespace Content.Server.Wieldable
             if (!component.Wielded)
                 return;
 
-            if (ComponentManager.TryGetComponent<ItemComponent>(uid, out var item))
+            if (EntityManager.TryGetComponent<ItemComponent>(uid, out var item))
             {
                 item.EquippedPrefix = component.OldInhandPrefix;
             }
@@ -206,7 +204,7 @@ namespace Content.Server.Wieldable
 
         private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
         {
-            if (ComponentManager.TryGetComponent<WieldableComponent>(uid, out var wield))
+            if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
             {
                 if (!wield.Wielded)
                     return;

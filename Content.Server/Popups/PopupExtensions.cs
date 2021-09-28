@@ -1,12 +1,11 @@
-﻿using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+﻿using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
-namespace Content.Server.Notification
+namespace Content.Server.Popups
 {
-    public static class NotifyExtensions
+    public static class PopupExtensions
     {
         /// <summary>
         ///     Pops up a message for every player around <see cref="source"/> to see,

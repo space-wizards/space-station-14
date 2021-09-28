@@ -14,7 +14,7 @@ namespace Content.Server.Audio
 
         private void HandlePowerChange(EntityUid uid, AmbientOnPoweredComponent component, PowerChangedEvent args)
         {
-            if (!ComponentManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
+            if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
             if (ambientSound.Enabled == args.Powered) return;
             ambientSound.Enabled = args.Powered;
             ambientSound.Dirty();

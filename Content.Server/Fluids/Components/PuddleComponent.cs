@@ -377,14 +377,14 @@ namespace Content.Server.Fluids.Components
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IPhysBody? physics) &&
+                if (Owner.EntityManager.TryGetComponent(entity, out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int) CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
                 }
 
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
+                if (Owner.EntityManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle._overflown)
                     {

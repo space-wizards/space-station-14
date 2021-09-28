@@ -16,7 +16,7 @@ namespace Content.Client.StationEvents
     [UsedImplicitly]
     public sealed class RadiationPulseOverlay : Overlay
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -119,7 +119,7 @@ namespace Content.Client.StationEvents
             var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
             _lastTick = _gameTiming.CurTime;
 
-            var radiationPulses = _componentManager
+            var radiationPulses = _entityManager
                 .EntityQuery<RadiationPulseComponent>(true)
                 .ToList();
 

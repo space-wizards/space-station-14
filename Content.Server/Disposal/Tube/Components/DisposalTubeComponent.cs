@@ -4,7 +4,7 @@ using Content.Server.Construction.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Shared.Acts;
 using Content.Shared.Disposal.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -17,7 +17,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Disposal.Tube.Components
@@ -71,7 +70,7 @@ namespace Content.Server.Disposal.Tube.Components
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
+                if (!Owner.EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
                 {
                     continue;
                 }

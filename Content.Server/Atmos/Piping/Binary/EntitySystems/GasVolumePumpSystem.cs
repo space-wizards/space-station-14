@@ -28,10 +28,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!pump.Enabled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out AtmosDeviceComponent? device))
+            if (!EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device))
                 return;
 
             if (!nodeContainer.TryGetNode(pump.InletName, out PipeNode? inlet)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
@@ -12,20 +11,16 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState;
-using Content.Shared.Movement;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
