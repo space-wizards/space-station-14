@@ -2079,3 +2079,8 @@ Entries:
   - {message: Fixes pointing localization, type: Fix}
   id: 371
   time: '2021-09-27T06:03:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items can be thrown into disposals more easily again., type: Fix}
+  id: 372
+  time: '2021-09-28T14:16:00.0000000+00:00'
