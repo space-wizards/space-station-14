@@ -13,7 +13,7 @@ namespace Content.Server.Movement
         {
             base.Update(frameTime);
 
-            foreach (var stressTest in ComponentManager.EntityQuery<StressTestMovementComponent>(true))
+            foreach (var stressTest in EntityManager.EntityQuery<StressTestMovementComponent>(true))
             {
                 var transform = stressTest.Owner.Transform;
 

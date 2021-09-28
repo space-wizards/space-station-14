@@ -69,7 +69,9 @@ namespace Content.Shared.Pulling.Components
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
                         eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-                        eventBus.RaiseLocalEvent(Owner.Uid, message);
+
+                        if (Owner.LifeStage <= EntityLifeStage.MapInitialized)
+                            eventBus.RaiseLocalEvent(Owner.Uid, message);
 
                         _physics.WakeBody();
                     }

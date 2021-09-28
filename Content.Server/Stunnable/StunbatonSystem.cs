@@ -7,8 +7,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -42,7 +41,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated || !args.HitEntities.Any())
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (IEntity entity in args.HitEntities)
@@ -56,7 +55,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             if (args.Entity.HasComponent<StunnableComponent>())
@@ -83,7 +82,7 @@ namespace Content.Server.Stunnable
 
         private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowDoHitEvent args)
         {
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
             if (!comp.Activated || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse)) return;
 
             StunEntity(args.Target, comp);
@@ -102,7 +101,7 @@ namespace Content.Server.Stunnable
             if (!Get<ActionBlockerSystem>().CanInteract(args.User))
                 return;
 
-            if (ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
+            if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
                 cellslot.InsertCell(args.Used);
         }
 

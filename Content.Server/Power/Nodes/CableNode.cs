@@ -17,7 +17,7 @@ namespace Content.Server.Power.Nodes
             if (!Anchored)
                 yield break;
 
-            var compMgr = IoCManager.Resolve<IComponentManager>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
@@ -26,7 +26,7 @@ namespace Content.Server.Power.Nodes
             var terminalDirs = 0;
             List<(Direction, Node)> nodeDirs = new();
 
-            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex))
+            foreach (var (dir, node) in NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex))
             {
                 if (node is CableNode && node != this)
                 {

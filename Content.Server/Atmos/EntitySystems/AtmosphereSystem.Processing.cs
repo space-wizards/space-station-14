@@ -231,7 +231,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 _currentRunAtmosphereIndex = 0;
                 _currentRunAtmosphere.Clear();
-                _currentRunAtmosphere.AddRange(ComponentManager.EntityQuery<GridAtmosphereComponent>());
+                _currentRunAtmosphere.AddRange(EntityManager.EntityQuery<GridAtmosphereComponent>());
             }
 
             // We set this to true just in case we have to stop processing due to time constraints.

@@ -48,7 +48,7 @@ namespace Content.Server.Explosion
         #region Explosions
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
+            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
             Explode(uid, explosiveComponent);
         }

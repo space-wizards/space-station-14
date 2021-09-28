@@ -14,7 +14,7 @@ namespace Content.Server.Speech
     public class AccentManager : IAccentManager
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IComponentManager _componentManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])");
 
@@ -28,7 +28,7 @@ namespace Content.Server.Speech
         public string AccentHandler(IEntity player, string message)
         {
             //TODO: give accents a prio?
-            var accents = _componentManager.GetComponents<IAccentComponent>(player.Uid);
+            var accents = _entityManager.GetComponents<IAccentComponent>(player.Uid);
             foreach (var accent in accents)
             {
                 message = accent.Accentuate(message);

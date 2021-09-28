@@ -68,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTimer;
 
-            foreach (var (barotrauma, transform) in ComponentManager.EntityQuery<BarotraumaComponent, ITransformComponent>())
+            foreach (var (barotrauma, transform) in EntityManager.EntityQuery<BarotraumaComponent, ITransformComponent>())
             {
                 var uid = barotrauma.Owner.Uid;
 
