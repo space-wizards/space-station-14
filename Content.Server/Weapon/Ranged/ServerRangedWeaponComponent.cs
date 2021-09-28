@@ -8,7 +8,7 @@ using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;

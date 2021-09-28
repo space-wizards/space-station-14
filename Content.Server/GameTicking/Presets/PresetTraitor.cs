@@ -59,7 +59,7 @@ namespace Content.Server.GameTicking.Presets
 
             if (!force && readyPlayers.Count < MinPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minumumPlayers", MinPlayers)));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minimumPlayers", MinPlayers)));
                 return false;
             }
 

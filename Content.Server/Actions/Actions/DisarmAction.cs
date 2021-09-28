@@ -1,6 +1,5 @@
 using Content.Server.Act;
 using Content.Server.Interaction;
-using Content.Server.Notification;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -9,7 +8,6 @@ using Content.Shared.Actions.Components;
 using Content.Shared.Audio;
 using Content.Shared.Cooldown;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -24,6 +22,8 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using System;
 using System.Linq;
+using Content.Server.Popups;
+using Content.Shared.Popups;
 
 namespace Content.Server.Actions.Actions
 {
