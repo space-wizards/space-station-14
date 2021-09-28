@@ -29,9 +29,9 @@ namespace Content.Shared.Chemistry
             if (args.Current is not MovespeedModifierMetabolismComponentState cast)
                 return;
 
-            if (ComponentManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
+            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var modifier) &&
                 (!component.WalkSpeedModifier.Equals(cast.WalkSpeedModifier) ||
-                !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
+                 !component.SprintSpeedModifier.Equals(cast.SprintSpeedModifier)))
             {
                 modifier.RefreshMovementSpeedModifiers();
             }
@@ -65,7 +65,7 @@ namespace Content.Shared.Chemistry
                 if (component.ModifierTimer > currentTime) continue;
 
                 _components.RemoveAt(i);
-                ComponentManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner.Uid);
+                EntityManager.RemoveComponent<MovespeedModifierMetabolismComponent>(component.Owner.Uid);
 
                 if (component.Owner.TryGetComponent(out MovementSpeedModifierComponent? modifier))
                 {

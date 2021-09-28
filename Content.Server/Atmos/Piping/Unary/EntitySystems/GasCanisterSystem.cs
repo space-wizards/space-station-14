@@ -49,9 +49,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnCanisterStartup(EntityUid uid, GasCanisterComponent canister, ComponentStartup args)
         {
             // Ensure container manager.
-            if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
+            if (!EntityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
             {
-                containerManager = ComponentManager.AddComponent<ContainerManagerComponent>(EntityManager.GetEntity(uid));
+                containerManager = EntityManager.AddComponent<ContainerManagerComponent>(EntityManager.GetEntity(uid));
             }
 
             // Ensure container.
@@ -105,7 +105,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!CheckInteract(args.Session))
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
+            if (!EntityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager)
                 || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                 return;
 
@@ -137,8 +137,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             if (!nodeContainer.TryGetNode(canister.PortName, out PortablePipeNode? portNode))
@@ -167,7 +167,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             // Release valve is open, release gas.
             if (canister.ReleaseValve)
             {
-                if (!ComponentManager.TryGetComponent(uid, out containerManager)
+                if (!EntityManager.TryGetComponent(uid, out containerManager)
                     || !containerManager.TryGetContainer(canister.ContainerName, out var container))
                     return;
 
@@ -261,7 +261,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             DirtyUI(uid, component);
 
-            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(GasCanisterVisuals.TankInserted, true);
@@ -274,7 +274,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             DirtyUI(uid, component);
 
-            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(GasCanisterVisuals.TankInserted, false);

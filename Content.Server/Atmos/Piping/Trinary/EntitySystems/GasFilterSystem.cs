@@ -29,8 +29,8 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             var appearance = filter.Owner.GetComponentOrNull<AppearanceComponent>();
 
             if (!filter.Enabled
-            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !ComponentManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
+            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
             || !nodeContainer.TryGetNode(filter.InletName, out PipeNode? inletNode)
             || !nodeContainer.TryGetNode(filter.FilterName, out PipeNode? filterNode)
             || !nodeContainer.TryGetNode(filter.OutletName, out PipeNode? outletNode)

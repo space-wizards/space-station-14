@@ -39,7 +39,7 @@ namespace Content.Server.Buckle
 
         public override void Update(float frameTime)
         {
-            foreach (var (buckle, physics) in ComponentManager.EntityQuery<BuckleComponent, PhysicsComponent>())
+            foreach (var (buckle, physics) in EntityManager.EntityQuery<BuckleComponent, PhysicsComponent>())
             {
                 buckle.Update(physics);
             }

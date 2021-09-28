@@ -63,7 +63,7 @@ namespace Content.Client.Light
         private void HandleAnimationComplete(EntityUid uid, EmergencyLightComponent component, AnimationCompletedEvent args)
         {
             if (!component.Enabled ||
-                !ComponentManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
+                !EntityManager.TryGetComponent<AnimationPlayerComponent>(uid, out var playerComponent)) return;
 
             playerComponent.Play(Animation, AnimKey);
         }

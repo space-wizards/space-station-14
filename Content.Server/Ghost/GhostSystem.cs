@@ -50,8 +50,8 @@ namespace Content.Server.Ghost
         private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
         {
             // Let's not ghost if our mind is visiting...
-            if (ComponentManager.HasComponent<VisitingMindComponent>(uid)) return;
-            if (!ComponentManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
+            if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
+            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
 
             _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
         }
@@ -193,7 +193,7 @@ namespace Content.Server.Ghost
 
         private IEnumerable<string> GetLocationNames()
         {
-            foreach (var warp in ComponentManager.EntityQuery<WarpPointComponent>())
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>())
             {
                 if (warp.Location != null)
                 {
@@ -204,7 +204,7 @@ namespace Content.Server.Ghost
 
         private WarpPointComponent? FindLocation(string name)
         {
-            foreach (var warp in ComponentManager.EntityQuery<WarpPointComponent>(true))
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location == name)
                 {

@@ -144,7 +144,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void RemoveAllSolution(EntityUid uid)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -224,7 +224,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetSolution(EntityUid uid, string name,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
             {
                 solution = null;
                 return false;
