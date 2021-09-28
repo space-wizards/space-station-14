@@ -22,7 +22,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (_timer < TimerDelay) return;
             _timer -= TimerDelay;
 
-            foreach (var gasTank in EntityManager.ComponentManager.EntityQuery<GasTankComponent>())
+            foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
                 _atmosphereSystem.React(gasTank.Air, gasTank);
                 gasTank.CheckStatus();

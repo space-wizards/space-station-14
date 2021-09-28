@@ -95,7 +95,7 @@ namespace Content.Client.Window
             var coords = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out LowWallComponent? lowWall))
+                if (Owner.EntityManager.TryGetComponent(entity, out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

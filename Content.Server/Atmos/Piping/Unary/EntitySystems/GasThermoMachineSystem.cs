@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var appearance = thermoMachine.Owner.GetComponentOrNull<AppearanceComponent>();
 
             if (!thermoMachine.Enabled
-                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
             {
                 appearance?.SetData(ThermoMachineVisuals.Enabled, false);
@@ -52,7 +52,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineLeaveAtmosphere(EntityUid uid, GasThermoMachineComponent component, AtmosDeviceDisabledEvent args)
         {
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(ThermoMachineVisuals.Enabled, false);
             }

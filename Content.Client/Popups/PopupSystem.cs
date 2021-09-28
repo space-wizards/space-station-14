@@ -49,7 +49,7 @@ namespace Content.Client.Popups
             if (!EntityManager.EntityExists(uid))
                 return;
 
-            var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+            var transform = EntityManager.GetComponent<ITransformComponent>(uid);
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
         }
 

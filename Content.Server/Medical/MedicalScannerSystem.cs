@@ -37,7 +37,7 @@ namespace Content.Server.Medical
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<MedicalScannerComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>(true))
             {
                 comp.Update(frameTime);
             }

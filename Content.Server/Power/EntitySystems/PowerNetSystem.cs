@@ -184,7 +184,7 @@ namespace Content.Server.Power.EntitySystems
 
             // Send events where necessary.
             {
-                foreach (var apcReceiver in ComponentManager.EntityQuery<ApcPowerReceiverComponent>())
+                foreach (var apcReceiver in EntityManager.EntityQuery<ApcPowerReceiverComponent>())
                 {
                     var recv = apcReceiver.NetworkLoad.ReceivingPower;
                     ref var last = ref apcReceiver.LastPowerReceived;
@@ -196,7 +196,7 @@ namespace Content.Server.Power.EntitySystems
                     }
                 }
 
-                foreach (var consumer in ComponentManager.EntityQuery<PowerConsumerComponent>())
+                foreach (var consumer in EntityManager.EntityQuery<PowerConsumerComponent>())
                 {
                     var newRecv = consumer.NetworkLoad.ReceivingPower;
                     ref var lastRecv = ref consumer.LastReceived;

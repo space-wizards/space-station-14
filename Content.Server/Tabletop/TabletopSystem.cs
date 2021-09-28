@@ -36,7 +36,7 @@ namespace Content.Server.Tabletop
         private void OnTabletopActivate(EntityUid uid, TabletopGameComponent component, ActivateInWorldEvent args)
         {
             // Check that a player is attached to the entity.
-            if (!ComponentManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
             // Check that the entity can interact with the game board.
@@ -62,7 +62,7 @@ namespace Content.Server.Tabletop
 
         private void OnGamerShutdown(EntityUid uid, TabletopGamerComponent component, ComponentShutdown args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ActorComponent? actor))
+            if (!EntityManager.TryGetComponent(uid, out ActorComponent? actor))
                 return;
 
             if(component.Tabletop.IsValid())
@@ -73,7 +73,7 @@ namespace Content.Server.Tabletop
         {
             base.Update(frameTime);
 
-            foreach (var gamer in ComponentManager.EntityQuery<TabletopGamerComponent>(true))
+            foreach (var gamer in EntityManager.EntityQuery<TabletopGamerComponent>(true))
             {
                 if (!EntityManager.TryGetEntity(gamer.Tabletop, out var table))
                     continue;

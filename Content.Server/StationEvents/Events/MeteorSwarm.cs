@@ -13,7 +13,6 @@ namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEvent
     {
-        [Dependency] private readonly IComponentManager _compManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
