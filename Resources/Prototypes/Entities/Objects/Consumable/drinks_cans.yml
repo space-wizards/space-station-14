@@ -27,13 +27,13 @@
       - state: icon
         map: ["enum.DrinkCanVisualLayers.Icon"]    
     netsync: false
-  - type: Spillable
+  - type: DrainableSolution
+    solution: drink
   - type: Appearance
     visuals:
     - type: DrinkCanVisualizer
       stateClosed: icon
       stateOpen: icon_open
-    solution: drink
 
 - type: entity
   parent: DrinkCanBaseFull
