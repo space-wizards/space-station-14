@@ -173,7 +173,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -196,7 +196,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)

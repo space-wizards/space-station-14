@@ -35,7 +35,7 @@ namespace Content.Server.Body.Metabolism
         {
             base.Update(frameTime);
 
-            foreach (var metab in ComponentManager.EntityQuery<MetabolizerComponent>(false))
+            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
             {
                 metab.AccumulatedFrametime += frameTime;
 

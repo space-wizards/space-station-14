@@ -21,7 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out SmokableComponent? smokable))
+            if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Lit)
@@ -36,7 +36,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (args.Handled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out SmokableComponent? smokable))
+            if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
                 return;
 
             if (smokable.State != SmokableState.Unlit)

@@ -52,7 +52,7 @@ namespace Content.Server.Tabletop
             TabletopMap = _mapManager.CreateMap();
             _tabletops = 0;
 
-            var mapComp = ComponentManager.GetComponent<IMapComponent>(_mapManager.GetMapEntityId(TabletopMap));
+            var mapComp = EntityManager.GetComponent<IMapComponent>(_mapManager.GetMapEntityId(TabletopMap));
 
             // Lighting is always disabled in tabletop world.
             mapComp.LightingEnabled = false;

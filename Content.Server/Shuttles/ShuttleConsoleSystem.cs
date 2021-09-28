@@ -28,7 +28,7 @@ namespace Content.Server.Shuttles
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<PilotComponent>().ToArray())
+            foreach (var comp in EntityManager.EntityQuery<PilotComponent>().ToArray())
             {
                 if (comp.Console == null) continue;
 
@@ -147,7 +147,7 @@ namespace Content.Server.Shuttles
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
             // TODO: RemoveComponent<T> is cooked and doesn't sync to client so this fucks up movement prediction.
-            // ComponentManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
+            // EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
             pilotComponent.Console = null;
             pilotComponent.Dirty();
         }

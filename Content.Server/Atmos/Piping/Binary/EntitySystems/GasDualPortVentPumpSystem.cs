@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
 
             if (!vent.Enabled
-            || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
             || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? inlet)
             || !nodeContainer.TryGetNode(vent.OutletName, out PipeNode? outlet))
             {
@@ -98,7 +98,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void OnGasDualPortVentPumpDisabled(EntityUid uid, GasDualPortVentPumpComponent vent, AtmosDeviceDisabledEvent args)
         {
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
             }

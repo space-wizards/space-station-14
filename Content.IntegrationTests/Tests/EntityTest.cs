@@ -189,7 +189,7 @@ namespace Content.IntegrationTests.Tests
 
                         Assert.DoesNotThrow(() =>
                             {
-                                entityManager.ComponentManager.AddComponent(entity, component);
+                                entityManager.AddComponent(entity, component);
                             }, "Component '{0}' threw an exception.",
                             component.Name);
 
@@ -330,7 +330,7 @@ namespace Content.IntegrationTests.Tests
                             // and all others variations (out parameter)
                             Assert.DoesNotThrow(() =>
                                 {
-                                    entityManager.ComponentManager.AddComponent(entity, component);
+                                    entityManager.AddComponent(entity, component);
                                 }, "Component '{0}' threw an exception.",
                                 component.Name);
                         }

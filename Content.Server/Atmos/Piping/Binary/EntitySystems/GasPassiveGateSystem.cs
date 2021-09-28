@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!gate.Enabled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(gate.InletName, out PipeNode? inlet)

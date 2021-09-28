@@ -70,7 +70,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             foreach (var uid in _active.ToArray())
             {
-                if (!ComponentManager.TryGetComponent(uid, out SmokableComponent? smokable))
+                if (!EntityManager.TryGetComponent(uid, out SmokableComponent? smokable))
                 {
                     _active.Remove(uid);
                     continue;

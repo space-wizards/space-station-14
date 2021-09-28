@@ -117,7 +117,7 @@ namespace Content.Client.Tabletop
             // Get the camera entity that the server has created for us
             var camera = EntityManager.GetEntity(msg.CameraUid);
 
-            if (!ComponentManager.TryGetComponent<EyeComponent>(camera.Uid, out var eyeComponent))
+            if (!EntityManager.TryGetComponent<EyeComponent>(camera.Uid, out var eyeComponent))
             {
                 // If there is no eye, print error and do not open any window
                 Logger.Error("Camera entity does not have eye component!");
@@ -181,7 +181,7 @@ namespace Content.Client.Tabletop
             }
 
             // Make sure that entity can be dragged
-            if (!ComponentManager.HasComponent<TabletopDraggableComponent>(draggedEntity.Uid))
+            if (!EntityManager.HasComponent<TabletopDraggableComponent>(draggedEntity.Uid))
             {
                 return false;
             }
