@@ -7,7 +7,7 @@ using Content.Shared.Access;
 using Content.Shared.Acts;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;

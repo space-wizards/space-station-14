@@ -15,7 +15,7 @@ using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;

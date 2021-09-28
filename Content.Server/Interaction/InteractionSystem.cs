@@ -16,7 +16,7 @@ using Content.Shared.Input;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
 using Content.Shared.Throwing;
@@ -314,7 +314,7 @@ namespace Content.Server.Interaction
         ///     Resolves user interactions with objects.
         /// </summary>
         /// <remarks>
-        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity. 
+        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
         /// </remarks>
         /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
         /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
@@ -324,7 +324,7 @@ namespace Content.Server.Interaction
             // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
             if (!altInteract && user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
-                
+
                 DoAttack(user, coordinates, false, clickedUid);
                 return;
 
@@ -495,7 +495,7 @@ namespace Content.Server.Interaction
         }
 
         /// <summary>
-        ///     Alternative interactions on an entity. 
+        ///     Alternative interactions on an entity.
         /// </summary>
         /// <remarks>
         ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.

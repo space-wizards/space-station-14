@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;

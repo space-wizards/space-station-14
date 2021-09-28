@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.CCVar;
-using Content.Shared.Collections;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;

@@ -8,7 +8,7 @@ using Content.Server.Items;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

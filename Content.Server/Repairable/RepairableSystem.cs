@@ -1,7 +1,7 @@
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;

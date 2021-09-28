@@ -5,7 +5,7 @@ using Content.Shared.Audio;
 using Content.Shared.Cabinet;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;

@@ -4,7 +4,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Power;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
