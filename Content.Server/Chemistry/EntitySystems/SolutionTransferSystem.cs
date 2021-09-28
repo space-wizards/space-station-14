@@ -3,10 +3,10 @@ using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
-using Content.Shared.Notification.Managers;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
