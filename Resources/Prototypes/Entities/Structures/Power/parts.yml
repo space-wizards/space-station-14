@@ -51,6 +51,10 @@
     range: 2
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
+  - type: PointLight
+    radius: 2
+    energy: 1.6
+    color: "#3db83b"
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]

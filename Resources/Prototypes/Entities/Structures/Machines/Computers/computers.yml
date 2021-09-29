@@ -94,6 +94,10 @@
     priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
+  - type: PointLight
+    radius: 2
+    energy: 1.6
+    color: "#b53ca1"
 
 - type: entity
   parent: ComputerBase
@@ -115,6 +119,10 @@
       screen: id
   - type: Computer
     board: IDComputerCircuitboard
+  - type: PointLight
+    radius: 2
+    energy: 1.6
+    color: "#3c5eb5"
 
 - type: entity
   parent: ComputerBase
