@@ -52,7 +52,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<IDeviceNetwork, DeviceNetwork.DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
-            IoCManager.Register<IHolidayManager, HolidayManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();

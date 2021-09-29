@@ -81,7 +81,6 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
-            IoCManager.Resolve<IHolidayManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
