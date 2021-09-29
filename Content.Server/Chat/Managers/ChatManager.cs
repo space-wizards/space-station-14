@@ -40,6 +40,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -133,12 +134,24 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            var mapPos = source.Transform.MapPosition;
+            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
+            // Downside is it may potentially convert to MapPosition unnecessarily.
+            var sourceMapId = source.Transform.MapID;
+            var sourceCoords = source.Transform.Coordinates;
 
-            var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
-                    && (x.AttachedEntity.HasComponent<GhostComponent>()
-                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
-                .Select(p => p.ConnectedClient).ToList();
+            var clients = new List<INetChannel>();
+
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (player.AttachedEntity == null) continue;
+                var transform = player.AttachedEntity.Transform;
+
+                if (transform.MapID != sourceMapId ||
+                    !player.AttachedEntity.HasComponent<GhostComponent>() &&
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange)) continue;
+
+                clients.Add(player.ConnectedClient);
+            }
 
             if (message.StartsWith(';'))
             {
