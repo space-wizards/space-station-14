@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
@@ -35,7 +36,10 @@ namespace Content.Server.Holiday
             _currentHolidays.Clear();
 
             if (!_enabled)
+            {
+                RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
                 return;
+            }
 
             var now = DateTime.Now;
 
