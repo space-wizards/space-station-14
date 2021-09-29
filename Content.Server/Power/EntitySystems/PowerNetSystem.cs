@@ -189,7 +189,7 @@ namespace Content.Server.Power.EntitySystems
                     var recv = apcReceiver.NetworkLoad.ReceivingPower;
                     ref var last = ref apcReceiver.LastPowerReceived;
 
-                    if (!MathHelper.CloseTo(recv, last))
+                    if (!MathHelper.CloseToPercent(recv, last))
                     {
                         last = recv;
                         apcReceiver.ApcPowerChanged();
@@ -200,7 +200,7 @@ namespace Content.Server.Power.EntitySystems
                 {
                     var newRecv = consumer.NetworkLoad.ReceivingPower;
                     ref var lastRecv = ref consumer.LastReceived;
-                    if (!MathHelper.CloseTo(lastRecv, newRecv))
+                    if (!MathHelper.CloseToPercent(lastRecv, newRecv))
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
