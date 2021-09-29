@@ -85,7 +85,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 var removed = tile.Remove(transferMoles);
 
                 // Nothing left to remove from the tile.
-                if (MathHelper.CloseTo(removed.TotalMoles, 0f))
+                if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
                     return;
 
                 atmosphereSystem.ScrubInto(removed, outlet.Air, scrubber.FilterGases);

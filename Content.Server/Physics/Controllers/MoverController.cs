@@ -105,6 +105,11 @@ namespace Content.Server.Physics.Controllers
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
 
+            if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+            {
+                movement *= 5f;
+            }
+
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
@@ -136,12 +141,6 @@ namespace Content.Server.Physics.Controllers
             // ideaguys the shit out of it later.
 
             var velocity = physicsComponent.LinearVelocity;
-
-            if (velocity.Length < 0.1f && movement.Length == 0f)
-            {
-                physicsComponent.LinearVelocity = Vector2.Zero;
-                return;
-            }
 
             if (velocity.Length > speedCap)
             {

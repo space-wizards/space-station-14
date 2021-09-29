@@ -186,7 +186,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             DirtyUI(uid, canister, nodeContainer, containerManager);
 
             // If last pressure is very close to the current pressure, do nothing.
-            if (MathHelper.CloseTo(canister.Air.Pressure, canister.LastPressure))
+            if (MathHelper.CloseToPercent(canister.Air.Pressure, canister.LastPressure))
                 return;
 
             canister.LastPressure = canister.Air.Pressure;

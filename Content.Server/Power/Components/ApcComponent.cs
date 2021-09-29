@@ -175,7 +175,7 @@ namespace Content.Server.Power.Components
             }
 
             var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
-            if (!MathHelper.CloseTo(delta, 0, 0.1f) && delta < 0)
+            if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
             }

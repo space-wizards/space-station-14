@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             var outputStartingPressure = outlet.Air.Pressure;
 
-            if (MathHelper.CloseTo(pump.TargetPressure, outputStartingPressure))
+            if (MathHelper.CloseToPercent(pump.TargetPressure, outputStartingPressure))
             {
                 appearance?.SetData(PressurePumpVisuals.Enabled, false);
                 return; // No need to pump gas if target has been reached.
