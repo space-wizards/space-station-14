@@ -144,7 +144,7 @@ namespace Content.Client.Preferences.UI
 
             #endregion Name
 
-            var tabContainer = new TabContainer {VerticalExpand = true};
+            var tabContainer = new TabContainer { VerticalExpand = true };
             vBox.AddChild(tabContainer);
 
             #region Appearance
@@ -433,10 +433,10 @@ namespace Content.Client.Preferences.UI
                 Orientation = LayoutOrientation.Vertical
             };
 
-                var jobVBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    Children =
+            var jobVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Children =
                     {
                         (_preferenceUnavailableButton = new OptionButton()),
                         new ScrollContainer
@@ -448,7 +448,7 @@ namespace Content.Client.Preferences.UI
                             }
                         }
                     }
-                };
+            };
 
             tabContainer.AddChild(jobVBox);
 
@@ -489,21 +489,21 @@ namespace Content.Client.Preferences.UI
                                                     ("departmentName", department))
                         };
 
-                            if (firstCategory)
+                        if (firstCategory)
+                        {
+                            firstCategory = false;
+                        }
+                        else
+                        {
+                            category.AddChild(new Control
                             {
-                                firstCategory = false;
-                            }
-                            else
-                            {
-                                category.AddChild(new Control
-                                {
-                                    MinSize = new Vector2(0, 23),
-                                });
-                            }
+                                MinSize = new Vector2(0, 23),
+                            });
+                        }
 
                         category.AddChild(new PanelContainer
                         {
-                            PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#464966")},
+                            PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#464966") },
                             Children =
                             {
                                 new Label
@@ -558,10 +558,10 @@ namespace Content.Client.Preferences.UI
                 Orientation = LayoutOrientation.Vertical
             };
 
-                var antagVBox = new BoxContainer
-                {
-                    Orientation = LayoutOrientation.Vertical,
-                    Children =
+            var antagVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Children =
                     {
                         new ScrollContainer
                         {
@@ -572,7 +572,7 @@ namespace Content.Client.Preferences.UI
                             }
                         }
                     }
-                };
+            };
 
             tabContainer.AddChild(antagVBox);
 
@@ -580,16 +580,16 @@ namespace Content.Client.Preferences.UI
 
             _antagPreferences = new List<AntagPreferenceSelector>();
 
-                foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+            foreach (var antag in prototypeManager.EnumeratePrototypes<AntagPrototype>().OrderBy(a => a.Name))
+            {
+                if (!antag.SetPreference)
                 {
-                    if (!antag.SetPreference)
-                    {
-                        continue;
-                    }
+                    continue;
+                }
 
-                    var selector = new AntagPreferenceSelector(antag);
-                    antagList.AddChild(selector);
-                    _antagPreferences.Add(selector);
+                var selector = new AntagPreferenceSelector(antag);
+                antagList.AddChild(selector);
+                _antagPreferences.Add(selector);
 
                 selector.PreferenceChanged += preference =>
                 {
@@ -1021,7 +1021,7 @@ namespace Content.Client.Preferences.UI
             {
                 Antag = antag;
 
-                _checkBox = new CheckBox {Text = $"{antag.Name}"};
+                _checkBox = new CheckBox { Text = $"{antag.Name}" };
                 _checkBox.OnToggled += OnCheckBoxToggled;
 
                 AddChild(new BoxContainer
