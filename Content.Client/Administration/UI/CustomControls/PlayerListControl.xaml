@@ -4,13 +4,10 @@
     <LineEdit Name="FilterLineEdit"
               MinSize="100 0"
               HorizontalExpand="True"
-              HorizontalAlignment="Stretch"
               PlaceHolder="{Loc Filter}"/>
     <ItemList Name="PlayerItemList"
               SelectMode="Single"
               VerticalExpand="True"
-              VerticalAlignment="Stretch"
               HorizontalExpand="True"
-              HorizontalAlignment="Stretch"
               MinSize="100 100" />
 </BoxContainer>
