@@ -8,9 +8,8 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Rounding;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
@@ -234,7 +233,7 @@ namespace Content.Server.Light.Components
 
             var currentCharge = Cell.CurrentCharge;
 
-            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(currentCharge, 0) || Wattage > currentCharge)
                 return 0;
 
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);

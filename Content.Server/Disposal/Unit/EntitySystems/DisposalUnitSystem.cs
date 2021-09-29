@@ -15,7 +15,7 @@ using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Movement;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -88,7 +88,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public void TogglePower(DisposalUnitComponent component)
         {
-            if (!ComponentManager.TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver))
+            if (!EntityManager.TryGetComponent(component.Owner.Uid, out ApcPowerReceiverComponent? receiver))
             {
                 return;
             }
@@ -291,11 +291,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             {
                 var uid = component.RecentlyEjected[i];
                 if (EntityManager.EntityExists(uid) &&
-                    ComponentManager.TryGetComponent(uid, out PhysicsComponent? body))
+                    EntityManager.TryGetComponent(uid, out PhysicsComponent? body))
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // Check for itemcomp as we won't just block the disposal unit "sleeping" for something it can't collide with anyway.
-                    if (!ComponentManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
+                    if (!EntityManager.HasComponent<ItemComponent>(uid) && body.GetWorldAABB().Intersects(disposalsBounds!.Value)) continue;
                     component.RecentlyEjected.RemoveAt(i);
                 }
             }
@@ -340,7 +340,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var grid = _mapManager.GetGrid(component.Owner.Transform.GridID);
             var coords = component.Owner.Transform.Coordinates;
             var entry = grid.GetLocal(coords)
-                .FirstOrDefault(entity => EntityManager.ComponentManager.HasComponent<DisposalEntryComponent>(entity));
+                .FirstOrDefault(entity => EntityManager.HasComponent<DisposalEntryComponent>(entity));
 
             if (entry == default)
             {
@@ -348,7 +348,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             var air = component.Air;
-            var entryComponent = EntityManager.ComponentManager.GetComponent<DisposalEntryComponent>(entry);
+            var entryComponent = EntityManager.GetComponent<DisposalEntryComponent>(entry);
 
             if (_atmosSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is {Temperature: > 0} environment)
             {

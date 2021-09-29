@@ -6,9 +6,8 @@ using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -203,7 +202,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

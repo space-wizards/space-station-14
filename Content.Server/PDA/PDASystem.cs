@@ -51,7 +51,7 @@ namespace Content.Server.PDA
             {
                 // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
-                if (ComponentManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
+                if (EntityManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
                     _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlotName);
             }
         }
@@ -76,7 +76,7 @@ namespace Content.Server.PDA
             if (args.SlotName == PDAComponent.IDSlotName)
             {
                 var item = args.ContainedItem;
-                if (item == null || !ComponentManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
+                if (item == null || !EntityManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
                     pda.ContainedID = null;
                 else
                     pda.ContainedID = idCard;

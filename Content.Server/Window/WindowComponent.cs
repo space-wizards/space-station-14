@@ -1,7 +1,7 @@
 using System;
 using Content.Server.Destructible;
 using Content.Server.Destructible.Thresholds.Triggers;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Examine;

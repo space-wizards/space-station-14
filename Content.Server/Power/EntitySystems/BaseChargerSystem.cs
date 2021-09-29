@@ -9,7 +9,7 @@ namespace Content.Server.Power.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BaseCharger>(true))
+            foreach (var comp in EntityManager.EntityQuery<BaseCharger>(true))
             {
                 comp.OnUpdate(frameTime);
             }

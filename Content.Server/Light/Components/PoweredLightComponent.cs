@@ -8,7 +8,7 @@ using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;

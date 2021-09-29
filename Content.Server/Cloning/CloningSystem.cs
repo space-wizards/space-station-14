@@ -72,7 +72,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
+            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -127,7 +127,7 @@ namespace Content.Server.Cloning
 
         public void OnChangeMadeToDnaScans()
         {
-            foreach (var cloning in ComponentManager.EntityQuery<CloningPodComponent>(true))
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>(true))
                 UpdateUserInterface(cloning);
         }
 

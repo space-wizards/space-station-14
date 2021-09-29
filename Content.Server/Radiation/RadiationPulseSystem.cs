@@ -26,7 +26,7 @@ namespace Content.Server.Radiation
             {
                 _accumulator -= RadiationCooldown;
 
-                foreach (var comp in ComponentManager.EntityQuery<RadiationPulseComponent>(true))
+                foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>(true))
                 {
                     comp.Update(frameTime);
                     var ent = comp.Owner;
