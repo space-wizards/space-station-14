@@ -2084,3 +2084,9 @@ Entries:
   - {message: Items can be thrown into disposals more easily again., type: Fix}
   id: 372
   time: '2021-09-28T14:16:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Weightless items stop moving sooner., type: Tweak}
+  - {message: Shuttles handle a bit better., type: Tweak}
+  id: 373
+  time: '2021-09-29T10:07:01.0000000+00:00'
