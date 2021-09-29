@@ -37,7 +37,8 @@ namespace Content.IntegrationTests.Tests.Disposal
                 });
                 insertionTasks.Add(insertTask);
             }
-            Task.WaitAll(insertionTasks.ToArray());
+
+            await Task.WhenAll(insertionTasks.ToArray());
         }
 
         private void UnitContains(DisposalUnitComponent unit, bool result, params IEntity[] entities)

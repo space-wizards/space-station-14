@@ -1,7 +1,7 @@
 ﻿using Content.Server.Doors.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Doors;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;

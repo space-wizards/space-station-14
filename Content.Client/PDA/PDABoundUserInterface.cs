@@ -171,7 +171,7 @@ namespace Content.Client.PDA
             }
             if (x <= 5)
             {
-                weightedColor = Color.Green;
+                weightedColor = Color.LimeGreen;
             }
             else if (x > 5 && x < 10)
             {

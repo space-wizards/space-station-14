@@ -68,11 +68,11 @@ namespace Content.Server.Chemistry.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                    if (Owner.EntityManager.TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                    if (Owner.EntityManager.TryGetComponent(neighbor,
                         out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }

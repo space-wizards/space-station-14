@@ -24,9 +24,9 @@ namespace Content.Shared.Pulling.Systems
             if (component.Pulling == null)
                 return;
 
-            if (component.Pulling == EntityManager.GetEntity(args.BlockingEntity));
+            if (component.Pulling == EntityManager.GetEntity(args.BlockingEntity))
             {
-                if (ComponentManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
+                if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
                     comp.TryStopPull(EntityManager.GetEntity(uid));
                 }

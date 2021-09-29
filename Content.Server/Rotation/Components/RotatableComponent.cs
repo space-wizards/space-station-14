@@ -1,6 +1,5 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Rotatable;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;

@@ -1,8 +1,4 @@
 using System;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Alert;
-using Content.Shared.Movement;
-using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -17,7 +13,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pulling.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedPullableComponent : Component, IRelayMoveInput
+    public abstract class SharedPullableComponent : Component
     {
         public override string Name => "Pullable";
 
@@ -51,12 +47,18 @@ namespace Content.Shared.Pulling.Components
                 }
 
                 var eventBus = Owner.EntityManager.EventBus;
+                // TODO: JESUS
 
                 // New value. Abandon being pulled by any existing object.
                 if (_puller != null)
                 {
                     var oldPuller = _puller;
                     var oldPullerPhysics = PullerPhysics;
+
+                    if (_puller.TryGetComponent(out SharedPullerComponent? puller))
+                    {
+                        puller.Pulling = null;
+                    }
 
                     _puller = null;
                     Dirty();
@@ -67,10 +69,13 @@ namespace Content.Shared.Pulling.Components
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
                         eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-                        eventBus.RaiseLocalEvent(Owner.Uid, message);
+
+                        if (Owner.LifeStage <= EntityLifeStage.MapInitialized)
+                            eventBus.RaiseLocalEvent(Owner.Uid, message);
 
                         _physics.WakeBody();
                     }
+
                     // else-branch warning is handled below
                 }
 
@@ -347,14 +352,6 @@ namespace Content.Shared.Pulling.Components
             MovingTo = null;
 
             base.OnRemove();
-        }
-
-        // TODO: Need a component bus relay so all entities can use this and not just players
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
-        {
-            var entity = session.AttachedEntity;
-            if (entity == null || !EntitySystem.Get<ActionBlockerSystem>().CanMove(entity)) return;
-            TryStopPull();
         }
     }
 

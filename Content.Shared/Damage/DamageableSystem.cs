@@ -100,7 +100,7 @@ namespace Content.Shared.Damage
         /// </returns>
         public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false)
         {
-            if (!ComponentManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
+            if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
                 // TODO BODY SYSTEM pass damage onto body system
                 return null;

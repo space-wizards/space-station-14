@@ -13,7 +13,6 @@ namespace Content.Server.StationEvents.Events
 {
     public sealed class MeteorSwarm : StationEvent
     {
-        [Dependency] private readonly IComponentManager _compManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -90,7 +89,7 @@ namespace Content.Server.StationEvents.Events
 
             foreach (var grid in _mapManager.GetAllGrids())
             {
-                if (grid.ParentMapId != mapId || !_compManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
+                if (grid.ParentMapId != mapId || !_entityManager.TryGetComponent(grid.GridEntityId, out PhysicsComponent? gridBody)) continue;
                 var aabb = gridBody.GetWorldAABB();
                 playableArea = playableArea?.Union(aabb) ?? aabb;
             }
@@ -112,7 +111,7 @@ namespace Content.Server.StationEvents.Events
                 var offset = angle.RotateVec(new Vector2((maximumDistance - minimumDistance) * _robustRandom.NextFloat() + minimumDistance, 0));
                 var spawnPosition = new MapCoordinates(center + offset, mapId);
                 var meteor = _entityManager.SpawnEntity("MeteorLarge", spawnPosition);
-                var physics = _compManager.GetComponent<PhysicsComponent>(meteor.Uid);
+                var physics = _entityManager.GetComponent<PhysicsComponent>(meteor.Uid);
                 physics.BodyStatus = BodyStatus.InAir;
                 physics.ApplyLinearImpulse(-offset.Normalized * MeteorVelocity * physics.Mass);
                 physics.ApplyAngularImpulse(

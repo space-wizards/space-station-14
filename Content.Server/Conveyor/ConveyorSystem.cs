@@ -3,12 +3,11 @@ using Content.Server.Items;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
-using Content.Server.Recycling.Components;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +15,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Conveyor
 {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
@@ -42,7 +42,7 @@ namespace Content.Server.AME.Components
                 return false; // No AME in space.
 
             var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
-            if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => _serverEntityManager.ComponentManager.HasComponent<AMEShieldComponent>(sc)))
+            if (mapGrid.GetAnchoredEntities(snapPos).Any(sc => _serverEntityManager.HasComponent<AMEShieldComponent>(sc)))
             {
                 Owner.PopupMessage(args.User, Loc.GetString("ame-part-component-shielding-already-present"));
                 return true;

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Content.Server.Cloning;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
@@ -12,20 +11,16 @@ using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.MedicalScanner;
 using Content.Shared.MobState;
-using Content.Shared.Movement;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Preferences;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Medical.Components
@@ -36,11 +31,9 @@ namespace Content.Server.Medical.Components
     public class MedicalScannerComponent : SharedMedicalScannerComponent, IActivate, IDestroyAct
     {
         [Dependency] private readonly IServerPreferencesManager _prefsManager = null!;
-        [Dependency] private readonly IPlayerManager _playerManager = null!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        private static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
-        private TimeSpan _lastInternalOpenAttempt;
+        public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
+        public TimeSpan LastInternalOpenAttempt;
 
         private ContainerSlot _bodyContainer = default!;
         private readonly Vector2 _ejectOffset = new(0f, 0f);
@@ -68,31 +61,6 @@ namespace Content.Server.Medical.Components
             UserInterface?.SetState(newState);
 
             UpdateUserInterface();
-        }
-
-        /// <inheritdoc />
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RelayMovementEntityMessage msg:
-                {
-                    if (EntitySystem.Get<ActionBlockerSystem>().CanInteract(msg.Entity))
-                    {
-                        if (_gameTiming.CurTime <
-                            _lastInternalOpenAttempt + InternalOpenAttemptDelay)
-                        {
-                            break;
-                        }
-
-                        _lastInternalOpenAttempt = _gameTiming.CurTime;
-                        EjectBody();
-                    }
-                    break;
-                }
-            }
         }
 
         private static readonly MedicalScannerBoundUserInterfaceState EmptyUIState =

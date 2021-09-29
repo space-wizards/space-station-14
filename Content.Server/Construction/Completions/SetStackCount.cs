@@ -16,9 +16,8 @@ namespace Content.Server.Construction.Completions
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
             if (entity.Deleted) return;
-            if(!entity.TryGetComponent<StackComponent>(out var stack)) return;
 
-            EntitySystem.Get<StackSystem>().SetCount(entity.Uid, stack, Amount);
+            EntitySystem.Get<StackSystem>().SetCount(entity.Uid, Amount);
         }
     }
 }

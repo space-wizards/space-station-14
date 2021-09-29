@@ -7,15 +7,13 @@ using Content.Server.Clothing.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Server.Pressure;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
-using Content.Shared.Inventory.Events;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -38,7 +36,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IPressureProtection, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -60,52 +58,6 @@ namespace Content.Server.Inventory.Components
                 {
                     AddSlot(slotName);
                 }
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float HighPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.HighPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
-            }
-        }
-
-        // Optimization: Cache this
-        [ViewVariables]
-        public float LowPressureMultiplier
-        {
-            get
-            {
-                var multiplier = 1f;
-
-                foreach (var (slot, containerSlot) in _slotContainers)
-                {
-                    foreach (var entity in containerSlot.ContainedEntities)
-                    {
-                        foreach (var protection in entity.GetAllComponents<IPressureProtection>())
-                        {
-                            multiplier *= protection.LowPressureMultiplier;
-                        }
-                    }
-                }
-
-                return multiplier;
             }
         }
 
@@ -266,7 +218,7 @@ namespace Content.Server.Inventory.Components
 
             // TODO: Make clothing component not inherit ItemComponent, for fuck's sake.
             // TODO: Make clothing component not required for playing a sound on equip... Move it to its own component.
-            if (item is ClothingComponent { EquipSound: {} equipSound })
+            if (mobCheck && item is ClothingComponent { EquipSound: {} equipSound })
             {
                 SoundSystem.Play(Filter.Pvs(Owner), equipSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
             }

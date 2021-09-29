@@ -46,7 +46,7 @@ namespace Content.Server.Tabletop
         /// <param name="uid">The UID of the tabletop game entity.</param>
         public void CleanupSession(EntityUid uid)
         {
-            if (!ComponentManager.TryGetComponent(uid, out TabletopGameComponent? tabletop))
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop))
                 return;
 
             if (tabletop.Session is not { } session)
@@ -72,7 +72,7 @@ namespace Content.Server.Tabletop
         /// <param name="uid">The UID of the tabletop game entity.</param>
         public void OpenSessionFor(IPlayerSession player, EntityUid uid)
         {
-            if (!ComponentManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {} attachedEntity)
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || player.AttachedEntity is not {} attachedEntity)
                 return;
 
             // Make sure we have a session, and add the player to it if not added already.
@@ -104,7 +104,7 @@ namespace Content.Server.Tabletop
         /// <param name="removeGamerComponent">Whether to remove the <see cref="TabletopGamerComponent"/> from the player's attached entity.</param>
         public void CloseSessionFor(IPlayerSession player, EntityUid uid, bool removeGamerComponent = true)
         {
-            if (!ComponentManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+            if (!EntityManager.TryGetComponent(uid, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
             if (!session.Players.TryGetValue(player, out var data))
