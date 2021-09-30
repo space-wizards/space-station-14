@@ -59,11 +59,10 @@ namespace Content.Server.Ghost
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
-            {
-                visibility.Layer |= (int) VisibilityFlags.Ghost;
-                visibility.Layer &= ~(int) VisibilityFlags.Normal;
-            }
+            var visibility = component.Owner.EnsureComponent<VisibilityComponent>();
+
+            visibility.Layer |= (int) VisibilityFlags.Ghost;
+            visibility.Layer &= ~(int) VisibilityFlags.Normal;
 
             if (component.Owner.TryGetComponent(out EyeComponent? eye))
             {
