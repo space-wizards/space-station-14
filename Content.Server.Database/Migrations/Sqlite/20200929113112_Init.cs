@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Sqlite
@@ -134,6 +134,27 @@ namespace Content.Server.Database.Migrations.Sqlite
                         column: x => x.preference_id,
                         principalTable: "preference",
                         principalColumn: "preference_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "trait",
+                columns: table => new
+                {
+                    trait_id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    profile_id = table.Column<int>(nullable: false),
+                    trait_name = table.Column<string>(nullable: false),
+                    setting = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trait", x => x.trait_id);
+                    table.ForeignKey(
+                        name: "FK_trait_profile_profile_id",
+                        column: x => x.profile_id,
+                        principalTable: "profile",
+                        principalColumn: "profile_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

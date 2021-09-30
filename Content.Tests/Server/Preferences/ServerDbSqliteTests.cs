@@ -55,6 +55,7 @@ namespace Content.Tests.Server.Preferences
                 ),
                 ClothingPreference.Jumpskirt,
                 BackpackPreference.Backpack,
+                new Dictionary<string, TraitSetting>(),
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}

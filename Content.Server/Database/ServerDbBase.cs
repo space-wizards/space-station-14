@@ -24,6 +24,7 @@ namespace Content.Server.Database
 
             var prefs = await db.DbContext
                 .Preference
+                .Include(p => p.Profiles).ThenInclude(h => h.Traits)
                 .Include(p => p.Profiles).ThenInclude(h => h.Jobs)
                 .Include(p => p.Profiles).ThenInclude(h => h.Antags)
                 .AsSingleQuery()
@@ -113,7 +114,7 @@ namespace Content.Server.Database
 
             await db.DbContext.SaveChangesAsync();
 
-            return new PlayerPreferences(new[] {new KeyValuePair<int, ICharacterProfile>(0, defaultProfile)}, 0, Color.FromHex(prefs.AdminOOCColor));
+            return new PlayerPreferences(new[] { new KeyValuePair<int, ICharacterProfile>(0, defaultProfile) }, 0, Color.FromHex(prefs.AdminOOCColor));
         }
 
         public async Task DeleteSlotAndSetSelectedIndex(NetUserId userId, int deleteSlot, int newSlot)
@@ -147,6 +148,7 @@ namespace Content.Server.Database
 
         private static HumanoidCharacterProfile ConvertProfiles(Profile profile)
         {
+            var traits = profile.Traits.ToDictionary(j => j.TraitName, j => (TraitSetting) j.Setting);
             var jobs = profile.Jobs.ToDictionary(j => j.JobName, j => (JobPriority) j.Priority);
             var antags = profile.Antags.Select(a => a.AntagName);
 
@@ -182,6 +184,7 @@ namespace Content.Server.Database
                 ),
                 clothing,
                 backpack,
+                traits,
                 jobs,
                 (PreferenceUnavailableMode) profile.PreferenceUnavailable,
                 antags.ToList()
@@ -209,14 +212,21 @@ namespace Content.Server.Database
                 Slot = slot,
                 PreferenceUnavailable = (DbPreferenceUnavailableMode) humanoid.PreferenceUnavailable
             };
+
+            entity.Traits.AddRange(
+              humanoid.TraitSettings
+                  .Where(j => j.Value != TraitSetting.No)
+                  .Select(j => new Trait { TraitName = j.Key, Setting = (DbTraitSetting) j.Value })
+            );
+
             entity.Jobs.AddRange(
                 humanoid.JobPriorities
                     .Where(j => j.Value != JobPriority.Never)
-                    .Select(j => new Job {JobName = j.Key, Priority = (DbJobPriority) j.Value})
+                    .Select(j => new Job { JobName = j.Key, Priority = (DbJobPriority) j.Value })
             );
             entity.Antags.AddRange(
                 humanoid.AntagPreferences
-                    .Select(a => new Antag {AntagName = a})
+                    .Select(a => new Antag { AntagName = a })
             );
 
             return entity;

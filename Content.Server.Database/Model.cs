@@ -37,11 +37,18 @@ namespace Content.Server.Database
                 .IsUnique();
 
             modelBuilder.Entity<Profile>()
-                .HasIndex(p => new {p.Slot, PrefsId = p.PreferenceId})
+                .HasIndex(p => new { p.Slot, PrefsId = p.PreferenceId })
                 .IsUnique();
 
+            modelBuilder.Entity<Trait>()
+              .HasIndex(j => j.ProfileId);
+
+            modelBuilder.Entity<Trait>()
+            .HasIndex(j => new { j.ProfileId, j.TraitName })
+            .IsUnique();
+
             modelBuilder.Entity<Antag>()
-                .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
+                .HasIndex(p => new { HumanoidProfileId = p.ProfileId, p.AntagName })
                 .IsUnique();
 
             modelBuilder.Entity<Job>()
@@ -71,11 +78,11 @@ namespace Content.Server.Database
                 .OnDelete(DeleteBehavior.SetNull);
 
             modelBuilder.Entity<AdminFlag>()
-                .HasIndex(f => new {f.Flag, f.AdminId})
+                .HasIndex(f => new { f.Flag, f.AdminId })
                 .IsUnique();
 
             modelBuilder.Entity<AdminRankFlag>()
-                .HasIndex(f => new {f.Flag, f.AdminRankId})
+                .HasIndex(f => new { f.Flag, f.AdminRankId })
                 .IsUnique();
         }
     }
@@ -115,6 +122,7 @@ namespace Content.Server.Database
         [Column("backpack")] public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
+        public List<Trait> Traits { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
@@ -140,6 +148,24 @@ namespace Content.Server.Database
         Low = 1,
         Medium = 2,
         High = 3
+    }
+
+    [Table("trait")]
+    public class Trait
+    {
+        [Column("trait_id")] public int Id { get; set; }
+        public Profile Profile { get; set; } = null!;
+        [Column("profile_id")] public int ProfileId { get; set; }
+
+        [Column("trait_name")] public string TraitName { get; set; } = null!;
+        [Column("setting")] public DbTraitSetting Setting { get; set; }
+    }
+
+    public enum DbTraitSetting
+    {
+        // These enum values HAVE to match the ones in TraitSetting in Content.Shared
+        No = 0,
+        Yes = 1,
     }
 
     [Table("antag")]

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Net;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -140,6 +140,27 @@ namespace Content.Server.Database.Migrations.Postgres
                         column: x => x.ban_id,
                         principalTable: "server_ban",
                         principalColumn: "server_ban_id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "trait",
+                columns: table => new
+                {
+                    trait_id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    profile_id = table.Column<int>(nullable: false),
+                    trait_name = table.Column<string>(nullable: false),
+                    setting = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_trait", x => x.trait_id);
+                    table.ForeignKey(
+                        name: "FK_trait_profile_profile_id",
+                        column: x => x.profile_id,
+                        principalTable: "profile",
+                        principalColumn: "profile_id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
