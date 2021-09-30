@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix
+    message: Fix bug where you couldn't join as clown under certain circumstances.
