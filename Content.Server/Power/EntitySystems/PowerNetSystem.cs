@@ -154,7 +154,7 @@ namespace Content.Server.Power.EntitySystems
 
             // Setup for events.
             {
-                foreach (var powerNetBattery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
                 {
                     _lastSupply[powerNetBattery] = powerNetBattery.CurrentSupply;
                 }
@@ -218,7 +218,7 @@ namespace Content.Server.Power.EntitySystems
                     }
                 }
 
-                foreach (var powerNetBattery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
                 {
                     if (!_lastSupply.TryGetValue(powerNetBattery, out var lastPowerSupply))
                     {
