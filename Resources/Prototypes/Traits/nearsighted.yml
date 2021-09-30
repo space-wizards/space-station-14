@@ -1,0 +1,6 @@
+- type: trait
+  id: NearsightedTrait
+  name: "nearsighted"
+  description: "vision impaired"
+  setPreference: true
+  

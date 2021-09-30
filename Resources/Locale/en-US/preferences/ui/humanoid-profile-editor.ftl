@@ -32,3 +32,6 @@ humanoid-profile-editor-job-priority-high-button = High
 humanoid-profile-editor-job-priority-medium-button = Medium
 humanoid-profile-editor-job-priority-low-button = Low
 humanoid-profile-editor-job-priority-never-button = Never
+humanoid-profile-editor-traits-tab = Traits
+humanoid-profile-editor-trait-setting-yes-button = Yes
+humanoid-profile-editor-trait-setting-no-button = Never

@@ -1,0 +1,6 @@
+- type: trait
+  id: BlindTrait
+  name: "blind"
+  description: "can't see anything at all"
+  setPreference: true
+  
