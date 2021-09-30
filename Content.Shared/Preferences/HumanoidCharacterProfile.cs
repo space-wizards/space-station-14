@@ -6,6 +6,7 @@ using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -25,6 +26,7 @@ namespace Content.Shared.Preferences
         public const int MaximumAge = 120;
         public const int MaxNameLength = 32;
 
+        private readonly Dictionary<string, TraitSetting> _traitSettings;
         private readonly Dictionary<string, JobPriority> _jobPriorities;
         private readonly List<string> _antagPreferences;
 
@@ -36,6 +38,7 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
+            Dictionary<string, TraitSetting> traitSettings,
             Dictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             List<string> antagPreferences)
@@ -47,6 +50,7 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
+            _traitSettings = traitSettings;
             _jobPriorities = jobPriorities;
             PreferenceUnavailable = preferenceUnavailable;
             _antagPreferences = antagPreferences;
@@ -55,16 +59,17 @@ namespace Content.Shared.Preferences
         /// <summary>Copy constructor but with overridable references (to prevent useless copies)</summary>
         private HumanoidCharacterProfile(
             HumanoidCharacterProfile other,
+            Dictionary<string, TraitSetting> traitSettings,
             Dictionary<string, JobPriority> jobPriorities,
             List<string> antagPreferences)
             : this(other.Name, other.Age, other.Sex, other.Gender, other.Appearance, other.Clothing, other.Backpack,
-                jobPriorities, other.PreferenceUnavailable, antagPreferences)
+                traitSettings, jobPriorities, other.PreferenceUnavailable, antagPreferences)
         {
         }
 
         /// <summary>Copy constructor</summary>
         private HumanoidCharacterProfile(HumanoidCharacterProfile other)
-            : this(other, new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences))
+            : this(other, new Dictionary<string, TraitSetting>(other.TraitSettings), new Dictionary<string, JobPriority>(other.JobPriorities), new List<string>(other.AntagPreferences))
         {
         }
 
@@ -76,10 +81,11 @@ namespace Content.Shared.Preferences
             HumanoidCharacterAppearance appearance,
             ClothingPreference clothing,
             BackpackPreference backpack,
+            IReadOnlyDictionary<string, TraitSetting> traitSettings,
             IReadOnlyDictionary<string, JobPriority> jobPriorities,
             PreferenceUnavailableMode preferenceUnavailable,
             IReadOnlyList<string> antagPreferences)
-            : this(name, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, JobPriority>(jobPriorities),
+            : this(name, age, sex, gender, appearance, clothing, backpack, new Dictionary<string, TraitSetting>(traitSettings), new Dictionary<string, JobPriority>(jobPriorities),
                 preferenceUnavailable, new List<string>(antagPreferences))
         {
         }
@@ -94,6 +100,7 @@ namespace Content.Shared.Preferences
                 HumanoidCharacterAppearance.Default(),
                 ClothingPreference.Jumpsuit,
                 BackpackPreference.Backpack,
+                new Dictionary<string, TraitSetting>(),
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -115,6 +122,7 @@ namespace Content.Shared.Preferences
             var age = random.Next(MinimumAge, MaximumAge);
 
             return new HumanoidCharacterProfile(name, age, sex, gender, HumanoidCharacterAppearance.Random(sex), ClothingPreference.Jumpsuit, BackpackPreference.Backpack,
+                new Dictionary<string, TraitSetting>(), // TODO : Consider random traits?
                 new Dictionary<string, JobPriority>
                 {
                     {SharedGameTicker.OverflowJob, JobPriority.High}
@@ -129,8 +137,10 @@ namespace Content.Shared.Preferences
         public HumanoidCharacterAppearance Appearance { get; private set; }
         public ClothingPreference Clothing { get; private set; }
         public BackpackPreference Backpack { get; private set; }
+        public IReadOnlyDictionary<string, TraitSetting> TraitSettings => _traitSettings;
         public IReadOnlyDictionary<string, JobPriority> JobPriorities => _jobPriorities;
         public IReadOnlyList<string> AntagPreferences => _antagPreferences;
+
         public PreferenceUnavailableMode PreferenceUnavailable { get; private set; }
 
         public HumanoidCharacterProfile WithName(string name)
@@ -166,9 +176,28 @@ namespace Content.Shared.Preferences
         {
             return new(this) { Backpack = backpack };
         }
+        public HumanoidCharacterProfile WithTraitSettings(IEnumerable<KeyValuePair<string, TraitSetting>> traitSettings)
+        {
+            return new(this, new Dictionary<string, TraitSetting>(traitSettings), _jobPriorities, _antagPreferences);
+        }
+
+        public HumanoidCharacterProfile WithTraitSetting(string traitId, TraitSetting setting)
+        {
+            var dictionary = new Dictionary<string, TraitSetting>(_traitSettings);
+            if (setting == TraitSetting.No)
+            {
+                dictionary.Remove(traitId);
+            }
+            else
+            {
+                dictionary[traitId] = setting;
+            }
+            return new(this, dictionary, _jobPriorities, _antagPreferences);
+        }
+
         public HumanoidCharacterProfile WithJobPriorities(IEnumerable<KeyValuePair<string, JobPriority>> jobPriorities)
         {
-            return new(this, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
+            return new(this, _traitSettings, new Dictionary<string, JobPriority>(jobPriorities), _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithJobPriority(string jobId, JobPriority priority)
@@ -182,7 +211,7 @@ namespace Content.Shared.Preferences
             {
                 dictionary[jobId] = priority;
             }
-            return new(this, dictionary, _antagPreferences);
+            return new(this, _traitSettings, dictionary, _antagPreferences);
         }
 
         public HumanoidCharacterProfile WithPreferenceUnavailable(PreferenceUnavailableMode mode)
@@ -192,27 +221,27 @@ namespace Content.Shared.Preferences
 
         public HumanoidCharacterProfile WithAntagPreferences(IEnumerable<string> antagPreferences)
         {
-            return new(this, _jobPriorities, new List<string>(antagPreferences));
+            return new(this, _traitSettings, _jobPriorities, new List<string>(antagPreferences));
         }
 
         public HumanoidCharacterProfile WithAntagPreference(string antagId, bool pref)
         {
             var list = new List<string>(_antagPreferences);
-            if(pref)
+            if (pref)
             {
-                if(!list.Contains(antagId))
+                if (!list.Contains(antagId))
                 {
                     list.Add(antagId);
                 }
             }
             else
             {
-                if(list.Contains(antagId))
+                if (list.Contains(antagId))
                 {
                     list.Remove(antagId);
                 }
             }
-            return new(this, _jobPriorities, list);
+            return new(this, _traitSettings, _jobPriorities, list);
         }
 
         public string Summary =>
@@ -233,6 +262,7 @@ namespace Content.Shared.Preferences
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (Clothing != other.Clothing) return false;
             if (Backpack != other.Backpack) return false;
+            if (!_traitSettings.SequenceEqual(other._traitSettings)) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
             if (!_antagPreferences.SequenceEqual(other._antagPreferences)) return false;
             return Appearance.MemberwiseEquals(other.Appearance);
@@ -304,6 +334,14 @@ namespace Content.Shared.Preferences
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
+            var traitSettings = new Dictionary<string, TraitSetting>(TraitSettings
+                .Where(p => prototypeManager.HasIndex<TraitPrototype>(p.Key) && p.Value switch
+                {
+                    TraitSetting.No => false, // Drop never since that's assumed default.
+                    TraitSetting.Yes => true,
+                    _ => false
+                }));
+
             var priorities = new Dictionary<string, JobPriority>(JobPriorities
                 .Where(p => prototypeManager.HasIndex<JobPrototype>(p.Key) && p.Value switch
                 {
@@ -325,6 +363,13 @@ namespace Content.Shared.Preferences
             Appearance = appearance;
             Clothing = clothing;
             Backpack = backpack;
+
+            _traitSettings.Clear();
+
+            foreach (var (trait, setting) in traitSettings)
+            {
+                _traitSettings.Add(trait, setting);
+            }
 
             _jobPriorities.Clear();
 
@@ -357,6 +402,7 @@ namespace Content.Shared.Preferences
                     Backpack
                 ),
                 PreferenceUnavailable,
+                _traitSettings,
                 _jobPriorities,
                 _antagPreferences
             );

@@ -7,6 +7,7 @@ using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
@@ -263,6 +264,9 @@ namespace Content.Server.Preferences.Managers
                     case HumanoidCharacterProfile hp:
                     {
                         newProf = hp
+                            .WithTraitSettings(
+                                hp.TraitSettings.Where(trait =>
+                                    _protos.HasIndex<TraitPrototype>(trait.Key)))
                             .WithJobPriorities(
                                 hp.JobPriorities.Where(job =>
                                     _protos.HasIndex<JobPrototype>(job.Key)))

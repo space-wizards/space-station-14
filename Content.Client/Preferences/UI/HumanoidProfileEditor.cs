@@ -8,6 +8,7 @@ using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Traits;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -17,6 +18,7 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -56,6 +58,8 @@ namespace Content.Client.Preferences.UI
         private readonly Dictionary<string, BoxContainer> _jobCategories;
 
         private readonly List<AntagPreferenceSelector> _antagPreferences;
+        private readonly List<TraitSettingSelector> _traitSettings;
+        private readonly Dictionary<string, BoxContainer> _traitEntries;
 
         private readonly IEntity _previewDummy;
         private readonly SpriteView _previewSprite;
@@ -426,6 +430,83 @@ namespace Content.Client.Preferences.UI
 
             #endregion Appearance
 
+            #region Traits
+
+            // Main block where traits are placed.
+            var traitsList = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
+
+            // Technically a tab.
+            var traitsVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Children =
+                    {
+                        new ScrollContainer
+                        {
+                            VerticalExpand = true,
+                            Children =
+                            {
+                                traitsList
+                            }
+                        }
+                    }
+            };
+
+            tabContainer.AddChild(traitsVBox); // Tab parent - tabContainer.
+            tabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-traits-tab")); // TODO Localisation
+
+            _traitSettings = new List<TraitSettingSelector>();
+            _traitEntries = new Dictionary<string, BoxContainer>();
+
+            var traitsPanel = HighlightedContainer(); // Nice identation from the edges.
+
+            // Iterate all trait prototypes sorted by name,
+            foreach (var trait in prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(j => j.Name))
+            {
+                // If we don't have trait in GUI list, we add it here.
+                if (_traitEntries.TryGetValue(trait.Name, out var traitEntry) == false)
+                {
+                    // Create new gui container.
+                    traitEntry = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical,
+                        Name = trait.Name,
+                        ToolTip = $"{trait.Name}"
+                    };
+
+                    //// A trait description from yml.
+                    //var traitDescription = new BoxContainer
+                    //{
+                    //    Orientation = LayoutOrientation.Vertical,
+                    //    Name = trait.Description,
+                    //};
+
+                    //traitEntry.AddChild(traitDescription);
+
+                    // Add it to the traits dict and add to the main traits panel.
+                    _traitEntries[trait.Name] = traitEntry;
+                    traitsPanel.AddChild(traitEntry);
+                }
+
+                //не работает декскрипшт  и лейбн
+                traitsList.AddChild(traitsPanel);
+
+                var selector = new TraitSettingSelector(trait);
+                traitEntry.AddChild(selector);
+                _traitSettings.Add(selector);
+
+                selector.SettingChanged += setting =>
+                {
+                    Profile = Profile?.WithTraitSetting(trait.ID, setting);
+                    IsDirty = true;
+                };
+
+            }
+            #endregion Traits
+
             #region Jobs
 
             var jobList = new BoxContainer
@@ -452,7 +533,7 @@ namespace Content.Client.Preferences.UI
 
             tabContainer.AddChild(jobVBox);
 
-            tabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-jobs-tab"));
+            tabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-jobs-tab"));
 
             _preferenceUnavailableButton.AddItem(
                 Loc.GetString("humanoid-profile-editor-preference-unavailable-stay-in-lobby-button"),
@@ -529,14 +610,14 @@ namespace Content.Client.Preferences.UI
 
                         foreach (var jobSelector in _jobPriorities)
                         {
-                            // Sync other selectors with the same job in case of multiple department jobs
-                            if (jobSelector.Job == selector.Job)
+                                // Sync other selectors with the same job in case of multiple department jobs
+                                if (jobSelector.Job == selector.Job)
                             {
                                 jobSelector.Priority = priority;
                             }
 
-                            // Lower any other high priorities to medium.
-                            if (priority == JobPriority.High)
+                                // Lower any other high priorities to medium.
+                                if (priority == JobPriority.High)
                             {
                                 if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
                                 {
@@ -576,7 +657,7 @@ namespace Content.Client.Preferences.UI
 
             tabContainer.AddChild(antagVBox);
 
-            tabContainer.SetTabTitle(2, Loc.GetString("humanoid-profile-editor-antags-tab"));
+            tabContainer.SetTabTitle(3, Loc.GetString("humanoid-profile-editor-antags-tab"));
 
             _antagPreferences = new List<AntagPreferenceSelector>();
 
@@ -899,6 +980,7 @@ namespace Content.Client.Preferences.UI
             UpdateHairPickers();
             UpdateEyePickers();
             UpdateSaveButton();
+            UpdateTraitSetting();
             UpdateJobPriorities();
             UpdateAntagPreferences();
 
@@ -1039,5 +1121,98 @@ namespace Content.Client.Preferences.UI
                 PreferenceChanged?.Invoke(Preference);
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void UpdateTraitSetting()
+        {
+            foreach (var traitSelector in _traitSettings)
+            {
+                var traitId = traitSelector.Trait.ID;
+
+                var setting = Profile?.TraitSettings.GetValueOrDefault(traitId, TraitSetting.No) ?? TraitSetting.Yes;
+
+                traitSelector.Setting = setting;
+            }
+        }
+
+        private class TraitSettingSelector : Control
+        {
+            public TraitPrototype Trait { get; }
+            private readonly RadioOptions<int> _optionButton;
+
+            public TraitSetting Setting
+            {
+                get => (TraitSetting) _optionButton.SelectedValue;
+                set => _optionButton.SelectByValue((int) value);
+            }
+
+            public event Action<TraitSetting>? SettingChanged;
+
+            public TraitSettingSelector(TraitPrototype trait)
+            {
+                Trait = trait;
+
+                _optionButton = new RadioOptions<int>(RadioOptionsLayout.Horizontal)
+                {
+                    FirstButtonStyle = StyleBase.ButtonOpenRight,
+                    ButtonStyle = StyleBase.ButtonOpenBoth,
+                    LastButtonStyle = StyleBase.ButtonOpenLeft
+                };
+
+                // Text, Value
+                _optionButton.AddItem(Loc.GetString("Yes"), (int) TraitSetting.Yes); // TODO localisation
+                _optionButton.AddItem(Loc.GetString("No"), (int) TraitSetting.No); // TODO localisation
+
+                _optionButton.OnItemSelected += args =>
+                {
+                    _optionButton.Select(args.Id);
+                    SettingChanged?.Invoke(Setting);
+                };
+
+                var icon = new TextureRect
+                {
+                    TextureScale = (2, 2),
+                    Stretch = TextureRect.StretchMode.KeepCentered
+                };
+
+                //if (trait.Icon != null)
+                //{
+                //    var specifier = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Interface/Misc/trait_icons.rsi"),
+                //        trait.Icon);
+                //    icon.Texture = specifier.Frame0();
+                //}
+
+                AddChild(new BoxContainer
+                {
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        icon,
+                        new Label {Text = trait.Name, MinSize = (175, 0)},
+                        _optionButton
+                    }
+                });
+            }
+        }
+
     }
 }
