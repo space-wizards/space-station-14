@@ -456,44 +456,38 @@ namespace Content.Client.Preferences.UI
             };
 
             tabContainer.AddChild(traitsVBox); // Tab parent - tabContainer.
-            tabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-traits-tab")); // TODO Localisation
+            tabContainer.SetTabTitle(1, Loc.GetString("humanoid-profile-editor-traits-tab"));
 
             _traitSettings = new List<TraitSettingSelector>();
             _traitEntries = new Dictionary<string, BoxContainer>();
 
-            var traitsPanel = HighlightedContainer(); // Nice identation from the edges.
+            // Nice identation from the edges.
+            // HighlightedContainer(); has dfifferent background so it's not used but.
+            //var traitsPanel = HighlightedContainer();
 
-            // Iterate all trait prototypes sorted by name,
+            var traitsPanel = new PanelContainer
+            {
+                PanelOverride = new StyleBoxFlat
+                {
+                    ContentMarginTopOverride = 10,
+                    ContentMarginBottomOverride = 10,
+                    ContentMarginLeftOverride = 10,
+                    ContentMarginRightOverride = 10
+                }
+            };
+
+            var traitEntry = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+            };
+
+            traitsPanel.AddChild(traitEntry);
+
+            // Iterate all trait prototypes sorted by name.
             foreach (var trait in prototypeManager.EnumeratePrototypes<TraitPrototype>().OrderBy(j => j.Name))
             {
-                // If we don't have trait in GUI list, we add it here.
-                if (_traitEntries.TryGetValue(trait.Name, out var traitEntry) == false)
-                {
-                    // Create new gui container.
-                    traitEntry = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical,
-                        Name = trait.Name,
-                        ToolTip = $"{trait.Name}"
-                    };
-
-                    //// A trait description from yml.
-                    //var traitDescription = new BoxContainer
-                    //{
-                    //    Orientation = LayoutOrientation.Vertical,
-                    //    Name = trait.Description,
-                    //};
-
-                    //traitEntry.AddChild(traitDescription);
-
-                    // Add it to the traits dict and add to the main traits panel.
-                    _traitEntries[trait.Name] = traitEntry;
-                    traitsPanel.AddChild(traitEntry);
-                }
-
-                //не работает декскрипшт  и лейбн
-                traitsList.AddChild(traitsPanel);
-
+                // Create new gui container.
+                // Selector is the actual gui contstructor that user can see.
                 var selector = new TraitSettingSelector(trait);
                 traitEntry.AddChild(selector);
                 _traitSettings.Add(selector);
@@ -503,8 +497,10 @@ namespace Content.Client.Preferences.UI
                     Profile = Profile?.WithTraitSetting(trait.ID, setting);
                     IsDirty = true;
                 };
-
             }
+
+            traitsList.AddChild(traitsPanel);
+
             #endregion Traits
 
             #region Jobs
@@ -610,14 +606,14 @@ namespace Content.Client.Preferences.UI
 
                         foreach (var jobSelector in _jobPriorities)
                         {
-                                // Sync other selectors with the same job in case of multiple department jobs
-                                if (jobSelector.Job == selector.Job)
+                // Sync other selectors with the same job in case of multiple department jobs
+                if (jobSelector.Job == selector.Job)
                             {
                                 jobSelector.Priority = priority;
                             }
 
-                                // Lower any other high priorities to medium.
-                                if (priority == JobPriority.High)
+                // Lower any other high priorities to medium.
+                if (priority == JobPriority.High)
                             {
                                 if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
                                 {
@@ -1122,26 +1118,6 @@ namespace Content.Client.Preferences.UI
             }
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         private void UpdateTraitSetting()
         {
             foreach (var traitSelector in _traitSettings)
@@ -1153,7 +1129,6 @@ namespace Content.Client.Preferences.UI
                 traitSelector.Setting = setting;
             }
         }
-
         private class TraitSettingSelector : Control
         {
             public TraitPrototype Trait { get; }
@@ -1179,8 +1154,8 @@ namespace Content.Client.Preferences.UI
                 };
 
                 // Text, Value
-                _optionButton.AddItem(Loc.GetString("Yes"), (int) TraitSetting.Yes); // TODO localisation
-                _optionButton.AddItem(Loc.GetString("No"), (int) TraitSetting.No); // TODO localisation
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-trait-setting-yes-button"), (int) TraitSetting.Yes);
+                _optionButton.AddItem(Loc.GetString("humanoid-profile-editor-trait-setting-no-button"), (int) TraitSetting.No);
 
                 _optionButton.OnItemSelected += args =>
                 {
@@ -1188,11 +1163,13 @@ namespace Content.Client.Preferences.UI
                     SettingChanged?.Invoke(Setting);
                 };
 
-                var icon = new TextureRect
-                {
-                    TextureScale = (2, 2),
-                    Stretch = TextureRect.StretchMode.KeepCentered
-                };
+                // Do we need an icon?
+
+                //var icon = new TextureRect
+                //{
+                //    TextureScale = (2, 2),
+                //    Stretch = TextureRect.StretchMode.KeepCentered
+                //};
 
                 //if (trait.Icon != null)
                 //{
@@ -1206,13 +1183,14 @@ namespace Content.Client.Preferences.UI
                     Orientation = LayoutOrientation.Horizontal,
                     Children =
                     {
-                        icon,
+                        //icon,
                         new Label {Text = trait.Name, MinSize = (175, 0)},
-                        _optionButton
+                        _optionButton,
+                        new Control{MinSize = new Vector2(23, 0)},
+                        new Label {Text = trait.Description, MinSize = (175, 0)}
                     }
                 });
             }
         }
-
     }
 }
