@@ -386,7 +386,6 @@ namespace Content.Client.PDA
                     HorizontalExpand = true,
                     VerticalExpand = true,
                     SizeFlagsStretchRatio = 2,
-                    MinSize = (100, 256)
                 };
 
                 //Add the category list to the left side. The store items to center.
