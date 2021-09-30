@@ -29,3 +29,4 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
+  - type: LitOnPowered # this doesn't have a pointlight, but most children do, so i'll put it here

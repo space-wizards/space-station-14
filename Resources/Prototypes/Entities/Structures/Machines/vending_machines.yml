@@ -46,6 +46,7 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: LitOnPowered
 
 - type: entity
   parent: VendingMachine

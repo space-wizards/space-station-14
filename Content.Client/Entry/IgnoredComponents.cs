@@ -278,7 +278,8 @@ namespace Content.Client.Entry
             "Wieldable",
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
-            "TabletopGame"
+            "TabletopGame",
+            "LitOnPowered"
         };
     }
 }

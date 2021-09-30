@@ -2,6 +2,7 @@ using System;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
+using Content.Server.Power.Components;
 using Content.Shared.Light;
 using Content.Shared.Damage;
 using Robust.Server.GameObjects;
@@ -24,6 +25,8 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
+
+            SubscribeLocalEvent<LitOnPoweredComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         /// <summary>
@@ -82,6 +85,14 @@ namespace Content.Server.Light.EntitySystems
                 case "toggle":
                     component.ToggleLight();
                     break;
+            }
+        }
+
+        private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, PowerChangedEvent args)
+        {
+            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            {
+                light.Enabled = args.Powered;
             }
         }
     }
