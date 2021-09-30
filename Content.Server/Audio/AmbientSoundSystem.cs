@@ -16,7 +16,7 @@ namespace Content.Server.Audio
 
         private void HandlePowerSupply(EntityUid uid, AmbientOnPoweredComponent component, PowerNetBatterySupplyEvent args)
         {
-            if (!ComponentManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
+            if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambientSound)) return;
             if (ambientSound.Enabled == args.Supply) return;
             ambientSound.Enabled = args.Supply;
             ambientSound.Dirty();
