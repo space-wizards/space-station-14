@@ -3,6 +3,7 @@ using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Shared.Light;
 using Content.Shared.Damage;
 using Robust.Server.GameObjects;
@@ -27,6 +28,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
 
             SubscribeLocalEvent<LitOnPoweredComponent, PowerChangedEvent>(OnPowerChanged);
+            SubscribeLocalEvent<LitOnPoweredComponent, PowerNetBatterySupplyEvent>(OnPowerSupply);
         }
 
         /// <summary>
@@ -93,6 +95,14 @@ namespace Content.Server.Light.EntitySystems
             if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
             {
                 light.Enabled = args.Powered;
+            }
+        }
+
+        private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, PowerNetBatterySupplyEvent args)
+        {
+            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            {
+                light.Enabled = args.Supply;
             }
         }
     }
