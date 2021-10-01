@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Fix # One of the following: Add, Remove, Tweak, Fix
+    message: Fix airlocks being opened by bullets and any thrown items. They can still be opened by thrown IDs and PDAs though!
