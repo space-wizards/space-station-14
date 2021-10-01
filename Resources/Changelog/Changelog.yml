@@ -2140,3 +2140,9 @@ Entries:
   - {message: Fix hands examine text showing virtual items it shouldn't., type: Fix}
   id: 382
   time: '2021-10-01T11:38:48.671438+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix airlocks being opened by bullets and any thrown items. They can
+      still be opened by thrown IDs and PDAs though!, type: Fix}
+  id: 383
+  time: '2021-10-01T11:48:44.804906+00:00'
