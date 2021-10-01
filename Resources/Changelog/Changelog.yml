@@ -2162,3 +2162,8 @@ Entries:
     type: Fix}
   id: 386
   time: '2021-10-01T13:28:49.058728+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fix tanks being empty on roundstart, type: Fix}
+  id: 387
+  time: '2021-10-01T13:48:00.0000000+00:00'
