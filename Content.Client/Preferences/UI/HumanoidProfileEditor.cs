@@ -605,14 +605,14 @@ namespace Content.Client.Preferences.UI
 
                         foreach (var jobSelector in _jobPriorities)
                         {
-                // Sync other selectors with the same job in case of multiple department jobs
-                if (jobSelector.Job == selector.Job)
+                            // Sync other selectors with the same job in case of multiple department jobs
+                            if (jobSelector.Job == selector.Job)
                             {
                                 jobSelector.Priority = priority;
                             }
 
-                // Lower any other high priorities to medium.
-                if (priority == JobPriority.High)
+                            // Lower any other high priorities to medium.
+                            if (priority == JobPriority.High)
                             {
                                 if (jobSelector.Job != selector.Job && jobSelector.Priority == JobPriority.High)
                                 {
