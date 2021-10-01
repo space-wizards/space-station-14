@@ -226,7 +226,7 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         /// <returns>Returns a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/></returns>
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
-        
+        {
             var beaker = BeakerContainer.ContainedEntity;
             if (beaker == null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
@@ -359,7 +359,7 @@ namespace Content.Server.Chemistry.Components
                     return false;
                 }
 
-                _beakerContainer.Insert(activeHandEntity);
+                BeakerContainer.Insert(activeHandEntity);
                 UpdateUserInterface();
 
                 return true;
