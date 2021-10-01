@@ -32,7 +32,7 @@ namespace Content.Server.Light.EntitySystems
             base.Update(frameTime);
             foreach (var match in _litMatches)
             {
-                if (match.CurrentState != SharedBurningStates.Lit)
+                if (match.CurrentState != SmokableState.Lit)
                     continue;
 
                 _atmosphereSystem.HotspotExpose(match.Owner.Transform.Coordinates, 400, 50, true);
@@ -41,7 +41,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnInteractUsing(EntityUid uid, MatchstickComponent component, InteractUsingEvent args)
         {
-            if (args.Handled || component.CurrentState != SharedBurningStates.Unlit)
+            if (args.Handled || component.CurrentState != SmokableState.Unlit)
                 return;
 
             var isHotEvent = new IsHotEvent();
@@ -56,7 +56,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnIsHotEvent(EntityUid uid, MatchstickComponent component, IsHotEvent args)
         {
-            args.IsHot = component.CurrentState == SharedBurningStates.Lit;
+            args.IsHot = component.CurrentState == SmokableState.Lit;
         }
 
         public void Ignite(MatchstickComponent component, IEntity user)
@@ -67,29 +67,29 @@ namespace Content.Server.Light.EntitySystems
                 AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
 
             // Change state
-            SetState(component, SharedBurningStates.Lit);
+            SetState(component, SmokableState.Lit);
             _litMatches.Add(component);
             component.Owner.SpawnTimer(component.Duration * 1000, delegate
             {
-                SetState(component, SharedBurningStates.Burnt);
+                SetState(component, SmokableState.Burnt);
                 _litMatches.Remove(component);
             });
         }
 
-        private void SetState(MatchstickComponent component, SharedBurningStates value)
+        private void SetState(MatchstickComponent component, SmokableState value)
         {
             component.CurrentState = value;
 
             if (component.PointLightComponent != null)
             {
-                component.PointLightComponent.Enabled = component.CurrentState == SharedBurningStates.Lit;
+                component.PointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }
 
             if (component.Owner.TryGetComponent(out ItemComponent? item))
             {
                 switch (component.CurrentState)
                 {
-                    case SharedBurningStates.Lit:
+                    case SmokableState.Lit:
                         item.EquippedPrefix = "lit";
                         break;
                     default:

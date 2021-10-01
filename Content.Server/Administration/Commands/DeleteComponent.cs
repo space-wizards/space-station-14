@@ -31,14 +31,14 @@ namespace Content.Server.Administration.Commands
                     }
 
                     var componentType = registration.Type;
-                    var components = entityManager.ComponentManager.GetAllComponents(componentType, true);
+                    var components = entityManager.GetAllComponents(componentType, true);
 
                     var i = 0;
 
                     foreach (var component in components)
                     {
                         var uid = component.Owner.Uid;
-                        entityManager.ComponentManager.RemoveComponent(uid, component);
+                        entityManager.RemoveComponent(uid, component);
                         i++;
                     }
 

@@ -8,8 +8,8 @@ using Content.Shared.Flash;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -120,14 +120,14 @@ namespace Content.Server.Flash
             if (attempt.Cancelled)
                 return;
 
-            if (ComponentManager.TryGetComponent<FlashableComponent>(target, out var flashable))
+            if (EntityManager.TryGetComponent<FlashableComponent>(target, out var flashable))
             {
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
                 flashable.Dirty();
             }
 
-            if (ComponentManager.TryGetComponent<StunnableComponent>(target, out var stunnableComponent))
+            if (EntityManager.TryGetComponent<StunnableComponent>(target, out var stunnableComponent))
             {
                 stunnableComponent.Slowdown(flashDuration / 1000f, slowTo, slowTo);
             }
@@ -149,7 +149,7 @@ namespace Content.Server.Flash
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            var transform = ComponentManager.GetComponent<ITransformComponent>(source);
+            var transform = EntityManager.GetComponent<ITransformComponent>(source);
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {

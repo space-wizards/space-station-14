@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -21,17 +21,17 @@ namespace Content.Server.Construction.Conditions
             return (physics.BodyType == BodyType.Static && Anchored) || (physics.BodyType != BodyType.Static && !Anchored);
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
-            if (!entity.TryGetComponent(out IPhysBody? physics)) return false;
+            var entity = args.Examined;
 
             switch (Anchored)
             {
-                case true when physics.BodyType != BodyType.Static:
-                    message.AddMarkup("First, anchor it.\n");
+                case true when !entity.Transform.Anchored:
+                    args.PushMarkup("First, anchor it.");
                     return true;
-                case false when physics.BodyType == BodyType.Static:
-                    message.AddMarkup("First, unanchor it.\n");
+                case false when entity.Transform.Anchored:
+                    args.PushMarkup("First, unanchor it.");
                     return true;
             }
 

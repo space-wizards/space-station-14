@@ -34,25 +34,25 @@ namespace Content.Server.DoAfter
         private readonly string? _activeHand;
         private readonly ItemComponent? _activeItem;
 
-        public DoAfter(DoAfterEventArgs eventArgs)
+        public DoAfter(DoAfterEventArgs eventArgs, IEntityManager entityManager)
         {
             EventArgs = eventArgs;
             StartTime = IoCManager.Resolve<IGameTiming>().CurTime;
 
             if (eventArgs.BreakOnUserMove)
             {
-                UserGrid = eventArgs.User.Transform.Coordinates;
+                UserGrid = entityManager.GetComponent<ITransformComponent>(eventArgs.User).Coordinates;
             }
 
             if (eventArgs.BreakOnTargetMove)
             {
                 // Target should never be null if the bool is set.
-                TargetGrid = eventArgs.Target!.Transform.Coordinates;
+                TargetGrid = entityManager.GetComponent<ITransformComponent>(eventArgs.Target!.Value).Coordinates;
             }
 
             // For this we need to stay on the same hand slot and need the same item in that hand slot
             // (or if there is no item there we need to keep it free).
-            if (eventArgs.NeedHand && eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
+            if (eventArgs.NeedHand && entityManager.TryGetComponent(eventArgs.User, out HandsComponent? handsComponent))
             {
                 _activeHand = handsComponent.ActiveHand;
                 _activeItem = handsComponent.GetActiveHand;
@@ -62,7 +62,7 @@ namespace Content.Server.DoAfter
             AsTask = Tcs.Task;
         }
 
-        public void Run(float frameTime)
+        public void Run(float frameTime, IEntityManager entityManager)
         {
             switch (Status)
             {
@@ -92,15 +92,15 @@ namespace Content.Server.DoAfter
                 return;
             }
 
-            if (IsCancelled())
+            if (IsCancelled(entityManager))
             {
                 Tcs.SetResult(DoAfterStatus.Cancelled);
             }
         }
 
-        private bool IsCancelled()
+        private bool IsCancelled(IEntityManager entityManager)
         {
-            if (EventArgs.User.Deleted || EventArgs.Target?.Deleted == true)
+            if (!entityManager.EntityExists(EventArgs.User) || EventArgs.Target is {} target && !entityManager.EntityExists(target))
             {
                 return true;
             }
@@ -112,14 +112,14 @@ namespace Content.Server.DoAfter
             }
 
             // TODO :Handle inertia in space.
-            if (EventArgs.BreakOnUserMove && !EventArgs.User.Transform.Coordinates.InRange(
-                EventArgs.User.EntityManager, UserGrid, EventArgs.MovementThreshold))
+            if (EventArgs.BreakOnUserMove && !entityManager.GetComponent<ITransformComponent>(EventArgs.User).Coordinates.InRange(
+                entityManager, UserGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
 
-            if (EventArgs.BreakOnTargetMove && !EventArgs.Target!.Transform.Coordinates.InRange(
-                EventArgs.User.EntityManager, TargetGrid, EventArgs.MovementThreshold))
+            if (EventArgs.BreakOnTargetMove && !entityManager.GetComponent<ITransformComponent>(EventArgs.Target!.Value).Coordinates.InRange(
+                entityManager, TargetGrid, EventArgs.MovementThreshold))
             {
                 return true;
             }
@@ -135,7 +135,7 @@ namespace Content.Server.DoAfter
             }
 
             if (EventArgs.BreakOnStun &&
-                EventArgs.User.TryGetComponent(out StunnableComponent? stunnableComponent) &&
+                entityManager.TryGetComponent(EventArgs.User, out StunnableComponent? stunnableComponent) &&
                 stunnableComponent.Stunned)
             {
                 return true;
@@ -143,7 +143,7 @@ namespace Content.Server.DoAfter
 
             if (EventArgs.NeedHand)
             {
-                if (!EventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
+                if (!entityManager.TryGetComponent(EventArgs.User, out HandsComponent? handsComponent))
                 {
                     // If we had a hand but no longer have it that's still a paddlin'
                     if (_activeHand != null)

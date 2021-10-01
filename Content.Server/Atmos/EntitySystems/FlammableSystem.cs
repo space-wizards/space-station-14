@@ -8,7 +8,7 @@ using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -58,7 +58,7 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnCollideEvent(EntityUid uid, FlammableComponent flammable, StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner.Uid;
-            if (!ComponentManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
+            if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
                 return;
 
             if (!flammable.FireSpread || !otherFlammable.FireSpread)
@@ -179,7 +179,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in ComponentManager.EntityQuery<FlammableComponent, PhysicsComponent, ITransformComponent>())
+            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, PhysicsComponent, ITransformComponent>())
             {
                 var uid = flammable.Owner.Uid;
 
@@ -237,7 +237,7 @@ namespace Content.Server.Atmos.EntitySystems
                         continue;
                     }
 
-                    var otherPhysics = ComponentManager.GetComponent<IPhysBody>(uid);
+                    var otherPhysics = EntityManager.GetComponent<IPhysBody>(uid);
 
                     // TODO: Sloth, please save our souls!
                     if (!physics.GetWorldAABB().Intersects(otherPhysics.GetWorldAABB()))

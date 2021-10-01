@@ -9,7 +9,7 @@ namespace Content.Server.Atmos.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var analyzer in ComponentManager.EntityQuery<GasAnalyzerComponent>(true))
+            foreach (var analyzer in EntityManager.EntityQuery<GasAnalyzerComponent>(true))
             {
                 analyzer.Update(frameTime);
             }

@@ -23,7 +23,7 @@ namespace Content.Server.Hands.Systems
 
         public bool TrySpawnVirtualItemInHand(EntityUid blockingEnt, EntityUid user)
         {
-            if (ComponentManager.TryGetComponent<HandsComponent>(user, out var hands))
+            if (EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 foreach (var handName in hands.ActivePriorityEnumerable())
                 {
@@ -82,7 +82,7 @@ namespace Content.Server.Hands.Systems
         /// </summary>
         public void DeleteInHandsMatching(EntityUid user, EntityUid matching)
         {
-            if (ComponentManager.TryGetComponent<HandsComponent>(user, out var hands))
+            if (EntityManager.TryGetComponent<HandsComponent>(user, out var hands))
             {
                 foreach (var handName in hands.ActivePriorityEnumerable())
                 {
@@ -92,9 +92,9 @@ namespace Content.Server.Hands.Systems
 
                     if (hand.HeldEntity != null)
                     {
-                        if (ComponentManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity.Uid,
-                            out var virt)
-                        && virt.BlockingEntity == matching)
+                        if (EntityManager.TryGetComponent<HandVirtualItemComponent>(hand.HeldEntity.Uid,
+                                out var virt)
+                            && virt.BlockingEntity == matching)
                         {
                             Delete(virt, user);
                         }

@@ -28,6 +28,7 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+  - type: DoorBumpOpener
 
 - type: entity
   parent: BasePDA

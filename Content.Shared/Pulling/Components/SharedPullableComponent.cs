@@ -69,7 +69,9 @@ namespace Content.Shared.Pulling.Components
                         var message = new PullStoppedMessage(oldPullerPhysics, _physics);
 
                         eventBus.RaiseLocalEvent(oldPuller.Uid, message, broadcast: false);
-                        eventBus.RaiseLocalEvent(Owner.Uid, message);
+
+                        if (Owner.LifeStage <= EntityLifeStage.MapInitialized)
+                            eventBus.RaiseLocalEvent(Owner.Uid, message);
 
                         _physics.WakeBody();
                     }
@@ -125,8 +127,6 @@ namespace Content.Shared.Pulling.Components
                         }
                     }
 
-                    valuePuller.Pulling = Owner;
-
                     // Continue with pulling process.
 
                     var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
@@ -147,6 +147,7 @@ namespace Content.Shared.Pulling.Components
 
                     // Pull start confirm
 
+                    valuePuller.Pulling = Owner;
                     _puller = value;
                     Dirty();
                     PullerPhysics = pullerPhysics;

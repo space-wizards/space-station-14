@@ -31,7 +31,7 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
-                    doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
+                    doAfter.EventArgs.Target ?? EntityUid.Invalid);
 
                 toAdd.Add(clientDoAfter);
             }

@@ -2066,3 +2066,99 @@ Entries:
       and unanchored again., type: Fix}
   id: 369
   time: '2021-09-23T22:45:00.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Smoking actually makes you inhale reagents now., type: Add}
+  - {message: You can put out a cigar or cigarette by "activating" it., type: Add}
+  - {message: Cigars and cigarettes now contain nicotine., type: Tweak}
+  - {message: Blunts now contain THC., type: Tweak}
+  id: 370
+  time: '2021-09-26T13:19:00.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes pointing localization, type: Fix}
+  id: 371
+  time: '2021-09-27T06:03:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items can be thrown into disposals more easily again., type: Fix}
+  id: 372
+  time: '2021-09-28T14:16:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Weightless items stop moving sooner., type: Tweak}
+  - {message: Shuttles handle a bit better., type: Tweak}
+  id: 373
+  time: '2021-09-29T10:07:01.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where you couldn't join as clown under certain circumstances.,
+    type: Fix}
+  id: 374
+  time: '2021-09-30T11:36:50.043933+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix uplink UI text going above limits., type: Fix}
+  id: 375
+  time: '2021-09-30T11:36:50.044677+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
+  id: 376
+  time: '2021-09-30T11:58:35.620628+00:00'
+- author: 20kdc
+  changes:
+  - {message: Syringes can inject into/draw from beakers and drinks again., type: Fix}
+  - {message: Syringe messages on failure to inject/draw are less confusing., type: Fix}
+  - {message: Drinks that have been transformed (i.e. beer glasses) can be put back
+      into the dispenser., type: Fix}
+  id: 377
+  time: '2021-10-01T10:06:50.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bar sign not changing its sprite correctly., type: Fix}
+  id: 378
+  time: '2021-10-01T10:29:58.504452+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes drinking glasses not fitting in reagent dispensers., type: Fix}
+  id: 379
+  time: '2021-10-01T10:29:58.505241+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes drinking glasses not breaking when thrown., type: Fix}
+  id: 380
+  time: '2021-10-01T10:29:58.505975+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix mob inventory strip window showing virtual items it shouldn't.,
+    type: Fix}
+  id: 381
+  time: '2021-10-01T11:36:27.868628+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix hands examine text showing virtual items it shouldn't., type: Fix}
+  id: 382
+  time: '2021-10-01T11:38:48.671438+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix airlocks being opened by bullets and any thrown items. They can
+      still be opened by thrown IDs and PDAs though!, type: Fix}
+  id: 383
+  time: '2021-10-01T11:48:44.804906+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to uncuff yourself while dead or incapacitated., type: Fix}
+  id: 384
+  time: '2021-10-01T12:48:27.257568+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to place cables/wires on non-subfloor tiles., type: Fix}
+  id: 385
+  time: '2021-10-01T13:28:49.057909+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix examine not showing the correct construction steps in certain cases.,
+    type: Fix}
+  id: 386
+  time: '2021-10-01T13:28:49.058728+00:00'

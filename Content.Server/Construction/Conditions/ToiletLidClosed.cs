@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Toilet;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -19,12 +20,14 @@ namespace Content.Server.Construction.Conditions
             return !toilet.LidOpen;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inExamineRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
             if (!toilet.LidOpen) return false;
 
-            message.AddMarkup(Loc.GetString("construction-condition-toilet-lid-closed") + "\n");
+            args.PushMarkup(Loc.GetString("construction-condition-toilet-lid-closed") + "\n");
             return true;
         }
     }

@@ -278,7 +278,7 @@ namespace Content.Client.IconSmoothing
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

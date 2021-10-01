@@ -7,9 +7,8 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -208,7 +207,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;

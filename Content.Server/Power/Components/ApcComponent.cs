@@ -4,7 +4,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -175,7 +175,7 @@ namespace Content.Server.Power.Components
             }
 
             var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
-            if (!MathHelper.CloseTo(delta, 0, 0.1f) && delta < 0)
+            if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
             }

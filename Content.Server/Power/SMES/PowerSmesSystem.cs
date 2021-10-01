@@ -8,7 +8,7 @@ namespace Content.Server.Power.SMES
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<SmesComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<SmesComponent>(true))
             {
                 comp.OnUpdate();
             }

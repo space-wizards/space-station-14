@@ -19,7 +19,7 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
             var system = EntitySystem.Get<ConveyorSystem>();
-            foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>())
+            foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
             {
                 Convey(system, comp, frameTime);
             }

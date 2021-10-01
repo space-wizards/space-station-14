@@ -30,7 +30,7 @@ namespace Content.Server.Fluids
 
         private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
         {
-            if (ComponentManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
+            if (EntityManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
             {
                 args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
@@ -40,7 +40,7 @@ namespace Content.Server.Fluids
         private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
         {
             // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            foreach (var puddle in ComponentManager.EntityQuery<PuddleComponent>(true))
+            foreach (var puddle in EntityManager.EntityQuery<PuddleComponent>(true))
             {
                 // If the tile becomes space then delete it (potentially change by design)
                 var puddleTransform = puddle.Owner.Transform;
