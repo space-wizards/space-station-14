@@ -233,7 +233,7 @@ namespace Content.Server.Light.Components
 
             var currentCharge = Cell.CurrentCharge;
 
-            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(currentCharge, 0) || Wattage > currentCharge)
                 return 0;
 
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);

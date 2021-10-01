@@ -2079,3 +2079,30 @@ Entries:
   - {message: Fixes pointing localization, type: Fix}
   id: 371
   time: '2021-09-27T06:03:10.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Items can be thrown into disposals more easily again., type: Fix}
+  id: 372
+  time: '2021-09-28T14:16:00.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Weightless items stop moving sooner., type: Tweak}
+  - {message: Shuttles handle a bit better., type: Tweak}
+  id: 373
+  time: '2021-09-29T10:07:01.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bug where you couldn't join as clown under certain circumstances.,
+    type: Fix}
+  id: 374
+  time: '2021-09-30T11:36:50.043933+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix uplink UI text going above limits., type: Fix}
+  id: 375
+  time: '2021-09-30T11:36:50.044677+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
+  id: 376
+  time: '2021-09-30T11:58:35.620628+00:00'

@@ -128,8 +128,6 @@ namespace Content.Shared.Pulling.Components
                         }
                     }
 
-                    valuePuller.Pulling = Owner;
-
                     // Continue with pulling process.
 
                     var pullAttempt = new PullAttemptMessage(pullerPhysics, _physics);
@@ -150,6 +148,7 @@ namespace Content.Shared.Pulling.Components
 
                     // Pull start confirm
 
+                    valuePuller.Pulling = Owner;
                     _puller = value;
                     Dirty();
                     PullerPhysics = pullerPhysics;

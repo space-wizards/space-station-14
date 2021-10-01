@@ -46,6 +46,7 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: AmbientOnPowered
   - type: AmbientSound
     volume: -15
     range: 2

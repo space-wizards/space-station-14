@@ -50,6 +50,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
+    ignoreResistances: true
     damage:
       types:
         Blunt: 5

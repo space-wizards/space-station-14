@@ -19,6 +19,8 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
+        private readonly Dictionary<PowerNetworkBatteryComponent, float> _lastSupply = new();
+
         private readonly BatteryRampPegSolver _solver = new();
 
         public override void Initialize()
@@ -150,6 +152,14 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Update(frameTime);
 
+            // Setup for events.
+            {
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
+                {
+                    _lastSupply[powerNetBattery] = powerNetBattery.CurrentSupply;
+                }
+            }
+
             // Reconnect networks.
             {
                 foreach (var apcNet in _apcNetReconnectQueue)
@@ -189,7 +199,7 @@ namespace Content.Server.Power.EntitySystems
                     var recv = apcReceiver.NetworkLoad.ReceivingPower;
                     ref var last = ref apcReceiver.LastPowerReceived;
 
-                    if (!MathHelper.CloseTo(recv, last))
+                    if (!MathHelper.CloseToPercent(recv, last))
                     {
                         last = recv;
                         apcReceiver.ApcPowerChanged();
@@ -200,13 +210,34 @@ namespace Content.Server.Power.EntitySystems
                 {
                     var newRecv = consumer.NetworkLoad.ReceivingPower;
                     ref var lastRecv = ref consumer.LastReceived;
-                    if (!MathHelper.CloseTo(lastRecv, newRecv))
+                    if (!MathHelper.CloseToPercent(lastRecv, newRecv))
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
                         RaiseLocalEvent(consumer.Owner.Uid, msg);
                     }
                 }
+
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
+                {
+                    if (!_lastSupply.TryGetValue(powerNetBattery, out var lastPowerSupply))
+                    {
+                        lastPowerSupply = 0f;
+                    }
+
+                    var currentSupply = powerNetBattery.CurrentSupply;
+
+                    if (lastPowerSupply == 0f && currentSupply != 0f)
+                    {
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = true});
+                    }
+                    else if (lastPowerSupply > 0f && currentSupply == 0f)
+                    {
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = false});
+                    }
+                }
+
+                _lastSupply.Clear();
             }
         }
 
@@ -322,6 +353,14 @@ namespace Content.Server.Power.EntitySystems
             ReceivedPower = receivedPower;
             DrawRate = drawRate;
         }
+    }
+
+    /// <summary>
+    /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
+    /// </summary>
+    public sealed class PowerNetBatterySupplyEvent : EntityEventArgs
+    {
+        public bool Supply { get; init;  }
     }
 
     public struct PowerStatistics
