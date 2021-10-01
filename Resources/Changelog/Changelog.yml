@@ -2135,3 +2135,8 @@ Entries:
     type: Fix}
   id: 381
   time: '2021-10-01T11:36:27.868628+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix hands examine text showing virtual items it shouldn't., type: Fix}
+  id: 382
+  time: '2021-10-01T11:38:48.671438+00:00'
