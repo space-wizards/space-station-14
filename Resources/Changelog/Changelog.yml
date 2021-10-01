@@ -2114,3 +2114,18 @@ Entries:
       into the dispenser., type: Fix}
   id: 377
   time: '2021-10-01T10:06:50.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes bar sign not changing its sprite correctly., type: Fix}
+  id: 378
+  time: '2021-10-01T10:29:58.504452+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes drinking glasses not fitting in reagent dispensers., type: Fix}
+  id: 379
+  time: '2021-10-01T10:29:58.505241+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes drinking glasses not breaking when thrown., type: Fix}
+  id: 380
+  time: '2021-10-01T10:29:58.505975+00:00'
