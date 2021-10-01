@@ -64,7 +64,7 @@ namespace Content.Server.GameTicking
         public void ChooseRandomLobbySong()
         {
             DebugTools.Assert(_lobbyMusicInitialized);
-            SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles));
+            SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString());
         }
 
         /// <summary>

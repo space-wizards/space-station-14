@@ -47,6 +47,7 @@
           components:
             - IdCard
   - type: PDA
+  - type: DoorBumpOpener
 
 - type: entity
   parent: BasePDA

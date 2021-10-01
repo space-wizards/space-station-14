@@ -246,7 +246,7 @@ namespace Content.Server.GameTicking
             RoundNumberMetric.Inc();
 
             RunLevel = GameRunLevel.PreRoundLobby;
-            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles);
+            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             ResettingCleanup();
             PreRoundSetup();
 

@@ -45,6 +45,11 @@ namespace Content.Server.Doors
 
         private void HandleCollide(EntityUid uid, ServerDoorComponent component, StartCollideEvent args)
         {
+            if (!args.OtherFixture.Body.Owner.HasComponent<DoorBumpOpenerComponent>())
+            {
+                return;
+            }
+
             if (component.State != SharedDoorComponent.DoorState.Closed)
             {
                 return;

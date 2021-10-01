@@ -207,7 +207,7 @@ namespace Content.Server.Cuffs.Components
             }
 
             // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
             {
                 user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
