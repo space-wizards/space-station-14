@@ -29,4 +29,10 @@
     - type: ComputerVisualizer
       key: generic_key
       screen: generic
-  - type: LitOnPowered # this doesn't have a pointlight, but most children do, so i'll put it here
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 2
+    energy: 1.6
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true

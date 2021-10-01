@@ -65,7 +65,7 @@
   components:
   - type: LightBulb
     bulb: Tube
-    color: "#FFE0C7" # 4800K color temp
+    color: "#FFE4CE" # 5000K color temp
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal
