@@ -33,7 +33,7 @@
     female:
       collection: FemaleScreams
     wilhelm:
-      path: /Audio/Voice/Human/wilhelm_scream.oggaaa
+      path: /Audio/Voice/Human/wilhelm_scream.ogg
 
 - type: action
   actionType: VoxScream
