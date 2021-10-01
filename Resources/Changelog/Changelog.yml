@@ -2175,3 +2175,8 @@ Entries:
       \ APCs and SMESes.", type: Tweak}
   id: 388
   time: '2021-10-01T20:59:06.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: You can uncuff yourself again., type: Fix}
+  id: 389
+  time: '2021-10-01T22:17:37.0000000+00:00'
