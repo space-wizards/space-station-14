@@ -2167,3 +2167,11 @@ Entries:
   - {message: Fix tanks being empty on roundstart, type: Fix}
   id: 387
   time: '2021-10-01T13:48:00.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Station lights have been dimmed, in accordance with Nanotrasen regulations.',
+    type: Tweak}
+  - {message: "Nanotrasen brand vendors and computers now emit Real Light\u2122! Also\
+      \ APCs and SMESes.", type: Tweak}
+  id: 388
+  time: '2021-10-01T20:59:06.0000000+00:00'
