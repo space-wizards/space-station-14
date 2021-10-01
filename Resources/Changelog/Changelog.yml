@@ -2146,3 +2146,8 @@ Entries:
       still be opened by thrown IDs and PDAs though!, type: Fix}
   id: 383
   time: '2021-10-01T11:48:44.804906+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to uncuff yourself while dead or incapacitated., type: Fix}
+  id: 384
+  time: '2021-10-01T12:48:27.257568+00:00'
