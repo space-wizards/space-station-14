@@ -2129,3 +2129,9 @@ Entries:
   - {message: Fixes drinking glasses not breaking when thrown., type: Fix}
   id: 380
   time: '2021-10-01T10:29:58.505975+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Fix mob inventory strip window showing virtual items it shouldn't.,
+    type: Fix}
+  id: 381
+  time: '2021-10-01T11:36:27.868628+00:00'
