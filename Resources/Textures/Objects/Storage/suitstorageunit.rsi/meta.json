@@ -18,6 +18,21 @@
         },
         {
             "name": "broken"
+        },
+        {
+            "name": "human"
+        },
+        {
+            "name": "uv"
+        },
+        {
+            "name": "uvhuman"
+        },
+        {
+            "name": "super1"
+        },
+        {
+            "name": "super2"
         }
     ]
 }
