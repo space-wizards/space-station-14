@@ -16,13 +16,14 @@ namespace Content.Server.Cuffs
     internal sealed class CuffableSystem : SharedCuffableSystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            EntityManager.EventBus.SubscribeEvent<HandCountChangedEvent>(EventSource.Local, this, OnHandCountChanged);
-            EntityManager.EventBus.SubscribeEvent<UncuffAttemptEvent>(EventSource.Local, this, OnUncuffAttempt);
+            SubscribeLocalEvent<HandCountChangedEvent>(OnHandCountChanged);
+            SubscribeLocalEvent<UncuffAttemptEvent>(OnUncuffAttempt);
         }
 
         private void OnUncuffAttempt(UncuffAttemptEvent args)
@@ -57,7 +58,7 @@ namespace Content.Server.Cuffs
             else
             {
                 // Check if the user can interact.
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(userEntity))
+                if (!_actionBlockerSystem.CanInteract(userEntity))
                 {
                     args.Cancel();
                 }
