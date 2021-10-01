@@ -71,7 +71,6 @@ namespace Content.Server.Nutrition.EntitySystems
             UpdateAppearance(component);
         }
 
-        // TODO move to DrinkSystem
         public void UpdateAppearance(DrinkComponent component)
         {
             if (!component.Owner.TryGetComponent(out AppearanceComponent? appearance) ||
