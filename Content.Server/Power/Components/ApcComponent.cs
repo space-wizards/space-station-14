@@ -49,6 +49,10 @@ namespace Content.Server.Power.Components
 
         private const int VisualsChangeDelay = 1;
 
+        private static readonly Color LackColor = Color.FromHex("#d1332e");
+        private static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
+        private static readonly Color FullColor = Color.FromHex("#3db83b");
+
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
         public BatteryComponent? Battery => Owner.TryGetComponent(out BatteryComponent? batteryComponent) ? batteryComponent : null;
@@ -114,6 +118,18 @@ namespace Content.Server.Power.Components
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
+                }
+
+                if (Owner.TryGetComponent(out SharedPointLightComponent? light))
+                {
+                    light.Color = newState switch
+                    {
+                        ApcChargeState.Lack => LackColor,
+                        ApcChargeState.Charging => ChargingColor,
+                        ApcChargeState.Full => FullColor,
+                        _ => LackColor
+                    };
+                    light.Dirty();
                 }
             }
 
