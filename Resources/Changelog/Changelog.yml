@@ -2106,3 +2106,11 @@ Entries:
   - {message: Fixes ghost pointing arrows being seen by mere mortals., type: Fix}
   id: 376
   time: '2021-09-30T11:58:35.620628+00:00'
+- author: 20kdc
+  changes:
+  - {message: Syringes can inject into/draw from beakers and drinks again., type: Fix}
+  - {message: Syringe messages on failure to inject/draw are less confusing., type: Fix}
+  - {message: Drinks that have been transformed (i.e. beer glasses) can be put back
+      into the dispenser., type: Fix}
+  id: 377
+  time: '2021-10-01T10:06:50.0000000+00:00'
