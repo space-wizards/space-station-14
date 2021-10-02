@@ -2180,3 +2180,8 @@ Entries:
   - {message: You can uncuff yourself again., type: Fix}
   id: 389
   time: '2021-10-01T22:17:37.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed radiation dealing wrong damage type., type: Fix}
+  id: 390
+  time: '2021-10-02T01:47:54.0000000+00:00'
