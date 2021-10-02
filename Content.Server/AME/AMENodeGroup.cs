@@ -46,11 +46,6 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
-                {
-                    _masterController = controller;
-                }
-
                 if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
@@ -66,6 +61,21 @@ namespace Content.Server.AME
                     {
                         shield.UnsetCore();
                     }
+                }
+            }
+
+            // Separate to ensure core count is correctly updated.
+            foreach (var node in groupNodes)
+            {
+                var nodeOwner = node.Owner;
+                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
+                {
+                    if (_masterController == null)
+                    {
+                        // Has to be the first one, as otherwise IsMasterController will return true on them all for this first update.
+                        _masterController = controller;
+                    }
+                    controller.OnAMENodeGroupUpdate();
                 }
             }
         }

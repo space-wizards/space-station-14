@@ -137,6 +137,12 @@ namespace Content.Server.AME.Components
             UpdateUserInterface();
         }
 
+        // Used to update core count
+        public void OnAMENodeGroupUpdate()
+        {
+            UpdateUserInterface();
+        }
+
         private AMEControllerBoundUserInterfaceState GetUserInterfaceState()
         {
             var jar = _jarSlot.ContainedEntity;
