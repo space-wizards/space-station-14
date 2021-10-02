@@ -56,6 +56,7 @@ namespace Content.Server.AME
                     {
                         _cores.Add(shield);
                         shield.SetCore();
+                        // Core visuals will be updated later.
                     }
                     else
                     {
@@ -78,10 +79,21 @@ namespace Content.Server.AME
                     controller.OnAMENodeGroupUpdate();
                 }
             }
+
+            UpdateCoreVisuals();
         }
 
-        public void UpdateCoreVisuals(int injectionAmount, bool injecting)
+        public void UpdateCoreVisuals()
         {
+            var injectionAmount = 0;
+            var injecting = false;
+
+            if (_masterController != null)
+            {
+                injectionAmount = _masterController.InjectionAmount;
+                injecting = _masterController.Injecting;
+            }
+
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)
