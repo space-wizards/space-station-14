@@ -32,14 +32,14 @@ namespace Content.Server.RCD.Systems
             if (args.Target == null || !EntityManager.TryGetComponent(args.Target.Uid, out RCDComponent? rcdComponent))
                 return;
 
-            if (rcdComponent.MaxAmmo - rcdComponent._ammo < component.RefillAmmo)
+            if (rcdComponent.MaxAmmo - rcdComponent.CurrentAmmo < component.RefillAmmo)
             {
                 rcdComponent.Owner.PopupMessage(args.User, Loc.GetString("rcd-ammo-component-after-interact-full-text"));
                 args.Handled = true;
                 return;
             }
 
-            rcdComponent._ammo = Math.Min(rcdComponent.MaxAmmo, rcdComponent._ammo + component.RefillAmmo);
+            rcdComponent.CurrentAmmo = Math.Min(rcdComponent.MaxAmmo, rcdComponent.CurrentAmmo + component.RefillAmmo);
             rcdComponent.Owner.PopupMessage(args.User, Loc.GetString("rcd-ammo-component-after-interact-refilled-text"));
             EntityManager.DeleteEntity(uid);
 
