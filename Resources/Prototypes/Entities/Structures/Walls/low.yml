@@ -4,7 +4,9 @@
   name: low wall
   description: Goes up to about your waist.
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: CanBuildWindowOnTop
   - type: Sprite
     netsync: false

@@ -122,7 +122,6 @@ namespace Content.Client.Entry
             "DamageOnToolInteract",
             "TrashSpawner",
             "RCD",
-            "RCDDeconstructWhitelist",
             "RCDAmmo",
             "CursedEntityStorage",
             "Listening",
