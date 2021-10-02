@@ -176,7 +176,7 @@ namespace Content.Client.ContextMenu.UI
          }
      }
 
-    public sealed class ContextMenuPopup : Popup
+    public sealed class ContextMenuPopup : Robust.Client.UserInterface.Controls.Popup
     {
         private static readonly Color DefaultColor = Color.FromHex("#1116");
         private static readonly Color MarginColor = Color.FromHex("#222E");

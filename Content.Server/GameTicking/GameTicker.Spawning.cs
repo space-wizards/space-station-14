@@ -97,7 +97,11 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
-            jobPrototype.Special?.AfterEquip(mob);
+
+            foreach (var jobSpecial in jobPrototype.Special)
+            {
+                jobSpecial.AfterEquip(mob);
+            }
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
@@ -189,7 +193,7 @@ namespace Content.Server.GameTicking
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
-                    if (equipmentStr != string.Empty)
+                    if (!string.IsNullOrEmpty(equipmentStr))
                     {
                         var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
@@ -246,7 +250,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
                     _possiblePositions.Add(transform.Coordinates);
@@ -264,7 +268,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.LateJoin) _possiblePositions.Add(transform.Coordinates);
             }
@@ -282,7 +286,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Observer)
                     _possiblePositions.Add(transform.Coordinates);

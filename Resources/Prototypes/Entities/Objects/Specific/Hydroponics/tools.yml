@@ -13,6 +13,9 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
 
@@ -30,6 +33,9 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
 
@@ -47,6 +53,9 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
   - type: Clothing
     sprite: Objects/Tools/Hydroponics/scythe.rsi
     size: 20
@@ -68,6 +77,10 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 10
+        Piercing: 5
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
 
@@ -86,5 +99,9 @@
     state: icon
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
+        Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi

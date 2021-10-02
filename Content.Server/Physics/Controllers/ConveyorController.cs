@@ -18,102 +18,43 @@ namespace Content.Server.Physics.Controllers
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
         {
             base.UpdateBeforeSolve(prediction, frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<ConveyorComponent>())
+            var system = EntitySystem.Get<ConveyorSystem>();
+            foreach (var comp in EntityManager.EntityQuery<ConveyorComponent>())
             {
-                Convey(comp, frameTime);
-            }
-
-            // TODO: Uhh you can probably wrap the recycler's conveying properties into... conveyor
-            foreach (var comp in ComponentManager.EntityQuery<RecyclerComponent>())
-            {
-                ConveyRecycler(comp, frameTime);
+                Convey(system, comp, frameTime);
             }
         }
 
-        private void Convey(ConveyorComponent comp, float frameTime)
+        private void Convey(ConveyorSystem system, ConveyorComponent comp, float frameTime)
         {
-            // TODO: Use ICollideBehavior and cache intersecting
             // Use an event for conveyors to know what needs to run
-            if (!comp.CanRun())
+            if (!system.CanRun(comp))
             {
                 return;
             }
 
-            var intersecting = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
-            var direction = comp.GetAngle().ToVec();
-            Vector2? ownerPos = null;
+            var direction = system.GetAngle(comp).ToVec();
+            var ownerPos = comp.Owner.Transform.WorldPosition;
 
-            foreach (var entity in intersecting)
+            foreach (var (entity, physics) in EntitySystem.Get<ConveyorSystem>().GetEntitiesToMove(comp))
             {
-                if (!comp.CanMove(entity)) continue;
-
-                if (!entity.TryGetComponent(out IPhysBody? physics) || physics.BodyStatus == BodyStatus.InAir ||
-                    entity.IsWeightless()) continue;
-
-                ownerPos ??= comp.Owner.Transform.WorldPosition;
-                var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos.Value;
-
-                physics.LinearVelocity += Convey(direction * comp.Speed, frameTime, itemRelativeToConveyor);
+                var itemRelativeToConveyor = entity.Transform.WorldPosition - ownerPos;
+                physics.LinearVelocity += Convey(direction, comp.Speed, frameTime, itemRelativeToConveyor);
             }
         }
 
-        // TODO Uhhh I did a shit job plz fix smug
-        private Vector2 Convey(Vector2 velocityDirection, float frameTime, Vector2 itemRelativeToConveyor)
+        private Vector2 Convey(Vector2 direction, float speed, float frameTime, Vector2 itemRelativeToConveyor)
         {
-            //gravitating item towards center
-            //http://csharphelper.com/blog/2016/09/find-the-shortest-distance-between-a-point-and-a-line-segment-in-c/
-            Vector2 centerPoint;
+            if(speed == 0 || direction.Length == 0) return Vector2.Zero;
+            direction = direction.Normalized;
 
-            var t = 0f;
-            if (velocityDirection.Length > 0) // if velocitydirection is 0, this calculation will divide by 0
-            {
-                t = Vector2.Dot(itemRelativeToConveyor, velocityDirection) /
-                    Vector2.Dot(velocityDirection, velocityDirection);
-            }
+            var dirNormal = new Vector2(direction.Y, direction.X);
+            var dot = Vector2.Dot(itemRelativeToConveyor, dirNormal);
 
-            if (t < 0)
-            {
-                centerPoint = new Vector2();
-            }
-            else if (t > 1)
-            {
-                centerPoint = velocityDirection;
-            }
-            else
-            {
-                centerPoint = velocityDirection * t;
-            }
+            var velocity = direction * speed * 5;
+            velocity += dirNormal * speed * -dot;
 
-            var delta = centerPoint - itemRelativeToConveyor;
-            return delta * (400 * delta.Length) * frameTime;
-        }
-
-        private void ConveyRecycler(RecyclerComponent comp, float frameTime)
-        {
-            if (!comp.CanRun())
-            {
-                comp.Intersecting.Clear();
-                return;
-            }
-
-            var direction = Vector2.UnitX;
-            Vector2? ownerPos = null;
-
-            // TODO: I know it sucks but conveyors need a refactor
-            for (var i = comp.Intersecting.Count - 1; i >= 0; i--)
-            {
-                var entity = comp.Intersecting[i];
-
-                if (entity.Deleted || !comp.CanMove(entity) || !IoCManager.Resolve<IEntityLookup>().IsIntersecting(comp.Owner, entity))
-                {
-                    comp.Intersecting.RemoveAt(i);
-                    continue;
-                }
-
-                if (!entity.TryGetComponent(out IPhysBody? physics)) continue;
-                ownerPos ??= comp.Owner.Transform.WorldPosition;
-                physics.LinearVelocity += Convey(direction, frameTime, entity.Transform.WorldPosition - ownerPos.Value);
-            }
+            return velocity * frameTime;
         }
     }
 }

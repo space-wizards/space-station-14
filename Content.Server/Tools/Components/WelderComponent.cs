@@ -6,16 +6,15 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chemistry.Components;
 using Content.Server.Explosion;
 using Content.Server.Items;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Temperature;
 using Content.Shared.Tool;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -26,7 +25,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Tools.Components
@@ -34,13 +32,14 @@ namespace Content.Server.Tools.Components
     [RegisterComponent]
     [ComponentReference(typeof(ToolComponent))]
     [ComponentReference(typeof(IToolComponent))]
-    [ComponentReference(typeof(IHotItem))]
     [NetworkedComponent()]
-    public class WelderComponent : ToolComponent, IExamine, IUse, ISuicideAct, ISolutionChange, IHotItem, IAfterInteract
+    public class WelderComponent : ToolComponent, IUse, ISuicideAct, IAfterInteract
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
         public override string Name => "Welder";
+
+        public const string SolutionName = "welder";
 
         /// <summary>
         /// Default Cost of using the welder fuel for an action
@@ -55,7 +54,6 @@ namespace Content.Server.Tools.Components
         private bool _welderLit;
         private WelderSystem _welderSystem = default!;
         private SpriteComponent? _spriteComponent;
-        private SolutionContainerComponent? _solutionComponent;
         private PointLightComponent? _pointLightComponent;
 
         [DataField("weldSounds")]
@@ -70,11 +68,19 @@ namespace Content.Server.Tools.Components
         [DataField("welderRefill")]
         private SoundSpecifier WelderRefill { get; set; } = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
-        [ViewVariables]
-        public float Fuel => _solutionComponent?.Solution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
+        [ViewVariables] public float Fuel => WelderSolution?.GetReagentQuantity("WeldingFuel").Float() ?? 0f;
 
-        [ViewVariables]
-        public float FuelCapacity => _solutionComponent?.MaxVolume.Float() ?? 0f;
+        [ViewVariables] public float FuelCapacity => WelderSolution?.MaxVolume.Float() ?? 0f;
+
+        private Solution? WelderSolution
+        {
+            get
+            {
+                Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
+                    .TryGetSolution(Owner, SolutionName, out var solution);
+                return solution;
+            }
+        }
 
         /// <summary>
         /// Status of welder, whether it is ignited
@@ -90,11 +96,6 @@ namespace Content.Server.Tools.Components
             }
         }
 
-        bool IHotItem.IsCurrentlyHot()
-        {
-            return WelderLit;
-        }
-
         protected override void Initialize()
         {
             base.Initialize();
@@ -103,9 +104,10 @@ namespace Content.Server.Tools.Components
 
             _welderSystem = _entitySystemManager.GetEntitySystem<WelderSystem>();
 
-            Owner.TryGetComponent(out _solutionComponent);
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
             Owner.TryGetComponent(out _spriteComponent);
             Owner.TryGetComponent(out _pointLightComponent);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, "welder");
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -113,7 +115,8 @@ namespace Content.Server.Tools.Components
             return new WelderComponentState(FuelCapacity, Fuel, WelderLit);
         }
 
-        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay, ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
+        public override async Task<bool> UseTool(IEntity user, IEntity? target, float doAfterDelay,
+            ToolQuality toolQualityNeeded, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -134,7 +137,8 @@ namespace Content.Server.Tools.Components
             return toolQualityNeeded.HasFlag(ToolQuality.Welding) ? canUse && TryWeld(DefaultFuelCost, user) : canUse;
         }
 
-        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded, float fuelConsumed, Func<bool>? doAfterCheck = null)
+        public async Task<bool> UseTool(IEntity user, IEntity target, float doAfterDelay, ToolQuality toolQualityNeeded,
+            float fuelConsumed, Func<bool>? doAfterCheck = null)
         {
             bool ExtraCheck()
             {
@@ -143,7 +147,8 @@ namespace Content.Server.Tools.Components
                 return extraCheck && CanWeld(fuelConsumed);
             }
 
-            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) && TryWeld(fuelConsumed, user);
+            return await base.UseTool(user, target, doAfterDelay, toolQualityNeeded, ExtraCheck) &&
+                   TryWeld(fuelConsumed, user);
         }
 
         private bool TryWeld(float value, IEntity? user = null, bool silent = false)
@@ -164,15 +169,17 @@ namespace Content.Server.Tools.Components
                 return false;
             }
 
-            if (_solutionComponent == null)
+            if (WelderSolution == null)
                 return false;
 
-            var succeeded = _solutionComponent.TryRemoveReagent("WeldingFuel", ReagentUnit.New(value));
+            var succeeded = EntitySystem.Get<SolutionContainerSystem>()
+                .TryRemoveReagent(Owner.Uid, WelderSolution, "WeldingFuel", ReagentUnit.New(value));
 
             if (succeeded && !silent)
             {
                 PlaySound(WeldSounds);
             }
+
             return succeeded;
         }
 
@@ -232,26 +239,6 @@ namespace Content.Server.Tools.Components
             return ToggleWelderStatus(eventArgs.User);
         }
 
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if (WelderLit)
-            {
-                message.AddMarkup(Loc.GetString("welder-component-on-examine-welder-lit-message") + "\n");
-            }
-            else
-            {
-                message.AddText(Loc.GetString("welder-component-on-examine-welder-not-lit-message") + "\n");
-            }
-
-            if (inDetailsRange)
-            {
-                message.AddMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                                                ("colorName", Fuel < FuelCapacity / 4f ? "darkorange" : "orange"),
-                                                ("fuelLeft", Math.Round(Fuel)),
-                                                ("fuelCapacity", FuelCapacity)));
-            }
-        }
-
         protected override void Shutdown()
         {
             base.Shutdown();
@@ -263,13 +250,13 @@ namespace Content.Server.Tools.Components
             if (!HasQuality(ToolQuality.Welding) || !WelderLit || Owner.Deleted)
                 return;
 
-            _solutionComponent?.TryRemoveReagent("WeldingFuel", ReagentUnit.New(FuelLossRate * frameTime));
+            EntitySystem.Get<SolutionContainerSystem>().TryRemoveReagent(Owner.Uid, WelderSolution, "WeldingFuel",
+                ReagentUnit.New(FuelLossRate * frameTime));
 
             EntitySystem.Get<AtmosphereSystem>().HotspotExpose(Owner.Transform.Coordinates, 700, 50, true);
 
             if (Fuel == 0)
                 ToggleWelderStatus();
-
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)
@@ -283,7 +270,7 @@ namespace Content.Server.Tools.Components
 
                 othersMessage =
                     Loc.GetString("welder-component-suicide-lit-others-message",
-                                  ("victim",victim));
+                        ("victim", victim));
                 victim.PopupMessageOtherClients(othersMessage);
 
                 selfMessage = Loc.GetString("welder-component-suicide-lit-message");
@@ -301,12 +288,6 @@ namespace Content.Server.Tools.Components
             return SuicideKind.Blunt;
         }
 
-        public void SolutionChanged(SolutionChangeEventArgs eventArgs)
-        {
-            Dirty();
-        }
-
-
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (eventArgs.Target == null || !eventArgs.CanReach)
@@ -316,24 +297,23 @@ namespace Content.Server.Tools.Components
 
             if (eventArgs.Target.TryGetComponent(out ReagentTankComponent? tank)
                 && tank.TankType == ReagentTankType.Fuel
-                && eventArgs.Target.TryGetComponent(out ISolutionInteractionsComponent? targetSolution)
-                && targetSolution.CanDrain
-                && _solutionComponent != null)
+                && EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetDrainableSolution(eventArgs.Target.Uid, out var targetSolution)
+                && WelderSolution != null)
             {
-                if (WelderLit)
-                {
-                    // Oh no no
-                    eventArgs.Target.SpawnExplosion();
-                    return true;
-                }
-
-                var trans = ReagentUnit.Min(_solutionComponent.EmptyVolume, targetSolution.DrainAvailable);
+                var trans = ReagentUnit.Min(WelderSolution.AvailableVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
-                    var drained = targetSolution.Drain(trans);
-                    _solutionComponent.TryAddSolution(drained);
+                    var drained = EntitySystem.Get<SolutionContainerSystem>().Drain(eventArgs.Target.Uid, targetSolution,  trans);
+                    EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, WelderSolution, drained);
                     SoundSystem.Play(Filter.Pvs(Owner), WelderRefill.GetSound(), Owner);
-                    eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("welder-component-after-interact-refueled-message"));
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("welder-component-after-interact-refueled-message"));
+                }
+                else
+                {
+                    eventArgs.Target.PopupMessage(eventArgs.User,
+                        Loc.GetString("welder-component-no-fuel-in-tank", ("owner", eventArgs.Target)));
                 }
             }
 

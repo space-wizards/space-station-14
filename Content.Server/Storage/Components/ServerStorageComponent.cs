@@ -11,8 +11,8 @@ using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
@@ -375,7 +375,7 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
+            _storage = Owner.EnsureContainer<Container>("storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 
@@ -405,20 +405,17 @@ namespace Content.Server.Storage.Components
                     var playerTransform = player.Transform;
 
                     if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform && !playerTransform.ContainsEntity(ownerTransform))
+                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
                     {
                         break;
                     }
 
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -516,7 +513,7 @@ namespace Content.Server.Storage.Components
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
                 {
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
@@ -543,7 +540,7 @@ namespace Content.Server.Storage.Components
                 foreach (var entity in validStorables)
                 {
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
@@ -572,7 +569,7 @@ namespace Content.Server.Storage.Components
             else if (_quickInsert)
             {
                 if (eventArgs.Target == null
-                    || !eventArgs.Target.Transform.IsMapTransform
+                    || eventArgs.Target.IsInContainer()
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;

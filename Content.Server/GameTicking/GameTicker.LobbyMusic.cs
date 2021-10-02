@@ -1,7 +1,4 @@
 using Content.Shared.Audio;
-using Robust.Shared.ContentPack;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
@@ -10,7 +7,6 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        [Dependency] private readonly IResourceManager _resourceManager = default!;
         private const string LobbyMusicCollection = "LobbyMusic";
 
         [ViewVariables]
@@ -48,12 +44,6 @@ namespace Content.Server.GameTicking
                 // TODO GAMETICKER send song stop event
             }
 
-            if (!_resourceManager.ContentFileExists(song))
-            {
-                Logger.ErrorS("ticker", $"Tried to set lobby song to \"{song}\", which doesn't exist!");
-                return;
-            }
-
             LobbySong = song;
             // TODO GAMETICKER send song change event
         }
@@ -64,7 +54,7 @@ namespace Content.Server.GameTicking
         public void ChooseRandomLobbySong()
         {
             DebugTools.Assert(_lobbyMusicInitialized);
-            SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles));
+            SetLobbySong(_robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString());
         }
 
         /// <summary>

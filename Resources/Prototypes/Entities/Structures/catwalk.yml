@@ -20,7 +20,8 @@
   - type: Icon
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: IconSmooth
     key: catwalk
     base: catwalk_

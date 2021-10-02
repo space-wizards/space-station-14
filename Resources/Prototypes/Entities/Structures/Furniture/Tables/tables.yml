@@ -9,7 +9,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/frame.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -41,7 +42,8 @@
   - type: Icon
     sprite: Structures/Furniture/Tables/generic.rsi
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -225,6 +227,8 @@
     sprite: Structures/Furniture/Tables/wood.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/wood.rsi
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -244,6 +248,9 @@
   - type: Construction
     graph: table
     node: TableWood
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableCarpet
@@ -255,6 +262,8 @@
     sprite: Structures/Furniture/Tables/carpet.rsi
   - type: Icon
     sprite: Structures/Furniture/Tables/carpet.rsi
+  - type: Damageable
+    damageModifierSet: Wood
   - type: Destructible
     thresholds:
     - trigger:
@@ -277,6 +286,9 @@
   - type: Construction
     graph: table
     node: TableCarpet
+  - type: Tag
+    tags:
+    - Wooden
 
 - type: entity
   id: TableStone

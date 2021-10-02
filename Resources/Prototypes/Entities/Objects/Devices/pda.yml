@@ -24,10 +24,13 @@
   - type: PointLight
     enabled: false
     radius: 1.4
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+  - type: DoorBumpOpener
 
 - type: entity
   parent: BasePDA

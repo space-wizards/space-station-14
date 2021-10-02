@@ -33,7 +33,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
             }
 
-            var lockers = comp.Owner.EntityManager.ComponentManager.EntityQuery<EntityStorageComponent>().Select(c => c.Owner).ToList();
+            var lockers = comp.Owner.EntityManager.EntityQuery<EntityStorageComponent>().Select(c => c.Owner).ToList();
 
             if (lockers.Contains(comp.Owner))
                 lockers.Remove(comp.Owner);

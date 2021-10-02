@@ -6,7 +6,7 @@ using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
@@ -47,9 +47,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
 
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
-
-        [DataField("allSelectors")]
-        private FireRateSelector _allRateSelectors;
 
         [DataField("fireRate")]
         public override float FireRate { get; } = 2f;
@@ -395,13 +392,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-
-                if (!result.HitEntity.TryGetComponent(out IDamageableComponent? damageable))
-                    return;
-
-                damageable.TryChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero));
-                //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
-                //even numbers if halfway between two numbers, rather than rounding to nearest
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
             }
             else
             {

@@ -171,7 +171,7 @@ namespace Content.Client.PDA
             }
             if (x <= 5)
             {
-                weightedColor = Color.Green;
+                weightedColor = Color.LimeGreen;
             }
             else if (x > 5 && x < 10)
             {
@@ -246,7 +246,7 @@ namespace Content.Client.PDA
 
             public BoxContainer UplinkTabContainer { get; }
 
-            protected readonly HSplitContainer CategoryAndListingsContainer;
+            protected readonly SplitContainer CategoryAndListingsContainer;
 
             private readonly IPrototypeManager _prototypeManager;
 
@@ -374,8 +374,9 @@ namespace Content.Client.PDA
                 };
 
                 //This contains both the panel of the category buttons and the listings box.
-                CategoryAndListingsContainer = new HSplitContainer
+                CategoryAndListingsContainer = new SplitContainer
                 {
+                    Orientation = SplitContainer.SplitOrientation.Horizontal,
                     VerticalExpand = true,
                 };
 
@@ -385,7 +386,6 @@ namespace Content.Client.PDA
                     HorizontalExpand = true,
                     VerticalExpand = true,
                     SizeFlagsStretchRatio = 2,
-                    MinSize = (100, 256)
                 };
 
                 //Add the category list to the left side. The store items to center.

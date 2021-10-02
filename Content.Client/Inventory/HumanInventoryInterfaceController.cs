@@ -25,11 +25,9 @@ namespace Content.Client.Inventory
     [UsedImplicitly]
     public class HumanInventoryInterfaceController : InventoryInterfaceController
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<Slots, List<ItemSlotButton>> _inventoryButtons
             = new();
@@ -283,7 +281,6 @@ namespace Content.Client.Inventory
             private const int RightSeparation = 2;
 
             public IReadOnlyDictionary<Slots, ItemSlotButton> Buttons { get; }
-            [Dependency] private readonly IGameHud _gameHud = default!;
 
             public HumanInventoryWindow(IGameHud gameHud)
             {

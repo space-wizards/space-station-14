@@ -1,22 +1,20 @@
 using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
-using Content.Shared.Damage;
 
 namespace Content.Server.Projectiles
 {
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {
@@ -50,16 +48,12 @@ namespace Content.Server.Projectiles
                     SoundSystem.Play(playerFilter, soundHit, coordinates);
             }
 
-            if (!otherEntity.Deleted && otherEntity.TryGetComponent(out IDamageableComponent? damage))
+            if (!otherEntity.Deleted)
             {
-                EntityManager.TryGetEntity(component.Shooter, out var shooter);
-
-                foreach (var (damageTypeID, amount) in component.Damages)
-                {
-                    damage.TryChangeDamage(_prototypeManager.Index<DamageTypePrototype>(damageTypeID), amount);
-                }
-
+                _damageableSystem.TryChangeDamage(otherEntity.Uid, component.Damage);
                 component.DamagedEntity = true;
+                // "DamagedEntity" is misleading. Hit entity may be more accurate, as the damage may have been resisted
+                // by resistance sets.
             }
 
             // Damaging it can delete it
@@ -77,7 +71,7 @@ namespace Content.Server.Projectiles
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<ProjectileComponent>())
+            foreach (var component in EntityManager.EntityQuery<ProjectileComponent>())
             {
                 component.TimeLeft -= frameTime;
 
