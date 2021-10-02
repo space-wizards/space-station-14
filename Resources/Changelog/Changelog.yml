@@ -2190,3 +2190,9 @@ Entries:
   - {message: Dice now have a roll cooldown., type: Tweak}
   id: 391
   time: '2021-10-02T09:05:03.404726+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed fuel tanks not exploding when damaged. They now explode when taking
+      heat damage., type: Fix}
+  id: 392
+  time: '2021-10-02T09:42:46.0000000+00:00'
