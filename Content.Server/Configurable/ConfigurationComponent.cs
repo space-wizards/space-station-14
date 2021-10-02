@@ -6,7 +6,8 @@ using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Configurable;
 using Content.Shared.Interaction;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -16,6 +17,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Configurable
@@ -33,6 +35,9 @@ namespace Content.Server.Configurable
 
         [DataField("validation")]
         private readonly Regex _validation = new ("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+
+        [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _qualityNeeded = "Pulsing";
 
         void ISerializationHooks.BeforeSerialization()
         {
@@ -81,10 +86,7 @@ namespace Content.Server.Configurable
             if (UserInterface == null || !eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 return false;
 
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool))
-                return false;
-
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.2f, ToolQuality.Multitool))
+            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool) || !tool.Qualities.Contains(_qualityNeeded))
                 return false;
 
             OpenUserInterface(actor);

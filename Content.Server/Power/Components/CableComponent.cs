@@ -1,10 +1,13 @@
 using System.Threading.Tasks;
 using Content.Server.Stack;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
@@ -21,6 +24,9 @@ namespace Content.Server.Power.Components
         [DataField("cableDroppedOnCutPrototype")]
         private string? _cableDroppedOnCutPrototype = "CableHVStack1";
 
+        [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _cuttingQuality = "Cutting";
+
         /// <summary>
         ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
         ///     already a cable of a type on a tile.
@@ -36,7 +42,7 @@ namespace Content.Server.Power.Components
                 return false;
 
             if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool)) return false;
-            if (!await tool.UseTool(eventArgs.User, Owner, 0.25f, ToolQuality.Cutting)) return false;
+            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
 
             Owner.Delete();
             var droppedEnt = Owner.EntityManager.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);

@@ -93,9 +93,9 @@ namespace Content.Client.Popups
                 return;
         }
 
-        public override Filter GetFilterFromEntity(IEntity entity)
+        public override Filter GetFilterFromEntity(EntityUid uid)
         {
-            return _playerManager.LocalPlayer?.ControlledEntity == entity
+            return _playerManager.LocalPlayer?.ControlledEntity?.Uid == uid
                 ? Filter.Local() : Filter.Empty().Unpredicted();
         }
 
