@@ -2196,3 +2196,8 @@ Entries:
       heat damage., type: Fix}
   id: 392
   time: '2021-10-02T09:42:46.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix lighting toggle on a security barrier, type: Fix}
+  id: 393
+  time: '2021-10-02T14:53:20.0000000+00:00'
