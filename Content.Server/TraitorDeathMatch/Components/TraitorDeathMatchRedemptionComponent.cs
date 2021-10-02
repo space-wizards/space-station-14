@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.TraitorDeathMatch.Components
@@ -16,6 +18,9 @@ namespace Content.Server.TraitorDeathMatch.Components
     {
         /// <inheritdoc />
         public override string Name => "TraitorDeathMatchRedemption";
+
+        [Dependency]
+        private readonly UplinkAccountsSystem _accounts = default!;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -105,8 +110,8 @@ namespace Content.Server.TraitorDeathMatch.Components
 
             // 4 is the per-PDA bonus amount.
             var transferAmount = victimAccount.Balance + 4;
-            victimAccount.ModifyAccountBalance(0);
-            userAccount.ModifyAccountBalance(userAccount.Balance + transferAmount);
+            _accounts.ChargeBalance(victimAccount, 0);
+            _accounts.ChargeBalance(userAccount, transferAmount);
 
             victimUplink.Owner.Delete();
 

@@ -2,7 +2,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.PDA;
-using Content.Server.PDA.Managers;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Traitor.Uplink;
@@ -13,14 +13,16 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using System;
 using System.Linq;
 
-namespace Content.Server.Traitor.Uplink.Systems
+namespace Content.Server.Traitor.Uplink
 {
     public class UplinkSystem : EntitySystem
     {
-        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
+        [Dependency]
+        private readonly UplinkAccountsSystem _accounts = default!;
+        [Dependency]
+        private readonly UplinkListingSytem _listing = default!;
 
         public override void Initialize()
         {
@@ -39,11 +41,12 @@ namespace Content.Server.Traitor.Uplink.Systems
             }
 
             component.UplinkAccount = account;
-            component.UplinkAccount.BalanceChanged += (acc) =>
-            {
-                UpdateUserInterface(component);
-            };
+            SubscribeLocalEvent<UplinkAccountBalanceChanged>((e) => {
+                if (account != e.Account)
+                    return;
 
+                UpdateUserInterface(component);
+            });
         }
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
@@ -79,8 +82,9 @@ namespace Content.Server.Traitor.Uplink.Systems
                     {
                         var player = message.Session.AttachedEntity;
                         if (player == null) break;
+                        if (uplink.UplinkAccount == null) break;
 
-                        if (!_uplinkManager.TryPurchaseItem(uplink.UplinkAccount, buyMsg.ItemId,
+                        if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, buyMsg.ItemId,
                             player.Transform.Coordinates, out var entity))
                         {
                             SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
@@ -111,7 +115,7 @@ namespace Content.Server.Traitor.Uplink.Systems
             if (ui == null)
                 return;
 
-            var listings = _uplinkManager.FetchListings.Values.ToArray();
+            var listings = _listing.GetListings().Values.ToArray();
             var acc = component.UplinkAccount;
 
             UplinkAccountData accData;

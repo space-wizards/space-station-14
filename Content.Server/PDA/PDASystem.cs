@@ -5,7 +5,6 @@ using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
 using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
