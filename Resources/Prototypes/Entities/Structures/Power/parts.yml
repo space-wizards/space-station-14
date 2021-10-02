@@ -20,7 +20,7 @@
     startingCharge: 1000
   - type: ExaminableBattery
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3db83b"
   - type: NodeContainer

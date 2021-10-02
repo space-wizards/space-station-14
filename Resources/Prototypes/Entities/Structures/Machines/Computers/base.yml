@@ -31,7 +31,7 @@
       screen: generic
   - type: LitOnPowered
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     enabled: false
     mask: /Textures/Effects/LightMasks/cone.png
