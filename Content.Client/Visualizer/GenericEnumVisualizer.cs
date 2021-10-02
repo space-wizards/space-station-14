@@ -54,7 +54,7 @@ namespace Content.Client.Visualizer
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
             if (!component.TryGetData(Key, out object status)) return;
             if (!States.TryGetValue(status, out var val)) return;
             sprite.LayerSetState(Layer, val);

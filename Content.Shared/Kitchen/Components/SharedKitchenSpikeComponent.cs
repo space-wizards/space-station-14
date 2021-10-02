@@ -35,13 +35,13 @@ namespace Content.Shared.Kitchen.Components
         public abstract bool DragDropOn(DragDropEvent eventArgs);
 
         [Serializable, NetSerializable]
-        public enum KitchenSpikeVisuals
+        public enum KitchenSpikeVisuals : byte
         {
             Status
         }
 
         [Serializable, NetSerializable]
-        public enum KitchenSpikeStatus
+        public enum KitchenSpikeStatus : byte
         {
             Empty,
             Bloody
