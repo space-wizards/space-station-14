@@ -2212,3 +2212,8 @@ Entries:
   - {message: 'Anchored Atmos devices (Gas miners, etc.) refusing to work', type: Fix}
   id: 395
   time: '2021-10-02T21:03:43.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Meat actually appears on the meat spike again, type: Fix}
+  id: 396
+  time: '2021-10-02T23:43:47.0000000+00:00'
