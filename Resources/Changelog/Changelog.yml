@@ -2185,3 +2185,8 @@ Entries:
   - {message: Fixed radiation dealing wrong damage type., type: Fix}
   id: 390
   time: '2021-10-02T01:47:54.0000000+00:00'
+- author: Your_Name_Here
+  changes:
+  - {message: Dice now have a roll cooldown., type: Tweak}
+  id: 391
+  time: '2021-10-02T09:05:03.404726+00:00'

@@ -1,4 +1,0 @@
-author: Your_Name_Here
-changes:
-  - type: Tweak # One of the following: Add, Remove, Tweak, Fix
-    message: Dice now have a roll cooldown.
