@@ -58,7 +58,7 @@ namespace Content.Server.Fluids.EntitySystems
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
             if (puddleComponent.Owner.Deleted || puddleComponent.EmptyHolder ||
-                !ComponentManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearanceComponent))
+                !EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;
             }
@@ -109,14 +109,14 @@ namespace Content.Server.Fluids.EntitySystems
 
             foreach (var entity in mapGrid.GetInDir(coords, direction))
             {
-                if (ComponentManager.TryGetComponent(entity, out IPhysBody? physics) &&
+                if (EntityManager.TryGetComponent(entity, out IPhysBody? physics) &&
                     (physics.CollisionLayer & (int)CollisionGroup.Impassable) != 0)
                 {
                     puddle = default;
                     return false;
                 }
 
-                if (ComponentManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
+                if (EntityManager.TryGetComponent(entity, out PuddleComponent? existingPuddle))
                 {
                     if (existingPuddle.Overflown)
                     {
@@ -139,14 +139,14 @@ namespace Content.Server.Fluids.EntitySystems
         {
             if ((puddleComponent.SlipThreshold == ReagentUnit.New(-1) ||
                  puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
-                ComponentManager.TryGetComponent(entityUid, out SlipperyComponent? oldSlippery))
+                EntityManager.TryGetComponent(entityUid, out SlipperyComponent? oldSlippery))
             {
                 oldSlippery.Slippery = false;
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
                 var newSlippery =
-                    ComponentManager.EnsureComponent<SlipperyComponent>(EntityManager.GetEntity(entityUid));
+                    EntityManager.EnsureComponent<SlipperyComponent>(EntityManager.GetEntity(entityUid));
                 newSlippery.Slippery = true;
             }
         }
@@ -239,7 +239,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void HandlePuddleExamined(EntityUid uid, PuddleComponent component, ExaminedEvent args)
         {
-            if (ComponentManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
+            if (EntityManager.TryGetComponent<SlipperyComponent>(uid, out var slippery) && slippery.Slippery)
             {
                 args.PushText(Loc.GetString("puddle-component-examine-is-slipper-text"));
             }
@@ -249,7 +249,7 @@ namespace Content.Server.Fluids.EntitySystems
         private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
         {
             // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            foreach (var puddle in ComponentManager.EntityQuery<PuddleComponent>(true))
+            foreach (var puddle in EntityManager.EntityQuery<PuddleComponent>(true))
             {
                 // If the tile becomes space then delete it (potentially change by design)
                 var puddleTransform = puddle.Owner.Transform;

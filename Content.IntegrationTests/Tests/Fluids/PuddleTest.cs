@@ -156,12 +156,12 @@ namespace Content.IntegrationTests.Tests.Fluids
             float sEvaporateTime = default;
             PuddleComponent sPuddle = null;
             EvaporationComponent sEvaporation = null;
-            ReagentUnit sPuddleStartingVolume = default;
+            var amount = 2;
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", ReagentUnit.New(amount));
                 sPuddle= puddleSystem.SpillAt(solution, sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
@@ -180,11 +180,10 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.That(sEvaporation.Accumulator, Is.EqualTo(0f));
 
                 sEvaporateTime = sEvaporation.EvaporateTime;
-                sPuddleStartingVolume = sPuddle.CurrentVolume;
             });
 
             // Wait enough time for it to evaporate if it was unpaused
-            var sTimeToWait = (5 + (int) Math.Ceiling(sEvaporateTime * sGameTiming.TickRate)) * 2;
+            var sTimeToWait = (5 + (int) Math.Ceiling(amount * sEvaporateTime * sGameTiming.TickRate));
             await server.WaitRunTicks(sTimeToWait);
 
             // No evaporation due to being paused

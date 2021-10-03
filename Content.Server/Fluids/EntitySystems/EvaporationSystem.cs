@@ -29,14 +29,14 @@ namespace Content.Server.Fluids.EntitySystems
         {
             base.Update(frameTime);
             var queueDelete = new RemQueue<EvaporationComponent>();
-            foreach (var evaporationComponent in ComponentManager.EntityQuery<EvaporationComponent>())
+            foreach (var evaporationComponent in EntityManager.EntityQuery<EvaporationComponent>())
             {
                 UpdateEvaporation(evaporationComponent, frameTime, ref queueDelete);
             }
 
             foreach (var evaporationComponent in queueDelete)
             {
-                ComponentManager.RemoveComponent(evaporationComponent.Owner.Uid, evaporationComponent);
+                EntityManager.RemoveComponent(evaporationComponent.Owner.Uid, evaporationComponent);
             }
         }
 

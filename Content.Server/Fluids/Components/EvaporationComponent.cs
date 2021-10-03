@@ -16,7 +16,7 @@ namespace Content.Server.Fluids.Components
         ///     The time that it will take this puddle to lose one reagent unit of solution, in seconds.
         /// </summary>
         [DataField("evaporate_time")]
-        public float EvaporateTime { get; set; } = 5f;
+        public float EvaporateTime { get; set; } = 3f;
 
         [DataField("solution")] 
         public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
