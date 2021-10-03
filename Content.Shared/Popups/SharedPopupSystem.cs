@@ -39,7 +39,10 @@ namespace Content.Shared.Popups
         ///     player attached to the entity.
         /// </summary>
         /// <remarks>Using this method is NOT recommended, please use one of the other methods instead.</remarks>
-        public abstract Filter GetFilterFromEntity(IEntity entity);
+        public Filter GetFilterFromEntity(IEntity entity)
+        {
+            return Filter.Entities(entity.Uid);
+        }
     }
 
     /// <summary>
