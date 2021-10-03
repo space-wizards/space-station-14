@@ -56,7 +56,9 @@ namespace Content.Shared.Pulling
             var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
 
             eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-            eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+
+            if (pullable.Owner.LifeStage <= EntityLifeStage.MapInitialized)
+                eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
 
             // Networking
             puller.Dirty();
