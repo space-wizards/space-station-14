@@ -35,18 +35,14 @@ namespace Content.Shared.Popups
         public abstract void PopupEntity(string message, EntityUid uid, Filter filter);
 
         /// <summary>
-        ///     Given an <see cref="EntityUid"/>, returns a <see cref="Filter"/> that is either empty or contains the
-        ///     player attached to the entity.
-        /// </summary>
-        /// <remarks>Using this method is NOT recommended, please use one of the other methods instead.</remarks>
-        public abstract Filter GetFilterFromEntity(EntityUid uid);
-
-        /// <summary>
         ///     Given an <see cref="IEntity"/>, returns a <see cref="Filter"/> that is either empty or contains the
         ///     player attached to the entity.
         /// </summary>
         /// <remarks>Using this method is NOT recommended, please use one of the other methods instead.</remarks>
-        public Filter GetFilterFromEntity(IEntity entity) => GetFilterFromEntity(entity.Uid);
+        public Filter GetFilterFromEntity(IEntity entity)
+        {
+            return Filter.Entities(entity.Uid);
+        }
     }
 
     /// <summary>
