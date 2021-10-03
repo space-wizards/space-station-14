@@ -82,6 +82,7 @@ namespace Content.Client.Entry
             "CommunicationsConsole",
             "BarSign",
             "DroppedBodyPart",
+            "DoorBumpOpener",
             "DroppedMechanism",
             "SolarPanel",
             "BodyScanner",
@@ -274,11 +275,15 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
+            "UnpoweredFlashlight",
+            "Uplink",
+            "PDA",
             "SpawnItemsOnUse",
             "Wieldable",
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
-            "TabletopGame"
+            "TabletopGame",
+            "LitOnPowered"
         };
     }
 }

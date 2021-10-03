@@ -9,7 +9,7 @@ namespace Content.Server.Radio.EntitySystems
     {
         public void PingListeners(IEntity source, string message)
         {
-            foreach (var listener in ComponentManager.EntityQuery<IListen>(true))
+            foreach (var listener in EntityManager.EntityQuery<IListen>(true))
             {
                 // TODO: Map Position distance
                 if (listener.CanListen(message, source))

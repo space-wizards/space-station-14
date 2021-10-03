@@ -30,7 +30,7 @@ namespace Content.Client.Ghost
 
                 _ghostVisibility = value;
 
-                foreach (var ghost in ComponentManager.GetAllComponents(typeof(GhostComponent), true))
+                foreach (var ghost in EntityManager.GetAllComponents(typeof(GhostComponent), true))
                 {
                     if (ghost.Owner.TryGetComponent(out SpriteComponent? sprite))
                     {

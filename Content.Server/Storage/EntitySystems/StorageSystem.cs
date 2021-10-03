@@ -31,7 +31,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnRelayMovement(EntityUid uid, EntityStorageComponent component, RelayMovementEntityEvent args)
         {
-            if (ComponentManager.HasComponent<HandsComponent>(uid))
+            if (EntityManager.HasComponent<HandsComponent>(uid))
             {
                 if (_gameTiming.CurTime <
                     component.LastInternalOpenAttempt + EntityStorageComponent.InternalOpenAttemptDelay)
@@ -47,7 +47,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<ServerStorageComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ServerStorageComponent>(true))
             {
                 CheckSubscribedEntities(component);
             }

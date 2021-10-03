@@ -28,7 +28,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         }
 
-        private void OnStartup(EntityUid eUI, LockComponent lockComp, ComponentStartup args)
+        private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
         {
             if (lockComp.Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
@@ -36,21 +36,20 @@ namespace Content.Server.Lock
             }
         }
 
-        private void OnActivated(EntityUid eUI, LockComponent lockComp, ActivateInWorldEvent args)
+        private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
         {
             // Only attempt an unlock by default on Activate
             if (lockComp.Locked)
             {
-                DoUnlock(lockComp, args);
+                DoUnlock(uid, args.User, lockComp);
             }
-            else
+            else if (lockComp.LockOnClick)
             {
-                if (lockComp.LockOnClick)
-                    DoLock(lockComp, args);
+                DoLock(uid, args.User, lockComp);
             }
         }
 
-        private void OnExamined(EntityUid eUI, LockComponent lockComp, ExaminedEvent args)
+        private void OnExamined(EntityUid uid, LockComponent lockComp, ExaminedEvent args)
         {
             args.PushText(Loc.GetString(lockComp.Locked
                     ? "lock-comp-on-examined-is-locked"
@@ -58,14 +57,15 @@ namespace Content.Server.Lock
                 ("entityName", lockComp.Owner.Name)));
         }
 
-        public void DoLock(LockComponent lockComp, ActivateInWorldEvent args)
+        public bool DoLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
         {
-            if (!HasUserAccess(lockComp, args.User))
-            {
-                return;
-            }
+            if (!Resolve(uid, ref lockComp))
+                return false;
 
-            lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
+            if (!HasUserAccess(uid, user))
+                return false;
+
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
             if(lockComp.LockSound != null)
             {
@@ -79,17 +79,18 @@ namespace Content.Server.Lock
 
             RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(true));
 
-            args.Handled = true;
+            return true;
         }
 
-        public void DoUnlock(LockComponent lockComp, ActivateInWorldEvent args )
+        public bool DoUnlock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
         {
-            if (!HasUserAccess(lockComp, args.User))
-            {
-                return;
-            }
+            if (!Resolve(uid, ref lockComp))
+                return false;
 
-            lockComp.Owner.PopupMessage(args.User, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
+            if (!HasUserAccess(uid, user))
+                return false;
+
+            lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
             if(lockComp.UnlockSound != null)
             {
@@ -104,19 +105,21 @@ namespace Content.Server.Lock
             RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(false));
 
             // To stop EntityStorageComponent from opening right after the container gets unlocked
-            args.Handled = true;
+            return true;
         }
 
-        private static bool HasUserAccess(LockComponent lockComp, IEntity user)
+        private bool HasUserAccess(EntityUid uid, IEntity user, AccessReader? reader = null)
         {
-            if (lockComp.Owner.TryGetComponent(out AccessReader? reader))
+            // Not having an AccessComponent means you get free access. woo!
+            if (!Resolve(uid, ref reader))
+                return true;
+
+            if (!reader.IsAllowed(user))
             {
-                if (!reader.IsAllowed(user))
-                {
-                    lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
-                    return false;
-                }
+                reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
+                return false;
             }
+
 
             return true;
         }

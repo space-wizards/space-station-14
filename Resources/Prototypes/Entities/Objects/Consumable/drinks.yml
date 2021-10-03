@@ -50,6 +50,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
+    ignoreResistances: true
     damage:
       types:
         Blunt: 5
@@ -57,6 +58,18 @@
     damage:
       types:
         Blunt: 5
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
 
 # Transformable container - normal glass
 - type: entity
@@ -71,15 +84,7 @@
     solutions:
       drink:
         maxVol: 50
-  - type: FitsInDispenser
-    solution: drink
-  - type: SolutionTransfer
-    canChangeTransferAmount: true
   - type: TransformableContainer
-  - type: UserInterface
-    interfaces:
-    - key: enum.TransferAmountUiKey.Key
-      type: TransferAmountBoundUserInterface
 
 - type: entity
   parent: DrinkGlassBase

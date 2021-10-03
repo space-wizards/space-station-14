@@ -50,11 +50,9 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                // solutionHolder.OwnerUid = component.Owner.Uid;
-                if (solutionHolder.MaxVolume == ReagentUnit.Zero && solutionHolder.TotalVolume > solutionHolder.MaxVolume)
-                {
-                    solutionHolder.MaxVolume = solutionHolder.TotalVolume;
-                }
+                solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
+                    ? solutionHolder.TotalVolume
+                    : solutionHolder.InitialMaxVolume;
 
                 UpdateAppearance(uid, solutionHolder);
             }
@@ -144,7 +142,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void RemoveAllSolution(EntityUid uid)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -224,7 +222,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public bool TryGetSolution(EntityUid uid, string name,
             [NotNullWhen(true)] out Solution? solution)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
             {
                 solution = null;
                 return false;

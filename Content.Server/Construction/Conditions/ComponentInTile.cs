@@ -55,5 +55,7 @@ namespace Content.Server.Construction.Conditions
 
             return !HasEntity;
         }
+
+        // TODO CONSTRUCTION: Custom examine for this condition.
     }
 }

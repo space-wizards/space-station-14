@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Holiday.Interfaces;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -13,12 +12,10 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Holiday
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class HolidayManager : IHolidayManager, IEntityEventSubscriber
+    public class HolidaySystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
 
         [ViewVariables]
@@ -27,19 +24,34 @@ namespace Content.Server.Holiday
         [ViewVariables]
         private bool _enabled = true;
 
+        public override void Initialize()
+        {
+            _configManager.OnValueChanged(CCVars.HolidaysEnabled, OnHolidaysEnableChange, true);
+
+            SubscribeLocalEvent<GameRunLevelChangedEvent>(OnRunLevelChanged);
+        }
+
         public void RefreshCurrentHolidays()
         {
             _currentHolidays.Clear();
 
-            if (!_enabled) return;
+            if (!_enabled)
+            {
+                RaiseLocalEvent(new HolidaysRefreshedEvent(Enumerable.Empty<HolidayPrototype>()));
+                return;
+            }
 
             var now = DateTime.Now;
 
             foreach (var holiday in _prototypeManager.EnumeratePrototypes<HolidayPrototype>())
             {
-                if(holiday.ShouldCelebrate(now))
+                if (holiday.ShouldCelebrate(now))
+                {
                     _currentHolidays.Add(holiday);
+                }
             }
+
+            RaiseLocalEvent(new HolidaysRefreshedEvent(_currentHolidays));
         }
 
         public void DoGreet()
@@ -71,13 +83,6 @@ namespace Content.Server.Holiday
             return _currentHolidays.Contains(prototype);
         }
 
-        public void Initialize()
-        {
-            _configManager.OnValueChanged(CCVars.HolidaysEnabled, OnHolidaysEnableChange, true);
-
-            _entityManager.EventBus.SubscribeEvent<GameRunLevelChangedEvent>(EventSource.Local, this, OnRunLevelChanged);
-        }
-
         private void OnHolidaysEnableChange(bool enabled)
         {
             _enabled = enabled;
@@ -101,6 +106,19 @@ namespace Content.Server.Holiday
                 case GameRunLevel.PostRound:
                     break;
             }
+        }
+    }
+
+    /// <summary>
+    ///     Event for when the list of currently active holidays has been refreshed.
+    /// </summary>
+    public class HolidaysRefreshedEvent : EntityEventArgs
+    {
+        public readonly IEnumerable<HolidayPrototype> Holidays;
+
+        public HolidaysRefreshedEvent(IEnumerable<HolidayPrototype> holidays)
+        {
+            Holidays = holidays;
         }
     }
 }

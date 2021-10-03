@@ -9,7 +9,7 @@ namespace Content.Server.Light.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var light in ComponentManager.EntityQuery<ExpendableLightComponent>(true))
+            foreach (var light in EntityManager.EntityQuery<ExpendableLightComponent>(true))
             {
                 light.Update(frameTime);
             }

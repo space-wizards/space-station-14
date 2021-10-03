@@ -7,6 +7,6 @@ namespace Content.Shared.Construction
     public interface IGraphCondition
     {
         Task<bool> Condition(IEntity entity);
-        bool DoExamine(ExaminedEvent examinedEvent) { return false; }
+        bool DoExamine(ExaminedEvent args) { return false; }
     }
 }

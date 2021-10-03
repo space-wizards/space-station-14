@@ -108,7 +108,7 @@ namespace Content.Server.Advertise
 
             var curTime = _gameTiming.CurTime;
 
-            foreach (var advertise in ComponentManager.EntityQuery<AdvertiseComponent>())
+            foreach (var advertise in EntityManager.EntityQuery<AdvertiseComponent>())
             {
                 if (!advertise.Enabled)
                     continue;
