@@ -2217,3 +2217,10 @@ Entries:
   - {message: Meat actually appears on the meat spike again, type: Fix}
   id: 396
   time: '2021-10-02T23:43:47.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Ghosts should no longer go in weird directions and lose the ability
+      to see when the body was inside something or buckled to something when the ghost
+      was made., type: Fix}
+  id: 397
+  time: '2021-10-03T04:51:23.0000000+00:00'
