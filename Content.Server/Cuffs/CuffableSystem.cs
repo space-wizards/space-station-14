@@ -9,6 +9,7 @@ using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.IoC;
+using Robust.Shared.Player;
 
 namespace Content.Server.Cuffs
 {
@@ -65,7 +66,7 @@ namespace Content.Server.Cuffs
             }
             if (args.Cancelled)
             {
-                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, _popupSystem.GetFilterFromEntity(userEntity));
+                _popupSystem.PopupEntity(Loc.GetString("cuffable-component-cannot-interact-message"), args.Target, Filter.Entities(userEntity.Uid));
             }
         }
 
