@@ -431,10 +431,6 @@ entities:
     pos: -19.463,-9.482748
     parent: 853
     type: Transform
-  - solutions:
-      food:
-        maxVol: 5
-    type: SolutionContainerManager
 - uid: 47
   type: FoodBanana
   components:
@@ -442,10 +438,6 @@ entities:
     pos: -19.603624,-9.388998
     parent: 853
     type: Transform
-  - solutions:
-      food:
-        maxVol: 5
-    type: SolutionContainerManager
 - uid: 48
   type: FoodBanana
   components:
@@ -453,10 +445,6 @@ entities:
     pos: -19.728624,-9.576498
     parent: 853
     type: Transform
-  - solutions:
-      food:
-        maxVol: 5
-    type: SolutionContainerManager
 - uid: 49
   type: Poweredlight
   components:
@@ -612,8 +600,6 @@ entities:
 - uid: 68
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - pos: -11.5,-17.5
     parent: 853
     type: Transform
@@ -901,10 +887,6 @@ entities:
     pos: -1.5,-11.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 107
   type: WaterTankFull
   components:
@@ -912,10 +894,6 @@ entities:
     pos: 0.5,-11.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 108
   type: Basketball
   components:
@@ -6408,10 +6386,6 @@ entities:
   - pos: 19.54588,-0.4289844
     parent: 853
     type: Transform
-  - solutions:
-      plasma:
-        maxVol: 10
-    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 608
@@ -8456,10 +8430,6 @@ entities:
   - pos: -19.5,-4.5
     parent: 853
     type: Transform
-  - solutions:
-      toilet:
-        maxVol: 200
-    type: SolutionContainerManager
   - containers:
       stash: !type:ContainerSlot {}
     type: ContainerContainer
@@ -15267,8 +15237,6 @@ entities:
 - uid: 985
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 0.5,23.5
     parent: 853
@@ -16624,10 +16592,6 @@ entities:
     pos: -17.5,1.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1151
   type: VendingMachineMedical
   components:
@@ -18981,10 +18945,6 @@ entities:
     pos: 35.5,-3.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1391
   type: WaterTankFull
   components:
@@ -18992,10 +18952,6 @@ entities:
     pos: -19.5,7.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1392
   type: ReinforcedWindow
   components:
@@ -20085,10 +20041,6 @@ entities:
   - pos: 33.5,12.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1544
   type: MedicalScanner
   components:
@@ -20902,10 +20854,6 @@ entities:
     pos: 10.5,-18.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 1655
   type: WallReinforced
   components:
@@ -25996,8 +25944,6 @@ entities:
 - uid: 2383
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - rot: 4.371139006309477E-08 rad
     pos: 5.5,-13.5
     parent: 853
@@ -26433,10 +26379,6 @@ entities:
     pos: -26.5,11.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 2440
   type: WeldingFuelTankFull
   components:
@@ -26444,10 +26386,6 @@ entities:
     pos: 35.5,-4.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 2441
   type: VendingBarDrobe
   components:
@@ -41760,8 +41698,6 @@ entities:
 - uid: 4038
   type: VendingMachineCoffee
   components:
-  - name: Hot drinks machine
-    type: MetaData
   - pos: -11.5,11.5
     parent: 853
     type: Transform
@@ -48493,10 +48429,6 @@ entities:
   - pos: -15.5,-12.5
     parent: 853
     type: Transform
-  - solutions:
-      tank:
-        maxVol: 1500
-    type: SolutionContainerManager
 - uid: 4883
   type: WallSolid
   components:
@@ -50146,10 +50078,6 @@ entities:
   - pos: 19.561504,-0.1164844
     parent: 853
     type: Transform
-  - solutions:
-      plasma:
-        maxVol: 10
-    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5102
@@ -50158,10 +50086,6 @@ entities:
   - pos: 19.54588,0.1647656
     parent: 853
     type: Transform
-  - solutions:
-      plasma:
-        maxVol: 10
-    type: SolutionContainerManager
   - canCollide: False
     type: Physics
 - uid: 5103

@@ -50,7 +50,7 @@ namespace Content.Client.Commands
             EntitySystem.Get<SubFloorHideSystem>()
                 .ShowAll = true;
 
-            var components = IoCManager.Resolve<IEntityManager>().ComponentManager
+            var components = IoCManager.Resolve<IEntityManager>()
                 .EntityQuery<SubFloorHideComponent>(true);
 
             foreach (var component in components)

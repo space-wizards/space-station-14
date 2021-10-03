@@ -70,7 +70,7 @@ namespace Content.Server.Disposal.Tube.Components
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, nextDirection))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
+                if (!Owner.EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
                 {
                     continue;
                 }

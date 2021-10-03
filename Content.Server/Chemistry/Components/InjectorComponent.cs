@@ -127,7 +127,11 @@ namespace Content.Server.Chemistry.Components
             {
                 if (solutionsSys.TryGetInjectableSolution(targetEntity.Uid, out var injectableSolution))
                 {
-                    TryInject(targetEntity, injectableSolution, eventArgs.User);
+                    TryInject(targetEntity, injectableSolution, eventArgs.User, false);
+                }
+                else if (solutionsSys.TryGetRefillableSolution(targetEntity.Uid, out var refillableSolution))
+                {
+                    TryInject(targetEntity, refillableSolution, eventArgs.User, true);
                 }
                 else if (targetEntity.TryGetComponent(out BloodstreamComponent? bloodstream))
                 {
@@ -137,7 +141,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-transfer-message",
-                            ("owner", eventArgs.User)));
+                            ("target", targetEntity)));
                 }
             }
             else if (ToggleState == InjectorToggleMode.Draw)
@@ -150,7 +154,7 @@ namespace Content.Server.Chemistry.Components
                 {
                     eventArgs.User.PopupMessage(eventArgs.User,
                         Loc.GetString("injector-component-cannot-draw-message",
-                            ("owner", eventArgs.User)));
+                            ("target", targetEntity)));
                 }
             }
 
@@ -181,7 +185,7 @@ namespace Content.Server.Chemistry.Components
             if (realTransferAmount <= 0)
             {
                 Owner.PopupMessage(user,
-                    Loc.GetString("injector-component-cannot-inject-message", ("owner", targetBloodstream.Owner)));
+                    Loc.GetString("injector-component-cannot-inject-message", ("target", targetBloodstream.Owner)));
                 return;
             }
 
@@ -210,7 +214,7 @@ namespace Content.Server.Chemistry.Components
             AfterInject();
         }
 
-        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user)
+        private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user, bool asRefill)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
                 || solution.CurrentVolume == 0)
@@ -233,8 +237,16 @@ namespace Content.Server.Chemistry.Components
 
             removedSolution.DoEntityReaction(targetEntity, ReactionMethod.Injection);
 
-            EntitySystem.Get<SolutionContainerSystem>()
-                .Inject(targetEntity.Uid, targetSolution, removedSolution);
+            if (!asRefill)
+            {
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .Inject(targetEntity.Uid, targetSolution, removedSolution);
+            }
+            else
+            {
+                EntitySystem.Get<SolutionContainerSystem>()
+                    .Refill(targetEntity.Uid, targetSolution, removedSolution);
+            }
 
             Owner.PopupMessage(user,
                 Loc.GetString("injector-component-transfer-success-message",

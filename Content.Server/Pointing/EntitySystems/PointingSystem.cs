@@ -136,7 +136,7 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) != 0))
+                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0))
                     return false;
 
                 return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
@@ -202,7 +202,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

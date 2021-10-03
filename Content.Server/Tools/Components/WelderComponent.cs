@@ -301,13 +301,6 @@ namespace Content.Server.Tools.Components
                     .TryGetDrainableSolution(eventArgs.Target.Uid, out var targetSolution)
                 && WelderSolution != null)
             {
-                if (WelderLit && targetSolution.DrainAvailable > 0)
-                {
-                    // Oh no no
-                    eventArgs.Target.SpawnExplosion();
-                    return true;
-                }
-
                 var trans = ReagentUnit.Min(WelderSolution.AvailableVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {

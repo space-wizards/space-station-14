@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Server.Doors.Components;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -24,16 +25,18 @@ namespace Content.Server.Construction.Conditions
             return doorComponent.IsWeldedShut == Welded;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out ServerDoorComponent? door)) return false;
 
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    message.AddMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)) + "\n");
                 else
-                    message.AddMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 

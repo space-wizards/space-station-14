@@ -49,7 +49,7 @@ namespace Content.Client.Popups
             if (!EntityManager.EntityExists(uid))
                 return;
 
-            var transform = ComponentManager.GetComponent<ITransformComponent>(uid);
+            var transform = EntityManager.GetComponent<ITransformComponent>(uid);
             PopupMessage(message, _eyeManager.CoordinatesToScreen(transform.Coordinates));
         }
 
@@ -79,24 +79,24 @@ namespace Content.Client.Popups
         {
             if (!filter.CheckPrediction)
                 return;
+
+            PopupCursor(message);
         }
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter)
         {
             if (!filter.CheckPrediction)
                 return;
+
+            PopupCoordinates(message, coordinates);
         }
 
         public override void PopupEntity(string message, EntityUid uid, Filter filter)
         {
             if (!filter.CheckPrediction)
                 return;
-        }
 
-        public override Filter GetFilterFromEntity(IEntity entity)
-        {
-            return _playerManager.LocalPlayer?.ControlledEntity == entity
-                ? Filter.Local() : Filter.Empty().Unpredicted();
+            PopupEntity(message, uid);
         }
 
         #endregion

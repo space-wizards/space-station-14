@@ -25,7 +25,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
         {
-            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
             if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
@@ -46,7 +46,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnBeforeUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, BeforeUnanchoredEvent args)
         {
-            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
             if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)

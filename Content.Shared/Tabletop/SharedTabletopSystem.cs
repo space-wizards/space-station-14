@@ -1,9 +1,12 @@
 ﻿using System;
+using Content.Shared.ActionBlocker;
+using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
 
@@ -11,6 +14,8 @@ namespace Content.Shared.Tabletop
 {
     public abstract class SharedTabletopSystem : EntitySystem
     {
+        [Dependency] protected readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         [Serializable, NetSerializable]
         public sealed class TabletopDraggableComponentState : ComponentState
         {
@@ -25,11 +30,11 @@ namespace Content.Shared.Tabletop
         #region Utility
 
         /// <summary>
-        /// Whether the table exists, is in range and the player is alive.
+        /// Whether the table exists, and the player can interact with it.
         /// </summary>
         /// <param name="playerEntity">The player entity to check.</param>
         /// <param name="table">The table entity to check.</param>
-        protected static bool CanSeeTable(IEntity playerEntity, IEntity? table)
+        protected bool CanSeeTable(IEntity playerEntity, IEntity? table)
         {
             if (table?.Transform.Parent?.Owner is not { } parent)
             {
@@ -41,10 +46,7 @@ namespace Content.Shared.Tabletop
                 return false;
             }
 
-            var alive = playerEntity.TryGetComponent<MobStateComponent>(out var mob) && mob.IsAlive();
-            var inRange = playerEntity.InRangeUnobstructed(table);
-
-            return alive && inRange;
+            return _actionBlockerSystem.CanInteract(playerEntity.Uid);
         }
 
         protected static bool StunnedOrNoHands(IEntity playerEntity)

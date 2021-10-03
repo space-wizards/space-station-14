@@ -22,7 +22,7 @@ namespace Content.Shared.Friction
             get => _modifier;
             set
             {
-                if (MathHelper.CloseTo(_modifier, value)) return;
+                if (MathHelper.CloseToPercent(_modifier, value)) return;
 
                 _modifier = value;
             }

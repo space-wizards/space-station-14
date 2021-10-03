@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids;
 using Content.Server.Fluids.Components;
@@ -22,6 +20,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Linq;
+using System.Threading.Tasks;
 using PuddleSystem = Content.Server.Fluids.EntitySystems.PuddleSystem;
 
 namespace Content.Server.Nutrition.Components
@@ -63,7 +63,7 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 _opened = value;
-                OpenedChanged();
+                OnOpenedChanged();
             }
         }
 
@@ -83,12 +83,17 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("burstSound")] public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
-        private void OpenedChanged()
+        private void OnOpenedChanged()
         {
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
             if (!solutionSys.TryGetSolution(Owner, SolutionName, out _))
             {
                 return;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(DrinkCanStateVisual.Opened, Opened);
             }
 
             if (Opened)
@@ -103,19 +108,6 @@ namespace Content.Server.Nutrition.Components
                 Owner.RemoveComponent<RefillableSolutionComponent>();
                 Owner.RemoveComponent<DrainableSolutionComponent>();
             }
-        }
-
-        // TODO move to DrinkSystem
-        public void UpdateAppearance()
-        {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !Owner.HasComponent<SolutionContainerManagerComponent>())
-            {
-                return;
-            }
-
-            var drainAvailable = EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner);
-            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, drainAvailable.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -220,7 +212,6 @@ namespace Content.Server.Nutrition.Components
             SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
             target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
-            UpdateAppearance();
 
             // TODO: Account for partial transfer.
 

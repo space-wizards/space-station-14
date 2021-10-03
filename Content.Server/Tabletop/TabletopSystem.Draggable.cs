@@ -28,7 +28,7 @@ namespace Content.Server.Tabletop
             if (args.SenderSession as IPlayerSession is not { AttachedEntity: { } playerEntity } playerSession)
                 return;
 
-            if (!ComponentManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
+            if (!EntityManager.TryGetComponent(msg.TableUid, out TabletopGameComponent? tabletop) || tabletop.Session is not {} session)
                 return;
 
             // Check if player is actually playing at this table
@@ -46,13 +46,13 @@ namespace Content.Server.Tabletop
             if (!EntityManager.TryGetEntity(msg.MovedEntityUid, out var movedEntity))
                 return;
 
-            if (!ComponentManager.HasComponent<TabletopDraggableComponent>(movedEntity.Uid))
+            if (!EntityManager.HasComponent<TabletopDraggableComponent>(movedEntity.Uid))
                 return;
 
             // TODO: some permission system, disallow movement if you're not permitted to move the item
 
             // Move the entity and dirty it (we use the map ID from the entity so noone can try to be funny and move the item to another map)
-            var transform = ComponentManager.GetComponent<ITransformComponent>(movedEntity.Uid);
+            var transform = EntityManager.GetComponent<ITransformComponent>(movedEntity.Uid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
             movedEntity.Dirty();

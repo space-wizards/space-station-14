@@ -50,7 +50,7 @@ namespace Content.Shared.Slippery
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !ComponentManager.TryGetComponent<SharedStunnableComponent>(uid, out stunnableComponent))
+                || !EntityManager.TryGetComponent<SharedStunnableComponent>(uid, out stunnableComponent))
             {
                 stunnableComponent = null;
                 return false;
@@ -99,7 +99,7 @@ namespace Content.Shared.Slippery
             if (component.Deleted || !component.Slippery || component.Colliding.Count == 0)
                 return true;
 
-            if (!ComponentManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
+            if (!EntityManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
             {
                 component.Colliding.Clear();
                 return true;
