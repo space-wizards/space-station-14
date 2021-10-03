@@ -30,6 +30,7 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
+    shader: unshaded
     netsync: false
   - type: Icon
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
