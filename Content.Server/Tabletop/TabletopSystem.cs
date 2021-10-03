@@ -18,7 +18,6 @@ namespace Content.Server.Tabletop
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly ViewSubscriberSystem _viewSubscriberSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         public override void Initialize()
         {

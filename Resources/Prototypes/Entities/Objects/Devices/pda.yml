@@ -21,13 +21,35 @@
     Slots:
     - idcard
     - Belt
+  - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
     radius: 1.4
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
   - type: UserInterface
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+    - key: enum.UplinkUiKey.Key
+      type: UplinkBoundUserInterface
+  - type: ItemSlots
+    slots:
+      pda_pen_slot:
+        item: "Pen"
+        whitelist:
+          tags:
+            - Write
+      pda_id_slot:
+        insertSound:
+          path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound:
+          path: /Audio/Machines/id_swipe.ogg
+        whitelist:
+          components:
+            - IdCard
+  - type: PDA
+  - type: DoorBumpOpener
 
 - type: entity
   parent: BasePDA

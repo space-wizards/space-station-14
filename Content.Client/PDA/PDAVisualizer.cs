@@ -1,4 +1,5 @@
-﻿using Content.Shared.PDA;
+using Content.Shared.Light;
+using Content.Shared.PDA;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -46,9 +47,9 @@ namespace Content.Client.PDA
 
             var sprite = component.Owner.GetComponent<ISpriteComponent>();
             sprite.LayerSetVisible(PDAVisualLayers.Flashlight, false);
-            if (component.TryGetData(PDAVisuals.FlashlightLit, out bool isScreenLit))
+            if (component.TryGetData(UnpoweredFlashlightVisuals.LightOn, out bool isFlashlightOn))
             {
-                sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isScreenLit);
+                sprite.LayerSetVisible(PDAVisualLayers.Flashlight, isFlashlightOn);
             }
 
             if (component.TryGetData(PDAVisuals.IDCardInserted, out bool isCardInserted))

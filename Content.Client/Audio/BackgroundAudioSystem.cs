@@ -126,7 +126,7 @@ namespace Content.Client.Audio
         private void StartAmbience()
         {
             EndAmbience();
-            var file = _robustRandom.Pick(_ambientCollection.PickFiles);
+            var file = _robustRandom.Pick(_ambientCollection.PickFiles).ToString();
             _ambientStream = SoundSystem.Play(Filter.Local(), file, _ambientParams);
         }
 

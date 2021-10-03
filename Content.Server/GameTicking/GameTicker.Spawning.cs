@@ -234,7 +234,8 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                .SetOwner(pdaComponent, characterName);
         }
         #endregion
 

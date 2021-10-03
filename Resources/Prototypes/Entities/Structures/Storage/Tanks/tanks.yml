@@ -12,6 +12,19 @@
     state: fueltank
   - type: ReagentTank
     tankType: Fuel
+  - type: DamageOnToolInteract
+    tools:
+    - 16 # welding
+    weldingDamage:
+      types:
+        Heat: 10
+  - type: Explosive
+    # The explosive component is independent of the stored liquid :/
+    # I dream of a day where all grenades/explosives will be reagent dependent.
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 6
+    flashRange: 5
 
 - type: entity
   id: WeldingFuelTankFull
@@ -20,11 +33,6 @@
   suffix: Full
   description: A storage tank containing welding fuel.
   components:
-  - type: Explosive
-    devastationRange: 0
-    heavyImpactRange: 2
-    lightImpactRange: 6
-    flashRange: 5
   - type: SolutionContainerManager
     solutions:
       tank:

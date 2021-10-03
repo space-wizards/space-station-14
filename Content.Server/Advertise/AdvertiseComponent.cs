@@ -16,7 +16,7 @@ namespace Content.Server.Advertise
         /// <summary>
         ///     Minimum time in seconds to wait before saying a new ad, in seconds. Has to be larger than or equal to 1.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("minWait")]
         public int MinimumWait { get; } = 8 * 60;
 
@@ -24,7 +24,7 @@ namespace Content.Server.Advertise
         ///     Maximum time in seconds to wait before saying a new ad, in seconds. Has to be larger than or equal
         ///     to <see cref="MinimumWait"/>
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxWait")]
         public int MaximumWait { get; } = 10 * 60;
 
@@ -37,7 +37,7 @@ namespace Content.Server.Advertise
         /// <summary>
         ///     The next time an advertisement will be said.
         /// </summary>
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public TimeSpan NextAdvertisementTime { get; set; } = TimeSpan.Zero;
 
         /// <summary>

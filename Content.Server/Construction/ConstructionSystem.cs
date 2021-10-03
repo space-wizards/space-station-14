@@ -59,7 +59,7 @@ namespace Content.Server.Construction
             {
                 args.PushMarkup(Loc.GetString(
                     "construction-component-to-create-header",
-                    ("targetName", component.Target.Name)));
+                    ("targetName", component.Target.Name)) + "\n");
             }
 
             if (component.Edge == null && component.TargetNextEdge != null)

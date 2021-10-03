@@ -8,6 +8,7 @@ using Content.Server.Items;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
+using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
 using Content.Shared.Strip.Components;
 using Content.Shared.Verbs;
@@ -25,6 +26,8 @@ namespace Content.Server.Strip
     public sealed class StrippableComponent : SharedStrippableComponent
     {
         public const float StripDelay = 2f;
+
+        // TODO: This component needs localization.
 
         [ViewVariables]
         private BoundUserInterface? UserInterface => Owner.GetUIOrNull(StrippingUiKey.Key);
@@ -128,7 +131,15 @@ namespace Content.Server.Strip
 
             foreach (var hand in hands.HandNames)
             {
-                dictionary[hand] = hands.GetItem(hand)?.Owner.Name ?? "None";
+                var owner = hands.GetItem(hand)?.Owner;
+
+                if (owner?.HasComponent<HandVirtualItemComponent>() ?? true)
+                {
+                    dictionary[hand] = "None";
+                    continue;
+                }
+
+                dictionary[hand] = owner.Name;
             }
 
             return dictionary;
@@ -347,6 +358,9 @@ namespace Content.Server.Strip
                     user.PopupMessageCursor(Loc.GetString("strippable-component-item-slot-free-message",("owner", Owner)));
                     return false;
                 }
+
+                if (heldItem.Owner.HasComponent<HandVirtualItemComponent>())
+                    return false;
 
                 if (!hands.CanDrop(hand, false))
                 {

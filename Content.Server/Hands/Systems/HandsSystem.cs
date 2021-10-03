@@ -183,6 +183,9 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
+                if (inhand.Owner.HasComponent<HandVirtualItemComponent>())
+                    continue;
+
                 args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
             }
         }

@@ -32,3 +32,12 @@
   - type: KitchenSpike
   - type: Anchorable
   - type: Pullable
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.KitchenSpikeVisuals.Status
+        layer: 0
+        states:
+          enum.KitchenSpikeStatus.Empty: spike
+          enum.KitchenSpikeStatus.Bloody: spikebloody
+

@@ -41,7 +41,7 @@
     damage:
       types:
         Blunt: 5
-    soundHit: 
+    soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
     damage:
@@ -209,10 +209,10 @@
       CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1 
+        Asphyxiation: 1
     damageRecovery:
       types:
-        Asphyxiation: -1 
+        Asphyxiation: -1
   - type: Internals
   - type: MobState
     thresholds:
@@ -273,6 +273,7 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: DoorBumpOpener
 
 - type: entity
   save: false
