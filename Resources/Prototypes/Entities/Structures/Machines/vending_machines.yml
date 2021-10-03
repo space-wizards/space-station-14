@@ -46,6 +46,9 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: PointLight
+    enabled: false
+    castShadows: false
   - type: LitOnPowered
 
 - type: entity
