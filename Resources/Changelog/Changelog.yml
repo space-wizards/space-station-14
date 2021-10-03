@@ -2230,3 +2230,9 @@ Entries:
   - {message: AME connection issues shouldn't occur anymore., type: Fix}
   id: 398
   time: '2021-10-03T11:33:28.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a rules button to the lobby and character creation screen. Be
+      sure to read them!, type: Add}
+  id: 399
+  time: '2021-10-03T21:48:29.0000000+00:00'
