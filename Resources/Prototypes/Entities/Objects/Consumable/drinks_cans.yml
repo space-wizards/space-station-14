@@ -23,8 +23,17 @@
       type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
-  - type: Spillable
+    layers:
+      - state: icon
+        map: ["enum.DrinkCanVisualLayers.Icon"]    
+    netsync: false
+  - type: DrainableSolution
     solution: drink
+  - type: Appearance
+    visuals:
+    - type: DrinkCanVisualizer
+      stateClosed: icon
+      stateOpen: icon_open
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -37,7 +46,6 @@
     - Cola
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cola.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/cola.rsi
 
@@ -49,7 +57,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
 
@@ -61,7 +68,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
 
@@ -73,7 +79,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/purple_can.rsi
 
@@ -85,7 +90,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
 
@@ -97,7 +101,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/space-up.rsi
 
@@ -109,7 +112,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Drinks/starkist.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/starkist.rsi
 
@@ -128,7 +130,6 @@
           Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
 
@@ -141,7 +142,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
 
@@ -154,7 +154,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
 
@@ -167,7 +166,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
-
   - type: Item
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
 

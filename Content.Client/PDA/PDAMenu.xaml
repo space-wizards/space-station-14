@@ -1,0 +1,32 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'comp-pda-ui-menu-title'}"
+            MinSize="512 256"
+            SetSize="512 256">
+    <TabContainer Name="MasterTabContainer">
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True"
+                      HorizontalExpand="True"
+                      MinSize="50 50">
+            <RichTextLabel Name="PdaOwnerLabelProtected" />
+            <PanelContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <RichTextLabel Name="IdInfoLabelProtected"
+                                   HorizontalExpand="True" />
+                    <Button Name="EjectIdButtonProtected"
+                            Text="{Loc 'comp-pda-ui-eject-id-button'}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    <Button Name="EjectPenButtonProtected"
+                            Text="{Loc 'comp-pda-ui-eject-pen-button'}"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                </BoxContainer>
+            </PanelContainer>
+            <Button Name="FlashLightToggleButtonProtected"
+                    Text="{Loc 'comp-pda-ui-toggle-flashlight-button'}"
+                    ToggleMode="True" />
+            <Button Name="ActivateUplinkButtonProtected"
+                    Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />
+        </BoxContainer>
+    </TabContainer>
+</SS14Window>

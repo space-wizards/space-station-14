@@ -21,19 +21,11 @@ namespace Content.Client.Security
             {
                 case DeployableBarrierState.Idle:
                     sprite.LayerSetState(0, "idle");
-                    ToggleLight(component, false);
                     break;
                 case DeployableBarrierState.Deployed:
                     sprite.LayerSetState(0, "deployed");
-                    ToggleLight(component, true);
                     break;
             }
-        }
-
-        private void ToggleLight(AppearanceComponent component, bool enabled)
-        {
-            if (component.Owner.TryGetComponent(out PointLightComponent? light))
-                light.Enabled = enabled;
         }
     }
 }

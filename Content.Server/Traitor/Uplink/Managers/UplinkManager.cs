@@ -2,19 +2,21 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Mind.Components;
 using Content.Shared.PDA;
+using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Server.PDA.Managers
 {
-    public class PDAUplinkManager : IPDAUplinkManager
+    public class UplinkManager : IUplinkManager
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        private readonly List<UplinkAccount> _accounts = new();
+        private readonly Dictionary<EntityUid, UplinkAccount> _accounts = new();
         private readonly Dictionary<string, UplinkListingData> _listings = new();
 
         public IReadOnlyDictionary<string, UplinkListingData> FetchListings => _listings;
@@ -52,18 +54,23 @@ namespace Content.Server.PDA.Managers
                 return false;
             }
 
-            if (_accounts.Contains(acc))
+            if (_accounts.ContainsKey(acc.AccountHolder))
             {
                 return false;
             }
 
-            _accounts.Add(acc);
+            _accounts.Add(acc.AccountHolder, acc);
             return true;
+        }
+
+        public bool TryGetAccount(EntityUid owner, out UplinkAccount? acc)
+        {
+            return _accounts.TryGetValue(owner, out acc);
         }
 
         public bool ChangeBalance(UplinkAccount acc, int amt)
         {
-            var account = _accounts.Find(uplinkAccount => uplinkAccount.AccountHolder == acc.AccountHolder);
+            var account = _accounts.GetValueOrDefault(acc.AccountHolder);
 
             if (account == null)
             {

@@ -87,7 +87,7 @@ namespace Content.Server.Entry
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
+            IoCManager.Resolve<IUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();
