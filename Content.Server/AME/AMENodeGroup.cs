@@ -46,11 +46,6 @@ namespace Content.Server.AME
             foreach (var node in groupNodes)
             {
                 var nodeOwner = node.Owner;
-                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
-                {
-                    _masterController = controller;
-                }
-
                 if (nodeOwner.TryGetComponent(out AMEShieldComponent? shield))
                 {
                     var nodeNeighbors = grid.GetCellsInSquareArea(nodeOwner.Transform.Coordinates, 1)
@@ -61,6 +56,7 @@ namespace Content.Server.AME
                     {
                         _cores.Add(shield);
                         shield.SetCore();
+                        // Core visuals will be updated later.
                     }
                     else
                     {
@@ -68,10 +64,36 @@ namespace Content.Server.AME
                     }
                 }
             }
+
+            // Separate to ensure core count is correctly updated.
+            foreach (var node in groupNodes)
+            {
+                var nodeOwner = node.Owner;
+                if (nodeOwner.TryGetComponent(out AMEControllerComponent? controller))
+                {
+                    if (_masterController == null)
+                    {
+                        // Has to be the first one, as otherwise IsMasterController will return true on them all for this first update.
+                        _masterController = controller;
+                    }
+                    controller.OnAMENodeGroupUpdate();
+                }
+            }
+
+            UpdateCoreVisuals();
         }
 
-        public void UpdateCoreVisuals(int injectionAmount, bool injecting)
+        public void UpdateCoreVisuals()
         {
+            var injectionAmount = 0;
+            var injecting = false;
+
+            if (_masterController != null)
+            {
+                injectionAmount = _masterController.InjectionAmount;
+                injecting = _masterController.Injecting;
+            }
+
             var injectionStrength = CoreCount > 0 ? injectionAmount / CoreCount : 0;
 
             foreach (AMEShieldComponent core in _cores)
