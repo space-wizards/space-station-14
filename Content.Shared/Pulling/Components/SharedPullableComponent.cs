@@ -165,7 +165,9 @@ namespace Content.Shared.Pulling.Components
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = false;
                     _pullJoint.Length = length * 0.75f;
+                    _pullJoint.MinLength = 0f;
                     _pullJoint.MaxLength = length;
+                    _pullJoint.Stiffness = 1f;
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
