@@ -434,10 +434,7 @@ namespace Content.Client.Verbs
                             Stretch = TextureRect.StretchMode.KeepCentered
                         }),
 
-                        (_label = new Label
-                        {
-                            SizeFlagsHorizontal = SizeFlags.FillExpand
-                        }),
+                        (_label = new Label { HorizontalExpand = true }),
 
                         // Padding
                         new Control {MinSize = (8, 0)},
