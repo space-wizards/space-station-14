@@ -36,6 +36,9 @@
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     state: singularity_1
     drawdepth: Items
+  - type: PointLight
+    enabled: true
+    radius: 10
   - type: Appearance
     visuals:
     - type: SingularityVisualizer
