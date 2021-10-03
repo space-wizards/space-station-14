@@ -17,8 +17,7 @@ namespace Content.Server.Alert.Click
         public void AlertClicked(ClickAlertEventArgs args)
         {
             var ps = EntitySystem.Get<SharedPullingSystem>();
-            var playerPullable = args.Player.GetComponentOrNull<SharedPullableComponent>();
-            if (playerPullable != null)
+            if (args.Player.TryGetComponent<SharedPullableComponent>(out var playerPullable))
             {
                 ps.TryStopPull(playerPullable);
             }

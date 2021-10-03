@@ -73,7 +73,7 @@ namespace Content.Shared.Pulling
             }
 
             var msg = new StopPullingEvent(user?.Uid);
-            pullable.Owner.EntityManager.EventBus.RaiseLocalEvent(pullable.Owner.Uid, msg);
+            RaiseLocalEvent(pullable.Owner.Uid, msg);
 
             if (msg.Cancelled) return false;
 
@@ -99,8 +99,6 @@ namespace Content.Shared.Pulling
         {
             if (puller.Pulling == pullable)
                 return true;
-
-            var eventBus = pullable.Owner.EntityManager.EventBus;
 
             // Pulling a new object : Perform sanity checks.
 
@@ -156,14 +154,14 @@ namespace Content.Shared.Pulling
 
             var pullAttempt = new PullAttemptMessage(pullerPhysics, pullablePhysics);
 
-            eventBus.RaiseLocalEvent(puller.Owner.Uid, pullAttempt, broadcast: false);
+            RaiseLocalEvent(puller.Owner.Uid, pullAttempt, broadcast: false);
 
             if (pullAttempt.Cancelled)
             {
                 return false;
             }
 
-            eventBus.RaiseLocalEvent(pullable.Owner.Uid, pullAttempt);
+            RaiseLocalEvent(pullable.Owner.Uid, pullAttempt);
 
             if (pullAttempt.Cancelled)
             {

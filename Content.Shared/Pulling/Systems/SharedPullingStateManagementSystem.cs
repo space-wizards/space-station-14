@@ -33,8 +33,6 @@ namespace Content.Shared.Pulling
         // They do not expect to be cancellable.
         private void ForceDisconnect(SharedPullerComponent puller, SharedPullableComponent pullable)
         {
-            var eventBus = pullable.Owner.EntityManager.EventBus;
-
             var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
             var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
 
@@ -55,10 +53,10 @@ namespace Content.Shared.Pulling
             // Messaging
             var message = new PullStoppedMessage(pullerPhysics, pullablePhysics);
 
-            eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
+            RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
 
             if (pullable.Owner.LifeStage <= EntityLifeStage.MapInitialized)
-                eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+                RaiseLocalEvent(pullable.Owner.Uid, message);
 
             // Networking
             puller.Dirty();
@@ -91,8 +89,6 @@ namespace Content.Shared.Pulling
 
             if ((puller != null) && (pullable != null))
             {
-                var eventBus = pullable.Owner.EntityManager.EventBus;
-
                 var pullerPhysics = puller.Owner.GetComponent<PhysicsComponent>();
                 var pullablePhysics = pullable.Owner.GetComponent<PhysicsComponent>();
 
@@ -112,8 +108,8 @@ namespace Content.Shared.Pulling
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
 
-                eventBus.RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
-                eventBus.RaiseLocalEvent(pullable.Owner.Uid, message);
+                RaiseLocalEvent(puller.Owner.Uid, message, broadcast: false);
+                RaiseLocalEvent(pullable.Owner.Uid, message);
 
                 // Networking
                 puller.Dirty();
@@ -153,11 +149,11 @@ namespace Content.Shared.Pulling
 
             if (movingTo == null)
             {
-                pullable.Owner.EntityManager.EventBus.RaiseLocalEvent(pullable.Owner.Uid, new PullableStopMovingMessage());
+                RaiseLocalEvent(pullable.Owner.Uid, new PullableStopMovingMessage());
             }
             else
             {
-                pullable.Owner.EntityManager.EventBus.RaiseLocalEvent(pullable.Owner.Uid, new PullableMoveMessage());
+                RaiseLocalEvent(pullable.Owner.Uid, new PullableMoveMessage());
             }
         }
     }
