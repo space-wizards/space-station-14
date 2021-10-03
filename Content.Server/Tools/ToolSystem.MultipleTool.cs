@@ -56,10 +56,10 @@ namespace Content.Server.Tools
             if (!Resolve(uid, ref multiple))
                 return false;
 
-            if (multiple.Entries.Count == 0)
+            if (multiple.Entries.Length == 0)
                 return false;
 
-            multiple.CurrentEntry = (multiple.CurrentEntry + 1) % multiple.Entries.Count;
+            multiple.CurrentEntry = (multiple.CurrentEntry + 1) % multiple.Entries.Length;
             SetMultipleTool(uid, multiple);
 
             var current = multiple.Entries[multiple.CurrentEntry];
@@ -78,7 +78,7 @@ namespace Content.Server.Tools
             // Sprite is optional.
             Resolve(uid, ref sprite);
 
-            if (multiple.Entries.Count == 0)
+            if (multiple.Entries.Length == 0)
             {
                 multiple.CurrentQualityName = Loc.GetString("multiple-tool-component-no-behavior");
                 multiple.Dirty();
