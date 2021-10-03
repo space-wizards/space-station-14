@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Shared.Sound;
 using Content.Shared.Tools;
@@ -32,8 +33,9 @@ namespace Content.Server.Tools.Components
             public SpriteSpecifier? Sprite { get; } = null;
         }
 
-        [DataField("entries", required:true)]
-        public List<ToolEntry> Entries { get; } = new();
+        // TODO: Make non-readonly when SpriteSpecifier has type writers.
+        [DataField("entries", required:true, readOnly:true)]
+        public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
 
         [ViewVariables]
         public int CurrentEntry = 0;
