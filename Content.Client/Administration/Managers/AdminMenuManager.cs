@@ -4,8 +4,11 @@ using Content.Client.HUD;
 using Content.Shared.Administration.Menu;
 using Content.Shared.Input;
 using Robust.Client.Console;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
@@ -19,9 +22,15 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IGameHud _gameHud = default!;
         [Dependency] private readonly IClientAdminManager _clientAdminManager = default!;
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
 
         private AdminMenuWindow? _window;
         private List<SS14Window> _commandWindows = new();
+        private AdminNameOverlay _adminNameOverlay = default!;
 
         public void Initialize()
         {
@@ -29,6 +38,7 @@ namespace Content.Client.Administration.Managers
             _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(HandlePlayerListMessage);
 
             _commandWindows = new List<SS14Window>();
+            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
             // Reset the AdminMenu Window on disconnect
             _netManager.Disconnect += (_, _) => ResetWindow();
 
@@ -70,6 +80,18 @@ namespace Content.Client.Administration.Managers
         private void HandlePlayerListMessage(AdminMenuPlayerListMessage msg)
         {
             _window?.RefreshPlayerList(msg.PlayersInfo);
+            _adminNameOverlay.UpdatePlayerInfo(msg.PlayersInfo);
+        }
+
+        private void AdminNameOverlayOn()
+        {
+            if (!_overlayManager.HasOverlay<AdminNameOverlay>())
+                _overlayManager.AddOverlay(_adminNameOverlay);
+        }
+
+        private void AdminNameOverlayOff()
+        {
+            _overlayManager.RemoveOverlay<AdminNameOverlay>();
         }
 
         public void ResetWindow()
@@ -92,6 +114,8 @@ namespace Content.Client.Administration.Managers
         {
             _window ??= new AdminMenuWindow();
             _window.OnPlayerListRefresh += RequestPlayerList;
+            _window.OnAdminNameOverlayOn += AdminNameOverlayOn;
+            _window.OnAdminNameOverlayOff += AdminNameOverlayOff;
             _window.OpenCentered();
         }
 
