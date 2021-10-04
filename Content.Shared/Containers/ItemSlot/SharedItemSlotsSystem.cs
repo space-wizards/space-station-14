@@ -103,7 +103,7 @@ namespace Content.Shared.Containers.ItemSlots
                 // TODO ITEMSLOTS give item slot names localization strings?
                 // Basically: its much nicer to have "insert ID" instead of the much longer "Insert <full-in-game-username>'s ID card (assistant)"
                 verb.Text = args.Using.Name;
-                verb.Category = VerbCategory.Eject;
+                verb.Category = VerbCategory.Insert;
                 verb.Act = () => InsertContent(component, slot, slotName, args.Using);
                 args.Verbs.Add(verb);
             }

@@ -11,6 +11,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -67,7 +68,16 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             Verb verb = new();
-            verb.Category = component.Open ? VerbCategory.Close : VerbCategory.Open;
+            if (component.Open)
+            {
+                verb.Text = Loc.GetString("verb-categories-close");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            }
+            else
+            {
+                verb.Text = Loc.GetString("verb-categories-open");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            }
             verb.Act = () => component.ToggleOpen(args.User);
             args.Verbs.Add(verb);
         }
@@ -90,8 +100,16 @@ namespace Content.Server.Storage.EntitySystems
 
             Verb verb = new();
             verb.Act = () => component.OpenStorageUI(args.User);
-            verb.Category = uiOpen ? VerbCategory.Close : VerbCategory.Open;
-            // TODO VERBS create a Open-UI verb category? Avoid clashes with other open verbs?
+            if (uiOpen)
+            {
+                verb.Text = Loc.GetString("verb-categories-close");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            }
+            else
+            {
+                verb.Text = Loc.GetString("verb-categories-open");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            }
             args.Verbs.Add(verb);
         }
 

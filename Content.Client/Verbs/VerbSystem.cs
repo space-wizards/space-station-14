@@ -138,9 +138,10 @@ namespace Content.Client.Verbs
             // Add the new server-side verbs.
             foreach (var (verbType, verbSet) in msg.Verbs)
             {
-                if (!CurrentVerbs.TryAdd(verbType, new SortedSet<Verb>(verbSet)))
+                SortedSet<Verb>  sortedVerbs = new (verbSet);
+                if (!CurrentVerbs.TryAdd(verbType, sortedVerbs))
                 {
-                    CurrentVerbs[verbType].UnionWith(verbSet);
+                    CurrentVerbs[verbType].UnionWith(sortedVerbs);
                 }
             }
 

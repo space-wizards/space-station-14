@@ -45,12 +45,6 @@ namespace Content.Shared.Verbs
         public static readonly VerbCategory Unbuckle =
             new("verb-categories-unbuckle", "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png");
 
-        public static readonly VerbCategory Open =
-            new("verb-categories-open", "/Textures/Interface/VerbIcons/open.svg.192dpi.png");
-
-        public static readonly VerbCategory Close =
-            new("verb-categories-close", "/Textures/Interface/VerbIcons/close.svg.192dpi.png");
-
         public static readonly VerbCategory Rotate =
             new("verb-categories-rotate", "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png", iconsOnly: true);
 

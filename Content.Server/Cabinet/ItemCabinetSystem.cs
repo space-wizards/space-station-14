@@ -46,7 +46,16 @@ namespace Content.Server.Cabinet
             // Toggle open verb
             Verb toggleVerb = new();
             toggleVerb.Act = () => OnToggleItemCabinet(uid, component);
-            toggleVerb.Category = component.Opened ? VerbCategory.Close : VerbCategory.Open;
+            if (component.Opened)
+            {
+                toggleVerb.Text = Loc.GetString("verb-categories-close");
+                toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            }
+            else
+            {
+                toggleVerb.Text = Loc.GetString("verb-categories-open");
+                toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            }
             args.Verbs.Add(toggleVerb);
         }
 
