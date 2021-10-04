@@ -17,7 +17,7 @@ namespace Content.Server.Traitor.Uplink.Account
         private readonly UplinkListingSytem _listingSystem = default!;
 
         private readonly HashSet<UplinkAccount> _accounts = new();
-        
+
         public bool AddNewAccount(UplinkAccount acc)
         {
             return _accounts.Add(acc);
@@ -31,8 +31,8 @@ namespace Content.Server.Traitor.Uplink.Account
             }
 
             account.Balance += amt;
-            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, amt));
 
+            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, amt));
             return true;
         }
 

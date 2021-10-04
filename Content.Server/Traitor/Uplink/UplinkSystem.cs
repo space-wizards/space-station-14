@@ -13,6 +13,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
+using System;
 using System.Linq;
 
 namespace Content.Server.Traitor.Uplink
@@ -30,6 +31,7 @@ namespace Content.Server.Traitor.Uplink
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<UplinkAccountBalanceChanged>(OnBalanceChangedBroadcast);
         }
 
         public void SetAccount(UplinkComponent component, UplinkAccount account)
@@ -41,12 +43,6 @@ namespace Content.Server.Traitor.Uplink
             }
 
             component.UplinkAccount = account;
-            SubscribeLocalEvent<UplinkAccountBalanceChanged>((e) => {
-                if (account != e.Account)
-                    return;
-
-                UpdateUserInterface(component);
-            });
         }
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
@@ -61,6 +57,20 @@ namespace Content.Server.Traitor.Uplink
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
+        }
+
+        private void OnBalanceChangedBroadcast(UplinkAccountBalanceChanged ev)
+        {
+            foreach (var uplink in EntityManager.EntityQuery<UplinkComponent>())
+            {
+                if (uplink.UplinkAccount == ev.Account)
+                    OnBalanceChanged(uplink, ev);
+            }    
+        }
+
+        private void OnBalanceChanged(UplinkComponent component, UplinkAccountBalanceChanged ev)
+        {
+            UpdateUserInterface(component);
         }
 
         public void ToggleUplinkUI(UplinkComponent component, IPlayerSession session)
