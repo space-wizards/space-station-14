@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -43,16 +43,9 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
-
-            SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
         }
 
         #region Explosions
-        private void HandleDestruction(EntityUid uid, ExplosiveComponent component, DestructionEventArgs args)
-        {
-            Explode(uid, component);
-        }
-
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;

@@ -206,10 +206,11 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            // TODO: Make into an event and instead have a system check for owner.
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            var attempt = new UncuffAttemptEvent(user.Uid, Owner.Uid);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(user.Uid, attempt);
+
+            if (attempt.Cancelled)
             {
-                user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
             }
 

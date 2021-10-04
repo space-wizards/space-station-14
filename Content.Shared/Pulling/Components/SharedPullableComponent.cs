@@ -161,11 +161,13 @@ namespace Content.Shared.Pulling.Components
                     var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
                     _physics.WakeBody();
-                    _pullJoint = pullerPhysics.CreateDistanceJoint(_physics, $"pull-joint-{_physics.Owner.Uid}");
+                    _pullJoint = EntitySystem.Get<SharedJointSystem>().CreateDistanceJoint(Owner.Uid, _puller.Uid, id:$"pull-joint-{_physics.Owner.Uid}");
                     // _physics.BodyType = BodyType.Kinematic; // TODO: Need to consider their original bodytype
                     _pullJoint.CollideConnected = false;
                     _pullJoint.Length = length * 0.75f;
+                    _pullJoint.MinLength = 0f;
                     _pullJoint.MaxLength = length;
+                    _pullJoint.Stiffness = 1f;
                 }
                 // Code here will not run if pulling a new object was attempted and failed because of the returns from the refactor.
             }
@@ -269,7 +271,7 @@ namespace Content.Shared.Pulling.Components
 
             if (_physics != null && _pullJoint != null)
             {
-                _physics.RemoveJoint(_pullJoint);
+                EntitySystem.Get<SharedJointSystem>().RemoveJoint(_pullJoint);
             }
 
             if (user != null && user.TryGetComponent<SharedPullerComponent>(out var puller))

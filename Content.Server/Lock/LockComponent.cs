@@ -52,14 +52,13 @@ namespace Content.Server.Storage.Components
 
                 // Call relevant entity system
                 var lockSystem = user.EntityManager.EntitySysManager.GetEntitySystem<LockSystem>();
-                var eventData = new ActivateInWorldEvent(user, component.Owner);
                 if (component.Locked)
                 {
-                    lockSystem.DoUnlock(component, eventData);
+                    lockSystem.DoUnlock(component.Owner.Uid, user, component);
                 }
                 else
                 {
-                    lockSystem.DoLock(component, eventData);
+                    lockSystem.DoLock(component.Owner.Uid, user, component);
                 }
             }
         }
