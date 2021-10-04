@@ -10,6 +10,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.IoC;
 using Content.Shared.MobState;
+using Robust.Shared.Player;
 
 namespace Content.Server.Cuffs
 {
