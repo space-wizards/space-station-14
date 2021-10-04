@@ -13,19 +13,18 @@ namespace Content.Server.Damage.Components
     [RegisterComponent]
     public class DamageOnToolInteractComponent : Component, IInteractUsing
     {
-
         public override string Name => "DamageOnToolInteract";
 
         [DataField("tools")]
         private List<ToolQuality> _tools = new();
 
-        [DataField("weldingDamage", required: true)]
+        [DataField("weldingDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier WeldingDamage = default!;
+        public DamageSpecifier? WeldingDamage;
 
-        [DataField("defaultDamage", required: true)]
+        [DataField("defaultDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier DefaultDamage = default!;
+        public DamageSpecifier? DefaultDamage;
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
@@ -33,7 +32,7 @@ namespace Content.Server.Damage.Components
             {
                 foreach (var toolQuality in _tools)
                 {
-                    if (tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
+                    if (WeldingDamage != null && tool.HasQuality(ToolQuality.Welding) && toolQuality == ToolQuality.Welding)
                     {
                         if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
                         {
@@ -43,7 +42,7 @@ namespace Content.Server.Damage.Components
                         break; //If the tool quality is welding and its not lit or its not actually a welder that can be lit then its pointless to continue.
                     }
 
-                    if (tool.HasQuality(toolQuality))
+                    if (DefaultDamage != null && tool.HasQuality(toolQuality))
                     {
                         EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, DefaultDamage);
                         return true;

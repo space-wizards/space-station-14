@@ -1,19 +1,12 @@
 
 ### UI
 
-comp-pda-ui-try-insert-id-card-no-hands = You have no hands.
-comp-pda-ui-try-insert-pen-no-hands = You have no hands.
-
 # For the PDA screen
 comp-pda-ui = ID: [color=white]{$Owner}[/color], [color=yellow]{$JobTitle}[/color]
 
 comp-pda-ui-blank = ID:
 
 comp-pda-ui-owner = Owner: [color=white]{$ActualOwnerName}[/color]
-
-pda-bound-user-interface-insufficient-funds-popup = Insufficient funds!
-
-pda-bound-user-interface-tc-balance-popup = TC Balance: [color={$weightedColor}]{$balance}[/color]
 
 pda-bound-user-interface-main-menu-tab-title = Main Menu
 

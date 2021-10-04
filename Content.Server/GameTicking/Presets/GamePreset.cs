@@ -72,7 +72,7 @@ namespace Content.Server.GameTicking.Presets
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ghost = entityManager.SpawnEntity("MobObserver", position);
+            var ghost = entityManager.SpawnEntity("MobObserver", position.ToMap(entityManager));
             ghost.Name = mind.CharacterName ?? string.Empty;
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();

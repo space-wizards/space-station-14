@@ -20,9 +20,9 @@
 - type: soundCollection
   id: ScientistScreams
   files:
-    - /Audio/Voice/Human/science_scream_1.ogg
-    - /Audio/Voice/Human/science_scream_2.ogg
-    - /Audio/Voice/Human/science_scream_3.ogg
-    - /Audio/Voice/Human/science_scream_4.ogg
-    - /Audio/Voice/Human/science_scream_5.ogg
-    - /Audio/Voice/Human/science_scream_6.ogg
+    - /Audio/Voice/Human/science_scream1.ogg
+    - /Audio/Voice/Human/science_scream2.ogg
+    - /Audio/Voice/Human/science_scream3.ogg
+    - /Audio/Voice/Human/science_scream4.ogg
+    - /Audio/Voice/Human/science_scream5.ogg
+    - /Audio/Voice/Human/science_scream6.ogg

@@ -20,15 +20,16 @@ namespace Content.Server.Radiation
         {
             base.Update(frameTime);
 
-            _accumulator += RadiationCooldown;
+            _accumulator += frameTime;
 
             while (_accumulator > RadiationCooldown)
             {
                 _accumulator -= RadiationCooldown;
 
+                // All code here runs effectively every RadiationCooldown seconds, so use that as the "frame time".
                 foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>(true))
                 {
-                    comp.Update(frameTime);
+                    comp.Update(RadiationCooldown);
                     var ent = comp.Owner;
 
                     if (ent.Deleted) continue;

@@ -209,6 +209,14 @@ namespace Content.Server.Interaction
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
+            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            {
+                if (delayComponent.ActiveDelay)
+                    return;
+
+                delayComponent.BeginDelay();
+            }
+
             if (!_actionBlockerSystem.CanInteract(user) || ! _actionBlockerSystem.CanUse(user))
                 return;
 
@@ -575,8 +583,8 @@ namespace Content.Server.Interaction
             {
                 if (delayComponent.ActiveDelay)
                     return;
-                else
-                    delayComponent.BeginDelay();
+
+                delayComponent.BeginDelay();
             }
 
             var useMsg = new UseInHandEvent(user, used);

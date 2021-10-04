@@ -29,6 +29,10 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface

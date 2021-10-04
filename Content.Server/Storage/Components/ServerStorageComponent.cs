@@ -374,7 +374,7 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
+            _storage = Owner.EnsureContainer<Container>("storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 
@@ -409,15 +409,12 @@ namespace Content.Server.Storage.Components
                         break;
                     }
 
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
                     {
                         break;
                     }
 
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }

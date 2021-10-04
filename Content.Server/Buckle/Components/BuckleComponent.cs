@@ -333,7 +333,7 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable != null && _stunnable.KnockedDown
+            if (_stunnable is { KnockedDown: true }
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
@@ -385,7 +385,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
         }
 
-        protected override void OnRemove()
+        protected override void Shutdown()
         {
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
@@ -393,7 +393,7 @@ namespace Content.Server.Buckle.Components
             _buckleTime = default;
             UpdateBuckleStatus();
 
-            base.OnRemove();
+            base.Shutdown();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)

@@ -9,6 +9,12 @@
     solutions:
       drink:
         maxVol: 10
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
