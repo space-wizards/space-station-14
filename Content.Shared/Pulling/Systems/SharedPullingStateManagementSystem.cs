@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -28,6 +29,8 @@ namespace Content.Shared.Pulling
     [UsedImplicitly]
     public class SharedPullingStateManagementSystem : EntitySystem
     {
+        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
+
         // A WARNING:
         // The following 2 functions are the most internal part of the pulling system's relationship management.
         // They do not expect to be cancellable.
@@ -40,9 +43,12 @@ namespace Content.Shared.Pulling
             ForceSetMovingTo(pullable, null);
 
             // Joint shutdown
-            if (pullerPhysics.Joints.Contains(pullable.PullJoint!))
+            if (puller.Owner.TryGetComponent<JointComponent>(out var jointComp))
             {
-                pullerPhysics.RemoveJoint(pullable.PullJoint!);
+                if (jointComp.GetJoints.Contains(pullable.PullJoint!))
+                {
+                    _jointSystem.RemoveJoint(pullable.PullJoint!);
+                }
             }
             pullable.PullJoint = null;
 
@@ -100,10 +106,12 @@ namespace Content.Shared.Pulling
                 var union = pullerPhysics.GetWorldAABB().Union(pullablePhysics.GetWorldAABB());
                 var length = Math.Max(union.Size.X, union.Size.Y) * 0.75f;
 
-                pullable.PullJoint = pullerPhysics.CreateDistanceJoint(pullablePhysics, $"pull-joint-{pullablePhysics.Owner.Uid}");
+                pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner.Uid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
                 pullable.PullJoint.CollideConnected = false;
                 pullable.PullJoint.Length = length * 0.75f;
+                pullable.PullJoint.MinLength = 0f;
                 pullable.PullJoint.MaxLength = length;
+                pullable.PullJoint.Stiffness = 1f;
 
                 // Messaging
                 var message = new PullStartedMessage(pullerPhysics, pullablePhysics);
