@@ -23,17 +23,45 @@ namespace Content.Server.Traitor.Uplink.Account
             return _accounts.Add(acc);
         }
 
-        public bool ChargeBalance(UplinkAccount account, int amt)
+
+        /// <summary>
+        /// Add TC to uplinks account balance
+        /// </summary>
+        public bool AddToBalance(UplinkAccount account, int toAdd)
         {
-            if (account.Balance + amt < 0)
-            {
-                return false;
-            }
+            account.Balance += toAdd;
 
-            account.Balance += amt;
-
-            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, amt));
+            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, toAdd));
             return true;
+        }
+
+        /// <summary>
+        /// Charge TC from uplinks account balance
+        /// </summary>
+        public bool RemoveFromBalance(UplinkAccount account, int price)
+        {
+            if (account.Balance - price < 0)
+                return false;
+
+            account.Balance -= price;
+
+            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, -price));
+            return true;
+        }
+
+        /// <summary>
+        /// Force-set TC uplinks account balance to a new value
+        /// </summary>
+        public bool SetBalance(UplinkAccount account, int newBalance)
+        {
+            if (newBalance < 0)
+                return false;
+
+            var dif = newBalance - account.Balance;
+            account.Balance = newBalance;
+            RaiseLocalEvent(new UplinkAccountBalanceChanged(account, dif));
+            return true;
+
         }
 
         public bool TryPurchaseItem(UplinkAccount acc, string itemId, EntityCoordinates spawnCoords, [NotNullWhen(true)] out IEntity? purchasedItem)
@@ -50,7 +78,7 @@ namespace Content.Server.Traitor.Uplink.Account
                 return false;
             }
 
-            if (!ChargeBalance(acc, -listing.Price))
+            if (!RemoveFromBalance(acc, listing.Price))
             {
                 return false;
             }
