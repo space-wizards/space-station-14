@@ -306,7 +306,7 @@
         - ReagentId: JuiceTomato
           Quantity: 10
   - type: Evaporation
-    evaporation_limit: 2
+    evaporationLimit: 2
   - type: Appearance
     visuals:
     - type: PuddleVisualizer

@@ -144,7 +144,7 @@
     netsync: false
   - type: Puddle
   - type: Evaporation
-    evaporate_time: 10
+    evaporateTime: 10
   - type: Appearance
     visuals:
     - type: PuddleVisualizer
