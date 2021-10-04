@@ -16,12 +16,15 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
-    public abstract class SharedPullingSystem : EntitySystem
+    public abstract partial class SharedPullingSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
@@ -101,12 +104,6 @@ namespace Content.Shared.Pulling
 
         private void OnPullStarted(PullStartedMessage message)
         {
-            if (_pullers.TryGetValue(message.Puller.Owner, out var pulled) &&
-                pulled.TryGetComponent(out SharedPullableComponent? pulledComponent))
-            {
-                pulledComponent.TryStopPull();
-            }
-
             SetPuller(message.Puller.Owner, message.Pulled.Owner);
         }
 
@@ -128,7 +125,16 @@ namespace Content.Shared.Pulling
         private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
+
             if (!TryGetPulled(ev.Sender, out var pulled))
+            {
+                return;
+            }
+
+            // The pulled object may have already been deleted.
+            // TODO: Work out why. Monkey + meat spike is a good test for this,
+            //  assuming you're still pulling the monkey when it gets gibbed.
+            if (pulled.Deleted)
             {
                 return;
             }
@@ -144,7 +150,7 @@ namespace Content.Shared.Pulling
 
             if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.MovingTo = null;
+                _pullSm.ForceSetMovingTo(pullable, null);
             }
         }
 
@@ -153,7 +159,7 @@ namespace Content.Shared.Pulling
         {
             if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.TryStopPull();
+                TryStopPull(pullable);
             }
 
             if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
@@ -165,7 +171,7 @@ namespace Content.Shared.Pulling
                     return;
                 }
 
-                pulling.TryStopPull();
+                TryStopPull(pulling);
             }
         }
 
@@ -188,7 +194,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            pullable.TryMoveTo(coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords.ToMap(EntityManager));
 
             return false;
         }
@@ -237,13 +243,6 @@ namespace Content.Shared.Pulling
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
                     pulled.Transform.WorldRotation = newAngle;
             }
-        }
-
-        public bool CanPull(IEntity puller, IEntity pulled)
-        {
-            var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller.Uid, startPull);
-            return !startPull.Cancelled;
         }
     }
 }

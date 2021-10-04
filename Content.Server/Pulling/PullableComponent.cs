@@ -1,6 +1,7 @@
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -50,11 +51,11 @@ namespace Content.Server.Pulling
                 // Why no reason? Because they're supposed to be performed in TryStartPull.
                 if (component.Puller == user)
                 {
-                    component.TryStopPull();
+                    EntitySystem.Get<SharedPullingSystem>().TryStopPull(component);
                 }
                 else
                 {
-                    component.TryStartPull(user);
+                    EntitySystem.Get<SharedPullingSystem>().TryStartPull(component.Owner, user);
                 }
             }
         }

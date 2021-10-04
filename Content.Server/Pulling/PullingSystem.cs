@@ -44,7 +44,7 @@ namespace Content.Server.Pulling
                 return;
             }
 
-            pullable.TryStopPull();
+            TryStopPull(pullable);
         }
     }
 }
