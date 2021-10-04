@@ -2246,3 +2246,8 @@ Entries:
   - {message: Cuffs can no longer be put in your belt slot, type: Fix}
   id: 401
   time: '2021-10-03T22:53:52.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: AME is no longer capable of producing negative energy., type: Fix}
+  id: 402
+  time: '2021-10-04T00:58:55.0000000+00:00'
