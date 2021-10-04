@@ -104,7 +104,7 @@ namespace Content.Server.GameTicking.Presets
                 inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
                 var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
                 accounts.AddNewAccount(uplinkAccount);
 

@@ -4,12 +4,12 @@ namespace Content.Shared.Traitor.Uplink
 {
     public class UplinkAccount
     {
-        public readonly EntityUid AccountHolder;
+        public readonly EntityUid? AccountHolder;
         public int Balance;
 
-        public UplinkAccount(EntityUid uid, int startingBalance)
+        public UplinkAccount(int startingBalance, EntityUid? accountHolder = null)
         {
-            AccountHolder = uid;
+            AccountHolder = accountHolder;
             Balance = startingBalance;
         }
     }

@@ -68,7 +68,7 @@ namespace Content.Server.Traitor.Uplink.Commands
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
             // Get account
-            var uplinkAccount = new UplinkAccount(user.Uid, tcCount);
+            var uplinkAccount = new UplinkAccount(tcCount, user.Uid);
             var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             accounts.AddNewAccount(uplinkAccount);
 
