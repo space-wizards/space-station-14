@@ -2262,3 +2262,9 @@ Entries:
   - {message: Pull-to-location works again., type: Fix}
   id: 404
   time: '2021-10-04T15:10:55.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a new rule against metagaming and metacomms. Be sure to read it!,
+    type: Add}
+  id: 405
+  time: '2021-10-04T15:16:06.0000000+00:00'
