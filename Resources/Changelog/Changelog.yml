@@ -2257,3 +2257,8 @@ Entries:
     type: Fix}
   id: 403
   time: '2021-10-04T01:26:45.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pull-to-location works again., type: Fix}
+  id: 404
+  time: '2021-10-04T15:10:55.0000000+00:00'
