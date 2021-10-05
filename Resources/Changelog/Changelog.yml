@@ -2279,3 +2279,8 @@ Entries:
       now interact with yourself while moving)., type: Fix}
   id: 406
   time: '2021-10-05T03:29:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: unbreak pulling prediction, type: Fix}
+  id: 407
+  time: '2021-10-05T21:51:34.0000000+00:00'
