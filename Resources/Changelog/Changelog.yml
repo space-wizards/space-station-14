@@ -2268,3 +2268,14 @@ Entries:
     type: Add}
   id: 405
   time: '2021-10-04T15:16:06.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added several new verbs for inserting objects and (un)buckling entities.,
+    type: Add}
+  - {message: 'Some verbs can now be triggerd by alt clicking (e.g., spin revolver).
+      Others have had alt-click removed (e.g., open storage UI), because that functionality
+      is already provided by the ''E'' keybind.', type: Tweak}
+  - {message: Moving entities remain in the context menu until out of view (you can
+      now interact with yourself while moving)., type: Fix}
+  id: 406
+  time: '2021-10-05T03:29:03.0000000+00:00'
