@@ -53,7 +53,7 @@ namespace Content.Server.PDA
                 // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
                 if (EntityManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
-                    _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlotName);
+                    _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlot);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Content.Server.PDA
         private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChanged args)
         {
             // check if ID slot changed
-            if (args.SlotName == PDAComponent.IDSlotName)
+            if (args.SlotName == PDAComponent.IDSlot)
             {
                 var item = args.ContainedItem;
                 if (item == null || !EntityManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
@@ -82,7 +82,7 @@ namespace Content.Server.PDA
                 else
                     pda.ContainedID = idCard;
             }
-            else if (args.SlotName == PDAComponent.PenSlotName)
+            else if (args.SlotName == PDAComponent.PenSlot)
             {
                 var item = args.ContainedItem;
                 pda.PenInserted = item != null;
@@ -163,13 +163,13 @@ namespace Content.Server.PDA
                 case PDAEjectIDMessage _:
                     {
                         if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
-                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.IDSlotName, msg.Session.AttachedEntity);
+                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.IDSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
                         if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
-                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.PenSlotName, msg.Session.AttachedEntity);
+                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.PenSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAShowUplinkMessage _:

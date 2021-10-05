@@ -41,6 +41,7 @@
           tags:
             - Write
       pda_id_slot:
+        name: ID Card
         insertSound:
           path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound:

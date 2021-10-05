@@ -76,9 +76,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 Verb verb = new();
-                // TODO ITEMSLOTS give item slot names localization strings?
-                // Basically: its much nicer to have "insert ID" instead of the much longer "Eject <full-in-game-username>'s ID card (assistant)"
-                verb.Text = slot.ContainerSlot.ContainedEntity.Name;
+                verb.Text = slot.Name;
                 verb.Category = VerbCategory.Eject;
                 verb.Act = () => TryEjectContent(component, slotName, args.User);
 
@@ -100,9 +98,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 Verb verb = new();
-                // TODO ITEMSLOTS give item slot names localization strings?
-                // Basically: its much nicer to have "insert ID" instead of the much longer "Insert <full-in-game-username>'s ID card (assistant)"
-                verb.Text = args.Using.Name;
+                verb.Text = slot.Name != string.Empty ? slot.Name : args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () => InsertContent(component, slot, slotName, args.Using);
                 args.Verbs.Add(verb);
