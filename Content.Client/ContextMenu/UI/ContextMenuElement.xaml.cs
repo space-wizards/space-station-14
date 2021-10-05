@@ -68,7 +68,6 @@ namespace Content.Client.ContextMenu.UI
             ParentMenu = null;
         }
 
-
         protected override void Draw(DrawingHandleScreen handle)
         {
             UpdateStyle();
