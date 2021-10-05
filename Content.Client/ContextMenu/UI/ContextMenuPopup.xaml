@@ -1,0 +1,6 @@
+<Popup xmlns="https://spacestation14.io">
+    <PanelContainer Name="MenuPanel">
+        <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Name="Scroll">
+        </ScrollContainer>
+    </PanelContainer>
+</Popup>

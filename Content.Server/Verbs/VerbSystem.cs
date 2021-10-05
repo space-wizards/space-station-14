@@ -26,7 +26,7 @@ namespace Content.Server.Verbs
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<RequestServerVerbsEvent>(HandleVerbRequest);
-            SubscribeNetworkEvent<TryExecuteVerbEvent>(HandleTryExecuteVerb);
+            SubscribeNetworkEvent<ExecuteVerbEvent>(HandleTryExecuteVerb);
 
             _playerManager.PlayerStatusChanged += PlayerStatusChanged;
         }
@@ -64,7 +64,7 @@ namespace Content.Server.Verbs
         /// <summary>
         ///     Called when asked over the network to run a given verb.
         /// </summary>
-        public void HandleTryExecuteVerb(TryExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
+        public void HandleTryExecuteVerb(ExecuteVerbEvent args, EntitySessionEventArgs eventArgs)
         {
             var session = eventArgs.SenderSession;
             var userEntity = session.AttachedEntity;
@@ -89,7 +89,7 @@ namespace Content.Server.Verbs
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
-                TryExecuteVerb(verb);
+                ExecuteVerb(verb);
             else
                 // 404 Verb not found
                 Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");

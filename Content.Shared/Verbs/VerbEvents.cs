@@ -46,7 +46,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class TryExecuteVerbEvent : EntityEventArgs
+    public class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
@@ -56,7 +56,7 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly VerbType Type;
 
-        public TryExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
         {
             Target = target;
             RequestedVerb = requestedVerb;

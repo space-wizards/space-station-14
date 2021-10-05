@@ -98,6 +98,7 @@ namespace Content.Client.Examine
             verb.Act = () => DoExamine(args.Target) ;
             verb.Text = Loc.GetString("examine-verb-name");
             verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            verb.ClientExclusive = true;
             args.Verbs.Add(verb);
         }
 

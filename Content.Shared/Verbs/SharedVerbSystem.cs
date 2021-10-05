@@ -73,7 +73,7 @@ namespace Content.Shared.Verbs
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s)
         /// </summary>
-        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
@@ -109,41 +109,24 @@ namespace Content.Shared.Verbs
         }
 
         /// <summary>
-        ///     Execute actions associated with the given verb.
+        ///     Execute the provided verb.
         /// </summary>
         /// <remarks>
-        ///     This will try to call delegates and raise any events for the given verb.
+        ///     This will try to call the action delegates and raise the local events for the given verb.
         /// </remarks>
-        public bool TryExecuteVerb(Verb verb)
+        public void ExecuteVerb(Verb verb)
         {
-            var executed = false;
 
-            // Maybe run a delegate
-            if (verb.Act != null)
-            {
-                executed = true;
-                verb.Act.Invoke();
-            }
-            
+            verb.Act?.Invoke();
+
             // Maybe raise a local event
-            if (verb.LocalVerbEventArgs != null)
+            if (verb.ExecutionEventArgs != null)
             {
-                executed = true;
-                if (verb.LocalEventTarget.IsValid())
-                    RaiseLocalEvent(verb.LocalEventTarget, verb.LocalVerbEventArgs);
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
                 else
-                    RaiseLocalEvent(verb.LocalVerbEventArgs);
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
             }
-
-            // maybe raise a network event
-            if (verb.NetworkVerbEventArgs != null)
-            {
-                executed = true;
-                RaiseNetworkEvent(verb.NetworkVerbEventArgs);
-            }
-                
-            // return false if all of these were null
-            return executed;
         }
     }
 }

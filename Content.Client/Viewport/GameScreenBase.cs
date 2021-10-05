@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Content.Client.Clickable;
+using Content.Client.ContextMenu.UI;
 using Content.Client.Interactable;
 using Content.Client.Interactable.Components;
 using Content.Client.State;
 using Content.Shared;
 using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -38,6 +40,7 @@ namespace Content.Client.Viewport
         [Dependency] protected readonly IUserInterfaceManager UserInterfaceManager = default!;
         [Dependency] protected readonly IConfigurationManager ConfigurationManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private IEventBus _eventBus => _entityManager.EventBus;
 
@@ -62,6 +65,9 @@ namespace Content.Client.Viewport
             _outlineEnabled = message.Enabled;
         }
 
+        /// <summary>
+        ///     Highlight the currently hovered entity.
+        /// </summary>
         public override void FrameUpdate(FrameEventArgs e)
         {
             base.FrameUpdate(e);
@@ -82,6 +88,14 @@ namespace Content.Client.Viewport
                 {
                     renderScale = svp.CurrentRenderScale;
                 }
+            }
+            else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
+            {
+                entityToClick = element.Entity;
+
+                // BUG: This assumes that the main viewport is the viewport that the context menu is active on. This
+                // might be particularly important in the future with a more advanced mapping mode.
+                renderScale = _eyeManager.MainViewport.GetRenderScale();
             }
 
             var inRange = false;

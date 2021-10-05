@@ -1,9 +1,8 @@
-﻿using Content.Shared;
+using Content.Client.ContextMenu.UI;
 using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;
-using ContextMenuView = Content.Client.ContextMenu.UI.ContextMenuView;
 
 namespace Content.Client.Commands
 {
@@ -13,7 +12,7 @@ namespace Content.Client.Commands
 
         public string Description => "Sets the contextmenu-groupingtype.";
 
-        public string Help => ($"Usage: contextmenug <0:{ContextMenuView.GroupingTypesCount}>");
+        public string Help => $"Usage: contextmenug <0:{EntityMenuPresenter.GroupingTypesCount}>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -28,7 +27,7 @@ namespace Content.Client.Commands
                 return;
             }
 
-            if (id < 0 ||id > ContextMenuView.GroupingTypesCount - 1)
+            if (id < 0 ||id > EntityMenuPresenter.GroupingTypesCount - 1)
             {
                 shell.WriteLine($"{args[0]} is not a valid integer.");
                 return;
