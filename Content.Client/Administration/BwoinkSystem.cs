@@ -1,7 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using Content.Client.UserInterface;
+using Content.Client.Administration.UI;
 using Content.Shared.Administration;
 using JetBrains.Annotations;
 using Robust.Client.Player;

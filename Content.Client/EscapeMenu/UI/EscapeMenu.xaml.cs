@@ -38,7 +38,8 @@ namespace Content.Client.EscapeMenu.UI
         private void OnAHelpButtonClicked(BaseButton.ButtonEventArgs args)
         {
             _consoleHost.ExecuteCommand("openahelp");
-            Dispose();
+            // Doing Dispose() here causes issues because you can't un-dispose the escape menu.
+            // The other commands don't really suffer as much from it. Unsure if bug.
         }
 
         private void OnDisconnectButtonClicked(BaseButton.ButtonEventArgs args)
