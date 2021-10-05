@@ -52,7 +52,7 @@
   - type: ItemSlots
     slots:
       cabinetSlot:
-        item: "FireExtinguisher"
+        item: FireExtinguisher
         whitelist:
           components:
           - FireExtinguisher
