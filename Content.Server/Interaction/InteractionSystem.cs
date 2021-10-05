@@ -49,6 +49,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
 
         public override void Initialize()
         {
@@ -315,7 +316,7 @@ namespace Content.Server.Interaction
             if (!pulledObject.TryGetComponent(out PullableComponent? pull))
                 return false;
 
-            return pull.TogglePull(userEntity);
+            return _pullSystem.TogglePull(userEntity, pull);
         }
 
         /// <summary>

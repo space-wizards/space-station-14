@@ -16,20 +16,23 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
-    public abstract class SharedPullingSystem : EntitySystem
+    public abstract partial class SharedPullingSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
         private readonly Dictionary<IEntity, IEntity> _pullers =
             new();
 
-        private readonly HashSet<PullableComponent> _moving = new();
-        private readonly HashSet<PullableComponent> _stoppedMoving = new();
+        private readonly HashSet<SharedPullableComponent> _moving = new();
+        private readonly HashSet<SharedPullableComponent> _stoppedMoving = new();
 
         /// <summary>
         ///     If distance between puller and pulled entity lower that this threshold,
@@ -45,7 +48,7 @@ namespace Content.Shared.Pulling
         /// </summary>
         private const float ThresholdRotAngle = 30;
 
-        public IReadOnlySet<PullableComponent> Moving => _moving;
+        public IReadOnlySet<SharedPullableComponent> Moving => _moving;
 
         public override void Initialize()
         {
@@ -57,8 +60,8 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<MoveEvent>(PullerMoved);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleContainerInsert);
 
-            SubscribeLocalEvent<PullableComponent, PullStartedMessage>(PullableHandlePullStarted);
-            SubscribeLocalEvent<PullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
+            SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
+            SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
@@ -66,7 +69,7 @@ namespace Content.Shared.Pulling
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
-        private static void PullableHandlePullStarted(EntityUid uid, PullableComponent component, PullStartedMessage args)
+        private static void PullableHandlePullStarted(EntityUid uid, SharedPullableComponent component, PullStartedMessage args)
         {
             if (args.Pulled.Owner.Uid != uid)
                 return;
@@ -75,7 +78,7 @@ namespace Content.Shared.Pulling
                 alerts.ShowAlert(AlertType.Pulled);
         }
 
-        private static void PullableHandlePullStopped(EntityUid uid, PullableComponent component, PullStoppedMessage args)
+        private static void PullableHandlePullStopped(EntityUid uid, SharedPullableComponent component, PullStoppedMessage args)
         {
             if (args.Pulled.Owner.Uid != uid)
                 return;
@@ -101,12 +104,6 @@ namespace Content.Shared.Pulling
 
         private void OnPullStarted(PullStartedMessage message)
         {
-            if (_pullers.TryGetValue(message.Puller.Owner, out var pulled) &&
-                pulled.TryGetComponent(out PullableComponent? pulledComponent))
-            {
-                pulledComponent.TryStopPull();
-            }
-
             SetPuller(message.Puller.Owner, message.Pulled.Owner);
         }
 
@@ -115,12 +112,12 @@ namespace Content.Shared.Pulling
             RemovePuller(message.Puller.Owner);
         }
 
-        protected void OnPullableMove(EntityUid uid, PullableComponent component, PullableMoveMessage args)
+        protected void OnPullableMove(EntityUid uid, SharedPullableComponent component, PullableMoveMessage args)
         {
             _moving.Add(component);
         }
 
-        protected void OnPullableStopMove(EntityUid uid, PullableComponent component, PullableStopMovingMessage args)
+        protected void OnPullableStopMove(EntityUid uid, SharedPullableComponent component, PullableStopMovingMessage args)
         {
             _stoppedMoving.Add(component);
         }
@@ -128,7 +125,16 @@ namespace Content.Shared.Pulling
         private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
+
             if (!TryGetPulled(ev.Sender, out var pulled))
+            {
+                return;
+            }
+
+            // The pulled object may have already been deleted.
+            // TODO: Work out why. Monkey + meat spike is a good test for this,
+            //  assuming you're still pulling the monkey when it gets gibbed.
+            if (pulled.Deleted)
             {
                 return;
             }
@@ -142,30 +148,30 @@ namespace Content.Shared.Pulling
 
             physics.WakeBody();
 
-            if (pulled.TryGetComponent(out PullableComponent? pullable))
+            if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.MovingTo = null;
+                _pullSm.ForceSetMovingTo(pullable, null);
             }
         }
 
         // TODO: When Joint networking is less shitcodey fix this to use a dedicated joints message.
         private void HandleContainerInsert(EntInsertedIntoContainerMessage message)
         {
-            if (message.Entity.TryGetComponent(out PullableComponent? pullable))
+            if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.TryStopPull();
+                TryStopPull(pullable);
             }
 
             if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
             {
                 if (puller.Pulling == null) return;
 
-                if (!puller.Pulling.TryGetComponent(out PullableComponent? pulling))
+                if (!puller.Pulling.TryGetComponent(out SharedPullableComponent? pulling))
                 {
                     return;
                 }
 
-                pulling.TryStopPull();
+                TryStopPull(pulling);
             }
         }
 
@@ -183,12 +189,12 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            if (!pulled.TryGetComponent(out PullableComponent? pullable))
+            if (!pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
                 return false;
             }
 
-            pullable.TryMoveTo(coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords.ToMap(EntityManager));
 
             return false;
         }
@@ -221,7 +227,7 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
+            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)
@@ -237,13 +243,6 @@ namespace Content.Shared.Pulling
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
                     pulled.Transform.WorldRotation = newAngle;
             }
-        }
-
-        public bool CanPull(IEntity puller, IEntity pulled)
-        {
-            var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller.Uid, startPull);
-            return !startPull.Cancelled;
         }
     }
 }

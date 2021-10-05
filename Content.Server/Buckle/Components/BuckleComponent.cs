@@ -267,7 +267,7 @@ namespace Content.Server.Buckle.Components
             {
                 if (ownerPullable.Puller != null)
                 {
-                    ownerPullable.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(ownerPullable);
                 }
             }
 
@@ -276,7 +276,7 @@ namespace Content.Server.Buckle.Components
                 if (toPullable.Puller == Owner)
                 {
                     // can't pull it and buckle to it at the same time
-                    toPullable.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(toPullable);
                 }
             }
 

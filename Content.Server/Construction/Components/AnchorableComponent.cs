@@ -79,7 +79,7 @@ namespace Content.Server.Construction.Components
             {
                 if (pullableComponent.Puller != null)
                 {
-                    pullableComponent.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(pullableComponent);
                 }
             }
 
