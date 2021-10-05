@@ -5,14 +5,14 @@ namespace Content.Shared.Containers.ItemSlots
     /// <summary>
     ///     Item was placed in or removed from one of the slots in <see cref="SharedItemSlotsComponent"/> 
     /// </summary>
-    public class ItemSlotChanged : EntityEventArgs
+    public class ItemSlotChangedEvent : EntityEventArgs
     {
         public SharedItemSlotsComponent SlotsComponent;
         public string SlotName;
         public ItemSlot Slot;
         public readonly EntityUid? ContainedItem;
 
-        public ItemSlotChanged(SharedItemSlotsComponent slotsComponent, string slotName, ItemSlot slot)
+        public ItemSlotChangedEvent(SharedItemSlotsComponent slotsComponent, string slotName, ItemSlot slot)
         {
             SlotsComponent = slotsComponent;
             SlotName = slotName;

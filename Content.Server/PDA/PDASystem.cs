@@ -29,7 +29,7 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PDAComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<PDAComponent, ItemSlotChanged>(OnItemSlotChanged);
+            SubscribeLocalEvent<PDAComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
 
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
@@ -71,7 +71,7 @@ namespace Content.Server.PDA
             args.Handled = OpenUI(pda, args.User);
         }
 
-        private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChanged args)
+        private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChangedEvent args)
         {
             // check if ID slot changed
             if (args.SlotName == PDAComponent.IDSlot)
@@ -162,14 +162,12 @@ namespace Content.Server.PDA
 
                 case PDAEjectIDMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
-                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.IDSlot, msg.Session.AttachedEntity);
+                        _slotsSystem.TryEjectContent(pda.Owner.Uid, PDAComponent.IDSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
-                            _slotsSystem.TryEjectContent(itemSlots, PDAComponent.PenSlot, msg.Session.AttachedEntity);
+                        _slotsSystem.TryEjectContent(pda.Owner.Uid, PDAComponent.PenSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAShowUplinkMessage _:

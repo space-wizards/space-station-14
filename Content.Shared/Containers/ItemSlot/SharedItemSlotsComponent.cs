@@ -48,5 +48,7 @@ namespace Content.Shared.Containers.ItemSlots
         [ViewVariables] public string? StartingItem;
 
         [ViewVariables] public ContainerSlot ContainerSlot = default!;
+
+        public bool HasEntity => ContainerSlot.ContainedEntity != null;
     }
 }
