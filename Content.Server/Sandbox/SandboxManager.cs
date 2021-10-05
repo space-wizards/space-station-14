@@ -138,7 +138,7 @@ namespace Content.Server.Sandbox
                         if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
                         {
                             _entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
-                                TryInsertContent(itemSlots, newID, PDAComponent.IDSlot);
+                                TryInsertContent(itemSlots, newID, pda.IdSlot);
                         }
                     }
                     else

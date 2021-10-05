@@ -53,7 +53,7 @@ namespace Content.Server.PDA
                 // if pda prototype doesn't have slots, ID will drop down on ground 
                 var idCard = EntityManager.SpawnEntity(pda.StartingIdCard, pda.Owner.Transform.Coordinates);
                 if (EntityManager.TryGetComponent(uid, out SharedItemSlotsComponent? itemSlots))
-                    _slotsSystem.TryInsertContent(itemSlots, idCard, PDAComponent.IDSlot);
+                    _slotsSystem.TryInsertContent(itemSlots, idCard, pda.IdSlot);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Content.Server.PDA
         private void OnItemSlotChanged(EntityUid uid, PDAComponent pda, ItemSlotChangedEvent args)
         {
             // check if ID slot changed
-            if (args.SlotName == PDAComponent.IDSlot)
+            if (args.SlotName == pda.IdSlot)
             {
                 var item = args.ContainedItem;
                 if (item == null || !EntityManager.TryGetComponent(item.Value, out IdCardComponent ? idCard))
@@ -82,7 +82,7 @@ namespace Content.Server.PDA
                 else
                     pda.ContainedID = idCard;
             }
-            else if (args.SlotName == PDAComponent.PenSlot)
+            else if (args.SlotName == pda.PenSlot)
             {
                 var item = args.ContainedItem;
                 pda.PenInserted = item != null;
@@ -162,12 +162,12 @@ namespace Content.Server.PDA
 
                 case PDAEjectIDMessage _:
                     {
-                        _slotsSystem.TryEjectContent(pda.Owner.Uid, PDAComponent.IDSlot, msg.Session.AttachedEntity);
+                        _slotsSystem.TryEjectContent(pda.Owner.Uid, pda.IdSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAEjectPenMessage _:
                     {
-                        _slotsSystem.TryEjectContent(pda.Owner.Uid, PDAComponent.PenSlot, msg.Session.AttachedEntity);
+                        _slotsSystem.TryEjectContent(pda.Owner.Uid, pda.PenSlot, msg.Session.AttachedEntity);
                         break;
                     }
                 case PDAShowUplinkMessage _:
