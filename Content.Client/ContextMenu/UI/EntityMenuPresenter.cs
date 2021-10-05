@@ -8,6 +8,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
@@ -43,6 +44,7 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly VerbSystem _verbSystem;
 
@@ -160,10 +162,14 @@ namespace Content.Client.ContextMenu.UI
 
             var coords = args.Coordinates.ToMap(_entityManager);
 
-            if (!_verbSystem.TryGetContextEntities(player, coords, out var entities, ignoreVisibility: _verbSystem.CanSeeAllContext))
+            bool ignoreVisibility = _verbSystem.CanSeeAllContext || !_eyeManager.CurrentEye.DrawFov;
+
+            if (!_verbSystem.TryGetContextEntities(player, coords, out var entities, ignoreVisibility: ignoreVisibility))
                 return false;
 
-            // do we need to do visibility checks?
+            // do we need to do container visibility checks? Note that while ghosts do ignore FOV, they cannot see into
+            // containers or access entities without sprites. Unless they should be allowed to? In that case add a `||
+            // !_eyeManager.CurrentEye.DrawFov` here
             if (_verbSystem.CanSeeAllContext)
             {
                 OpenRootMenu(entities);
@@ -230,7 +236,17 @@ namespace Content.Client.ContextMenu.UI
 
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (entity.Deleted || !_verbSystem.CanSeeAllContext && !player.InRangeUnOccluded(entity))
+                if (entity.Deleted)
+                {
+                    RemoveEntity(entity);
+                    continue;
+                }
+
+                // Do we need to do in-range unOccluded checks?
+                if (_verbSystem.CanSeeAllContext || !_eyeManager.CurrentEye.DrawFov)
+                    continue;
+
+                if (!player.InRangeUnOccluded(entity))
                     RemoveEntity(entity);
             }
         }

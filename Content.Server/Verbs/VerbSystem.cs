@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -113,21 +114,23 @@ namespace Content.Server.Verbs
                 return;
             }
 
+            // Can the user see through walls?
+            var ignoreVisibility = SeeAllContextPlayers.Contains(player) ||
+               EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
+
             // Validate input (check that the user can see the entity)
             TryGetContextEntities(user,
                 target.Transform.MapPosition,
                 out var entities,
                 buffer: true,
-                ignoreVisibility: SeeAllContextPlayers.Contains(player));
+                ignoreVisibility: ignoreVisibility);
 
             VerbsResponseEvent response;
             if (entities != null && entities.Contains(target))
-            {
                 response = new(args.EntityUid, GetVerbs(target, user, args.Type));
-            }
             else
             {
-                // Don't leave the client hanging on "Waiting for server....", send empty response.
+                // The user should not be seeing this entity.
                 response = new(args.EntityUid, null);
             }
 
