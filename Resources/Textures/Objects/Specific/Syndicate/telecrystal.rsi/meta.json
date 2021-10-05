@@ -1,0 +1,22 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/f8f4aeda930fcd0805ca4cc76d9bc9412a5b3428",
+    "copyright": "CC-BY-SA-3.0",
+    "states": [
+        {
+            "name": "telecrystal"
+        },
+		{
+		  "name": "inhand-left",
+		  "directions": 4
+		},
+		{
+		  "name": "inhand-right",
+		  "directions": 4
+		}
+    ]
+}
