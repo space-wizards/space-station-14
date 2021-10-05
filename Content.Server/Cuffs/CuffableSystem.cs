@@ -36,14 +36,10 @@ namespace Content.Server.Cuffs
             if (!args.CanAccess || component.CuffedHandCount == 0)
                 return;
 
-            // if the user is not un-cuffing themselves, check that they can interact with the target.
-            // Otherwise, check CanMove() to see if they are still alive enough to weasel out of their cuffs.
-            if (args.User != args.Target)
-            {
-                if (!args.CanInteract)
-                    return;
-            }
-            else if (!_actionBlockerSystem.CanMove(uid))
+            // We only check can interact if the user is not uncuffing themselves. As a result, the verb will show up
+            // when the user is incapacitated & trying to uncuff themselves, but TryUncuff() will still fail when
+            // attempted.
+            if (args.User != args.Target && !args.CanInteract)
                 return;
 
             Verb verb = new();
@@ -69,6 +65,7 @@ namespace Content.Server.Cuffs
             // This is because the CanInteract blocking of the cuffs prevents self-uncuff.
             if (args.User == args.Target)
             {
+                // This UncuffAttemptEvent check should probably be In MobStateSystem, not here?
                 if (userEntity.TryGetComponent<IMobStateComponent>(out var state))
                 {
                     // Manually check this.
@@ -80,6 +77,7 @@ namespace Content.Server.Cuffs
                 else
                 {
                     // Uh... let it go through???
+                    // TODO CUFFABLE/STUN add UncuffAttemptEvent subscription to StunSystem
                 }
             }
             else
