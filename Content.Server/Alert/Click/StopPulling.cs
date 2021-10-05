@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;

@@ -1,10 +1,12 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -12,6 +14,8 @@ namespace Content.Shared.Containers.ItemSlots
 {
     public class SharedItemSlotsSystem : EntitySystem
     {
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -19,6 +23,9 @@ namespace Content.Shared.Containers.ItemSlots
             SubscribeLocalEvent<SharedItemSlotsComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<SharedItemSlotsComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<SharedItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
+
+            SubscribeLocalEvent<SharedItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
+            SubscribeLocalEvent<SharedItemSlotsComponent, GetInteractionVerbsEvent>(AddInsertVerbs);
         }
 
         private void OnComponentInit(EntityUid uid, SharedItemSlotsComponent itemSlots, ComponentInit args)
@@ -55,6 +62,53 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
+        private void AddEjectVerbs(EntityUid uid, SharedItemSlotsComponent component, GetAlternativeVerbsEvent args)
+        {
+            if (args.Hands == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                !_actionBlockerSystem.CanPickup(args.User))
+                return;
+
+            foreach (var (slotName, slot) in component.Slots)
+            {
+                if (slot.ContainerSlot.ContainedEntity == null)
+                    continue;
+
+                Verb verb = new();
+                // TODO ITEMSLOTS give item slot names localization strings?
+                // Basically: its much nicer to have "insert ID" instead of the much longer "Eject <full-in-game-username>'s ID card (assistant)"
+                verb.Text = slot.ContainerSlot.ContainedEntity.Name;
+                verb.Category = VerbCategory.Eject;
+                verb.Act = () => TryEjectContent(component, slotName, args.User);
+
+                args.Verbs.Add(verb);
+            }
+        }
+
+        private void AddInsertVerbs(EntityUid uid, SharedItemSlotsComponent component, GetInteractionVerbsEvent args)
+        {
+            if (args.Using == null ||
+                !args.CanAccess ||
+                !args.CanInteract ||
+                !_actionBlockerSystem.CanDrop(args.User))
+                return;
+
+            foreach (var (slotName, slot) in component.Slots)
+            {
+                if (!CanInsertContent(args.Using, slot))
+                    continue;
+
+                Verb verb = new();
+                // TODO ITEMSLOTS give item slot names localization strings?
+                // Basically: its much nicer to have "insert ID" instead of the much longer "Insert <full-in-game-username>'s ID card (assistant)"
+                verb.Text = args.Using.Name;
+                verb.Category = VerbCategory.Insert;
+                verb.Act = () => InsertContent(component, slot, slotName, args.Using);
+                args.Verbs.Add(verb);
+            }
+        }
+
         private void OnInteractUsing(EntityUid uid, SharedItemSlotsComponent itemSlots, InteractUsingEvent args)
         {
             if (args.Handled)
@@ -64,29 +118,26 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
-        ///     Tries to insert item in any fitting item slot from users hand
+        ///     Tries to insert or swap an item in any fitting item slot from users hand. If a valid slot already contains an item, it will swap it out.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertContent(SharedItemSlotsComponent itemSlots, IEntity item, IEntity user)
+        public bool TryInsertContent(SharedItemSlotsComponent itemSlots, IEntity item, IEntity user, SharedHandsComponent? hands = null)
         {
-            foreach (var pair in itemSlots.Slots)
+            if (!Resolve(user.Uid, ref hands))
             {
-                var slotName = pair.Key;
-                var slot = pair.Value;
+                itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
+                return false;
+            }
 
+            foreach (var (slotName, slot) in itemSlots.Slots)
+            {
                 // check if item allowed in whitelist
                 if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
                     continue;
 
-                // check if slot is empty
+                // check if slot does not contain the item currently being inserted???
                 if (slot.ContainerSlot.Contains(item))
                     continue;
-
-                if (!user.TryGetComponent(out SharedHandsComponent? hands))
-                {
-                    itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
-                    return true;
-                }
 
                 // get item inside container
                 IEntity? swap = null;
@@ -101,18 +152,38 @@ namespace Content.Shared.Containers.ItemSlots
                 if (swap != null)
                     hands.TryPutInAnyHand(swap);
 
-                // insert item
-                slot.ContainerSlot.Insert(item);
-                RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
-
-                // play sound
-                if (slot.InsertSound != null)
-                    SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.InsertSound.GetSound(), itemSlots.Owner);
+                InsertContent(itemSlots, slot, slotName, item);
 
                 return true;
             }
 
             return false;
+        }
+
+        public void InsertContent(SharedItemSlotsComponent itemSlots, ItemSlot slot, string slotName, IEntity item)
+        {
+            // insert item
+            slot.ContainerSlot.Insert(item);
+            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+
+            // play sound
+            if (slot.InsertSound != null)
+                SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.InsertSound.GetSound(), itemSlots.Owner);
+        }
+
+        /// <summary>
+        ///     Can a given item be inserted into a slot, without ejecting the current item in that slot.
+        /// </summary>
+        public bool CanInsertContent(IEntity item, ItemSlot slot)
+        {
+            if (slot.ContainerSlot.ContainedEntity != null)
+                return false;
+
+            // check if item allowed in whitelist
+            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
+                return false;
+
+            return true;
         }
 
         /// <summary>
@@ -124,15 +195,10 @@ namespace Content.Shared.Containers.ItemSlots
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return false;
 
-            if (slot.ContainerSlot.ContainedEntity != null)
+            if (!CanInsertContent(item, slot))
                 return false;
 
-            // check if item allowed in whitelist
-            if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
-                return false;
-
-            slot.ContainerSlot.Insert(item);
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+            InsertContent(itemSlots, slot, slotName, item);
             return true;
         }
 

@@ -1,11 +1,7 @@
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -50,52 +46,5 @@ namespace Content.Server.Cabinet
         [ViewVariables]
         [DataField("opened")]
         public bool Opened { get; set; } = false;
-
-        [Verb]
-        public sealed class EjectItemFromCabinetVerb : Verb<ItemCabinetComponent>
-        {
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
-            {
-                if (component.ItemContainer.ContainedEntity == null || !component.Opened || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    data.Visibility = VerbVisibility.Invisible;
-                else
-                {
-                    data.Text = Loc.GetString("comp-item-cabinet-eject-verb-text");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                    data.Visibility = VerbVisibility.Visible;
-                }
-            }
-
-            protected override void Activate(IEntity user, ItemCabinetComponent component)
-            {
-                component.Owner.EntityManager.EventBus.RaiseLocalEvent(component.Owner.Uid, new TryEjectItemCabinetEvent(user), false);
-            }
-        }
-
-        [Verb]
-        public sealed class ToggleItemCabinetVerb : Verb<ItemCabinetComponent>
-        {
-            // Unlike lockers, you cannot open/close cabinets by clicking on them, as this usually removes their item
-            // instead. So open/close is the alt-interact verb
-
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    data.Visibility = VerbVisibility.Invisible;
-                else
-                {
-                    data.Text = Loc.GetString(component.Opened ? "comp-item-cabinet-close-verb-text" : "comp-item-cabinet-open-verb-text");
-                    data.IconTexture = component.Opened ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-                    data.Visibility = VerbVisibility.Visible;
-                }
-            }
-
-            protected override void Activate(IEntity user, ItemCabinetComponent component)
-            {
-                component.Owner.EntityManager.EventBus.RaiseLocalEvent(component.Owner.Uid, new ToggleItemCabinetEvent(), false);
-            }
-        }
     }
 }

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Hands;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;

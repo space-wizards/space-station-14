@@ -76,7 +76,7 @@ namespace Content.Server.Storage.Components
         private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
 
         [ViewVariables]
-        protected Container Contents = default!;
+        public Container Contents = default!;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -156,13 +156,6 @@ namespace Content.Server.Storage.Components
 
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
-            // HACK until EntityStorageComponent gets refactored to the new ECS system
-            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
-            {
-                // Do nothing, LockSystem is responsible for handling this case
-                return;
-            }
-
             ToggleOpen(eventArgs.User);
         }
 
@@ -173,6 +166,13 @@ namespace Content.Server.Storage.Components
                 if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
+
+            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            {
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-locked-message"));
+                return false;
+            }
+
             return true;
         }
 
@@ -181,7 +181,7 @@ namespace Content.Server.Storage.Components
             return true;
         }
 
-        private void ToggleOpen(IEntity user)
+        public void ToggleOpen(IEntity user)
         {
             if (Open)
             {
@@ -420,48 +420,6 @@ namespace Content.Server.Storage.Components
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
             return entityLookup.GetEntitiesIntersecting(Owner);
-        }
-
-        [Verb]
-        private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                component.OpenVerbGetData(user, component, data);
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, EntityStorageComponent component)
-            {
-                component.ToggleOpen(user);
-            }
-        }
-
-        protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                return;
-            }
-
-            if (IsWeldedShut)
-            {
-                data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message", ("verb", verb));
-                return;
-            }
-
-            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

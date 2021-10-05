@@ -4,6 +4,7 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Storage;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -26,6 +27,7 @@ namespace Content.Server.Lock
             SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
             SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<LockComponent, GetAlternativeVerbsEvent>(AddToggleLockVerb);
         }
 
         private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -38,14 +40,17 @@ namespace Content.Server.Lock
 
         private void OnActivated(EntityUid uid, LockComponent lockComp, ActivateInWorldEvent args)
         {
+            if (args.Handled)
+                return;
+
             // Only attempt an unlock by default on Activate
             if (lockComp.Locked)
             {
-                DoUnlock(uid, args.User, lockComp);
+                args.Handled = TryUnlock(uid, args.User, lockComp);
             }
             else if (lockComp.LockOnClick)
             {
-                DoLock(uid, args.User, lockComp);
+                args.Handled = TryLock(uid, args.User, lockComp);
             }
         }
 
@@ -57,16 +62,20 @@ namespace Content.Server.Lock
                 ("entityName", lockComp.Owner.Name)));
         }
 
-        public bool DoLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryLock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-
-            if (!HasUserAccess(uid, user))
+            
+            if (!CanToggleLock(uid, user, quiet: false))
+                return false;
+            
+            if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
             lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-lock-success", ("entityName",lockComp.Owner.Name)));
             lockComp.Locked = true;
+            
             if(lockComp.LockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.LockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
@@ -82,16 +91,20 @@ namespace Content.Server.Lock
             return true;
         }
 
-        public bool DoUnlock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
+        public bool TryUnlock(EntityUid uid, IEntity user, LockComponent? lockComp = null)
         {
             if (!Resolve(uid, ref lockComp))
                 return false;
-
-            if (!HasUserAccess(uid, user))
+            
+            if (!CanToggleLock(uid, user, quiet: false))
+                return false;
+            
+            if (!HasUserAccess(uid, user, quiet: false))
                 return false;
 
             lockComp.Owner.PopupMessage(user, Loc.GetString("lock-comp-do-unlock-success", ("entityName", lockComp.Owner.Name)));
             lockComp.Locked = false;
+            
             if(lockComp.UnlockSound != null)
             {
                 SoundSystem.Play(Filter.Pvs(lockComp.Owner), lockComp.UnlockSound.GetSound(), lockComp.Owner, AudioParams.Default.WithVolume(-5));
@@ -104,11 +117,26 @@ namespace Content.Server.Lock
 
             RaiseLocalEvent(lockComp.Owner.Uid, new LockToggledEvent(false));
 
-            // To stop EntityStorageComponent from opening right after the container gets unlocked
             return true;
         }
 
-        private bool HasUserAccess(EntityUid uid, IEntity user, AccessReader? reader = null)
+        public bool CanToggleLock(EntityUid uid, IEntity user, EntityStorageComponent? storage = null, bool quiet = true)
+        {
+            if (!Resolve(uid, ref storage))
+                return true;
+
+            // Cannot lock if the entity is currently opened.
+            if (storage.Open)
+                return false;
+
+            // Cannot (un)lock from the inside. Maybe a bad idea? Security jocks could trap nerds in lockers?
+            if (storage.Contents.Contains(user))
+                return false;
+
+            return true;
+        }
+
+        private bool HasUserAccess(EntityUid uid, IEntity user, AccessReader? reader = null, bool quiet = true)
         {
             // Not having an AccessComponent means you get free access. woo!
             if (!Resolve(uid, ref reader))
@@ -116,12 +144,26 @@ namespace Content.Server.Lock
 
             if (!reader.IsAllowed(user))
             {
-                reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
+                if (!quiet)
+                    reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));
                 return false;
             }
 
-
             return true;
+        }
+
+        private void AddToggleLockVerb(EntityUid uid, LockComponent component, GetAlternativeVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract || !CanToggleLock(uid, args.User))
+                return;
+
+            Verb verb = new();
+            verb.Act = component.Locked ?
+                () => TryUnlock(uid, args.User, component) :
+                () => TryLock(uid, args.User, component);
+            verb.Text = Loc.GetString(component.Locked ? "toggle-lock-verb-unlock" : "toggle-lock-verb-lock");
+            // TODO VERB ICONS need padlock open/close icons.
+            args.Verbs.Add(verb);
         }
     }
 }

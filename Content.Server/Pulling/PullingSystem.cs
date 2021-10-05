@@ -17,8 +17,8 @@ namespace Content.Server.Pulling
 
             UpdatesAfter.Add(typeof(PhysicsSystem));
 
-            SubscribeLocalEvent<PullableComponent, PullableMoveMessage>(OnPullableMove);
-            SubscribeLocalEvent<PullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
+            SubscribeLocalEvent<SharedPullableComponent, PullableMoveMessage>(OnPullableMove);
+            SubscribeLocalEvent<SharedPullableComponent, PullableStopMovingMessage>(OnPullableStopMove);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ReleasePulledObject, InputCmdHandler.FromDelegate(HandleReleasePulledObject))
