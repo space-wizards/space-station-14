@@ -57,7 +57,7 @@ namespace Content.Shared.Containers.ItemSlots
                     var item = EntityManager.SpawnEntity(slot.StartingItem, itemSlots.Owner.Transform.Coordinates);
                     slot.ContainerSlot.Insert(item);
 
-                    RaiseLocalEvent(uid, new ItemSlotChanged(itemSlots, slotName, slot));
+                    RaiseLocalEvent(uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
                 }
             }
         }
@@ -76,11 +76,9 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 Verb verb = new();
-                // TODO ITEMSLOTS give item slot names localization strings?
-                // Basically: its much nicer to have "insert ID" instead of the much longer "Eject <full-in-game-username>'s ID card (assistant)"
-                verb.Text = slot.ContainerSlot.ContainedEntity.Name;
+                verb.Text = slot.Name;
                 verb.Category = VerbCategory.Eject;
-                verb.Act = () => TryEjectContent(component, slotName, args.User);
+                verb.Act = () => TryEjectContent(uid, slotName, args.User, component);
 
                 args.Verbs.Add(verb);
             }
@@ -100,9 +98,7 @@ namespace Content.Shared.Containers.ItemSlots
                     continue;
 
                 Verb verb = new();
-                // TODO ITEMSLOTS give item slot names localization strings?
-                // Basically: its much nicer to have "insert ID" instead of the much longer "Insert <full-in-game-username>'s ID card (assistant)"
-                verb.Text = args.Using.Name;
+                verb.Text = slot.Name != string.Empty ? slot.Name : args.Using.Name;
                 verb.Category = VerbCategory.Insert;
                 verb.Act = () => InsertContent(component, slot, slotName, args.Using);
                 args.Verbs.Add(verb);
@@ -114,15 +110,18 @@ namespace Content.Shared.Containers.ItemSlots
             if (args.Handled)
                 return;
 
-            args.Handled = TryInsertContent(itemSlots, args.Used, args.User);
+            args.Handled = TryInsertContent(uid, args.Used, args.User, itemSlots);
         }
 
         /// <summary>
         ///     Tries to insert or swap an item in any fitting item slot from users hand. If a valid slot already contains an item, it will swap it out.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsertContent(SharedItemSlotsComponent itemSlots, IEntity item, IEntity user, SharedHandsComponent? hands = null)
+        public bool TryInsertContent(EntityUid uid, IEntity item, IEntity user, SharedItemSlotsComponent? itemSlots = null, SharedHandsComponent? hands = null)
         {
+            if (!Resolve(uid, ref itemSlots))
+                return false;
+
             if (!Resolve(user.Uid, ref hands))
             {
                 itemSlots.Owner.PopupMessage(user, Loc.GetString("item-slots-try-insert-no-hands"));
@@ -164,7 +163,7 @@ namespace Content.Shared.Containers.ItemSlots
         {
             // insert item
             slot.ContainerSlot.Insert(item);
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
 
             // play sound
             if (slot.InsertSound != null)
@@ -218,8 +217,11 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Try to eject item from slot to users hands
         /// </summary>
-        public bool TryEjectContent(SharedItemSlotsComponent itemSlots, string slotName, IEntity? user)
+        public bool TryEjectContent(EntityUid uid, string slotName, IEntity? user, SharedItemSlotsComponent? itemSlots = null)
         {
+            if (!Resolve(uid, ref itemSlots))
+                return false;
+
             if (!itemSlots.Slots.TryGetValue(slotName, out var slot))
                 return false;
 
@@ -246,7 +248,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(itemSlots.Owner), slot.EjectSound.GetSound(), itemSlots.Owner);
 
-            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChanged(itemSlots, slotName, slot));
+            RaiseLocalEvent(itemSlots.Owner.Uid, new ItemSlotChangedEvent(itemSlots, slotName, slot));
             return true;
         }
     }
