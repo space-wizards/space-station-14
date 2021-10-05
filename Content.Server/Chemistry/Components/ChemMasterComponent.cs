@@ -14,7 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -38,10 +37,10 @@ namespace Content.Server.Chemistry.Components
     public class ChemMasterComponent : SharedChemMasterComponent, IActivate, IInteractUsing
     {
         [ViewVariables]
-        private ContainerSlot _beakerContainer = default!;
+        public ContainerSlot BeakerContainer = default!;
 
         [ViewVariables]
-        private bool HasBeaker => _beakerContainer.ContainedEntity != null;
+        public bool HasBeaker => BeakerContainer.ContainedEntity != null;
 
         [ViewVariables]
         private bool _bufferModeTransfer = true;
@@ -74,7 +73,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _beakerContainer =
+            BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
@@ -177,7 +176,7 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedChemMasterComponent.ChemMasterBoundUserInterfaceState"/></returns>
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
             EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution);
             // TODO this is just a guess
             if (beaker == null || beakerSolution == null)
@@ -204,17 +203,17 @@ namespace Content.Server.Chemistry.Components
         /// If this component contains an entity with a <see cref="Solution"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto chem master if both hands are full.
         /// </summary>
-        private void TryEject(IEntity user)
+        public void TryEject(IEntity user)
         {
             if (!HasBeaker)
                 return;
 
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
 
             if (beaker is null)
                 return;
 
-            _beakerContainer.Remove(beaker);
+            BeakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if (!user.TryGetComponent<HandsComponent>(out var hands) ||
@@ -227,7 +226,7 @@ namespace Content.Server.Chemistry.Components
         private void TransferReagent(string id, ReagentUnit amount, bool isBuffer)
         {
             if (!HasBeaker && _bufferModeTransfer) return;
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
 
             if (beaker is null)
                 return;
@@ -428,7 +427,7 @@ namespace Content.Server.Chemistry.Components
                 }
                 else
                 {
-                    _beakerContainer.Insert(activeHandEntity);
+                    BeakerContainer.Insert(activeHandEntity);
                     UpdateUserInterface();
                 }
             }
@@ -444,30 +443,6 @@ namespace Content.Server.Chemistry.Components
         private void ClickSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        [Verb]
-        public sealed class EjectBeakerVerb : Verb<ChemMasterComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ChemMasterComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
-                data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, ChemMasterComponent component)
-            {
-                component.TryEject(user);
-            }
         }
     }
 }

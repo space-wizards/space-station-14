@@ -11,10 +11,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -119,7 +116,7 @@ namespace Content.Server.Configurable
             UserInterface?.SetState(new ConfigurationBoundUserInterfaceState(_config));
         }
 
-        private void OpenUserInterface(ActorComponent actor)
+        public void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
             UserInterface?.Open(actor.PlayerSession);
@@ -130,32 +127,6 @@ namespace Content.Server.Configurable
             for (var index = 0; index < list.Count; index++)
             {
                 configuration.Add(list[index], value);
-            }
-        }
-
-        [Verb]
-        public sealed class ConfigureVerb : Verb<ConfigurationComponent>
-        {
-            protected override void GetData(IEntity user, ConfigurationComponent component, VerbData data)
-            {
-                var session = user.PlayerSession();
-                var groupController = IoCManager.Resolve<IConGroupController>();
-                if (session == null || !groupController.CanAdminMenu(session))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("configure-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, ConfigurationComponent component)
-            {
-                if (user.TryGetComponent(out ActorComponent? actor))
-                {
-                    component.OpenUserInterface(actor);
-                }
             }
         }
     }

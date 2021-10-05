@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction;
 using Content.Server.Storage.Components;
+using Content.Shared.Verbs;
 using Content.Shared.Movement;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Timing;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Storage.EntitySystems
 {
@@ -26,6 +29,9 @@ namespace Content.Server.Storage.EntitySystems
 
             SubscribeLocalEvent<EntRemovedFromContainerMessage>(HandleEntityRemovedFromContainer);
             SubscribeLocalEvent<EntInsertedIntoContainerMessage>(HandleEntityInsertedIntoContainer);
+
+            SubscribeLocalEvent<EntityStorageComponent, GetInteractionVerbsEvent>(AddToggleOpenVerb);
+            SubscribeLocalEvent<ServerStorageComponent, GetActivationVerbsEvent>(AddOpenUiVerb);
             SubscribeLocalEvent<EntityStorageComponent, RelayMovementEntityEvent>(OnRelayMovement);
         }
 
@@ -51,6 +57,60 @@ namespace Content.Server.Storage.EntitySystems
             {
                 CheckSubscribedEntities(component);
             }
+        }
+
+        private void AddToggleOpenVerb(EntityUid uid, EntityStorageComponent component, GetInteractionVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (!component.CanOpen(args.User, silent: true))
+                return;
+
+            Verb verb = new();
+            if (component.Open)
+            {
+                verb.Text = Loc.GetString("verb-categories-close");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            }
+            else
+            {
+                verb.Text = Loc.GetString("verb-categories-open");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            }
+            verb.Act = () => component.ToggleOpen(args.User);
+            args.Verbs.Add(verb);
+        }
+
+        private void AddOpenUiVerb(EntityUid uid, ServerStorageComponent component, GetActivationVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComponent) && lockComponent.Locked)
+                return;
+
+            // Get the session for the user
+            var session = args.User.GetComponentOrNull<ActorComponent>()?.PlayerSession;
+            if (session == null)
+                return;
+
+            // Does this player currently have the storage UI open?
+            var uiOpen = component.SubscribedSessions.Contains(session);
+
+            Verb verb = new();
+            verb.Act = () => component.OpenStorageUI(args.User);
+            if (uiOpen)
+            {
+                verb.Text = Loc.GetString("verb-categories-close");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
+            }
+            else
+            {
+                verb.Text = Loc.GetString("verb-categories-open");
+                verb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            }
+            args.Verbs.Add(verb);
         }
 
         private static void HandleEntityRemovedFromContainer(EntRemovedFromContainerMessage message)

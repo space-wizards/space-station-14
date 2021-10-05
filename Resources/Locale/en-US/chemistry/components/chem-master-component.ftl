@@ -29,6 +29,3 @@ chem-master-window-create-pill-button = Create
 chem-master-window-create-bottle-button = Create
 cham-master-window-bottles-label = Bottles:
 chem-master-window-unknown-reagent-text = Unknown reagent
-
-## Eject beaker verb
-eject-beaker-verb-get-data-text = Eject Beaker

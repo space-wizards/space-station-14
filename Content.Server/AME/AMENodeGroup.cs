@@ -102,7 +102,7 @@ namespace Content.Server.AME
             }
         }
 
-        public int InjectFuel(int fuel, out bool overloading)
+        public float InjectFuel(int fuel, out bool overloading)
         {
             overloading = false;
             if(fuel > 0 && CoreCount > 0)
@@ -137,7 +137,8 @@ namespace Content.Server.AME
                     }
                 }
                 // Note the float conversions. The maths will completely fail if not done using floats.
-                return (int) ((((float) fuel) / CoreCount) * fuel * 20000);
+                // Oh, and don't ever stuff the result of this in an int. Seriously.
+                return (((float) fuel) / CoreCount) * fuel * 20000;
             }
             return 0;
         }

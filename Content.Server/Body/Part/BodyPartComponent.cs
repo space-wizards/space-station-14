@@ -218,54 +218,5 @@ namespace Content.Server.Body.Part
                     break;
             }
         }
-
-        [Verb]
-        public class AttachBodyPartVerb : Verb<BodyPartComponent>
-        {
-            protected override void GetData(IEntity user, BodyPartComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-
-                if (user == component.Owner)
-                {
-                    return;
-                }
-
-                if (!user.TryGetComponent(out ActorComponent? actor))
-                {
-                    return;
-                }
-
-                var groupController = IoCManager.Resolve<IConGroupController>();
-
-                if (!groupController.CanCommand(actor.PlayerSession, "attachbodypart"))
-                {
-                    return;
-                }
-
-                if (!user.TryGetComponent(out SharedBodyComponent? body))
-                {
-                    return;
-                }
-
-                if (body.HasPart(component))
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("attach-bodypart-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, BodyPartComponent component)
-            {
-                if (!user.TryGetComponent(out SharedBodyComponent? body))
-                {
-                    return;
-                }
-
-                body.SetPart($"{nameof(AttachBodyPartVerb)}-{component.Owner.Uid}", component);
-            }
-        }
     }
 }

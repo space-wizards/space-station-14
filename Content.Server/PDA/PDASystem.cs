@@ -1,5 +1,4 @@
 using Content.Server.Access.Components;
-using Content.Shared.Containers.ItemSlots;
 using Content.Server.Light.Components;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
@@ -7,6 +6,7 @@ using Content.Server.Traitor.Uplink;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.Traitor.Uplink.Systems;
 using Content.Server.UserInterface;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
@@ -24,6 +24,7 @@ namespace Content.Server.PDA
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PDAComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);

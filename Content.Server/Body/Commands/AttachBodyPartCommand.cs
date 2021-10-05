@@ -99,7 +99,7 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            body.SetPart($"{nameof(AttachBodyPartVerb)}-{partEntity.Uid}", part);
+            body.SetPart($"AttachBodyPartVerb-{partEntity.Uid}", part);
         }
     }
 }
