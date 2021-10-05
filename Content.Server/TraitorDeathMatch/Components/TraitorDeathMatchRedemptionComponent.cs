@@ -111,7 +111,7 @@ namespace Content.Server.TraitorDeathMatch.Components
             // 4 is the per-PDA bonus amount.
             var transferAmount = victimAccount.Balance + 4;
             _accounts.SetBalance(victimAccount, 0);
-            _accounts.SetBalance(userAccount, transferAmount);
+            _accounts.AddToBalance(userAccount, transferAmount);
 
             victimUplink.Owner.Delete();
 
