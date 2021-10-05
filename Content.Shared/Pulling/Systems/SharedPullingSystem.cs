@@ -17,6 +17,8 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
 using Robust.Shared.IoC;
+using Content.Shared.Verbs;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Pulling
 {
@@ -63,9 +65,37 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
 
+            SubscribeLocalEvent<SharedPullableComponent, GetOtherVerbsEvent>(AddPullVerbs);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetOtherVerbsEvent args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+                return;
+
+            // Are they trying to pull themselves up by their bootstraps?
+            if (args.User == args.Target)
+                return;
+
+            //TODO VERB ICONS add pulling icon
+            if (component.Puller == args.User)
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
+                verb.Act = () => TryStopPull(component, args.User);
+                args.Verbs.Add(verb);
+            }
+            else if (CanPull(args.User, args.Target))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pulling-verb-get-data-text");
+                verb.Act = () => TryStartPull(args.User, args.Target);
+                args.Verbs.Add(verb);
+            }
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
@@ -227,7 +257,7 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
+            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)

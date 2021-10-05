@@ -16,7 +16,8 @@ namespace Content.Shared.Pulling.Components
     // Before you try to add another type than SharedPullingStateManagementSystem, consider the can of worms you may be opening!
     [NetworkedComponent()]
     [Friend(typeof(SharedPullingStateManagementSystem))]
-    public abstract class SharedPullableComponent : Component
+    [RegisterComponent]
+    public class SharedPullableComponent : Component
     {
         public override string Name => "Pullable";
 

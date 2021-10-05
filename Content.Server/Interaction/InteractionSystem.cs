@@ -6,6 +6,7 @@ using Content.Server.Buckle.Components;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Pulling;
 using Content.Server.Timing;
 using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
@@ -313,7 +314,7 @@ namespace Content.Server.Interaction
             if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
-            if (!pulledObject.TryGetComponent(out PullableComponent? pull))
+            if (!pulledObject.TryGetComponent(out SharedPullableComponent? pull))
                 return false;
 
             return _pullSystem.TogglePull(userEntity, pull);

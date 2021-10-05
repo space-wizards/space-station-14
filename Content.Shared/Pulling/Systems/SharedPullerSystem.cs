@@ -30,7 +30,7 @@ namespace Content.Shared.Pulling.Systems
 
             if (component.Pulling == EntityManager.GetEntity(args.BlockingEntity))
             {
-                if (EntityManager.TryGetComponent<PullableComponent>(args.BlockingEntity, out var comp))
+                if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
                     _pullSystem.TryStopPull(comp, EntityManager.GetEntity(uid));
                 }

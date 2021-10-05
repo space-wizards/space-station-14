@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Alert;
 using Content.Server.Hands.Components;
+using Content.Server.Pulling;
 using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
@@ -9,6 +10,7 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
@@ -263,7 +265,7 @@ namespace Content.Server.Buckle.Components
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
+            if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
             {
                 if (ownerPullable.Puller != null)
                 {
@@ -271,7 +273,7 @@ namespace Content.Server.Buckle.Components
                 }
             }
 
-            if (to.TryGetComponent(out PullableComponent? toPullable))
+            if (to.TryGetComponent(out SharedPullableComponent? toPullable))
             {
                 if (toPullable.Puller == Owner)
                 {

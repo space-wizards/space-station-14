@@ -1,4 +1,4 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
@@ -18,7 +18,7 @@ namespace Content.Server.Alert.Click
         {
             var ps = EntitySystem.Get<SharedPullingSystem>();
             var playerTargetPullable = ps.GetPulled(args.Player)?
-                .GetComponentOrNull<PullableComponent>();
+                .GetComponentOrNull<SharedPullableComponent>();
             if (playerTargetPullable != null)
             {
                 ps.TryStopPull(playerTargetPullable);
