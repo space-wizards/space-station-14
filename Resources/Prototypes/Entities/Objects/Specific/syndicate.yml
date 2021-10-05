@@ -15,6 +15,7 @@
     count: 20
     max: 20
     stackType: Telecrystal
+  - type: Telecrystal
 
 - type: entity
   parent: Telecrystal
@@ -32,7 +33,7 @@
   - type: Stack
     count: 5
 
-- type: entitya
+- type: entity
   parent: Telecrystal
   id: Telecrystal10
   suffix: Ten
