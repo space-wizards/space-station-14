@@ -2307,3 +2307,8 @@ Entries:
   - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
   id: 411
   time: '2021-10-06T13:13:56.224775+00:00'
+- author: 20kdc
+  changes:
+  - {message: '''AHelp'' next to the options menu.', type: Add}
+  id: 412
+  time: '2021-10-06T15:25:28.0000000+00:00'
