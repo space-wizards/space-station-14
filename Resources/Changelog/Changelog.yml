@@ -2284,3 +2284,13 @@ Entries:
   - {message: unbreak pulling prediction, type: Fix}
   id: 407
   time: '2021-10-05T21:51:34.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
+  id: 408
+  time: '2021-10-06T09:58:02.819938+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix ghosts having empty names under certain conditions., type: Fix}
+  id: 409
+  time: '2021-10-06T09:58:02.820744+00:00'
