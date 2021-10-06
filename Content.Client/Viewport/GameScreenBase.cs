@@ -77,6 +77,13 @@ namespace Content.Client.Viewport
             if (localPlayer == null)
                 return;
 
+            // TODO InteractionOutlineComponent
+            // BUG: The logic that gets the renderScale here assumes that the entity is only visible in a single
+            // viewport. The entity will be highlighted in ALL viewport where it is visible, regardless of which
+            // viewport is being used to hover over it. If these Viewports have very different render scales, this may
+            // lead to extremely thick outlines in the other viewports. Fixing this probably requires changing how the
+            // hover outline works, so that it only highlights the entity in a single viewport.
+
             IEntity? entityToClick = null;
             var renderScale = 1;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp)
@@ -92,9 +99,10 @@ namespace Content.Client.Viewport
             else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
             {
                 entityToClick = element.Entity;
-
-                // BUG: This assumes that the main viewport is the viewport that the context menu is active on. This
-                // might be particularly important in the future with a more advanced mapping mode.
+                // TODO InteractionOutlineComponent
+                // Currently we just take the renderscale from the main viewport. In the future, when the bug mentioned
+                // above is fixed, the viewport should probably be the one that was clicked on to open the entity menu
+                // in the first place.
                 renderScale = _eyeManager.MainViewport.GetRenderScale();
             }
 
