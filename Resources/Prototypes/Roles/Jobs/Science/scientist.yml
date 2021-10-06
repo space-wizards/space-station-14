@@ -7,6 +7,7 @@
   departments:
   - Science
   icon: "Scientist"
+  supervisors: "the research director"
   access:
   - Research
   - Maintenance
