@@ -28,13 +28,13 @@ namespace Content.Server.Administration
 
             // TODO: Sanitize text?
             // Confirm that this person is actually allowed to send a message here.
-            if ((eventArgs.SenderSession.UserId != message.ChannelId) && (_adminManager.GetAdminData(senderSession) == null))
+            if ((senderSession.UserId != message.ChannelId) && (_adminManager.GetAdminData(senderSession) == null))
             {
                 // Unauthorized bwoink (log?)
                 return;
             }
 
-            var msg = new BwoinkTextMessage(message.ChannelId, $"{eventArgs.SenderSession.Name}: {message.Text}");
+            var msg = new BwoinkTextMessage(message.ChannelId, senderSession.UserId, $"{senderSession.Name}: {message.Text}");
 
             LogBwoink(msg);
 

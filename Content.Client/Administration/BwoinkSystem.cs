@@ -10,6 +10,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameObjects.Components;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using Robust.Shared.Player;
+using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 
 namespace Content.Client.Administration
@@ -24,9 +26,15 @@ namespace Content.Client.Administration
         {
             base.OnBwoinkTextMessage(message, eventArgs);
             LogBwoink(message);
-            // TODO: Well, for one, a sound
+            // Actual line
             var window = EnsureWindow(message.ChannelId);
             window.ReceiveLine(message.Text);
+            // Play a sound if we didn't send it
+            var localPlayer = _playerManager.LocalPlayer;
+            if (localPlayer?.UserId != message.TrueSender)
+            {
+                SoundSystem.Play(Filter.Local(), "/Audio/Effects/adminhelp.ogg");
+            }
         }
 
         public BwoinkWindow EnsureWindow(NetUserId channelId)
@@ -60,7 +68,9 @@ namespace Content.Client.Administration
 
         public void Send(NetUserId channelId, string text)
         {
-            RaiseNetworkEvent(new BwoinkTextMessage(channelId, text));
+            // Reuse the channel ID as the 'true sender'.
+            // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.
+            RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text));
         }
     }
 }

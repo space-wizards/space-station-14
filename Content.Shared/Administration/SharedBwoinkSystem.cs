@@ -34,11 +34,16 @@ namespace Content.Shared.Administration
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
             public NetUserId ChannelId { get; }
+            // This is ignored from the client.
+            // It's checked by the client when receiving a message from the server for bwoink noises.
+            // This could be a boolean "Incoming", but that would require making a second instance.
+            public NetUserId TrueSender { get; }
             public string Text { get; }
 
-            public BwoinkTextMessage(NetUserId channelId, string text)
+            public BwoinkTextMessage(NetUserId channelId, NetUserId trueSender, string text)
             {
                 ChannelId = channelId;
+                TrueSender = trueSender;
                 Text = text;
             }
         }
