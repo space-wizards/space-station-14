@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Ghost.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
@@ -207,6 +208,10 @@ namespace Content.Server.Storage.Components
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<SharedItemComponent>() &&
                     !entity.HasComponent<SharedBodyComponent>())
+                    continue;
+
+                // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
+                if (entity.HasComponent<GhostComponent>())
                     continue;
 
                 if (!AddToContents(entity))
