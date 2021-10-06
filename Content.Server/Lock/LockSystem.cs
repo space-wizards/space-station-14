@@ -46,11 +46,13 @@ namespace Content.Server.Lock
             // Only attempt an unlock by default on Activate
             if (lockComp.Locked)
             {
-                args.Handled = TryUnlock(uid, args.User, lockComp);
+                TryUnlock(uid, args.User, lockComp);
+                args.Handled = true;
             }
             else if (lockComp.LockOnClick)
             {
-                args.Handled = TryLock(uid, args.User, lockComp);
+                TryLock(uid, args.User, lockComp);
+                args.Handled = true;
             }
         }
 

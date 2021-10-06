@@ -1,6 +1,4 @@
 using Content.Shared.Sound;
-using Content.Shared.Whitelist;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -8,8 +6,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Cabinet
 {
     /// <summary>
-    ///     Used for entities that can hold one item that fits the whitelist, which can be extracted by interacting with
-    ///     the entity, and can have an item fitting the whitelist placed back inside
+    ///     Used for entities that can be opened, closed, and can hold one item. E.g., fire extinguisher cabinets.
     /// </summary>
     [RegisterComponent]
     public class ItemCabinetComponent : Component
@@ -24,21 +21,10 @@ namespace Content.Server.Cabinet
         public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>
-        ///     The prototype that should be spawned inside the cabinet when it is map initialized.
+        ///     The slot name, used to get the actual item slot from the ItemSlotsComponent.
         /// </summary>
-        [ViewVariables]
-        [DataField("spawnPrototype")]
-        public string? SpawnPrototype { get; set; }
-
-        /// <summary>
-        ///     A whitelist defining which entities are allowed into the cabinet.
-        /// </summary>
-        [ViewVariables]
-        [DataField("whitelist")]
-        public EntityWhitelist? Whitelist = null;
-
-        [ViewVariables]
-        public ContainerSlot ItemContainer = default!;
+        [DataField("cabinetSlot")]
+        public string CabinetSlot = "cabinetSlot";
 
         /// <summary>
         ///     Whether the cabinet is currently open or not.

@@ -28,7 +28,7 @@ namespace Content.Shared.Pulling.Components
 
         /// <summary>
         /// The current entity pulling this component.
-        /// Ideally, alter using TryStartPull and TryStopPull.
+        /// SharedPullingStateManagementSystem should be writing this. This means definitely not you.
         /// </summary>
         public IEntity? Puller { get; set; }
         /// <summary>
@@ -57,7 +57,7 @@ namespace Content.Shared.Pulling.Components
 
             if (state.Puller == null)
             {
-                Puller = null;
+                EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
                 return;
             }
 
@@ -67,7 +67,21 @@ namespace Content.Shared.Pulling.Components
                 return;
             }
 
-            Puller = entity;
+            if (Puller == entity)
+            {
+                // don't disconnect and reconnect a puller for no reason
+                return;
+            }
+
+            if (!entity.TryGetComponent<SharedPullerComponent>(out var comp))
+            {
+                Logger.Error($"Entity {state.Puller.Value} for pulling had no Puller component");
+                // ensure it disconnects from any different puller, still
+                EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPullable(this);
+                return;
+            }
+
+            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceRelationship(comp, this);
         }
 
         protected override void Shutdown()
