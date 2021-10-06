@@ -6,13 +6,13 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Commands
 {
-    public class GroupingContextMenuCommand : IConsoleCommand
+    public class GroupingEntityMenuCommand : IConsoleCommand
     {
-        public string Command => "contextmenug";
+        public string Command => "entitymenug";
 
-        public string Description => "Sets the contextmenu-groupingtype.";
+        public string Description => "Sets the entity menu grouping type.";
 
-        public string Help => $"Usage: contextmenug <0:{EntityMenuPresenter.GroupingTypesCount}>";
+        public string Help => $"Usage: entitymenug <0:{EntityMenuPresenter.GroupingTypesCount}>";
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (args.Length != 1)
@@ -34,7 +34,7 @@ namespace Content.Client.Commands
             }
 
             var configurationManager = IoCManager.Resolve<IConfigurationManager>();
-            var cvar = CCVars.ContextMenuGroupingType;
+            var cvar = CCVars.EntityMenuGroupingType;
 
             configurationManager.SetCVar(cvar, id);
             shell.WriteLine($"Context Menu Grouping set to type: {configurationManager.GetCVar(cvar)}");

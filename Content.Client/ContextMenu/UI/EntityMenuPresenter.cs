@@ -62,18 +62,18 @@ namespace Content.Client.ContextMenu.UI
 
             _verbSystem = verbSystem;
 
-            _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, OnGroupingContextMenuChanged, true);
+            _cfg.OnValueChanged(CCVars.EntityMenuGroupingType, OnGroupingChanged, true);
 
             CommandBinds.Builder
-                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenContextMenu))
-                .Register<ContextMenuPresenter>();
+                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenEntityMenu))
+                .Register<EntityMenuPresenter>();
         }
 
         public override void Dispose()
         {
             base.Dispose();
             Elements.Clear();
-            CommandBinds.Unregister<ContextMenuPresenter>();
+            CommandBinds.Unregister<EntityMenuPresenter>();
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace Content.Client.ContextMenu.UI
             }
         }
 
-        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
+        private bool HandleOpenEntityMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
             if (args.State != BoundKeyState.Down)
                 return false;

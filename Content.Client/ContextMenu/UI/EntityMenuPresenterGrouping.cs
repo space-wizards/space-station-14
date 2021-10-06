@@ -10,7 +10,7 @@ namespace Content.Client.ContextMenu.UI
     {
         public const int GroupingTypesCount = 2;
         private int GroupingContextMenuType { get; set; }
-        public void OnGroupingContextMenuChanged(int obj)
+        public void OnGroupingChanged(int obj)
         {
             Close();
             GroupingContextMenuType = obj;
