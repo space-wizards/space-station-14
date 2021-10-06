@@ -19,9 +19,6 @@ namespace Content.Server.TraitorDeathMatch.Components
         /// <inheritdoc />
         public override string Name => "TraitorDeathMatchRedemption";
 
-        [Dependency]
-        private readonly UplinkAccountsSystem _accounts = default!;
-
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             if (!eventArgs.User.TryGetComponent<InventoryComponent>(out var userInv))
@@ -109,9 +106,10 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             // 4 is the per-PDA bonus amount.
+            var accounts = Owner.EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             var transferAmount = victimAccount.Balance + 4;
-            _accounts.SetBalance(victimAccount, 0);
-            _accounts.AddToBalance(userAccount, transferAmount);
+            accounts.SetBalance(victimAccount, 0);
+            accounts.AddToBalance(userAccount, transferAmount);
 
             victimUplink.Owner.Delete();
 
