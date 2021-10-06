@@ -13,9 +13,7 @@ using Robust.Client.Input;
 using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Configuration;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -156,69 +154,13 @@ namespace Content.Client.ContextMenu.UI
             if (_stateManager.CurrentState is not GameScreenBase)
                 return false;
 
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-            if (player == null)
-                return false;
-
             var coords = args.Coordinates.ToMap(_entityManager);
 
-            bool ignoreVisibility = _verbSystem.CanSeeAllContext || !_eyeManager.CurrentEye.DrawFov;
-
-            if (!_verbSystem.TryGetContextEntities(player, coords, out var entities, ignoreVisibility: ignoreVisibility))
-                return false;
-
-            // do we need to do container visibility checks? Note that while ghosts do ignore FOV, they cannot see into
-            // containers or access entities without sprites. Unless they should be allowed to? In that case add a `||
-            // !_eyeManager.CurrentEye.DrawFov` here
-            if (_verbSystem.CanSeeAllContext)
-            {
-                OpenRootMenu(entities);
-                return true;
-            }
-
-            //visibility checks
-            player.TryGetContainer(out var playerContainer);
-            foreach (var entity in entities.ToList())
-            {
-                if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) ||
-                    !spriteComponent.Visible ||
-                    !CanSeeContainerCheck(entity, playerContainer))
-                {
-                    entities.Remove(entity);
-                }
-            }
-
-            if (entities.Count == 0)
+            if (!_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
                 return false;
 
             OpenRootMenu(entities);
             return true;
-        }
-
-        /// <summary>
-        ///     Can the player see the entity through any entity containers?
-        /// </summary>
-        /// <remarks>
-        ///     This is similar to <see cref="ContainerHelpers.IsInSameOrParentContainer()"/>, except that we do not
-        ///     allow the player to be the "parent" container and we allow for see-through containers (display cases). 
-        /// </remarks>
-        private bool CanSeeContainerCheck(IEntity entity, IContainer? playerContainer)
-        {
-            // is the player inside this entity?
-            if (playerContainer?.Owner == entity)
-                return true;
-
-            entity.TryGetContainer(out var entityContainer);
-
-            // are they in the same container (or none?)
-            if (playerContainer == entityContainer)
-                return true;
-
-            // Is the entity in a display case?
-            if (playerContainer == null && entityContainer!.ShowContents)
-                return true;
-
-            return false;
         }
 
         /// <summary>
@@ -234,19 +176,12 @@ namespace Content.Client.ContextMenu.UI
             if (player == null)
                 return;
 
+            // Do we need to do in-range unOccluded checks?
+            var ignoreFov = _verbSystem.CanSeeAll || !_eyeManager.CurrentEye.DrawFov;
+
             foreach (var entity in Elements.Keys.ToList())
             {
-                if (entity.Deleted)
-                {
-                    RemoveEntity(entity);
-                    continue;
-                }
-
-                // Do we need to do in-range unOccluded checks?
-                if (_verbSystem.CanSeeAllContext || !_eyeManager.CurrentEye.DrawFov)
-                    continue;
-
-                if (!player.InRangeUnOccluded(entity))
+                if (entity.Deleted || !ignoreFov && !player.InRangeUnOccluded(entity))
                     RemoveEntity(entity);
             }
         }

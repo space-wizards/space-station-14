@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Tag;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -19,13 +20,13 @@ namespace Content.Shared.Verbs
         ///     Get all of the entities in an area for displaying on the context menu.
         /// </summary>
         /// <param name="buffer">Whether we should slightly extend the entity search area.</param>
-        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos,
-            [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false, bool ignoreVisibility = false)
+        public bool TryGetEntityMenuEntities(IEntity player, MapCoordinates targetPos,
+            [NotNullWhen(true)] out List<IEntity>? menuEntities, bool buffer = false, bool showAll = false, bool ignoreFoV = false, bool includeInventory = false)
         {
-            contextEntities = null;
+            menuEntities = null;
 
             // Check if we have LOS to the clicked-location.
-            if (!ignoreVisibility && !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
+            if (!(showAll || ignoreFoV) && !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
                 return false;
 
             // Get entities
@@ -35,29 +36,43 @@ namespace Content.Shared.Verbs
                     Box2.CenteredAround(targetPos.Position, (length, length)))
                 .ToList();
 
-            if (entities.Count == 0) return false;
+            if (entities.Count == 0)
+                return false;
 
-            if (ignoreVisibility)
+            if (showAll)
             {
-                contextEntities = entities;
+                menuEntities = entities;
                 return true;
             }
 
-            // perform visibility checks
+            // We are not showing all entities. Remove any that should not appear on the menu. This includes both
+            // entities that just should not show up, and entities that are currently inside of other containers.
+            player.TryGetContainer(out var playerContainer);
+            foreach (var entity in entities.ToList())
+            {
+                if (entity.HasTag("HideContextMenu") ||
+                    !CanSeeContainerCheck(entity, player, playerContainer, includeInventory))
+                    entities.Remove(entity);
+            }
+
+            if (entities.Count == 0)
+                return false;
+
+            if (ignoreFoV)
+            {
+                menuEntities = entities;
+                return true;
+            }
+
+            // We are not ignoring FoV (aka, this is not a ghost/spectator). Perform visibility checks.
             var playerPos = player.Transform.MapPosition;
             foreach (var entity in entities.ToList())
             {
-                if (entity.HasTag("HideContextMenu"))
-                {
-                    entities.Remove(entity);
-                    continue;
-                }
-
                 if (!ExamineSystemShared.InRangeUnOccluded(
                         playerPos,
                         entity.Transform.MapPosition,
                         ExamineSystemShared.ExamineRange,
-                        null) )
+                        null))
                 {
                     entities.Remove(entity);
                 }
@@ -66,14 +81,52 @@ namespace Content.Shared.Verbs
             if (entities.Count == 0)
                 return false;
 
-            contextEntities = entities;
+            menuEntities = entities;
             return true;
         }
 
         /// <summary>
-        ///     Raises a number of events in order to get all verbs of the given type(s)
+        ///     Can the player see the entity through any entity containers?
         /// </summary>
-        public virtual Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        /// <remarks>
+        ///     This is similar to <see cref="ContainerHelpers.IsInSameOrParentContainer()"/>, except that we do not
+        ///     allow the player to be the "parent" container and we allow for see-through containers (display cases).
+        ///     If we allowed the player to be the parent container, they could see their own organs.
+        /// </remarks>
+        private bool CanSeeContainerCheck(IEntity entity, IEntity player, IContainer? playerContainer, bool includeInventory)
+        {
+            // is the player inside this entity?
+            if (playerContainer?.Owner == entity)
+                return true;
+
+            entity.TryGetContainer(out var entityContainer);
+
+            // IS the player the container that this entity is in? Usually we want to exclude those entities (organs
+            // should not appear in the entity menu). But we need to allow this when the user is right-clicking on
+            // inventory slots.
+            if (includeInventory && entityContainer?.Owner == player)
+                return true;
+
+            // are they in the same container (or none?)
+            if (playerContainer == entityContainer)
+                return true;
+
+            if (entityContainer == null)
+                return false;
+
+            // Is the entity in a display case / see-through container?
+            entityContainer.Owner.TryGetContainer(out var parentContainer);
+            if (entityContainer.ShowContents && playerContainer == parentContainer)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
+        ///     does not request verbs from the server.
+        /// </summary>
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 

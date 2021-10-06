@@ -1,12 +1,18 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Popups;
 using Content.Client.Verbs.UI;
 using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Client.Verbs
 {
@@ -18,6 +24,9 @@ namespace Content.Client.Verbs
         public EntityMenuPresenter EntityMenu = default!;
         public VerbMenuPresenter VerbMenu = default!;
 
+        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IPlayerManager _playerManager = default!;
+
         /// <summary>
         ///     Whether to show all entities on the context menu.
         /// </summary>
@@ -25,7 +34,7 @@ namespace Content.Client.Verbs
         ///     Verb execution will only be affected if the server also agrees that this player can see the target
         ///     entity.
         /// </remarks>
-        public bool CanSeeAllContext = false;
+        public bool CanSeeAll = false;
 
         public override void Initialize()
         {
@@ -59,7 +68,7 @@ namespace Content.Client.Verbs
 
         private void SetSeeAllContext(SetSeeAllContextEvent args)
         {
-            CanSeeAllContext = args.CanSeeAllContext;
+            CanSeeAll = args.CanSeeAll;
         }
 
         public void CloseAllMenus()
@@ -68,18 +77,54 @@ namespace Content.Client.Verbs
             VerbMenu.Close();
         }
 
+        public bool TryGetEntityMenuEntities(MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? menuEntities)
+        {
+            menuEntities = null;
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (player == null)
+                return false;
+
+            var ignoreFov = !_eyeManager.CurrentEye.DrawFov;
+            if (!TryGetEntityMenuEntities(player, targetPos, out var entities, false, CanSeeAll, ignoreFov))
+                return false;
+
+            if (CanSeeAll)
+            {
+                menuEntities = entities;
+                return true;
+            }
+
+            // Client specific visibility checks: Do these entities have valid sprites?
+            foreach (var entity in entities.ToList())
+            {
+                if (!EntityManager.TryGetComponent(entity.Uid, out ISpriteComponent? spriteComponent) ||
+                    !spriteComponent.Visible)
+                {
+                    entities.Remove(entity);
+                }
+            }
+
+            if (entities.Count == 0)
+                return false;
+
+            menuEntities = entities;
+            return true;
+        }
+
         /// <summary>
         ///     Ask the server to send back a list of server-side verbs, and for now return an incomplete list of verbs
         ///     (only those defined locally).
         /// </summary>
-        public override Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public Dictionary<VerbType, SortedSet<Verb>> GetVerbs(IEntity target, IEntity user, VerbType verbTypes)
         {
             if (!target.Uid.IsClientSide())
             {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(target.Uid, verbTypes));
             }
             
-            return base.GetVerbs(target, user, verbTypes);
+            return GetLocalVerbs(target, user, verbTypes);
         }
 
         /// <summary>

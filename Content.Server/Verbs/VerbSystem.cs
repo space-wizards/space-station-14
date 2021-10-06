@@ -58,7 +58,7 @@ namespace Content.Server.Verbs
                 SeeAllContextPlayers.Remove(player);
             }
 
-            SetSeeAllContextEvent args = new() { CanSeeAllContext = SeeAllContextPlayers.Contains(player) };
+            SetSeeAllContextEvent args = new() { CanSeeAll = SeeAllContextPlayers.Contains(player) };
             RaiseNetworkEvent(args, player.ConnectedClient);
         }
 
@@ -86,7 +86,7 @@ namespace Content.Server.Verbs
             // though we know precisely which one we want. However, MOST entities will only have 1 or 2 verbs of a given
             // type. The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs. So maybe
             // the debug verbs should be made a separate type?
-            var verbs = GetVerbs(targetEntity, userEntity, args.Type)[args.Type];
+            var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
@@ -115,19 +115,21 @@ namespace Content.Server.Verbs
             }
 
             // Can the user see through walls?
-            var ignoreVisibility = SeeAllContextPlayers.Contains(player) ||
-               EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
+            var ignoreFov = EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
 
-            // Validate input (check that the user can see the entity)
-            TryGetContextEntities(user,
+            // Validate input (check that the user can see the entity).
+            // here, we default to using ignoreContainer : true.
+            TryGetEntityMenuEntities(user,
                 target.Transform.MapPosition,
                 out var entities,
                 buffer: true,
-                ignoreVisibility: ignoreVisibility);
+                SeeAllContextPlayers.Contains(player),
+                ignoreFov,
+                includeInventory: true);
 
             VerbsResponseEvent response;
             if (entities != null && entities.Contains(target))
-                response = new(args.EntityUid, GetVerbs(target, user, args.Type));
+                response = new(args.EntityUid, GetLocalVerbs(target, user, args.Type));
             else
             {
                 // The user should not be seeing this entity.
