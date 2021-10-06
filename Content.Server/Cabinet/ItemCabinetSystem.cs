@@ -38,7 +38,7 @@ namespace Content.Server.Cabinet
             SharedItemSlotsComponent? itemSlots = null,
             SharedAppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref cabinet, ref itemSlots, ref appearance))
+            if (!Resolve(uid, ref cabinet, ref itemSlots, ref appearance, false))
                 return;
 
             appearance.SetData(ItemCabinetVisuals.IsOpen, cabinet.Opened);
