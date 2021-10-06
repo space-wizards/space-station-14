@@ -8,6 +8,8 @@
   - Command
   - Science
   icon: "ResearchDirector"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Research
   - Command
