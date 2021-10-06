@@ -532,6 +532,7 @@ namespace Content.Client.Administration.UI
 
             public EditAdminRankWindow(PermissionsEui ui, KeyValuePair<int, PermissionsEuiState.AdminRankData>? data)
             {
+                Title = Loc.GetString("permissions-eui-edit-admin-rank-window-title");
                 MinSize = SetSize = (600, 400);
                 SourceId = data?.Key;
 
