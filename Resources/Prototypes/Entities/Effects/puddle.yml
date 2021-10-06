@@ -8,7 +8,7 @@
   - type: Sprite
     drawdepth: FloorObjects
   - type: Puddle
-    spill_sound:
+    spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
   - type: Clickable
   - type: Slippery

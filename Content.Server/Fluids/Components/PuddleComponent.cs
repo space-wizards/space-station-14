@@ -1,5 +1,4 @@
 using Content.Server.Fluids.EntitySystems;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
@@ -17,6 +16,8 @@ namespace Content.Server.Fluids.Components
     public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
+        private static readonly ReagentUnit DefaultSlipThreshold = ReagentUnit.New(3);
+        public static readonly ReagentUnit DefaultOverflowVolume = ReagentUnit.New(20);
 
         public override string Name => "Puddle";
 
@@ -34,9 +35,9 @@ namespace Content.Server.Fluids.Components
         // to check for low volumes for evaporation or whatever
 
 
-        [DataField("slip_threshold")] public ReagentUnit SlipThreshold = ReagentUnit.New(3);
+        [DataField("slipThreshold")] public ReagentUnit SlipThreshold = DefaultSlipThreshold;
 
-        [DataField("spill_sound")]
+        [DataField("spillSound")]
         public SoundSpecifier SpillSound = new SoundPathSpecifier("/Audio/Effects/Fluids/splat.ogg");
 
         /// <summary>
@@ -47,8 +48,8 @@ namespace Content.Server.Fluids.Components
         [ViewVariables(VVAccess.ReadOnly)]
         public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(this);
 
-        [ViewVariables] [DataField("overflow_volume")]
-        public ReagentUnit OverflowVolume = ReagentUnit.New(20);
+        [ViewVariables] [DataField("overflowVolume")]
+        public ReagentUnit OverflowVolume = DefaultOverflowVolume;
 
         public ReagentUnit OverflowLeft => CurrentVolume - OverflowVolume;
 

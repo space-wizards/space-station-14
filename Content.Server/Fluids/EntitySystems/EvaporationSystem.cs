@@ -64,7 +64,8 @@ namespace Content.Server.Fluids.EntitySystems
             {
                 EntityManager.QueueDeleteEntity(uid);
             }
-            else if (solution.CurrentVolume <= evaporationComponent.EvaporationLimit)
+            else if (solution.CurrentVolume <= evaporationComponent.LowerLimit 
+                     || solution.CurrentVolume >= evaporationComponent.UpperLimit)
             {
                 queueDelete.Add(evaporationComponent);
             }
