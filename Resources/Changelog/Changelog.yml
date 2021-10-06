@@ -2302,3 +2302,8 @@ Entries:
     type: Tweak}
   id: 410
   time: '2021-10-06T11:51:11.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
+  id: 411
+  time: '2021-10-06T13:13:56.224775+00:00'
