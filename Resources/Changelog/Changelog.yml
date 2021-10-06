@@ -2294,3 +2294,11 @@ Entries:
   - {message: Fix ghosts having empty names under certain conditions., type: Fix}
   id: 409
   time: '2021-10-06T09:58:02.820744+00:00'
+- author: Zumorica
+  changes:
+  - {message: Improved the join greeting text. Now you can easily know who your supervisors
+      are!, type: Tweak}
+  - {message: A station announcement will be sent when there's a captain on deck.,
+    type: Tweak}
+  id: 410
+  time: '2021-10-06T11:51:11.0000000+00:00'
