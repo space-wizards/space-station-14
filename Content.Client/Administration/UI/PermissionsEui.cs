@@ -320,15 +320,15 @@ namespace Content.Client.Administration.UI
                 var adminVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = {AdminsList, AddAdminButton},
+                    Children = {new ScrollContainer(){VerticalExpand = true, Children = { AdminsList }}, AddAdminButton},
                 };
                 TabContainer.SetTabTitle(adminVBox, Loc.GetString("permissions-eui-menu-admins-tab-title"));
 
-                AdminRanksList = new GridContainer {Columns = 3};
+                AdminRanksList = new GridContainer {Columns = 3, VerticalExpand = true};
                 var rankVBox = new BoxContainer
                 {
                     Orientation = LayoutOrientation.Vertical,
-                    Children = { AdminRanksList, AddAdminRankButton}
+                    Children = { new ScrollContainer(){VerticalExpand = true, Children = {AdminRanksList}}, AddAdminRankButton}
                 };
                 TabContainer.SetTabTitle(rankVBox, Loc.GetString("permissions-eui-menu-admin-ranks-tab-title"));
 
