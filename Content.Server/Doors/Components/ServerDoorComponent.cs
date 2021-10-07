@@ -9,12 +9,14 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,7 +25,9 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
 
@@ -35,8 +39,14 @@ namespace Content.Server.Doors.Components
     public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
         [ViewVariables]
-        [DataField("board")]
+        [DataField("board", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _boardPrototype;
+
+        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _weldingQuality = "Welding";
+
+        [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _pryingQuality = "Prying";
 
         [DataField("tryOpenDoorSound")]
         private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
@@ -627,8 +637,10 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
             // for prying doors
-            if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
+            if (tool.Qualities.Contains(_pryingQuality) && !IsWeldedShut)
             {
                 var ev = new DoorGetPryTimeModifierEvent();
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
@@ -636,8 +648,8 @@ namespace Content.Server.Doors.Components
                 var canEv = new BeforeDoorPryEvent(eventArgs);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
-                var successfulPry = await tool.UseTool(eventArgs.User, Owner,
-                        ev.PryTimeModifier * PryTime, ToolQuality.Prying, () => !canEv.Cancelled);
+                var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
+                        0f, ev.PryTimeModifier * PryTime, _pryingQuality, () => !canEv.Cancelled);
 
                 if (successfulPry && !IsWeldedShut)
                 {
@@ -655,12 +667,12 @@ namespace Content.Server.Doors.Components
             }
 
             // for welding doors
-            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
+            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.Lit)
             {
                 if(!_beingWelded)
                 {
                     _beingWelded = true;
-                    if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
+                    if(await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 3f, 3f, _weldingQuality, () => CanWeldShut))
                     {
                         // just in case
                         if (!CanWeldShut)

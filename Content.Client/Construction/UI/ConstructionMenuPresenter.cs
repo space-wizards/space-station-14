@@ -5,7 +5,8 @@ using Content.Client.HUD;
 using Content.Client.Resources;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
@@ -271,7 +272,7 @@ namespace Content.Client.Construction.UI
                             stepList.AddItem(Loc.GetString(
                                                  "construction-presenter-tool-step",
                                                  ("step-number", stepNumber++),
-                                                 ("tool", toolStep.Tool.GetToolName())),
+                                                 ("tool", _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName)),
                                              icon);
                             break;
 
@@ -314,7 +315,7 @@ namespace Content.Client.Construction.UI
                                                                  ("step-number", stepNumber),
                                                                  ("parallel-number", parallelNumber),
                                                                  ("substep-number", subStepNumber++),
-                                                                 ("tool", toolStep.Tool.GetToolName())),
+                                                                 ("tool", _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName)),
                                                             icon);
                                             break;
 
@@ -341,7 +342,7 @@ namespace Content.Client.Construction.UI
             }
         }
 
-        private static Texture? GetTextureForStep(IResourceCache resourceCache, ConstructionGraphStep step)
+        private Texture? GetTextureForStep(IResourceCache resourceCache, ConstructionGraphStep step)
         {
             switch (step)
             {
@@ -349,23 +350,7 @@ namespace Content.Client.Construction.UI
                     return materialStep.MaterialPrototype.Icon?.Frame0();
 
                 case ToolConstructionGraphStep toolStep:
-                    switch (toolStep.Tool)
-                    {
-                        case ToolQuality.Anchoring:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/wrench.rsi/icon.png");
-                        case ToolQuality.Prying:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/crowbar.rsi/icon.png");
-                        case ToolQuality.Screwing:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
-                        case ToolQuality.Cutting:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
-                        case ToolQuality.Welding:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/welder.rsi/icon.png");
-                        case ToolQuality.Multitool:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/multitool.rsi/icon.png");
-                    }
-
-                    break;
+                    return _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).Icon?.Frame0();
 
                 case ArbitraryInsertConstructionGraphStep arbitraryStep:
                     return arbitraryStep.Icon?.Frame0();

@@ -2,13 +2,16 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Pulling;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Pulling.Components;
-using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -20,8 +23,8 @@ namespace Content.Server.Construction.Components
         public override string Name => "Anchorable";
 
         [ViewVariables]
-        [DataField("tool")]
-        public ToolQuality Tool { get; private set; } = ToolQuality.Anchoring;
+        [DataField("tool", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        public string Tool { get; private set; } = "Anchoring";
 
         [ViewVariables]
         int IInteractUsing.Priority => 1;
@@ -56,7 +59,7 @@ namespace Content.Server.Construction.Components
             if (attempt.Cancelled)
                 return false;
 
-            return utilizing.TryGetComponent(out ToolComponent? tool) && await tool.UseTool(user, Owner, 0.5f + attempt.Delay, Tool);
+            return await EntitySystem.Get<ToolSystem>().UseTool(utilizing.Uid, user.Uid, Owner.Uid, 0f, 0.5f + attempt.Delay, Tool);
         }
 
         /// <summary>
