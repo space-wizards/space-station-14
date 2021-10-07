@@ -32,9 +32,8 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public SpriteSpecifier? Sprite { get; } = null;
         }
-
-        // TODO: Make non-readonly when SpriteSpecifier has type writers.
-        [DataField("entries", required:true, readOnly:true)]
+        
+        [DataField("entries", required:true)]
         public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
 
         [ViewVariables]
