@@ -70,11 +70,20 @@
   description: If the floor was a little hotter this would fry.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/egg.rsi
+    sprite: Fluids/egg_splat.rsi
     state: egg-0
+    netsync: false
   - type: Puddle
-    variants: 4
-    state: egg
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Egg
+          Quantity: 2
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: eggshells

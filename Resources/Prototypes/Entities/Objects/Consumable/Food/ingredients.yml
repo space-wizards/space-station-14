@@ -9,11 +9,21 @@
   description: Call the janitor.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/ingredients.rsi
-    state: powder-0
-    color: white
-  - type: Puddle
+    sprite: Fluids/powder.rsi
     state: powder
+    color: white
+    netsync: false
+  - type: Puddle
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Flour
+          Quantity: 10
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 # Reagent Containers
 
