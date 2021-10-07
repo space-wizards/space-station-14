@@ -8,6 +8,7 @@ on:
       - '**.csproj'
       - '**.sln'
       - '**.git**'
+      - '**.yml'
       - 'RobustToolbox/'
   pull_request:
     branches: [ master ]
@@ -16,6 +17,7 @@ on:
       - '**.csproj'
       - '**.sln'
       - '**.git**'
+      - '**.yml'
       - 'RobustToolbox/'
 
 jobs:
