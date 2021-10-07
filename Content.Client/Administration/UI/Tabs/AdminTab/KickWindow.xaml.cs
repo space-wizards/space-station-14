@@ -18,13 +18,16 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         protected override void EnteredTree()
         {
             SubmitButton.OnPressed += SubmitButtonOnOnPressed;
+            SubmitAHButton.OnPressed += SubmitAHButtonOnOnPressed;
             PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
         }
 
         private void OnListOnOnSelectionChanged(ICommonSession? obj)
         {
             _selectedSession = obj;
-            SubmitButton.Disabled = _selectedSession == null;
+            var disableButtons = _selectedSession == null;
+            SubmitButton.Disabled = disableButtons;
+            SubmitAHButton.Disabled = disableButtons;
         }
 
         private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
@@ -33,6 +36,14 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 return;
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"kick \"{_selectedSession.Name}\" \"{CommandParsing.Escape(ReasonLine.Text)}\"");
+        }
+
+        private void SubmitAHButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        {
+            if (_selectedSession == null)
+                return;
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
+                $"openahelp \"{_selectedSession.UserId}\"");
         }
     }
 }

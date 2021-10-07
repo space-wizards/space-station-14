@@ -304,7 +304,7 @@ namespace Content.Server.Atmos.EntitySystems
                 for (var i = 0; i < Atmospherics.Directions; i++)
                 {
                     var direction = (AtmosDirection) (1 << i);
-                    var otherIndices = indices.Offset(direction.ToDirection());
+                    var otherIndices = indices.Offset(direction);
                     var otherTile = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, otherIndices);
                     if (otherTile != null)
                         AddActiveTile(gridAtmosphere, otherTile);
@@ -1100,7 +1100,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 var direction = (AtmosDirection) (1 << i);
 
-                var otherIndices = tileAtmosphere.GridIndices.Offset(direction.ToDirection());
+                var otherIndices = tileAtmosphere.GridIndices.Offset(direction);
 
                 var adjacent = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, otherIndices);
                 tileAtmosphere.AdjacentTiles[direction.ToIndex()] = adjacent;
@@ -1168,9 +1168,9 @@ namespace Content.Server.Atmos.EntitySystems
         /// <param name="direction">Direction to be updated.</param>
         private void UpdateAdjacent(IMapGrid mapGrid, GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile, AtmosDirection direction)
         {
-            tile.AdjacentTiles[direction.ToIndex()] = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, tile.GridIndices.Offset(direction.ToDirection()));
+            tile.AdjacentTiles[direction.ToIndex()] = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, tile.GridIndices.Offset(direction));
 
-            if (!tile.BlockedAirflow.IsFlagSet(direction) && !IsTileAirBlocked(mapGrid, tile.GridIndices.Offset(direction.ToDirection()), direction.GetOpposite()))
+            if (!tile.BlockedAirflow.IsFlagSet(direction) && !IsTileAirBlocked(mapGrid, tile.GridIndices.Offset(direction), direction.GetOpposite()))
             {
                 tile.AdjacentBits |= direction;
             }
