@@ -2312,3 +2312,8 @@ Entries:
   - {message: '''AHelp'' next to the options menu.', type: Add}
   id: 412
   time: '2021-10-06T15:25:28.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes a bunch of weirdly rotated stuff on Saltern., type: Fix}
+  id: 413
+  time: '2021-10-07T04:55:39.708225+00:00'
