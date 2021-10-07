@@ -399,12 +399,6 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.Lit)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
             if (_beingWelded)
                 return false;
 

@@ -39,7 +39,8 @@ namespace Content.Server.Tools
             float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, Func<bool>? doAfterCheck = null,
             ToolComponent? toolComponent = null)
         {
-            if (!Resolve(tool, ref toolComponent))
+            // No logging here, after all that'd mean the caller would need to check if the component is there or not.
+            if (!Resolve(tool, ref toolComponent, false))
                 return false;
 
             if (!toolComponent.Qualities.ContainsAll(toolQualitiesNeeded) || !_actionBlockerSystem.CanInteract(user))

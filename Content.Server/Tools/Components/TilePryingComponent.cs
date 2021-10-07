@@ -52,7 +52,7 @@ namespace Content.Server.Tools.Components
             if (!tileDef.CanCrowbar)
                 return;
 
-            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded))
+            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
             coordinates.PryTile(Owner.EntityManager, _mapManager);

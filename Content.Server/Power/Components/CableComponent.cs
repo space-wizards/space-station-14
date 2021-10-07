@@ -41,7 +41,6 @@ namespace Content.Server.Power.Components
             if (_cableDroppedOnCutPrototype == null)
                 return false;
 
-            if (!eventArgs.Using.TryGetComponent<ToolComponent>(out var tool)) return false;
             if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
 
             Owner.Delete();
