@@ -2,9 +2,9 @@
 
 Space Station 14 is a remake of SS13 that runs on [Robust Toolbox](https://github.com/space-wizards/RobustToolbox), our homegrown engine written in C#.
 
-This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
+This is the primary repo for Space Station 14. To prevent people from forking RobustToolbox, a "content" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.
 
-If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for development of new content packs.
+If you want to host or create content for SS14, this is the repo you need. It contains both RobustToolbox and the content pack for the development of new content packs.
 
 ## Links
 
@@ -16,14 +16,14 @@ The [HackMD Wiki](https://hackmd.io/@ss14/docs/wiki) has documentation on SS14s 
 
 ## Contributing
 
-We are happy to accept contributions from anybody. Get in Discord if you want to help. We've got a [list of issues](https://github.com/space-wizards/space-station-14-content/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!
+We are happy to accept contributions from anybody. Get in Discord if you want to help. We've got a [list of issues](https://github.com/space-wizards/space-station-14-content/issues) that needs to be done and anybody can pick them up. Don't be afraid to ask for help either!
 
 We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language consider creating a fork or contributing to a fork.
 
 ## Building
 
 1. Clone this repo.
-2. Run `RUN_THIS.py` to init submodules and download the engine.
+2. Run `RUN_THIS.py` to in its submodules and download the engine.
 3. Compile the solution.
 
 [More detailed instructions on building the project.](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)
