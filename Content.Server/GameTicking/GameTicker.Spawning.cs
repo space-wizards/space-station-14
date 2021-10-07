@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [ViewVariables(VVAccess.ReadWrite)]
