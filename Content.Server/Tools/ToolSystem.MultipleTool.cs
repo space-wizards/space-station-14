@@ -27,7 +27,9 @@ namespace Content.Server.Tools
 
         private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
         {
-            SetMultipleTool(uid, multiple);
+            // Only set the multiple tool if we have a tool component.
+            if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+                SetMultipleTool(uid, multiple, tool);
         }
 
         private void OnMultipleToolUsedInHand(EntityUid uid, MultipleToolComponent multiple, UseInHandEvent args)
