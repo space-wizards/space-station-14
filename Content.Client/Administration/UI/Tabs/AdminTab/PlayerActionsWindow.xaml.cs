@@ -29,6 +29,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
             var disableButtons = _selectedSession == null;
             SubmitKickButton.Disabled = disableButtons;
             SubmitAHelpButton.Disabled = disableButtons;
+            SubmitRespawnButton.Disabled = disableButtons;
         }
 
         private void SubmitKickButtonOnPressed(BaseButton.ButtonEventArgs obj)
