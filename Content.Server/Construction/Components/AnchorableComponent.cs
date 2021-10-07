@@ -47,6 +47,9 @@ namespace Content.Server.Construction.Components
                 return false;
             }
 
+            if (!utilizing.TryGetComponent(out ToolComponent? tool))
+                return false;
+
             BaseAnchoredAttemptEvent attempt =
                 anchoring ? new AnchorAttemptEvent(user, utilizing) : new UnanchorAttemptEvent(user, utilizing);
 
@@ -59,7 +62,7 @@ namespace Content.Server.Construction.Components
             if (attempt.Cancelled)
                 return false;
 
-            return await EntitySystem.Get<ToolSystem>().UseTool(utilizing.Uid, user.Uid, Owner.Uid, 0f, 0.5f + attempt.Delay, Tool);
+            return await EntitySystem.Get<ToolSystem>().UseTool(utilizing.Uid, user.Uid, Owner.Uid, 0f, 0.5f + attempt.Delay, Tool, toolComponent:tool);
         }
 
         /// <summary>
