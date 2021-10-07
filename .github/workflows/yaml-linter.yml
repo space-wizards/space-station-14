@@ -5,10 +5,12 @@ on:
     paths:
       - '**.yml'
       - '**.yaml'
+      - '**.cs'
   push:
     paths:
       - '**.yml'
       - '**.yaml'
+      - '**.cs
 
 jobs:
   build:
