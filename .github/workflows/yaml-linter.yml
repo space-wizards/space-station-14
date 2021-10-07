@@ -1,16 +1,7 @@
 name: YAML Linter
 
 on:
-  pull_request:
-    paths:
-      - '**.yml'
-      - '**.yaml'
-      - '**.cs'
-  push:
-    paths:
-      - '**.yml'
-      - '**.yaml'
-      - '**.cs
+  [pull_request, push]
 
 jobs:
   build:
