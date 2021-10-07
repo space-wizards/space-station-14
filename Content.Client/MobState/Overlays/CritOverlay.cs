@@ -16,7 +16,6 @@ namespace Content.Client.MobState.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
         private readonly ShaderInstance _gradientCircleShader;
-        private readonly ShaderInstance? _glowingBorderShader;
 
         public CritOverlay()
         {

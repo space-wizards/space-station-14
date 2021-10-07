@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
 
             if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
             {
-                shell.WriteLine("Aren't you a ghost already?");
+                player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
@@ -47,7 +47,12 @@ namespace Content.Server.Administration.Commands
 
             if (canReturn)
             {
-                ghost.Name = mind.CharacterName ?? string.Empty;
+                // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
+                if(!string.IsNullOrWhiteSpace(mind.CharacterName))
+                    ghost.Name = mind.CharacterName;
+                else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
+                    ghost.Name = mind.Session.Name;
+
                 mind.Visit(ghost);
             }
             else

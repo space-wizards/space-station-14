@@ -140,7 +140,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
             var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
             var isHudThemeSame = HudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
-            var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
+            var isUIScaleSame = MathHelper.CloseToPercent(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
             var isVPStretchSame = ViewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
@@ -191,18 +191,22 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 case 0:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, false);
                     break;
                 case 1:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 2:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 3:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
             }
         }
@@ -211,7 +215,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         {
             for (var i = 0; i < UIScaleOptions.Length; i++)
             {
-                if (MathHelper.CloseTo(UIScaleOptions[i], value))
+                if (MathHelper.CloseToPercent(UIScaleOptions[i], value))
                 {
                     return i;
                 }

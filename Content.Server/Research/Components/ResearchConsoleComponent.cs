@@ -23,7 +23,6 @@ namespace Content.Server.Research.Components
     public class ResearchConsoleComponent : SharedResearchConsoleComponent, IActivate
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
 
         [DataField("sound")]
         private SoundSpecifier _soundCollectionName = new SoundCollectionSpecifier("keyboard");

@@ -24,15 +24,10 @@ namespace Content.Client.Items.Managers
 {
     public class ItemSlotManager : IItemSlotManager
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
         [Dependency] private readonly IUserInterfaceManager _uiMgr = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IComponentManager _componentManager = default!;
 
         private readonly HashSet<EntityUid> _highlightEntities = new();
 
@@ -49,7 +44,7 @@ namespace Content.Client.Items.Managers
             {
                 ISpriteComponent? sprite;
                 if (entity.TryGetComponent(out HandVirtualItemComponent? virtPull)
-                    && _componentManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
+                    && _entityManager.TryGetComponent(virtPull.BlockingEntity, out ISpriteComponent pulledSprite))
                 {
                     sprite = pulledSprite;
                 }
@@ -83,7 +78,7 @@ namespace Content.Client.Items.Managers
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
-                                    .OpenContextMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
+                                    .OpenVerbMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {

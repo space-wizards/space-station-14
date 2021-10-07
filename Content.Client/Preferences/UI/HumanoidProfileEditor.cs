@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CharacterAppearance;
 using Content.Client.Lobby.UI;
+using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
@@ -107,12 +108,8 @@ namespace Content.Client.Preferences.UI
             #region Randomize
 
             var randomizePanel = HighlightedContainer();
-            var randomizeEverythingButton = new Button
-            {
-                Text = Loc.GetString("humanoid-profile-editor-randomize-everything-button")
-            };
-            randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
-            randomizePanel.AddChild(randomizeEverythingButton);
+            var randomizeVbox = new BoxContainer() { Orientation = LayoutOrientation.Vertical };
+            randomizePanel.AddChild(randomizeVbox);
             leftColumn.AddChild(randomizePanel);
 
             #endregion Randomize
@@ -140,7 +137,27 @@ namespace Content.Client.Preferences.UI
             nameHBox.AddChild(nameLabel);
             nameHBox.AddChild(_nameEdit);
             nameHBox.AddChild(nameRandomButton);
-            randomizePanel.AddChild(nameHBox);
+            randomizeVbox.AddChild(nameHBox);
+
+            var randomizeEverythingButton = new Button
+            {
+                HorizontalAlignment = HAlignment.Center,
+                HorizontalExpand = false,
+                MaxWidth = 256,
+                Text = Loc.GetString("humanoid-profile-editor-randomize-everything-button"),
+            };
+            randomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
+            randomizeVbox.AddChild(randomizeEverythingButton);
+
+            var warningLabel = new RichTextLabel()
+            {
+                HorizontalExpand = false,
+                VerticalExpand = true,
+                MaxWidth = 425,
+                HorizontalAlignment = HAlignment.Left,
+            };
+            warningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
+            randomizeVbox.AddChild(warningLabel);
 
             #endregion Name
 

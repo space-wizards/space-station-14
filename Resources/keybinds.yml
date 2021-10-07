@@ -162,6 +162,7 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G

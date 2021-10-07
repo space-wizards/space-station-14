@@ -1,6 +1,6 @@
 using System;
 using Content.Client.Markers;
-using Content.Client.Notifications.Managers;
+using Content.Client.Popups;
 using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
@@ -50,7 +50,7 @@ namespace Content.Client.Commands
             EntitySystem.Get<SubFloorHideSystem>()
                 .ShowAll = true;
 
-            var components = IoCManager.Resolve<IEntityManager>().ComponentManager
+            var components = IoCManager.Resolve<IEntityManager>()
                 .EntityQuery<SubFloorHideComponent>(true);
 
             foreach (var component in components)
@@ -73,8 +73,7 @@ namespace Content.Client.Commands
         {
             var message = args[0];
 
-            var notifyManager = IoCManager.Resolve<IClientNotifyManager>();
-            notifyManager.PopupMessage(message);
+            EntitySystem.Get<PopupSystem>().PopupCursor(message);
         }
     }
 

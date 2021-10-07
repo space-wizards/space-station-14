@@ -299,7 +299,7 @@
         - CigPack
       components:
         - Seed
-        - Smoking
+        - Smokable
   - type: ItemMapper
     mapLayers:
       hatchet:

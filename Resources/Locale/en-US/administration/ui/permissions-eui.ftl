@@ -17,5 +17,6 @@ permissions-eui-edit-admin-title-control-text = none
 permissions-eui-edit-no-rank-text = none
 permissions-eui-edit-title-button = Edit
 permissions-eui-edit-admin-rank-button = Edit
+permissions-eui-edit-admin-rank-window-title = Edit Admin Rank
 permissions-eui-edit-admin-window-save-button = Save
 permissions-eui-edit-admin-window-remove-flag-button = Remove

@@ -23,7 +23,7 @@ namespace Content.Server.Kitchen.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<MicrowaveComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<MicrowaveComponent>(true))
             {
                 comp.OnUpdate();
             }

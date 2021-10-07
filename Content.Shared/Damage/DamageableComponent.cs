@@ -86,7 +86,7 @@ namespace Content.Shared.Damage
 
             // Radiation should really just be a damage group instead of a list of types.
             DamageSpecifier damage = new();
-            foreach (var typeID in ExplosionDamageTypeIDs)
+            foreach (var typeID in RadiationDamageTypeIDs)
             {
                 damage.DamageDict.Add(typeID, damageValue);
             }

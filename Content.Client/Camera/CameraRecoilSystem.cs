@@ -10,7 +10,7 @@ namespace Content.Client.Camera
         {
             base.FrameUpdate(frameTime);
 
-            foreach (var recoil in EntityManager.ComponentManager.EntityQuery<CameraRecoilComponent>(true))
+            foreach (var recoil in EntityManager.EntityQuery<CameraRecoilComponent>(true))
             {
                 recoil.FrameUpdate(frameTime);
             }

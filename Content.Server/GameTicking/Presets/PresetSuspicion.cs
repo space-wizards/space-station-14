@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.PDA;
+using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
-using Content.Shared;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
-using Content.Shared.PDA;
 using Content.Shared.Roles;
+using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -31,6 +33,8 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] protected readonly IEntityManager EntityManager = default!;
+        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }
@@ -109,28 +113,17 @@ namespace Content.Server.GameTicking.Presets
                 var traitorRole = new SuspicionTraitorRole(mind!, antagPrototype);
                 mind!.AddRole(traitorRole);
                 traitors.Add(traitorRole);
+
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount =
-                    new UplinkAccount(mind.OwnedEntity!.Uid,
-                        TraitorStartingBalance);
-                var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
-                {
+                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, TraitorStartingBalance);
+                _uplinkManager.AddNewAccount(uplinkAccount);
+
+                // try to place uplink
+                if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
-                }
-
-                var pda = pdaItem.Owner;
-
-                var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.IdSlotEmpty)
-                {
-                    continue;
-                }
-
-                pdaComponent.InitUplinkAccount(uplinkAccount);
-
             }
 
             foreach (var player in list)

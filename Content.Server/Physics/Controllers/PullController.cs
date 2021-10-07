@@ -51,6 +51,10 @@ namespace Content.Server.Physics.Controllers
 
             foreach (var pullable in _pullableSystem.Moving)
             {
+                // There's a 1-frame delay between stopping moving something and it leaving the Moving set.
+                // This can include if leaving the Moving set due to not being pulled anymore,
+                //  or due to being deleted.
+
                 if (pullable.Deleted)
                 {
                     continue;
@@ -61,12 +65,17 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                DebugTools.AssertNotNull(pullable.Puller);
+                if (pullable.Puller == null)
+                {
+                    continue;
+                }
+
+                // Now that's over with...
 
                 var pullerPosition = pullable.Puller!.Transform.MapPosition;
                 if (pullable.MovingTo.Value.MapId != pullerPosition.MapId)
                 {
-                    pullable.MovingTo = null;
+                    _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
@@ -74,22 +83,23 @@ namespace Content.Server.Physics.Controllers
                     physics.BodyType == BodyType.Static ||
                     pullable.MovingTo.Value.MapId != pullable.Owner.Transform.MapID)
                 {
-                    pullable.MovingTo = null;
+                    _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
                 var movingPosition = pullable.MovingTo.Value.Position;
                 var ownerPosition = pullable.Owner.Transform.MapPosition.Position;
 
-                if (movingPosition.EqualsApprox(ownerPosition, MaximumSettleDistance) && (physics.LinearVelocity.Length < MaximumSettleVelocity))
+                var diff = movingPosition - ownerPosition;
+                var diffLength = diff.Length;
+
+                if ((diffLength < MaximumSettleDistance) && (physics.LinearVelocity.Length < MaximumSettleVelocity))
                 {
                     physics.LinearVelocity = Vector2.Zero;
-                    pullable.MovingTo = null;
+                    _pullableSystem.StopMoveTo(pullable);
                     continue;
                 }
 
-                var diff = movingPosition - ownerPosition;
-                var diffLength = diff.Length;
                 var impulseModifierLerp = Math.Min(1.0f, Math.Max(0.0f, (physics.Mass - AccelModifierLowMass) / (AccelModifierHighMass - AccelModifierLowMass)));
                 var impulseModifier = MathHelper.Lerp(AccelModifierLow, AccelModifierHigh, impulseModifierLerp);
                 var multiplier = diffLength < 1 ? impulseModifier * diffLength : impulseModifier;
@@ -102,6 +112,7 @@ namespace Content.Server.Physics.Controllers
                     var scaling = (SettleShutdownDistance - diffLength) / SettleShutdownDistance;
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
+                physics.WakeBody();
                 physics.ApplyLinearImpulse(accel * physics.Mass * frameTime);
             }
         }

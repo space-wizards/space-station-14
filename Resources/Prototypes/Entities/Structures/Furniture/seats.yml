@@ -20,6 +20,7 @@
       - SmallImpassable
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
+    noRot: true
   - type: Strap
     position: Stand
   - type: Pullable
@@ -43,13 +44,14 @@
   id: Chair
   parent: SeatBase
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
     state: chair
     color: "#8e9799"
   - type: Physics
-    bodyType: Static
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -91,6 +93,8 @@
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Transform
+    anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Anchorable
@@ -149,6 +153,8 @@
   parent: SeatBase
   description: It looks comfy.
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Sprite
     state: comfychair_preview
@@ -174,6 +180,7 @@
   - type: Sprite
     state: wooden_chair
     color: "white"
+  - type: Rotatable
   - type: Physics
     fixtures:
     - shape:
@@ -214,6 +221,8 @@
   parent: SeatBase
   description: The pilot seat of a prestigious ship.
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite

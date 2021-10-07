@@ -15,9 +15,9 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -51,7 +51,40 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
+        {
+            if (!args.CanAccess)
+                return;
+
+            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
+                component.Node?.Name == component.DeconstructionNodeIdentifier)
+                return;
+
+            Verb verb = new();
+            //verb.Category = VerbCategories.Construction;
+            //TODO VERBS add more construction verbs? Until then, removing construction category
+            verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
+            verb.IconTexture = "/Textures/Interface/hammer_scaled.svg.192dpi.png";
+
+            verb.Act = () =>
+            {
+                component.SetNewTarget(component.DeconstructionNodeIdentifier);
+                if (component.Target == null)
+                {
+                    // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
+                }
+                else
+                {
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
+                }
+            };
+
+            args.Verbs.Add(verb);
         }
 
         private void HandleConstructionExamined(EntityUid uid, ConstructionComponent component, ExaminedEvent args)
@@ -60,7 +93,7 @@ namespace Content.Server.Construction
             {
                 args.PushMarkup(Loc.GetString(
                     "construction-component-to-create-header",
-                    ("targetName", component.Target.Name)));
+                    ("targetName", component.Target.Name)) + "\n");
             }
 
             if (component.Edge == null && component.TargetNextEdge != null)
@@ -102,7 +135,6 @@ namespace Content.Server.Construction
 
                 list[0].DoExamine(args);
             }
-
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
@@ -225,7 +257,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = _stackSystem.Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
+                            var splitStack = _stackSystem.Split(entity.Uid, materialStep.Amount, user.ToCoordinates(), stack);
 
                             if (splitStack == null)
                                 continue;
@@ -395,6 +427,7 @@ namespace Content.Server.Construction
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
+
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
@@ -414,6 +447,12 @@ namespace Content.Server.Construction
             if (user == null)
             {
                 Logger.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
+            if (user.IsInContainer())
+            {
+                user.PopupMessageCursor(Loc.GetString("construction-system-inside-container"));
                 return;
             }
 

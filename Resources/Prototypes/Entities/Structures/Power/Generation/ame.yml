@@ -56,7 +56,7 @@
     examinable: true
     nodes:
       ame:
-        !type:CableDeviceNode
+        !type:AdjacentNode
         nodeGroupID: AMEngine
       input:
         !type:CableDeviceNode

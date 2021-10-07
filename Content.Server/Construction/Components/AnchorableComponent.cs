@@ -4,6 +4,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Server.Pulling;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Tool;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -75,11 +76,11 @@ namespace Content.Server.Construction.Components
             var rot = Owner.Transform.LocalRotation;
             Owner.Transform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
 
-            if (Owner.TryGetComponent(out PullableComponent? pullableComponent))
+            if (Owner.TryGetComponent(out SharedPullableComponent? pullableComponent))
             {
                 if (pullableComponent.Puller != null)
                 {
-                    pullableComponent.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(pullableComponent);
                 }
             }
 

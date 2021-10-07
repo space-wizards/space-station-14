@@ -6,10 +6,9 @@ using Content.Client.Interactable;
 using Content.Client.Items.Managers;
 using Content.Client.Verbs;
 using Content.Client.Viewport;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
-using Content.Shared.Verbs;
+using Content.Shared.Interaction.Helpers;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -40,21 +39,19 @@ namespace Content.Client.ContextMenu.UI
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
+        public static readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
+        private CancellationTokenSource? _cancelHover;
+
         private readonly IContextMenuView _contextMenuView;
         private readonly VerbSystem _verbSystem;
 
-        private bool _playerCanSeeThroughContainers;
-
         private MapCoordinates _mapCoordinates;
-        private CancellationTokenSource? _cancellationTokenSource;
 
         public ContextMenuPresenter(VerbSystem verbSystem)
         {
             IoCManager.InjectDependencies(this);
 
             _verbSystem = verbSystem;
-            _verbSystem.ToggleContextMenu += SystemOnToggleContextMenu;
-            _verbSystem.ToggleContainerVisibility += SystemOnToggleContainerVisibility;
 
             _contextMenuView = new ContextMenuView();
             _contextMenuView.OnKeyBindDownSingle += OnKeyBindDownSingle;
@@ -70,6 +67,10 @@ namespace Content.Client.ContextMenu.UI
             _contextMenuView.OnCloseChildMenu += OnCloseChildMenu;
 
             _cfg.OnValueChanged(CCVars.ContextMenuGroupingType, _contextMenuView.OnGroupingContextMenuChanged, true);
+
+            CommandBinds.Builder
+                .Bind(ContentKeyFunctions.OpenContextMenu,  new PointerInputCmdHandler(HandleOpenContextMenu))
+                .Register<ContextMenuPresenter>();
         }
 
         #region View Events
@@ -92,13 +93,11 @@ namespace Content.Client.ContextMenu.UI
         {
             var realGlobalPosition = e.GlobalPosition;
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource = new();
+            _cancelHover?.Cancel();
+            _cancelHover = new();
 
-            Timer.Spawn(e.HoverDelay, () =>
+            Timer.Spawn(HoverDelay, () =>
             {
-                _verbSystem.CloseGroupMenu();
-
                 if (_contextMenuView.Menus.Count == 0)
                 {
                     return;
@@ -111,7 +110,7 @@ namespace Content.Client.ContextMenu.UI
                 {
                     _contextMenuView.AddChildMenu(filteredEntities, realGlobalPosition, e);
                 }
-            }, _cancellationTokenSource.Token);
+            }, _cancelHover.Token);
         }
 
         private void OnKeyBindDownStack(object? sender, (GUIBoundKeyEventArgs, StackContextElement) e)
@@ -169,10 +168,23 @@ namespace Content.Client.ContextMenu.UI
 
         private void OnMouseEnteredSingle(object? sender, SingleContextElement e)
         {
-            _cancellationTokenSource?.Cancel();
+            // close other pop-ups after a short delay
+            _cancelHover?.Cancel();
+            _cancelHover = new();
+
+            Timer.Spawn(HoverDelay, () =>
+            {
+                if (_contextMenuView.Menus.Count == 0)
+                {
+                    return;
+                }
+
+                OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
+
+            }, _cancelHover.Token);
+
 
             var entity = e.ContextEntity;
-            _verbSystem.CloseGroupMenu();
 
             OnCloseChildMenu(sender, e.ParentMenu?.Depth ?? 0);
 
@@ -251,91 +263,114 @@ namespace Content.Client.ContextMenu.UI
         #endregion
 
         #region Model Updates
-        private void SystemOnToggleContainerVisibility(object? sender, bool args)
+        private bool HandleOpenContextMenu(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            _playerCanSeeThroughContainers = args;
-        }
-
-        private void SystemOnToggleContextMenu(object? sender, PointerInputCmdHandler.PointerInputCmdArgs args)
-        {
-            if (_stateManager.CurrentState is not GameScreenBase)
+            if (args.State != BoundKeyState.Down)
             {
-                return;
+                return false;
             }
 
-            var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
-            if (playerEntity == null)
+            if (_stateManager.CurrentState is not GameScreenBase)
             {
-                return;
+                return false;
+            }
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+            if (player == null)
+            {
+                return false;
             }
 
             _mapCoordinates = args.Coordinates.ToMap(_entityManager);
-            if (!_verbSystem.TryGetContextEntities(playerEntity, _mapCoordinates, out var entities))
-            {
-                return;
-            }
 
-            entities = entities.Where(CanSeeOnContextMenu).ToList();
-            if (entities.Count > 0)
+            if (!_verbSystem.TryGetContextEntities(player, _mapCoordinates, out var entities, ignoreVisibility: _verbSystem.CanSeeAllContext))
+                return false;
+
+            // do we need to do visiblity checks?
+            if (_verbSystem.CanSeeAllContext)
             {
                 _contextMenuView.AddRootMenu(entities);
+                return true;
             }
-        }
 
-        public void HandleMoveEvent(ref MoveEvent ev)
-        {
-            if (_contextMenuView.Elements.Count == 0) return;
-            var entity = ev.Sender;
-            if (_contextMenuView.Elements.ContainsKey(entity))
+            //visibility checks
+            player.TryGetContainer(out var playerContainer);
+            foreach (var entity in entities.ToList())
             {
-                if (!entity.Transform.MapPosition.InRange(_mapCoordinates, 1.0f))
+                if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) ||
+                    !spriteComponent.Visible ||
+                    !CanSeeContainerCheck(entity, playerContainer))
                 {
-                    _contextMenuView.RemoveEntity(entity);
+                    entities.Remove(entity);
                 }
             }
+
+            if (entities.Count == 0)
+                return false;
+
+            _contextMenuView.AddRootMenu(entities);
+            return true;
         }
 
+        /// <summary>
+        ///     Can the player see the entity through any entity containers?
+        /// </summary>
+        /// <remarks>
+        ///     This is similar to <see cref="ContainerHelpers.IsInSameOrParentContainer()"/>, except that we do not
+        ///     allow the player to be the "parent" container and we allow for see-through containers (display cases). 
+        /// </remarks>
+        private bool CanSeeContainerCheck(IEntity entity, IContainer? playerContainer)
+        {
+            // is the player inside this entity?
+            if (playerContainer?.Owner == entity)
+                return true;
+
+            entity.TryGetContainer(out var entityContainer);
+
+            // are they in the same container (or none?)
+            if (playerContainer == entityContainer)
+                return true;
+
+            // Is the entity in a display case?
+            if (playerContainer == null && entityContainer!.ShowContents)
+                return true;
+
+            return false;
+        }
+
+        /// <summary>
+        ///     Check that entities in the context menu are still visible. If not, remove them from the context menu.
+        /// </summary>
         public void Update()
         {
-            if (_contextMenuView.Elements.Count == 0) return;
+            if (_contextMenuView.Elements.Count == 0)
+                return;
+
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (player == null)
+                return;
 
             foreach (var entity in _contextMenuView.Elements.Keys.ToList())
             {
-                if (entity.Deleted || !_playerCanSeeThroughContainers && entity.IsInContainer())
+                if (entity.Deleted || !_verbSystem.CanSeeAllContext && !player.InRangeUnOccluded(entity))
                 {
                     _contextMenuView.RemoveEntity(entity);
+                    if (_verbSystem.CurrentTarget == entity.Uid)
+                        _verbSystem.CloseVerbMenu();
                 }
             }
         }
         #endregion
 
-        private bool CanSeeOnContextMenu(IEntity entity)
-        {
-            if (!entity.TryGetComponent(out ISpriteComponent? spriteComponent) || !spriteComponent.Visible)
-            {
-                return false;
-            }
-
-            if (entity.GetAllComponents<IShowContextMenu>().Any(s => !s.ShowContextMenu(entity)))
-            {
-                return false;
-            }
-
-            return _playerCanSeeThroughContainers || !entity.TryGetContainer(out var container) || container.ShowContents;
-        }
-
-        private void CloseAllMenus()
+        public void CloseAllMenus()
         {
             _contextMenuView.CloseContextPopups();
-            _verbSystem.CloseGroupMenu();
             _verbSystem.CloseVerbMenu();
         }
 
         public void Dispose()
         {
-            _verbSystem.ToggleContextMenu -= SystemOnToggleContextMenu;
-            _verbSystem.ToggleContainerVisibility -= SystemOnToggleContainerVisibility;
-
             _contextMenuView.OnKeyBindDownSingle -= OnKeyBindDownSingle;
             _contextMenuView.OnMouseEnteredSingle -= OnMouseEnteredSingle;
             _contextMenuView.OnMouseExitedSingle -= OnMouseExitedSingle;
@@ -347,6 +382,8 @@ namespace Content.Client.ContextMenu.UI
             _contextMenuView.OnExitedTree -= OnExitedTree;
             _contextMenuView.OnCloseRootMenu -= OnCloseRootMenu;
             _contextMenuView.OnCloseChildMenu -= OnCloseChildMenu;
+
+            CommandBinds.Unregister<ContextMenuPresenter>();
         }
     }
 }
