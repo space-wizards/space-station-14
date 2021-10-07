@@ -8,13 +8,15 @@ on:
       - '**.csproj'
       - '**.sln'
       - '**.git**'
+      - 'RobustToolbox/'
   pull_request:
     branches: [ master ]
     paths:
       - '**.cs'
       - '**.csproj'
       - '**.sln'
-      - '**.git**'    
+      - '**.git**'
+      - 'RobustToolbox/'
 
 jobs:
   build:
