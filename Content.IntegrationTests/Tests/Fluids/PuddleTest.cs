@@ -148,51 +148,48 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             float sEvaporateTime = default;
             PuddleComponent sPuddle = null;
-            Solution solution = null;
-            ReagentUnit sPuddleStartingVolume = default;
+            EvaporationComponent sEvaporation;
+            var amount = 2;
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", ReagentUnit.New(amount));
                 sPuddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
                 Assert.NotNull(sPuddle);
+
+                sEvaporation = sPuddle.Owner.GetComponent<EvaporationComponent>();
 
                 sPuddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
                 Assert.True(sPuddle.Owner.Paused);
 
                 // Check that the puddle is going to evaporate
-                Assert.Positive(sPuddle.EvaporateTime);
+                Assert.Positive(sEvaporation.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
+                Assert.That(sEvaporation.Accumulator, Is.EqualTo(0f));
 
-                sEvaporateTime = sPuddle.EvaporateTime;
-                sPuddleStartingVolume = sPuddle.CurrentVolume;
+                sEvaporateTime = sEvaporation.EvaporateTime;
             });
 
             // Wait enough time for it to evaporate if it was unpaused
-            var sTimeToWait = (5 + (int) Math.Ceiling(sEvaporateTime * sGameTiming.TickRate)) * 2;
+            var sTimeToWait = (5 + (int)Math.Ceiling(amount * sEvaporateTime * sGameTiming.TickRate));
             await server.WaitRunTicks(sTimeToWait);
 
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
             {
                 Assert.True(sPuddle.Owner.Paused);
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
 
                 // Check that the puddle still exists
                 Assert.False(sPuddle.Owner.Deleted);
             });
 
             // Unpause the map
-            await server.WaitPost(() =>
-            {
-                sPauseManager.SetMapPaused(sMapId, false);
-            });
+            await server.WaitPost(() => { sPauseManager.SetMapPaused(sMapId, false); });
 
             // Check that the map, grid and puddle are unpaused
             await server.WaitAssertion(() =>

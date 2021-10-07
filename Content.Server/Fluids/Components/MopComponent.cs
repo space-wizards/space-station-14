@@ -155,7 +155,7 @@ namespace Content.Server.Fluids.Components
             }
             else
             {
-                puddleComponent.SplitSolution(transferAmount);
+                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount);
             }
 
             if (
