@@ -3,8 +3,8 @@ name: Diff RSIs
 on:
   pull_request:
     paths:
-      - *.rsi*
-      - *.RSI*
+      - '*.rsi*'
+      - '*.RSI*'
 
 jobs:
   diff:
