@@ -38,10 +38,6 @@
     sprite: Objects/Weapons/Guns/Cannons/pie_cannon.rsi
     layers:
     - state: piecannon
-      map: [ "enum.PneumaticCannonVisualLayers.Base" ]
-    - state: oxygen
-      map: [ "enum.PneumaticCannonVisualLayers.Tank" ]
-      visible: false
   - type: Storage
     whitelist:
       components:
