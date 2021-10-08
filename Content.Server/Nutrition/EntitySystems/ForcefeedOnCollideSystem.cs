@@ -18,10 +18,8 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (!args.Target.HasComponent<HungerComponent>())
                 return;
-            if (!ComponentManager.TryGetComponent<FoodComponent>(uid, out var food))
+            if (!EntityManager.TryGetComponent<FoodComponent>(uid, out var food))
                 return;
-
-
 
             // the 'target' isnt really the 'user' per se.. but..
             food.TryUseFood(args.Target, args.Target);
@@ -32,7 +30,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (!component.RemoveOnThrowEnd)
                 return;
 
-            ComponentManager.RemoveComponent(uid, component);
+            EntityManager.RemoveComponent(uid, component);
         }
     }
 }

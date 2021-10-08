@@ -282,7 +282,6 @@ namespace Content.Client.Entry
             "AmbientOnPowered",
             "Wieldable",
             "IncreaseDamageOnWield",
-            "AmbientOnPowered",
             "TabletopGame",
             "LitOnPowered",
             "PneumaticCannon"

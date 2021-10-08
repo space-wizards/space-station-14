@@ -17,9 +17,10 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Server.Throwing;
 using Content.Server.Tools.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Tool;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -43,6 +44,8 @@ namespace Content.Server.PneumaticCannon
             SubscribeLocalEvent<PneumaticCannonComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<PneumaticCannonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<PneumaticCannonComponent, AfterInteractEvent>(OnAfterInteract);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetAlternativeVerbsEvent>(OnAlternativeVerbs);
+            SubscribeLocalEvent<PneumaticCannonComponent, GetOtherVerbsEvent>(OnOtherVerbs);
         }
 
         public override void Update(float frameTime)
@@ -274,6 +277,30 @@ namespace Content.Server.PneumaticCannon
             }
 
             return false;
+        }
+
+        private void OnAlternativeVerbs(EntityUid uid, PneumaticCannonComponent component, GetAlternativeVerbsEvent args)
+        {
+            if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
+                return;
+            if (!args.CanInteract)
+                return;
+
+            Verb ejectTank = new();
+            ejectTank.Act = () => TryRemoveGasTank(component, args.User);
+            ejectTank.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
+            args.Verbs.Add(ejectTank);
+        }
+
+        private void OnOtherVerbs(EntityUid uid, PneumaticCannonComponent component, GetOtherVerbsEvent args)
+        {
+            if (!args.CanInteract)
+                return;
+
+            Verb ejectItems = new();
+            ejectItems.Act = () => TryEjectAllItems(component, args.User);
+            ejectItems.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
+            args.Verbs.Add(ejectItems);
         }
 
         public void TryRemoveGasTank(PneumaticCannonComponent component, IEntity user)

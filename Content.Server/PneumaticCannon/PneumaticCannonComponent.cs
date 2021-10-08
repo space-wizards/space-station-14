@@ -77,44 +77,6 @@ namespace Content.Server.PneumaticCannon
         [ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier FireSound = new SoundPathSpecifier("/Audio/Effects/thunk.ogg");
 
-        [Verb]
-        public sealed class EjectGasTankVerb : Verb<PneumaticCannonComponent>
-        {
-            public override bool RequireInteractionRange { get; } = true;
-
-            protected override void GetData(IEntity user, PneumaticCannonComponent component, VerbData data)
-            {
-                if (component.GasTankSlot.ContainedEntities.Count == 0 || !component.GasTankRequired)
-                {
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-
-                data.Text = Loc.GetString("pneumatic-cannon-component-verb-gas-tank-name");
-            }
-
-            protected override void Activate(IEntity user, PneumaticCannonComponent component)
-            {
-                EntitySystem.Get<PneumaticCannonSystem>().TryRemoveGasTank(component, user);
-            }
-        }
-
-        [Verb]
-        public sealed class EjectAllItems : Verb<PneumaticCannonComponent>
-        {
-            public override bool AlternativeInteraction { get; } = true;
-            public override bool RequireInteractionRange { get; } = true;
-
-            protected override void GetData(IEntity user, PneumaticCannonComponent component, VerbData data)
-            {
-                data.Text = Loc.GetString("pneumatic-cannon-component-verb-eject-items-name");
-            }
-
-            protected override void Activate(IEntity user, PneumaticCannonComponent component)
-            {
-                EntitySystem.Get<PneumaticCannonSystem>().TryEjectAllItems(component, user);
-            }
-        }
-
         public struct FireData
         {
             public IEntity User;
