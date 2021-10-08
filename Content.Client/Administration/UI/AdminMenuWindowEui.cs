@@ -1,0 +1,42 @@
+using System.Linq;
+using Content.Client.Eui;
+using Content.Shared.Administration;
+using Robust.Client.UserInterface.Controls;
+using Robust.Client.UserInterface.CustomControls;
+
+namespace Content.Client.Administration.UI
+{
+    public class AdminAnnounceEui : BaseEui
+    {
+        private readonly AdminAnnounceWindow _window;
+
+        public AdminAnnounceEui()
+        {
+            _window = new AdminAnnounceWindow();
+            _window.OnClose += () => SendMessage(new AdminAnnounceEuiMsg.Close());
+            _window.AnnounceButton.OnPressed += AnnounceButtonOnOnPressed;
+        }
+
+        private void AnnounceButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        {
+            SendMessage(new AdminAnnounceEuiMsg.DoAnnounce
+            {
+                Announcement = _window.Announcement.Text,
+                Announcer =  _window.Announcer.Text,
+                AnnounceType =  (AdminAnnounceType) (_window.AnnounceMethod.SelectedMetadata ?? AdminAnnounceType.Station),
+                CloseAfter = true,
+            });
+
+        }
+
+        public override void Opened()
+        {
+            _window.OpenCentered();
+        }
+
+        public override void Closed()
+        {
+            _window.Close();
+        }
+    }
+}
