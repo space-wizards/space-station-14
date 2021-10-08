@@ -2327,3 +2327,8 @@ Entries:
   - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
   id: 415
   time: '2021-10-08T07:37:18.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
+  id: 416
+  time: '2021-10-08T10:26:43.0000000+00:00'
