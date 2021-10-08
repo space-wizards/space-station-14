@@ -1,7 +1,5 @@
 using Content.Server.Administration;
-using Content.Server.PDA.Managers;
-using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Systems;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Traitor.Uplink;
@@ -70,16 +68,9 @@ namespace Content.Server.Traitor.Uplink.Commands
             var tcCount = configManager.GetCVar(CCVars.TraitorStartingBalance);
 
             // Get account
-            var uplinkManager = IoCManager.Resolve<IUplinkManager>();
-            if (!uplinkManager.TryGetAccount(user.Uid, out UplinkAccount? uplinkAccount))
-            {
-                uplinkAccount = new UplinkAccount(user.Uid, tcCount);
-                if (!uplinkManager.AddNewAccount(uplinkAccount))
-                {
-                    shell.WriteLine(Loc.GetString("Can't create new uplink account"));
-                    return;
-                }
-            }
+            var uplinkAccount = new UplinkAccount(tcCount, user.Uid);
+            var accounts = entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+            accounts.AddNewAccount(uplinkAccount);
 
             // Finally add uplink
             if (!entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
