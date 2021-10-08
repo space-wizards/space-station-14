@@ -24,12 +24,7 @@ namespace Content.Server.Administration.UI
 
         public override EuiStateBase GetNewState()
         {
-            return new AdminAnnounceEuiState()
-            {
-                /*Announcer = "Central Command",
-                Announcement = "",
-                AnnounceType = AdminAnnounceType.Station,*/
-            };
+            return new AdminAnnounceEuiState();
         }
 
         public override void HandleMessage(EuiMessageBase msg)

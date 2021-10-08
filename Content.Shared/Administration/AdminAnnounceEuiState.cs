@@ -10,12 +10,7 @@ namespace Content.Shared.Administration
         Server,
     }
     [Serializable, NetSerializable]
-    public sealed class AdminAnnounceEuiState : EuiStateBase
-    {
-        /*public string Announcer = default!;
-        public string Announcement = default!;
-        public AdminAnnounceType AnnounceType = AdminAnnounceType.Station;*/
-    }
+    public sealed class AdminAnnounceEuiState : EuiStateBase {}
 
     public static class AdminAnnounceEuiMsg
     {
