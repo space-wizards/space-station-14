@@ -2332,3 +2332,9 @@ Entries:
   - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
   id: 416
   time: '2021-10-08T10:26:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Added a warning dialog to the observe button, no more misclicks.',
+    type: Add}
+  id: 417
+  time: '2021-10-08T14:22:58.0000000+00:00'
