@@ -41,7 +41,7 @@ namespace Content.Server.WireHacking
         private bool _isPanelOpen;
 
         [DataField("screwingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        private string _screwingQuality = "Pulsing";
+        private string _screwingQuality = "Screwing";
 
         [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         private string _cuttingQuality = "Cutting";
