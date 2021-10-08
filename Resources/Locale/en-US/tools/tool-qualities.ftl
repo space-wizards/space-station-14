@@ -2,10 +2,10 @@ tool-quality-anchoring-name = Anchoring
 tool-quality-anchoring-tool-name = Wrench
 
 tool-quality-prying-name = Prying
-tool-quality-prying-tool-name = Wrench
+tool-quality-prying-tool-name = Crowbar
 
 tool-quality-screwing-name = Screwing
-tool-quality-screwing-tool-name = Wrench
+tool-quality-screwing-tool-name = Screwdriver
 
 tool-quality-cutting-name = Cutting
 tool-quality-cutting-tool-name = Wirecutter
