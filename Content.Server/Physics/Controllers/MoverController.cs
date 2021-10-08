@@ -99,7 +99,7 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
-            var angularSpeed = 1f;
+            var angularSpeed = 0.75f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
@@ -120,6 +120,11 @@ namespace Content.Server.Physics.Controllers
                 case ShuttleMode.Cruise:
                     if (movement.Length != 0.0f)
                     {
+                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        {
+                            movement.Y *= 5f;
+                        }
+
                         // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
                         physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
                                                             shuttleComponent.SpeedMultipler *
