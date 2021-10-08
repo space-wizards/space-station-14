@@ -99,20 +99,19 @@ namespace Content.Server.Physics.Controllers
             // inputs will do different things.
             // TODO: Do that
             float speedCap;
-            // This is comically fast for debugging
-            var angularSpeed = 20000f;
+            var angularSpeed = 1f;
 
             // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
             var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
 
-            if (physicsComponent.LinearVelocity.LengthSquared == 0f)
-            {
-                movement *= 5f;
-            }
-
             switch (shuttleComponent.Mode)
             {
                 case ShuttleMode.Docking:
+                    if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                    {
+                        movement *= 5f;
+                    }
+
                     if (movement.Length != 0f)
                         physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
 
@@ -126,8 +125,9 @@ namespace Content.Server.Physics.Controllers
                                                             shuttleComponent.SpeedMultipler *
                                                             physicsComponent.Mass *
                                                             movement.Y *
-                                                            10);
-                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed);
+                                                            2.5f);
+
+                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
                     }
 
                     // TODO WHEN THIS ACTUALLY WORKS
