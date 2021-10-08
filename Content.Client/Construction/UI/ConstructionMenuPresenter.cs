@@ -272,7 +272,7 @@ namespace Content.Client.Construction.UI
                             stepList.AddItem(Loc.GetString(
                                                  "construction-presenter-tool-step",
                                                  ("step-number", stepNumber++),
-                                                 ("tool", _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName)),
+                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
                                              icon);
                             break;
 
@@ -315,7 +315,7 @@ namespace Content.Client.Construction.UI
                                                                  ("step-number", stepNumber),
                                                                  ("parallel-number", parallelNumber),
                                                                  ("substep-number", subStepNumber++),
-                                                                 ("tool", _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName)),
+                                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
                                                             icon);
                                             break;
 
