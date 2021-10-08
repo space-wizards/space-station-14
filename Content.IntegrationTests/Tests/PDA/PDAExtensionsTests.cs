@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests.PDA
   components:
   - type: ItemSlots
     slots:
-      pda_id_slot:
+      pdaIdSlot:
         whitelist:
           components:
             - IdCard
@@ -79,7 +79,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
                 sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
-                    .TryInsertContent(itemSlots, pdaIdCard, PDAComponent.IDSlotName);
+                    .TryInsertContent(itemSlots, pdaIdCard, pdaComponent.IdSlot);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first

@@ -5,11 +5,8 @@ medical-scanner-component-msg-soul-broken = ERROR: Soul present, but defunct / d
 
 ## EnterVerb
 
-enter-verb-get-data-text = Enter
-
-## EjectVerb
-
-medical-scanner-eject-verb-get-data-text = Eject
+medical-scanner-verb-enter = Enter
+medical-scanner-verb-noun-occupant = occupant
 
 ## UI
 

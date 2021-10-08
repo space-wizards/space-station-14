@@ -1,0 +1,1 @@
+expendable-light-start-verb = Start Light

@@ -40,8 +40,10 @@
   name: low wall overlay
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - HideContextMenu
   - type: Sprite
     color: "#889192"
     drawdepth: WallMountedItems
     sprite: Structures/Walls/low_wall.rsi
-  - type: HideContextMenu
