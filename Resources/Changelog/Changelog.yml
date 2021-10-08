@@ -2322,3 +2322,8 @@ Entries:
   - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
   id: 414
   time: '2021-10-07T06:59:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
+  id: 415
+  time: '2021-10-08T07:37:18.0000000+00:00'
