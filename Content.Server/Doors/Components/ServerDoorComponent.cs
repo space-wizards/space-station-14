@@ -446,7 +446,8 @@ namespace Content.Server.Doors.Components
                 // Use this version so we can ignore the CanCollide being false
                 foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
-                    if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
+                    if (((physicsComponent.CollisionMask & e.CollisionLayer) | (e.CollisionMask & physicsComponent.CollisionLayer)) != 0
+                        && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
             }
             return false;
