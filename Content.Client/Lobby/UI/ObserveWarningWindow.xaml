@@ -1,9 +1,5 @@
 <SS14Window
     xmlns="https://spacestation14.io"
-    xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
-    xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
-    xmlns:atmosTab="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
-    xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
     <BoxContainer Orientation="Vertical">
         <Label Text="{Loc 'observe-warning-1'}"/>
