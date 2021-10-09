@@ -52,9 +52,9 @@ grids:
   - ind: "0,0"
     tiles: HgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAAB4AAAAhAAAAFgAAABYAAAAWAAAAIQAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAbAAAAGwAAABsAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIAAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAABYAAAAhAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAFgAAACEAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAYAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAgAAAAIAAAACAAAAAgAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAIQAAABYAAAAWAAAAFgAAABgAAAAgAAAAGAAAABgAAAAYAAAAIAAAACAAAAAgAAAAGAAAABgAAAAYAAAAIQAAACEAAAAWAAAAFgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAABgAAAAhAAAAGAAAAA==
   - ind: "1,0"
-    tiles: GwAAABsAAAAbAAAAGwAAACAAAAAYAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABsAAAAbAAAAGwAAABsAAAAgAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAACAAAAAgAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAABgAAAAYAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAGAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABgAAAAYAAAAGAAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAhAAAAFgAAABYAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAA==
+    tiles: GwAAABsAAAAbAAAAGwAAACAAAAAYAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABsAAAAbAAAAGwAAABsAAAAgAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAACAAAAAgAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIAAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAABgAAAAYAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAGAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABgAAAAYAAAAGAAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAIAAAACAAAAAhAAAAFgAAABYAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAGAAAABgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhAAAAIQAAAA==
   - ind: "0,1"
-    tiles: IQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAGAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAACEAAAAAAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAAAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAIQAAAAAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAACEAAAAAAAAAIQAAACEAAAAWAAAAIQAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAIQAAAAAAAAAPAAAADwAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACEAAAAAAAAADwAAAA8AAAAWAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFAAAABQAAAAhAAAAAAAAAAAAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: IQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAhAAAAIQAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAIAAAACAAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAACAAAAAgAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAgAAAAIAAAABgAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAGAAAACAAAAAYAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAYAAAAGAAAABgAAAAYAAAAIQAAACEAAAAWAAAAIQAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACEAAAAhAAAAIQAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAhAAAAGAAAABgAAAAYAAAAIQAAAAAAAAAPAAAADwAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACAAAAAgAAAAIAAAACEAAAAAAAAADwAAAA8AAAAWAAAAFgAAABYAAAAWAAAAHgAAAB4AAAAeAAAAHgAAACEAAAAhAAAAIQAAACEAAAAhAAAAAAAAAA8AAAAhAAAAFgAAABYAAAAWAAAAIQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFAAAABQAAAAhAAAAAAAAAAAAAAAhAAAAIQAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "-2,0"
     tiles: IQAAAB4AAAAeAAAAHgAAAB4AAAAeAAAAFgAAABYAAAAWAAAAFgAAACEAAAAOAAAAFgAAABYAAAAWAAAAFgAAACEAAAAeAAAAHgAAAB4AAAAeAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAADgAAAA4AAAAOAAAADgAAABYAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAFgAAABYAAAAWAAAAFgAAACEAAAAhAAAAIQAAACEAAAAhAAAAGAAAACAAAAAhAAAAFgAAABYAAAAWAAAAIQAAACEAAAAWAAAAFgAAACEAAAAhAAAAFgAAABYAAAAhAAAAIAAAACAAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAWAAAAIQAAACAAAAAYAAAAGAAAACEAAAAWAAAAFgAAABYAAAAWAAAAIQAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAgAAAAGAAAABgAAAAhAAAAFgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAACEAAAAWAAAAFgAAABYAAAAhAAAAIAAAABgAAAAYAAAAIQAAABYAAAAWAAAAFgAAABYAAAAhAAAAFgAAABYAAAAhAAAAIQAAABgAAAAhAAAAIQAAACAAAAAgAAAAGAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAABgAAAAgAAAAGAAAABgAAAAgAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAYAAAAIAAAACAAAAAgAAAAIAAAABgAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAgAAAAIAAAACAAAAAhAAAAIQAAACAAAAAYAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACAAAAAgAAAAGAAAAA==
   - ind: "1,-1"
@@ -70,7 +70,7 @@ grids:
   - ind: "-1,2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAFgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,1"
-    tiles: IQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: IQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGAAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAhAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAYAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIQAAACEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,2"
     tiles: FgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAACEAAAAhAAAAIQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "2,0"
@@ -6495,8 +6495,7 @@ entities:
 - uid: 617
   type: AirlockExternalLocked
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 15.5,16.5
+  - pos: 17.5,15.5
     parent: 853
     type: Transform
   - containers:
@@ -7928,7 +7927,7 @@ entities:
 - uid: 778
   type: ClosetEmergencyFilledRandom
   components:
-  - pos: 12.5,21.5
+  - pos: 14.5,21.5
     parent: 853
     type: Transform
   - isPlaceable: False
@@ -12887,12 +12886,30 @@ entities:
       -21,19: 0
       -21,20: 0
       -21,21: 0
-      11,26: 1
-      11,27: 1
-      12,26: 1
-      12,27: 1
-      13,26: 1
-      13,27: 1
+      11,26: 0
+      11,27: 0
+      12,26: 0
+      12,27: 0
+      13,26: 0
+      13,27: 0
+      15,17: 0
+      15,18: 0
+      15,19: 0
+      15,20: 0
+      15,21: 0
+      15,22: 0
+      16,17: 0
+      16,18: 0
+      16,19: 0
+      16,20: 0
+      16,21: 0
+      16,22: 0
+      17,17: 0
+      17,18: 0
+      17,19: 0
+      17,20: 0
+      17,21: 0
+      17,22: 0
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
@@ -12905,19 +12922,9 @@ entities:
       - 0
       - 0
       - 0
-    - volume: 2500
-      temperature: 293.15
-      moles:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
     type: GridAtmosphere
   - angularDamping: 0.1
+    fixedRotation: False
     fixtures:
     - shape: !type:PolygonShape
         vertices:
@@ -12931,6 +12938,7 @@ entities:
       layer:
       - MapGrid
       mass: 256
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,-16
@@ -12943,6 +12951,7 @@ entities:
       layer:
       - MapGrid
       mass: 256
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,0
@@ -12955,6 +12964,7 @@ entities:
       layer:
       - MapGrid
       mass: 256
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 16,-16
@@ -12967,6 +12977,7 @@ entities:
       layer:
       - MapGrid
       mass: 256
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 32,0
@@ -12979,6 +12990,7 @@ entities:
       layer:
       - MapGrid
       mass: 240
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 18,15
@@ -12991,6 +13003,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 32,15
@@ -13003,30 +13016,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
-    - shape: !type:PolygonShape
-        vertices:
-        - 16,16
-        - 16,17
-        - 0,17
-        - 0,16
-      id: grid_chunk-0-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 16
-    - shape: !type:PolygonShape
-        vertices:
-        - 15,17
-        - 15,26
-        - 0,26
-        - 0,17
-      id: grid_chunk-0-17
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 135
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 14,26
@@ -13039,6 +13029,7 @@ entities:
       layer:
       - MapGrid
       mass: 28
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 11,28
@@ -13051,6 +13042,7 @@ entities:
       layer:
       - MapGrid
       mass: 44
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,0
@@ -13063,6 +13055,7 @@ entities:
       layer:
       - MapGrid
       mass: 256
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 29,-16
@@ -13075,6 +13068,7 @@ entities:
       layer:
       - MapGrid
       mass: 91
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 32,-9
@@ -13087,6 +13081,7 @@ entities:
       layer:
       - MapGrid
       mass: 144
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 14,-32
@@ -13099,6 +13094,7 @@ entities:
       layer:
       - MapGrid
       mass: 39
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 14,-29
@@ -13111,6 +13107,7 @@ entities:
       layer:
       - MapGrid
       mass: 28
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 16,-27
@@ -13123,6 +13120,7 @@ entities:
       layer:
       - MapGrid
       mass: 176
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 29,-27
@@ -13135,6 +13133,7 @@ entities:
       layer:
       - MapGrid
       mass: 143
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,16
@@ -13147,6 +13146,7 @@ entities:
       layer:
       - MapGrid
       mass: 160
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -6,26
@@ -13159,6 +13159,7 @@ entities:
       layer:
       - MapGrid
       mass: 10
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,26
@@ -13171,6 +13172,7 @@ entities:
       layer:
       - MapGrid
       mass: 24
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,16
@@ -13183,6 +13185,7 @@ entities:
       layer:
       - MapGrid
       mass: 72
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,22
@@ -13195,6 +13198,7 @@ entities:
       layer:
       - MapGrid
       mass: 20
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,32
@@ -13207,6 +13211,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,33
@@ -13219,18 +13224,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
-    - shape: !type:PolygonShape
-        vertices:
-        - 18,16
-        - 18,17
-        - 16,17
-        - 16,16
-      id: grid_chunk-16-16
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 10,32
@@ -13243,6 +13237,7 @@ entities:
       layer:
       - MapGrid
       mass: 10
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 9,33
@@ -13255,6 +13250,7 @@ entities:
       layer:
       - MapGrid
       mass: 9
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,0
@@ -13267,6 +13263,7 @@ entities:
       layer:
       - MapGrid
       mass: 240
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 37,15
@@ -13279,6 +13276,7 @@ entities:
       layer:
       - MapGrid
       mass: 5
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 52,0
@@ -13291,6 +13289,7 @@ entities:
       layer:
       - MapGrid
       mass: 60
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 44,-16
@@ -13303,6 +13302,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 47,-16
@@ -13315,6 +13315,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-15
@@ -13327,6 +13328,7 @@ entities:
       layer:
       - MapGrid
       mass: 35
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 40,-9
@@ -13339,6 +13341,7 @@ entities:
       layer:
       - MapGrid
       mass: 24
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-8
@@ -13351,6 +13354,7 @@ entities:
       layer:
       - MapGrid
       mass: 14
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 45,-6
@@ -13363,6 +13367,7 @@ entities:
       layer:
       - MapGrid
       mass: 78
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-1
@@ -13375,6 +13380,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -6,-31
@@ -13387,6 +13393,7 @@ entities:
       layer:
       - MapGrid
       mass: 10
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,-29
@@ -13399,6 +13406,7 @@ entities:
       layer:
       - MapGrid
       mass: 13
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 0,-28
@@ -13411,6 +13419,7 @@ entities:
       layer:
       - MapGrid
       mass: 192
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,-28
@@ -13423,6 +13432,7 @@ entities:
       layer:
       - MapGrid
       mass: 33
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,-17
@@ -13435,6 +13445,7 @@ entities:
       layer:
       - MapGrid
       mass: 10
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,-16
@@ -13447,6 +13458,7 @@ entities:
       layer:
       - MapGrid
       mass: 30
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -16,-13
@@ -13459,6 +13471,7 @@ entities:
       layer:
       - MapGrid
       mass: 208
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,0
@@ -13471,6 +13484,7 @@ entities:
       layer:
       - MapGrid
       mass: 7
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,1
@@ -13483,6 +13497,7 @@ entities:
       layer:
       - MapGrid
       mass: 18
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,3
@@ -13495,6 +13510,7 @@ entities:
       layer:
       - MapGrid
       mass: 30
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,6
@@ -13507,6 +13523,7 @@ entities:
       layer:
       - MapGrid
       mass: 9
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,7
@@ -13519,6 +13536,7 @@ entities:
       layer:
       - MapGrid
       mass: 30
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,10
@@ -13531,6 +13549,7 @@ entities:
       layer:
       - MapGrid
       mass: 18
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,12
@@ -13543,6 +13562,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,-13
@@ -13555,6 +13575,7 @@ entities:
       layer:
       - MapGrid
       mass: 12
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,-9
@@ -13567,6 +13588,7 @@ entities:
       layer:
       - MapGrid
       mass: 28
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,-5
@@ -13579,6 +13601,7 @@ entities:
       layer:
       - MapGrid
       mass: 24
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - -32,-2
@@ -13591,6 +13614,7 @@ entities:
       layer:
       - MapGrid
       mass: 14
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-16
@@ -13603,6 +13627,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 53,-16
@@ -13615,6 +13640,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 56,-16
@@ -13627,6 +13653,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 56,-15
@@ -13639,6 +13666,7 @@ entities:
       layer:
       - MapGrid
       mass: 56
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 53,-8
@@ -13651,6 +13679,7 @@ entities:
       layer:
       - MapGrid
       mass: 35
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 52,-1
@@ -13663,6 +13692,7 @@ entities:
       layer:
       - MapGrid
       mass: 4
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-32
@@ -13675,6 +13705,7 @@ entities:
       layer:
       - MapGrid
       mass: 6
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 41,-32
@@ -13687,6 +13718,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 43,-31
@@ -13699,6 +13731,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 46,-31
@@ -13711,6 +13744,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-29
@@ -13723,6 +13757,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 41,-28
@@ -13735,6 +13770,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 43,-28
@@ -13747,6 +13783,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 46,-28
@@ -13759,6 +13796,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-25
@@ -13771,6 +13809,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 41,-24
@@ -13783,6 +13822,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 43,-24
@@ -13795,6 +13835,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 46,-24
@@ -13807,6 +13848,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-21
@@ -13819,6 +13861,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 41,-20
@@ -13831,6 +13874,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 43,-20
@@ -13843,6 +13887,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 46,-20
@@ -13855,6 +13900,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-18
@@ -13867,6 +13913,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 44,-17
@@ -13879,6 +13926,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 47,-17
@@ -13891,6 +13939,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 57,-32
@@ -13903,6 +13952,7 @@ entities:
       layer:
       - MapGrid
       mass: 9
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-31
@@ -13915,6 +13965,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 54,-31
@@ -13927,6 +13978,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 57,-31
@@ -13939,6 +13991,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-32
@@ -13951,6 +14004,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-29
@@ -13963,6 +14017,7 @@ entities:
       layer:
       - MapGrid
       mass: 11
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-28
@@ -13975,6 +14030,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 54,-28
@@ -13987,6 +14043,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 57,-28
@@ -13999,6 +14056,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-28
@@ -14011,6 +14069,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-25
@@ -14023,6 +14082,7 @@ entities:
       layer:
       - MapGrid
       mass: 11
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-24
@@ -14035,6 +14095,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 54,-24
@@ -14047,6 +14108,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 57,-24
@@ -14059,6 +14121,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-24
@@ -14071,6 +14134,7 @@ entities:
       layer:
       - MapGrid
       mass: 3
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-21
@@ -14083,6 +14147,7 @@ entities:
       layer:
       - MapGrid
       mass: 11
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-20
@@ -14095,6 +14160,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 54,-20
@@ -14107,6 +14173,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 57,-20
@@ -14119,6 +14186,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-20
@@ -14131,6 +14199,7 @@ entities:
       layer:
       - MapGrid
       mass: 2
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-18
@@ -14143,6 +14212,7 @@ entities:
       layer:
       - MapGrid
       mass: 11
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-17
@@ -14155,6 +14225,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 53,-17
@@ -14167,6 +14238,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 56,-17
@@ -14179,6 +14251,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-34
@@ -14191,6 +14264,7 @@ entities:
       layer:
       - MapGrid
       mass: 11
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 50,-33
@@ -14203,6 +14277,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 54,-33
@@ -14215,6 +14290,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 59,-33
@@ -14227,6 +14303,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 48,-34
@@ -14239,6 +14316,7 @@ entities:
       layer:
       - MapGrid
       mass: 8
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 41,-33
@@ -14251,6 +14329,7 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
         - 46,-33
@@ -14263,6 +14342,46 @@ entities:
       layer:
       - MapGrid
       mass: 1
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 15,23
+        - 15,26
+        - 0,26
+        - 0,23
+      id: grid_chunk-0-23
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 45
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 16,16
+        - 16,23
+        - 0,23
+        - 0,16
+      id: grid_chunk-0-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 112
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 18,16
+        - 18,23
+        - 16,23
+        - 16,16
+      id: grid_chunk-16-16
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 14
+      restitution: 0.1
     bodyType: Dynamic
     type: Physics
   - gravityShakeSound: !type:SoundPathSpecifier
@@ -18081,8 +18200,7 @@ entities:
 - uid: 1307
   type: PoweredSmallLight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 17,15.5
+  - pos: 16.5,16
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -18095,8 +18213,8 @@ entities:
 - uid: 1308
   type: PoweredSmallLight
   components:
-  - rot: 4.71238902409608 rad
-    pos: 14,16.5
+  - rot: 1.5707963267948966 rad
+    pos: 12,18.5
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -19944,45 +20062,47 @@ entities:
     parent: 853
     type: Transform
 - uid: 1529
-  type: ReinforcedWindow
+  type: PoweredSmallLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,20.5
+  - pos: 14.5,22
     parent: 853
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - enabled: False
+    type: AmbientSound
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
 - uid: 1530
-  type: ReinforcedWindow
+  type: ChairOfficeLight
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,19.5
+  - rot: 1.5707963267948966 rad
+    pos: 16.495005,21
     parent: 853
     type: Transform
 - uid: 1531
-  type: ReinforcedWindow
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,18.5
+  - pos: 15.5,16.5
     parent: 853
     type: Transform
 - uid: 1532
-  type: LowWall
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,20.5
+  - pos: 16.5,16.5
     parent: 853
     type: Transform
 - uid: 1533
   type: LowWall
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,19.5
+  - pos: 15.5,22.5
     parent: 853
     type: Transform
 - uid: 1534
-  type: LowWall
+  type: WallSolid
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 14.5,18.5
+  - pos: 14.5,16.5
     parent: 853
     type: Transform
 - uid: 1535
@@ -25730,11 +25850,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2351
-  type: WallReinforced
+  type: CableApcExtension
   components:
-  - pos: 17.5,15.5
+  - pos: 13.5,17.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 2352
   type: WallReinforced
   components:
@@ -25742,15 +25866,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2353
-  type: WallReinforced
+  type: LowWall
   components:
-  - pos: 16.5,16.5
+  - pos: 16.5,22.5
     parent: 853
     type: Transform
 - uid: 2354
-  type: WallReinforced
+  type: LowWall
   components:
-  - pos: 14.5,17.5
+  - pos: 17.5,22.5
     parent: 853
     type: Transform
 - uid: 2355
@@ -25887,15 +26011,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 2374
-  type: WallReinforced
+  type: LowWall
   components:
-  - pos: 14.5,16.5
+  - pos: 17.5,21.5
     parent: 853
     type: Transform
 - uid: 2375
-  type: WallReinforced
+  type: LowWall
   components:
-  - pos: 14.5,21.5
+  - pos: 17.5,20.5
     parent: 853
     type: Transform
 - uid: 2376
@@ -48293,6 +48417,18 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 4855
+  type: LowWall
+  components:
+  - pos: 17.5,19.5
+    parent: 853
+    type: Transform
+- uid: 4856
+  type: LowWall
+  components:
+  - pos: 17.5,18.5
+    parent: 853
+    type: Transform
 - uid: 4857
   type: SignLibrary
   components:
@@ -48862,6 +48998,12 @@ entities:
   - containers:
       cabinetSlot: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 4933
+  type: LowWall
+  components:
+  - pos: 17.5,17.5
+    parent: 853
+    type: Transform
 - uid: 4934
   type: ExtinguisherCabinetFilled
   components:
@@ -49849,6 +49991,30 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 5056
+  type: ReinforcedWindow
+  components:
+  - pos: 15.5,22.5
+    parent: 853
+    type: Transform
+- uid: 5057
+  type: ReinforcedWindow
+  components:
+  - pos: 16.5,22.5
+    parent: 853
+    type: Transform
+- uid: 5058
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,22.5
+    parent: 853
+    type: Transform
+- uid: 5059
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,21.5
+    parent: 853
+    type: Transform
 - uid: 5060
   type: Firelock
   components:
@@ -50395,6 +50561,12 @@ entities:
       DisposalEntry: !type:Container
         ents: []
     type: ContainerContainer
+- uid: 5127
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,20.5
+    parent: 853
+    type: Transform
 - uid: 5128
   type: DisposalPipe
   components:
@@ -50639,4 +50811,22 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 5154
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,19.5
+    parent: 853
+    type: Transform
+- uid: 5155
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,18.5
+    parent: 853
+    type: Transform
+- uid: 5156
+  type: ReinforcedWindow
+  components:
+  - pos: 17.5,17.5
+    parent: 853
+    type: Transform
 ...
