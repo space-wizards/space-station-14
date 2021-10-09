@@ -27,7 +27,7 @@ namespace Content.Shared.Jittering
 
         private void OnGetState(EntityUid uid, JitteringComponent component, ref ComponentGetState args)
         {
-            args.State = new JitteringComponentState(component.EndTime, component.Amplitude);
+            args.State = new JitteringComponentState(component.EndTime, component.Amplitude, component.Frequency);
         }
 
         private void OnHandleState(EntityUid uid, JitteringComponent component, ref ComponentHandleState args)
@@ -37,6 +37,7 @@ namespace Content.Shared.Jittering
 
             component.EndTime = jitteringState.EndTime;
             component.Amplitude = jitteringState.Amplitude;
+            component.Frequency = jitteringState.Frequency;
         }
 
         /// <summary>
@@ -50,8 +51,9 @@ namespace Content.Shared.Jittering
         /// <param name="uid">Entity in question.</param>
         /// <param name="time">For how much time to apply the effect.</param>
         /// <param name="amplitude">Jitteriness of the animation. 300 is essentially the maximum.</param>
+        /// <param name="frequency">How often a jitter will happen.</param>
         /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
-        public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, bool forceValueChange = false)
+        public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 0.25f, bool forceValueChange = false)
         {
             var jittering = EntityManager.EnsureComponent<JitteringComponent>(uid);
 
@@ -62,6 +64,9 @@ namespace Content.Shared.Jittering
 
             if(forceValueChange || jittering.Amplitude < amplitude)
                 jittering.Amplitude = amplitude;
+
+            if (forceValueChange || jittering.Frequency < frequency)
+                jittering.Frequency = frequency;
 
             jittering.Dirty();
         }

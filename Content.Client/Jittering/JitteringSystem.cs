@@ -56,10 +56,11 @@ namespace Content.Client.Jittering
             var offset = new Vector2(_random.NextFloat(-amplitude, amplitude),
                 _random.NextFloat(-amplitude / 3f, amplitude / 3f));
 
+            var length = jittering.Frequency*2f;
+
             return new Animation()
             {
-                // No matter what, the animation always lasts half a second so it refreshes often.
-                Length = TimeSpan.FromSeconds(0.5f),
+                Length = TimeSpan.FromSeconds(length),
                 AnimationTracks =
                 {
                     new AnimationTrackComponentProperty()
@@ -71,13 +72,13 @@ namespace Content.Client.Jittering
                         {
                             new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0f),
 
-                            new AnimationTrackProperty.KeyFrame(offset, 0.125f),
+                            new AnimationTrackProperty.KeyFrame(offset, length * 0.25f),
 
-                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0.25f),
+                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, length * 0.5f),
 
-                            new AnimationTrackProperty.KeyFrame(-offset, 0.375f),
+                            new AnimationTrackProperty.KeyFrame(-offset, length * 0.75f),
 
-                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0.5f),
+                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, length),
                         }
                     }
                 }

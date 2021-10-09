@@ -18,6 +18,9 @@ namespace Content.Shared.Jittering
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Amplitude { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float Frequency { get; set; }
     }
 
     [Serializable, NetSerializable]
@@ -25,11 +28,13 @@ namespace Content.Shared.Jittering
     {
         public TimeSpan EndTime { get; }
         public float Amplitude { get; }
+        public float Frequency { get; }
 
-        public JitteringComponentState(TimeSpan endTime, float amplitude)
+        public JitteringComponentState(TimeSpan endTime, float amplitude, float frequency)
         {
             EndTime = endTime;
             Amplitude = amplitude;
+            Frequency = frequency;
         }
     }
 }
