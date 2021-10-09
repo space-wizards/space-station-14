@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Immutable;
 using Content.Shared.Jittering;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -14,6 +15,7 @@ namespace Content.Client.Jittering
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        private readonly float[] _sign = { -1, 1 };
         private readonly string _jitterAnimationKey = "jittering";
 
         public override void Initialize()
@@ -53,8 +55,8 @@ namespace Content.Client.Jittering
         private Animation GetAnimation(JitteringComponent jittering)
         {
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
-            var offset = new Vector2(_random.NextFloat(-amplitude, amplitude),
-                _random.NextFloat(-amplitude / 3f, amplitude / 3f));
+            var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude) * _random.Pick(_sign),
+                _random.NextFloat(amplitude / 4f, amplitude / 3f) * _random.Pick(_sign));
 
             // Since the animation jitters twice, we get the frequency times two.
             // Also, animation length shouldn't be too high so we will cap it at 2 seconds...
@@ -68,7 +70,6 @@ namespace Content.Client.Jittering
                     new AnimationTrackComponentProperty()
                     {
                         ComponentType = typeof(ISpriteComponent),
-                        InterpolationMode = AnimationInterpolationMode.Linear,
                         Property = nameof(ISpriteComponent.Offset),
                         KeyFrames =
                         {
