@@ -90,7 +90,7 @@ namespace Content.Client.Verbs.UI
                     }
 
                     else if (listedCategories.Add(verb.Category.Text))
-                        AddVerbCategory(verb.Category, verbs, type, this);
+                        AddVerbCategory(verb.Category, verbs, type);
                 }
             }
 
@@ -100,7 +100,7 @@ namespace Content.Client.Verbs.UI
         /// <summary>
         ///     Add a verb category button to the pop-up
         /// </summary>
-        public void AddVerbCategory(VerbCategory category, SortedSet<Verb> verbs, VerbType type, VerbMenuPresenter presenter)
+        public void AddVerbCategory(VerbCategory category, SortedSet<Verb> verbs, VerbType type)
         {
             // Get a list of the verbs in this category
             List<Verb> verbsInCategory = new();
@@ -171,11 +171,27 @@ namespace Content.Client.Verbs.UI
             if (element is not VerbMenuElement verbElement)
                 return;
 
-            if (verbElement.Verb == null || verbElement.Type == null)
-                return;
+            var verb = verbElement.Verb;
 
-            _verbSystem.ExecuteVerb(CurrentTarget, verbElement.Verb, (VerbType) verbElement.Type);
-            if (verbElement.Verb.CloseMenu)
+            if (verb == null)
+            {
+                // The user probably clicked on a verb category.
+                // We will act as if they clicked on the first verb in that category.
+
+                if (verbElement.SubMenu == null || verbElement.SubMenu.ChildCount == 0)
+                    return;
+
+                if (verbElement.SubMenu.MenuBody.Children.First() is not VerbMenuElement verbCategoryElement)
+                    return;
+
+                verb = verbCategoryElement.Verb;
+
+                if (verb == null)
+                    return;
+            }
+
+            _verbSystem.ExecuteVerb(CurrentTarget, verb, verbElement.Type);
+            if (verb.CloseMenu)
                 _verbSystem.CloseAllMenus();
 
             args.Handle();

@@ -26,7 +26,7 @@ namespace Content.Client.Verbs.UI
         // Top quality variable naming
         public Verb? Verb;
 
-        public VerbType? Type;
+        public VerbType Type;
 
         public VerbMenuElement(string? text, SpriteSpecifier? icon, VerbType verbType) : base(text)
         {
