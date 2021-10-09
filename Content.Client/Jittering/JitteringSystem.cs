@@ -59,12 +59,27 @@ namespace Content.Client.Jittering
         private Animation GetAnimation(JitteringComponent jittering, ISpriteComponent sprite)
         {
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
-            var sign = _random.Pick(_sign);
-            var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude) * sign,
-                _random.NextFloat(amplitude / 4f, amplitude / 3f) * -sign);
+            var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude),
+                _random.NextFloat(amplitude / 4f, amplitude / 3f));
+
+            offset.X *= _random.Pick(_sign);
+            offset.Y *= _random.Pick(_sign);
+
+            if (Math.Sign(offset.X) == Math.Sign(jittering.LastJitter.X)
+                || Math.Sign(offset.Y) == Math.Sign(jittering.LastJitter.Y))
+            {
+                // If the sign is the same as last time on both axis we flip one randomly
+                // to avoid jitter staying in one quadrant too much.
+                if (_random.Prob(0.5f))
+                    offset.X *= -1;
+                else
+                    offset.Y *= -1;
+            }
 
             // Animation length shouldn't be too high so we will cap it at 2 seconds...
             var length = Math.Min((1f/jittering.Frequency), 2f);
+
+            jittering.LastJitter = offset;
 
             return new Animation()
             {

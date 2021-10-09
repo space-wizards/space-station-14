@@ -2,6 +2,7 @@ using System;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
@@ -21,6 +22,9 @@ namespace Content.Shared.Jittering
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float Frequency { get; set; }
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Vector2 LastJitter { get; set; }
     }
 
     [Serializable, NetSerializable]
