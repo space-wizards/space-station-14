@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Threading;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles.Components;
 using Content.Server.Singularity.Components;
@@ -26,6 +27,7 @@ namespace Content.Server.Singularity.EntitySystems
     public class EmitterSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
         public override void Initialize()
         {
@@ -45,7 +47,7 @@ namespace Content.Server.Singularity.EntitySystems
                 return;
             }
 
-            if (component.AccessReader.IsAllowed(access))
+            if (_accessReader.IsAllowed(component.AccessReader, access))
             {
                 component.IsLocked ^= true;
 

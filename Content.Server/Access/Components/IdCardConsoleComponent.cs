@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Access.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
@@ -91,7 +92,8 @@ namespace Content.Server.Access.Components
             }
 
             var privilegedIdEntity = PrivilegedIdContainer.ContainedEntity;
-            return privilegedIdEntity != null && reader.IsAllowed(privilegedIdEntity);
+            var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Uid);
         }
 
         /// <summary>
