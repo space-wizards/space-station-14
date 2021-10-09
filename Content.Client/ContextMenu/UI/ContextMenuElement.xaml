@@ -2,7 +2,7 @@
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
-    SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
+    MinHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
     <BoxContainer Orientation="Horizontal">
         <Control
             Name="Icon"
@@ -10,6 +10,7 @@
             SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"/>
         <RichTextLabel
             Name="Label"
+            MaxWidth="300"
             HorizontalExpand="True" 
             VerticalAlignment="Center"
             Margin ="4 0 4 0"/>
