@@ -3,13 +3,12 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
-using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Suspicion;
 using Content.Server.Suspicion.Roles;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Inventory;
 using Content.Shared.Roles;
@@ -34,7 +33,6 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] protected readonly IEntityManager EntityManager = default!;
-        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public int MinPlayers { get; set; }
         public int MinTraitors { get; set; }
@@ -117,8 +115,9 @@ namespace Content.Server.GameTicking.Presets
                 // creadth: we need to create uplink for the antag.
                 // PDA should be in place already, so we just need to
                 // initiate uplink account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, TraitorStartingBalance);
-                _uplinkManager.AddNewAccount(uplinkAccount);
+                var uplinkAccount = new UplinkAccount(TraitorStartingBalance, mind.OwnedEntity!.Uid);
+                var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
 
                 // try to place uplink
                 if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()

@@ -1,7 +1,7 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
-    Title="{Loc admin-kick-window-title}" MinSize="425 272">
+    Title="{Loc admin-player-actions-window-title}" MinSize="425 272">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc Reason}" MinWidth="100" />
@@ -10,8 +10,9 @@
         </BoxContainer>
         <cc:PlayerListControl Name="PlayerList" VerticalExpand="True" />
         <BoxContainer Orientation="Horizontal">
-            <Button Name="SubmitButton" Text="{Loc admin-kick-window-kick-text}" />
-            <Button Name="SubmitAHButton" Text="{Loc admin-kick-window-ahelp-text}" />
+            <Button Name="SubmitKickButton" Text="{Loc admin-player-actions-window-kick-text}" Disabled="True"/>
+            <Button Name="SubmitAHelpButton" Text="{Loc admin-player-actions-window-ahelp-text}" Disabled="True"/>
+            <Button Name="SubmitRespawnButton" Text="{Loc admin-player-actions-window-respawn-text}" Disabled="True"/>
         </BoxContainer>
     </BoxContainer>
 </SS14Window>

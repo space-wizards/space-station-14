@@ -27,10 +27,9 @@ using Robust.Shared.Map;
 using Robust.Shared.Random;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Traitor.Uplink;
-using Content.Server.PDA.Managers;
 using Content.Server.Traitor.Uplink;
-using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.Damage.Prototypes;
+using Content.Server.Traitor.Uplink.Account;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -43,7 +42,6 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -106,8 +104,10 @@ namespace Content.Server.GameTicking.Presets
                 inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-                _uplinkManager.AddNewAccount(uplinkAccount);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
+                var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
+
                 _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
                     .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
 

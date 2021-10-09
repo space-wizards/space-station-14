@@ -11,14 +11,15 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
 {
     [GenerateTypedNameReferences]
     [UsedImplicitly]
-    public partial class KickWindow : SS14Window
+    public partial class PlayerActionsWindow : SS14Window
     {
         private ICommonSession? _selectedSession;
 
         protected override void EnteredTree()
         {
-            SubmitButton.OnPressed += SubmitButtonOnOnPressed;
-            SubmitAHButton.OnPressed += SubmitAHButtonOnOnPressed;
+            SubmitKickButton.OnPressed += SubmitKickButtonOnPressed;
+            SubmitAHelpButton.OnPressed += SubmitAhelpButtonOnPressed;
+            SubmitRespawnButton.OnPressed += SubmitRespawnButtonOnPressed;
             PlayerList.OnSelectionChanged += OnListOnOnSelectionChanged;
         }
 
@@ -26,11 +27,12 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
         {
             _selectedSession = obj;
             var disableButtons = _selectedSession == null;
-            SubmitButton.Disabled = disableButtons;
-            SubmitAHButton.Disabled = disableButtons;
+            SubmitKickButton.Disabled = disableButtons;
+            SubmitAHelpButton.Disabled = disableButtons;
+            SubmitRespawnButton.Disabled = disableButtons;
         }
 
-        private void SubmitButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void SubmitKickButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
             if (_selectedSession == null)
                 return;
@@ -38,12 +40,20 @@ namespace Content.Client.Administration.UI.Tabs.AdminTab
                 $"kick \"{_selectedSession.Name}\" \"{CommandParsing.Escape(ReasonLine.Text)}\"");
         }
 
-        private void SubmitAHButtonOnOnPressed(BaseButton.ButtonEventArgs obj)
+        private void SubmitAhelpButtonOnPressed(BaseButton.ButtonEventArgs obj)
         {
             if (_selectedSession == null)
                 return;
             IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
                 $"openahelp \"{_selectedSession.UserId}\"");
+        }
+
+        private void SubmitRespawnButtonOnPressed(BaseButton.ButtonEventArgs obj)
+        {
+            if (_selectedSession == null)
+                return;
+            IoCManager.Resolve<IClientConsoleHost>().ExecuteCommand(
+                $"respawn \"{_selectedSession.Name}\"");
         }
     }
 }
