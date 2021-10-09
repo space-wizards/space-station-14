@@ -35,7 +35,7 @@ namespace Content.Server.Administration.UI
                     Close();
                     break;
                 case AdminAnnounceEuiMsg.DoAnnounce doAnnounce:
-                    if (!_adminManager.HasAdminFlag(Player, AdminFlags.Fun))
+                    if (!_adminManager.HasAdminFlag(Player, AdminFlags.Admin))
                     {
                         Close();
                         break;
