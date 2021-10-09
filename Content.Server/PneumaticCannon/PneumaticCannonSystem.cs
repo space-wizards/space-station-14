@@ -16,10 +16,10 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Content.Server.Throwing;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Tool;
 using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
@@ -106,7 +106,7 @@ namespace Content.Server.PneumaticCannon
 
             if (args.Used.TryGetComponent<ToolComponent>(out var tool))
             {
-                if (tool.HasQuality(component.ModifyMode))
+                if (tool.Qualities.Contains(component.ToolModifyMode))
                 {
                     // this is kind of ugly but it just cycles the enum
                     var val = (int) component.Mode;
@@ -118,7 +118,7 @@ namespace Content.Server.PneumaticCannon
                     return;
                 }
 
-                if (tool.HasQuality(component.ModifyPower))
+                if (tool.Qualities.Contains(component.ToolModifyPower))
                 {
                     var val = (int) component.Power;
                     val = (val + 1) % (int) PneumaticCannonPower.Len;
