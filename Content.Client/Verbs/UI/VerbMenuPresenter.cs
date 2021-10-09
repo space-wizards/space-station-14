@@ -120,21 +120,16 @@ namespace Content.Client.Verbs.UI
             var element = new VerbMenuElement(category, type);
             AddElement(RootMenu, element);
 
-            // We only apply the verb-type style to the first member verb, and the category button itself. This makes it
-            // clearer which verb would actually be run when using those keybindings.
-            var first = true;
-
             // Create the pop-up that appears when hovering over this element
             element.SubMenu = new ContextMenuPopup(this, element);
             foreach (var verb in verbsInCategory)
             {
-                var subElement = new VerbMenuElement(verb, type, setStyle: first)
+                var subElement = new VerbMenuElement(verb, type)
                 {
                     IconVisible = drawIcons,
                     TextVisible = !category.IconsOnly
                 };
                 AddElement(element.SubMenu, subElement);
-                first = false;
             }
 
             if (category.IconsOnly)

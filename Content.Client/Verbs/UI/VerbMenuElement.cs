@@ -28,7 +28,7 @@ namespace Content.Client.Verbs.UI
 
         public VerbType Type;
 
-        public VerbMenuElement(string? text, SpriteSpecifier? icon, VerbType verbType, bool setStyle = true) : base(text)
+        public VerbMenuElement(string? text, SpriteSpecifier? icon, VerbType verbType) : base(text)
         {
             Icon.AddChild(new TextureRect()
             {
@@ -37,12 +37,6 @@ namespace Content.Client.Verbs.UI
             });
 
             Type = verbType;
-
-            if (!setStyle)
-            {
-                Label.SetOnlyStyleClass(StyleClassVerbOtherText);
-                return;
-            }
 
             // Set text font style based on verb type
             switch (verbType)
@@ -62,8 +56,7 @@ namespace Content.Client.Verbs.UI
             }
         }
 
-        public VerbMenuElement(Verb verb, VerbType verbType, bool setStyle = true)
-            : this(verb.Text, verb.Icon, verbType, setStyle)
+        public VerbMenuElement(Verb verb, VerbType verbType) : this(verb.Text, verb.Icon, verbType)
         {
             ToolTip = verb.Message;
             TooltipDelay = VerbTooltipDelay;
@@ -71,7 +64,6 @@ namespace Content.Client.Verbs.UI
             Verb = verb;
         }
 
-        public VerbMenuElement(VerbCategory category, VerbType verbType, bool setStyle = true)
-            : this(category.Text, category.Icon, verbType, setStyle) { }
+        public VerbMenuElement(VerbCategory category, VerbType verbType) : this(category.Text, category.Icon, verbType) { }
     }
 }
