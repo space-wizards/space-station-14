@@ -50,8 +50,8 @@ namespace Content.Shared.Jittering
         /// </remarks>
         /// <param name="uid">Entity in question.</param>
         /// <param name="time">For how much time to apply the effect.</param>
-        /// <param name="amplitude">Jitteriness of the animation. 300 is essentially the maximum.</param>
-        /// <param name="frequency">How often a jitter will happen.</param>
+        /// <param name="amplitude">Jitteriness of the animation. 300 is the maximum.</param>
+        /// <param name="frequency">How often a jitter will happen. 1 is the maximum.</param>
         /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
         public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 0.25f, bool forceValueChange = false)
         {

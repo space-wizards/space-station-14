@@ -56,7 +56,9 @@ namespace Content.Client.Jittering
             var offset = new Vector2(_random.NextFloat(-amplitude, amplitude),
                 _random.NextFloat(-amplitude / 3f, amplitude / 3f));
 
-            var length = jittering.Frequency*2f;
+            // Since the animation jitters twice, we get the frequency times two.
+            // Also, animation length shouldn't be too high so we cap it at 2 seconds...
+            var length = Math.Min(jittering.Frequency*2f, 2f);
 
             return new Animation()
             {
