@@ -51,8 +51,10 @@ namespace Content.Shared.Verbs
             foreach (var entity in entities.ToList())
             {
                 if (entity.HasTag("HideContextMenu") ||
-                    !CanSeeContainerCheck(entity, player, playerContainer, includeInventory))
+                    !player.IsInSameOrTransparentContainer(entity, includeInventory))
+                {
                     entities.Remove(entity);
+                }
             }
 
             if (entities.Count == 0)
@@ -83,43 +85,6 @@ namespace Content.Shared.Verbs
 
             menuEntities = entities;
             return true;
-        }
-
-        /// <summary>
-        ///     Can the player see the entity through any entity containers?
-        /// </summary>
-        /// <remarks>
-        ///     This is similar to <see cref="ContainerHelpers.IsInSameOrParentContainer()"/>, except that we do not
-        ///     allow the player to be the "parent" container and we allow for see-through containers (display cases).
-        ///     If we allowed the player to be the parent container, they could see their own organs.
-        /// </remarks>
-        private bool CanSeeContainerCheck(IEntity entity, IEntity player, IContainer? playerContainer, bool includeInventory)
-        {
-            // is the player inside this entity?
-            if (playerContainer?.Owner == entity)
-                return true;
-
-            entity.TryGetContainer(out var entityContainer);
-
-            // IS the player the container that this entity is in? Usually we want to exclude those entities (organs
-            // should not appear in the entity menu). But we need to allow this when the user is right-clicking on
-            // inventory slots.
-            if (includeInventory && entityContainer?.Owner == player)
-                return true;
-
-            // are they in the same container (or none?)
-            if (playerContainer == entityContainer)
-                return true;
-
-            if (entityContainer == null)
-                return false;
-
-            // Is the entity in a display case / see-through container?
-            entityContainer.Owner.TryGetContainer(out var parentContainer);
-            if (entityContainer.ShowContents && playerContainer == parentContainer)
-                return true;
-
-            return false;
         }
 
         /// <summary>
