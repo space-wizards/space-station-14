@@ -15,7 +15,7 @@ jobs:
 
       - name: Get changed files
         id: files
-        uses: Ana06/get-changed-files@v1.1
+        uses: Ana06/get-changed-files@v1.2
         with:
           format: 'space-delimited'
        
