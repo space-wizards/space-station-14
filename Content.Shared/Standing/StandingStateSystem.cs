@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Audio;
 using Content.Shared.Hands;
+using Content.Shared.Hands.Components;
 using Content.Shared.Rotation;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -21,7 +22,7 @@ namespace Content.Shared.Standing
 
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
-            if (!Resolve(uid, ref standingState))
+            if (!Resolve(uid, ref standingState, false))
                 return false;
 
             return !standingState.Standing;
@@ -35,13 +36,15 @@ namespace Content.Shared.Standing
 
         public bool Down(EntityUid uid, bool playSound = true, bool dropHeldItems = true,
             StandingStateComponent? standingState = null,
-            SharedAppearanceComponent? appearance = null)
+            SharedAppearanceComponent? appearance = null,
+            SharedHandsComponent? hands = null)
         {
-            if (!Resolve(uid, ref standingState))
+            // TODO: This should actually log missing comps...
+            if (!Resolve(uid, ref standingState, false))
                 return false;
 
             // Optional component.
-            Resolve(uid, ref appearance, false);
+            Resolve(uid, ref appearance, ref hands, false);
 
             if (!standingState.Standing)
                 return true;
@@ -50,9 +53,9 @@ namespace Content.Shared.Standing
             // 99% of the time you'll want to drop items but in some scenarios (e.g. buckling) you don't want to.
             // We do this BEFORE downing because something like buckle may be blocking downing but we want to drop hand items anyway
             // and ultimately this is just to avoid boilerplate in Down callers + keep their behavior consistent.
-            if (dropHeldItems)
+            if (dropHeldItems && hands != null)
             {
-                _sharedHandsSystem.DropHandItems(uid, false);
+                _sharedHandsSystem.DropHandItems(uid, false, hands);
             }
 
             var msg = new DownAttemptEvent();
@@ -87,7 +90,8 @@ namespace Content.Shared.Standing
             StandingStateComponent? standingState = null,
             SharedAppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref standingState))
+            // TODO: This should actually log missing comps...
+            if (!Resolve(uid, ref standingState, false))
                 return false;
 
             // Optional component.
