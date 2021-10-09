@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Sound;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
 using Content.Shared.Verbs;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.PneumaticCannon
@@ -45,11 +46,11 @@ namespace Content.Server.PneumaticCannon
         [DataField("instantFire")]
         public bool InstantFire = true;
 
-        [DataField("toolModifyPower")]
-        public ToolQuality ModifyPower = ToolQuality.Screwing;
+        [DataField("toolModifyPower", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        public string ToolModifyPower = "Welding";
 
-        [DataField("toolModifyMode")]
-        public ToolQuality ModifyMode = ToolQuality.Anchoring;
+        [DataField("toolModifyMode", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        public string ToolModifyMode = "Screwing";
 
         /// <remarks>
         ///     If this value is too high it just straight up stops working for some reason
