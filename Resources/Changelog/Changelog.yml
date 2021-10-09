@@ -2378,3 +2378,9 @@ Entries:
   - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
   id: 425
   time: '2021-10-09T16:33:24.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Fixed certain vending machines having very large ambient light radius
+      and shining through walls., type: Fix}
+  id: 426
+  time: '2021-10-09T18:15:06.131590+00:00'

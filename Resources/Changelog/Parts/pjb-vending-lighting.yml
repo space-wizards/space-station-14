@@ -1,4 +1,0 @@
-﻿author: PJB
-changes:
-- type: Fix
-  message: Fixed certain vending machines having very large ambient light radius and shining through walls.
