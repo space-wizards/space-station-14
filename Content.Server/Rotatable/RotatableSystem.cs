@@ -42,12 +42,21 @@ namespace Content.Server.Rotatable
                 physics.BodyType == BodyType.Static)
                 return;
 
+            Verb resetRotation = new();
+            resetRotation.Act = () => component.Owner.Transform.LocalRotation = Angle.Zero;
+            resetRotation.Category = VerbCategory.Rotate;
+            resetRotation.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
+            resetRotation.Text = "Reset";
+            resetRotation.Priority = -2; // show CCW, then CW, then reset
+            resetRotation.CloseMenu = false;
+            args.Verbs.Add(resetRotation);
+
             // rotate clockwise
             Verb rotateCW = new();
             rotateCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(-90);
             rotateCW.Category = VerbCategory.Rotate;
             rotateCW.IconTexture =  "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png";
-            rotateCW.Priority = -2; // show CCW, then CW
+            rotateCW.Priority = -1;
             rotateCW.CloseMenu = false; // allow for easy double rotations.
             args.Verbs.Add(rotateCW);
 
@@ -56,7 +65,7 @@ namespace Content.Server.Rotatable
             rotateCCW.Act = () => component.Owner.Transform.LocalRotation += Angle.FromDegrees(90);
             rotateCCW.Category = VerbCategory.Rotate;
             rotateCCW.IconTexture = "/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png";
-            rotateCCW.Priority = -1;
+            rotateCCW.Priority = 0;
             rotateCCW.CloseMenu = false; // allow for easy double rotations.
             args.Verbs.Add(rotateCCW);
         }
