@@ -92,7 +92,7 @@ namespace Content.Server.Power.Components
                 var user = serverMsg.Session.AttachedEntity;
                 if (user == null) return;
 
-                var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
                 if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user.Uid))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;

@@ -92,7 +92,7 @@ namespace Content.Server.Access.Components
             }
 
             var privilegedIdEntity = PrivilegedIdContainer.ContainedEntity;
-            var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Uid);
         }
 

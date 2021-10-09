@@ -192,7 +192,7 @@ namespace Content.Server.VendingMachines
         {
             if (Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
-                var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
                 if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));

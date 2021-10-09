@@ -118,8 +118,7 @@ namespace Content.Server.AI.Pathfinding
                 return false;
             }
 
-            var entitySysManager = IoCManager.Resolve<IEntitySystemManager>();
-            var accessSystem = entitySysManager.GetEntitySystem<AccessReaderSystem>();
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             foreach (var reader in node.AccessReaders)
             {
                 if (!accessSystem.IsAllowed(reader, access))

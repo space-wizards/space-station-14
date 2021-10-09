@@ -289,7 +289,7 @@ namespace Content.Server.Doors.Components
             var doorSystem = EntitySystem.Get<DoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
-            var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             return doorSystem.AccessType switch
             {
                 DoorSystem.AccessTypes.AllowAll => true,
@@ -409,7 +409,7 @@ namespace Content.Server.Doors.Components
                 return true;
             }
 
-            var accessSystem = Owner.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             return accessSystem.IsAllowed(access, user.Uid);
         }
 

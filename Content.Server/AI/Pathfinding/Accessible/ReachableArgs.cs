@@ -33,7 +33,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                 collisionMask = physics.CollisionMask;
             }
 
-            var accessSystem = entity.EntityManager.EntitySysManager.GetEntitySystem<AccessReaderSystem>();
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             var access = accessSystem.FindAccessTags(entity.Uid);
             var visionRadius = entity.GetComponent<AiControllerComponent>().VisionRadius;
 
