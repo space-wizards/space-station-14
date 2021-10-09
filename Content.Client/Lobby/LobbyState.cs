@@ -84,7 +84,6 @@ namespace Content.Client.Lobby
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += _ => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += _ =>
             {
                 if (!gameTicker.IsGameStarted)

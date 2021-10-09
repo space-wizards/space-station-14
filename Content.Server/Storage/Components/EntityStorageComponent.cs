@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Tools;
+using Content.Server.Ghost.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
@@ -13,7 +15,8 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,6 +28,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -62,6 +66,9 @@ namespace Content.Server.Storage.Components
 
         [DataField("open")]
         private bool _open;
+
+        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _weldingQuality = "Welding";
 
         [DataField("CanWeldShut")]
         private bool _canWeldShut = true;
@@ -148,7 +155,7 @@ namespace Content.Server.Storage.Components
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
 
             UpdateAppearance();
@@ -209,6 +216,10 @@ namespace Content.Server.Storage.Components
                     !entity.HasComponent<SharedBodyComponent>())
                     continue;
 
+                // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
+                if (entity.HasComponent<GhostComponent>())
+                    continue;
+
                 if (!AddToContents(entity))
                 {
                     continue;
@@ -264,7 +275,7 @@ namespace Content.Server.Storage.Components
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
 
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -388,18 +399,14 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
             if (_beingWelded)
                 return false;
 
             _beingWelded = true;
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 1f, ToolQuality.Welding, 1f))
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
+            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 1f, 1f, _weldingQuality))
             {
                 _beingWelded = false;
                 return false;

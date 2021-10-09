@@ -32,7 +32,7 @@ namespace Content.Client.Lobby.UI
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
             var header = new NanoHeading
             {

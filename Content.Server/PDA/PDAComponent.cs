@@ -13,8 +13,11 @@ namespace Content.Server.PDA
     {
         public override string Name => "PDA";
 
-        public const string IDSlotName = "pda_id_slot";
-        public const string PenSlotName = "pda_pen_slot";
+        [DataField("idSlot")] 
+        public string IdSlot = "pdaIdSlot";
+
+        [DataField("penSlot")]
+        public string PenSlot = "pdaPenSlot";
 
         [ViewVariables] [DataField("idCard")] public string? StartingIdCard;
 

@@ -93,6 +93,8 @@
   id: StoolBar
   parent: SeatBase
   components:
+  - type: Transform
+    anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Anchorable
@@ -151,6 +153,8 @@
   parent: SeatBase
   description: It looks comfy.
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Sprite
     state: comfychair_preview
@@ -217,6 +221,8 @@
   parent: SeatBase
   description: The pilot seat of a prestigious ship.
   components:
+  - type: Transform
+    anchored: true
   - type: Anchorable
   - type: Rotatable
   - type: Sprite

@@ -5,12 +5,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Stack;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
-using Content.Shared.Tool;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -227,19 +228,7 @@ namespace Content.Server.Construction.Components
             switch (step)
             {
                 case ToolConstructionGraphStep toolStep:
-                    // Gotta take welder fuel into consideration.
-                    if (toolStep.Tool == ToolQuality.Welding)
-                    {
-                        if (eventArgs.Using.TryGetComponent(out WelderComponent? welder) &&
-                            await welder.UseTool(eventArgs.User, Owner, step.DoAfter, toolStep.Tool, toolStep.Fuel))
-                        {
-                            handled = true;
-                        }
-                        break;
-                    }
-
-                    if (eventArgs.Using.TryGetComponent(out ToolComponent? tool) &&
-                        await tool.UseTool(eventArgs.User, Owner, step.DoAfter, toolStep.Tool))
+                    if (await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, toolStep.Fuel, step.DoAfter, toolStep.Tool))
                     {
                         handled = true;
                     }

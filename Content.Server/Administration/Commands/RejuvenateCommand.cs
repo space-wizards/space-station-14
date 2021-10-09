@@ -57,7 +57,10 @@ namespace Content.Server.Administration.Commands
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
             target.GetComponentOrNull<StunnableComponent>()?.ResetStuns();
 
-            EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid);
+            if (target.TryGetComponent(out FlammableComponent? flammable))
+            {
+                EntitySystem.Get<FlammableSystem>().Extinguish(target.Uid, flammable);
+            }
 
             if (target.TryGetComponent(out DamageableComponent? damageable))
             {

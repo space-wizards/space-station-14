@@ -1,7 +1,7 @@
 using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Tool;
+using Content.Shared.Tools.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -13,26 +13,23 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Tools.Components
 {
     [RegisterComponent]
-    [NetworkedComponent()]
-    public class MultiToolComponent : Component, IItemStatus
+    public class MultipleToolComponent : SharedMultipleToolComponent, IItemStatus
     {
-        private ToolQuality _behavior;
+        private string? _behavior;
         [DataField("statusShowBehavior")]
         private bool _statusShowBehavior = true;
 
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
         [ViewVariables] public bool StatusShowBehavior => _statusShowBehavior;
-        [ViewVariables] public ToolQuality? Behavior => _behavior;
-
-        public override string Name => "MultiTool";
+        [ViewVariables] public string? Behavior => _behavior;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
         {
             base.HandleComponentState(curState, nextState);
 
-            if (curState is not MultiToolComponentState tool) return;
+            if (curState is not MultipleToolComponentState tool) return;
 
-            _behavior = tool.Quality;
+            _behavior = tool.QualityName;
             _uiUpdateNeeded = true;
 
         }
@@ -41,10 +38,10 @@ namespace Content.Client.Tools.Components
 
         private sealed class StatusControl : Control
         {
-            private readonly MultiToolComponent _parent;
+            private readonly MultipleToolComponent _parent;
             private readonly RichTextLabel _label;
 
-            public StatusControl(MultiToolComponent parent)
+            public StatusControl(MultipleToolComponent parent)
             {
                 _parent = parent;
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
@@ -64,7 +61,7 @@ namespace Content.Client.Tools.Components
 
                 _parent._uiUpdateNeeded = false;
 
-                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior.ToString() ?? string.Empty : string.Empty);
+                _label.SetMarkup(_parent.StatusShowBehavior ? _parent.Behavior ?? string.Empty : string.Empty);
             }
         }
     }

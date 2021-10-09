@@ -1,6 +1,6 @@
 - type: entity
   name: space carp
-  id: CarpMob_Content
+  id: MobCarp
   parent: SimpleMobBase
   description: It's a space carp.
   components:
@@ -44,8 +44,8 @@
 
 - type: entity
   name: magicarp
-  parent: CarpMob_Content
-  id: MagicarpMob_Content
+  parent: MobCarp
+  id: MobCarpMagic
   description: Looks like some kind of fish. Might be magical.
   components:
   - type: Sprite
@@ -57,8 +57,8 @@
 
 - type: entity
   name: holocarp
-  parent: CarpMob_Content
-  id: HolocarpMob_Content
+  parent: MobCarp
+  id: MobCarpHolo
   description: Carp made out of holographic energies.
   components:
   - type: Sprite

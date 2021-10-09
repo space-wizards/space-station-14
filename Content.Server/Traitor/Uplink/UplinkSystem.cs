@@ -2,7 +2,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.PDA;
-using Content.Server.PDA.Managers;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Traitor.Uplink;
@@ -16,11 +16,14 @@ using Robust.Shared.Player;
 using System;
 using System.Linq;
 
-namespace Content.Server.Traitor.Uplink.Systems
+namespace Content.Server.Traitor.Uplink
 {
     public class UplinkSystem : EntitySystem
     {
-        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
+        [Dependency]
+        private readonly UplinkAccountsSystem _accounts = default!;
+        [Dependency]
+        private readonly UplinkListingSytem _listing = default!;
 
         public override void Initialize()
         {
@@ -28,6 +31,10 @@ namespace Content.Server.Traitor.Uplink.Systems
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
+            SubscribeLocalEvent<UplinkComponent, UplinkRequestUpdateInterfaceMessage>(OnRequestUpdateUI);
+
+            SubscribeLocalEvent<UplinkAccountBalanceChanged>(OnBalanceChangedBroadcast);
         }
 
         public void SetAccount(UplinkComponent component, UplinkAccount account)
@@ -39,25 +46,59 @@ namespace Content.Server.Traitor.Uplink.Systems
             }
 
             component.UplinkAccount = account;
-            component.UplinkAccount.BalanceChanged += (acc) =>
-            {
-                UpdateUserInterface(component);
-            };
-
         }
 
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
-            var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
-            if (ui != null)
-                ui.OnReceiveMessage += (msg) => OnUIMessage(component, msg);
-
             RaiseLocalEvent(uid, new UplinkInitEvent(component));
         }
 
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
+        }
+
+        private void OnBalanceChangedBroadcast(UplinkAccountBalanceChanged ev)
+        {
+            foreach (var uplink in EntityManager.EntityQuery<UplinkComponent>())
+            {
+                if (uplink.UplinkAccount == ev.Account)
+                {
+                    UpdateUserInterface(uplink);
+                }
+            }    
+        }
+
+        private void OnRequestUpdateUI(EntityUid uid, UplinkComponent uplink, UplinkRequestUpdateInterfaceMessage args)
+        {
+            UpdateUserInterface(uplink);
+        }
+
+        private void OnBuy(EntityUid uid, UplinkComponent uplink, UplinkBuyListingMessage message)
+        {
+            var player = message.Session.AttachedEntity;
+            if (player == null) return;
+            if (uplink.UplinkAccount == null) return;
+
+            if (!_accounts.TryPurchaseItem(uplink.UplinkAccount, message.ItemId,
+                player.Transform.Coordinates, out var entity))
+            {
+                SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
+                    uplink.Owner, AudioParams.Default);
+                RaiseNetworkEvent(new UplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
+                return;
+            }
+
+            if (player.TryGetComponent(out HandsComponent? hands) &&
+                entity.TryGetComponent(out ItemComponent? item))
+            {
+                hands.PutInHandOrDrop(item);
+            }
+
+            SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
+                uplink.Owner, AudioParams.Default.WithVolume(-2f));
+
+            RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
         }
 
         public void ToggleUplinkUI(UplinkComponent component, IPlayerSession session)
@@ -68,50 +109,13 @@ namespace Content.Server.Traitor.Uplink.Systems
             UpdateUserInterface(component);
         }
 
-        private void OnUIMessage(UplinkComponent uplink, ServerBoundUserInterfaceMessage message)
-        {
-            switch (message.Message)
-            {
-                case UplinkRequestUpdateInterfaceMessage _:
-                    UpdateUserInterface(uplink);
-                    break;
-                case UplinkBuyListingMessage buyMsg:
-                    {
-                        var player = message.Session.AttachedEntity;
-                        if (player == null) break;
-
-                        if (!_uplinkManager.TryPurchaseItem(uplink.UplinkAccount, buyMsg.ItemId,
-                            player.Transform.Coordinates, out var entity))
-                        {
-                            SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.InsufficientFundsSound.GetSound(),
-                                uplink.Owner, AudioParams.Default);
-                            RaiseNetworkEvent(new UplinkInsufficientFundsMessage(), message.Session.ConnectedClient);
-                            break;
-                        }
-
-                        if (player.TryGetComponent(out HandsComponent? hands) &&
-                            entity.TryGetComponent(out ItemComponent? item))
-                        {
-                            hands.PutInHandOrDrop(item);
-                        }
-
-                        SoundSystem.Play(Filter.SinglePlayer(message.Session), uplink.BuySuccessSound.GetSound(),
-                            uplink.Owner, AudioParams.Default.WithVolume(-2f));
-
-                        RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
-                        break;
-                    }
-
-            }
-        }
-
         private void UpdateUserInterface(UplinkComponent component)
         {
             var ui = component.Owner.GetUIOrNull(UplinkUiKey.Key);
             if (ui == null)
                 return;
 
-            var listings = _uplinkManager.FetchListings.Values.ToArray();
+            var listings = _listing.GetListings().Values.ToArray();
             var acc = component.UplinkAccount;
 
             UplinkAccountData accData;

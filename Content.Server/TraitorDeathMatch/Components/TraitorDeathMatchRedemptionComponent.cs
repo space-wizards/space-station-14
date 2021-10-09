@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.TraitorDeathMatch.Components
@@ -104,9 +106,10 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             // 4 is the per-PDA bonus amount.
+            var accounts = Owner.EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             var transferAmount = victimAccount.Balance + 4;
-            victimAccount.ModifyAccountBalance(0);
-            userAccount.ModifyAccountBalance(userAccount.Balance + transferAmount);
+            accounts.SetBalance(victimAccount, 0);
+            accounts.AddToBalance(userAccount, transferAmount);
 
             victimUplink.Owner.Delete();
 
