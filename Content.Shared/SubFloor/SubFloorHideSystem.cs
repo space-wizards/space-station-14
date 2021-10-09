@@ -80,7 +80,9 @@ namespace Content.Shared.SubFloor
         {
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);
-            EntityManager.RemoveComponent<CollideOnAnchorComponent>(uid);
+
+            if (EntityManager.GetEntity(uid).LifeStage < EntityLifeStage.Terminating)
+                EntityManager.RemoveComponent<CollideOnAnchorComponent>(uid);
         }
 
         private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, ref AnchorStateChangedEvent args)
