@@ -12,6 +12,7 @@
             <cc:CommandButton Command="aghost" Text="{Loc Admin Ghost}" />
             <cc:UICommandButton Command="tpto" Text="{Loc Teleport}" WindowType="{x:Type at:TeleportWindow}" />
             <cc:CommandButton Command="permissions" Text="{Loc Permissions Panel}" />
+            <cc:CommandButton Command="announceui" Text="{Loc Announce}"/>
         </GridContainer>
     </BoxContainer>
 </Control>
