@@ -117,7 +117,7 @@ namespace Content.Server.Verbs
             // Can the user see through walls?
             var ignoreFov = EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
             var visibility = PlayerContextMenuVisibility.GetValueOrDefault(player);
-            if (ignoreFov) visibility |= MenuVisibility.NoFoV;
+            if (ignoreFov) visibility |= MenuVisibility.NoFov;
 
             // Validate input (check that the user can see the entity). Here, we set includeInventory: true to override
             // some visibility checks, so that users can interact with items in their own entity container (inventory).

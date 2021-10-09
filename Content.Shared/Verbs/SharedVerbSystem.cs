@@ -27,7 +27,7 @@ namespace Content.Shared.Verbs
             menuEntities = null;
 
             // Check if we have LOS to the clicked-location.
-            if ((visibility & MenuVisibility.NoFoV) == 0 &&
+            if ((visibility & MenuVisibility.NoFov) == 0 &&
                 !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
                 return false;
 
@@ -68,7 +68,7 @@ namespace Content.Shared.Verbs
             }
 
             // Remove any entities that do not have LOS
-            if ((visibility & MenuVisibility.NoFoV) == 0)
+            if ((visibility & MenuVisibility.NoFov) == 0)
             {
                 var playerPos = player.Transform.MapPosition;
                 foreach (var entity in entities.ToList())
@@ -157,9 +157,9 @@ namespace Content.Shared.Verbs
     {
         // What entities can a user see on the entity menu?
         Default = 0,          // They can only see entities in FoV.
-        NoFoV = 1 << 0,         // They ignore FoV restrictions
+        NoFov = 1 << 0,         // They ignore FoV restrictions
         InContainer = 1 << 1,   // They can see through containers.
         Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
-        All = NoFoV | InContainer | Invisible
+        All = NoFov | InContainer | Invisible
     }
 }

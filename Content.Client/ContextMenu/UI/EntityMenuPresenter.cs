@@ -179,7 +179,7 @@ namespace Content.Client.ContextMenu.UI
 
             // Do we need to do in-range unOccluded checks?
             var ignoreFov = !_eyeManager.CurrentEye.DrawFov ||
-                (_verbSystem.Visibility & MenuVisibility.NoFoV) == MenuVisibility.NoFoV;
+                (_verbSystem.Visibility & MenuVisibility.NoFov) == MenuVisibility.NoFov;
 
             foreach (var entity in Elements.Keys.ToList())
             {

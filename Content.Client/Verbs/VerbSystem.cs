@@ -88,7 +88,7 @@ namespace Content.Client.Verbs
 
             var visibility = Visibility;
             if (!_eyeManager.CurrentEye.DrawFov)
-                visibility |= MenuVisibility.NoFoV;
+                visibility |= MenuVisibility.NoFov;
 
             if (!TryGetEntityMenuEntities(player, targetPos, out var entities, visibility, false))
                 return false;

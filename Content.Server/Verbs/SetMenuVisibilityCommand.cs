@@ -40,7 +40,7 @@ namespace Content.Server.Verbs
                 switch (arg.ToLower())
                 {
                     case "nofov":
-                        visibility |= MenuVisibility.NoFoV;
+                        visibility |= MenuVisibility.NoFov;
                         break;
                     case "incontainer":
                         visibility |= MenuVisibility.InContainer;
@@ -52,7 +52,7 @@ namespace Content.Server.Verbs
                         visibility |= MenuVisibility.All;
                         break;
                     default:
-                        shell.WriteLine($"Unknown visibility argument '{arg}'. Only 'NoFoV', 'InContainer', 'Invisible' or 'All' are valid. Provide no arguments to set to default.");
+                        shell.WriteLine($"Unknown visibility argument '{arg}'. Only 'NoFov', 'InContainer', 'Invisible' or 'All' are valid. Provide no arguments to set to default.");
                         return false;
                 }
             }
