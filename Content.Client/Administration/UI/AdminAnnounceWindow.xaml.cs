@@ -14,19 +14,15 @@ namespace Content.Client.Administration.UI
     {
         [Dependency] private readonly IGameHud? _gameHud = default!;
         [Dependency] private readonly ILocalizationManager _localization = default!;
-        public readonly Button AnnounceButton;
-        public readonly OptionButton AnnounceMethod;
-        public readonly LineEdit Announcer;
-        public readonly LineEdit Announcement;
+        public Button AnnounceButton => _announceButton;
+        public OptionButton AnnounceMethod => _announceMethod;
+        public LineEdit Announcer => _announcer;
+        public LineEdit Announcement => _announcement;
 
         public AdminAnnounceWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
-            AnnounceButton = _announceButton;
-            AnnounceMethod = _announceMethod;
-            Announcer = _announcer;
-            Announcement = _announcement;
 
             AnnounceMethod.AddItem(_localization.GetString("announce-type-station"));
             AnnounceMethod.SetItemMetadata(0, AdminAnnounceType.Station);
