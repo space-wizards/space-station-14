@@ -28,13 +28,13 @@ namespace Content.Client.Verbs
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
         /// <summary>
-        ///     Whether to show all entities on the context menu.
+        ///     These flags determine what entities the user can see on the context menu.
         /// </summary>
         /// <remarks>
-        ///     Verb execution will only be affected if the server also agrees that this player can see the target
+        ///     Verb execution will only be affected if the server also agrees that this player can see the targeted
         ///     entity.
         /// </remarks>
-        public bool CanSeeAll = false;
+        public MenuVisibility Visibility;
 
         public override void Initialize()
         {
@@ -68,7 +68,7 @@ namespace Content.Client.Verbs
 
         private void SetSeeAllContext(SetSeeAllContextEvent args)
         {
-            CanSeeAll = args.CanSeeAll;
+            Visibility = args.MenuVisibility;
         }
 
         public void CloseAllMenus()
@@ -86,11 +86,14 @@ namespace Content.Client.Verbs
             if (player == null)
                 return false;
 
-            var ignoreFov = !_eyeManager.CurrentEye.DrawFov;
-            if (!TryGetEntityMenuEntities(player, targetPos, out var entities, false, CanSeeAll, ignoreFov))
+            var visibility = Visibility;
+            if (!_eyeManager.CurrentEye.DrawFov)
+                visibility |= MenuVisibility.NoFoV;
+
+            if (!TryGetEntityMenuEntities(player, targetPos, out var entities, visibility, false))
                 return false;
 
-            if (CanSeeAll)
+            if ((Visibility & MenuVisibility.Invisible) == MenuVisibility.Invisible)
             {
                 menuEntities = entities;
                 return true;

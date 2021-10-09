@@ -70,7 +70,7 @@ namespace Content.Shared.Verbs
     [Serializable, NetSerializable]
     public class SetSeeAllContextEvent : EntityEventArgs
     {
-        public bool CanSeeAll = false;
+        public MenuVisibility MenuVisibility;
     }
 
     /// <summary>

@@ -7,6 +7,7 @@ using Content.Client.Viewport;
 using Content.Shared.CCVar;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -177,7 +178,8 @@ namespace Content.Client.ContextMenu.UI
                 return;
 
             // Do we need to do in-range unOccluded checks?
-            var ignoreFov = _verbSystem.CanSeeAll || !_eyeManager.CurrentEye.DrawFov;
+            var ignoreFov = !_eyeManager.CurrentEye.DrawFov ||
+                (_verbSystem.Visibility & MenuVisibility.NoFoV) == MenuVisibility.NoFoV;
 
             foreach (var entity in Elements.Keys.ToList())
             {

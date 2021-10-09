@@ -17,7 +17,7 @@ namespace Content.Server.Verbs
         /// <summary>
         ///     List of players that can see all entities on the context menu, ignoring normal visibility rules.
         /// </summary>
-        public readonly HashSet<IPlayerSession> SeeAllContextPlayers = new();
+        public readonly Dictionary<IPlayerSession, MenuVisibility> PlayerContextMenuVisibility = new();
 
         public override void Initialize()
         {
@@ -41,24 +41,24 @@ namespace Content.Server.Verbs
         private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
         {
             if (args.NewStatus == SessionStatus.Disconnected)
-            {
-                SeeAllContextPlayers.Remove(args.Session);
-            }
+                PlayerContextMenuVisibility.Remove(args.Session);
         }
 
         public void Reset(RoundRestartCleanupEvent ev)
         {
-            SeeAllContextPlayers.Clear();
-        }
-
-        public void ToggleSeeAllContext(IPlayerSession player)
-        {
-            if (!SeeAllContextPlayers.Add(player))
+            foreach (var player in PlayerContextMenuVisibility.Keys)
             {
-                SeeAllContextPlayers.Remove(player);
+                SetSeeAllContextEvent args = new() { MenuVisibility = MenuVisibility.Default };
+                RaiseNetworkEvent(args, player.ConnectedClient);
             }
 
-            SetSeeAllContextEvent args = new() { CanSeeAll = SeeAllContextPlayers.Contains(player) };
+            PlayerContextMenuVisibility.Clear();
+        }
+
+        public void SetMenuVisibility(IPlayerSession player, MenuVisibility visibility)
+        {
+            PlayerContextMenuVisibility[player] = visibility;
+            SetSeeAllContextEvent args = new() { MenuVisibility = visibility };
             RaiseNetworkEvent(args, player.ConnectedClient);
         }
 
@@ -116,15 +116,16 @@ namespace Content.Server.Verbs
 
             // Can the user see through walls?
             var ignoreFov = EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
+            var visibility = PlayerContextMenuVisibility.GetValueOrDefault(player);
+            if (ignoreFov) visibility |= MenuVisibility.NoFoV;
 
-            // Validate input (check that the user can see the entity).
-            // here, we default to using ignoreContainer : true.
+            // Validate input (check that the user can see the entity). Here, we set includeInventory: true to override
+            // some visibility checks, so that users can interact with items in their own entity container (inventory).
             TryGetEntityMenuEntities(user,
                 target.Transform.MapPosition,
                 out var entities,
+                visibility,
                 buffer: true,
-                SeeAllContextPlayers.Contains(player),
-                ignoreFov,
                 includeInventory: true);
 
             VerbsResponseEvent response;
