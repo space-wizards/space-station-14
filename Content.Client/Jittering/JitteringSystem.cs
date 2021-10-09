@@ -29,9 +29,12 @@ namespace Content.Client.Jittering
 
         private void OnStartup(EntityUid uid, JitteringComponent jittering, ComponentStartup args)
         {
+            if (!EntityManager.TryGetComponent(uid, out ISpriteComponent? sprite))
+                return;
+
             var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
 
-            animationPlayer.Play(GetAnimation(jittering), _jitterAnimationKey);
+            animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
         private void OnShutdown(EntityUid uid, JitteringComponent jittering, ComponentShutdown args)
@@ -48,19 +51,20 @@ namespace Content.Client.Jittering
             if(args.Key != _jitterAnimationKey || jittering.EndTime <= GameTiming.CurTime)
                 return;
 
-            if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer))
-                animationPlayer.Play(GetAnimation(jittering), _jitterAnimationKey);
+            if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
+            && EntityManager.TryGetComponent(uid, out ISpriteComponent? sprite))
+                animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
-        private Animation GetAnimation(JitteringComponent jittering)
+        private Animation GetAnimation(JitteringComponent jittering, ISpriteComponent sprite)
         {
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
-            var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude) * _random.Pick(_sign),
-                _random.NextFloat(amplitude / 4f, amplitude / 3f) * _random.Pick(_sign));
+            var sign = _random.Pick(_sign);
+            var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude) * sign,
+                _random.NextFloat(amplitude / 4f, amplitude / 3f) * -sign);
 
-            // Since the animation jitters twice, we get the frequency times two.
-            // Also, animation length shouldn't be too high so we will cap it at 2 seconds...
-            var length = Math.Min((1f/jittering.Frequency)*2f, 2f);
+            // Animation length shouldn't be too high so we will cap it at 2 seconds...
+            var length = Math.Min((1f/jittering.Frequency), 2f);
 
             return new Animation()
             {
@@ -73,15 +77,8 @@ namespace Content.Client.Jittering
                         Property = nameof(ISpriteComponent.Offset),
                         KeyFrames =
                         {
-                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, 0f),
-
-                            new AnimationTrackProperty.KeyFrame(offset, length * 0.25f),
-
-                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, length * 0.5f),
-
-                            new AnimationTrackProperty.KeyFrame(-offset, length * 0.75f),
-
-                            new AnimationTrackProperty.KeyFrame(Vector2.Zero, length),
+                            new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),
+                            new AnimationTrackProperty.KeyFrame(offset, length),
                         }
                     }
                 }
