@@ -50,9 +50,12 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
-                    ? solutionHolder.TotalVolume
-                    : solutionHolder.InitialMaxVolume;
+                if (solutionHolder.MaxVolume == ReagentUnit.Zero)
+                {
+                    solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
+                        ? solutionHolder.TotalVolume
+                        : solutionHolder.InitialMaxVolume;
+                }
 
                 UpdateAppearance(uid, solutionHolder);
             }
