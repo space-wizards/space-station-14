@@ -58,7 +58,7 @@ namespace Content.Client.Jittering
 
             // Since the animation jitters twice, we get the frequency times two.
             // Also, animation length shouldn't be too high so we will cap it at 2 seconds...
-            var length = Math.Min(jittering.Frequency*2f, 2f);
+            var length = Math.Min((1f/jittering.Frequency)*2f, 2f);
 
             return new Animation()
             {
