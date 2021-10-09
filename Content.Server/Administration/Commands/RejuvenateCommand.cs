@@ -5,6 +5,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
+using Content.Shared.Jittering;
 using Content.Shared.MobState;
 using Content.Shared.Nutrition.Components;
 using Robust.Server.Player;
@@ -70,6 +71,11 @@ namespace Content.Server.Administration.Commands
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
+            }
+
+            if (target.HasComponent<JitteringComponent>())
+            {
+                target.RemoveComponent<JitteringComponent>();
             }
         }
     }
