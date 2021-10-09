@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using Content.Server.Items;
-using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
@@ -71,8 +69,6 @@ namespace Content.Server.Stunnable
         {
             if (!Get<ActionBlockerSystem>().CanUse(args.User))
                 return;
-
-            Get<JitteringSystem>().DoJitter(args.User.Uid, TimeSpan.FromMinutes(1), 20f, 0.125f);
 
             if (comp.Activated)
             {
