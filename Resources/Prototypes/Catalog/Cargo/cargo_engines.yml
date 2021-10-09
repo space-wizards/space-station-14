@@ -27,7 +27,7 @@
   id: EngineAmeControl
   description: "The control unit of an antimatter reactor."
   icon:
-    sprite: Constructible/Power/ame_controller.rsi
+    sprite: Structures/Power/Generation/ame.rsi
     state: control
   product: CrateEngineeringAMEControl
   cost: 500
@@ -39,7 +39,7 @@
   id: EngineSingularityGenerator
   description: "Contains a singularity generator. The mother of the beast."
   icon:
-    sprite: Constructible/Power/Singularity/generator.rsi
+    sprite: Structures/Power/Generation/Singularity/generator.rsi
     state: icon
   product: CrateEngineeringSingularityGenerator
   cost: 4000
@@ -51,7 +51,7 @@
   id: EngineSingularityContainment
   description: "Contains a singularity containment field generator."
   icon:
-    sprite: Constructible/Power/Singularity/containment.rsi
+    sprite: Structures/Power/Generation/Singularity/containment.rsi
     state: icon
   product: CrateEngineeringSingularityContainment
   cost: 1000
@@ -63,7 +63,7 @@
   id: EngineSingularityEmitter
   description: "Contains an emitter. Used only for dangerous applications."
   icon:
-    sprite: Constructible/Power/Singularity/emitter.rsi
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: emitter2
   product: CrateEngineeringSingularityEmitter
   cost: 1000
@@ -75,7 +75,7 @@
   id: EngineSingularityCollector
   description: "Contains a radiation collector. Safety first!"
   icon:
-    sprite: Constructible/Power/Singularity/collector.rsi
+    sprite: Structures/Power/Generation/Singularity/collector.rsi
     state: ca_on
   product: CrateEngineeringSingularityCollector
   cost: 1000
@@ -87,7 +87,7 @@
   id: EngineParticleAccelerator
   description: "Contains all the boards needed to construct a Particle Accelerator."
   icon:
-    sprite: Constructible/Specific/Engines/PA/control_box.rsi
+    sprite: Structures/Power/Generation/PA/control_box.rsi
     state: boxc
   product: CrateEngineeringParticleAccelerator
   cost: 10000

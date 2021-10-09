@@ -1,12 +1,9 @@
-#nullable enable
 using System;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Verbs;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -63,7 +60,7 @@ namespace Content.Server.PowerCell.Components
         /// <example>"/Audio/Items/pistol_magout.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cellRemoveSound")]
-        public string? CellRemoveSound { get; set; } = "/Audio/Items/pistol_magin.ogg";
+        public SoundSpecifier CellRemoveSound { get; set; } = new SoundPathSpecifier("/Audio/Items/pistol_magin.ogg");
 
         /// <summary>
         /// File path to a sound file that should be played when a cell is inserted.
@@ -71,7 +68,7 @@ namespace Content.Server.PowerCell.Components
         /// <example>"/Audio/Items/pistol_magin.ogg"</example>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("cellInsertSound")]
-        public string? CellInsertSound { get; set; } = "/Audio/Items/pistol_magout.ogg";
+        public SoundSpecifier CellInsertSound { get; set; } = new SoundPathSpecifier("/Audio/Items/pistol_magout.ogg");
 
         [ViewVariables] private ContainerSlot _cellContainer = default!;
 
@@ -144,9 +141,9 @@ namespace Content.Server.PowerCell.Components
                 cell.Owner.Transform.Coordinates = Owner.Transform.Coordinates;
             }
 
-            if (playSound && CellRemoveSound != null)
+            if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellRemoveSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(true), false);
@@ -167,47 +164,13 @@ namespace Content.Server.PowerCell.Components
             if (cellComponent.CellSize != SlotSize) return false;
             if (!_cellContainer.Insert(cell)) return false;
             //Dirty();
-            if (playSound && CellInsertSound != null)
+            if (playSound)
             {
-                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound, Owner, AudioHelpers.WithVariation(0.125f));
+                SoundSystem.Play(Filter.Pvs(Owner), CellInsertSound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f));
             }
 
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerCellChangedEvent(false), false);
             return true;
-        }
-
-        [Verb]
-        public sealed class EjectCellVerb : Verb<PowerCellSlotComponent>
-        {
-            protected override void GetData(IEntity user, PowerCellSlotComponent component, VerbData data)
-            {
-                if (!component.ShowVerb || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.Cell == null)
-                {
-                    data.Text = Loc.GetString("power-cell-slot-component-no-cell");
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-                else
-                {
-                    data.Text = Loc.GetString("power-cell-slot-component-eject-cell");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                }
-
-                if (component.Cell == null || !component.CanRemoveCell)
-                {
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-            }
-
-            protected override void Activate(IEntity user, PowerCellSlotComponent component)
-            {
-                component.EjectCell(user);
-            }
         }
 
         void IMapInit.MapInit()

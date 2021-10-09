@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Singularity.Components;
@@ -14,7 +13,6 @@ namespace Content.Client.Singularity
 {
     public class SingularityOverlay : Overlay
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -74,7 +72,7 @@ namespace Content.Client.Singularity
 
             var currentEyeLoc = currentEye.Position;
 
-            var distortions = _componentManager.EntityQuery<SingularityDistortionComponent>();
+            var distortions = _entityManager.EntityQuery<SingularityDistortionComponent>();
             foreach (var distortion in distortions) //Add all singulos that are not added yet but qualify
             {
                 var singuloEntity = distortion.Owner;

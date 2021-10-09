@@ -1,20 +1,21 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Act;
 using Content.Server.Buckle.Components;
 using Content.Server.Chat.Managers;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Storage.Components;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Toilet;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -22,6 +23,8 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -37,10 +40,15 @@ namespace Content.Server.Toilet
 
         private bool _isPrying = false;
 
+        [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _pryingQuality = "Prying";
+
         [ViewVariables] public bool LidOpen { get; private set; }
         [ViewVariables] public bool IsSeatUp { get; private set; }
 
         [ViewVariables] private SecretStashComponent _secretStash = default!;
+
+        [DataField("toggleSound")] SoundSpecifier _toggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
 
         protected override void Initialize()
         {
@@ -60,14 +68,14 @@ namespace Content.Server.Toilet
         {
             // are player trying place or lift of cistern lid?
             if (eventArgs.Using.TryGetComponent(out ToolComponent? tool)
-                && tool!.HasQuality(ToolQuality.Prying))
+                && tool.Qualities.Contains(_pryingQuality))
             {
                 // check if someone is already prying this toilet
                 if (_isPrying)
                     return false;
                 _isPrying = true;
 
-                if (!await tool.UseTool(eventArgs.User, Owner, PryLidTime, ToolQuality.Prying))
+                if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, PryLidTime, _pryingQuality))
                 {
                     _isPrying = false;
                     return false;
@@ -127,7 +135,7 @@ namespace Content.Server.Toilet
         public void ToggleToiletSeat()
         {
             IsSeatUp = !IsSeatUp;
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/toilet_seat_down.ogg", Owner, AudioHelpers.WithVariation(0.05f));
+            SoundSystem.Play(Filter.Pvs(Owner), _toggleSound.GetSound(), Owner, AudioHelpers.WithVariation(0.05f));
 
             UpdateSprite();
         }

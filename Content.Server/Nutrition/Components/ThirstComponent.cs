@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.MobState;
 using Content.Shared.Movement.Components;
 using Content.Shared.Nutrition.Components;
@@ -22,6 +21,8 @@ namespace Content.Server.Nutrition.Components
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 
+        private float _accumulatedFrameTime;
+
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
         public float BaseDecayRate
@@ -29,7 +30,7 @@ namespace Content.Server.Nutrition.Components
             get => _baseDecayRate;
             set => _baseDecayRate = value;
         }
-        [DataField("base_decay_rate")]
+        [DataField("baseDecayRate")]
         private float _baseDecayRate = 0.1f;
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -71,6 +72,10 @@ namespace Content.Server.Nutrition.Components
             {ThirstThreshold.Thirsty, AlertType.Thirsty},
             {ThirstThreshold.Parched, AlertType.Parched},
         };
+
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
 
         public void ThirstThresholdEffect(bool force = false)
         {
@@ -174,16 +179,20 @@ namespace Content.Server.Nutrition.Components
 
             if (_currentThirstThreshold != ThirstThreshold.Dead)
                 return;
-
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable))
-                return;
+            // --> Current Hunger is below dead threshold
 
             if (!Owner.TryGetComponent(out IMobStateComponent? mobState))
                 return;
 
             if (!mobState.IsDead())
             {
-                damageable.ChangeDamage(DamageType.Blunt, 2, true);
+                // --> But they are not dead yet.
+                _accumulatedFrameTime += frametime;
+                if (_accumulatedFrameTime >= 1)
+                {
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage * (int) _accumulatedFrameTime, true);
+                    _accumulatedFrameTime -= (int) _accumulatedFrameTime;
+                }
             }
         }
 

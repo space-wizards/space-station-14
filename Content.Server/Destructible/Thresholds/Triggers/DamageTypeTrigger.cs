@@ -1,8 +1,8 @@
-﻿#nullable enable
 using System;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
@@ -14,20 +14,15 @@ namespace Content.Server.Destructible.Thresholds.Triggers
     [DataDefinition]
     public class DamageTypeTrigger : IThresholdTrigger
     {
-        [DataField("type")]
-        public DamageType? Type { get; set; }
+        [DataField("damageType", required:true, customTypeSerializer: typeof(PrototypeIdSerializer<DamageTypePrototype>))]
+        public string DamageType { get; set; } = default!;
 
-        [DataField("damage")]
-        public int Damage { get; set; }
+        [DataField("damage", required: true)]
+        public int Damage { get; set; } = default!;
 
-        public bool Reached(IDamageableComponent damageable, DestructibleSystem system)
+        public bool Reached(DamageableComponent damageable, DestructibleSystem system)
         {
-            if (Type == null)
-            {
-                return false;
-            }
-
-            return damageable.TryGetDamage(Type.Value, out var damageReceived) &&
+            return damageable.Damage.DamageDict.TryGetValue(DamageType, out var damageReceived) &&
                    damageReceived >= Damage;
         }
     }

@@ -38,7 +38,7 @@ namespace Content.Client.Window
             if (_sprite != null)
             {
                 var state0 = $"{_stateBase}0";
-                const string cracksRSIPath = "/Textures/Constructible/Structures/Windows/cracks.rsi";
+                const string cracksRSIPath = "/Textures/Structures/Windows/cracks.rsi";
                 _sprite.LayerMapSet(CornerLayers.SE, _sprite.AddLayerState(state0));
                 _sprite.LayerSetDirOffset(CornerLayers.SE, SpriteComponent.DirectionOffset.None);
                 _sprite.LayerMapSet(WindowDamageLayers.DamageSE, _sprite.AddLayerState("0_1", cracksRSIPath));
@@ -95,7 +95,7 @@ namespace Content.Client.Window
             var coords = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out LowWallComponent? lowWall))
+                if (Owner.EntityManager.TryGetComponent(entity, out LowWallComponent? lowWall))
                 {
                     return lowWall;
                 }

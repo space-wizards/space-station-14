@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.EscapeMenu.UI;
 using Content.Client.GameTicking.Managers;
@@ -7,11 +8,8 @@ using Content.Client.LateJoin;
 using Content.Client.Lobby.UI;
 using Content.Client.Preferences;
 using Content.Client.Preferences.UI;
-using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Chat;
 using Content.Shared.GameTicking;
-using Content.Shared.Input;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.Input;
@@ -20,7 +18,6 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
@@ -44,8 +41,8 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
 
-        [ViewVariables] private CharacterSetupGui _characterSetup = default!;
-        [ViewVariables] private LobbyGui _lobby = default!;
+        [ViewVariables] private CharacterSetupGui? _characterSetup;
+        [ViewVariables] private LobbyGui? _lobby;
 
         public override void Startup()
         {
@@ -53,6 +50,9 @@ namespace Content.Client.Lobby
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
+
+            _lobby = new LobbyGui(_entityManager, _preferencesManager);
+            _userInterfaceManager.StateRoot.AddChild(_lobby);
 
             _characterSetup.CloseButton.OnPressed += _ =>
             {
@@ -66,32 +66,14 @@ namespace Content.Client.Lobby
                 _lobby?.CharacterPreview.UpdateUI();
             };
 
-            _lobby = new LobbyGui(_entityManager, _preferencesManager);
-            _userInterfaceManager.StateRoot.AddChild(_lobby);
-
             LayoutContainer.SetAnchorPreset(_lobby, LayoutContainer.LayoutPreset.Wide);
 
             _chatManager.SetChatBox(_lobby.Chat);
             _voteManager.SetPopupContainer(_lobby.VoteContainer);
 
-            _lobby.Chat.DefaultChatFormat = "ooc \"{0}\"";
-
             _lobby.ServerName.Text = _baseClient.GameInfo?.ServerName;
 
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusChat,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChat(_lobby.Chat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusOOC,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.OOC)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.FocusAdminChat,
-                InputCmdHandler.FromDelegate(_ => GameScreen.FocusChannel(_lobby.Chat, ChatChannel.AdminChat)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelForward,
-                InputCmdHandler.FromDelegate(_ => _lobby.Chat.CycleChatChannel(true)));
-
-            _inputManager.SetInputCommand(ContentKeyFunctions.CycleChatChannelBackward,
-                InputCmdHandler.FromDelegate(_ => _lobby.Chat.CycleChatChannel(false)));
+            ChatInput.SetupChatInputHandlers(_inputManager, _lobby.Chat);
 
             UpdateLobbyUi();
 
@@ -102,7 +84,6 @@ namespace Content.Client.Lobby
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += _ => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += _ =>
             {
                 if (!gameTicker.IsGameStarted)
@@ -133,12 +114,22 @@ namespace Content.Client.Lobby
         public override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
-            _lobby.Dispose();
-            _characterSetup.Dispose();
+            var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
+            gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
+            gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+
+            _lobby?.Dispose();
+            _characterSetup?.Dispose();
+            _lobby = null;
+            _characterSetup = null;
         }
 
         public override void FrameUpdate(FrameEventArgs e)
         {
+            if (_lobby == null) return;
+
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
             if (gameTicker.IsGameStarted)
             {
@@ -197,15 +188,13 @@ namespace Content.Client.Lobby
 
         private void LobbyLateJoinStatusUpdated()
         {
+            if (_lobby == null) return;
             _lobby.ReadyButton.Disabled = EntitySystem.Get<ClientGameTicker>().DisallowedLateJoin;
         }
 
         private void UpdateLobbyUi()
         {
-            if (_lobby == null)
-            {
-                return;
-            }
+            if (_lobby == null) return;
 
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
 
@@ -232,6 +221,7 @@ namespace Content.Client.Lobby
 
         private void UpdatePlayerList()
         {
+            if (_lobby == null) return;
             _lobby.OnlinePlayerList.Clear();
             var gameTicker = EntitySystem.Get<ClientGameTicker>();
 

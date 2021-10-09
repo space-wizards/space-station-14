@@ -1,7 +1,6 @@
-#nullable enable
 using System;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -16,10 +15,10 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(IMobMoverComponent))]
+    [NetworkedComponent()]
     public class SharedPlayerMobMoverComponent : Component, IMobMoverComponent
     {
         public override string Name => "PlayerMobMover";
-        public override uint? NetID => ContentNetIDs.PLAYER_MOB_MOVER;
 
         private float _stepSoundDistance;
         [DataField("grabRange")]
@@ -42,7 +41,7 @@ namespace Content.Shared.Movement.Components
             get => _stepSoundDistance;
             set
             {
-                if (MathHelper.CloseTo(_stepSoundDistance, value)) return;
+                if (MathHelper.CloseToPercent(_stepSoundDistance, value)) return;
                 _stepSoundDistance = value;
             }
         }
@@ -53,7 +52,7 @@ namespace Content.Shared.Movement.Components
             get => _grabRange;
             set
             {
-                if (MathHelper.CloseTo(_grabRange, value)) return;
+                if (MathHelper.CloseToPercent(_grabRange, value)) return;
                 _grabRange = value;
                 Dirty();
             }
@@ -65,7 +64,7 @@ namespace Content.Shared.Movement.Components
             get => _pushStrength;
             set
             {
-                if (MathHelper.CloseTo(_pushStrength, value)) return;
+                if (MathHelper.CloseToPercent(_pushStrength, value)) return;
                 _pushStrength = value;
                 Dirty();
             }
@@ -77,7 +76,7 @@ namespace Content.Shared.Movement.Components
             get => _weightlessStrength;
             set
             {
-                if (MathHelper.CloseTo(_weightlessStrength, value)) return;
+                if (MathHelper.CloseToPercent(_weightlessStrength, value)) return;
                 _weightlessStrength = value;
                 Dirty();
             }
@@ -112,7 +111,7 @@ namespace Content.Shared.Movement.Components
             public float PushStrength;
             public float WeightlessStrength;
 
-            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength) : base(ContentNetIDs.PLAYER_MOB_MOVER)
+            public PlayerMobMoverComponentState(float grabRange, float pushStrength, float weightlessStrength)
             {
                 GrabRange = grabRange;
                 PushStrength = pushStrength;

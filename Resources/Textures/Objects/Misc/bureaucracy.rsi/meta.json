@@ -235,6 +235,14 @@
       "name": "pen_red"
     },
     {
+      "name": "pen-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pen-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "scrap"
     },
     {
@@ -296,6 +304,10 @@
           0.1
         ]
       ]
+    },
+    {
+      "name": "clipboard-equipped-BELT",
+      "directions": 4
     }
   ]
 }

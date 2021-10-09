@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Solar.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -22,7 +21,7 @@ namespace Content.Server.Solar.EntitySystems
             if (_updateTimer >= 1)
             {
                 _updateTimer -= 1;
-                foreach (var component in ComponentManager.EntityQuery<SolarControlConsoleComponent>(true))
+                foreach (var component in EntityManager.EntityQuery<SolarControlConsoleComponent>(true))
                 {
                     component.UpdateUIState();
                 }

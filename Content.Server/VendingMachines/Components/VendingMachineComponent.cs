@@ -1,18 +1,16 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Components;
-using Content.Server.Advertise;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Wires.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Acts;
 using Content.Shared.DragDrop;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.VendingMachines;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -23,7 +21,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Wires.SharedWiresComponent;
 
@@ -31,7 +28,7 @@ namespace Content.Server.VendingMachines.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
-    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IExamine, IBreakAct, IWires
+    public class VendingMachineComponent : SharedVendingMachineComponent, IActivate, IBreakAct, IWires
     {
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -40,22 +37,24 @@ namespace Content.Server.VendingMachines.Components
         private TimeSpan _animationDuration = TimeSpan.Zero;
         [DataField("pack")]
         private string _packPrototypeId = string.Empty;
-        private string? _description;
-        private string _spriteName = "";
+        private string _spriteName = string.Empty;
+        private string _description = string.Empty;
         // a vending machine cannot change this after initialization
         private VendingMachineInventoryPrototype? _packPrototype;
 
-        private bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private bool _broken;
 
         [DataField("soundVend")]
         // Grabbed from: https://github.com/discordia-space/CEV-Eris/blob/f702afa271136d093ddeb415423240a2ceb212f0/sound/machines/vending_drop.ogg
-        private string _soundVend = "/Audio/Machines/machine_vend.ogg";
+        private SoundSpecifier _soundVend = new SoundPathSpecifier("/Audio/Machines/machine_vend.ogg");
         [DataField("soundDeny")]
         // Yoinked from: https://github.com/discordia-space/CEV-Eris/blob/35bbad6764b14e15c03a816e3e89aa1751660ba9/sound/machines/Custom_deny.ogg
-        private string _soundDeny = "/Audio/Machines/custom_deny.ogg";
+        private SoundSpecifier _soundDeny = new SoundPathSpecifier("/Audio/Machines/custom_deny.ogg");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(VendingMachineUiKey.Key);
+
+        public bool Broken => _broken;
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
@@ -92,7 +91,7 @@ namespace Content.Server.VendingMachines.Components
             if (!string.IsNullOrEmpty(_spriteName))
             {
                 var spriteComponent = Owner.GetComponent<SpriteComponent>();
-                const string vendingMachineRSIPath = "Constructible/Power/VendingMachines/{0}.rsi";
+                const string vendingMachineRSIPath = "Structures/Machines/VendingMachines/{0}.rsi";
                 spriteComponent.BaseRSIPath = string.Format(vendingMachineRSIPath, _spriteName);
             }
 
@@ -132,7 +131,7 @@ namespace Content.Server.VendingMachines.Components
                 UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
             }
 
-            if (Owner.TryGetComponent(out PowerReceiverComponent? receiver))
+            if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver))
             {
                 TrySetVisualState(receiver.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off);
             }
@@ -155,18 +154,6 @@ namespace Content.Server.VendingMachines.Components
         {
             var state = args.Powered ? VendingMachineVisualState.Normal : VendingMachineVisualState.Off;
             TrySetVisualState(state);
-
-            // Pause/resume advertising if advertising component exists and not broken
-            if (!Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent) || _broken) return;
-
-            if (Powered)
-            {
-                advertiseComponent.Resume();
-            }
-            else
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage serverMsg)
@@ -184,12 +171,6 @@ namespace Content.Server.VendingMachines.Components
                     UserInterface?.SendMessage(new VendingMachineInventoryMessage(Inventory));
                     break;
             }
-        }
-
-        public void Examine(FormattedMessage message, bool inDetailsRange)
-        {
-            if(_description == null) { return; }
-            message.AddText(_description);
         }
 
         private void TryEject(string id)
@@ -226,7 +207,7 @@ namespace Content.Server.VendingMachines.Components
                 Owner.EntityManager.SpawnEntity(id, Owner.Transform.Coordinates);
             });
 
-            SoundSystem.Play(Filter.Pvs(Owner), _soundVend, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundVend.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void TryEject(string id, IEntity? sender)
@@ -245,7 +226,7 @@ namespace Content.Server.VendingMachines.Components
 
         private void Deny()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny, Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _soundDeny.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
 
             // Play the Deny animation
             TrySetVisualState(VendingMachineVisualState.Deny);
@@ -282,11 +263,6 @@ namespace Content.Server.VendingMachines.Components
         {
             _broken = true;
             TrySetVisualState(VendingMachineVisualState.Broken);
-
-            if (Owner.TryGetComponent(out AdvertiseComponent? advertiseComponent))
-            {
-                advertiseComponent.Pause();
-            }
         }
 
         public enum Wires

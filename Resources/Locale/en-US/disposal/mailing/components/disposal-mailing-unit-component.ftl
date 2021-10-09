@@ -16,8 +16,10 @@ disposal-mailing-unit-is-valid-interaction-no-hands = You have no hands.
 
 ## SelfInsertVerb
 
-self-insert-verb-get-data-text = Jump inside
+disposal-self-insert-verb-get-data-text = Jump inside
 
 ## FlushVerb
 
-flush-verb-get-data-text = Flush
+disposal-flush-verb-get-data-text = Flush
+
+disposal-eject-verb-contents = contents

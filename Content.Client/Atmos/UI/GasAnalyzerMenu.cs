@@ -10,6 +10,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Atmos.UI
 {
@@ -61,11 +62,15 @@ namespace Content.Client.Atmos.UI
             LayoutContainer.SetAnchorPreset(bottomWrap, LayoutContainer.LayoutPreset.VerticalCenterWide);
             LayoutContainer.SetGrowHorizontal(bottomWrap, LayoutContainer.GrowDirection.Both);
 
-            var topContainerWrap = new VBoxContainer
+            var topContainerWrap = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    (_topContainer = new VBoxContainer()),
+                    (_topContainer = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }),
                     new Control {MinSize = (0, 110)}
                 }
             };
@@ -78,8 +83,9 @@ namespace Content.Client.Atmos.UI
             var fontSmall = resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 10);
 
             Button refreshButton;
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 4, 12, 2),
                 Children =
                 {
@@ -118,8 +124,9 @@ namespace Content.Client.Atmos.UI
                 PanelOverride = new StyleBoxFlat { BackgroundColor = Color.FromHex("#202025") },
                 Children =
                 {
-                    (_statusContainer = new VBoxContainer
+                    (_statusContainer = new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 8, 4, 4)
                     })
                 }
@@ -178,10 +185,17 @@ namespace Content.Client.Atmos.UI
             });
 
             // Add a table with all the gases
-            var tableKey = new VBoxContainer();
-            var tableVal = new VBoxContainer();
-            _statusContainer.AddChild(new HBoxContainer
+            var tableKey = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical
+            };
+            var tableVal = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
+            _statusContainer.AddChild(new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
                 Children =
                 {
                     tableKey,
@@ -195,8 +209,9 @@ namespace Content.Client.Atmos.UI
             // This is the gas bar thingy
             var height = 30;
             var minSize = 24; // This basically allows gases which are too small, to be shown properly
-            var gasBar = new HBoxContainer
+            var gasBar = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 HorizontalExpand = true,
                 MinSize = new Vector2(0, height)
             };

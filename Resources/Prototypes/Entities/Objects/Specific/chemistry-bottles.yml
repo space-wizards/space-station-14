@@ -5,20 +5,36 @@
   abstract: true
   description: A small bottle.
   components:
+  - type: Tag
+    tags:
+    - Bottle
   - type: Sprite
     sprite: Objects/Specific/Chemistry/bottle.rsi
     netsync: false
     state: bottle-1
   - type: Drink
     isOpen: true
-  - type: SolutionContainer
-    maxVol: 30
-    caps: OpenContainer
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+  - type: RefillableSolution
+    solution: drink
+  - type: DrainableSolution
+    solution: drink
+  - type: ExaminableSolution
+    solution: drink
   - type: SolutionTransfer
-    transferAmount: 5
+    maxTransferAmount: 30
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
   - type: Spillable
+    solution: drink
 
 - type: entity
   name: bottle
@@ -29,7 +45,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-1
-      - state: bottle-1-1  
+      - state: bottle-1-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -47,7 +63,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-2
-      - state: bottle-2-1  
+      - state: bottle-2-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -65,7 +81,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-3
-      - state: bottle-3-1  
+      - state: bottle-3-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance
@@ -83,7 +99,7 @@
     sprite: Objects/Specific/Chemistry/bottle.rsi
     layers:
       - state: bottle-4
-      - state: bottle-4-1  
+      - state: bottle-4-1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Appearance

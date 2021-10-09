@@ -3,7 +3,7 @@
   - help
   - list
 
-- Flags: FUN
+- Flags: VAREDIT
   Commands:
   - addcomp
   - rmcomp
@@ -25,6 +25,7 @@
   - togglehardfov
   - togglelight
   - toggleshadows
+  - testbed
 
 - Flags: MAPPING
   Commands:

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,9 +14,10 @@ using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Coordinates;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -40,6 +40,8 @@ namespace Content.Server.Construction
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly StackSystem _stackSystem = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
@@ -49,6 +51,90 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+            SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
+            SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
+        {
+            if (!args.CanAccess)
+                return;
+
+            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
+                component.Node?.Name == component.DeconstructionNodeIdentifier)
+                return;
+
+            Verb verb = new();
+            //verb.Category = VerbCategories.Construction;
+            //TODO VERBS add more construction verbs? Until then, removing construction category
+            verb.Text = Loc.GetString("deconstructible-verb-begin-deconstruct");
+            verb.IconTexture = "/Textures/Interface/hammer_scaled.svg.192dpi.png";
+
+            verb.Act = () =>
+            {
+                component.SetNewTarget(component.DeconstructionNodeIdentifier);
+                if (component.Target == null)
+                {
+                    // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
+                }
+                else
+                {
+                    component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-text"));
+                }
+            };
+
+            args.Verbs.Add(verb);
+        }
+
+        private void HandleConstructionExamined(EntityUid uid, ConstructionComponent component, ExaminedEvent args)
+        {
+            if (component.Target != null)
+            {
+                args.PushMarkup(Loc.GetString(
+                    "construction-component-to-create-header",
+                    ("targetName", component.Target.Name)) + "\n");
+            }
+
+            if (component.Edge == null && component.TargetNextEdge != null)
+            {
+                var preventStepExamine = false;
+
+                foreach (var condition in component.TargetNextEdge.Conditions)
+                {
+                    preventStepExamine |= condition.DoExamine(args);
+                }
+
+                if (!preventStepExamine)
+                    component.TargetNextEdge.Steps[0].DoExamine(args);
+                return;
+            }
+
+            if (component.Edge != null)
+            {
+                var preventStepExamine = false;
+
+                foreach (var condition in component.Edge.Conditions)
+                {
+                    preventStepExamine |= condition.DoExamine(args);
+                }
+
+                if (preventStepExamine) return;
+            }
+
+            if (component.EdgeNestedStepProgress == null)
+            {
+                if (component.EdgeStep < component.Edge?.Steps.Count)
+                    component.Edge.Steps[component.EdgeStep].DoExamine(args);
+                return;
+            }
+
+            foreach (var list in component.EdgeNestedStepProgress)
+            {
+                if(list.Count == 0) continue;
+
+                list[0].DoExamine(args);
+            }
         }
 
         private IEnumerable<IEntity> EnumerateNearby(IEntity user)
@@ -85,7 +171,7 @@ namespace Content.Server.Construction
                 }
             }
 
-            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, true))
+            foreach (var near in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(user!, 2f, LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 yield return near;
             }
@@ -171,7 +257,7 @@ namespace Content.Server.Construction
                             if (!materialStep.EntityValid(entity, out var stack))
                                 continue;
 
-                            var splitStack = Get<StackSystem>().Split(entity.Uid, stack, materialStep.Amount, user.ToCoordinates());
+                            var splitStack = _stackSystem.Split(entity.Uid, materialStep.Amount, user.ToCoordinates(), stack);
 
                             if (splitStack == null)
                                 continue;
@@ -227,8 +313,6 @@ namespace Content.Server.Construction
                 return null;
             }
 
-            var doAfterSystem = Get<DoAfterSystem>();
-
             var doAfterArgs = new DoAfterEventArgs(user, doAfterTime)
             {
                 BreakOnDamage = true,
@@ -238,7 +322,7 @@ namespace Content.Server.Construction
                 NeedHand = false,
             };
 
-            if (await doAfterSystem.DoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
+            if (await _doAfterSystem.WaitDoAfter(doAfterArgs) == DoAfterStatus.Cancelled)
             {
                 FailCleanup();
                 return null;
@@ -343,6 +427,7 @@ namespace Content.Server.Construction
 
         private async void HandleStartStructureConstruction(TryStartStructureConstructionMessage ev, EntitySessionEventArgs args)
         {
+
             if (!_prototypeManager.TryIndex(ev.PrototypeName, out ConstructionPrototype? constructionPrototype))
             {
                 Logger.Error($"Tried to start construction of invalid recipe '{ev.PrototypeName}'!");
@@ -362,6 +447,12 @@ namespace Content.Server.Construction
             if (user == null)
             {
                 Logger.Error($"Client sent {nameof(TryStartStructureConstructionMessage)} with no attached entity!");
+                return;
+            }
+
+            if (user.IsInContainer())
+            {
+                user.PopupMessageCursor(Loc.GetString("construction-system-inside-container"));
                 return;
             }
 
@@ -457,8 +548,15 @@ namespace Content.Server.Construction
                 return;
             }
 
+            // We do this to be able to move the construction to its proper position in case it's anchored...
+            // Oh wow transform anchoring is amazing wow I love it!!!!
+            var wasAnchored = structure.Transform.Anchored;
+            structure.Transform.Anchored = false;
+
             structure.Transform.Coordinates = ev.Location;
             structure.Transform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
+
+            structure.Transform.Anchored = wasAnchored;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack));
 

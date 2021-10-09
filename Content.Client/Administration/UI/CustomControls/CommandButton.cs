@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Robust.Client.Console;
+﻿using Robust.Client.Console;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.IoC;
 
@@ -9,7 +8,7 @@ namespace Content.Client.Administration.UI.CustomControls
     {
         public string? Command { get; set; }
 
-        public CommandButton() : base()
+        public CommandButton()
         {
             OnPressed += Execute;
         }

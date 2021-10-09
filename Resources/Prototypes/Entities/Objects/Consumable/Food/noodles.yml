@@ -11,13 +11,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Noodles
 

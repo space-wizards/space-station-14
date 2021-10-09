@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -10,9 +9,6 @@ namespace Content.Shared.Roles
     [ImplicitDataDefinitionForInheritors]
     public abstract class JobSpecial
     {
-        public virtual void AfterEquip(IEntity mob)
-        {
-
-        }
+        public abstract void AfterEquip(IEntity mob);
     }
 }

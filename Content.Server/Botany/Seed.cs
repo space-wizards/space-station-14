@@ -1,12 +1,10 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Botany.Components;
 using Content.Server.Plants;
 using Content.Shared.Atmos;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
@@ -265,7 +263,7 @@ namespace Content.Server.Botany
                 sprite.LayerSetSprite(0, new SpriteSpecifier.Rsi(PlantRsi, "seed"));
             }
 
-            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNount", SeedNoun));
+            seed.Name = Loc.GetString("botany-seed-packet-name", ("seedName", SeedName), ("seedNoun", SeedNoun));
 
             return seed;
         }

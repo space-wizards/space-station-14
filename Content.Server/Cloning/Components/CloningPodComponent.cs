@@ -6,8 +6,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Cloning;
 using Content.Shared.MobState;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
@@ -26,7 +25,7 @@ namespace Content.Server.Cloning.Components
         [Dependency] private readonly EuiManager _euiManager = null!;
 
         [ViewVariables]
-        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -135,7 +134,7 @@ namespace Content.Server.Cloning.Components
                         return; // If we can't track down the client, we can't offer transfer. That'd be quite bad.
                     }
 
-                    var mob = Owner.EntityManager.SpawnEntity("HumanMob_Content", Owner.Transform.MapPosition);
+                    var mob = Owner.EntityManager.SpawnEntity("MobHuman", Owner.Transform.MapPosition);
 
                     mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(dna.Profile);
                     mob.Name = dna.Profile.Name;

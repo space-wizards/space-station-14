@@ -20,13 +20,16 @@
       hard: false
       mask:
       - Impassable
+      layer:
       - MobImpassable
     linearDamping: 0
     angularDamping: 0
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Piercing: 20
+    damage:
+      types:
+        Piercing: 20
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
   id: BulletBaseFlash
@@ -35,11 +38,18 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
-    damages:
-      Piercing: 10
-  - type: FlashProjectile
+    damage:
+      types:
+        Piercing: 10
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
+  - type: FlashOnTrigger
     range: 1
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 - type: entity
   id: BulletBaseHV
@@ -48,8 +58,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 12
+    damage:
+      types:
+        Piercing: 12
 
 - type: entity
   id: BulletBasePractice
@@ -58,8 +69,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 2
+    damage:
+      types:
+        Blunt: 2
 
 - type: entity
   id: BulletBaseRubber
@@ -68,11 +80,14 @@
   abstract: true
   components:
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/snap.ogg
-    damages:
-      Blunt: 3
-  - type: StunnableProjectile
-    paralyzeAmount: 2
+    damage:
+      types:
+        Blunt: 3
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
+  - type: StunOnCollide
+    stunAmount: 2
+    knockdownAmount: 2
 
 # Energy projectiles
 - type: entity
@@ -95,17 +110,20 @@
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
       mask:
-          - Impassable
-          - MobImpassable
+      - Impassable
+      layer:
+      - MobImpassable
   - type: Ammo
     isProjectile: true
     ammoVelocity: 20
     caliber: Energy
   - type: Projectile
-    soundHitSpecies: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
-    damages:
-      Heat: 5
-  - type: StunnableProjectile
+    damage:
+      types:
+        Heat: 5
+    soundHit:
+      path: "/Audio/Weapons/Guns/Hits/taser_hit.ogg"
+  - type: StunOnCollide
     stunAmount: 5
     knockdownAmount: 5
 
@@ -117,7 +135,7 @@
   components:
   - type: Sprite
     color: "#ffff33"
-    sprite: Constructible/Power/Singularity/emitter.rsi
+    sprite: Structures/Power/Generation/Singularity/emitter.rsi
     state: 'projectile'
   - type: Physics
     fixtures:
@@ -131,9 +149,11 @@
       mask:
         - Opaque
   - type: Projectile
-    soundHit: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
-    damages:
-      Heat: 20
+    damage:
+      types:
+        Heat: 20
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
   - type: Tag
     tags:
     - EmitterBolt
@@ -149,9 +169,14 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/rocket.rsi
     state: frag
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -174,9 +199,14 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/gen_hit.ogg
-  - type: StunnableProjectile
-    paralyzeAmount: 8
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Effects/gen_hit.ogg
+  - type: StunOnCollide
+    stunAmount: 8
+    knockdownAmount: 8
 
 - type: entity
   id: BulletGrenadeBlast
@@ -188,9 +218,14 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 1
     heavyImpactRange: 2
@@ -209,9 +244,18 @@
     state: grenade
   - type: Projectile
     deleteOnCollide: false
-    soundHit: /Audio/Effects/flash_bang.ogg
-  - type: FlashProjectile
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Effects/flash_bang.ogg
+  - type: FlashOnTrigger
     range: 7
+  - type: SoundOnTrigger
+    sound:
+      path: "/Audio/Effects/flash_bang.ogg"
+  - type: TriggerOnCollide
+  - type: DeleteOnTrigger
 
 # This is supposed to spawn shrapnel and stuff so uhh... TODO?
 - type: entity
@@ -224,9 +268,14 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/grenade.rsi
     state: grenade
-  - type: ExplosiveProjectile
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
   - type: Projectile
     deleteOnCollide: false
+    damage:
+      types:
+        Blunt: 1
   - type: Explosive
     devastationRange: 0
     heavyImpactRange: 1
@@ -245,9 +294,11 @@
     state: foamdart
   - type: Projectile
     deleteOnCollide: true
-    soundHit: /Audio/Guns/Hits/snap.ogg
-    damages:
-      Blunt: 2
+    damage:
+      types:
+        Blunt: 2
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/snap.ogg
 
 - type: entity
   id: BulletCap
@@ -261,8 +312,9 @@
     state: capbullet
   - type: Projectile
     deleteOnCollide: true
-    damages:
-      Piercing: 0
+    damage:
+      types:
+        Piercing: 0
 
 - type: entity
   id: BulletCreampie
@@ -271,16 +323,22 @@
   description: get creampied, honk!!
   abstract: true
   components:
-    - type: Projectile
-      deleteOnCollide: false # CreamPie component handles this.
-    - type: CreamPie
-    - type: ThrownItem
-    - type: Sprite
-      netsync: false
-      sprite: Objects/Consumable/Food/pie.rsi
-      state: icon
-    - type: SolutionContainer
-      contents:
+  - type: Projectile
+    deleteOnCollide: false # CreamPie component handles this.
+    damage:
+      types:
+        Blunt: 1
+  - type: CreamPie
+  - type: ThrownItem
+  - type: Sprite
+    sprite: Objects/Consumable/Food/Baked/pie.rsi
+    netsync: false
+    layers:
+    - state: tin
+    - state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
         reagents:
-          - ReagentId: Nutriment
-            Quantity: 8
+        - ReagentId: Nutriment
+          Quantity: 8

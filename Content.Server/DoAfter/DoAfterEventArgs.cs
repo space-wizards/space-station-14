@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Threading;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
@@ -11,22 +10,10 @@ namespace Content.Server.DoAfter
 {
     public sealed class DoAfterEventArgs
     {
-        // Premade checks
-        public Func<bool> GetInRangeUnobstructed(CollisionGroup collisionMask = CollisionGroup.MobMask)
-        {
-            if (Target == null)
-            {
-                throw new InvalidOperationException("Can't supply a null target to DoAfterEventArgs.GetInRangeUnobstructed");
-            }
-
-            bool Ignored(IEntity entity) => entity == User || entity == Target;
-            return () => User.InRangeUnobstructed(Target, collisionMask: collisionMask, predicate: Ignored);
-        }
-
         /// <summary>
         ///     The entity invoking do_after
         /// </summary>
-        public IEntity User { get; }
+        public EntityUid User { get; }
 
         /// <summary>
         ///     How long does the do_after require to complete
@@ -36,7 +23,7 @@ namespace Content.Server.DoAfter
         /// <summary>
         ///     Applicable target (if relevant)
         /// </summary>
-        public IEntity? Target { get; }
+        public EntityUid? Target { get; }
 
         /// <summary>
         ///     Manually cancel the do_after so it no longer runs
@@ -81,11 +68,49 @@ namespace Content.Server.DoAfter
         /// </summary>
         public Func<bool>? ExtraCheck { get; set; }
 
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public object? UserCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="User"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public object? UserFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is cancelled.
+        /// </summary>
+        public object? TargetCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be raised directed to the <see cref="Target"/> entity when the DoAfter is finished successfully.
+        /// </summary>
+        public object? TargetFinishedEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is cancelled.
+        /// </summary>
+        public object? BroadcastCancelledEvent { get; set; }
+
+        /// <summary>
+        ///     Event to be broadcast when the DoAfter is finished successfully.
+        /// </summary>
+        public object? BroadcastFinishedEvent { get; set; }
+
         public DoAfterEventArgs(
             IEntity user,
             float delay,
             CancellationToken cancelToken = default,
-            IEntity? target = null)
+            IEntity? target = null) : this(user.Uid, delay, cancelToken, target?.Uid ?? null)
+        {
+        }
+
+        public DoAfterEventArgs(
+            EntityUid user,
+            float delay,
+            CancellationToken cancelToken = default,
+            EntityUid? target = null)
         {
             User = user;
             Delay = delay;

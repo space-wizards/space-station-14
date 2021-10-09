@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -24,7 +24,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             if (!gate.Enabled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(gate.InletName, out PipeNode? inlet)

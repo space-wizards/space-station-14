@@ -5,23 +5,32 @@
   suffix: Empty
   description: A spray bottle with an unscrewable top.
   components:
+  - type: Tag
+    tags:
+    - Spray
   - type: Sprite
     netsync: false
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   - type: Item
     sprite: Objects/Specific/Janitorial/janitorial.rsi
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable, Drainable
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
   - type: SolutionTransfer
-    transferAmount: 5.0
   - type: Spillable
+    solution: spray
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
     sprayVelocity: 2
-    spraySound: /Audio/Effects/spray2.ogg
+    spraySound:
+      path: /Audio/Effects/spray2.ogg
 
 - type: entity
   name: spray bottle
@@ -29,12 +38,13 @@
   suffix: Filled
   parent: SprayBottle
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
         reagents:
-          - ReagentId: Water
-            Quantity: 100
+        - ReagentId: Water
+          Quantity: 100
 
 - type: entity
   name: space cleaner
@@ -43,12 +53,13 @@
   parent: SprayBottle
   suffix: ""
   components:
-    - type: SolutionContainer
-      maxVol: 100
-      contents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
         reagents:
-          - ReagentId: SpaceCleaner
-            Quantity: 100
+        - ReagentId: SpaceCleaner
+          Quantity: 100
 
 # Vapor
 
@@ -57,28 +68,29 @@
   name: "vapor"
   abstract: true
   components:
-  - type: SnapGrid
-  - type: SolutionContainer
-    maxVol: 50
+  - type: SolutionContainerManager
+    solutions:
+      vapor:
+        maxVol: 50
   - type: Vapor
   - type: AnimationPlayer
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
     layers:
-      - state: chempuff
-        map: [ "enum.VaporVisualLayers.Base" ]
+    - state: chempuff
+      map: ["enum.VaporVisualLayers.Base"]
   - type: Physics
-    bodyType: KinematicController
+    bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.25,0.25,0.25"
+              !type:PhysShapeAabb
+        bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
-        - Impassable
-        - MobImpassable
-        - SmallImpassable
+      - Impassable
+      - MobImpassable
+      - SmallImpassable
   - type: Appearance
     visuals:
-      - type: VaporVisualizer
+    - type: VaporVisualizer

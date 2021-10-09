@@ -26,7 +26,7 @@
               store: board
               name: any computer circuit board
               icon:
-                sprite: "Constructible/Misc/module.rsi"
+                sprite: "Objects/Misc/module.rsi"
                 state: "id_mod"
 
         - to: start
@@ -100,7 +100,7 @@
             - !type:EntityAnchored { }
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
               amount: 5
           steps:
             - tool: Cutting

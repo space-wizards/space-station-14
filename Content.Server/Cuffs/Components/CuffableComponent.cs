@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +7,8 @@ using Content.Server.Hands.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Cuffs.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -208,10 +206,11 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            var attempt = new UncuffAttemptEvent(user.Uid, Owner.Uid);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(user.Uid, attempt);
+
+            if (attempt.Cancelled)
             {
-                user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
             }
 
@@ -232,13 +231,11 @@ namespace Content.Server.Cuffs.Components
 
             if (isOwner)
             {
-                if (cuff.StartBreakoutSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartBreakoutSound.GetSound(), Owner);
             }
             else
             {
-                if (cuff.StartUncuffSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.StartUncuffSound.GetSound(), Owner);
             }
 
             var uncuffTime = isOwner ? cuff.BreakoutTime : cuff.UncuffTime;
@@ -253,14 +250,13 @@ namespace Content.Server.Cuffs.Components
             var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
             _uncuffing = true;
 
-            var result = await doAfterSystem.DoAfter(doAfterEventArgs);
+            var result = await doAfterSystem.WaitDoAfter(doAfterEventArgs);
 
             _uncuffing = false;
 
             if (result != DoAfterStatus.Cancelled)
             {
-                if (cuff.EndUncuffSound != null)
-                    SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), cuff.EndUncuffSound.GetSound(), Owner);
 
                 Container.ForceRemove(cuffsToRemove);
                 cuffsToRemove.Transform.AttachToGridOrMap();
@@ -290,7 +286,7 @@ namespace Content.Server.Cuffs.Components
 
                     if (!isOwner)
                     {
-                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message",("otherName", user)));
+                        user.PopupMessage(Owner, Loc.GetString("cuffable-component-remove-cuffs-by-other-success-message", ("otherName", user)));
                     }
                 }
                 else
@@ -306,7 +302,7 @@ namespace Content.Server.Cuffs.Components
                     }
                     else
                     {
-                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message",("cuffedHandCount", CuffedHandCount)));
+                        user.PopupMessage(Loc.GetString("cuffable-component-remove-cuffs-partial-success-message", ("cuffedHandCount", CuffedHandCount)));
                     }
                 }
             }
@@ -316,32 +312,6 @@ namespace Content.Server.Cuffs.Components
             }
 
             return;
-        }
-
-        /// <summary>
-        /// Allows the uncuffing of a cuffed person. Used by other people and by the component owner to break out of cuffs.
-        /// </summary>
-        [Verb]
-        private sealed class UncuffVerb : Verb<CuffableComponent>
-        {
-            protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
-            {
-                if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("uncuff-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, CuffableComponent component)
-            {
-                if (component.CuffedHandCount > 0)
-                {
-                    component.TryUncuff(user);
-                }
-            }
         }
     }
 }

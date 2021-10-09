@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Camera;
 using Content.Shared.Gravity;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -40,7 +41,7 @@ namespace Content.Server.Gravity.EntitySystems
         {
             if (ev.GridId == GridId.Invalid) return;
 
-            var gravity = ComponentManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
+            var gravity = EntityManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
 
             if (ev.Status == GravityGeneratorStatus.On)
             {
@@ -58,7 +59,7 @@ namespace Content.Server.Gravity.EntitySystems
             var gridId = component.Owner.Transform.GridID;
             GravityChangedMessage message;
 
-            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
+            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.Owner.Transform.GridID == gridId && generator.Status == GravityGeneratorStatus.On)
                 {
@@ -77,7 +78,7 @@ namespace Content.Server.Gravity.EntitySystems
         public override void Update(float frameTime)
         {
             // TODO: Pointless iteration, just make both of these event-based PLEASE
-            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
+            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.NeedsUpdate)
                 {
@@ -108,7 +109,7 @@ namespace Content.Server.Gravity.EntitySystems
             comp.Enabled = true;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes);
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, true);
             RaiseLocalEvent(message);
@@ -120,13 +121,13 @@ namespace Content.Server.Gravity.EntitySystems
             comp.Enabled = false;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes);
+            ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, false);
             RaiseLocalEvent(message);
         }
 
-        private void ScheduleGridToShake(GridId gridId, uint shakeTimes)
+        private void ScheduleGridToShake(GridId gridId, uint shakeTimes, GravityComponent comp)
         {
             if (!_gridsToShake.Keys.Contains(gridId))
             {
@@ -136,13 +137,8 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 _gridsToShake[gridId] = shakeTimes;
             }
-            // Play the gravity sound
-            foreach (var player in _playerManager.GetAllPlayers())
-            {
-                if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId) continue;
-                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), "/Audio/Effects/alert.ogg", player.AttachedEntity);
-            }
+
+            SoundSystem.Play(Filter.BroadcastGrid(gridId), comp.GravityShakeSound.GetSound(), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()

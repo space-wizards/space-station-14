@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,15 +6,17 @@ using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.Placeable;
+using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
-using Content.Shared.Audio;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Placeable;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Storage;
+using Content.Shared.Verbs;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -23,6 +24,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -48,10 +50,16 @@ namespace Content.Server.Storage.Components
 
         [DataField("occludesLight")]
         private bool _occludesLight = true;
+
         [DataField("quickInsert")]
-        private bool _quickInsert; //Can insert storables by "attacking" them with the storage entity
+        private bool _quickInsert = false; // Can insert storables by "attacking" them with the storage entity
+
         [DataField("areaInsert")]
-        private bool _areaInsert;  //"Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+
+        [DataField("whitelist")]
+        private EntityWhitelist? _whitelist = null;
+
         private bool _storageInitialCalculated;
         private int _storageUsed;
         [DataField("capacity")]
@@ -59,7 +67,7 @@ namespace Content.Server.Storage.Components
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
-        public string? StorageSoundCollection { get; set; }
+        public SoundSpecifier StorageSoundCollection { get; set; } = new SoundCollectionSpecifier("storageRustle");
 
         [ViewVariables]
         public override IReadOnlyList<IEntity>? StoredEntities => _storage?.ContainedEntities;
@@ -124,6 +132,11 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            if (_whitelist != null && !_whitelist.IsValid(entity))
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -150,7 +163,7 @@ namespace Content.Server.Storage.Components
                 return;
             }
 
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             Logger.DebugS(LoggerName, $"Storage (UID {Owner.Uid}) had entity (UID {message.Entity.Uid}) inserted into it.");
@@ -246,7 +259,7 @@ namespace Content.Server.Storage.Components
         /// <param name="entity">The entity to open the UI for</param>
         public void OpenStorageUI(IEntity entity)
         {
-            PlaySoundCollection(StorageSoundCollection);
+            PlaySoundCollection();
             EnsureInitialCalculated();
 
             var userSession = entity.GetComponent<ActorComponent>().PlayerSession;
@@ -361,7 +374,7 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
+            _storage = Owner.EnsureContainer<Container>("storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 
@@ -391,22 +404,17 @@ namespace Content.Server.Storage.Components
                     var playerTransform = player.Transform;
 
                     if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform &&
-                        !playerTransform.ContainsEntity(ownerTransform))
+                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
                     {
                         break;
                     }
 
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null ||
-                        !player.TryGetComponent(out HandsComponent? hands))
+                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -499,12 +507,12 @@ namespace Content.Server.Storage.Components
 
             // Pick up all entities in a radius around the clicked location.
             // The last half of the if is because carpets exist and this is terrible
-            if(_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
+            if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
                 {
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
@@ -522,7 +530,7 @@ namespace Content.Server.Storage.Components
                         BreakOnUserMove = true,
                         NeedHand = true,
                     };
-                    var result = await doAfterSystem.DoAfter(doAfterArgs);
+                    var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
                     if (result != DoAfterStatus.Finished) return true;
                 }
 
@@ -531,7 +539,7 @@ namespace Content.Server.Storage.Components
                 foreach (var entity in validStorables)
                 {
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
@@ -544,9 +552,9 @@ namespace Content.Server.Storage.Components
                 }
 
                 // If we picked up atleast one thing, play a sound and do a cool animation!
-                if (successfullyInserted.Count>0)
+                if (successfullyInserted.Count > 0)
                 {
-                    PlaySoundCollection(StorageSoundCollection);
+                    PlaySoundCollection();
                     SendNetworkMessage(
                         new AnimateInsertingEntitiesMessage(
                             successfullyInserted,
@@ -557,15 +565,15 @@ namespace Content.Server.Storage.Components
                 return true;
             }
             // Pick up the clicked entity
-            else if(_quickInsert)
+            else if (_quickInsert)
             {
                 if (eventArgs.Target == null
-                    || !eventArgs.Target.Transform.IsMapTransform
+                    || eventArgs.Target.IsInContainer()
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
                 var position = eventArgs.Target.Transform.Coordinates;
-                if(PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
+                if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
                         new List<EntityUid>() { eventArgs.Target.Uid },
@@ -617,15 +625,9 @@ namespace Content.Server.Storage.Components
             }
         }
 
-        protected void PlaySoundCollection(string? name)
+        private void PlaySoundCollection()
         {
-            if (string.IsNullOrEmpty(name))
-            {
-                return;
-            }
-
-            var file = AudioHelpers.GetRandomFileFromSoundCollection(name);
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner, AudioParams.Default);
+            SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
         }
     }
 }

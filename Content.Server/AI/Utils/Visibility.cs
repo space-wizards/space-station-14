@@ -41,7 +41,7 @@ namespace Content.Server.AI.Utils
                 angle.ToVec(),
                 (int)(CollisionGroup.Opaque | CollisionGroup.Impassable | CollisionGroup.MobImpassable));
 
-            var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
+            var rayCastResults = EntitySystem.Get<SharedBroadphaseSystem>().IntersectRay(owner.Transform.MapID, ray, range, owner).ToList();
 
             return rayCastResults.Count > 0 && rayCastResults[0].HitEntity == target;
         }
@@ -58,7 +58,7 @@ namespace Content.Server.AI.Utils
         public static IEnumerable<IEntity> GetEntitiesInRange(EntityCoordinates grid, Type component, float range)
         {
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            foreach (var entity in entityManager.ComponentManager.GetAllComponents(component).Select(c => c.Owner))
+            foreach (var entity in entityManager.GetAllComponents(component).Select(c => c.Owner))
             {
                 if (entity.Transform.Coordinates.GetGridId(entityManager) != grid.GetGridId(entityManager))
                 {

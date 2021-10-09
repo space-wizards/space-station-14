@@ -6,11 +6,12 @@
   departments:
   - Civilian
   icon: "Janitor"
+  supervisors: "the head of personnel"
   access:
   - Janitor
   - Maintenance
   special:
-    !type:JanitorSpecial
+  - !type:GiveItemOnHolidaySpecial
     holiday: GarbageDay
     prototype: RevolverInspector
 

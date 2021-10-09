@@ -3,15 +3,13 @@
   id: ProduceBase
   abstract: true
   components:
-  - type: SolutionContainer
-    caps: None
+  - type: SolutionContainerManager
   - type: Sprite
     netsync: false
     state: produce
   - type: Produce
-  - type: Tag
-    tags:
-    - Grindable
+  - type: Extractable
+    extractableSolution: food
 
 - type: entity
   name: wheat bushel
@@ -21,12 +19,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/wheat.rsi
-  - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Flour
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Flour
+          Quantity: 10
   - type: Produce
     seed: wheat
 
@@ -38,15 +36,15 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/oat.rsi
-  - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Oats
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Oats
+          Quantity: 10
   - type: Produce
     seed: oat
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: MilkOat
@@ -60,12 +58,12 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/sugarcane.rsi
-  - type: SolutionContainer
-    caps: None
-    contents:
-      reagents:
-      - ReagentId: Glucose
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Glucose
+          Quantity: 10
   - type: Produce
     seed: sugarcane
 
@@ -77,9 +75,11 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/towercap.rsi
-  - type: SolutionContainer
-    caps: None
+  - type: SolutionContainerManager
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Produce
     seed: towercap
   - type: Log
@@ -92,16 +92,17 @@
   components:
   - type: Food
     trash: TrashBananaPeel
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
   - type: Produce
     seed: banana
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceBanana
@@ -115,6 +116,9 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peel
+  - type: Item
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    HeldPrefix: peel
   - type: Slippery
     intersectPercentage: 0.2
   - type: CollisionWake
@@ -142,17 +146,21 @@
   id: FoodCarrot
   description: It's good for the eyes!
   components:
+  - type: Tag
+    tags:
+    - Carrot
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/carrot.rsi
   - type: Produce
     seed: carrots
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceCarrot
@@ -165,16 +173,17 @@
   description: When life gives you lemons, be grateful they aren't limes.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/lemon.rsi
   - type: Produce
     seed: lemon
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceLime
@@ -187,16 +196,17 @@
   description: Mmm, tropical.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Produce
     seed: pineapple
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuicePineapple
@@ -212,11 +222,12 @@
   description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
@@ -229,33 +240,46 @@
   description: I say to-mah-to, you say tom-mae-to.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/tomato.rsi
   - type: Produce
     seed: tomato
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
   - type: Damageable
+    damageContainer: Biological
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           PuddleTomato:
@@ -283,11 +307,12 @@
   description: Maybe there's a chicken inside?
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/eggplant.rsi
   - type: Produce
@@ -300,16 +325,17 @@
   description: It's a little piece of Eden.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/apple.rsi
   - type: Produce
     seed: apple
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuiceApple
@@ -323,11 +349,12 @@
   components:
   - type: Food
     trash: FoodCornTrash
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -353,11 +380,12 @@
   description: Nothing to cry over.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion.rsi
   - type: Produce
@@ -373,11 +401,12 @@
   description: Purple despite the name.
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/onion_red.rsi
   - type: Produce
@@ -393,11 +422,12 @@
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/chanterelle.rsi
   - type: Produce
@@ -411,17 +441,17 @@
   abstract: true
   components:
   - type: Food
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 2
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
   - type: Sprite
     netsync: false
     state: slice
-  - type: Tag
-    tags:
-    - Grindable
+  - type: Extractable
+    extractableSolution: food
 
 - type: entity
   name: pineapple slice
@@ -431,7 +461,7 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
-  - type: Juiceable
+  - type: Extractable
     result:
       reagents:
       - ReagentId: JuicePineapple

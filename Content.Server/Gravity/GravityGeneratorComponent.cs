@@ -1,7 +1,7 @@
-﻿#nullable enable
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Acts;
+using Content.Shared.Audio;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
@@ -26,7 +26,7 @@ namespace Content.Server.Gravity
 
         private GravityGeneratorStatus _status;
 
-        public bool Powered => !Owner.TryGetComponent(out PowerReceiverComponent? receiver) || receiver.Powered;
+        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         public bool SwitchedOn => _switchedOn;
 
@@ -138,6 +138,7 @@ namespace Content.Server.Gravity
         private void MakeBroken()
         {
             _status = GravityGeneratorStatus.Broken;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
 
             _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
@@ -146,6 +147,7 @@ namespace Content.Server.Gravity
         private void MakeUnpowered()
         {
             _status = GravityGeneratorStatus.Unpowered;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
 
             _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
@@ -154,6 +156,7 @@ namespace Content.Server.Gravity
         private void MakeOff()
         {
             _status = GravityGeneratorStatus.Off;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, false);
 
             _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, false);
@@ -162,6 +165,7 @@ namespace Content.Server.Gravity
         private void MakeOn()
         {
             _status = GravityGeneratorStatus.On;
+            EntitySystem.Get<SharedAmbientSoundSystem>().SetAmbience(Owner.Uid, true);
 
             _appearance?.SetData(GravityGeneratorVisuals.State, Status);
             _appearance?.SetData(GravityGeneratorVisuals.CoreVisible, true);

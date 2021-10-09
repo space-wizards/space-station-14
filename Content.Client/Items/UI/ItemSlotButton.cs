@@ -1,18 +1,24 @@
 ﻿using System;
 using Content.Client.Cooldown;
+using Content.Client.Items.Managers;
 using Content.Client.Stylesheets;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Items.UI
 {
-    public class ItemSlotButton : Control
+    public class ItemSlotButton : Control, IEntityEventSubscriber
     {
         private const string HighlightShader = "SelectionOutlineInrange";
 
+        [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
+
+        public EntityUid Entity { get; set; }
         public TextureRect Button { get; }
         public SpriteView SpriteView { get; }
         public SpriteView HoverSpriteView { get; }
@@ -32,6 +38,8 @@ namespace Content.Client.Items.UI
 
         public ItemSlotButton(Texture texture, Texture storageTexture, string textureName)
         {
+            IoCManager.InjectDependencies(this);
+
             MinSize = (64, 64);
 
             TextureName = textureName;
@@ -99,6 +107,31 @@ namespace Content.Client.Items.UI
             {
                 Visible = false,
             });
+        }
+
+        protected override void EnteredTree()
+        {
+            base.EnteredTree();
+
+            _itemSlotManager.EntityHighlightedUpdated += HandleEntitySlotHighlighted;
+            UpdateSlotHighlighted();
+        }
+
+        protected override void ExitedTree()
+        {
+            base.ExitedTree();
+
+            _itemSlotManager.EntityHighlightedUpdated -= HandleEntitySlotHighlighted;
+        }
+
+        private void HandleEntitySlotHighlighted(EntitySlotHighlightedEventArgs entitySlotHighlightedEventArgs)
+        {
+            UpdateSlotHighlighted();
+        }
+
+        public void UpdateSlotHighlighted()
+        {
+            Highlight(_itemSlotManager.IsHighlighted(Entity));
         }
 
         public void ClearHover()

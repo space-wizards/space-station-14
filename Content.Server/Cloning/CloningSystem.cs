@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Cloning.Components;
@@ -16,19 +15,19 @@ using static Content.Shared.Cloning.SharedCloningPodComponent;
 
 namespace Content.Server.Cloning
 {
-    internal sealed class CloningSystem : EntitySystem, IResettingEntitySystem
+    internal sealed class CloningSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _timing = default!;
         public readonly Dictionary<Mind.Mind, int> MindToId = new();
         public readonly Dictionary<int, ClonerDNAEntry> IdToDNA = new();
         private int _nextAllocatedMindId = 0;
-        private float _quickAndDirtyUserUpdatePreventerTimer = 0.0f;
         public readonly Dictionary<Mind.Mind, EntityUid> ClonesWaitingForMind = new();
 
         public override void Initialize()
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<CloningPodComponent, ActivateInWorldEvent>(HandleActivate);
             SubscribeLocalEvent<BeingClonedComponent, MindAddedMessage>(HandleMindAdded);
         }
@@ -73,7 +72,7 @@ namespace Content.Server.Cloning
 
         public override void Update(float frameTime)
         {
-            foreach (var (cloning, power) in ComponentManager.EntityQuery<CloningPodComponent, PowerReceiverComponent>(true))
+            foreach (var (cloning, power) in EntityManager.EntityQuery<CloningPodComponent, ApcPowerReceiverComponent>(true))
             {
                 if (cloning.UiKnownPowerState != power.Powered)
                 {
@@ -128,7 +127,7 @@ namespace Content.Server.Cloning
 
         public void OnChangeMadeToDnaScans()
         {
-            foreach (var cloning in ComponentManager.EntityQuery<CloningPodComponent>(true))
+            foreach (var cloning in EntityManager.EntityQuery<CloningPodComponent>(true))
                 UpdateUserInterface(cloning);
         }
 
@@ -142,7 +141,7 @@ namespace Content.Server.Cloning
             return IdToDNA.ToDictionary(m => m.Key, m => m.Value.Mind.CharacterName);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             MindToId.Clear();
             IdToDNA.Clear();

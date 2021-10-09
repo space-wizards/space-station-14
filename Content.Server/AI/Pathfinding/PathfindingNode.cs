@@ -276,7 +276,7 @@ namespace Content.Server.AI.Pathfinding
 
             DebugTools.Assert((PathfindingSystem.TrackedCollisionLayers & physicsComponent.CollisionLayer) != 0);
 
-            if (physicsComponent.BodyType == BodyType.Static)
+            if (physicsComponent.BodyType != BodyType.Static)
             {
                 _physicsLayers.Add(entity, physicsComponent.CollisionLayer);
             }

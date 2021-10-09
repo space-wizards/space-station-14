@@ -8,6 +8,8 @@
   - Command
   - Science
   icon: "ResearchDirector"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Research
   - Command
@@ -19,6 +21,7 @@
     innerclothing: ClothingUniformJumpsuitResearchDirector
     backpack: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorBrown
+    outerclothing: ClothingOuterCoatLab
     idcard: RnDPDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtResearchDirector

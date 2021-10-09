@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Server.Inventory.Components;
@@ -118,26 +117,6 @@ namespace Content.Server.Clothing.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new MagbootsComponentState(On);
-        }
-
-        [UsedImplicitly]
-        public sealed class ToggleMagbootsVerb : Verb<MagbootsComponent>
-        {
-            protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, MagbootsComponent component)
-            {
-                component.Toggle(user);
-            }
         }
     }
 

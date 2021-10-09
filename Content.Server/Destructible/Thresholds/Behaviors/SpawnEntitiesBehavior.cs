@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Stack;
@@ -34,7 +33,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 {
                     var spawned = owner.EntityManager.SpawnEntity(entityId, owner.Transform.MapPosition);
                     var stack = spawned.GetComponent<StackComponent>();
-                    EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, stack, count);
+                    EntitySystem.Get<StackSystem>().SetCount(spawned.Uid, count, stack);
                     spawned.RandomOffset(0.5f);
                 }
                 else

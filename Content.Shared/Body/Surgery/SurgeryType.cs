@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Body.Surgery

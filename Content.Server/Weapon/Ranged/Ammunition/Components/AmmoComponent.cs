@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Examine;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -82,7 +83,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         private string _muzzleFlashSprite = "Objects/Weapons/Guns/Projectiles/bullet_muzzle.png";
 
         [DataField("soundCollectionEject")]
-        public string? SoundCollectionEject { get; } = "CasingEject";
+        public SoundSpecifier SoundCollectionEject { get; } = new SoundCollectionSpecifier("CasingEject");
 
         void ISerializationHooks.AfterDeserialization()
         {

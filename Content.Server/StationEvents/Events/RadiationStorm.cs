@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.GameTicking;
 using Content.Server.Radiation;
 using Content.Shared.Coordinates;
@@ -91,8 +90,9 @@ namespace Content.Server.StationEvents.Events
                 return false;
             }
 
-            var randomX = _robustRandom.Next((int) mapGrid.WorldBounds.Left, (int) mapGrid.WorldBounds.Right);
-            var randomY = _robustRandom.Next((int) mapGrid.WorldBounds.Bottom, (int) mapGrid.WorldBounds.Top);
+            var bounds = mapGrid.LocalBounds;
+            var randomX = _robustRandom.Next((int) bounds.Left, (int) bounds.Right);
+            var randomY = _robustRandom.Next((int) bounds.Bottom, (int) bounds.Top);
 
             coordinates = mapGrid.ToCoordinates(randomX, randomY);
 
@@ -102,7 +102,6 @@ namespace Content.Server.StationEvents.Events
                 coordinates = default;
                 return false;
             }
-
             return true;
         }
     }

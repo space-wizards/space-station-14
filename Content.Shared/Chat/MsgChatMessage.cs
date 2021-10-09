@@ -1,4 +1,3 @@
-#nullable enable
 using JetBrains.Annotations;
 using Lidgren.Network;
 using Robust.Shared.GameObjects;
@@ -52,7 +51,7 @@ namespace Content.Shared.Chat
             {
                 case ChatChannel.Local:
                 case ChatChannel.Dead:
-                case ChatChannel.AdminChat:
+                case ChatChannel.Admin:
                 case ChatChannel.Emotes:
                     SenderEntity = buffer.ReadEntityUid();
                     break;
@@ -70,7 +69,7 @@ namespace Content.Shared.Chat
             {
                 case ChatChannel.Local:
                 case ChatChannel.Dead:
-                case ChatChannel.AdminChat:
+                case ChatChannel.Admin:
                 case ChatChannel.Emotes:
                     buffer.Write(SenderEntity);
                     break;

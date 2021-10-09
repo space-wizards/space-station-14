@@ -10,13 +10,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Item
     sprite: Objects/Consumable/Food/burger.rsi
 
@@ -154,12 +154,13 @@
   id: FoodBurgerBig
   description: Forget the Big Mac. THIS is the future!
   components:
-  - type: SolutionContainer
-    maxVol: 25
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 25
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 25
   - type: Sprite
     state: bigbite
 # Tastes like bun, silver, magic.
@@ -170,12 +171,13 @@
   id: FoodBurgerSuper
   description: This is a mountain of a burger. FOOD!
   components:
-  - type: SolutionContainer
-    maxVol: 40
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 40
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 40
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 40
   - type: Sprite
     state: superbite
 # Tastes like bun, diabetes.

@@ -1,4 +1,3 @@
-#nullable enable
 using Robust.Shared;
 using Robust.Shared.Configuration;
 
@@ -8,6 +7,28 @@ namespace Content.Shared.CCVar
     [CVarDefs]
     public sealed class CCVars : CVars
     {
+        /*
+         * Ambience
+         */
+
+        /// <summary>
+        ///     Whether the basic 'hum' ambience will be enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// </summary>
+        public static readonly CVarDef<float> AmbientCooldown =
+            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<float> AmbientRange =
+            CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<int> MaxAmbientSources =
+            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+
         /*
          * Status
          */
@@ -55,6 +76,19 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<string>
             GameMap = CVarDef.Create("game.map", "Maps/saltern.yml", CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether a random position offset will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationOffset =
+            CVarDef.Create("game.station_offset", true);
+
+        /// <summary>
+        /// When the default blueprint is loaded what is the maximum amount it can be offset from 0,0.
+        /// Does nothing without <see cref="StationOffset"/> as true.
+        /// </summary>
+        public static readonly CVarDef<float> MaxStationOffset =
+            CVarDef.Create("game.maxstationoffset", 1000.0f);
 
         /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
@@ -176,18 +210,26 @@ namespace Content.Shared.CCVar
          * Physics
          */
 
+        /// <summary>
+        /// When a mob is walking should its X / Y movement be relative to its parent (true) or the map (false).
+        /// </summary>
+        public static readonly CVarDef<bool> RelativeMovement =
+            CVarDef.Create("physics.relative_movement", true, CVar.ARCHIVE | CVar.REPLICATED);
+
         public static readonly CVarDef<float> TileFrictionModifier =
-            CVarDef.Create("physics.tilefriction", 15.0f);
+            CVarDef.Create("physics.tile_friction", 40.0f);
 
         public static readonly CVarDef<float> StopSpeed =
-            CVarDef.Create("physics.stopspeed", 0.1f);
+            CVarDef.Create("physics.stop_speed", 0.1f);
 
-        /*
-         * Ambience
-         */
-
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+        /// <summary>
+        /// Whether mobs can push objects like lockers.
+        /// </summary>
+        /// <remarks>
+        /// Technically client doesn't need to know about it but this may prevent a bug in the distant future so it stays.
+        /// </remarks>
+        public static readonly CVarDef<bool> MobPushing =
+            CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
 
         /*
          * Lobby music
@@ -245,10 +287,37 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.space_wind", true, CVar.SERVERONLY);
 
         /// <summary>
+        ///     The sound that plays when space wind occurs.
+        /// </summary>
+        public static readonly CVarDef<string> SpaceWindSound =
+            CVarDef.Create("atmos.space_wind_sound", "/Audio/Effects/space_wind.ogg", CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether monstermos tile equalization is enabled.
         /// </summary>
         public static readonly CVarDef<bool> MonstermosEqualization =
             CVarDef.Create("atmos.monstermos_equalization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether monstermos explosive depressurization is enabled.
+        ///     Needs <see cref="MonstermosEqualization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosDepressurization =
+            CVarDef.Create<bool>("atmos.monstermos_depressurization", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether monstermos explosive depressurization will rip tiles..
+        ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> MonstermosRipTiles =
+            CVarDef.Create<bool>("atmos.monstermos_rip_tiles", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether explosive depressurization will cause the grid to gain an impulse.
+        ///     Needs <see cref="MonstermosEqualization"/> and <see cref="MonstermosDepressurization"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> AtmosGridImpulse =
+            CVarDef.Create("atmos.grid_impulse", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether atmos superconduction is enabled.
@@ -256,6 +325,21 @@ namespace Content.Shared.CCVar
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
         public static readonly CVarDef<bool> Superconduction =
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether excited groups will be processed and created.
+        /// </summary>
+        public static readonly CVarDef<bool> ExcitedGroups =
+            CVarDef.Create("atmos.excited_groups", true, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Whether all tiles in an excited group will clear themselves once being exposed to space.
+        ///     Similar to <see cref="MonstermosDepressurization"/>, without none of the tile ripping or
+        ///     things being thrown around very violently.
+        ///     Needs <see cref="ExcitedGroups"/> to be enabled to work.
+        /// </summary>
+        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
+            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
 
         /// <summary>
         ///     Maximum time in milliseconds that atmos can take processing.
@@ -268,9 +352,6 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AtmosTickRate =
             CVarDef.Create("atmos.tickrate", 26f, CVar.SERVERONLY);
-
-        public static readonly CVarDef<bool> ExcitedGroupsSpaceIsAllConsuming =
-            CVarDef.Create("atmos.excited_groups_space_is_all_consuming", false, CVar.SERVERONLY);
 
         /*
          * MIDI instruments
@@ -318,8 +399,17 @@ namespace Content.Shared.CCVar
          * VOTE
          */
 
+        /// <summary>
+        ///     The required ratio of the server that must agree for a restart round vote to go through.
+        /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
             CVarDef.Create("vote.restart_required_ratio", 0.8f, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     The delay which two votes of the same type are allowed to be made by separate people, in seconds.
+        /// </summary>
+        public static readonly CVarDef<float> VoteSameTypeTimeout =
+            CVarDef.Create("vote.same_type_timeout", 240f, CVar.SERVERONLY);
 
         /*
          * BAN
@@ -327,6 +417,14 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> BanHardwareIds =
             CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
+
+        /*
+         * Shuttles
+         */
+        // Once cruising actually gets implemented I'd likely drop this speed to 3 maybe.
+        public static readonly CVarDef<float> ShuttleDockSpeedCap =
+            CVarDef.Create("shuttle.dock_speed_cap", 5f, CVar.SERVERONLY);
+
         /*
          * VIEWPORT
          */
@@ -346,5 +444,22 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
+
+        /*
+         * CHAT
+         */
+
+        public static readonly CVarDef<int> ChatMaxMessageLength =
+            CVarDef.Create("chat.max_message_length", 1000, CVar.SERVER | CVar.REPLICATED);
+
+        /*
+         * AFK
+         */
+
+        /// <summary>
+        /// How long a client can go without any input before being considered AFK.
+        /// </summary>
+        public static readonly CVarDef<float> AfkTime =
+            CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
     }
 }

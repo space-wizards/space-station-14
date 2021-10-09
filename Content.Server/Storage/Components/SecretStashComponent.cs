@@ -1,10 +1,8 @@
-#nullable enable
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Acts;
 using Content.Shared.Item;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -82,7 +80,7 @@ namespace Content.Server.Storage.Components
             if (_itemContainer.ContainedEntity == null)
                 return false;
 
-            Owner.PopupMessage(user, Loc.GetString("There was something inside {0}!", ("stash", SecretPartName)));
+            Owner.PopupMessage(user, Loc.GetString("comp-secret-stash-action-get-item-found-something", ("stash", SecretPartName)));
 
             if (user.TryGetComponent(out HandsComponent? hands))
             {

@@ -1,4 +1,3 @@
-﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,9 +105,13 @@ namespace Content.Client.ContextMenu.UI
             public int GetHashCode(IEntity e)
             {
                 var hash = EqualityComparer<string>.Default.GetHashCode(e.Prototype?.ID!);
-                foreach (var element in e.GetComponent<ISpriteComponent>().AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+
+                if (e.TryGetComponent<ISpriteComponent>(out var sprite))
                 {
-                    hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
+                    foreach (var element in sprite.AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    {
+                        hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
+                    }
                 }
 
                 return hash;

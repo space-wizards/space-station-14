@@ -8,7 +8,7 @@
   id: BasicResearch
   description: Nanotrasen basic research technologies.
   icon:
-    sprite: Constructible/Power/server.rsi
+    sprite: Structures/Machines/server.rsi
     state: server-on
   requiredPoints: 2500
 
@@ -16,7 +16,7 @@
 
 - type: technology
   name: "cleaning technology"
-  id: MopBucket 
+  id: MopBucket
   description: Start to a shiny clean station
   icon:
     sprite: Objects/Specific/Janitorial/janitorial.rsi
@@ -36,7 +36,7 @@
   id: BiologicalTechnology
   description: Investigations into the natural world.
   icon:
-    sprite: Constructible/Misc/potted_plants.rsi
+    sprite: Structures/Furniture/potted_plants.rsi
     state: applebush
   requiredPoints: 10000
   requiredTechnologies:
@@ -44,7 +44,7 @@
   unlockedRecipes:
     - Scythe
     - Hatchet
-    - KitchenKnife  
+    - KitchenKnife
 
 - type: technology
   name: "advanced botany"
@@ -181,7 +181,7 @@
 #   id: DataTheory
 #   description: Just like regular data, but in space!
 #   icon:
-#     sprite: Constructible/Power/computers.rsi
+#     sprite: Structures/Machines/computers.rsi
 #     state: computer-datatheory
 #   requiredPoints: 10000
 #   requiredTechnologies:
@@ -194,7 +194,7 @@
   id: IndustrialEngineering
   description: A refresher course on modern engineering technology.
   icon:
-    sprite: Constructible/Power/protolathe.rsi
+    sprite: Structures/Machines/protolathe.rsi
     state: icon
   requiredPoints: 10000
   requiredTechnologies:
@@ -227,20 +227,41 @@
   id: ElectromagneticTheory
   description: Try not to fry yourself.
   icon:
-    sprite: Constructible/Power/apc.rsi
+    sprite: Structures/Power/apc.rsi
     state: apcewires
   requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
   unlockedRecipes:
     - CableStack
-    - MVWireStack
-    - HVWireStack
+    - CableMVStack
+    - CableHVStack
     - LightBulb
     - LightTube
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+
+# Basic Parts Technology Tree
+
+- type: technology
+  name: "basic parts technology"
+  id: BasicPartsTechnology
+  description: They aren't great, but at least they're something.
+  icon:
+    sprite: Objects/Misc/stock_parts.rsi
+    state: micro_mani
+  requiredPoints: 3000
+  requiredTechnologies:
+    - BasicResearch
+  unlockedRecipes:
+    - CapacitorStockPart
+    - MatterBinStockPart
+    - MicroLaserStockPart
+    - MicroManipulatorStockPart
+    - ScanningModuleStockPart
 
 # Bluespace Theory Technology Tree
 

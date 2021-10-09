@@ -1,12 +1,11 @@
-#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
@@ -19,11 +18,10 @@ namespace Content.Shared.Item
     /// <summary>
     ///    Players can pick up, drop, and put items in bags, and they can be seen in player's hands.
     /// </summary>
+    [NetworkedComponent()]
     public abstract class SharedItemComponent : Component, IEquipped, IUnequipped, IInteractHand
     {
         public override string Name => "Item";
-
-        public override uint? NetID => ContentNetIDs.ITEM;
 
         /// <summary>
         ///     How much big this item is.
@@ -111,7 +109,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     If a player can pick up this item.
         /// </summary>
-        public bool CanPickup(IEntity user)
+        public bool CanPickup(IEntity user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
@@ -122,7 +120,7 @@ namespace Content.Shared.Item
             if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
-            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
         }
 
         void IEquipped.Equipped(EquippedEventArgs eventArgs)
@@ -169,7 +167,7 @@ namespace Content.Shared.Item
         public Color Color { get; }
         public string? RsiPath { get; }
 
-        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath) : base(ContentNetIDs.ITEM)
+        public ItemComponentState(int size, string? equippedPrefix, Color color, string? rsiPath)
         {
             Size = size;
             EquippedPrefix = equippedPrefix;

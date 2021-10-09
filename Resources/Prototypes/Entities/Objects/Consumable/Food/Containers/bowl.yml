@@ -6,26 +6,35 @@
   id: FoodBowlBig
   description: A simple bowl, used for soups and salads.
   components:
-  - type: SolutionContainer
-    maxVol: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     state: bowl
     netsync: false
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOtherOnHit
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: Spillable
+    solution: food
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Client.Administration.UI.Tabs;
 using Content.Client.HUD;
@@ -20,6 +19,18 @@ namespace Content.Client.Administration.UI
         {
             add => PlayerTabControl.OnPlayerListRefresh += value;
             remove => PlayerTabControl.OnPlayerListRefresh -= value;
+        }
+
+        public event PlayerTab.AdminNameOverlayToggle? OnAdminNameOverlayOn
+        {
+            add => PlayerTabControl.OnAdminNameOverlayOn += value;
+            remove => PlayerTabControl.OnAdminNameOverlayOn -= value;
+        }
+
+        public event PlayerTab.AdminNameOverlayToggle? OnAdminNameOverlayOff
+        {
+            add => PlayerTabControl.OnAdminNameOverlayOff += value;
+            remove => PlayerTabControl.OnAdminNameOverlayOff -= value;
         }
 
         public AdminMenuWindow()

@@ -1,18 +1,17 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Shared.DragDrop;
-using Content.Shared.NetIDs;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.VendingMachines
 {
+    [NetworkedComponent()]
     public class SharedVendingMachineComponent : Component, IDragDropOn
     {
         public override string Name => "VendingMachine";
-        public override uint? NetID => ContentNetIDs.VENDING_MACHINE;
 
         [ViewVariables]
         public List<VendingMachineInventoryEntry> Inventory = new();

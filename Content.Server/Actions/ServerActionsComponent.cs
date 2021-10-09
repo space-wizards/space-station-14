@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions;
@@ -21,7 +20,6 @@ namespace Content.Server.Actions
     [ComponentReference(typeof(SharedActionsComponent))]
     public sealed class ServerActionsComponent : SharedActionsComponent
     {
-        [Dependency] private readonly IServerEntityManager _entityManager = default!;
         [Dependency] private readonly IServerGameStateManager _stateManager = default!;
 
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)

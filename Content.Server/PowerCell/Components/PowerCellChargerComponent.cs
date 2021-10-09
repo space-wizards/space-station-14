@@ -1,5 +1,3 @@
-#nullable enable
-using Content.Server.Battery.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
@@ -16,7 +14,7 @@ namespace Content.Server.PowerCell.Components
     {
         public override string Name => "PowerCellCharger";
 
-        protected override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(IEntity entity)
         {
             return entity.HasComponent<BatteryComponent>();
         }

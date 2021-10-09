@@ -10,13 +10,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/skewer.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
   - type: Item
     size: 5
 
@@ -104,11 +104,12 @@
     layers:
       - state: skewer
       - state: skewer-rat1
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
 
 - type: entity
   name: double rat kebab
@@ -121,11 +122,12 @@
       - state: skewer
       - state: skewer-rat1
       - state: skewer-rat2
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
 
 - type: entity
   name: fiesta kebab

@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Actions.Components;
+﻿using Content.Shared.Actions.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Actions
@@ -20,7 +19,7 @@ namespace Content.Shared.Actions
             _timeSinceCooldownCheck += frameTime;
             if (_timeSinceCooldownCheck < CooldownCheckIntervalSeconds) return;
 
-            foreach (var comp in ComponentManager.EntityQuery<SharedActionsComponent>(false))
+            foreach (var comp in EntityManager.EntityQuery<SharedActionsComponent>(false))
             {
                 comp.ExpireCooldowns();
             }

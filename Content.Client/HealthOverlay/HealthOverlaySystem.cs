@@ -1,7 +1,6 @@
-﻿#nullable enable
 using System.Collections.Generic;
 using Content.Client.HealthOverlay.UI;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.GameTicking;
 using Content.Shared.MobState;
 using JetBrains.Annotations;
@@ -13,7 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.HealthOverlay
 {
     [UsedImplicitly]
-    public class HealthOverlaySystem : EntitySystem, IResettingEntitySystem
+    public class HealthOverlaySystem : EntitySystem
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -44,10 +43,11 @@ namespace Content.Client.HealthOverlay
         {
             base.Initialize();
 
+            SubscribeNetworkEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             foreach (var gui in _guis.Values)
             {
@@ -79,7 +79,7 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in ComponentManager.EntityQuery<IMobStateComponent, IDamageableComponent>())
+            foreach (var (mobState, _) in EntityManager.EntityQuery<IMobStateComponent, DamageableComponent>())
             {
                 var entity = mobState.Owner;
 

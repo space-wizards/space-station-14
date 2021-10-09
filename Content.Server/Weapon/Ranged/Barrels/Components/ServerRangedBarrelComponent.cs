@@ -6,9 +6,10 @@ using Content.Server.Camera;
 using Content.Server.Projectiles.Components;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -46,9 +47,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private FireRateSelector _fireRateSelector = FireRateSelector.Safety;
 
         public override FireRateSelector AllRateSelectors => _fireRateSelector;
-
-        [DataField("allSelectors")]
-        private FireRateSelector _allRateSelectors;
 
         [DataField("fireRate")]
         public override float FireRate { get; } = 2f;
@@ -96,11 +94,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public bool CanMuzzleFlash { get; } = true;
 
         // Sounds
-        [DataField("soundGunshot")]
-        public string? SoundGunshot { get; set; }
+        [DataField("soundGunshot", required: true)]
+        public SoundSpecifier SoundGunshot { get; set; } = default!;
 
         [DataField("soundEmpty")]
-        public string SoundEmpty { get; } = "/Audio/Weapons/Guns/Empty/empty.ogg";
+        public SoundSpecifier SoundEmpty { get; } = new SoundPathSpecifier("/Audio/Weapons/Guns/Empty/empty.ogg");
 
         void ISerializationHooks.BeforeSerialization()
         {
@@ -196,10 +194,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             if (ShotsLeft == 0)
             {
-                if (SoundEmpty != null)
-                {
-                    SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
-                }
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
             }
 
@@ -207,7 +202,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             var projectile = TakeProjectile(shooter.Transform.Coordinates);
             if (projectile == null)
             {
-                SoundSystem.Play(Filter.Broadcast(), SoundEmpty, Owner.Transform.Coordinates);
+                SoundSystem.Play(Filter.Broadcast(), SoundEmpty.GetSound(), Owner);
                 return;
             }
 
@@ -219,7 +214,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 recoilComponent.Kick(-angle.ToVec() * 0.15f);
             }
-
 
             // This section probably needs tweaking so there can be caseless hitscan etc.
             if (projectile.TryGetComponent(out HitscanComponent? hitscan))
@@ -248,10 +242,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 throw new InvalidOperationException();
             }
 
-            if (!string.IsNullOrEmpty(SoundGunshot))
-            {
-                SoundSystem.Play(Filter.Broadcast(), SoundGunshot, Owner.Transform.Coordinates);
-            }
+            SoundSystem.Play(Filter.Broadcast(), SoundGunshot.GetSound(), Owner);
 
             _lastFire = _gameTiming.CurTime;
         }
@@ -282,16 +273,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             entity.Transform.Coordinates = entity.Transform.Coordinates.Offset(offsetPos);
             entity.Transform.LocalRotation = robustRandom.Pick(ejectDirections).ToAngle();
 
-            if (ammo.SoundCollectionEject == null || !playSound)
-            {
-                return;
-            }
-
-            prototypeManager ??= IoCManager.Resolve<IPrototypeManager>();
-
-            var soundCollection = prototypeManager.Index<SoundCollectionPrototype>(ammo.SoundCollectionEject);
-            var randomFile = robustRandom.Pick(soundCollection.PickFiles);
-            SoundSystem.Play(Filter.Broadcast(), randomFile, entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
+            SoundSystem.Play(Filter.Broadcast(), ammo.SoundCollectionEject.GetSound(), entity.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
         }
 
         /// <summary>
@@ -366,7 +348,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 // FIXME: Work around issue where inserting and removing an entity from a container,
                 // then setting its linear velocity in the same tick resets velocity back to zero.
-                // See SharedBroadPhaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
+                // See SharedBroadphaseSystem.HandleContainerInsert()... It sets Awake to false, which causes this.
                 projectile.SpawnTimer(TimeSpan.FromMilliseconds(25), () =>
                 {
                     projectile
@@ -402,7 +384,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physicsManager = EntitySystem.Get<SharedBroadphaseSystem>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)
@@ -410,13 +392,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 var result = rayCastResults[0];
                 var distance = result.Distance;
                 hitscan.FireEffects(shooter, distance, angle, result.HitEntity);
-
-                if (!result.HitEntity.TryGetComponent(out IDamageableComponent? damageable))
-                    return;
-
-                damageable.ChangeDamage(hitscan.DamageType, (int)Math.Round(hitscan.Damage, MidpointRounding.AwayFromZero), false, Owner);
-                //I used Math.Round over Convert.toInt32, as toInt32 always rounds to
-                //even numbers if halfway between two numbers, rather than rounding to nearest
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(result.HitEntity.Uid, hitscan.Damage);
             }
             else
             {

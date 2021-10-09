@@ -12,10 +12,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
-using Content.Shared.Emoting;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
-using Content.Shared.Speech;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -42,6 +40,7 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
+        [Dependency] private readonly IEntityManager _entManager = default!;
         [Dependency] private readonly IServerNetManager _netManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMoMMILink _mommiLink = default!;
@@ -52,7 +51,7 @@ namespace Content.Server.Chat.Managers
         /// <summary>
         /// The maximum length a player-sent message can be sent
         /// </summary>
-        public const int MaxMessageLength = 1000;
+        public int MaxMessageLength => _configurationManager.GetCVar(CCVars.ChatMaxMessageLength);
 
         private const int VoiceRange = 7; // how far voice goes in world units
 
@@ -64,12 +63,6 @@ namespace Content.Server.Chat.Managers
         public void Initialize()
         {
             _netManager.RegisterNetMessage<MsgChatMessage>();
-            _netManager.RegisterNetMessage<ChatMaxMsgLengthMessage>(OnMaxLengthRequest);
-
-            // Tell all the connected players the chat's character limit
-            var msg = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            msg.MaxMessageLength = MaxMessageLength;
-            _netManager.ServerSendToAll(msg);
 
             _configurationManager.OnValueChanged(CCVars.OocEnabled, OnOocEnabledChanged, true);
             _configurationManager.OnValueChanged(CCVars.AdminOocEnabled, OnAdminOocEnabledChanged, true);
@@ -141,12 +134,24 @@ namespace Content.Server.Chat.Managers
 
             message = message.Trim();
 
-            var mapPos = source.Transform.MapPosition;
+            // We'll try to avoid using MapPosition as EntityCoordinates can early-out and potentially be faster for common use cases
+            // Downside is it may potentially convert to MapPosition unnecessarily.
+            var sourceMapId = source.Transform.MapID;
+            var sourceCoords = source.Transform.Coordinates;
 
-            var clients = _playerManager.GetPlayersBy((x) => x.AttachedEntity != null
-                    && (x.AttachedEntity.HasComponent<GhostComponent>()
-                    || mapPos.InRange(x.AttachedEntity.Transform.MapPosition, VoiceRange)))
-                .Select(p => p.ConnectedClient).ToList();
+            var clients = new List<INetChannel>();
+
+            foreach (var player in _playerManager.GetAllPlayers())
+            {
+                if (player.AttachedEntity == null) continue;
+                var transform = player.AttachedEntity.Transform;
+
+                if (transform.MapID != sourceMapId ||
+                    !player.AttachedEntity.HasComponent<GhostComponent>() &&
+                    !sourceCoords.InRange(_entManager, transform.Coordinates, VoiceRange)) continue;
+
+                clients.Add(player.ConnectedClient);
+            }
 
             if (message.StartsWith(';'))
             {
@@ -333,7 +338,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-chat-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")),
@@ -349,7 +354,7 @@ namespace Content.Server.Chat.Managers
 
             var msg = _netManager.CreateNetMessage<MsgChatMessage>();
 
-            msg.Channel = ChatChannel.AdminChat;
+            msg.Channel = ChatChannel.Admin;
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-admin-announcement-wrap-message",
                                             ("adminChannelName", Loc.GetString("chat-manager-admin-channel-name")));
@@ -366,13 +371,6 @@ namespace Content.Server.Chat.Managers
             msg.Message = message;
             msg.MessageWrap = Loc.GetString("chat-manager-send-hook-ooc-wrap-message", ("senderName", sender));
             _netManager.ServerSendToAll(msg);
-        }
-
-        private void OnMaxLengthRequest(ChatMaxMsgLengthMessage msg)
-        {
-            var response = _netManager.CreateNetMessage<ChatMaxMsgLengthMessage>();
-            response.MaxMessageLength = MaxMessageLength;
-            _netManager.ServerSendMessage(response, msg.MsgChannel);
         }
 
         public void RegisterChatTransform(TransformChat handler)

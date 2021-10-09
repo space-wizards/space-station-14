@@ -1,6 +1,7 @@
 using System;
 using Content.Shared.Damage;
 using Content.Shared.Physics;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -10,6 +11,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Projectiles.Components
 {
@@ -27,18 +29,11 @@ namespace Content.Server.Projectiles.Components
         [DataField("layers")] //todo  WithFormat.Flags<CollisionLayer>()
         private int _collisionMask = (int) CollisionGroup.Opaque;
 
-        public float Damage
-        {
-            get => _damage;
-            set => _damage = value;
-        }
-        [DataField("damage")]
-        private float _damage = 10f;
-        public DamageType DamageType => _damageType;
-        [DataField("damageType")]
-        private DamageType _damageType = DamageType.Heat;
-        public float MaxLength => 20.0f;
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
 
+        public float MaxLength => 20.0f;
         private TimeSpan _startTime;
         private TimeSpan _deathTime;
 
@@ -50,7 +45,7 @@ namespace Content.Server.Projectiles.Components
         [DataField("impactFlash")]
         private string? _impactFlash;
         [DataField("soundHitWall")]
-        private string _soundHitWall = "/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg";
+        private SoundSpecifier _soundHitWall = new SoundPathSpecifier("/Audio/Weapons/Guns/Hits/laser_sear_wall.ogg");
 
         public void FireEffects(IEntity user, float distance, Angle angle, IEntity? hitEntity = null)
         {
@@ -85,7 +80,7 @@ namespace Content.Server.Projectiles.Components
                 // TODO: No wall component so ?
                 var offset = angle.ToVec().Normalized / 2;
                 var coordinates = user.Transform.Coordinates.Offset(offset);
-                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall, coordinates);
+                SoundSystem.Play(Filter.Pvs(coordinates), _soundHitWall.GetSound(), coordinates);
             }
 
             Owner.SpawnTimer((int) _deathTime.TotalMilliseconds, () =>

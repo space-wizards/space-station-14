@@ -16,6 +16,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
@@ -24,14 +25,14 @@ namespace Content.Client.Lobby.UI
         private readonly IClientPreferencesManager _preferencesManager;
         private IEntity _previewDummy;
         private readonly Label _summaryLabel;
-        private readonly VBoxContainer _loaded;
+        private readonly BoxContainer _loaded;
         private readonly Label _unloaded;
 
         public LobbyCharacterPreviewPanel(IEntityManager entityManager,
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
             var header = new NanoHeading
             {
@@ -51,18 +52,28 @@ namespace Content.Client.Lobby.UI
             var viewWest = MakeSpriteView(_previewDummy, Direction.West);
             var viewEast = MakeSpriteView(_previewDummy, Direction.East);
 
-            var vBox = new VBoxContainer();
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             vBox.AddChild(header);
 
             _unloaded = new Label {Text = Loc.GetString("lobby-character-preview-panel-unloaded-preferences-label")};
 
-            _loaded = new VBoxContainer {Visible = false};
+            _loaded = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                Visible = false
+            };
 
             _loaded.AddChild(CharacterSetupButton);
             _loaded.AddChild(_summaryLabel);
 
-            var hBox = new HBoxContainer();
+            var hBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             hBox.AddChild(viewSouth);
             hBox.AddChild(viewNorth);
             hBox.AddChild(viewWest);

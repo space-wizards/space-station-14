@@ -1,17 +1,21 @@
 using System;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
-using Content.Server.GameObjects.Components.NodeContainer.Nodes;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public class GasPassiveVentSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -21,38 +25,37 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPassiveVentUpdated(EntityUid uid, GasPassiveVentComponent vent, AtmosDeviceUpdateEvent args)
         {
-            var environment = args.Atmosphere.GetTile(vent.Owner.Transform.Coordinates)!;
+            var environment = _atmosphereSystem.GetTileMixture(vent.Owner.Transform.Coordinates, true);
 
-            if (environment.Air == null)
+            if (environment == null)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(vent.InletName, out PipeNode? inlet))
                 return;
 
-            var environmentPressure = environment.Air.Pressure;
+            var environmentPressure = environment.Pressure;
             var pressureDelta = MathF.Abs(environmentPressure - inlet.Air.Pressure);
 
-            if ((environment.Air.Temperature > 0 || inlet.Air.Temperature > 0) && pressureDelta > 0.5f)
+            if ((environment.Temperature > 0 || inlet.Air.Temperature > 0) && pressureDelta > 0.5f)
             {
                 if (environmentPressure < inlet.Air.Pressure)
                 {
                     var airTemperature = environment.Temperature > 0 ? environment.Temperature : inlet.Air.Temperature;
-                    var transferMoles = pressureDelta * environment.Air.Volume / (airTemperature * Atmospherics.R);
+                    var transferMoles = pressureDelta * environment.Volume / (airTemperature * Atmospherics.R);
                     var removed = inlet.Air.Remove(transferMoles);
-                    environment.AssumeAir(removed);
+                    _atmosphereSystem.Merge(environment, removed);
                 }
                 else
                 {
                     var airTemperature = inlet.Air.Temperature > 0 ? inlet.Air.Temperature : environment.Temperature;
                     var outputVolume = inlet.Air.Volume;
                     var transferMoles = (pressureDelta * outputVolume) / (airTemperature * Atmospherics.R);
-                    transferMoles = MathF.Min(transferMoles, environment.Air.TotalMoles * inlet.Air.Volume / environment.Air.Volume);
-                    var removed = environment.Air.Remove(transferMoles);
+                    transferMoles = MathF.Min(transferMoles, environment.TotalMoles * inlet.Air.Volume / environment.Volume);
+                    var removed = environment.Remove(transferMoles);
                     inlet.AssumeAir(removed);
-                    environment.Invalidate();
                 }
             }
 

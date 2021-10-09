@@ -1,7 +1,7 @@
-#nullable enable
 using System;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
+using Content.Shared.Sound;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -33,11 +33,8 @@ namespace Content.Server.Light.Components
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>
     [RegisterComponent]
-    public class LightBulbComponent : Component, ILand, IBreakAct
+    public class LightBulbComponent : Component, IBreakAct
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         /// <summary>
         ///     Invoked whenever the state of the light bulb changes.
         /// </summary>
@@ -47,7 +44,8 @@ namespace Content.Server.Light.Components
         [DataField("color")]
         private Color _color = Color.White;
 
-        [ViewVariables(VVAccess.ReadWrite)] public Color Color
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Color Color
         {
             get { return _color; }
             set
@@ -71,11 +69,15 @@ namespace Content.Server.Light.Components
         private int _powerUse = 40;
         public int PowerUse => _powerUse;
 
+        [DataField("breakSound")]
+        private SoundSpecifier _breakSound = new SoundCollectionSpecifier("GlassBreak");
+
         /// <summary>
         ///     The current state of the light bulb. Invokes the OnLightBulbStateChange event when set.
         ///     It also updates the bulb's sprite accordingly.
         /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] public LightBulbState State
+        [ViewVariables(VVAccess.ReadWrite)]
+        public LightBulbState State
         {
             get { return _state; }
             set
@@ -116,12 +118,6 @@ namespace Content.Server.Light.Components
             UpdateColor();
         }
 
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            PlayBreakSound();
-            State = LightBulbState.Broken;
-        }
-
         public void OnBreak(BreakageEventArgs eventArgs)
         {
             State = LightBulbState.Broken;
@@ -129,10 +125,7 @@ namespace Content.Server.Light.Components
 
         public void PlayBreakSound()
         {
-            var soundCollection = _prototypeManager.Index<SoundCollectionPrototype>("GlassBreak");
-            var file = _random.Pick(soundCollection.PickFiles);
-
-            SoundSystem.Play(Filter.Pvs(Owner), file, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), _breakSound.GetSound(), Owner);
         }
     }
 }

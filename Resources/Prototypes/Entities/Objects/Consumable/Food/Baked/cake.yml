@@ -10,13 +10,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/cake.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 - type: entity
   parent: FoodCakeBase
@@ -26,12 +26,13 @@
   components:
   - type: Food
     trash: FoodPlateSmall
-  - type: SolutionContainer
-    maxVol: 7
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 7
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 7
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 7
 
 # Custom Cake Example
 

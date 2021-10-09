@@ -1,6 +1,4 @@
-﻿#nullable enable
-using Content.Server.Battery.Components;
-using Content.Server.Power.Components;
+﻿using Content.Server.Power.Components;
 using Content.Server.PowerCell.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Interaction;
@@ -18,7 +16,7 @@ namespace Content.Server.Weapon
     {
         public override string Name => "WeaponCapacitorCharger";
 
-        protected override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(IEntity entity)
         {
             return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
                    entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;

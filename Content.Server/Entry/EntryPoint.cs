@@ -1,4 +1,5 @@
-﻿using Content.Server.Administration.Managers;
+using Content.Server.Administration.Managers;
+using Content.Server.Afk;
 using Content.Server.AI.Utility;
 using Content.Server.AI.Utility.Considerations;
 using Content.Server.AI.WorldState;
@@ -10,8 +11,6 @@ using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.IoC;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.Notification.Managers;
-using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
@@ -56,11 +55,11 @@ namespace Content.Server.Entry
             }
 
             IoCManager.BuildGraph();
+            factory.GenerateNetIds();
 
             _euiManager = IoCManager.Resolve<EuiManager>();
             _voteManager = IoCManager.Resolve<IVoteManager>();
 
-            IoCManager.Resolve<IServerNotifyManager>().Initialize();
             IoCManager.Resolve<IChatManager>().Initialize();
 
             var playerManager = IoCManager.Resolve<IPlayerManager>();
@@ -81,16 +80,15 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
-            IoCManager.Resolve<IHolidayManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
+            IoCManager.Resolve<IAfkManager>().Initialize();
             _euiManager.Initialize();
 
             IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();

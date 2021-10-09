@@ -9,10 +9,10 @@ namespace Content.Client.Chat
             channel switch
             {
                 ChatChannel.Server => Color.Orange,
-                ChatChannel.Radio => Color.Green,
+                ChatChannel.Radio => Color.LimeGreen,
                 ChatChannel.OOC => Color.LightSkyBlue,
                 ChatChannel.Dead => Color.MediumPurple,
-                ChatChannel.AdminChat => Color.Red,
+                ChatChannel.Admin => Color.Red,
                 _ => Color.DarkGray
             };
     }

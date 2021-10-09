@@ -1,0 +1,34 @@
+- type: entity
+  id: PlasmaWindow
+  name: plasma window
+  parent: Window
+  components:
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Windows/plasma_window.rsi
+  - type: Icon
+    sprite: Structures/Windows/plasma_window.rsi
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Window
+    base: pwindow
+  - type: Construction
+    graph: window
+    node: plasmaWindow

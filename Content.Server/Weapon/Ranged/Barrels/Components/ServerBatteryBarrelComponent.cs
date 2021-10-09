@@ -1,22 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Server.Battery.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
-using Content.Shared.ActionBlocker;
-using Content.Shared.Damage;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.NetIDs;
-using Content.Shared.Verbs;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -26,10 +21,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
+    [NetworkedComponent()]
     public sealed class ServerBatteryBarrelComponent : ServerRangedBarrelComponent
     {
         public override string Name => "BatteryBarrel";
-        public override uint? NetID => ContentNetIDs.BATTERY_BARREL;
 
         // The minimum change we need before we can fire
         [DataField("lowerChargeLimit")]
@@ -47,7 +42,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("powerCellPrototype")]
         private string? _powerCellPrototype = default;
         [DataField("powerCellRemovable")]
-        [ViewVariables] private bool _powerCellRemovable = default;
+        [ViewVariables] public bool PowerCellRemovable = default;
 
         public override int ShotsLeft
         {
@@ -82,10 +77,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private AppearanceComponent? _appearanceComponent;
 
         // Sounds
-        [DataField("soundPowerCellInsert")]
-        private string? _soundPowerCellInsert = default;
-        [DataField("soundPowerCellEject")]
-        private string? _soundPowerCellEject = default;
+        [DataField("soundPowerCellInsert", required: true)]
+        private SoundSpecifier _soundPowerCellInsert = default!;
+        [DataField("soundPowerCellEject", required: true)]
+        private SoundSpecifier _soundPowerCellEject = default!;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {
@@ -187,13 +182,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 if (energyRatio < 1.0)
                 {
-                    var newDamages = new Dictionary<DamageType, int>(projectileComponent.Damages.Count);
-                    foreach (var (damageType, damage) in projectileComponent.Damages)
-                    {
-                        newDamages.Add(damageType, (int) (damage * energyRatio));
-                    }
-
-                    projectileComponent.Damages = newDamages;
+                    projectileComponent.Damage *= energyRatio;
                 }
             } else if (entity.TryGetComponent(out HitscanComponent? hitscanComponent))
             {
@@ -222,10 +211,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return false;
             }
 
-            if (_soundPowerCellInsert != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             _powerCellContainer.Insert(entity);
 
@@ -236,7 +222,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!_powerCellRemovable)
+            if (!PowerCellRemovable)
             {
                 return false;
             }
@@ -249,9 +235,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return TryEjectCell(eventArgs.User);
         }
 
-        private bool TryEjectCell(IEntity user)
+        public bool TryEjectCell(IEntity user)
         {
-            if (PowerCell == null || !_powerCellRemovable)
+            if (PowerCell == null || !PowerCellRemovable)
             {
                 return false;
             }
@@ -275,10 +261,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 cell.Owner.Transform.Coordinates = user.Transform.Coordinates;
             }
 
-            if (_soundPowerCellEject != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundPowerCellEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             return true;
         }
 
@@ -290,35 +273,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             return TryInsertPowerCell(eventArgs.Using);
-        }
-
-        [Verb]
-        public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
-        {
-            protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.PowerCell == null)
-                {
-                    data.Text = Loc.GetString("eject-cell-verb-get-data-text-no-cell");
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-                else
-                {
-                    data.Text = Loc.GetString("eject-cell-verb-get-data-text");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                }
-            }
-
-            protected override void Activate(IEntity user, ServerBatteryBarrelComponent component)
-            {
-                component.TryEjectCell(user);
-            }
         }
     }
 }

@@ -5,8 +5,11 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 1
+    damage:
+      types:
+        Blunt: 1
+    soundHit:
+      path: /Audio/Weapons/Guns/Hits/bullet_hit.ogg
 
 - type: entity
   id: BulletDonkSoft
@@ -23,5 +26,6 @@
     sprite: Objects/Fun/toys.rsi
     state: foamdart
   - type: Projectile
-    damages:
-      Blunt: 1
+    damage:
+      types:
+        Blunt: 1

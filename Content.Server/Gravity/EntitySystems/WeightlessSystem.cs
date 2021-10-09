@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Gravity.EntitySystems
 {
     [UsedImplicitly]
-    public class WeightlessSystem : EntitySystem, IResettingEntitySystem
+    public class WeightlessSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -22,11 +22,12 @@ namespace Content.Server.Gravity.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<GravityChangedMessage>(GravityChanged);
             SubscribeLocalEvent<EntParentChangedMessage>(EntParentChanged);
         }
 
-        public void Reset()
+        public void Reset(RoundRestartCleanupEvent ev)
         {
             _alerts.Clear();
         }
@@ -96,7 +97,7 @@ namespace Content.Server.Gravity.EntitySystems
             status.ClearAlert(AlertType.Weightless);
         }
 
-        private void EntParentChanged(EntParentChangedMessage ev)
+        private void EntParentChanged(ref EntParentChangedMessage ev)
         {
             if (!ev.Entity.TryGetComponent(out ServerAlertsComponent? status))
             {

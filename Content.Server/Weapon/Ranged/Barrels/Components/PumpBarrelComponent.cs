@@ -2,14 +2,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
 using Content.Shared.Interaction;
-using Content.Shared.NetIDs;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
@@ -25,10 +25,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// Bolt-action rifles
     /// </summary>
     [RegisterComponent]
+    [NetworkedComponent()]
     public sealed class PumpBarrelComponent : ServerRangedBarrelComponent, IMapInit, ISerializationHooks
     {
         public override string Name => "PumpBarrel";
-        public override uint? NetID => ContentNetIDs.PUMP_BARREL;
 
         public override int ShotsLeft
         {
@@ -45,7 +45,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Even a point having a chamber? I guess it makes some of the below code cleaner
         private ContainerSlot _chamberContainer = default!;
-        private Stack<IEntity> _spawnedAmmo = new (DefaultCapacity-1);
+        private Stack<IEntity> _spawnedAmmo = new(DefaultCapacity - 1);
         private Container _ammoContainer = default!;
 
         [ViewVariables]
@@ -65,10 +65,10 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Sounds
         [DataField("soundCycle")]
-        private string _soundCycle = "/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg";
+        private SoundSpecifier _soundCycle = new SoundPathSpecifier("/Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg");
 
         [DataField("soundInsert")]
-        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/bullet_insert.ogg";
+        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/bullet_insert.ogg");
 
         void IMapInit.MapInit()
         {
@@ -94,7 +94,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 chamber,
                 FireRateSelector,
                 count,
-                SoundGunshot);
+                SoundGunshot.GetSound());
         }
 
         void ISerializationHooks.AfterDeserialization()
@@ -189,10 +189,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                if (!string.IsNullOrEmpty(_soundCycle))
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundCycle, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundCycle.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -218,10 +215,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _spawnedAmmo.Push(eventArgs.Using);
                 Dirty();
                 UpdateAppearance();
-                if (_soundInsert != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 return true;
             }
 
@@ -245,7 +239,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine",("caliber", _caliber)));
+            message.AddMarkup("\n" + Loc.GetString("pump-barrel-component-on-examine", ("caliber", _caliber)));
         }
     }
 }

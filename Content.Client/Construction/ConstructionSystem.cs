@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Examine;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Helpers;
 using JetBrains.Annotations;
@@ -11,10 +12,11 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Prototypes;
 
-#nullable enable
 
 namespace Content.Client.Construction
 {
@@ -25,6 +27,8 @@ namespace Content.Client.Construction
     public class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
 
         private int _nextId;
@@ -45,6 +49,8 @@ namespace Content.Client.Construction
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUse))
                 .Register<ConstructionSystem>();
+
+            SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
         }
 
         /// <inheritdoc />
@@ -53,6 +59,28 @@ namespace Content.Client.Construction
             base.Shutdown();
 
             CommandBinds.Unregister<ConstructionSystem>();
+        }
+
+        private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
+        {
+            if (component.Prototype == null) return;
+
+            args.PushMarkup(Loc.GetString(
+                "construction-ghost-examine-message",
+                ("name", component.Prototype.Name)));
+
+            if (!_prototypeManager.TryIndex(component.Prototype.Graph, out ConstructionGraphPrototype? graph))
+                return;
+
+            var startNode = graph.Nodes[component.Prototype.StartNode];
+
+            if (!graph.TryPath(component.Prototype.StartNode, component.Prototype.TargetNode, out var path) ||
+                !startNode.TryGetEdge(path[0].Name, out var edge))
+            {
+                return;
+            }
+
+            edge.Steps[0].DoExamine(args);
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;

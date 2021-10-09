@@ -1,14 +1,12 @@
-#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
@@ -292,24 +290,30 @@ namespace Content.Server.Instruments
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            if (Handheld || !eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
+            if (Handheld)
+                return;
 
-            if (InstrumentPlayer != null) return;
-
-            InstrumentPlayer = actor.PlayerSession;
-            OpenUserInterface(actor.PlayerSession);
+            InteractInstrument(eventArgs.User);
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
-
-            if (InstrumentPlayer == actor.PlayerSession)
-            {
-                OpenUserInterface(actor.PlayerSession);
-            }
-
+            InteractInstrument(eventArgs.User);
             return false;
+        }
+
+        private void InteractInstrument(IEntity user)
+        {
+            if (!user.TryGetComponent(out ActorComponent? actor)) return;
+
+            if ((!Handheld && InstrumentPlayer != null)
+                || (Handheld && actor.PlayerSession != InstrumentPlayer)
+                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+
+            InstrumentPlayer = actor.PlayerSession;
+            OpenUserInterface(InstrumentPlayer);
+
+            return;
         }
 
         private void UserInterfaceOnClosed(IPlayerSession player)

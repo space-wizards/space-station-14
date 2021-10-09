@@ -19,6 +19,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Sandbox
 {
@@ -47,7 +48,11 @@ namespace Content.Client.Sandbox
 
             Title = Loc.GetString("sandbox-window-title");
 
-            var vBox = new VBoxContainer { SeparationOverride = 4 };
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 4
+            };
             Contents.AddChild(vBox);
 
             RespawnButton = new Button { Text = Loc.GetString("sandbox-window-respawn-button") };
@@ -83,7 +88,7 @@ namespace Content.Client.Sandbox
             ShowMarkersButton = new Button { Text = Loc.GetString("sandbox-window-show-spawns-button"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("sandbox-window-show-bb-button"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
+            ShowBbButton = new Button { Text = Loc.GetString("sandbox-window-show-bb-button"), ToggleMode = true, Pressed = (EntitySystem.Get<DebugPhysicsSystem>().Flags & PhysicsDebugFlags.Shapes) != 0x0 };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("sandbox-window-link-machines-button"), ToggleMode = true };
@@ -349,7 +354,7 @@ namespace Content.Client.Sandbox
 
         private void ShowBb()
         {
-            _consoleHost.ExecuteCommand("showbb");
+            _consoleHost.ExecuteCommand("physics shapes");
         }
 
         private void LinkMachines()

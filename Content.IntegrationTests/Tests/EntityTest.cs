@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Battery.Components;
+using Content.Server.Power.Components;
 using Content.Server.PowerCell.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -21,7 +22,12 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnTest()
         {
-            var server = StartServerDummyTicker();
+            var options = new ServerContentIntegrationOption()
+            {
+                CVarOverrides = {{CCVars.AIMaxUpdates.Name, int.MaxValue.ToString()}}
+            };
+
+            var server = StartServerDummyTicker(options);
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -183,7 +189,7 @@ namespace Content.IntegrationTests.Tests
 
                         Assert.DoesNotThrow(() =>
                             {
-                                entityManager.ComponentManager.AddComponent(entity, component);
+                                entityManager.AddComponent(entity, component);
                             }, "Component '{0}' threw an exception.",
                             component.Name);
 
@@ -261,10 +267,6 @@ namespace Content.IntegrationTests.Tests
             // Split components into groups, ensuring that their references don't conflict
             foreach (var type in componentFactory.AllRegisteredTypes)
             {
-                if (type == typeof(PowerCellComponent) || type == typeof(BatteryComponent))
-                {
-
-                }
                 var registration = componentFactory.GetRegistration(type);
 
                 for (var i = 0; i < distinctComponents.Count; i++)
@@ -328,7 +330,7 @@ namespace Content.IntegrationTests.Tests
                             // and all others variations (out parameter)
                             Assert.DoesNotThrow(() =>
                                 {
-                                    entityManager.ComponentManager.AddComponent(entity, component);
+                                    entityManager.AddComponent(entity, component);
                                 }, "Component '{0}' threw an exception.",
                                 component.Name);
                         }

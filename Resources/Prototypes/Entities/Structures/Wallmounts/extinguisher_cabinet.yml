@@ -1,0 +1,66 @@
+﻿- type: entity
+  id: ExtinguisherCabinet
+  name: extinguisher cabinet
+  description: A small wall mounted cabinet designed to hold a fire extinguisher.
+  components:
+    - type: Transform
+      anchored: true
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Sprite
+      sprite: Structures/Wallmounts/extinguisher_cabinet.rsi
+      netsync: false
+      layers:
+      - state: frame
+      - state: extinguisher
+        map: ["enum.ItemCabinetVisualLayers.ContainsItem"]
+        visible: true
+      - state: closed
+        map: ["enum.ItemCabinetVisualLayers.Door"]
+    - type: ItemCabinet
+      doorSound:
+        path: /Audio/Machines/machine_switch.ogg
+    - type: Appearance
+      visuals:
+        - type: ItemCabinetVisualizer
+          openState: open
+          closedState: closed
+    - type: ItemSlots
+      slots:
+        cabinetSlot:
+          whitelist:
+            components:
+            - FireExtinguisher
+  placement:
+    mode: SnapgridCenter
+
+- type: entity
+  id: ExtinguisherCabinetOpen
+  parent: ExtinguisherCabinet
+  suffix: Open
+  components:
+  - type: ItemCabinet
+    opened: true
+
+- type: entity
+  id: ExtinguisherCabinetFilled
+  parent: ExtinguisherCabinet
+  suffix: Filled
+  components:
+  - type: ItemCabinet
+    spawnPrototype: FireExtinguisher
+  - type: ItemSlots
+    slots:
+      cabinetSlot:
+        item: FireExtinguisher
+        whitelist:
+          components:
+          - FireExtinguisher
+
+- type: entity
+  id: ExtinguisherCabinetFilledOpen
+  parent: ExtinguisherCabinetFilled
+  suffix: Filled, Open
+  components:
+  - type: ItemCabinet
+    opened: true

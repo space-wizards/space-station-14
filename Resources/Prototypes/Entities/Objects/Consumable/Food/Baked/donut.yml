@@ -1,8 +1,5 @@
 # Base
 
-- type: Tag
-  id: Donut
-
 - type: entity
   parent: BaseItem
   id: FoodDonutBase
@@ -12,17 +9,17 @@
   - type: Food
   - type: Tag
     tags:
-      - Donut
+    - Donut
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 3
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 3
   - type: Item
     sprite: Objects/Consumable/Food/Baked/donut.rsi
     size: 1

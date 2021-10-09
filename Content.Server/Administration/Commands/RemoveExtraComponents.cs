@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -45,7 +44,7 @@ namespace Content.Server.Administration.Commands
                     if (entity.Prototype.Components.ContainsKey(component.Name))
                         continue;
 
-                    entityManager.ComponentManager.RemoveComponent(entity.Uid, component);
+                    entityManager.RemoveComponent(entity.Uid, component);
                     components++;
 
                     modified = true;

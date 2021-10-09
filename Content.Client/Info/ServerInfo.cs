@@ -9,22 +9,30 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Info
 {
-    public class ServerInfo : VBoxContainer
+    public class ServerInfo : BoxContainer
     {
         private readonly RichTextLabel _richTextLabel;
 
         public ServerInfo()
         {
+            Orientation = LayoutOrientation.Vertical;
+
             _richTextLabel = new RichTextLabel
             {
                 VerticalExpand = true
             };
             AddChild(_richTextLabel);
 
-            var buttons = new HBoxContainer();
+            var buttons = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal
+            };
             AddChild(buttons);
 
             var uriOpener = IoCManager.Resolve<IUriOpener>();
+
+            var rulesButton = new Button() { Text = Loc.GetString("server-info-rules-button") };
+            rulesButton.OnPressed += args => new InfoWindow().Open();
 
             var discordButton = new Button {Text = Loc.GetString("server-info-discord-button") };
             discordButton.OnPressed += args => uriOpener.OpenUri(UILinks.Discord);
@@ -44,6 +52,7 @@ namespace Content.Client.Info
                 HorizontalAlignment = HAlignment.Right
             };
 
+            buttons.AddChild(rulesButton);
             buttons.AddChild(discordButton);
             buttons.AddChild(websiteButton);
             buttons.AddChild(reportButton);

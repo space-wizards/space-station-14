@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 
@@ -45,6 +44,6 @@ namespace Content.Shared.MobState
             [NotNullWhen(true)] out IMobState? state,
             out int threshold);
 
-        void UpdateState(int damage, bool syncing = false);
+        void UpdateState(int damage);
     }
 }
