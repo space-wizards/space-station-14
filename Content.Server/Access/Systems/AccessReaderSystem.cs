@@ -16,6 +16,8 @@ namespace Content.Server.Access.Systems
 {
     public class AccessReaderSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -24,11 +26,10 @@ namespace Content.Server.Access.Systems
 
         private void OnInit(EntityUid uid, AccessReader reader, ComponentInit args)
         {
-            var proto = IoCManager.Resolve<IPrototypeManager>();
             var allTags = reader.AccessLists.SelectMany(c => c).Union(reader.DenyTags);
             foreach (var level in allTags)
             {
-                if (!proto.HasIndex<AccessLevelPrototype>(level))
+                if (!_prototypeManager.HasIndex<AccessLevelPrototype>(level))
                 {
                     Logger.ErrorS("access", $"Invalid access level: {level}");
                 }
