@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.EffectBlocker;
@@ -6,6 +7,7 @@ using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -14,6 +16,8 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
+        [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+
         private List<SlipperyComponent> _slipped = new();
 
         public override void Initialize()
@@ -45,12 +49,12 @@ namespace Content.Shared.Slippery
             }
         }
 
-        public bool CanSlip(SlipperyComponent component, EntityUid uid, [NotNullWhen(true)] out SharedStunnableComponent? stunnableComponent)
+        public bool CanSlip(SlipperyComponent component, EntityUid uid, [NotNullWhen(true)] out StunnableComponent? stunnableComponent)
         {
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !EntityManager.TryGetComponent<SharedStunnableComponent>(uid, out stunnableComponent))
+                || !EntityManager.TryGetComponent<StunnableComponent>(uid, out stunnableComponent))
             {
                 stunnableComponent = null;
                 return false;
@@ -82,7 +86,7 @@ namespace Content.Shared.Slippery
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            stun.Paralyze(5);
+            _stunSystem.Paralyze(component.Owner.Uid, TimeSpan.FromSeconds(5), stun);
             component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 

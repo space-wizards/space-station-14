@@ -1,5 +1,7 @@
-﻿using Content.Server.Stunnable.Components;
+﻿using Content.Server.Stunnable;
+using Content.Server.Stunnable.Components;
 using Content.Shared.MobState.State;
+using Content.Shared.Stunnable;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.MobState.States
@@ -12,7 +14,7 @@ namespace Content.Server.MobState.States
 
             if (entity.TryGetComponent(out StunnableComponent? stun))
             {
-                stun.CancelAll();
+                EntitySystem.Get<StunSystem>().Reset(entity.Uid, stun);
             }
         }
     }
