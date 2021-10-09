@@ -2367,3 +2367,9 @@ Entries:
   - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
   id: 423
   time: '2021-10-09T16:23:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: small light sources like computers no longer cast shadows to improve
+      performance., type: Tweak}
+  id: 424
+  time: '2021-10-09T16:26:45.0000000+00:00'
