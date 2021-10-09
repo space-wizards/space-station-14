@@ -2362,3 +2362,8 @@ Entries:
   - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
   id: 422
   time: '2021-10-09T13:49:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
+  id: 423
+  time: '2021-10-09T16:23:34.0000000+00:00'
