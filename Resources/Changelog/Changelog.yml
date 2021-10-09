@@ -2348,3 +2348,8 @@ Entries:
   - {message: Added grilles., type: Add}
   id: 419
   time: '2021-10-09T08:54:56.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
+  id: 420
+  time: '2021-10-09T11:06:34.0000000+00:00'
