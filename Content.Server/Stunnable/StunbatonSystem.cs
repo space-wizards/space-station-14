@@ -72,8 +72,6 @@ namespace Content.Server.Stunnable
             if (!Get<ActionBlockerSystem>().CanUse(args.User))
                 return;
 
-            Get<JitteringSystem>().DoJitter(args.User.Uid, TimeSpan.FromMinutes(1), 20f, 8f);
-
             if (comp.Activated)
             {
                 TurnOff(comp);
