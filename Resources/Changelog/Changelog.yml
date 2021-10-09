@@ -2353,3 +2353,12 @@ Entries:
   - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
   id: 420
   time: '2021-10-09T11:06:34.0000000+00:00'
+- author: 20kdc
+  changes: []
+  id: 421
+  time: '2021-10-09T13:48:53.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
+  id: 422
+  time: '2021-10-09T13:49:08.0000000+00:00'
