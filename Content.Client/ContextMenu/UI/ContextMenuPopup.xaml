@@ -1,6 +1,6 @@
 <Popup xmlns="https://spacestation14.io">
     <PanelContainer Name="MenuPanel">
-        <ScrollContainer VerticalExpand="True" HScrollEnabled="False" Name="Scroll">
+        <ScrollContainer Name="Scroll" VerticalExpand="True" HScrollEnabled="False" ReturnMeasure="True">
         </ScrollContainer>
     </PanelContainer>
 </Popup>
