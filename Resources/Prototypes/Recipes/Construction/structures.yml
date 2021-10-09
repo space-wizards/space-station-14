@@ -71,6 +71,23 @@
   canRotate: false
 
 - type: construction
+  name: grille
+  id: Grille
+  graph: grille
+  startNode: start
+  targetNode: grille
+  category: Structures
+  description: A flimsy framework of iron rods.
+  conditions:
+    - !type:TileNotBlocked
+  icon:
+    sprite: Structures/Walls/grille.rsi
+    state: grille
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: window
   id: Window
   graph: window
