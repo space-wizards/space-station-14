@@ -34,7 +34,7 @@ namespace Content.Client.Light
         {
             base.OnChangeData(component);
 
-            if (component.Deleted || !component.Owner.Initialized)
+            if (!component.Initialized)
                 return;
 
             PlayAnimation(component);
