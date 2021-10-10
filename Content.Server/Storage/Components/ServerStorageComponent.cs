@@ -375,7 +375,7 @@ namespace Content.Server.Storage.Components
 
             // ReSharper disable once StringLiteralTypo
             _storage = Owner.EnsureContainer<Container>("storagebase");
-            // _storage.Visibility = ContainerVisibility.None;
+            _storage.Visibility = ContainerVisibility.None;
             _storage.OccludesLight = _occludesLight;
         }
 

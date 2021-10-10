@@ -95,7 +95,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 !_actionBlockerSystem.CanMove(args.User))
                 return;
 
-            // Add verb to climb inside of the unit, 
+            // Add verb to climb inside of the unit,
             Verb verb = new();
             verb.Act = () => component.TryInsert(args.User, args.User);
             verb.Text = Loc.GetString("disposal-self-insert-verb-get-data-text");
@@ -205,6 +205,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         private void HandleDisposalInit(EntityUid uid, DisposalUnitComponent component, ComponentInit args)
         {
             component.Container = component.Owner.EnsureContainer<Container>(component.Name);
+            component.Container.Visibility = ContainerVisibility.None;
 
             if (component.UserInterface != null)
             {
