@@ -1,6 +1,7 @@
 using Content.Server.Access.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.PDA;
 using Content.Shared.Access;
 using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
@@ -10,6 +11,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Content.Server.Access.Systems
@@ -50,11 +52,6 @@ namespace Content.Server.Access.Systems
             return IsAllowed(reader, tags);
         }
 
-        public bool IsAllowed(AccessReader reader, AccessComponent access)
-        {
-            return IsAllowed(reader, access.Tags);
-        }
-
         public bool IsAllowed(AccessReader reader, ICollection<string> accessTags)
         {
             if (reader.DenyTags.Overlaps(accessTags))
@@ -68,17 +65,17 @@ namespace Content.Server.Access.Systems
 
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
-            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
-            {
-                return access.Tags;
-            }
+            HashSet<string>? tags = null;
+
+            if (FindAccessTagsItem(uid, out tags))
+                return tags;
 
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    heldItem.TryGetComponent(out AccessComponent? handAccessComponent))
+                    FindAccessTagsItem(heldItem.Uid, out tags))
                 {
-                    return handAccessComponent.Tags;
+                    return tags;
                 }
             }
 
@@ -86,14 +83,35 @@ namespace Content.Server.Access.Systems
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    item.Owner.TryGetComponent(out AccessComponent? idAccessComponent)
+                    FindAccessTagsItem(item.Owner.Uid, out tags)
                 )
                 {
-                    return idAccessComponent.Tags;
+                    return tags;
                 }
             }
 
             return Array.Empty<string>();
+        }
+
+        /// <summary>
+        ///     Try to find access component on this item or inside this item (if its pda)
+        /// </summary>
+        private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
+        {
+            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
+            {
+                tags = access.Tags;
+                return true;
+            }
+
+            if (EntityManager.TryGetComponent(uid, out PDAComponent? pda))
+            {
+                tags = pda?.ContainedID?.Owner?.GetComponent<AccessComponent>()?.Tags;
+                return tags != null;
+            }
+
+            tags = null;
+            return false;
         }
     }
 }

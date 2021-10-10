@@ -20,7 +20,6 @@ namespace Content.Server.Access.Components
     ///     Stores access levels necessary to "use" an entity
     ///     and allows checking if something or somebody is authorized with these access levels.
     /// </summary>
-    [PublicAPI]
     [RegisterComponent]
     public class AccessReader : Component
     {
