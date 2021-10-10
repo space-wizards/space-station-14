@@ -2385,8 +2385,14 @@ Entries:
   id: 426
   time: '2021-10-09T18:15:06.131590+00:00'
 - author: moony
-  changes: 
-  - {message: The Restart Round vote no longer instantly ends the round, and allows
-      you to see the round end screen., type: tweak}
+  changes:
+  - {and allows you to see the round end screen.: null, message: The Restart Round
+      vote no longer instantly ends the round, type: tweak}
   id: 427
   time: '2021-10-09T18:18:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Blast doors and shutters have been added, though they aren''t mapped
+      in yet.', type: Add}
+  id: 428
+  time: '2021-10-10T10:43:50.0000000+00:00'
