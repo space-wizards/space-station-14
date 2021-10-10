@@ -118,8 +118,9 @@ namespace Content.Server.Access.Components
                 Logger.Warning("Tried to write unknown access tag.");
                 return;
             }
-            var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
-            targetIdAccess.SetTags(newAccessList);
+
+            var accessSystem = EntitySystem.Get<AccessSystem>();
+            accessSystem.TrySetTags(targetIdEntity.Uid, newAccessList);
         }
 
         /// <summary>

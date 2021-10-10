@@ -50,7 +50,7 @@ namespace Content.Server.Access.Systems
             return IsAllowed(reader, tags);
         }
 
-        public bool IsAllowed(AccessReader reader, IAccess access)
+        public bool IsAllowed(AccessReader reader, AccessComponent access)
         {
             return IsAllowed(reader, access.Tags);
         }
@@ -68,7 +68,7 @@ namespace Content.Server.Access.Systems
 
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
-            if (EntityManager.TryGetComponent(uid, out IAccess? access))
+            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
             {
                 return access.Tags;
             }
@@ -76,7 +76,7 @@ namespace Content.Server.Access.Systems
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
-                    heldItem.TryGetComponent(out IAccess? handAccessComponent))
+                    heldItem.TryGetComponent(out AccessComponent? handAccessComponent))
                 {
                     return handAccessComponent.Tags;
                 }
@@ -86,7 +86,7 @@ namespace Content.Server.Access.Systems
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
                     inventoryComponent.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? item) &&
-                    item.Owner.TryGetComponent(out IAccess? idAccessComponent)
+                    item.Owner.TryGetComponent(out AccessComponent? idAccessComponent)
                 )
                 {
                     return idAccessComponent.Tags;

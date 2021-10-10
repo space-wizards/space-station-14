@@ -12,6 +12,7 @@ namespace Content.Server.Access.Systems
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IdCardSystem _cardSystem = default!;
+        [Dependency] private readonly AccessSystem _accessSystem = default!;
 
         public override void Initialize()
         {
@@ -21,10 +22,7 @@ namespace Content.Server.Access.Systems
 
         private void OnMapInit(EntityUid uid, PresetIdCardComponent id, MapInitEvent args)
         {
-            if (id.JobName == null)
-            {
-                return;
-            }
+            if (id.JobName == null) return;
 
             if (!_prototypeManager.TryIndex(id.JobName, out JobPrototype? job))
             {
@@ -32,11 +30,10 @@ namespace Content.Server.Access.Systems
                 return;
             }
 
-            if (EntityManager.TryGetComponent(uid, out AccessComponent? access))
-            {
-                access.SetTags(job.Access);
-            }
+            // set access for access component
+            _accessSystem.TrySetTags(uid, job.Access);
 
+            // and also change job title on a card id
             _cardSystem.TryChangeJobTitle(uid, job.Name);
         }
     }

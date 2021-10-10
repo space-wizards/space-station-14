@@ -42,12 +42,12 @@ namespace Content.Server.Singularity.EntitySystems
         {
             if(args.Handled) return;
 
-            if (component.AccessReader == null || !args.Used.TryGetComponent(out IAccess? access))
+            if (component.AccessReader == null)
             {
                 return;
             }
 
-            if (_accessReader.IsAllowed(component.AccessReader, access))
+            if (_accessReader.IsAllowed(component.AccessReader, args.Used.Uid))
             {
                 component.IsLocked ^= true;
 
