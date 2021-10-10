@@ -16,10 +16,8 @@ namespace Content.Server.Light.Components
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
     [RegisterComponent]
-    public class EmergencyLightComponent : Component, IExamine
+    public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
     {
-        public override string Name => "EmergencyLight";
-
         [ViewVariables]
         private EmergencyLightState State
         {

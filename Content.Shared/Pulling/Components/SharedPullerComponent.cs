@@ -1,49 +1,40 @@
-﻿using Content.Shared.Movement.Components;
+﻿using Content.Shared.Pulling;
+using Content.Shared.Movement.Components;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Log;
 using Component = Robust.Shared.GameObjects.Component;
 
 namespace Content.Shared.Pulling.Components
 {
     [RegisterComponent]
+    [Friend(typeof(SharedPullingStateManagementSystem))]
     public class SharedPullerComponent : Component, IMoveSpeedModifier
     {
         public override string Name => "Puller";
 
-        private IEntity? _pulling;
+        // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
+        public float WalkSpeedModifier => Pulling == null ? 1.0f : 0.75f;
 
-        public float WalkSpeedModifier => _pulling == null ? 1.0f : 0.75f;
-
-        public float SprintSpeedModifier => _pulling == null ? 1.0f : 0.75f;
+        public float SprintSpeedModifier => Pulling == null ? 1.0f : 0.75f;
 
         [ViewVariables]
-        public IEntity? Pulling
+        public IEntity? Pulling { get; set; }
+
+        protected override void Shutdown()
         {
-            get => _pulling;
-            set
-            {
-                if (_pulling == value)
-                {
-                    return;
-                }
-
-                _pulling = value;
-
-                if (Owner.TryGetComponent(out MovementSpeedModifierComponent? speed))
-                {
-                    speed.RefreshMovementSpeedModifiers();
-                }
-            }
+            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
+            base.Shutdown();
         }
 
         protected override void OnRemove()
         {
-            if (Pulling != null &&
-                Pulling.TryGetComponent(out SharedPullableComponent? pullable))
+            if (Pulling != null)
             {
-                pullable.TryStopPull();
+                // This is absolute paranoia but it's also absolutely necessary. Too many puller state bugs. - 20kdc
+                Logger.ErrorS("c.go.c.pulling", "PULLING STATE CORRUPTION IMMINENT IN PULLER {0} - OnRemove called when Pulling is set!", Owner);
             }
-
             base.OnRemove();
         }
     }

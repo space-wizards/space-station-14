@@ -79,7 +79,7 @@ namespace Content.Client.HealthOverlay
 
             var viewBox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var (mobState, _) in ComponentManager.EntityQuery<IMobStateComponent, DamageableComponent>())
+            foreach (var (mobState, _) in EntityManager.EntityQuery<IMobStateComponent, DamageableComponent>())
             {
                 var entity = mobState.Owner;
 

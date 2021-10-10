@@ -17,7 +17,7 @@ namespace Content.Server.Spawners.EntitySystems
 
         private void OnRuleAdded(GameRuleAddedEvent args)
         {
-            foreach (var spawner in ComponentManager.EntityQuery<ConditionalSpawnerComponent>())
+            foreach (var spawner in EntityManager.EntityQuery<ConditionalSpawnerComponent>())
             {
                 spawner.RuleAdded(args);
             }

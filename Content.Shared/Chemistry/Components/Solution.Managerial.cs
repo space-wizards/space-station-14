@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Chemistry.Reagent;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -37,14 +36,16 @@ namespace Content.Shared.Chemistry.Components
         [DataField("maxSpillRefill")]
         public ReagentUnit MaxSpillRefill { get; set; }
 
+        /// <summary>
+        /// Initially set <see cref="MaxVolume"/>. If empty will be calculated based
+        /// on sum of <see cref="Contents"/> reagent units.
+        /// </summary>
+        [DataField("maxVol")] public ReagentUnit InitialMaxVolume; 
+
         [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("maxVol")]
         public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
 
         [ViewVariables]
         public ReagentUnit CurrentVolume => TotalVolume;
-
-        // [ViewVariables]
-        // public EntityUid OwnerUid { get; set; }
     }
 }

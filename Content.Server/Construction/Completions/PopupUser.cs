@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Content.Shared.Construction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

@@ -1,4 +1,4 @@
-﻿using Content.Server.Construction.Components;
+using System;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
@@ -69,14 +69,9 @@ namespace Content.Server.Explosion
         }
 
         #region Explosions
-        private void HandleDestruction(EntityUid uid, ExplosiveComponent component, DestructionEventArgs args)
-        {
-            Explode(uid, component);
-        }
-
         private void HandleExplodeTrigger(EntityUid uid, ExplodeOnTriggerComponent component, TriggerEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
+            if (!EntityManager.TryGetComponent(uid, out ExplosiveComponent? explosiveComponent)) return;
 
             Explode(uid, explosiveComponent);
         }

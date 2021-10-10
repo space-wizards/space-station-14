@@ -1,9 +1,5 @@
-﻿using Content.Shared.ActionBlocker;
-using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -32,30 +28,5 @@ namespace Content.Server.Tabletop.Components
 
         [ViewVariables]
         public TabletopSession? Session { get; set; } = null;
-
-        /// <summary>
-        /// A verb that allows the player to start playing a tabletop game.
-        /// </summary>
-        [Verb]
-        public class PlayVerb : Verb<TabletopGameComponent>
-        {
-            protected override void GetData(IEntity user, TabletopGameComponent component, VerbData data)
-            {
-                if (!user.HasComponent<ActorComponent>() || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("tabletop-verb-play-game");
-                data.IconTexture = "/Textures/Interface/VerbIcons/die.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, TabletopGameComponent component)
-            {
-                if(user.TryGetComponent(out ActorComponent? actor))
-                    EntitySystem.Get<TabletopSystem>().OpenSessionFor(actor.PlayerSession, component.Owner.Uid);
-            }
-        }
     }
 }

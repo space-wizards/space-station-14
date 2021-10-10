@@ -11,7 +11,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
