@@ -279,7 +279,8 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
             "TabletopGame",
-            "LitOnPowered"
+            "LitOnPowered",
+            "Foldable"
         };
     }
 }

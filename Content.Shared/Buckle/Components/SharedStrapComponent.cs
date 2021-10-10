@@ -56,11 +56,13 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
-    public enum StrapVisuals
+    public enum StrapVisuals : byte
     {
-        RotationAngle
+        RotationAngle,
+        BuckledState
     }
 
+    // TODO : Convert this to an Entity Message. Careful, it will Break ShuttleControllerComponent (only place where it's used)
     [Serializable, NetSerializable]
     public abstract class StrapChangeMessage : ComponentMessage
     {

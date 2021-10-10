@@ -1,6 +1,6 @@
 - type: entity
   id: RollerBed
-  parent: BaseConstructibleDynamic
+  parent: BaseStructureDynamic
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
@@ -47,11 +47,11 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.3"
-    - type: Foldable
+#   - type: Foldable
     - type: Appearance
       visuals:
         - type: StrapVisualizer
-        - type: FoldableVisualizer
+#        - type: FoldableVisualizer
 
 - type: entity
   id: CheapRollerBed

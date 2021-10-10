@@ -139,16 +139,8 @@ namespace Content.Server.Buckle.Components
             }
 
             // Assign BuckleOffset first, before causing a MoveEvent to fire
-            if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
-            {
-                BuckleOffset = (0, 0.15f);
-                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset;
-            }
-            else
-            {
-                BuckleOffset = Vector2.Zero;
-                ownTransform.WorldPosition = strapTransform.WorldPosition;
-            }
+            BuckleOffset = strap.BuckleOffset;
+            ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset;
         }
 
         public bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
@@ -331,6 +323,8 @@ namespace Content.Server.Buckle.Components
             {
                 Owner.Transform.AttachParentToContainerOrGrid();
                 Owner.Transform.WorldRotation = oldBuckledTo.Owner.Transform.WorldRotation;
+                if (oldBuckledTo.UnbuckleOffset != Vector2.Zero)
+                    Owner.Transform.WorldPosition += oldBuckledTo.UnbuckleOffset;
             }
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
