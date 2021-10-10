@@ -78,11 +78,12 @@ namespace Content.Shared.SubFloor
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
+            // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
+            if (EntityManager.GetEntity(uid).LifeStage >= EntityLifeStage.Terminating) return;
+
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);
-
-            if (EntityManager.GetEntity(uid).LifeStage < EntityLifeStage.Terminating)
-                EntityManager.RemoveComponent<CollideOnAnchorComponent>(uid);
+            EntityManager.RemoveComponent<CollideOnAnchorComponent>(uid);
         }
 
         private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, ref AnchorStateChangedEvent args)
