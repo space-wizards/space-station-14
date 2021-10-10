@@ -11,6 +11,7 @@ namespace Content.Server.Access.Systems
     public class PresetIdCardSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IdCardSystem _cardSystem = default!;
 
         public override void Initialize()
         {
@@ -36,10 +37,7 @@ namespace Content.Server.Access.Systems
                 access.SetTags(job.Access);
             }
 
-            if (EntityManager.TryGetComponent(uid, out IdCardComponent? idCard))
-            {
-                idCard.JobTitle = job.Name;
-            }
+            _cardSystem.TryChangeJobTitle(uid, job.Name);
         }
     }
 }

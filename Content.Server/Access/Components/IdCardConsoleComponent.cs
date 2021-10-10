@@ -109,9 +109,9 @@ namespace Content.Server.Access.Components
 
             var targetIdEntity = TargetIdContainer.ContainedEntity;
 
-            var targetIdComponent = targetIdEntity.GetComponent<IdCardComponent>();
-            targetIdComponent.FullName = newFullName;
-            targetIdComponent.JobTitle = newJobTitle;
+            var cardSystem = EntitySystem.Get<IdCardSystem>();
+            cardSystem.TryChangeFullName(targetIdEntity.Uid, newFullName);
+            cardSystem.TryChangeJobTitle(targetIdEntity.Uid, newJobTitle);
 
             if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
