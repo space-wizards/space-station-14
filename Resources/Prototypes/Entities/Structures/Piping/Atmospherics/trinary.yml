@@ -11,15 +11,15 @@
         inlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: North
+          pipeDirection: West
         filter:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: East
+          pipeDirection: South
         outlet:
           !type:PipeNode
           nodeGroupID: Pipe
-          pipeDirection: South
+          pipeDirection: East
 
 - type: entity
   parent: GasTrinaryBase
