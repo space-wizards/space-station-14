@@ -10,8 +10,9 @@ using Content.Shared.Buckle.Components;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
+using Content.Shared.Pulling;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Standing;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -150,7 +151,7 @@ namespace Content.Server.Buckle.Components
             }
         }
 
-        private bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
+        public bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
         {
             strap = null;
 
@@ -264,20 +265,20 @@ namespace Content.Server.Buckle.Components
 
             SendMessage(new BuckleMessage(Owner, to));
 
-            if (Owner.TryGetComponent(out PullableComponent? ownerPullable))
+            if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
             {
                 if (ownerPullable.Puller != null)
                 {
-                    ownerPullable.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(ownerPullable);
                 }
             }
 
-            if (to.TryGetComponent(out PullableComponent? toPullable))
+            if (to.TryGetComponent(out SharedPullableComponent? toPullable))
             {
                 if (toPullable.Puller == Owner)
                 {
                     // can't pull it and buckle to it at the same time
-                    toPullable.TryStopPull();
+                    EntitySystem.Get<PullingSystem>().TryStopPull(toPullable);
                 }
             }
 
@@ -334,7 +335,7 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable != null && _stunnable.KnockedDown
+            if (_stunnable is { KnockedDown: true }
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner);
@@ -386,7 +387,7 @@ namespace Content.Server.Buckle.Components
             UpdateBuckleStatus();
         }
 
-        protected override void OnRemove()
+        protected override void Shutdown()
         {
             BuckledTo?.Remove(this);
             TryUnbuckle(Owner, true);
@@ -394,7 +395,7 @@ namespace Content.Server.Buckle.Components
             _buckleTime = default;
             UpdateBuckleStatus();
 
-            base.OnRemove();
+            base.Shutdown();
         }
 
         public override ComponentState GetComponentState(ICommonSession player)
@@ -426,30 +427,6 @@ namespace Content.Server.Buckle.Components
             }
 
             IsOnStrapEntityThisFrame = false;
-        }
-
-        /// <summary>
-        ///     Allows the unbuckling of the owning entity through a verb if
-        ///     anyone right clicks them.
-        /// </summary>
-        [Verb]
-        private sealed class BuckleVerb : Verb<BuckleComponent>
-        {
-            protected override void GetData(IEntity user, BuckleComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component.Buckled)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("buckle-verb-unbuckle");
-            }
-
-            protected override void Activate(IEntity user, BuckleComponent component)
-            {
-                component.TryUnbuckle(user);
-            }
         }
     }
 }

@@ -1,15 +1,19 @@
-﻿using Content.Shared.Alert;
+using Content.Shared.Alert;
 using Content.Shared.Hands;
+using Content.Shared.Movement.Components;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Pulling.Systems
 {
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,7 +32,7 @@ namespace Content.Shared.Pulling.Systems
             {
                 if (EntityManager.TryGetComponent<SharedPullableComponent>(args.BlockingEntity, out var comp))
                 {
-                    comp.TryStopPull(EntityManager.GetEntity(uid));
+                    _pullSystem.TryStopPull(comp, EntityManager.GetEntity(uid));
                 }
             }
         }
@@ -43,6 +47,8 @@ namespace Content.Shared.Pulling.Systems
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
                 alerts.ShowAlert(AlertType.Pulling);
+
+            RefreshMovementSpeed(component);
         }
 
         private static void PullerHandlePullStopped(
@@ -55,6 +61,17 @@ namespace Content.Shared.Pulling.Systems
 
             if (component.Owner.TryGetComponent(out SharedAlertsComponent? alerts))
                 alerts.ClearAlert(AlertType.Pulling);
+
+            RefreshMovementSpeed(component);
+        }
+
+        private static void RefreshMovementSpeed(SharedPullerComponent component)
+        {
+            // Before changing how this is updated, please see SharedPullerComponent
+            if (component.Owner.TryGetComponent<MovementSpeedModifierComponent>(out var speed))
+            {
+                speed.RefreshMovementSpeedModifiers();
+            }
         }
     }
 }

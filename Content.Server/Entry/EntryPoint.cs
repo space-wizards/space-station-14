@@ -11,7 +11,6 @@ using Content.Server.GameTicking;
 using Content.Server.Holiday.Interfaces;
 using Content.Server.IoC;
 using Content.Server.NodeContainer.NodeGroups;
-using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
@@ -81,14 +80,12 @@ namespace Content.Server.Entry
         {
             base.PostInit();
 
-            IoCManager.Resolve<IHolidayManager>().Initialize();
             IoCManager.Resolve<ISandboxManager>().Initialize();
             IoCManager.Resolve<RecipeManager>().Initialize();
             IoCManager.Resolve<AlertManager>().Initialize();
             IoCManager.Resolve<ActionManager>().Initialize();
             IoCManager.Resolve<BlackboardManager>().Initialize();
             IoCManager.Resolve<ConsiderationsManager>().Initialize();
-            IoCManager.Resolve<IPDAUplinkManager>().Initialize();
             IoCManager.Resolve<IAdminManager>().Initialize();
             IoCManager.Resolve<INpcBehaviorManager>().Initialize();
             IoCManager.Resolve<IAfkManager>().Initialize();

@@ -125,7 +125,7 @@ namespace Content.Shared.Movement
                 new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
                 total;
 
-            DebugTools.Assert(MathHelper.CloseTo(total.Length, worldTotal.Length));
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
             if (weightless)
             {

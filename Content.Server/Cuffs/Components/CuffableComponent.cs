@@ -206,10 +206,11 @@ namespace Content.Server.Cuffs.Components
                 return;
             }
 
-            // TODO: Make into an event and instead have a system check for owner.
-            if (!isOwner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
+            var attempt = new UncuffAttemptEvent(user.Uid, Owner.Uid);
+            Owner.EntityManager.EventBus.RaiseLocalEvent(user.Uid, attempt);
+
+            if (attempt.Cancelled)
             {
-                user.PopupMessage(Loc.GetString("cuffable-component-cannot-interact-message"));
                 return;
             }
 
@@ -311,32 +312,6 @@ namespace Content.Server.Cuffs.Components
             }
 
             return;
-        }
-
-        /// <summary>
-        /// Allows the uncuffing of a cuffed person. Used by other people and by the component owner to break out of cuffs.
-        /// </summary>
-        [Verb]
-        private sealed class UncuffVerb : Verb<CuffableComponent>
-        {
-            protected override void GetData(IEntity user, CuffableComponent component, VerbData data)
-            {
-                if ((user != component.Owner && !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) || component.CuffedHandCount == 0)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("uncuff-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, CuffableComponent component)
-            {
-                if (component.CuffedHandCount > 0)
-                {
-                    component.TryUncuff(user);
-                }
-            }
         }
     }
 }

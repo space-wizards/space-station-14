@@ -178,7 +178,7 @@ namespace Content.Server.Doors.Components
 
             var timingStatus =
                 new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :
-                                                    !MathHelper.CloseTo(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
+                                                    !MathHelper.CloseToPercent(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
 

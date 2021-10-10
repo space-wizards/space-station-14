@@ -107,7 +107,7 @@ namespace Content.Server.Light.Components
             return Activated ? TurnOff() : TurnOn(user);
         }
 
-        private bool TurnOff(bool makeNoise = true)
+        public bool TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -127,7 +127,7 @@ namespace Content.Server.Light.Components
             return true;
         }
 
-        private bool TurnOn(IEntity user)
+        public bool TurnOn(IEntity user)
         {
             if (Activated)
             {
@@ -233,7 +233,7 @@ namespace Content.Server.Light.Components
 
             var currentCharge = Cell.CurrentCharge;
 
-            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(currentCharge, 0) || Wattage > currentCharge)
                 return 0;
 
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
@@ -242,26 +242,6 @@ namespace Content.Server.Light.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new HandheldLightComponentState(GetLevel());
-        }
-
-        [Verb]
-        public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
-        {
-            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-light-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, HandheldLightComponent component)
-            {
-                component.ToggleStatus(user);
-            }
         }
     }
 

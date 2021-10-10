@@ -1,11 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -267,35 +265,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
-        }
-
-        [Verb]
-        private sealed class SpinRevolverVerb : Verb<RevolverBarrelComponent>
-        {
-            protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("spin-revolver-verb-get-data-text");
-                if (component.Capacity <= 1)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Visibility = component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
-                data.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, RevolverBarrelComponent component)
-            {
-                component.Spin();
-                component.Owner.PopupMessage(user, Loc.GetString("spin-revolver-verb-on-activate"));
-            }
         }
     }
 }

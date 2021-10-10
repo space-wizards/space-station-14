@@ -20,10 +20,9 @@
         !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.4"
       layer:
-        - SmallImpassable
+      - SmallImpassable
       mask:
-        - SmallImpassable
-        - MobImpassable
+      - SmallImpassable
       hard: false
 
 - type: entity

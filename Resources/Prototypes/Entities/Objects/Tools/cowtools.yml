@@ -106,7 +106,7 @@
     sprite: Objects/Tools/Cowtools/mooltitool.rsi
   - type: Tool
     qualities:
-    - Multitool
+    - Pulsing
   - type: SignalLinker
 
 - type: entity

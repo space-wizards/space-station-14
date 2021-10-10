@@ -27,7 +27,8 @@ namespace Content.Server.AME.Components
     public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
-        [ViewVariables] private bool _injecting;
+        private bool _injecting;
+        [ViewVariables] public bool Injecting => _injecting;
         [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;
@@ -137,6 +138,12 @@ namespace Content.Server.AME.Components
             UpdateUserInterface();
         }
 
+        // Used to update core count
+        public void OnAMENodeGroupUpdate()
+        {
+            UpdateUserInterface();
+        }
+
         private AMEControllerBoundUserInterfaceState GetUserInterfaceState()
         {
             var jar = _jarSlot.ContainedEntity;
@@ -216,7 +223,7 @@ namespace Content.Server.AME.Components
                     break;
             }
 
-            GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
+            GetAMENodeGroup()?.UpdateCoreVisuals();
 
             UpdateUserInterface();
             ClickSound();

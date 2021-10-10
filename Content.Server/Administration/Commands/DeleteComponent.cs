@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.VarEdit)]
     public class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";

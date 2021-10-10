@@ -22,11 +22,5 @@ namespace Content.Server.Popups
         {
             RaiseNetworkEvent(new PopupEntityEvent(message, uid), filter);
         }
-
-        public override Filter GetFilterFromEntity(IEntity entity)
-        {
-            return entity.TryGetComponent(out ActorComponent? actor)
-                ? Filter.SinglePlayer(actor.PlayerSession) : Filter.Empty();
-        }
     }
 }

@@ -8,6 +8,8 @@
   - Command
   - Engineering
   icon: "ChiefEngineer"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Maintenance
   - Engineering

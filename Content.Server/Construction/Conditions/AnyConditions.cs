@@ -24,5 +24,7 @@ namespace Content.Server.Construction.Conditions
 
             return false;
         }
+
+        // TODO CONSTRUCTION: Examine for this condition.
     }
 }

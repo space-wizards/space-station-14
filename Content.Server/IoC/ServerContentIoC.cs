@@ -16,7 +16,6 @@ using Content.Server.MoMMI;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.PDA.Managers;
 using Content.Server.Preferences.Managers;
 using Content.Server.Sandbox;
 using Content.Server.Speech;
@@ -42,7 +41,6 @@ namespace Content.Server.IoC
             IoCManager.Register<RecipeManager, RecipeManager>();
             IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<ActionManager, ActionManager>();
-            IoCManager.Register<IPDAUplinkManager,PDAUplinkManager>();
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
@@ -52,7 +50,6 @@ namespace Content.Server.IoC
             IoCManager.Register<IAdminManager, AdminManager>();
             IoCManager.Register<IDeviceNetwork, DeviceNetwork.DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
-            IoCManager.Register<IHolidayManager, HolidayManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();
             IoCManager.Register<IPlayerLocator, PlayerLocator>();
