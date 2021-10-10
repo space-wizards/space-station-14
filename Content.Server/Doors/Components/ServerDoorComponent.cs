@@ -108,6 +108,12 @@ namespace Content.Server.Doors.Components
         public bool BumpOpen = true;
 
         /// <summary>
+        /// Whether the door will open when it is activated or clicked.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("clickOpen")]
+        public bool ClickOpen = true;
+
+        /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
         /// Handled in Startup().
         /// </summary>
@@ -163,6 +169,12 @@ namespace Content.Server.Doors.Components
         /// </summary>
         [DataField("denySound")]
         public SoundSpecifier? DenySound;
+
+        /// <summary>
+        ///     Should this door automatically close if its been open for too long?
+        /// </summary>
+        [DataField("autoClose")]
+        public bool AutoClose;
 
         /// <summary>
         /// Default time that the door should take to pry open.
@@ -238,6 +250,9 @@ namespace Content.Server.Doors.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!ClickOpen)
+                return;
+
             DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             if (ev.Handled)
@@ -255,9 +270,15 @@ namespace Content.Server.Doors.Components
 
         #region Opening
 
-        public void TryOpen(IEntity user)
+        public void TryOpen(IEntity? user=null)
         {
-            if (CanOpenByEntity(user))
+            if (user == null)
+            {
+                // a machine opened it or something, idk
+                Open();
+                return;
+            }
+            else if (CanOpenByEntity(user))
             {
                 Open();
 
@@ -384,9 +405,9 @@ namespace Content.Server.Doors.Components
 
         #region Closing
 
-        public void TryClose(IEntity user)
+        public void TryClose(IEntity? user=null)
         {
-            if (!CanCloseByEntity(user))
+            if (user != null && !CanCloseByEntity(user))
             {
                 Deny();
                 return;
@@ -608,6 +629,9 @@ namespace Content.Server.Doors.Components
         public void RefreshAutoClose()
         {
             if (State != DoorState.Open)
+                return;
+
+            if (!AutoClose)
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
