@@ -129,13 +129,13 @@ namespace Content.Server.Hands.Components
             RemoveHand(args.Slot);
         }
 
-        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        bool IDisarmedAct.Disarmed(DisarmedActEvent @event)
         {
             if (BreakPulls())
                 return false;
 
-            var source = eventArgs.Source;
-            var target = eventArgs.Target;
+            var source = @event.Source;
+            var target = @event.Target;
 
             if (source != null)
             {
