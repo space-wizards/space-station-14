@@ -152,6 +152,7 @@ namespace Content.Server.Storage.Components
             Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
             Contents.ShowContents = _showContents;
             Contents.OccludesLight = _occludesLight;
+            Contents.Visibility = ContainerVisibility.None;
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
