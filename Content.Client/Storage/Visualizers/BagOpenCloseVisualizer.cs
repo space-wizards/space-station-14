@@ -1,6 +1,7 @@
 ﻿
 using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -57,7 +58,7 @@ namespace Content.Client.Storage.Visualizers
                             spriteComponent.LayerSetVisible(OpenIcon, false);
                             break;
                     }
-                    component.SetData(StackVisuals.Hide, bagState == SharedBagState.Close);
+
                 }
             }
         }

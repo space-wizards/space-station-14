@@ -8,7 +8,9 @@
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Blunt: 15
   - type: Clothing
     size: 15
     sprite: Objects/Weapons/Melee/baseball_bat.rsi

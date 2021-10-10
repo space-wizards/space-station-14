@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!mixer.Enabled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(mixer.InletOneName, out PipeNode? inletOne)

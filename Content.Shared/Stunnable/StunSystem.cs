@@ -23,7 +23,7 @@ namespace Content.Shared.Stunnable
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<SharedStunnableComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<SharedStunnableComponent>(true))
             {
                 component.Update(frameTime);
             }

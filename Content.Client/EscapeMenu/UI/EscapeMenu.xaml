@@ -4,10 +4,11 @@
             Title="{Loc 'ui-escape-title'}"
             Resizable="False">
 
-    <BoxContainer Orientation="Vertical" SeparationOverride="4" CustomMinimumSize="150 160">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
         <changelog:ChangelogButton />
         <ui:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
+        <Button Name="AHelpButton" Text="{Loc 'ui-escape-ahelp'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>

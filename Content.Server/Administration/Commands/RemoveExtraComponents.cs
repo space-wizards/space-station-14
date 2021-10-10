@@ -44,7 +44,7 @@ namespace Content.Server.Administration.Commands
                     if (entity.Prototype.Components.ContainsKey(component.Name))
                         continue;
 
-                    entityManager.ComponentManager.RemoveComponent(entity.Uid, component);
+                    entityManager.RemoveComponent(entity.Uid, component);
                     components++;
 
                     modified = true;

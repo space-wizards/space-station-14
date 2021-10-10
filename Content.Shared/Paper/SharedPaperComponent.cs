@@ -57,5 +57,18 @@ namespace Content.Shared.Paper
             Stamp
         }
 
+        [Serializable, NetSerializable]
+        public enum PaperVisuals : byte
+        {
+            Status
+        }
+
+        [Serializable, NetSerializable]
+        public enum PaperStatus : byte
+        {
+            Blank,
+            Written
+        }
+
     }
 }

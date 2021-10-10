@@ -1,6 +1,6 @@
 - type: entity
   id: Rollie
-  parent: BaseSmokeable
+  parent: BaseCigar
   name: blunt
   description: A roll of dried plant matter wrapped in thin paper.
   components:
@@ -19,3 +19,10 @@
   - type: Construction
     graph: smokeableRollie
     node: rollie
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 20
+        reagents:
+          - ReagentId: THC
+            Quantity: 10

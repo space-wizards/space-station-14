@@ -16,7 +16,7 @@ namespace Content.Shared.Cuffs
 
         private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
         {
-            if (component.CanStillInteract || !ComponentManager.TryGetComponent(uid, out SharedPullableComponent? pullable) || !pullable.BeingPulled)
+            if (component.CanStillInteract || !EntityManager.TryGetComponent(uid, out SharedPullableComponent? pullable) || !pullable.BeingPulled)
                 return;
 
             args.Cancel();

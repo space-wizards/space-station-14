@@ -8,18 +8,22 @@
     netsync: false
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
-      - state: fire_extinguisher_closed
-        map: [ "enum.SprayVisualLayers.Base" ]
+        - state: fire_extinguisher_closed
+          map: [ "enum.SprayVisualLayers.Base" ]
   - type: Item
     sprite: Objects/Misc/fire_extinguisher.rsi
     size: 10
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Refillable, Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
         - ReagentId: Water
           Quantity: 100
+  - type: RefillableSolution
+    solution: spray
+  - type: DrainableSolution
+    solution: spray
   - type: ItemCooldown
   - type: Spray
     spraySound:
@@ -34,8 +38,9 @@
     impulse: 50.0
   - type: FireExtinguisher
   - type: MeleeWeapon
-    damage: 10
-    damageType: Blunt
+    damage: 
+      types:
+        Blunt: 10
     hitSound:
       path: /Audio/Weapons/smash.ogg
   - type: Appearance

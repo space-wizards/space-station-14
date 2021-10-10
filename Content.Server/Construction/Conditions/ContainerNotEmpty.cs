@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -23,15 +24,17 @@ namespace Content.Server.Construction.Conditions
             return container.ContainedEntities.Count != 0;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return false;
 
             if (container.ContainedEntities.Count != 0)
                 return false;
 
-            message.AddMarkup(Text);
+            args.PushMarkup(Text);
             return true;
 
         }

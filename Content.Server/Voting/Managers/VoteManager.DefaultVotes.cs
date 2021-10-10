@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Server.GameTicking;
+using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
 using Content.Shared.Voting;
 using Robust.Server.Player;
@@ -63,7 +64,7 @@ namespace Content.Server.Voting.Managers
                 if (votesYes / (float) total >= ratioRequired)
                 {
                     _chatManager.DispatchServerAnnouncement(Loc.GetString("ui-vote-restart-succeeded"));
-                    EntitySystem.Get<GameTicker>().RestartRound();
+                    EntitySystem.Get<RoundEndSystem>().EndRound();
                 }
                 else
                 {

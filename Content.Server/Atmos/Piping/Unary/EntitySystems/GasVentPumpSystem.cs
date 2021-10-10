@@ -37,7 +37,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             if (!vent.Enabled
-                || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 || !nodeContainer.TryGetNode(vent.InletName, out PipeNode? pipe))
             {
                 appearance?.SetData(VentPumpVisuals.State, VentPumpState.Off);
@@ -95,7 +95,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnGasVentPumpLeaveAtmosphere(EntityUid uid, GasVentPumpComponent component, AtmosDeviceDisabledEvent args)
         {
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
             }

@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Content.Server.Damage;
+using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
-    [TestOf(typeof(RejuvenateVerb))]
+    [TestOf(typeof(RejuvenateCommand))]
     public class RejuvenateTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Commands
   id: DamageableDummy
   components:
   - type: Damageable
-    damageContainer: biologicalDamageContainer
+    damageContainer: Biological
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -47,15 +47,17 @@ namespace Content.IntegrationTests.Tests.Commands
                 var human = entityManager.SpawnEntity("DamageableDummy", MapCoordinates.Nullspace);
 
                 // Sanity check
-                Assert.True(human.TryGetComponent(out IDamageableComponent damageable));
+                Assert.True(human.TryGetComponent(out DamageableComponent damageable));
                 Assert.True(human.TryGetComponent(out IMobStateComponent mobState));
+                mobState.UpdateState(0);
                 Assert.That(mobState.IsAlive, Is.True);
                 Assert.That(mobState.IsCritical, Is.False);
                 Assert.That(mobState.IsDead, Is.False);
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                damageable.TryChangeDamage(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000, true);
+                DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(human.Uid, damage, true);
 
                 // Check that it is dead
                 Assert.That(mobState.IsAlive, Is.False);
@@ -64,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.True);
 
                 // Rejuvenate them
-                RejuvenateVerb.PerformRejuvenate(human);
+                RejuvenateCommand.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
                 Assert.That(mobState.IsAlive, Is.True);

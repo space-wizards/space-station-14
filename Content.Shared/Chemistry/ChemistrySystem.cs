@@ -1,5 +1,4 @@
-using System;
-using System.Linq;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -9,51 +8,27 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry
 {
-    /// <summary>
-    /// This interface gives components behavior on whether entities solution (implying SolutionComponent is in place) is changed
-    /// </summary>
-    public interface ISolutionChange
-    {
-        /// <summary>
-        /// Called when solution is mixed with some other solution, or when some part of the solution is removed
-        /// </summary>
-        void SolutionChanged(SolutionChangeEventArgs eventArgs);
-    }
-
-    public class SolutionChangeEventArgs : EventArgs
-    {
-        public IEntity Owner { get; set; } = default!;
-    }
-
     [UsedImplicitly]
-    public class ChemistrySystem : EntitySystem
+    public partial class ChemistrySystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public void HandleSolutionChange(IEntity owner)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, Solution solution)
         {
-            var eventArgs = new SolutionChangeEventArgs
+            foreach (var (id, quantity) in solution)
             {
-                Owner = owner,
-            };
-            var solutionChangeArgs = owner.GetAllComponents<ISolutionChange>().ToList();
-
-            foreach (var solutionChangeArg in solutionChangeArgs)
-            {
-                solutionChangeArg.SolutionChanged(eventArgs);
-
-                if (owner.Deleted)
-                    return;
+                ReactionEntity(entity, method, id, quantity, solution);
             }
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution.Solution? source)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent, ReagentUnit reactVolume, Solution.Solution? source)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, ReagentPrototype reagent,
+            ReagentUnit reactVolume, Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

@@ -16,20 +16,29 @@ namespace Content.Shared.Placeable
             SubscribeLocalEvent<PlaceableSurfaceComponent, ComponentHandleState>(OnHandleState);
         }
 
-        public void SetPlaceable(PlaceableSurfaceComponent surface, bool isPlaceable)
+        public void SetPlaceable(EntityUid uid, bool isPlaceable, PlaceableSurfaceComponent? surface = null)
         {
+            if (!Resolve(uid, ref surface))
+                return;
+
             surface.IsPlaceable = isPlaceable;
             surface.Dirty();
         }
 
-        public void SetPlaceCentered(PlaceableSurfaceComponent surface, bool placeCentered)
+        public void SetPlaceCentered(EntityUid uid, bool placeCentered, PlaceableSurfaceComponent? surface = null)
         {
+            if (!Resolve(uid, ref surface))
+                return;
+
             surface.PlaceCentered = placeCentered;
             surface.Dirty();
         }
 
-        public void SetPositionOffset(PlaceableSurfaceComponent surface, Vector2 offset)
+        public void SetPositionOffset(EntityUid uid, Vector2 offset, PlaceableSurfaceComponent? surface = null)
         {
+            if (!Resolve(uid, ref surface))
+                return;
+
             surface.PositionOffset = offset;
             surface.Dirty();
         }
@@ -56,7 +65,7 @@ namespace Content.Shared.Placeable
             args.Handled = true;
         }
 
-        private void OnHandleState(EntityUid uid, PlaceableSurfaceComponent component, ComponentHandleState args)
+        private void OnHandleState(EntityUid uid, PlaceableSurfaceComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not PlaceableSurfaceComponentState state)
                 return;

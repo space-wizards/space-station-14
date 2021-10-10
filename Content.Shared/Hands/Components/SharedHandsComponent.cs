@@ -228,7 +228,23 @@ namespace Content.Shared.Hands.Components
             }
         }
 
-        private bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
+        /// <summary>
+        ///     Returns the number of hands that have no items in them.
+        /// </summary>
+        /// <returns></returns>
+        public int GetFreeHands()
+        {
+            int acc = 0;
+            foreach (var hand in Hands)
+            {
+                if (hand.HeldEntity == null)
+                    acc += 1;
+            }
+
+            return acc;
+        }
+
+        public bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
         {
             handFound = null;
 
@@ -418,6 +434,7 @@ namespace Content.Shared.Hands.Components
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {handContainer}.");
                 return;
             }
+
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
             HandsModified();
@@ -437,7 +454,7 @@ namespace Content.Shared.Hands.Components
 
             DoDroppedInteraction(heldEntity, intentionalDrop);
 
-            heldEntity.Transform.Coordinates = GetFinalDropCoordinates(targetDropLocation);
+            heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
             OnItemChanged?.Invoke();
         }
@@ -445,29 +462,25 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Calculates the final location a dropped item will end up at, accounting for max drop range and collision along the targeted drop path.
         /// </summary>
-        private EntityCoordinates GetFinalDropCoordinates(EntityCoordinates targetCoords)
+        private Vector2 GetFinalDropCoordinates(EntityCoordinates targetCoords)
         {
             var origin = Owner.Transform.MapPosition;
-            var other = targetCoords.ToMap(Owner.EntityManager);
+            var target = targetCoords.ToMap(Owner.EntityManager);
 
-            var dropVector = other.Position - origin.Position;
-            var requestedDropDistance = (dropVector.Length);
+            var dropVector = target.Position - origin.Position;
+            var requestedDropDistance = dropVector.Length;
 
             if (dropVector.Length > SharedInteractionSystem.InteractionRange)
             {
                 dropVector = dropVector.Normalized * SharedInteractionSystem.InteractionRange;
-                other = new MapCoordinates(origin.Position + dropVector, other.MapId);
+                target = new MapCoordinates(origin.Position + dropVector, target.MapId);
             }
 
-            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, other, ignoredEnt: Owner);
+            var dropLength = EntitySystem.Get<SharedInteractionSystem>().UnobstructedDistance(origin, target, ignoredEnt: Owner);
 
-            var diff = requestedDropDistance - dropLength;
-
-            // If we come up short then offset the drop location.
-            if (diff > 0)
-                return targetCoords.Offset(-dropVector.Normalized * diff);
-
-            return targetCoords;
+            if (dropLength < requestedDropDistance)
+                return origin.Position + dropVector.Normalized * dropLength;
+            return target.Position;
         }
 
         /// <summary>

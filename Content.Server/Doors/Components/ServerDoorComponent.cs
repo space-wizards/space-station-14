@@ -9,29 +9,27 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable.Components;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 using Timer = Robust.Shared.Timing.Timer;
-using Robust.Shared.Prototypes;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Doors.Components
 {
@@ -41,23 +39,21 @@ namespace Content.Server.Doors.Components
     public class ServerDoorComponent : SharedDoorComponent, IActivate, IInteractUsing, IMapInit
     {
         [ViewVariables]
-        [DataField("board")]
+        [DataField("board", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         private string? _boardPrototype;
+
+        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _weldingQuality = "Welding";
+
+        [DataField("pryingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _pryingQuality = "Prying";
 
         [DataField("tryOpenDoorSound")]
         private SoundSpecifier _tryOpenDoorSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("damageType")]
-        private readonly string _damageTypeID = "Blunt";
+        [DataField("crushDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype DamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            DamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_damageTypeID);
-        }
+        public DamageSpecifier CrushDamage = default!;
 
         public override DoorState State
         {
@@ -90,7 +86,6 @@ namespace Content.Server.Doors.Components
         private CancellationTokenSource? _stateChangeCancelTokenSource;
         private CancellationTokenSource? _autoCloseCancelTokenSource;
 
-        private const int DoorCrushDamage = 15;
         private const float DoorStunTime = 5f;
 
         /// <summary>
@@ -446,12 +441,13 @@ namespace Content.Server.Doors.Components
 
             if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+                var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
                 foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
                 {
-                    if ((physicsComponent.CollisionMask & e.CollisionLayer) != 0 && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
+                    if (((physicsComponent.CollisionMask & e.CollisionLayer) | (e.CollisionMask & physicsComponent.CollisionLayer)) != 0
+                        && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
                 }
             }
             return false;
@@ -537,7 +533,7 @@ namespace Content.Server.Doors.Components
             foreach (var e in collidingentities)
             {
                 if (!e.Owner.TryGetComponent(out StunnableComponent? stun)
-                    || !e.Owner.TryGetComponent(out IDamageableComponent? damage))
+                    || !e.Owner.HasComponent<DamageableComponent>())
                 {
                     continue;
                 }
@@ -550,7 +546,8 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                damage.TryChangeDamage(DamageType, DoorCrushDamage);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
+
                 stun.Paralyze(DoorStunTime);
             }
 
@@ -641,8 +638,10 @@ namespace Content.Server.Doors.Components
                 return false;
             }
 
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
             // for prying doors
-            if (tool.HasQuality(ToolQuality.Prying) && !IsWeldedShut)
+            if (tool.Qualities.Contains(_pryingQuality) && !IsWeldedShut)
             {
                 var ev = new DoorGetPryTimeModifierEvent();
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
@@ -650,8 +649,8 @@ namespace Content.Server.Doors.Components
                 var canEv = new BeforeDoorPryEvent(eventArgs);
                 Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, canEv, false);
 
-                var successfulPry = await tool.UseTool(eventArgs.User, Owner,
-                        ev.PryTimeModifier * PryTime, ToolQuality.Prying, () => !canEv.Cancelled);
+                var successfulPry = await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid,
+                        0f, ev.PryTimeModifier * PryTime, _pryingQuality, () => !canEv.Cancelled);
 
                 if (successfulPry && !IsWeldedShut)
                 {
@@ -669,12 +668,12 @@ namespace Content.Server.Doors.Components
             }
 
             // for welding doors
-            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.WelderLit)
+            if (CanWeldShut && tool.Owner.TryGetComponent(out WelderComponent? welder) && welder.Lit)
             {
                 if(!_beingWelded)
                 {
                     _beingWelded = true;
-                    if(await welder.UseTool(eventArgs.User, Owner, 3f, ToolQuality.Welding, 3f, () => CanWeldShut))
+                    if(await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 3f, 3f, _weldingQuality, () => CanWeldShut))
                     {
                         // just in case
                         if (!CanWeldShut)

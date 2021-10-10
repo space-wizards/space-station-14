@@ -7,6 +7,7 @@
   departments:
   - Medical
   icon: "MedicalDoctor"
+  supervisors: "the chief medical officer"
   access:
   - Medical
   - Maintenance

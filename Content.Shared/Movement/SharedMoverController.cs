@@ -22,10 +22,11 @@ namespace Content.Shared.Movement
     /// </summary>
     public abstract class SharedMoverController : VirtualController
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         private ActionBlockerSystem _blocker = default!;
-        private SharedBroadphaseSystem _broadPhaseSystem = default!;
+        private SharedPhysicsSystem _broadPhaseSystem = default!;
 
         private bool _relativeMovement;
 
@@ -37,7 +38,7 @@ namespace Content.Shared.Movement
         public override void Initialize()
         {
             base.Initialize();
-            _broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+            _broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
             _blocker = EntitySystem.Get<ActionBlockerSystem>();
             var configManager = IoCManager.Resolve<IConfigurationManager>();
             configManager.OnValueChanged(CCVars.RelativeMovement, SetRelativeMovement, true);
@@ -99,7 +100,7 @@ namespace Content.Shared.Movement
 
             UsedMobMovement[mover.Owner.Uid] = true;
             var transform = mover.Owner.Transform;
-            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager);
+            var weightless = mover.Owner.IsWeightless(physicsComponent, mapManager: _mapManager, entityManager: _entityManager);
             var (walkDir, sprintDir) = mover.VelocityDir;
 
             // Handle wall-pushes.
@@ -124,7 +125,7 @@ namespace Content.Shared.Movement
                 new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
                 total;
 
-            DebugTools.Assert(MathHelper.CloseTo(total.Length, worldTotal.Length));
+            DebugTools.Assert(MathHelper.CloseToPercent(total.Length, worldTotal.Length));
 
             if (weightless)
             {
@@ -152,18 +153,15 @@ namespace Content.Shared.Movement
         {
             return body.BodyStatus == BodyStatus.OnGround &&
                    body.Owner.HasComponent<IMobStateComponent>() &&
+                   // If we're being pulled then don't mess with our velocity.
+                   (!body.Owner.TryGetComponent(out SharedPullableComponent? pullable) || !pullable.BeingPulled) &&
                    _blocker.CanMove(body.Owner);
         }
 
         /// <summary>
         ///     Used for weightlessness to determine if we are near a wall.
         /// </summary>
-        /// <param name="broadPhaseSystem"></param>
-        /// <param name="transform"></param>
-        /// <param name="mover"></param>
-        /// <param name="collider"></param>
-        /// <returns></returns>
-        public static bool IsAroundCollider(SharedBroadphaseSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
+        public static bool IsAroundCollider(SharedPhysicsSystem broadPhaseSystem, ITransformComponent transform, IMobMoverComponent mover, IPhysBody collider)
         {
             var enlargedAABB = collider.GetWorldAABB().Enlarged(mover.GrabRange);
 

@@ -41,7 +41,7 @@ namespace Content.Server.Gravity.EntitySystems
         {
             if (ev.GridId == GridId.Invalid) return;
 
-            var gravity = ComponentManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
+            var gravity = EntityManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
 
             if (ev.Status == GravityGeneratorStatus.On)
             {
@@ -59,7 +59,7 @@ namespace Content.Server.Gravity.EntitySystems
             var gridId = component.Owner.Transform.GridID;
             GravityChangedMessage message;
 
-            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
+            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.Owner.Transform.GridID == gridId && generator.Status == GravityGeneratorStatus.On)
                 {
@@ -78,7 +78,7 @@ namespace Content.Server.Gravity.EntitySystems
         public override void Update(float frameTime)
         {
             // TODO: Pointless iteration, just make both of these event-based PLEASE
-            foreach (var generator in ComponentManager.EntityQuery<GravityGeneratorComponent>(true))
+            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
             {
                 if (generator.NeedsUpdate)
                 {
@@ -137,15 +137,8 @@ namespace Content.Server.Gravity.EntitySystems
             {
                 _gridsToShake[gridId] = shakeTimes;
             }
-            // Play the gravity sound
-            foreach (var player in _playerManager.GetAllPlayers())
-            {
-                if (player.AttachedEntity == null
-                    || player.AttachedEntity.Transform.GridID != gridId)
-                    continue;
 
-                SoundSystem.Play(Filter.Pvs(player.AttachedEntity), comp.GravityShakeSound.GetSound(), player.AttachedEntity);
-            }
+            SoundSystem.Play(Filter.BroadcastGrid(gridId), comp.GravityShakeSound.GetSound(), AudioParams.Default.WithVolume(-2f));
         }
 
         private void ShakeGrids()

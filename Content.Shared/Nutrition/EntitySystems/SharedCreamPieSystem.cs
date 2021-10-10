@@ -40,7 +40,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             creamPied.CreamPied = value;
 
-            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(CreamPiedVisuals.Creamed, value);
             }
@@ -64,7 +64,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             CreamedEntity(uid, creamPied, args);
 
-            if (ComponentManager.TryGetComponent(uid, out SharedStunnableComponent? stun))
+            if (EntityManager.TryGetComponent(uid, out SharedStunnableComponent? stun))
             {
                 stun.Paralyze(creamPie.ParalyzeTime);
             }

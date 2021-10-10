@@ -118,26 +118,6 @@ namespace Content.Server.Clothing.Components
         {
             return new MagbootsComponentState(On);
         }
-
-        [UsedImplicitly]
-        public sealed class ToggleMagbootsVerb : Verb<MagbootsComponent>
-        {
-            protected override void GetData(IEntity user, MagbootsComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, MagbootsComponent component)
-            {
-                component.Toggle(user);
-            }
-        }
     }
 
     [UsedImplicitly]
