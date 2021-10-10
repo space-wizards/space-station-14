@@ -280,7 +280,9 @@ namespace Content.Client.Entry
             "AmbientOnPowered",
             "TabletopGame",
             "LitOnPowered",
-            "Foldable"
+            "Foldable",
+            "TriggerOnSignalReceived",
+            "ToggleDoorOnTrigger"
         };
     }
 }

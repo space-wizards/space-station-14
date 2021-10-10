@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
