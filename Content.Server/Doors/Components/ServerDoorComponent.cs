@@ -9,6 +9,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
@@ -16,6 +17,7 @@ using Content.Shared.Damage;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Audio;
@@ -109,6 +111,12 @@ namespace Content.Server.Doors.Components
         public bool BumpOpen = true;
 
         /// <summary>
+        /// Whether the door will open when it is activated or clicked.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("clickOpen")]
+        public bool ClickOpen = true;
+
+        /// <summary>
         /// Whether the door starts open when it's first loaded from prototype. A door won't start open if its prototype is also welded shut.
         /// Handled in Startup().
         /// </summary>
@@ -164,6 +172,12 @@ namespace Content.Server.Doors.Components
         /// </summary>
         [DataField("denySound")]
         public SoundSpecifier? DenySound;
+
+        /// <summary>
+        ///     Should this door automatically close if its been open for too long?
+        /// </summary>
+        [DataField("autoClose")]
+        public bool AutoClose;
 
         /// <summary>
         /// Default time that the door should take to pry open.
@@ -239,6 +253,9 @@ namespace Content.Server.Doors.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+            if (!ClickOpen)
+                return;
+
             DoorClickShouldActivateEvent ev = new DoorClickShouldActivateEvent(eventArgs);
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, ev, false);
             if (ev.Handled)
@@ -256,9 +273,15 @@ namespace Content.Server.Doors.Components
 
         #region Opening
 
-        public void TryOpen(IEntity user)
+        public void TryOpen(IEntity? user=null)
         {
-            if (CanOpenByEntity(user))
+            if (user == null)
+            {
+                // a machine opened it or something, idk
+                Open();
+                return;
+            }
+            else if (CanOpenByEntity(user))
             {
                 Open();
 
@@ -386,9 +409,9 @@ namespace Content.Server.Doors.Components
 
         #region Closing
 
-        public void TryClose(IEntity user)
+        public void TryClose(IEntity? user=null)
         {
-            if (!CanCloseByEntity(user))
+            if (user != null && !CanCloseByEntity(user))
             {
                 Deny();
                 return;
@@ -444,7 +467,7 @@ namespace Content.Server.Doors.Components
 
             if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+                var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
                 foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
@@ -535,12 +558,6 @@ namespace Content.Server.Doors.Components
             // Crush
             foreach (var e in collidingentities)
             {
-                if (!e.Owner.TryGetComponent(out StunnableComponent? stun)
-                    || !e.Owner.HasComponent<DamageableComponent>())
-                {
-                    continue;
-                }
-
                 var percentage = e.GetWorldAABB().IntersectPercentage(doorAABB);
 
                 if (percentage < 0.1f)
@@ -549,9 +566,11 @@ namespace Content.Server.Doors.Components
                 hitsomebody = true;
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
+                if (e.Owner.HasComponent<DamageableComponent>())
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
-                stun.Paralyze(DoorStunTime);
+                if(e.Owner.TryGetComponent(out StunnableComponent? stun))
+                    EntitySystem.Get<StunSystem>().Paralyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime), stun);
             }
 
             // If we hit someone, open up after stun (opens right when stun ends)
@@ -611,6 +630,9 @@ namespace Content.Server.Doors.Components
         public void RefreshAutoClose()
         {
             if (State != DoorState.Open)
+                return;
+
+            if (!AutoClose)
                 return;
 
             var autoev = new BeforeDoorAutoCloseEvent();
