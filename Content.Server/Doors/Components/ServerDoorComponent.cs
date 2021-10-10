@@ -441,7 +441,7 @@ namespace Content.Server.Doors.Components
 
             if (safety && Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                var broadPhaseSystem = EntitySystem.Get<SharedBroadphaseSystem>();
+                var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
                 foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
