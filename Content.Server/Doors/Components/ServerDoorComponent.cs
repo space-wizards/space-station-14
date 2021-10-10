@@ -176,7 +176,7 @@ namespace Content.Server.Doors.Components
         ///     Should this door automatically close if its been open for too long?
         /// </summary>
         [DataField("autoClose")]
-        public bool AutoClose;
+        public bool AutoClose = true;
 
         /// <summary>
         /// Default time that the door should take to pry open.
