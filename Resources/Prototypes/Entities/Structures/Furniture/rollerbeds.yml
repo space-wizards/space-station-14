@@ -47,11 +47,11 @@
       rotation: -90
       buckleOffset: "0,0.15"
       unbuckleOffset: "0,0.3"
-#   - type: Foldable
+    - type: Foldable
     - type: Appearance
       visuals:
         - type: StrapVisualizer
-#        - type: FoldableVisualizer
+        - type: FoldableVisualizer
 
 - type: entity
   id: CheapRollerBed

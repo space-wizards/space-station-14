@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.ActionBlocker;
+using Content.Shared.EffectBlocker;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -112,6 +113,9 @@ namespace Content.Shared.Item
         public bool CanPickup(IEntity user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
+                return false;
+
+            if (!EntitySystem.Get<EffectBlockerSystem>().CanBePickedUp(this.Owner))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)

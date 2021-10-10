@@ -10,5 +10,6 @@ namespace Content.Shared.EffectBlocker
     {
         bool CanFall() => true;
         bool CanSlip() => true;
+        bool CanBePickedUp() => true;
     }
 }

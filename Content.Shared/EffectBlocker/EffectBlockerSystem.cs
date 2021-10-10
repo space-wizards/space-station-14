@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Item;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -37,6 +38,24 @@ namespace Content.Shared.EffectBlocker
             }
 
             return canSlip;
+        }
+
+        public bool CanBePickedUp(IEntity entity)
+        {
+            var ev = new PickedUpAttemptEvent(entity);
+
+            RaiseLocalEvent(entity.Uid, ev);
+
+            foreach (var blocker in ev.Entity.GetAllComponents<IEffectBlocker>())
+            {
+                if (!blocker.CanBePickedUp())
+                {
+                    ev.Cancel();
+                    break;
+                }
+            }
+
+            return !ev.Cancelled;
         }
     }
 }
