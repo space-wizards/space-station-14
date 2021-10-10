@@ -8,6 +8,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Stack
@@ -94,7 +95,7 @@ namespace Content.Server.Stack
                 popupPos = args.User.Transform.Coordinates;
             }
 
-            var filter = _popupSystem.GetFilterFromEntity(args.User);
+            var filter = Filter.Entities(args.User.Uid);
 
             switch (toTransfer)
             {

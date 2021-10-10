@@ -129,13 +129,13 @@ namespace Content.Server.Hands.Components
             RemoveHand(args.Slot);
         }
 
-        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        bool IDisarmedAct.Disarmed(DisarmedActEvent @event)
         {
             if (BreakPulls())
                 return false;
 
-            var source = eventArgs.Source;
-            var target = eventArgs.Target;
+            var source = @event.Source;
+            var target = @event.Target;
 
             if (source != null)
             {
@@ -163,10 +163,10 @@ namespace Content.Server.Hands.Components
         {
             // What is this API??
             if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out PullableComponent? pullable))
+                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
                 return false;
 
-            return pullable.TryStopPull();
+            return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
         }
 
         #endregion

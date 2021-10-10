@@ -6,13 +6,9 @@ using Content.Shared.Alert;
 using Content.Shared.Buckle.Components;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Interaction.Helpers;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -171,53 +167,6 @@ namespace Content.Server.Buckle.Components
             }
 
             return buckle.ToggleBuckle(eventArgs.User, Owner);
-        }
-
-        [Verb]
-        private sealed class StrapVerb : Verb<StrapComponent>
-        {
-            protected override void GetData(IEntity user, StrapComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(component.Owner) ||
-                    !user.TryGetComponent<BuckleComponent>(out var buckle) ||
-                    buckle.BuckledTo != null && buckle.BuckledTo != component ||
-                    user == component.Owner)
-                {
-                    return;
-                }
-
-                var parent = component.Owner.Transform.Parent;
-                while (parent != null)
-                {
-                    if (parent == user.Transform)
-                    {
-                        return;
-                    }
-
-                    parent = parent.Parent;
-                }
-
-                if (!user.InRangeUnobstructed(component, buckle.Range))
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.IconTexture = buckle.BuckledTo == null ? "/Textures/Interface/VerbIcons/buckle.svg.192dpi.png" : "/Textures/Interface/VerbIcons/unbuckle.svg.192dpi.png";
-                data.Text = Loc.GetString(buckle.BuckledTo == null ? "strap-verb-get-data-text-buckle" : "strap-verb-get-data-text-unbuckle");
-            }
-
-            protected override void Activate(IEntity user, StrapComponent component)
-            {
-                if (!user.TryGetComponent<BuckleComponent>(out var buckle))
-                {
-                    return;
-                }
-
-                buckle.ToggleBuckle(user, component.Owner);
-            }
         }
 
         public override bool DragDropOn(DragDropEvent eventArgs)

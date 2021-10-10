@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Lidgren.Network;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Administration.Menu
@@ -21,8 +23,9 @@ namespace Content.Shared.Administration.Menu
                 var username = buffer.ReadString();
                 var characterName = buffer.ReadString();
                 var antag = buffer.ReadBoolean();
+                var uid = buffer.ReadEntityUid();
 
-                PlayersInfo.Add(new PlayerInfo(username, characterName, antag));
+                PlayersInfo.Add(new PlayerInfo(username, characterName, antag, uid));
             }
         }
 
@@ -35,9 +38,10 @@ namespace Content.Shared.Administration.Menu
                 buffer.Write(player.Username);
                 buffer.Write(player.CharacterName);
                 buffer.Write(player.Antag);
+                buffer.Write(player.EntityUid);
             }
         }
 
-        public record PlayerInfo(string Username, string CharacterName, bool Antag);
+        public record PlayerInfo(string Username, string CharacterName, bool Antag, EntityUid EntityUid);
     }
 }

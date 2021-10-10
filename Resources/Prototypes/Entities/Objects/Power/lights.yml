@@ -43,6 +43,7 @@
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/
+# https://academo.org/demos/colour-temperature-relationship/
 - type: entity
   parent: BaseLightbulb
   name: incandescent light bulb
@@ -64,7 +65,7 @@
   components:
   - type: LightBulb
     bulb: Tube
-    color: "#FFEBDC" # 5400K color temp
+    color: "#FFE4CE" # 5000K color temp
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal

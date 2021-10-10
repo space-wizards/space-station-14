@@ -22,11 +22,6 @@ namespace Content.Client.Entry
             "FootstepModifier",
             "HeatResistance",
             "EntityStorage",
-            "Wirecutter",
-            "Screwdriver",
-            "Multitool",
-            "Wrench",
-            "Crowbar",
             "MeleeWeapon",
             "MeleeChemicalInjector",
             "Dice",
@@ -91,6 +86,7 @@ namespace Content.Client.Entry
             "TilePrying",
             "RandomSpriteColor",
             "ConditionalSpawner",
+            "DamageOnToolInteract",
             "ExaminableBattery",
             "PottedPlantHide",
             "SecureEntityStorage",
@@ -119,7 +115,7 @@ namespace Content.Client.Entry
             "SurgeryTool",
             "EmitSoundOnThrow",
             "Flash",
-            "DamageOnToolInteract",
+            "Telecrystal",
             "TrashSpawner",
             "RCD",
             "RCDDeconstructWhitelist",
@@ -275,11 +271,17 @@ namespace Content.Client.Entry
             "Advertise",
             "PowerNetworkBattery",
             "BatteryCharger",
+            "UnpoweredFlashlight",
+            "Uplink",
+            "PDA",
             "SpawnItemsOnUse",
             "Wieldable",
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
-            "TabletopGame"
+            "TabletopGame",
+            "LitOnPowered",
+            "TriggerOnSignalReceived",
+            "ToggleDoorOnTrigger"
         };
     }
 }

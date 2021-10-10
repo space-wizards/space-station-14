@@ -3,14 +3,12 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Paper;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -96,28 +94,6 @@ namespace Content.Server.Morgue.Components
             {
                 ent.Transform.Coordinates = Owner.Transform.Coordinates;
                 _appearance?.SetData(BodyBagVisuals.Label, false);
-            }
-        }
-
-
-        [Verb]
-        private sealed class RemoveLabelVerb : Verb<BodyBagEntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, BodyBagEntityStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.LabelContainer?.ContainedEntity == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("remove-label-verb-get-data-text");
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, BodyBagEntityStorageComponent component)
-            {
-                component.RemoveLabel(user);
             }
         }
     }

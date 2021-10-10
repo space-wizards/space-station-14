@@ -30,6 +30,8 @@ namespace Content.Client.Launcher
             }
         }
 
+        public string? LastDisconnectReason => _baseClient.LastDisconnectReason;
+
         public Page CurrentPage
         {
             get => _currentPage;

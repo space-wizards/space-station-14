@@ -6,6 +6,10 @@
   parent: ComputerBase
   components:
   - type: ApcPowerReceiver
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
   - type: Sprite
     sprite: Structures/Machines/arcade.rsi
     layers:

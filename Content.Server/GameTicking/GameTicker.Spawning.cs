@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -234,7 +234,8 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                .SetOwner(pdaComponent, characterName);
         }
         #endregion
 

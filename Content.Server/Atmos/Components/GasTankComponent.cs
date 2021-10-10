@@ -16,7 +16,6 @@ using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -319,37 +318,6 @@ namespace Content.Server.Atmos.Components
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             DisconnectFromInternals(eventArgs.User);
-        }
-
-        /// <summary>
-        /// Open interaction window
-        /// </summary>
-        [Verb]
-        private sealed class ControlVerb : Verb<GasTankComponent>
-        {
-            public override bool RequireInteractionRange => true;
-
-            protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<ActorComponent>())
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("control-verb-open-control-panel-text");
-            }
-
-            protected override void Activate(IEntity user, GasTankComponent component)
-            {
-                if (!user.TryGetComponent<ActorComponent>(out var actor))
-                {
-                    return;
-                }
-
-                component.OpenInterface(actor.PlayerSession);
-            }
         }
     }
 

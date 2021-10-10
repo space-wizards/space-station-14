@@ -24,8 +24,8 @@
     state: on
   - type: PointLight
     radius: 10
-    energy: 1.4
-    softness: 1.1
+    energy: 0.8
+    softness: 1
     offset: "0, -0.5"
   - type: SignalReceiver
     inputs:
