@@ -27,7 +27,6 @@
             - Opaque
             - MobImpassable
     - type: Damageable
-      resistances: metallicResistances
     - type: Destructible
       thresholds:
         - trigger:
