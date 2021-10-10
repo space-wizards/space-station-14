@@ -39,7 +39,7 @@ namespace Content.Server.Access.Systems
         }
 
         /// <summary>
-        /// Searches an <see cref="IAccess"/> in the entity itself, in its active hand or in its ID slot.
+        /// Searches an <see cref="AccessComponent"/> in the entity itself, in its active hand or in its ID slot.
         /// Then compares the found access with the configured access lists to see if it is allowed.
         /// </summary>
         /// <remarks>
@@ -65,11 +65,11 @@ namespace Content.Server.Access.Systems
 
         public ICollection<string> FindAccessTags(EntityUid uid)
         {
-            HashSet<string>? tags = null;
-
-            if (FindAccessTagsItem(uid, out tags))
+            // check entity itself
+            if (FindAccessTagsItem(uid, out var tags))
                 return tags;
 
+            // maybe access component inside its hands?
             if (EntityManager.TryGetComponent(uid, out SharedHandsComponent? hands))
             {
                 if (hands.TryGetActiveHeldEntity(out var heldItem) &&
@@ -79,6 +79,7 @@ namespace Content.Server.Access.Systems
                 }
             }
 
+            // maybe its inside an inventory slot?
             if (EntityManager.TryGetComponent(uid, out InventoryComponent? inventoryComponent))
             {
                 if (inventoryComponent.HasSlot(EquipmentSlotDefines.Slots.IDCARD) &&
@@ -94,7 +95,8 @@ namespace Content.Server.Access.Systems
         }
 
         /// <summary>
-        ///     Try to find access component on this item or inside this item (if its pda)
+        ///     Try to find <see cref="AccessComponent"/> on this item
+        ///     or inside this item (if it's pda)
         /// </summary>
         private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
         {

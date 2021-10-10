@@ -378,7 +378,6 @@ namespace Content.Server.AI.Pathfinding
             }
 
             var access = _accessReader.FindAccessTags(entity.Uid);
-
             foreach (var reader in node.AccessReaders)
             {
                 if (!_accessReader.IsAllowed(reader, access))
