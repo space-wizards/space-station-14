@@ -10,7 +10,6 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
