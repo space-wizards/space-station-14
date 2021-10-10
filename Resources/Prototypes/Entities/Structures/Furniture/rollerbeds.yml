@@ -1,0 +1,70 @@
+- type: entity
+  id: RollerBed
+  parent: BaseConstructibleDynamic
+  name: rollerbed
+  description: Used to carry patients around without damaging them.
+  components:
+    - type: Item
+      size: 5
+    - type: Sprite
+      sprite: Structures/Furniture/rollerbeds.rsi
+      state: rollerbed
+      netsync: false
+    - type: MovedByPressure
+    - type: DamageOnHighSpeedImpact
+      soundHit: /Audio/Effects/bang.ogg
+    - type: InteractionOutline
+    - type: Physics
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45, -0.45, 0.05, 0.45"
+          mass: 30
+          mask:
+            - Impassable
+            - VaultImpassable
+          layer:
+            - Opaque
+            - MobImpassable
+    - type: Damageable
+      resistances: metallicResistances
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+            - !type:SpawnEntitiesBehavior
+              spawn:
+                SheetSteel1:
+                  min: 1
+                  max: 1
+    - type: Pullable
+    - type: Strap
+      position: Down
+      rotation: -90
+      buckleOffset: "0,0.15"
+      unbuckleOffset: "0,0.3"
+    - type: Foldable
+    - type: Appearance
+      visuals:
+        - type: StrapVisualizer
+        - type: FoldableVisualizer
+
+- type: entity
+  id: CheapRollerBed
+  parent: RollerBed
+  description: A crappy looking roller bed, used to carry patients around.
+  components:
+    - type: Sprite
+      state: cheap_rollerbed
+
+- type: entity
+  id: EmergencyRollerBed
+  parent: RollerBed
+  description: A robust looking rollerbed used for emergencies.
+  components:
+    - type: Sprite
+      state: emergency_rollerbed
