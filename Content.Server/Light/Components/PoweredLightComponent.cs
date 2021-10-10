@@ -87,6 +87,7 @@ namespace Content.Server.Light.Components
         {
             base.Initialize();
             _lightBulbContainer = Owner.EnsureContainer<ContainerSlot>("light_bulb");
+            _lightBulbContainer.Visibility = ContainerVisibility.None;
         }
 
         [ViewVariables]
