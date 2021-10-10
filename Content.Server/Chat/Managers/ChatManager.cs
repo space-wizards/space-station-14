@@ -375,6 +375,7 @@ namespace Content.Server.Chat.Managers
 
         public void RegisterChatTransform(TransformChat handler)
         {
+            // TODO: Literally just make this an event...
             _chatTransformHandlers.Add(handler);
         }
     }
