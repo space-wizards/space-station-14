@@ -49,6 +49,7 @@ namespace Content.Server.Body
             base.Initialize();
 
             _partContainer = Owner.EnsureContainer<Container>($"{Name}-{nameof(BodyComponent)}");
+            _partContainer.Visibility = ContainerVisibility.None;
             var preset = Preset;
 
             if (preset != null)
