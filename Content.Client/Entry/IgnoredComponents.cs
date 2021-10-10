@@ -279,7 +279,9 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
             "TabletopGame",
-            "LitOnPowered"
+            "LitOnPowered",
+            "TriggerOnSignalReceived",
+            "ToggleDoorOnTrigger"
         };
     }
 }

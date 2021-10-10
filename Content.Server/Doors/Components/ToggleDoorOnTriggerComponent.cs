@@ -2,10 +2,9 @@
 
 namespace Content.Server.Doors.Components
 {
+    [RegisterComponent]
     public class ToggleDoorOnTriggerComponent : Component
     {
-        public override string Name => "ToggledoorOnTrigger";
-
-
+        public override string Name => "ToggleDoorOnTrigger";
     }
 }

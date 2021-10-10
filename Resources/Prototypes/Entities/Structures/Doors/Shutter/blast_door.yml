@@ -13,8 +13,8 @@
       map: ["enum.DoorVisualLayers.Base"]
   - type: Door
     closeTimeOne: 0.4
-    closeTimeTwo: 0.6
-    openTimeOne: 0.6
+    closeTimeTwo: 0.4
+    openTimeOne: 0.4
     openTimeTwo: 0.4
     crushDamage:
       types:

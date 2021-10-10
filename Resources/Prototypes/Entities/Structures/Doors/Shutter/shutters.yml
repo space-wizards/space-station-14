@@ -29,6 +29,7 @@
   - type: Door
     board: DoorElectronics
     bumpOpen: false
+    clickOpen: false
     autoClose: false
     closeTimeOne: 0.2
     closeTimeTwo: 1.2
@@ -39,9 +40,9 @@
       types:
         Blunt: 5 # getting shutters closed on you probably doesn't hurt that much
     openSound:
-      path: /Audio/Machines/airlock_open.ogg
+      path: /Audio/Machines/blastdoor.ogg
     closeSound:
-      path: /Audio/Machines/airlock_close.ogg
+      path: /Audio/Machines/blastdoor.ogg
   - type: Appearance
     visuals:
       - type: AirlockVisualizer
@@ -68,6 +69,8 @@
     key: walls
     mode: NoSprite
   - type: SignalReceiver
+    inputs:
+    - name: pressed
   - type: ToggleDoorOnTrigger
   - type: TriggerOnSignalReceived
   placement:

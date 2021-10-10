@@ -72,7 +72,7 @@ namespace Content.Server.MachineLinking.System
                 if (!IsInRange(component, link.ReceiverComponent)) continue;
 
                 RaiseLocalEvent(link.ReceiverComponent.Owner.Uid,
-                    new SignalReceivedEvent(link.Receiverport.Name, args.Value));
+                    new SignalReceivedEvent(link.Receiverport.Name, args.Value), false);
             }
         }
 
