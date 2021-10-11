@@ -18,55 +18,22 @@ namespace Content.Server.DeviceNetwork.Systems
         }
 
         /// <summary>
-        /// Tries to get the node groups wit the id: <see cref="NodeGroupID.WireNet"/> from both
-        /// the sending and receiving entity and checks if they are the same.
+        /// Checks if both devices are on the same grid
         /// </summary>
         private void OnBeforePacketSent(EntityUid uid, WiredNetworkComponent component, BeforePacketSentEvent args)
         {
-            if (!component.Owner.TryGetComponent<PowerReceiverComponent>(out var ownPowerReceiver) || !TryGetWireNet(ownPowerReceiver, out var ownNet))
-            {
-                args.Cancel();
-                return;
-            }
+            IEntity sender = EntityManager.GetEntity(args.Sender);
+            IEntity receiver = EntityManager.GetEntity(uid);
 
-            if (!ComponentManager.TryGetComponent<PowerReceiverComponent>(args.Sender, out var powerReceiver) || !TryGetWireNet(powerReceiver, out var net))
+            if (receiver.Transform.GridID != sender.Transform.GridID)
             {
                 args.Cancel();
-                return;
-            }
-
-            if (!ownNet.Equals(net))
-            {
-                args.Cancel();
-                return;
             }
         }
 
-        /// <summary>
-        /// Looks for a node group with the id: <see cref="NodeGroupID.WireNet"/> on the connected power provider.
-        /// </summary>
-        /// <param name="powerReceiver"></param>
-        /// <param name="net"></param>
-        /// <returns></returns>
-        private bool TryGetWireNet(PowerReceiverComponent powerReceiver, [NotNullWhen(true)] out INodeGroup? net)
-        {
-            if (powerReceiver.Provider is PowerProviderComponent provider &&
-                provider.ProviderOwner.TryGetComponent<NodeContainerComponent>(out var nodeContainer))
-            {
-                var nodes = nodeContainer.Nodes;
-
-                foreach (var node in nodes.Values)
-                {
-                    if (node.NodeGroupID == NodeGroupID.WireNet)
-                    {
-                        net = node.NodeGroup;
-                        return true;
-                    }
-                }
-            }
-
-            net = default;
-            return false;
-        }
+        //Things to do in a future PR:
+        //Abstract out the connection between the apcExtensionCable and the apcPowerReceiver
+        //Traverse the power cables using path traversal
+        //Cache an optimized representation of the traversed path (Probably just cache Devices)
     }
 }
