@@ -18,7 +18,7 @@ namespace Content.Server.DeviceNetwork.Components
         /// 2 -> Wireless
         /// </summary>
         [DataField("deviceNetId")]
-        public int DeviceNetId => (int)DeviceNetworkConstants.ConnectionType.Private;
+        public int DeviceNetId { get; set; } = (int)DeviceNetworkConstants.ConnectionType.Private;
 
         [DataField("frequency")]
         public int Frequency { get; set; } = 0;
