@@ -21,7 +21,6 @@ namespace Content.MapRenderer
         private const string PrNumberEnvKey = "PR_NUMBER";
 
         private static readonly MapPainter MapPainter = new();
-        private static readonly ImgurClient ImgurClient = new();
 
         internal static void Main()
         {
