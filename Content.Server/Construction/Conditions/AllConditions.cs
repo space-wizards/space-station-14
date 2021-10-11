@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -11,7 +12,7 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class AllConditions : IGraphCondition
     {
-        [field: DataField("conditions")]
+        [DataField("conditions")]
         public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();
 
         public async Task<bool> Condition(IEntity entity)
@@ -23,6 +24,18 @@ namespace Content.Server.Construction.Conditions
             }
 
             return true;
+        }
+
+        public bool DoExamine(ExaminedEvent args)
+        {
+            var ret = false;
+
+            foreach (var condition in Conditions)
+            {
+                ret |= condition.DoExamine(args);
+            }
+
+            return ret;
         }
     }
 }

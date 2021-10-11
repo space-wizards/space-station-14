@@ -1,10 +1,11 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Access;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.PDA;
-using Content.Server.Interfaces.GameObjects.Components.Items;
+using Content.Server.Access.Components;
+using Content.Shared.Containers.ItemSlots;
+using Content.Server.Hands.Components;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.PDA;
 using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -28,8 +29,13 @@ namespace Content.IntegrationTests.Tests.PDA
   id: {PdaDummy}
   name: {PdaDummy}
   components:
+  - type: ItemSlots
+    slots:
+      pdaIdSlot:
+        whitelist:
+          components:
+            - IdCard
   - type: PDA
-    idCard: {IdCardDummy}
   - type: Item";
 
         [Test]
@@ -69,13 +75,17 @@ namespace Content.IntegrationTests.Tests.PDA
                 player.GetComponent<IHandsComponent>().PutInHand(pdaItemComponent);
 
                 var pdaComponent = dummyPda.GetComponent<PDAComponent>();
-                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition).GetComponent<IdCardComponent>();
-                pdaComponent.InsertIdCard(pdaIdCard);
+                var pdaIdCard = sEntityManager.SpawnEntity(IdCardDummy, player.Transform.MapPosition);
+
+                var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
+                sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
+                    .TryInsertContent(itemSlots, pdaIdCard, pdaComponent.IdSlot);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first
                 Assert.NotNull(player.GetHeldId());
                 Assert.True(player.TryGetHeldId(out id));
+
                 Assert.NotNull(id);
                 Assert.That(id, Is.EqualTo(pdaContainedId));
 

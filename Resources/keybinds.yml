@@ -51,15 +51,34 @@ binds:
 - function: ShowEscapeMenu
   type: State
   key: Escape
-- function: FocusChatWindow
+- function: CycleChatChannelForward
+  type: State
+  key: Tab
+- function: CycleChatChannelBackward
+  type: State
+  key: Tab
+  mod1: Control
+- function: FocusChatInputWindow
   type: State
   key: T
+- function: FocusLocalChatWindow
+  type: State
+  key: Period
+- function: FocusRadioWindow
+  type: State
+  key: SemiColon
 - function: FocusOOCWindow
   type: State
   key: LBracket
 - function: FocusAdminChatWindow
   type: State
   key: RBracket
+- function: FocusDeadChatWindow
+  type: State
+  key: Backslash
+- function: FocusConsoleChatWindow
+  type: State
+  key: Slash
 - function: EditorLinePlace
   type: State
   key: MouseLeft
@@ -90,6 +109,10 @@ binds:
 - function: ActivateItemInHand
   type: State
   key: Z
+- function: AltActivateItemInHand
+  type: State
+  key: Z
+  mod1: Alt
 - function: OpenCharacterMenu
   type: State
   key: C
@@ -109,6 +132,15 @@ binds:
 - function: ActivateItemInWorld
   type: State
   key: E
+- function: AltActivateItemInWorld
+  type: State
+  key: MouseLeft
+  canFocus: true
+  mod1: Alt
+- function: AltActivateItemInWorld # secondary binding
+  type: State
+  key: E
+  mod1: Alt
 - function: ThrowItemInHand
   type: State
   key: Q
@@ -130,6 +162,7 @@ binds:
   type: State
   key: MouseRight
   canFocus: true
+  priority: -1 # UIRightClick & EditorCancelPlace should fire first.
 - function: OpenCraftingMenu
   type: State
   key: G

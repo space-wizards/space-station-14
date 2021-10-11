@@ -1,34 +1,40 @@
-﻿{
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation and modified by Swept at https://github.com/vgstation-coders/vgstation13/blob/Bleeding-Edge/icons/obj/lighting.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "flashlight"
     },
-    "states": [
-        {
-          "name": "lantern_off"
-        },
-        {
-          "name": "lantern_on"
-        },
-        {
-          "name": "HandheldLightOnOverlay"
-        },
-        {
-          "name": "off-inhand-left",
-          "directions": 4
-        },
-        {
-          "name": "off-inhand-right",
-          "directions": 4
-        },
-        {
-          "name": "on-inhand-left",
-          "directions": 4
-        },
-        {
-          "name": "on-inhand-right",
-          "directions": 4
-        }
-    ]
+    {
+      "name": "flashlight-on"
+    },
+    {
+      "name": "flashlight-overlay"
+    },
+    {
+      "name": "off-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "equipped-BELT",
+      "directions": 4
+    }
+  ]
 }

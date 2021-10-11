@@ -1,0 +1,15 @@
+﻿<SS14Window
+    xmlns="https://spacestation14.io"
+    xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
+    xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
+    xmlns:atmosTab="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
+    xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs">
+    <TabContainer Name="MasterTabContainer">
+        <adminTab:AdminTab />
+        <adminbusTab:AdminbusTab />
+        <atmosTab:AtmosTab />
+        <tabs:RoundTab />
+        <tabs:ServerTab />
+        <tabs:PlayerTab Name="PlayerTabControl" />
+    </TabContainer>
+</SS14Window>

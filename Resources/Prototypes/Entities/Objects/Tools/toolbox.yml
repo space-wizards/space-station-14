@@ -3,14 +3,20 @@
   parent: BaseItem
   abstract: true
   components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
   - type: Storage
     capacity: 60
   - type: Item
     size: 9999
   - type: ItemCooldown
   - type: MeleeWeapon
-    damage: 10
-    hitSound: "/Audio/Weapons/smash.ogg"
+    damage:
+      types:
+        Blunt: 10
+    hitSound:
+      path: "/Audio/Weapons/smash.ogg"
 
 - type: entity
   name: emergency toolbox
@@ -72,7 +78,9 @@
   - type: Item
     sprite: Objects/Tools/Toolboxes/toolbox_syn.rsi
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Blunt: 15
 
 - type: entity
   name: golden toolbox

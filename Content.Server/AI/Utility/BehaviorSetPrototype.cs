@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,7 +12,7 @@ namespace Content.Server.AI.Utility
         ///     Name of the BehaviorSet.
         /// </summary>
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         /// <summary>

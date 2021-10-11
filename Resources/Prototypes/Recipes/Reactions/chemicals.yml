@@ -90,7 +90,8 @@
       removeDelay: 0.5
       diluteReagents: false
       prototypeId: Smoke
-      sound: /Audio/Effects/smoke.ogg
+      sound:
+        path: /Audio/Effects/smoke.ogg
 
 - type: reaction
   id: Foam
@@ -112,6 +113,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2 #The reagents will get multiplied by this number if the range turns out to be 0
       prototypeId: Foam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: IronMetalFoam
@@ -135,6 +138,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: IronMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: AluminiumMetalFoam
@@ -158,6 +163,8 @@
       reagentDilutionFactor: 1
       reagentMaxConcentrationFactor: 2
       prototypeId: AluminiumMetalFoam
+      sound:
+        path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
   id: TableSalt
@@ -204,6 +211,18 @@
     Water: 2
 
 - type: reaction
+  id: Oil
+  reactants:
+    WeldingFuel:
+      amount: 1
+    Carbon:
+      amount: 1
+    Hydrogen:
+      amount: 1
+  products:
+    Oil: 3
+
+- type: reaction
   id: Fluorosurfactant
   reactants:
     Carbon:
@@ -214,3 +233,31 @@
       amount: 1
   products:
     Fluorosurfactant: 5
+
+- type: reaction
+  id: Meth
+  reactants:
+    Ephedrine:
+      amount: 1
+    Carbon:
+      amount: 1
+    Iodine:
+      amount: 1
+    Phosphorus:
+     amount: 1
+  products:
+    Meth: 4 #I kinda remember having to heat this up, and if you heated it up too much, it went boom, I can't remember the specific values tho.
+
+- type: reaction
+  id: Ephedrine
+  reactants:
+    Oil:
+      amount: 1
+    Hydrogen:
+      amount: 1
+    Sugar:
+      amount: 1
+    Diethylamine:
+     amount: 1
+  products:
+    Ephedrine: 4

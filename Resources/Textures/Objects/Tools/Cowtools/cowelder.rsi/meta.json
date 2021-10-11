@@ -1,39 +1,39 @@
-﻿{
-    "version": 1,
-    "size": {
-        "x": 32,
-        "y": 32
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "@trerri#0107",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
     },
-    "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/199fffd989d6f7fd6ea9c5188c875137df4f34b8 & from @trerri#0107",
-    "states": [
-        {
-            "name": "icon"
-        },
-        {
-            "name": "welder_flame",
-            "delays": [
-                [
-                    0.2,
-                    0.1
-                ]
-            ]
-        },
-        {
-            "name": "off-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "off-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "on-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "on-inhand-right",
-            "directions": 4
-        }
+    {
+      "name": "welder_flame",
+      "delays": [
+        [
+          0.2,
+          0.1
         ]
+      ]
+    },
+    {
+      "name": "off-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "off-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "on-inhand-right",
+      "directions": 4
     }
+  ]
+}

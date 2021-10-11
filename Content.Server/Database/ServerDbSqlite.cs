@@ -6,15 +6,16 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.IP;
 using Content.Server.Preferences;
-using Content.Server.Utility;
+using Content.Server.Preferences.Managers;
 using Content.Shared;
+using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
 using Robust.Shared.IoC;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {
@@ -103,7 +104,7 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
         {
-            if (address != null && ban.Address != null && address.IsInSubnet(ban.Address))
+            if (address != null && ban.Address != null && IPAddressExt.IsInSubnet(address, ban.Address))
             {
                 return true;
             }

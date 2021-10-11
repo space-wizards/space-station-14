@@ -52,13 +52,13 @@
               store: board
               name: "door electronics circuit board"
               icon:
-                sprite: "Constructible/Misc/module.rsi"
+                sprite: "Objects/Misc/module.rsi"
                 state: "door_electronics"
               doAfter: 1
         - to: assembly
           completed:
             - !type:SpawnPrototype
-              prototype: ApcExtensionCableStack1
+              prototype: CableApcStack1
               amount: 5
           steps:
             - tool: Cutting

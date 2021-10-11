@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
@@ -16,14 +15,23 @@ namespace Content.Shared.Roles
         private string _name = string.Empty;
 
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
+
+        [DataField("supervisors")]
+        public string Supervisors { get; } = "nobody";
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
-        [field: DataField("name")]
+        [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("joinNotifyCrew")]
+        public bool JoinNotifyCrew { get; } = false;
+
+        [DataField("requireAdminNotify")]
+        public bool RequireAdminNotify { get; } = false;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -49,15 +57,15 @@ namespace Content.Shared.Roles
         [DataField("startingGear")]
         public string? StartingGear { get; private set; }
 
-        [field: DataField("icon")] public string Icon { get; } = string.Empty;
+        [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        [DataField("special")]
-        public JobSpecial? Special { get; private set; }
+        [DataField("special", serverOnly:true)]
+        public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
-        [field: DataField("departments")]
+        [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();
 
-        [field: DataField("access")]
+        [DataField("access")]
         public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
     }
 }

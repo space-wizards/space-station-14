@@ -5,23 +5,25 @@
   components:
   - type: StorageFill
     contents:
-      - name: TaserGun
+      - id: FlashlightSeclite
+        prob: 1
+      - id: TaserGun
         prob: 0.3
-      - name: ClothingHeadHatWarden
+      - id: ClothingHeadHatWarden
         prob: 1
-      - name: ClothingHeadHatBeretWarden
+      - id: ClothingHeadHatBeretWarden
         prob: 1
-      - name: ClothingBeltSecurityFilled
+      - id: ClothingBeltSecurityFilled
         prob: 1
-      - name: Flash
+      - id: Flash
         prob: 1
-      - name: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesSecurity
         prob: 1
-      - name: ClothingHeadsetAltSecurity
+      - id: ClothingHeadsetAltSecurity
         prob: 1
-      - name: ClothingHandsGlovesCombat
+      - id: ClothingHandsGlovesCombat
         prob: 1
-      - name: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJack
         prob: 1
 
 - type: entity
@@ -31,23 +33,25 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingUniformJumpsuitSecGrey
+      - id: FlashlightSeclite
+        prob: 0.8
+      - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
-      - name: ClothingHeadHelmetHelmet
+      - id: ClothingHeadHelmetHelmet
         prob: 1
-      - name: ClothingOuterArmorBulletproof
+      - id: ClothingOuterArmorBulletproof
         prob: 1
-      - name: ClothingBeltSecurityFilled
+      - id: ClothingBeltSecurityFilled
         prob: 1
-      - name: Flash
+      - id: Flash
         prob: 0.5
-      - name: ClothingEyesGlassesSecurity
+      - id: ClothingEyesGlassesSecurity
         prob: 1
-      - name: ClothingHeadsetSecurity
+      - id: ClothingHeadsetSecurity
         prob: 1
-      - name: ClothingHandsGlovesColorBlack
+      - id: ClothingHandsGlovesColorBlack
         prob: 1
-      - name: ClothingShoesBootsJack
+      - id: ClothingShoesBootsJack
         prob: 1
 
 - type: entity
@@ -57,26 +61,27 @@
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHatFedoraBrown
+      - id: ClothingHeadHatFedoraBrown
         prob: 1
-      - name: ClothingNeckTieDet
+      - id: ClothingNeckTieDet
         prob: 1
-      - name: ClothingOuterVestDetective
+      - id: ClothingOuterVestDetective
         prob: 1
-      - name: ClothingOuterCoatDetective
+      - id: ClothingOuterCoatDetective
         prob: 1
-
+      - id: FlashlightSeclite
+        prob: 1
 
 - type: entity
-  id: LockerBombFilled
-  parent: LockerBomb
+  id: ClosetBombFilled
+  parent: ClosetBomb
   suffix: Filled
   components:
   - type: StorageFill
     contents:
-      - name: ClothingHeadHelmetBombSuit
+      - id: ClothingHeadHelmetBombSuit
         prob: 1
-      - name: ClothingOuterSuitBomb
+      - id: ClothingOuterSuitBomb
         prob: 1
-      - name: ClothingMaskGas
+      - id: ClothingMaskGas
         prob: 1

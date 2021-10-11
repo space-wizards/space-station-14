@@ -6,10 +6,13 @@
   departments:
   - Civilian
   icon: "Clown"
+  supervisors: "the head of personnel"
   access:
   - Theatre
   - Maintenance
-  special: !type:ClownSpecial {}
+  special:
+  - !type:AddComponentSpecial
+    component: Clumsy # Adds ClumsyComponent to the mob.
 
 - type: startingGear
   id: ClownGear

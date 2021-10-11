@@ -8,77 +8,77 @@
   },
   "states": [
     {
-        "name": "phoron"
+      "name": "phoron"
     },
     {
-        "name": "phoron-inhand-left",
-        "directions": 4
+      "name": "phoron-inhand-left",
+      "directions": 4
     },
     {
-        "name": "phoron-inhand-right",
-        "directions": 4
+      "name": "phoron-inhand-right",
+      "directions": 4
     },
     {
-        "name": "paper"
+      "name": "paper"
     },
     {
-        "name": "paper_2"
+      "name": "paper_2"
     },
     {
-        "name": "paper_3"
+      "name": "paper_3"
     },
     {
-        "name": "paper-inhand-left",
-        "directions": 4
+      "name": "paper-inhand-left",
+      "directions": 4
     },
     {
-        "name": "paper-inhand-right",
-        "directions": 4
+      "name": "paper-inhand-right",
+      "directions": 4
     },
     {
-        "name": "plastic"
+      "name": "plastic"
     },
     {
-        "name": "plastic_2"
+      "name": "plastic_2"
     },
     {
-        "name": "plastic_3"
+      "name": "plastic_3"
     },
     {
-        "name": "plastic-inhand-left",
-        "directions": 4
+      "name": "plastic-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plastic-inhand-right",
-        "directions": 4
+      "name": "plastic-inhand-right",
+      "directions": 4
     },
     {
-        "name": "plasma"
+      "name": "plasma"
     },
     {
-        "name": "plasma_2"
+      "name": "plasma_2"
     },
     {
-        "name": "plasma_3"
+      "name": "plasma_3"
     },
     {
-        "name": "plasma-inhand-left",
-        "directions": 4
+      "name": "plasma-inhand-left",
+      "directions": 4
     },
     {
-        "name": "plasma-inhand-right",
-        "directions": 4
+      "name": "plasma-inhand-right",
+      "directions": 4
     },
     {
-        "name": "uranium"
+      "name": "uranium"
     },
     {
-        "name": "uranium-inhand-left",
-        "directions": 4
+      "name": "uranium-inhand-left",
+      "directions": 4
     },
     {
-        "name": "uranium-inhand-right",
-        "directions": 4
+      "name": "uranium-inhand-right",
+      "directions": 4
     }
   ]
 }

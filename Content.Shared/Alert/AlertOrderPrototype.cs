@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -16,7 +15,7 @@ namespace Content.Shared.Alert
     public class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>, ISerializationHooks
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
         [DataField("order")] private readonly List<(string type, string alert)> _order = new();

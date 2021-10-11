@@ -1,7 +1,7 @@
-#nullable enable
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Audio
@@ -10,9 +10,10 @@ namespace Content.Shared.Audio
     public sealed class SoundCollectionPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("files")] public List<string> PickFiles { get; } = new();
+        [DataField("files")]
+        public List<ResourcePath> PickFiles { get; } = new();
     }
 }

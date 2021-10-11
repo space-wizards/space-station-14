@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Client.GameObjects.Components.StationEvents;
 using JetBrains.Annotations;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -17,7 +16,7 @@ namespace Content.Client.StationEvents
     [UsedImplicitly]
     public sealed class RadiationPulseOverlay : Overlay
     {
-        [Dependency] private readonly IComponentManager _componentManager = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -103,11 +102,11 @@ namespace Content.Client.StationEvents
             }
 
             _transitions[entity] = (!easingIn, transitionTime);
-            _colors[entity] = Color.Green.WithAlpha(0.0f);
+            _colors[entity] = Color.LimeGreen.WithAlpha(0.0f);
             _alphaRateOfChange[entity] = 1.0f / (float) (transitionTime - currentTime).TotalSeconds;
         }
 
-        protected override void Draw(DrawingHandleBase handle, OverlaySpace currentSpace)
+        protected override void Draw(in OverlayDrawArgs args)
         {
             // PVS should control the overlay pretty well so the overlay doesn't get instantiated unless we're near one...
             var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
@@ -120,11 +119,11 @@ namespace Content.Client.StationEvents
             var elapsedTime = (float) (_gameTiming.CurTime - _lastTick).TotalSeconds;
             _lastTick = _gameTiming.CurTime;
 
-            var radiationPulses = _componentManager
+            var radiationPulses = _entityManager
                 .EntityQuery<RadiationPulseComponent>(true)
                 .ToList();
 
-            var screenHandle = (DrawingHandleScreen) handle;
+            var screenHandle = args.ScreenHandle;
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var grid in _mapManager.FindGridsIntersecting(playerEntity.Transform.MapID, viewport))
@@ -134,7 +133,7 @@ namespace Content.Client.StationEvents
                     if (!pulse.Draw || grid.Index != pulse.Owner.Transform.GridID) continue;
 
                     // TODO: Check if viewport intersects circle
-                    var circlePosition = _eyeManager.WorldToScreen(pulse.Owner.Transform.WorldPosition);
+                    var circlePosition = args.ViewportControl!.WorldToScreen(pulse.Owner.Transform.WorldPosition);
 
                     // change to worldhandle when implemented
                     screenHandle.DrawCircle(

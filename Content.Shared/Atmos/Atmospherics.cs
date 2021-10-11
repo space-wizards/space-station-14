@@ -1,7 +1,7 @@
-#nullable enable
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;
+// ReSharper disable InconsistentNaming
 
 namespace Content.Shared.Atmos
 {
@@ -142,14 +142,14 @@ namespace Content.Shared.Atmos
         #endregion
 
         /// <summary>
-        ///     Hard limit for tile equalization.
+        ///     Hard limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosHardTileLimit = 2000;
+        public const int MonstermosHardTileLimit = 2000;
 
         /// <summary>
         ///     Limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosTileLimit = 200;
+        public const int MonstermosTileLimit = 200;
 
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
@@ -244,6 +244,20 @@ namespace Content.Shared.Atmos
         public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
 
         public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
+
+        #region Pipes
+
+        /// <summary>
+        ///     The pressure pumps and powered equipment max out at, in kPa.
+        /// </summary>
+        public const float MaxOutputPressure = 4500;
+
+        /// <summary>
+        ///     The maximum speed powered equipment can work at, in L/s.
+        /// </summary>
+        public const float MaxTransferRate = 200;
+
+        #endregion
     }
 
     /// <summary>

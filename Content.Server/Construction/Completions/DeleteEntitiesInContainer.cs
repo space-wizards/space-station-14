@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
@@ -11,7 +10,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class DeleteEntitiesInContainer : IGraphAction
     {
-        [field: DataField("container")] public string Container { get; } = string.Empty;
+        [DataField("container")] public string Container { get; } = string.Empty;
 
         public async Task PerformAction(IEntity entity, IEntity? user)
         {
@@ -22,7 +21,7 @@ namespace Content.Server.Construction.Completions
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 if(container.Remove(contained))
-                    contained.Delete();
+                    contained.QueueDelete();
             }
         }
     }

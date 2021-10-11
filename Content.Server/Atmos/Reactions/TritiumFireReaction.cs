@@ -1,6 +1,5 @@
-#nullable enable
-using Content.Server.Interfaces;
-using Content.Server.Utility;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Coordinates.Helpers;
 using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -12,10 +11,10 @@ namespace Content.Server.Atmos.Reactions
     [DataDefinition]
     public class TritiumFireReaction : IGasReactionEffect
     {
-        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, GridTileLookupSystem gridTileLookup)
+        public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {
             var energyReleased = 0f;
-            var oldHeatCapacity = mixture.HeatCapacity;
+            var oldHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
             var temperature = mixture.Temperature;
             var location = holder as TileAtmosphere;
             mixture.ReactionResults[GasReaction.Fire] = 0f;
@@ -42,7 +41,7 @@ namespace Content.Server.Atmos.Reactions
             if (burnedFuel > 0)
             {
                 energyReleased += (Atmospherics.FireHydrogenEnergyReleased * burnedFuel);
-                
+
                 // TODO ATMOS Radiation pulse here!
 
                 // Conservation of mass is important.
@@ -53,7 +52,7 @@ namespace Content.Server.Atmos.Reactions
 
             if (energyReleased > 0)
             {
-                var newHeatCapacity = mixture.HeatCapacity;
+                var newHeatCapacity = atmosphereSystem.GetHeatCapacity(mixture);
                 if (newHeatCapacity > Atmospherics.MinimumHeatCapacity)
                     mixture.Temperature = ((temperature * oldHeatCapacity + energyReleased) / newHeatCapacity);
             }
@@ -63,17 +62,7 @@ namespace Content.Server.Atmos.Reactions
                 temperature = mixture.Temperature;
                 if (temperature > Atmospherics.FireMinimumTemperatureToExist)
                 {
-                    location.HotspotExpose(temperature, mixture.Volume);
-
-                    foreach (var entity in location.GridIndices.GetEntitiesInTileFast(location.GridIndex, gridTileLookup))
-                    {
-                        foreach (var temperatureExpose in entity.GetAllComponents<ITemperatureExpose>())
-                        {
-                            temperatureExpose.TemperatureExpose(mixture, temperature, mixture.Volume);
-                        }
-                    }
-
-                    location.TemperatureExpose(mixture, temperature, mixture.Volume);
+                    atmosphereSystem.HotspotExpose(location.GridIndex, location.GridIndices, temperature, mixture.Volume);
                 }
             }
 

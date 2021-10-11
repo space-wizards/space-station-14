@@ -1,6 +1,5 @@
-﻿# SKREEEEEEEEEEE
-- type: entity
-  parent: HumanMob_Content
+﻿- type: entity
+  parent: MobHuman
   abstract: True
   id: BaseVox
   components:
@@ -79,15 +78,23 @@
         sprite: Mobs/Customization/human_hair.rsi
       - map: [ "enum.Slots.MASK" ]
       - map: [ "enum.Slots.HEAD" ]
+      - map: [ "enum.Slots.POCKET1" ]
+      - map: [ "enum.Slots.POCKET2" ]
   - type: Body
     template: HumanoidTemplate
     preset: VoxPreset
-  - type: Metabolism
+  - type: Respirator
     needsGases:
       Nitrogen: 0.00060763888
     producesGases:
       Nitrogen: 0.00045572916
       CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
 #  - type: Appearance
 #    visuals:
 #      - type: RotationVisualizer
@@ -106,3 +113,4 @@
     categoriesFacialHair: VoxFacialHair
   - type: Inventory
     speciesId: vox
+  - type: DoorBumpOpener

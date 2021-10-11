@@ -1,6 +1,6 @@
-﻿#nullable enable
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -10,19 +10,26 @@ namespace Content.Shared.Stacks
     public class StackPrototype : IPrototype
     {
         [ViewVariables]
-        [field: DataField("id", required: true)]
+        [DataField("id", required: true)]
         public string ID { get; } = default!;
 
-        [field: DataField("name")]
+        /// <summary>
+        ///     Human-readable name for this stack type e.g. "Steel"
+        /// </summary>
+        /// <remarks>This is a localization string ID.</remarks>
+        [DataField("name")]
         public string Name { get; } = string.Empty;
 
-        [field: DataField("icon")]
-        public SpriteSpecifier? Icon { get; }
+        /// <summary>
+        ///     An icon that will be used to represent this stack type.
+        /// </summary>
+        [DataField("icon")]
+        public SpriteSpecifier? Icon { get; } = null;
 
         /// <summary>
         ///     The entity id that will be spawned by default from this stack.
         /// </summary>
-        [field: DataField("spawn")]
-        public string? Spawn { get; }
+        [DataField("spawn", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string Spawn { get; } = string.Empty;
     }
 }

@@ -7,6 +7,9 @@
   departments:
   - Command
   icon: "Captain"
+  requireAdminNotify: true
+  joinNotifyCrew: true
+  supervisors: "Nanotrasen officials"
   access:
   # All of em.
   # Could probably do with some kind of wildcard or whatever to automate this.
@@ -27,6 +30,7 @@
   - External
   - Janitor
   - Theatre
+  - Bar
 
 - type: startingGear
   id: CaptainGear
@@ -40,5 +44,6 @@
     outerclothing: ClothingOuterHardsuitCap
     idcard: CaptainPDA
     ears: ClothingHeadsetAltCommand
+  innerclothingskirt: ClothingUniformJumpskirtCaptain
   satchel: ClothingBackpackSatchelCaptainFilled
   duffelbag: ClothingBackpackDuffelCaptainFilled

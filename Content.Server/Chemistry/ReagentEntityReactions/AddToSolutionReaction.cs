@@ -1,6 +1,7 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,18 +10,21 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEntityReactions
 {
     [UsedImplicitly]
-    [DataDefinition]
     public class AddToSolutionReaction : ReagentEntityReaction
     {
-        [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
+        [DataField("reagents", true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local
-        private readonly HashSet<string> _reagents = new ();
+        private readonly HashSet<string> _reagents = new();
 
         protected override void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source)
         {
-            if (!entity.TryGetComponent(out SolutionContainerComponent? solutionContainer) || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
+            // TODO see if this is correct
+            if (!EntitySystem.Get<SolutionContainerSystem>()
+                    .TryGetSolution(entity, "reagents", out var solutionContainer)
+                || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
-            if(solutionContainer.TryAddReagent(reagent.ID, volume, out var accepted))
+            if (EntitySystem.Get<SolutionContainerSystem>()
+                .TryAddReagent(entity.Uid, solutionContainer, reagent.ID, volume, out var accepted))
                 source?.RemoveReagent(reagent.ID, accepted);
         }
     }

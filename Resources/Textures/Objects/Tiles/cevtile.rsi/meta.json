@@ -1,1 +1,215 @@
-{"version": 1, "size": {"x": 32, "y": 32}, "states": [{"name": "", "delays": [[1.0]]}, {"name": "tile", "delays": [[1.0]]}, {"name": "tile-white-techfloor", "delays": [[1.0]]}, {"name": "tile_bcarpet", "delays": [[1.0]]}, {"name": "tile_blucarpet", "delays": [[1.0]]}, {"name": "tile_cafe", "delays": [[1.0]]}, {"name": "tile_carpet", "delays": [[1.0]]}, {"name": "tile_dark", "delays": [[1.0]]}, {"name": "tile_dark_bluecorner", "delays": [[1.0]]}, {"name": "tile_dark_brownperforated", "delays": [[1.0]]}, {"name": "tile_dark_brownplatform", "delays": [[1.0]]}, {"name": "tile_dark_cargo", "delays": [[1.0]]}, {"name": "tile_dark_cyancorner", "delays": [[1.0]]}, {"name": "tile_dark_danger", "delays": [[1.0]]}, {"name": "tile_dark_golden", "delays": [[1.0]]}, {"name": "tile_dark_grayperforated", "delays": [[1.0]]}, {"name": "tile_dark_grayplatform", "delays": [[1.0]]}, {"name": "tile_dark_monofloor", "delays": [[1.0]]}, {"name": "tile_dark_orangecorner", "delays": [[1.0]]}, {"name": "tile_dark_panels", "delays": [[1.0]]}, {"name": "tile_dark_techfloor", "delays": [[1.0]]}, {"name": "tile_dark_techfloor_grid", "delays": [[1.0]]}, {"name": "tile_dark_violetcorener", "delays": [[1.0]]}, {"name": "tile_gaycarpet", "delays": [[1.0]]}, {"name": "tile_grass", "delays": [[1.0]]}, {"name": "tile_oracarpet", "delays": [[1.0]]}, {"name": "tile_purcarpet", "delays": [[1.0]]}, {"name": "tile_sblucarpet", "delays": [[1.0]]}, {"name": "tile_steel", "delays": [[1.0]]}, {"name": "tile_steel_bar_dance", "delays": [[1.0]]}, {"name": "tile_steel_bar_flat", "delays": [[1.0]]}, {"name": "tile_steel_bar_light", "delays": [[1.0]]}, {"name": "tile_steel_bluecorner", "delays": [[1.0]]}, {"name": "tile_steel_brownperforated", "delays": [[1.0]]}, {"name": "tile_steel_brownplatform", "delays": [[1.0]]}, {"name": "tile_steel_cargo", "delays": [[1.0]]}, {"name": "tile_steel_cyancorner", "delays": [[1.0]]}, {"name": "tile_steel_danger", "delays": [[1.0]]}, {"name": "tile_steel_golden", "delays": [[1.0]]}, {"name": "tile_steel_grayperforated", "delays": [[1.0]]}, {"name": "tile_steel_grayplatform", "delays": [[1.0]]}, {"name": "tile_steel_monofloor", "delays": [[1.0]]}, {"name": "tile_steel_orangecorner", "delays": [[1.0]]}, {"name": "tile_steel_panels", "delays": [[1.0]]}, {"name": "tile_steel_techfloor", "delays": [[1.0]]}, {"name": "tile_steel_techfloor_grid", "delays": [[1.0]]}, {"name": "tile_steel_violetcorener", "delays": [[1.0]]}, {"name": "tile_techmaint", "delays": [[1.0]]}, {"name": "tile_techmaint_cargo", "delays": [[1.0]]}, {"name": "tile_techmaint_panels", "delays": [[1.0]]}, {"name": "tile_techmaint_perforated", "delays": [[1.0]]}, {"name": "tile_turcarpet", "delays": [[1.0]]}, {"name": "tile_white", "delays": [[1.0]]}, {"name": "tile_white_bluecorner", "delays": [[1.0]]}, {"name": "tile_white_brownperforated", "delays": [[1.0]]}, {"name": "tile_white_brownplatform", "delays": [[1.0]]}, {"name": "tile_white_cargo", "delays": [[1.0]]}, {"name": "tile_white_cyancorner", "delays": [[1.0]]}, {"name": "tile_white_danger", "delays": [[1.0]]}, {"name": "tile_white_golden", "delays": [[1.0]]}, {"name": "tile_white_grayperforated", "delays": [[1.0]]}, {"name": "tile_white_grayplatform", "delays": [[1.0]]}, {"name": "tile_white_monofloor", "delays": [[1.0]]}, {"name": "tile_white_orangecorner", "delays": [[1.0]]}, {"name": "tile_white_panels", "delays": [[1.0]]}, {"name": "tile_white_techfloor_grid", "delays": [[1.0]]}, {"name": "tile_white_violetcorener", "delays": [[1.0]]}, {"name": "tile_wood", "delays": [[1.0]]}]}
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/4f4f8e186bd6ded4d424fad1dee49d3d969adc7c",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": ""
+    },
+    {
+      "name": "tile"
+    },
+    {
+      "name": "tile-white-techfloor"
+    },
+    {
+      "name": "tile_bcarpet"
+    },
+    {
+      "name": "tile_blucarpet"
+    },
+    {
+      "name": "tile_cafe"
+    },
+    {
+      "name": "tile_carpet"
+    },
+    {
+      "name": "tile_dark"
+    },
+    {
+      "name": "tile_dark_bluecorner"
+    },
+    {
+      "name": "tile_dark_brownperforated"
+    },
+    {
+      "name": "tile_dark_brownplatform"
+    },
+    {
+      "name": "tile_dark_cargo"
+    },
+    {
+      "name": "tile_dark_cyancorner"
+    },
+    {
+      "name": "tile_dark_danger"
+    },
+    {
+      "name": "tile_dark_golden"
+    },
+    {
+      "name": "tile_dark_grayperforated"
+    },
+    {
+      "name": "tile_dark_grayplatform"
+    },
+    {
+      "name": "tile_dark_monofloor"
+    },
+    {
+      "name": "tile_dark_orangecorner"
+    },
+    {
+      "name": "tile_dark_panels"
+    },
+    {
+      "name": "tile_dark_techfloor"
+    },
+    {
+      "name": "tile_dark_techfloor_grid"
+    },
+    {
+      "name": "tile_dark_violetcorener"
+    },
+    {
+      "name": "tile_gaycarpet"
+    },
+    {
+      "name": "tile_grass"
+    },
+    {
+      "name": "tile_oracarpet"
+    },
+    {
+      "name": "tile_purcarpet"
+    },
+    {
+      "name": "tile_sblucarpet"
+    },
+    {
+      "name": "tile_steel"
+    },
+    {
+      "name": "tile_steel_bar_dance"
+    },
+    {
+      "name": "tile_steel_bar_flat"
+    },
+    {
+      "name": "tile_steel_bar_light"
+    },
+    {
+      "name": "tile_steel_bluecorner"
+    },
+    {
+      "name": "tile_steel_brownperforated"
+    },
+    {
+      "name": "tile_steel_brownplatform"
+    },
+    {
+      "name": "tile_steel_cargo"
+    },
+    {
+      "name": "tile_steel_cyancorner"
+    },
+    {
+      "name": "tile_steel_danger"
+    },
+    {
+      "name": "tile_steel_golden"
+    },
+    {
+      "name": "tile_steel_grayperforated"
+    },
+    {
+      "name": "tile_steel_grayplatform"
+    },
+    {
+      "name": "tile_steel_monofloor"
+    },
+    {
+      "name": "tile_steel_orangecorner"
+    },
+    {
+      "name": "tile_steel_panels"
+    },
+    {
+      "name": "tile_steel_techfloor"
+    },
+    {
+      "name": "tile_steel_techfloor_grid"
+    },
+    {
+      "name": "tile_steel_violetcorener"
+    },
+    {
+      "name": "tile_techmaint"
+    },
+    {
+      "name": "tile_techmaint_cargo"
+    },
+    {
+      "name": "tile_techmaint_panels"
+    },
+    {
+      "name": "tile_techmaint_perforated"
+    },
+    {
+      "name": "tile_turcarpet"
+    },
+    {
+      "name": "tile_white"
+    },
+    {
+      "name": "tile_white_bluecorner"
+    },
+    {
+      "name": "tile_white_brownperforated"
+    },
+    {
+      "name": "tile_white_brownplatform"
+    },
+    {
+      "name": "tile_white_cargo"
+    },
+    {
+      "name": "tile_white_cyancorner"
+    },
+    {
+      "name": "tile_white_danger"
+    },
+    {
+      "name": "tile_white_golden"
+    },
+    {
+      "name": "tile_white_grayperforated"
+    },
+    {
+      "name": "tile_white_grayplatform"
+    },
+    {
+      "name": "tile_white_monofloor"
+    },
+    {
+      "name": "tile_white_orangecorner"
+    },
+    {
+      "name": "tile_white_panels"
+    },
+    {
+      "name": "tile_white_techfloor_grid"
+    },
+    {
+      "name": "tile_white_violetcorener"
+    },
+    {
+      "name": "tile_wood"
+    }
+  ]
+}

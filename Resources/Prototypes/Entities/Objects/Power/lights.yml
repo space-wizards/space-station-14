@@ -6,26 +6,33 @@
   components:
   - type: LightBulb
   - type: Damageable
+    damageContainer: Inorganic
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOtherOnHit
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:DoActsBehavior
         acts: [ "Breakage" ]
     - trigger:
         !type:DamageTrigger
         damage: 10
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
@@ -34,26 +41,31 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 
+# Lighting color values gathered from
+# https://andi-siess.de/rgb-to-color-temperature/
+# https://academo.org/demos/colour-temperature-relationship/
 - type: entity
   parent: BaseLightbulb
-  name: light bulb
+  name: incandescent light bulb
   id: LightBulb
   description: That's a light bulb.
   components:
   - type: LightBulb
     bulb: Bulb
+    color: "#FFD1A3" # 4000K color temp
   - type: Sprite
     sprite: Objects/Power/light_bulb.rsi
     state: normal
 
 - type: entity
   parent: BaseLightbulb
-  name: light tube
+  name: fluorescent light tube
   id: LightTube
   description: That's a light fixture.
   components:
   - type: LightBulb
     bulb: Tube
+    color: "#FFE4CE" # 5000K color temp
   - type: Sprite
     sprite:  Objects/Power/light_tube.rsi
     state: normal

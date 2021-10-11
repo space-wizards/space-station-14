@@ -1,13 +1,16 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
-using Content.Server.Utility;
+﻿using System;
+using System.Threading.Tasks;
+using Content.Server.Inventory;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Stunnable;
+using Content.Server.Stunnable.Components;
+using Content.Shared.Stunnable;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -73,7 +76,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
                 Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
-                stun.Stun(1f);
+                EntitySystem.Get<StunSystem>().Stun(human.Uid, TimeSpan.FromSeconds(1f), stun);
 
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);

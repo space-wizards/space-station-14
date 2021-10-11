@@ -17,8 +17,8 @@
 
 - type: itemAction
   actionType: ToggleLight
-  icon: Objects/Tools/flashlight.rsi/lantern_off.png
-  iconOn: Objects/Tools/flashlight.rsi/lantern_on.png
+  icon: Objects/Tools/flashlight.rsi/flashlight.png
+  iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
   name: "Toggle Light"
   description: "Turn the light on."
   filters:
@@ -107,15 +107,19 @@
   parent: BaseItem
   id: ItemActionExample
   description: for testing item actions
+  suffix: DEBUG
   components:
-    - type: Sprite
-      sprite: Objects/Fun/bikehorn.rsi
-      state: icon
-    - type: ItemActions
-      actions:
-        - actionType: DebugInstant
-        - actionType: DebugToggle
-        - actionType: DebugTargetPoint
-        - actionType: DebugTargetPointRepeat
-        - actionType: DebugTargetEntity
-        - actionType: DebugTargetEntityRepeat
+  - type: Tag
+    tags:
+      - Debug
+  - type: Sprite
+    sprite: Objects/Fun/bikehorn.rsi
+    state: icon
+  - type: ItemActions
+    actions:
+      - actionType: DebugInstant
+      - actionType: DebugToggle
+      - actionType: DebugTargetPoint
+      - actionType: DebugTargetPointRepeat
+      - actionType: DebugTargetEntity
+      - actionType: DebugTargetEntityRepeat

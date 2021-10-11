@@ -14,6 +14,7 @@
     HeldPrefix: default
   - type: Access
   - type: IdCard
+  - type: DoorBumpOpener
 
 #IDs with layers
 
@@ -55,17 +56,17 @@
   - type: PresetIdCard
     job: SecurityOfficer
 
-- type: entity
-  parent: IDCardStandard
-  id: WardenIDCard
-  name: warden ID card
-  components:
-    - type: Sprite
-      layers:
-        - state: default
-        - state: idwarden
-    - type: PresetIdCard
-      job: Warden
+# - type: entity
+#   parent: IDCardStandard
+#   id: WardenIDCard
+#   name: warden ID card
+#   components:
+#     - type: Sprite
+#       layers:
+#         - state: default
+#         - state: idwarden
+#     - type: PresetIdCard
+#       job: Warden
 
 - type: entity
   parent: IDCardStandard

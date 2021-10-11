@@ -1,7 +1,9 @@
 using System;
-using Content.Server.Explosions;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Server.Chemistry.Components;
+using Content.Server.Explosion;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -26,12 +28,11 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("maxScale")] private float _maxScale = 1;
 
-        public void React(IEntity? solutionEntity, double intensity)
+        public void React(Solution solution, IEntity solutionEntity, double intensity)
         {
             var floatIntensity = (float) intensity;
-            if (solutionEntity == null)
-                return;
-            if (!solutionEntity.HasComponent<SolutionContainerComponent>())
+      
+            if (!solutionEntity.HasComponent<SolutionContainerManagerComponent>())
                 return;
 
             //Handle scaling

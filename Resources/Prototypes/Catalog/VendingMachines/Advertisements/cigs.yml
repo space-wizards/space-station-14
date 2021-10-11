@@ -1,0 +1,14 @@
+﻿- type: advertisementsPack
+  id: CigaretteMachineAds
+  advertisements:
+  - advertisement-cigs-1
+  - advertisement-cigs-2
+  - advertisement-cigs-3
+  - advertisement-cigs-4
+  - advertisement-cigs-5
+  - advertisement-cigs-6
+  - advertisement-cigs-7
+  - advertisement-cigs-8
+  - advertisement-cigs-9
+  - advertisement-cigs-10
+  - advertisement-cigs-11

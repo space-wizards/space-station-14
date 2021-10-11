@@ -1,10 +1,9 @@
-using Content.Server.Explosions;
+using Content.Server.Explosion;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
 
-#nullable enable
 
 namespace Content.Server.Administration.Commands
 {

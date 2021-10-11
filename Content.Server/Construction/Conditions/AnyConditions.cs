@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class AnyConditions : IGraphCondition
     {
-        [field: DataField("conditions")]
+        [DataField("conditions")]
         public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();
 
         public async Task<bool> Condition(IEntity entity)
@@ -24,5 +24,7 @@ namespace Content.Server.Construction.Conditions
 
             return false;
         }
+
+        // TODO CONSTRUCTION: Examine for this condition.
     }
 }
