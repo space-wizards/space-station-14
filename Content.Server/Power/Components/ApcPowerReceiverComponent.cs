@@ -104,6 +104,8 @@ namespace Content.Server.Power.Components
             DesiredPower = 5
         };
 
+        public float PowerReceived => NetworkLoad.ReceivingPower;
+
         protected override void Startup()
         {
             base.Startup();
@@ -134,7 +136,13 @@ namespace Content.Server.Power.Components
 
         public void ApcPowerChanged()
         {
-            OnNewPowerState();
+            SendMessage(new PowerChangedMessage(Powered));
+            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered, NetworkLoad.ReceivingPower));
+
+            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            {
+                appearance.SetData(PowerDeviceVisuals.Powered, Powered);
+            }
         }
 
         private bool TryFindAvailableProvider([NotNullWhen(true)] out ApcPowerProviderComponent? foundProvider)
@@ -169,17 +177,6 @@ namespace Content.Server.Power.Components
             Provider = null;
             _powerReceptionRange = newPowerReceptionRange;
             TryFindAndSetProvider();
-        }
-
-        private void OnNewPowerState()
-        {
-            SendMessage(new PowerChangedMessage(Powered));
-            Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
-
-            if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
-            {
-                appearance.SetData(PowerDeviceVisuals.Powered, Powered);
-            }
         }
 
         public void AnchorUpdate()
@@ -224,10 +221,12 @@ namespace Content.Server.Power.Components
     public sealed class PowerChangedEvent : EntityEventArgs
     {
         public readonly bool Powered;
+        public readonly float ReceivingPower;
 
-        public PowerChangedEvent(bool powered)
+        public PowerChangedEvent(bool powered, float receivingPower)
         {
             Powered = powered;
+            ReceivingPower = receivingPower;
         }
     }
 }
