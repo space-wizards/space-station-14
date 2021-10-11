@@ -8,7 +8,7 @@ namespace Content.Server.DeviceNetwork
     public class NetworkPayload : Dictionary<string, object>
     {
         /// <summary>
-        /// Tries to get a value from the payload and checks if that value is of type T.
+        /// Tries to get a value from the payload and checks if that value is of type  T.
         /// </summary>
         /// <typeparam name="T">The type that should be casted to</typeparam>
         /// <returns>Whether the value was present in the payload and of the required type</returns>
