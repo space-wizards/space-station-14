@@ -12,7 +12,7 @@
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                 </PanelContainer.PanelOverride>
-                <SplitContainer Orientation="Horizontal"
+                <BoxContainer Orientation="Horizontal"
                                 VerticalExpand="True">
                     <PanelContainer VerticalExpand="True">
                         <PanelContainer.PanelOverride>
@@ -26,17 +26,17 @@
                     <ScrollContainer HorizontalExpand="True"
                                      VerticalExpand="True"
                                      SizeFlagsStretchRatio="2"
+                                     HScrollEnabled="False"
                                      MinSize="100 256">
                         <BoxContainer Name="UplinkListingsContainer"
                                       Orientation="Vertical"
-                                      HorizontalExpand="True"
                                       VerticalExpand="True"
                                       SizeFlagsStretchRatio="2"
                                       MinSize="100 256">
                             <!-- Listings are added here by code -->
                         </BoxContainer>
                     </ScrollContainer>
-                </SplitContainer>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>

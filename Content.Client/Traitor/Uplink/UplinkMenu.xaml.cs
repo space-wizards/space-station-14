@@ -93,6 +93,12 @@ namespace Content.Client.Traitor.Uplink
                 MinSize = (32, 1),
             };
 
+            var description = new RichTextLabel()
+            {
+            };
+            description.SetMessage("This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a " +
+                "\"content\" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.");
+
             //Contains the name of the item and its price. Used for spacing item name and price.
             var listingButtonHbox = new BoxContainer
             {
@@ -105,11 +111,21 @@ namespace Content.Client.Traitor.Uplink
                 }
             };
 
+            var verticalButtonVbox = new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Vertical,
+                Children =
+                {
+                    listingButtonHbox,
+                    description
+                }
+            };
+
             var listingButtonPanelContainer = new PanelContainer
             {
                 Children =
                 {
-                    listingButtonHbox
+                    verticalButtonVbox
                 }
             };
 
