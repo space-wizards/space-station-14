@@ -2,11 +2,13 @@ using System.Threading.Tasks;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Components;
 using Content.Server.PDA;
+using Content.Server.Traitor.Uplink.Account;
+using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Inventory;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.TraitorDeathMatch.Components
@@ -41,7 +43,7 @@ namespace Content.Server.TraitorDeathMatch.Components
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent<PDAComponent>(out var victimPDA))
+            if (!eventArgs.Using.TryGetComponent<UplinkComponent>(out var victimUplink))
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-message"))));
@@ -63,13 +65,13 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             var userPDAEntity = userInv.GetSlotItem(EquipmentSlotDefines.Slots.IDCARD)?.Owner;
-            PDAComponent? userPDA = null;
+            UplinkComponent? userUplink = null;
 
             if (userPDAEntity != null)
-                if (userPDAEntity.TryGetComponent<PDAComponent>(out var userPDAComponent))
-                    userPDA = userPDAComponent;
+                if (userPDAEntity.TryGetComponent<UplinkComponent>(out var userUplinkComponent))
+                    userUplink = userUplinkComponent;
 
-            if (userPDA == null)
+            if (userUplink == null)
             {
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-main-message",
                                                                  ("secondMessage", Loc.GetString("traitor-death-match-redemption-component-interact-using-no-pda-in-pocket-message"))));
@@ -78,8 +80,8 @@ namespace Content.Server.TraitorDeathMatch.Components
 
             // We have finally determined both PDA components. FINALLY.
 
-            var userAccount = userPDA.SyndicateUplinkAccount;
-            var victimAccount = victimPDA.SyndicateUplinkAccount;
+            var userAccount = userUplink.UplinkAccount;
+            var victimAccount = victimUplink.UplinkAccount;
 
             if (userAccount == null)
             {
@@ -104,11 +106,12 @@ namespace Content.Server.TraitorDeathMatch.Components
             }
 
             // 4 is the per-PDA bonus amount.
+            var accounts = Owner.EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
             var transferAmount = victimAccount.Balance + 4;
-            victimAccount.ModifyAccountBalance(0);
-            userAccount.ModifyAccountBalance(userAccount.Balance + transferAmount);
+            accounts.SetBalance(victimAccount, 0);
+            accounts.AddToBalance(userAccount, transferAmount);
 
-            victimPDA.Owner.Delete();
+            victimUplink.Owner.Delete();
 
             Owner.PopupMessage(eventArgs.User, Loc.GetString("traitor-death-match-redemption-component-interact-using-success-message", ("tcAmount", transferAmount)));
             return true;

@@ -2,6 +2,7 @@
 using Content.Server.GameObjects.Components;
 using Content.Server.WireHacking;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -38,5 +39,7 @@ namespace Content.Server.Construction.Conditions
 
             return true;
         }
+
+        // TODO CONSTRUCTION: Examine for this condition.
     }
 }

@@ -10,7 +10,6 @@
     sprite: Structures/Machines/cloning.rsi
     layers:
       - state: pod_0
-        map: ["enum.CloningPodVisualLayers.Machine"]
   - type: Physics
     bodyType: Static
     fixtures:
@@ -44,7 +43,14 @@
     LayoutId: CloningPod
   - type: Appearance
     visuals:
-      - type: CloningPodVisualizer
+      - type: GenericEnumVisualizer
+        key: enum.CloningPodVisuals.Status
+        layer: 0
+        states:
+          enum.CloningPodStatus.Cloning: pod_1
+          enum.CloningPodStatus.NoMind: pod_e
+          enum.CloningPodStatus.Gore: pod_g
+          enum.CloningPodStatus.Idle: pod_0
   - type: UserInterface
     interfaces:
       - key: enum.CloningPodUIKey.Key

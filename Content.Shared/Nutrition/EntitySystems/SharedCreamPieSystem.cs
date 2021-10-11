@@ -1,14 +1,18 @@
+using System;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Shared.Nutrition.EntitySystems
 {
     [UsedImplicitly]
     public abstract class SharedCreamPieSystem : EntitySystem
     {
+        [Dependency] private SharedStunSystem _stunSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -40,7 +44,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             creamPied.CreamPied = value;
 
-            if (ComponentManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearance))
             {
                 appearance.SetData(CreamPiedVisuals.Creamed, value);
             }
@@ -64,9 +68,9 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             CreamedEntity(uid, creamPied, args);
 
-            if (ComponentManager.TryGetComponent(uid, out SharedStunnableComponent? stun))
+            if (EntityManager.TryGetComponent(uid, out StunnableComponent? stun))
             {
-                stun.Paralyze(creamPie.ParalyzeTime);
+                _stunSystem.Paralyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime), stun);
             }
         }
 

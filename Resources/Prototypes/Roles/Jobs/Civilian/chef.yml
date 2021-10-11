@@ -6,6 +6,7 @@
   departments:
   - Civilian
   icon: "Chef"
+  supervisors: "the head of personnel"
   access:
   - Service
   - Maintenance

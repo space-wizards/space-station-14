@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Localization;
+﻿using Content.Shared.Examine;
+using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
@@ -10,10 +11,12 @@ namespace Content.Shared.Construction.Steps
 
         [DataField("icon")] public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
 
-        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            if (string.IsNullOrEmpty(Name)) return;
-            message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
+            if (string.IsNullOrEmpty(Name))
+                return;
+
+            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-arbitrary-entity", ("stepName", Name)));
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:pllax="clr-namespace:Content.Client.Parallax"
+         xmlns:clog="clr-namespace:Content.Client.Changelog">
+    <pllax:ParallaxControl />
+    <LayoutContainer>
+        <BoxContainer Name="VBox"
+                      Orientation="Vertical"
+                      StyleIdentifier="mainMenuVBox">
+            <TextureRect Name="Logo"
+                         Stretch="KeepCentered" />
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="4">
+                <Label Text="{Loc 'main-menu-username-label'}" />
+                <LineEdit Name="UsernameBoxProtected"
+                          PlaceHolder="{Loc 'main-menu-username-text'}"
+                          HorizontalExpand="True" />
+            </BoxContainer>
+            <Button Name="JoinPublicServerButtonProtected"
+                    Text="{Loc 'main-menu-join-public-server-button'}"
+                    StyleIdentifier="mainMenu"
+                    TextAlign="Center" />
+            <Control MinSize="0 2" />
+            <LineEdit Name="AddressBoxProtected"
+                      Text="localhost"
+                      PlaceHolder="server address:port"
+                      HorizontalExpand="True" />
+            <Button Name="DirectConnectButtonProtected"
+                    Text="{Loc 'main-menu-direct-connect-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Control MinSize="0 2" />
+            <Button Name="OptionsButtonProtected"
+                    Text="{Loc 'main-menu-options-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Button Name="QuitButtonProtected"
+                    Text="{Loc 'main-menu-quit-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <clog:ChangelogButton />
+        </BoxContainer>
+        <Label Name="VersionLabel" Text="v0.1" />
+    </LayoutContainer>
+</Control>

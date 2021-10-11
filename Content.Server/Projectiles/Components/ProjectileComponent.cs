@@ -13,12 +13,9 @@ namespace Content.Server.Projectiles.Components
     [ComponentReference(typeof(SharedProjectileComponent))]
     public class ProjectileComponent : SharedProjectileComponent
     {
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // This also requires changing the dictionary type and modifying ProjectileSystem.cs, which uses it.
-        // While thats being done, also replace "damages" -> "damageTypes" For consistency.
-        [DataField("damages")]
+        [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public Dictionary<string, int> Damages { get; set; } = new();
+        public DamageSpecifier Damage = default!;
 
         [DataField("deleteOnCollide")]
         public bool DeleteOnCollide { get; } = true;

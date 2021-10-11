@@ -88,7 +88,7 @@ namespace Content.Client.Sandbox
             ShowMarkersButton = new Button { Text = Loc.GetString("sandbox-window-show-spawns-button"), ToggleMode = true, Pressed = EntitySystem.Get<MarkerSystem>().MarkersVisible };
             vBox.AddChild(ShowMarkersButton);
 
-            ShowBbButton = new Button { Text = Loc.GetString("sandbox-window-show-bb-button"), ToggleMode = true, Pressed = IoCManager.Resolve<IDebugDrawing>().DebugColliders };
+            ShowBbButton = new Button { Text = Loc.GetString("sandbox-window-show-bb-button"), ToggleMode = true, Pressed = (EntitySystem.Get<DebugPhysicsSystem>().Flags & PhysicsDebugFlags.Shapes) != 0x0 };
             vBox.AddChild(ShowBbButton);
 
             MachineLinkingButton = new Button { Text = Loc.GetString("sandbox-window-link-machines-button"), ToggleMode = true };
@@ -354,7 +354,7 @@ namespace Content.Client.Sandbox
 
         private void ShowBb()
         {
-            _consoleHost.ExecuteCommand("showbb");
+            _consoleHost.ExecuteCommand("physics shapes");
         }
 
         private void LinkMachines()

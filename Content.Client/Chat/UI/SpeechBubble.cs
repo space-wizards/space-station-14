@@ -101,7 +101,7 @@ namespace Content.Client.Chat.UI
             }
 
             // Lerp to our new vertical offset if it's been modified.
-            if (MathHelper.CloseTo(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
+            if (MathHelper.CloseToPercent(_verticalOffsetAchieved - VerticalOffset, 0, 0.1))
             {
                 _verticalOffsetAchieved = VerticalOffset;
             }

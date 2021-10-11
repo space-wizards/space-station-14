@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Collections;
+using Content.Shared.CCVar;
 using Content.Shared.Hands.Components;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
+using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,6 +21,7 @@ namespace Content.Shared.Throwing
     public class ThrownItemSystem : EntitySystem
     {
         [Dependency] private readonly SharedBroadphaseSystem _broadphaseSystem = default!;
+        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -31,27 +33,6 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-        }
-
-        public override void Update(float frameTime)
-        {
-            base.Update(frameTime);
-
-            var toRemove = new RemQueue<ThrownItemComponent>();
-
-            // We can't just use sleeping unfortunately because there's a delay of the sleep timer. ThrownItemComponent
-            // is transient while the entity is thrown so this shouldn't be too bad.
-            foreach (var (thrown, physics) in ComponentManager.EntityQuery<ThrownItemComponent, PhysicsComponent>())
-            {
-                if (!physics.LinearVelocity.Equals(Vector2.Zero)) continue;
-                toRemove.Add(thrown);
-            }
-
-            foreach (var comp in toRemove)
-            {
-                if (comp.Deleted) continue;
-                LandComponent(comp);
-            }
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)
@@ -88,45 +69,48 @@ namespace Content.Shared.Throwing
 
         private void HandleSleep(EntityUid uid, ThrownItemComponent thrownItem, PhysicsSleepMessage message)
         {
-            LandComponent(thrownItem);
+            StopThrow(uid, thrownItem);
         }
 
         private void HandlePullStarted(PullStartedMessage message)
         {
             // TODO: this isn't directed so things have to be done the bad way
-            if (message.Pulled.Owner.TryGetComponent(out ThrownItemComponent? thrownItem))
-                LandComponent(thrownItem);
+            if (EntityManager.TryGetComponent(message.Pulled.Owner.Uid, out ThrownItemComponent? thrownItemComponent))
+                StopThrow(message.Pulled.Owner.Uid, thrownItemComponent);
         }
 
-        private void LandComponent(ThrownItemComponent thrownItem)
+        private void StopThrow(EntityUid uid, ThrownItemComponent thrownItemComponent)
         {
-            if (thrownItem.Owner.Deleted) return;
+            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
+            {
+                var fixture = physicsComponent.GetFixture(ThrowingFixture);
+
+                if (fixture != null)
+                {
+                    _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
+                }
+            }
+
+            EntityManager.EventBus.RaiseLocalEvent(uid, new StopThrowEvent {User = thrownItemComponent.Thrower?.Uid});
+            EntityManager.RemoveComponent<ThrownItemComponent>(uid);
+        }
+
+        public void LandComponent(ThrownItemComponent thrownItem)
+        {
+            if (thrownItem.Deleted || thrownItem.Owner.Deleted || _containerSystem.IsEntityInContainer(thrownItem.Owner.Uid)) return;
 
             var landing = thrownItem.Owner;
-
-            if (!thrownItem.Owner.TryGetComponent(out PhysicsComponent? physicsComponent)) return;
-
-            var fixture = physicsComponent.GetFixture(ThrowingFixture);
-
-            if (fixture != null)
-            {
-                _broadphaseSystem.DestroyFixture(physicsComponent, fixture);
-            }
 
             // Unfortunately we can't check for hands containers as they have specific names.
             if (thrownItem.Owner.TryGetContainerMan(out var containerManager) &&
                 containerManager.Owner.HasComponent<SharedHandsComponent>())
             {
-                ComponentManager.RemoveComponent(landing.Uid, thrownItem);
+                EntityManager.RemoveComponent(landing.Uid, thrownItem);
                 return;
             }
 
-            var user = thrownItem.Thrower;
-            var coordinates = landing.Transform.Coordinates;
-
-            var landMsg = new LandEvent(user, landing, coordinates);
-            RaiseLocalEvent(landing.Uid, landMsg);
-            ComponentManager.RemoveComponent(landing.Uid, thrownItem);
+            var landMsg = new LandEvent {User = thrownItem.Thrower?.Uid};
+            RaiseLocalEvent(landing.Uid, landMsg, false);
         }
 
         /// <summary>
