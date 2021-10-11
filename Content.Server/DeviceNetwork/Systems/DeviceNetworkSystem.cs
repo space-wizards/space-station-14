@@ -72,7 +72,7 @@ namespace Content.Server.DeviceNetwork.Systems
             {
                 var packet = new NetworkPacket
                 {
-                    NetId = component.DeviceNetID,
+                    NetId = component.DeviceNetId,
                     Address = address,
                     Frequency = frequency,
                     Broadcast = broadcast,
@@ -114,7 +114,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private bool AddConnection(DeviceNetworkComponent connection)
         {
-            var netId = connection.DeviceNetID;
+            var netId = connection.DeviceNetId;
             if (!_connections.ContainsKey(netId))
                 _connections[netId] = new List<DeviceNetworkComponent>();
 
@@ -133,7 +133,7 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             connection.Address = "";
             connection.Open = false;
-            return _connections[connection.DeviceNetID].Remove(connection);
+            return _connections[connection.DeviceNetId].Remove(connection);
         }
 
         /// <summary>

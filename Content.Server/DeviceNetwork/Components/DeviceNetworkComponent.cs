@@ -9,7 +9,16 @@ namespace Content.Server.DeviceNetwork.Components
     {
         public override string Name => "DeviceNetworkComponent";
 
-        public int DeviceNetID => _deviceNetID;
+        /// <summary>
+        /// The device networks netID this DeviceNetworkComponent connects to.
+        /// The netID is used to seperate device networks that shouldn't interact with each other e.g. wireless and wired.
+        /// The default netID's are_
+        /// 0 -> Private
+        /// 1 -> Wired
+        /// 2 -> Wireless
+        /// </summary>
+        [DataField("deviceNetID")]
+        public int DeviceNetId => (int)DeviceNetworkConstants.ConnectionType.Private;
 
         [DataField("frequency")]
         public int Frequency { get; set; } = 0;
@@ -22,16 +31,5 @@ namespace Content.Server.DeviceNetwork.Components
 
         [DataField("receiveAll")]
         public bool ReceiveAll;
-
-        /// <summary>
-        /// The device networks netID this DeviceNetworkComponent connects to.
-        /// The netID is used to seperate device networks that shouldn't interact with each other e.g. wireless and wired.
-        /// The default netID's are_
-        /// 0 -> Private
-        /// 1 -> Wired
-        /// 2 -> Wireless
-        /// </summary>
-        [DataField("deviceNetID")]
-        private int _deviceNetID = (int)DeviceNetworkConstants.ConnectionType.Private;
     }
 }
