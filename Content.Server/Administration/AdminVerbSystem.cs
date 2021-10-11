@@ -33,7 +33,7 @@ namespace Content.Server.Administration
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
         [Dependency] private readonly VerbSystem _verbSystem = default!;
-        
+
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
@@ -80,7 +80,6 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    targetMind.Mind?.TransferTo(null);
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 args.Verbs.Add(verb);
