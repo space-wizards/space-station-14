@@ -2401,3 +2401,8 @@ Entries:
   - {message: Fix airlocks not auto-closing anymore., type: Fix}
   id: 429
   time: '2021-10-10T13:59:27.943854+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
+  id: 430
+  time: '2021-10-11T23:44:30.123871+00:00'
