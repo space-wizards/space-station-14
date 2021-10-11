@@ -30,6 +30,7 @@ namespace Content.Client.Gravity.UI
             };
 
             _window.OpenCentered();
+            _window.OnClose += Close;
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
