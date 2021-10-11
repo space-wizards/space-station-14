@@ -72,7 +72,6 @@ namespace Content.Server.Entry
             IoCManager.Resolve<IServerDbManager>().Init();
             IoCManager.Resolve<IServerPreferencesManager>().Init();
             IoCManager.Resolve<INodeGroupFactory>().Initialize();
-            IoCManager.Resolve<IAccentManager>().Initialize();
             _voteManager.Initialize();
         }
 
