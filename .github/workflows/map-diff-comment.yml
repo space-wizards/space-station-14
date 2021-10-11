@@ -53,3 +53,14 @@ jobs:
         run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Create map images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
+      - name: Upload map images
+        uses: devicons/public-upload-to-imgur@main
+        id: new_map_images
+        with:
+          path: ./Resources/MapImages/
+          client_id: ${{secrets.IMGUR_CLIENT_ID}}
+      - name: View results
+        env:
+          STEP_1_RESULT: ${{ steps.new_map_images.outputs.imgur_urls }}
+        run: |
+          echo $STEP_1_RESULT
