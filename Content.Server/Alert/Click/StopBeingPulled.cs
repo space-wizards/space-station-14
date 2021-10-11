@@ -1,3 +1,4 @@
+using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Pulling;
@@ -16,6 +17,9 @@ namespace Content.Server.Alert.Click
     {
         public void AlertClicked(ClickAlertEventArgs args)
         {
+            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(args.Player))
+                return;
+
             if (args.Player.TryGetComponent<SharedPullableComponent>(out var playerPullable))
             {
                 EntitySystem.Get<SharedPullingSystem>().TryStopPull(playerPullable);
