@@ -281,7 +281,10 @@ namespace Content.Client.Entry
             "TabletopGame",
             "LitOnPowered",
             "TriggerOnSignalReceived",
-            "ToggleDoorOnTrigger"
+            "ToggleDoorOnTrigger",
+            "DeviceNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection"
         };
     }
 }
