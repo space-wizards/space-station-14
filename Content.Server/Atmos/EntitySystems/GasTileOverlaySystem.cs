@@ -269,7 +269,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var gridEntityId = grid.GridEntityId;
 
-                if (!EntityManager.GetEntity(gridEntityId).TryGetComponent(out GridAtmosphereComponent? gam))
+                if (!EntityManager.TryGetComponent(gridEntityId, out GridAtmosphereComponent? gam))
                 {
                     continue;
                 }

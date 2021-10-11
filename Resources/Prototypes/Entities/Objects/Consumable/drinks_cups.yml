@@ -9,6 +9,12 @@
     solutions:
       drink:
         maxVol: 10
+  - type: FitsInDispenser
+    solution: drink
+  - type: DrawableSolution
+    solution: drink
+  - type: RefillableSolution
+    solution: drink
   - type: SolutionTransfer
     canChangeTransferAmount: true
     maxTransferAmount: 10
@@ -21,6 +27,7 @@
   - type: Sprite
     state: icon
   - type: Spillable
+    solution: drink
 
 - type: entity
   parent: DrinkBaseCup

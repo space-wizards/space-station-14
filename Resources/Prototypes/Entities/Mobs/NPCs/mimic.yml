@@ -1,6 +1,6 @@
 - type: entity
   name: Mimic
-  id: MimicMob_Content
+  id: MobMimic
   parent: SimpleMobBase
   description: Surprise. # When this gets a proper write this should use the object's actual description >:)
   components:
@@ -43,4 +43,6 @@
     range: 1.5
     arcwidth: 0
     arc: fist
-    damage: 90
+    damage:
+      types:
+        Blunt: 90

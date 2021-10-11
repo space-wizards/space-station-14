@@ -32,7 +32,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void HandleCollide(EntityUid uid, VaporComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
             foreach (var (_, value) in contents.Solutions)
             {
@@ -66,17 +66,18 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName, out _))
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName,
+                out var vaporSolution))
             {
                 return false;
             }
 
-            return true;
+            return _solutionContainerSystem.TryAddSolution(vapor.Owner.Uid, vaporSolution, solution);
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (vaporComp, solution) in ComponentManager
+            foreach (var (vaporComp, solution) in EntityManager
                 .EntityQuery<VaporComponent, SolutionContainerManagerComponent>(true))
             {
                 foreach (var (_, value) in solution.Solutions)

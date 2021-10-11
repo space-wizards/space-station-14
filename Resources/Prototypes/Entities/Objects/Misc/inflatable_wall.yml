@@ -21,7 +21,8 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: inflatableResistances
+    damageContainer: Inorganic
+    damageModifierSet: Inflatable
   - type: Destructible
     thresholds:
     - trigger:
@@ -34,6 +35,7 @@
     prototype: InflatableWallStack1
     doAfter: 3
   - type: Airtight
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   placement:
     mode: SnapgridCenter

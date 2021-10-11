@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
@@ -9,29 +7,26 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
-    public class DrinkComponent : Component, IUse, IAfterInteract, IExamine, ILand
+    public class DrinkComponent : Component, IUse, IAfterInteract, IExamine
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;
         public const string DefaultSolutionName = "drink";
@@ -66,7 +61,7 @@ namespace Content.Server.Nutrition.Components
                 }
 
                 _opened = value;
-                OpenedChanged();
+                OnOpenedChanged();
             }
         }
 
@@ -81,17 +76,22 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("openSounds")]
         private SoundSpecifier _openSounds = new SoundCollectionSpecifier("canOpenSounds");
-        [DataField("pressurized")]
-        private bool _pressurized = default;
-        [DataField("burstSound")]
-        private SoundSpecifier _burstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
-        private void OpenedChanged()
+        [DataField("pressurized")] public bool Pressurized;
+
+        [DataField("burstSound")] public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
+
+        private void OnOpenedChanged()
         {
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
             if (!solutionSys.TryGetSolution(Owner, SolutionName, out _))
             {
                 return;
+            }
+
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(DrinkCanStateVisual.Opened, Opened);
             }
 
             if (Opened)
@@ -106,19 +106,6 @@ namespace Content.Server.Nutrition.Components
                 Owner.RemoveComponent<RefillableSolutionComponent>();
                 Owner.RemoveComponent<DrainableSolutionComponent>();
             }
-        }
-
-        // TODO move to DrinkSystem
-        public void UpdateAppearance()
-        {
-            if (!Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !Owner.HasComponent<SolutionContainerManagerComponent>())
-            {
-                return;
-            }
-
-            var drainAvailable = EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner);
-            appearance.SetData(SharedFoodComponent.FoodVisuals.Visual, drainAvailable.Float());
         }
 
         bool IUse.UseEntity(UseEntityEventArgs args)
@@ -223,7 +210,6 @@ namespace Content.Server.Nutrition.Components
             SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
             target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
-            UpdateAppearance();
 
             // TODO: Account for partial transfer.
 
@@ -232,23 +218,6 @@ namespace Content.Server.Nutrition.Components
             firstStomach.TryTransferSolution(drain);
 
             return true;
-        }
-
-        void ILand.Land(LandEventArgs eventArgs)
-        {
-            if (_pressurized &&
-                !Opened &&
-                _random.Prob(0.25f) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(Owner.Uid, out var interactions))
-            {
-                Opened = true;
-
-                var solution = EntitySystem.Get<SolutionContainerSystem>()
-                    .Drain(Owner.Uid, interactions, interactions.DrainAvailable);
-                solution.SpillAt(Owner, "PuddleSmear");
-
-                SoundSystem.Play(Filter.Pvs(Owner), _burstSound.GetSound(), Owner, AudioParams.Default.WithVolume(-4));
-            }
         }
     }
 }

@@ -18,6 +18,7 @@
   - type: Drink
     isOpen: true
   - type: Spillable
+    solution: drink
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key

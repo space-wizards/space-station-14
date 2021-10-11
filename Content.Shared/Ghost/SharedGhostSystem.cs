@@ -7,11 +7,6 @@ namespace Content.Shared.Ghost
 {
     public abstract class SharedGhostSystem : EntitySystem
     {
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)
         {
             if (component.CanReturnToBody == canReturn)

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Examine;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -15,6 +15,6 @@ namespace Content.Shared.Construction.Steps
 
         public IReadOnlyList<IGraphAction> Completed => _completed;
 
-        public abstract void DoExamine(FormattedMessage message, bool inDetailsRange);
+        public abstract void DoExamine(ExaminedEvent examinedEvent);
     }
 }

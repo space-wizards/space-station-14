@@ -5,12 +5,16 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.Manager.Result;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Serialization.Markdown.Value;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Sound
 {
     [TypeSerializer]
-    public class SoundSpecifierTypeSerializer : ITypeReader<SoundSpecifier, MappingDataNode>
+    public class SoundSpecifierTypeSerializer :
+        ITypeReader<SoundSpecifier, MappingDataNode>,
+        ITypeReader<SoundSpecifier, ValueDataNode>
     {
         private Type GetType(MappingDataNode node)
         {
@@ -33,6 +37,12 @@ namespace Content.Shared.Sound
             return serializationManager.Read(type, node, context, skipHook);
         }
 
+        public DeserializationResult Read(ISerializationManager serializationManager, ValueDataNode node,
+            IDependencyCollection dependencies, bool skipHook, ISerializationContext? context = null)
+        {
+            return new DeserializedValue<SoundSpecifier>(new SoundPathSpecifier(node.Value));
+        }
+
         public ValidationNode Validate(ISerializationManager serializationManager, MappingDataNode node,
             IDependencyCollection dependencies, ISerializationContext? context = null)
         {
@@ -43,6 +53,15 @@ namespace Content.Shared.Sound
                 return new ErrorNode(node, "You need to specify either a sound path or a sound collection!");
 
             return serializationManager.ValidateNode(GetType(node), node, context);
+        }
+
+        public ValidationNode Validate(ISerializationManager serializationManager, ValueDataNode node,
+            IDependencyCollection dependencies, ISerializationContext? context = null)
+        {
+            if (serializationManager.ValidateNode<ResourcePath>(node, context) is not ErrorNode)
+                return new ValidatedValueNode(node);
+
+            return new ErrorNode(node, "SoundSpecifier value is not a valid resource path!");
         }
     }
 }

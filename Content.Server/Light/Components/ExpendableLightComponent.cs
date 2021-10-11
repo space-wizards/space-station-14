@@ -1,11 +1,7 @@
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
-using Content.Server.Sound.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -52,7 +48,7 @@ namespace Content.Server.Light.Components
         /// <summary>
         ///     Enables the light if it is not active. Once active it cannot be turned off.
         /// </summary>
-        private bool TryActivate()
+        public bool TryActivate()
         {
             if (!Activated && CurrentState == ExpendableLightState.BrandNew)
             {
@@ -171,34 +167,6 @@ namespace Content.Server.Light.Components
 
                         break;
                 }
-            }
-        }
-
-        [Verb]
-        public sealed class ActivateVerb : Verb<ExpendableLightComponent>
-        {
-            protected override void GetData(IEntity user, ExpendableLightComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.CurrentState == ExpendableLightState.BrandNew)
-                {
-                    data.Text = "Activate";
-                    data.Visibility = VerbVisibility.Visible;
-                }
-                else
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                }
-            }
-
-            protected override void Activate(IEntity user, ExpendableLightComponent component)
-            {
-                component.TryActivate();
             }
         }
     }

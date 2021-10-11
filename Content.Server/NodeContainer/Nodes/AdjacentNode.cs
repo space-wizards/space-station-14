@@ -17,11 +17,11 @@ namespace Content.Server.NodeContainer.Nodes
             if (!Owner.Transform.Anchored)
                 yield break;
 
-            var compMgr = IoCManager.Resolve<IComponentManager>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
-            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(compMgr, grid, gridIndex))
+            foreach (var (_, node) in NodeHelpers.GetCardinalNeighborNodes(entMan, grid, gridIndex))
             {
                 if (node != this)
                     yield return node;

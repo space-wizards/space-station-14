@@ -25,7 +25,8 @@
       - VaultImpassable
       - SmallImpassable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -46,7 +47,8 @@
         maxVol: 200
   - type: RefillableSolution
     solution: soil
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction

@@ -38,7 +38,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             component.Open = value;
 
-            if (ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+            if (EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
                 && nodeContainer.TryGetNode(component.PipeName, out PipeNode? pipe))
             {
                 pipe.ConnectionsEnabled = component.Open;

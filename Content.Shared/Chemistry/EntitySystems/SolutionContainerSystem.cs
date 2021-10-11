@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
@@ -50,10 +50,11 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                // solutionHolder.OwnerUid = component.Owner.Uid;
-                if (solutionHolder.MaxVolume == ReagentUnit.Zero && solutionHolder.TotalVolume > solutionHolder.MaxVolume)
+                if (solutionHolder.MaxVolume == ReagentUnit.Zero)
                 {
-                    solutionHolder.MaxVolume = solutionHolder.TotalVolume;
+                    solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
+                        ? solutionHolder.TotalVolume
+                        : solutionHolder.InitialMaxVolume;
                 }
 
                 UpdateAppearance(uid, solutionHolder);
@@ -69,7 +70,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             if (solutionHolder.Contents.Count == 0)
             {
-                args.Message.AddText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
+                args.PushText(Loc.GetString("shared-solution-container-component-on-examine-empty-container"));
                 return;
             }
 
@@ -86,7 +87,7 @@ namespace Content.Shared.Chemistry.EntitySystems
                 .ToHexNoAlpha(); //TODO: If the chem has a dark color, the examine text becomes black on a black background, which is unreadable.
             var messageString = "shared-solution-container-component-on-examine-main-text";
 
-            args.Message.AddMarkup(Loc.GetString(messageString,
+            args.PushMarkup(Loc.GetString(messageString,
                 ("color", colorHex),
                 ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                     ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
@@ -144,7 +145,7 @@ namespace Content.Shared.Chemistry.EntitySystems
 
         public void RemoveAllSolution(EntityUid uid)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -210,7 +211,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetSolution(IEntity? target, string name,
-            [NotNullWhen(true)] out Solution? solution)
+            [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
         {
             if (target == null || target.Deleted)
             {
@@ -218,13 +219,12 @@ namespace Content.Shared.Chemistry.EntitySystems
                 return false;
             }
 
-            return TryGetSolution(target.Uid, name, out solution);
+            return TryGetSolution(target.Uid, name, out solution, solutionsMgr);
         }
 
-        public bool TryGetSolution(EntityUid uid, string name,
-            [NotNullWhen(true)] out Solution? solution)
+        public bool TryGetSolution(EntityUid uid, string name, [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
         {
-            if (!ComponentManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
+            if (!Resolve(uid, ref solutionsMgr))
             {
                 solution = null;
                 return false;

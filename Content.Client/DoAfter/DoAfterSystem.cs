@@ -56,7 +56,7 @@ namespace Content.Client.DoAfter
 
             var viewbox = _eyeManager.GetWorldViewport().Enlarged(2.0f);
 
-            foreach (var comp in ComponentManager.EntityQuery<DoAfterComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
             {
                 var doAfters = comp.DoAfters.ToList();
                 var compPos = comp.Owner.Transform.WorldPosition;

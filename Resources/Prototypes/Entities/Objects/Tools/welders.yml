@@ -20,16 +20,23 @@
     HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: ItemStatus
   - type: RefillableSolution
-    solution: welder
+    solution: Welder
   - type: SolutionContainerManager
     solutions:
-      welder:
+      Welder:
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 100
         maxVol: 100
+  - type: Tool
+    useSound:
+      collection: Welder
+    qualities: Welding
   - type: Welder
   - type: PointLight
     enabled: false
@@ -50,7 +57,7 @@
     solution: welder
   - type: SolutionContainerManager
     solutions:
-      welder:
+      Welder:
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 1000
@@ -71,10 +78,10 @@
   - type: Item
     sprite: Objects/Tools/welder_mini.rsi
   - type: RefillableSolution
-    solution: welder
+    solution: Welder
   - type: SolutionContainerManager
     solutions:
-      welder:
+      Welder:
         reagents:
         - ReagentId: WeldingFuel
           Quantity: 25

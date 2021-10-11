@@ -3,7 +3,7 @@
   - help
   - list
 
-- Flags: FUN
+- Flags: VAREDIT
   Commands:
   - addcomp
   - rmcomp
@@ -19,12 +19,13 @@
   - mem
   - netaudit
   - querymappaused
-  - showbb
+  - physics
   - showtime
   - togglefov
   - togglehardfov
   - togglelight
   - toggleshadows
+  - testbed
 
 - Flags: MAPPING
   Commands:

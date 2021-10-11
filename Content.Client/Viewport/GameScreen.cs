@@ -28,9 +28,6 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;

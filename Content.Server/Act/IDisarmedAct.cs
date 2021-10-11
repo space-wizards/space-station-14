@@ -7,7 +7,7 @@ namespace Content.Server.Act
     /// <summary>
     ///     Implements behavior when an entity is disarmed.
     /// </summary>
-    [RequiresExplicitImplementation]
+    [RequiresExplicitImplementation, Obsolete("Use the directed event instead.")]
     public interface IDisarmedAct
     {
         /// <summary>
@@ -15,7 +15,7 @@ namespace Content.Server.Act
         ///     Return true to prevent the default disarm behavior,
         ///     or rest of IDisarmedAct behaviors that come after this one from happening.
         /// </summary>
-        bool Disarmed(DisarmedActEventArgs eventArgs);
+        bool Disarmed(DisarmedActEvent @event);
 
         /// <summary>
         ///     Priority for this disarm act.
@@ -24,7 +24,7 @@ namespace Content.Server.Act
         int Priority => 0;
     }
 
-    public class DisarmedActEventArgs : EventArgs
+    public class DisarmedActEvent : HandledEntityEventArgs
     {
         /// <summary>
         ///     The entity being disarmed.

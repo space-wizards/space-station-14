@@ -87,11 +87,11 @@ namespace Content.Client.Atmos.Overlays
                                     // Red-Green-Blue interpolation
                                     if (interp < 0.5f)
                                     {
-                                        res = Color.InterpolateBetween(Color.Red, Color.Green, interp * 2);
+                                        res = Color.InterpolateBetween(Color.Red, Color.LimeGreen, interp * 2);
                                     }
                                     else
                                     {
-                                        res = Color.InterpolateBetween(Color.Green, Color.Blue, (interp - 0.5f) * 2);
+                                        res = Color.InterpolateBetween(Color.LimeGreen, Color.Blue, (interp - 0.5f) * 2);
                                     }
                                 }
                                 res = res.WithAlpha(0.75f);
