@@ -25,10 +25,21 @@
         - ReagentId: Egg
           Quantity: 5
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Body.Circulatory;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
@@ -35,7 +35,7 @@ namespace Content.Server.Body.Metabolism
         {
             base.Update(frameTime);
 
-            foreach (var metab in ComponentManager.EntityQuery<MetabolizerComponent>(false))
+            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
             {
                 metab.AccumulatedFrametime += frameTime;
 

@@ -71,7 +71,8 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe
 
@@ -190,6 +191,7 @@
     visuals:
     - type: ProtolatheVisualizer
     - type: WiresVisualizer
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe

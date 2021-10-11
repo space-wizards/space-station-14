@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Content.Shared.Examine;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -20,7 +20,7 @@ namespace Content.Shared.Construction.Steps
             }
         }
 
-        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        public override void DoExamine(ExaminedEvent examinedEvent)
         {
         }
     }

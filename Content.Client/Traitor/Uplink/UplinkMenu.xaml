@@ -1,0 +1,43 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+            Title="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
+            MinSize="512 512"
+            SetSize="512 512">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical"
+                      VerticalExpand="True">
+            <RichTextLabel Name="BalanceInfoProtected"
+                           HorizontalAlignment="Center" />
+            <PanelContainer VerticalExpand="True">
+                <PanelContainer.PanelOverride>
+                    <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
+                </PanelContainer.PanelOverride>
+                <SplitContainer Orientation="Horizontal"
+                                VerticalExpand="True">
+                    <PanelContainer VerticalExpand="True">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#80808005" />
+                        </PanelContainer.PanelOverride>
+                        <BoxContainer Name="CategoryListContainer"
+                                      Orientation="Vertical">
+                            <!-- Category buttons are added here by code -->
+                        </BoxContainer>
+                    </PanelContainer>
+                    <ScrollContainer HorizontalExpand="True"
+                                     VerticalExpand="True"
+                                     SizeFlagsStretchRatio="2"
+                                     MinSize="100 256">
+                        <BoxContainer Name="UplinkListingsContainer"
+                                      Orientation="Vertical"
+                                      HorizontalExpand="True"
+                                      VerticalExpand="True"
+                                      SizeFlagsStretchRatio="2"
+                                      MinSize="100 256">
+                            <!-- Listings are added here by code -->
+                        </BoxContainer>
+                    </ScrollContainer>
+                </SplitContainer>
+            </PanelContainer>
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

@@ -1,14 +1,13 @@
 using System;
 using Content.Server.DoAfter;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Climbing;
 using Content.Shared.DragDrop;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -191,7 +190,7 @@ namespace Content.Server.Climbing.Components
             }
         }
 
-        private async void TryClimb(IEntity user)
+        public async void TryClimb(IEntity user)
         {
             if (!user.TryGetComponent(out ClimbingComponent? climbingComponent) || climbingComponent.IsClimbing)
                 return;
@@ -233,30 +232,6 @@ namespace Content.Server.Climbing.Components
 
                 var selfMessage = Loc.GetString("comp-climbable-user-climbs", ("climbable", Owner));
                 user.PopupMessage(selfMessage);
-            }
-        }
-
-        /// <summary>
-        ///     Allows you to vault an object with the ClimbableComponent through right click
-        /// </summary>
-        [Verb]
-        private sealed class ClimbVerb : Verb<ClimbableComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ClimbableComponent component, VerbData data)
-            {
-                if (!component.CanVault(user, component.Owner, out var _))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                }
-
-                data.Text = Loc.GetString("comp-climbable-verb-climb");
-            }
-
-            protected override void Activate(IEntity user, ClimbableComponent component)
-            {
-                component.TryClimb(user);
             }
         }
     }

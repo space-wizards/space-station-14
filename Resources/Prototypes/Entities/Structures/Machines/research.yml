@@ -45,6 +45,10 @@
   - type: ResearchPointSource
     pointspersecond: 100
     active: true
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
   - type: UserInterface
     interfaces:
     - key: enum.ResearchClientUiKey.Key

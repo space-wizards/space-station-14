@@ -6,8 +6,7 @@ using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
@@ -186,36 +185,10 @@ namespace Content.Server.Disposal.Tube.Components
             base.OnRemove();
         }
 
-        private void OpenUserInterface(ActorComponent actor)
+        public void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
             UserInterface?.Open(actor.PlayerSession);
-        }
-
-        [Verb]
-        public sealed class ConfigureVerb : Verb<DisposalRouterComponent>
-        {
-            protected override void GetData(IEntity user, DisposalRouterComponent component, VerbData data)
-            {
-                var session = user.PlayerSession();
-                var groupController = IoCManager.Resolve<IConGroupController>();
-                if (session == null || !groupController.CanAdminMenu(session))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("configure-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, DisposalRouterComponent component)
-            {
-                if (user.TryGetComponent(out ActorComponent? actor))
-                {
-                    component.OpenUserInterface(actor);
-                }
-            }
         }
     }
 }

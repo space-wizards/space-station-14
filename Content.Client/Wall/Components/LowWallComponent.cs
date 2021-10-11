@@ -204,7 +204,7 @@ namespace Content.Client.Wall.Components
 
             foreach (var entity in grid.GetLocal(coords))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(entity, out WindowComponent? window))
+                if (Owner.EntityManager.TryGetComponent(entity, out WindowComponent? window))
                 {
                     window.UpdateSprite();
                 }
@@ -216,7 +216,7 @@ namespace Content.Client.Wall.Components
         {
             foreach (var entity in candidates)
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent(entity, out IconSmoothComponent? other))
+                if (!Owner.EntityManager.TryGetComponent(entity, out IconSmoothComponent? other))
                 {
                     continue;
                 }

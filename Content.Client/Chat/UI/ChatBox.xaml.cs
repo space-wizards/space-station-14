@@ -490,7 +490,7 @@ namespace Content.Client.Chat.UI
         {
             return channel switch
             {
-                ChatSelectChannel.Radio => Color.Green,
+                ChatSelectChannel.Radio => Color.LimeGreen,
                 ChatSelectChannel.OOC => Color.LightSkyBlue,
                 ChatSelectChannel.Dead => Color.MediumPurple,
                 ChatSelectChannel.Admin => Color.Red,

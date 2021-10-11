@@ -98,9 +98,9 @@ namespace Content.Client.Hands
 
                 _itemSlotManager.SetItemSlot(newButton, hand.HeldItem);
 
-                // Show blocked overlay if hand is pulling.
+                // Show blocked overlay if hand is blocked.
                 newButton.Blocked.Visible =
-                    hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualPullComponent>();
+                    hand.HeldItem != null && hand.HeldItem.HasComponent<HandVirtualItemComponent>();
             }
 
             if (TryGetActiveHand(out var activeHand))

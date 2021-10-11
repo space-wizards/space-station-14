@@ -17,7 +17,7 @@ namespace Content.Shared.Shuttles
         public float SpeedMultipler { get; set; } = 200.0f;
 
         [ViewVariables]
-        public ShuttleMode Mode { get; set; } = ShuttleMode.Docking;
+        public ShuttleMode Mode { get; set; } = ShuttleMode.Cruise;
     }
 
     public enum ShuttleMode : byte

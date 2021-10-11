@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.CharacterAppearance;
+using Content.Client.Info;
 using Content.Client.Lobby.UI;
 using Content.Client.Parallax;
 using Content.Client.Resources;
@@ -30,6 +31,7 @@ namespace Content.Client.Preferences.UI
         private readonly IClientPreferencesManager _preferencesManager;
         public readonly Button CloseButton;
         public readonly Button SaveButton;
+        public readonly Button RulesButton;
 
         public CharacterSetupGui(
             IEntityManager entityManager,
@@ -84,12 +86,19 @@ namespace Content.Client.Preferences.UI
                         StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                         VAlign = Label.VAlignMode.Center,
                     },
-                    (SaveButton = new Button
+                    (RulesButton = new Button
                     {
                         HorizontalExpand = true,
                         HorizontalAlignment = HAlignment.Right,
+                        Text = Loc.GetString("character-setup-gui-character-setup-rules-button"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+
+                    }),
+                    (SaveButton = new Button
+                    {
                         Text = Loc.GetString("character-setup-gui-character-setup-save-button"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
+
                     }),
                     (CloseButton = new Button
                     {
@@ -155,6 +164,7 @@ namespace Content.Client.Preferences.UI
 
             UpdateUI();
 
+            RulesButton.OnPressed += _ => new InfoWindow().Open();
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
@@ -235,7 +245,7 @@ namespace Content.Client.Preferences.UI
                 ToggleMode = true;
                 Group = group;
 
-                _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+                _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)

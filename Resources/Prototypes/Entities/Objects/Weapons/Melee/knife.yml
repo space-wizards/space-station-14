@@ -11,9 +11,11 @@
       - Knife
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 12
     hitSound: 
       path: /Audio/Weapons/bladeslice.ogg
-    damage: 12
   - type: Sprite
     netsync: false
   - type: Item
@@ -51,7 +53,9 @@
     size: 4
     state: butch
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
@@ -72,7 +76,9 @@
     size: 2
     state: icon
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi

@@ -3,7 +3,6 @@ using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -51,22 +50,13 @@ namespace Content.Server.Temperature.Components
             }
         }
 
-        // TODO PROTOTYPE Replace this datafield variable with prototype references, once they are supported.
-        // Also remove Initialize override, if no longer needed.
-        [DataField("coldDamageType")]
-        private readonly string _coldDamageTypeID = "Cold";
+        [DataField("coldDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype ColdDamageType = default!;
-        [DataField("hotDamageType")]
-        private readonly string _hotDamageTypeID = "Heat";
+        public DamageSpecifier ColdDamage = default!;
+
+        [DataField("heatDamage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageTypePrototype HotDamageType = default!;
-        protected override void Initialize()
-        {
-            base.Initialize();
-            ColdDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_coldDamageTypeID);
-            HotDamageType = IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>(_hotDamageTypeID);
-        }
+        public DamageSpecifier HeatDamage = default!;
 
         public void Update()
         {
@@ -112,19 +102,18 @@ namespace Content.Server.Temperature.Components
                 }
             }
 
-            if (!Owner.TryGetComponent(out IDamageableComponent? component)) return;
+            if (!Owner.HasComponent<DamageableComponent>()) return;
 
             if (CurrentTemperature >= _heatDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((CurrentTemperature - _heatDamageThreshold) * _tempDamageCoefficient);
-                component.TryChangeDamage(HotDamageType, tempDamage, false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, HeatDamage * tempDamage);
             }
             else if (CurrentTemperature <= _coldDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((_coldDamageThreshold - CurrentTemperature) * _tempDamageCoefficient);
-                component.TryChangeDamage(ColdDamageType, tempDamage, false);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, ColdDamage * tempDamage);
             }
-            
         }
 
         /// <summary>
