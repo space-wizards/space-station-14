@@ -31,7 +31,7 @@ namespace Content.Server.DeviceNetwork.Systems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            
+
             while (_packets.Count > 0)
             {
                 var packet = _packets.Dequeue();
@@ -68,7 +68,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="broadcast">Send to all devices on the same device network on the given frequency</param>
         public void QueuePacket(EntityUid uid, string address, int frequency, NetworkPayload data, bool broadcast = false)
         {
-            if (ComponentManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
+            if (EntityManager.TryGetComponent<DeviceNetworkComponent>(uid, out var component))
             {
                 var packet = new NetworkPacket
                 {
