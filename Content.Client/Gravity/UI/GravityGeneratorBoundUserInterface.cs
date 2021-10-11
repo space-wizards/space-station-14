@@ -14,7 +14,6 @@ namespace Content.Client.Gravity.UI
 
         public GravityGeneratorBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base (owner, uiKey)
         {
-            SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
         }
 
         protected override void Open()
@@ -28,7 +27,6 @@ namespace Content.Client.Gravity.UI
             _window.Switch.OnPressed += _ =>
             {
                 SendMessage(new SharedGravityGeneratorComponent.SwitchGeneratorMessage(!IsOn));
-                SendMessage(new SharedGravityGeneratorComponent.GeneratorStatusRequestMessage());
             };
 
             _window.OpenCentered();

@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Camera;
 using Content.Shared.Gravity;
-using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -34,23 +33,6 @@ namespace Content.Server.Gravity.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<GravityComponent, ComponentInit>(HandleGravityInitialize);
-            SubscribeLocalEvent<GravityGeneratorUpdateEvent>(HandleGeneratorUpdate);
-        }
-
-        private void HandleGeneratorUpdate(GravityGeneratorUpdateEvent ev)
-        {
-            if (ev.GridId == GridId.Invalid) return;
-
-            var gravity = EntityManager.GetComponent<GravityComponent>(_mapManager.GetGrid(ev.GridId).GridEntityId);
-
-            if (ev.Status == GravityGeneratorStatus.On)
-            {
-                EnableGravity(gravity);
-            }
-            else
-            {
-                DisableGravity(gravity);
-            }
         }
 
         private void HandleGravityInitialize(EntityUid uid, GravityComponent component, ComponentInit args)
@@ -61,7 +43,7 @@ namespace Content.Server.Gravity.EntitySystems
 
             foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
             {
-                if (generator.Owner.Transform.GridID == gridId && generator.Status == GravityGeneratorStatus.On)
+                if (generator.Owner.Transform.GridID == gridId && generator.GravityActive)
                 {
                     component.Enabled = true;
                     message = new GravityChangedMessage(gridId, true);
@@ -77,15 +59,6 @@ namespace Content.Server.Gravity.EntitySystems
 
         public override void Update(float frameTime)
         {
-            // TODO: Pointless iteration, just make both of these event-based PLEASE
-            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
-            {
-                if (generator.NeedsUpdate)
-                {
-                    generator.UpdateState();
-                }
-            }
-
             if (_gridsToShake.Count > 0)
             {
                 _internalTimer += frameTime;
@@ -103,7 +76,7 @@ namespace Content.Server.Gravity.EntitySystems
             }
         }
 
-        private void EnableGravity(GravityComponent comp)
+        public void EnableGravity(GravityComponent comp)
         {
             if (comp.Enabled) return;
             comp.Enabled = true;
@@ -115,7 +88,7 @@ namespace Content.Server.Gravity.EntitySystems
             RaiseLocalEvent(message);
         }
 
-        private void DisableGravity(GravityComponent comp)
+        public void DisableGravity(GravityComponent comp)
         {
             if (!comp.Enabled) return;
             comp.Enabled = false;
