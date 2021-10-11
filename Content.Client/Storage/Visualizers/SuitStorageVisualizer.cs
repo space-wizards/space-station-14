@@ -9,6 +9,10 @@ namespace Content.Client.Storage.Visualizers
     [UsedImplicitly]
     public sealed class SuitStorageVisualizer : AppearanceVisualizer
     {
+        [DataField("state_open")]
+        private string? _stateOpen;
+        [DataField("state_closed")]
+        private string? _stateClosed;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -28,7 +32,8 @@ namespace Content.Client.Storage.Visualizers
             }
 
             // Checks if the door is open and if so, unhides the "open" layer
-            component.TryGetData(StorageVisuals.Open, out bool open);
+            component.TryGetData(SuitStorageVisuals.Open, out bool open);
+
             sprite.LayerSetVisible(SuitStorageVisualLayers.Opening, open);
 
         }

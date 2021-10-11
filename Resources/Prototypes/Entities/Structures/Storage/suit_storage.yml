@@ -38,8 +38,7 @@
       - Opaque
       - MobImpassable
       - SmallImpassable
-  - type: EntityStorage
-    CanWeldShut: false
+  - type: SuitStorage
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable
@@ -66,3 +65,7 @@
     - type: SuitStorageVisualizer
       state_open: generic_open
       state_closed: generic_door
+  - type: UserInterface
+    interfaces:
+      - key: enum.SuitStorageUIKey.Key
+        type: SuitStorageBoundUserInterface
