@@ -9,9 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Foldable
 {
 
-    /// <summary>
     /// <inheritdoc cref="SharedFoldableComponent"/>
-    /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedFoldableComponent))]
     public class FoldableComponent : SharedFoldableComponent
