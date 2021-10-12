@@ -16,12 +16,12 @@ namespace Content.Server.Fluids.Components
         ///     The time that it will take this puddle to lose one reagent unit of solution, in seconds.
         /// </summary>
         [DataField("evaporateTime")]
-        public float EvaporateTime { get; set; } = 3f;
+        public float EvaporateTime { get; set; } = 5f;
 
         /// <summary>
         ///     Name of referenced solution. Defaults to <see cref="PuddleComponent.DefaultSolutionName"/>
         /// </summary>
-        [DataField("solution")] 
+        [DataField("solution")]
         public string SolutionName { get; set; } = PuddleComponent.DefaultSolutionName;
 
         /// <summary>
@@ -30,7 +30,7 @@ namespace Content.Server.Fluids.Components
         /// </summary>
         [DataField("lowerLimit")]
         public ReagentUnit LowerLimit = ReagentUnit.Zero;
-        
+
         /// <summary>
         ///     Upper limit below which puddle won't evaporate. Useful when wanting to make sure large puddle will
         ///     remain forever. Defaults to <see cref="PuddleComponent.DefaultOverflowVolume"/>.

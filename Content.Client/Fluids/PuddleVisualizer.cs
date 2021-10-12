@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -24,9 +25,14 @@ namespace Content.Client.Fluids
         {
             base.InitializeEntity(entity);
 
+            if (!entity.TryGetComponent(out SpriteComponent? spriteComponent))
+            {
+                Logger.Warning($"Missing SpriteComponent for PuddleVisualizer on entityUid = {entity.Uid}");
+                return;
+            }
+
             IoCManager.InjectDependencies(this);
 
-            var spriteComponent = entity.EnsureComponent<SpriteComponent>();
             var maxStates = spriteComponent.BaseRSI?.ToArray();
 
             if (maxStates is not { Length: > 0 }) return;

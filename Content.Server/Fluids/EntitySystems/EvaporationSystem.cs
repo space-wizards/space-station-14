@@ -13,18 +13,6 @@ namespace Content.Server.Fluids.EntitySystems
     {
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<EvaporationComponent, ComponentInit>(OnComponentInit);
-        }
-
-        private void OnComponentInit(EntityUid uid, EvaporationComponent component, ComponentInit args)
-        {
-            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
-        }
-
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
@@ -47,7 +35,11 @@ namespace Content.Server.Fluids.EntitySystems
             evaporationComponent.Accumulator += frameTime;
 
             if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
+            {
+                // If no solution, delete the entity
+                queueDelete.Add(evaporationComponent);
                 return;
+            }
 
             if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
                 return;
@@ -58,13 +50,11 @@ namespace Content.Server.Fluids.EntitySystems
             _solutionContainerSystem.SplitSolution(uid, solution,
                 ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
 
-            RaiseLocalEvent(uid, new SolutionChangedEvent());
-
             if (solution.CurrentVolume == 0)
             {
                 EntityManager.QueueDeleteEntity(uid);
             }
-            else if (solution.CurrentVolume <= evaporationComponent.LowerLimit 
+            else if (solution.CurrentVolume <= evaporationComponent.LowerLimit
                      || solution.CurrentVolume >= evaporationComponent.UpperLimit)
             {
                 queueDelete.Add(evaporationComponent);
