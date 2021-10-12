@@ -55,7 +55,7 @@ namespace Content.Server.Buckle.Components
             set
             {
                 _enabled = value;
-                if (_enabled) return;
+                if (_enabled == value) return;
                 RemoveAll();
             }
         }
