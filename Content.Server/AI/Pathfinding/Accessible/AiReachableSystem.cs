@@ -171,6 +171,10 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <returns></returns>
         public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
         {
+            // TODO: Handle this gracefully instead of just failing.
+            if (!target.Transform.GridID.IsValid())
+                return false;
+
             var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 

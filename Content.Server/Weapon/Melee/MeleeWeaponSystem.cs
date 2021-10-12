@@ -216,7 +216,7 @@ namespace Content.Server.Weapon.Melee
             for (var i = 0; i < increments; i++)
             {
                 var castAngle = new Angle(baseAngle + increment * i);
-                var res = Get<SharedBroadphaseSystem>().IntersectRay(mapId,
+                var res = Get<SharedPhysicsSystem>().IntersectRay(mapId,
                     new CollisionRay(position, castAngle.ToWorldVec(),
                         (int) (CollisionGroup.Impassable | CollisionGroup.MobImpassable)), range, ignore).ToList();
 

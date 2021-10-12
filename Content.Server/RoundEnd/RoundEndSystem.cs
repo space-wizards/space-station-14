@@ -124,7 +124,7 @@ namespace Content.Server.RoundEnd
             OnRoundEndCountdownCancelled?.Invoke();
         }
 
-        private void EndRound()
+        public void EndRound()
         {
             OnRoundEndCountdownFinished?.Invoke();
             var gameTicker = Get<GameTicker>();

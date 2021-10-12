@@ -7,12 +7,11 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
-using Content.Server.PDA.Managers;
 using Content.Server.Players;
 using Content.Server.Traitor;
 using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
-using Content.Server.Traitor.Uplink.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Inventory;
@@ -38,7 +37,6 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] protected readonly IEntityManager EntityManager = default!;
-        [Dependency] private readonly IUplinkManager _uplinkManager = default!;
 
         public override string ModeTitle => Loc.GetString("traitor-title");
 
@@ -124,8 +122,9 @@ namespace Content.Server.GameTicking.Presets
                 // initiate uplink account.
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
-                _uplinkManager.AddNewAccount(uplinkAccount);
+                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!.Uid);
+                var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
 
                 if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
                     .AddUplink(mind.OwnedEntity, uplinkAccount))

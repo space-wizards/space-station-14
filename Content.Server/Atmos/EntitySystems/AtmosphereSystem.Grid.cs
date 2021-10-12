@@ -305,7 +305,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var direction = (AtmosDirection) (1 << i);
                     var otherIndices = indices.Offset(direction);
-                    var otherTile = GetTileAtmosphereOrCreateSpace(mapGrid, gridAtmosphere, otherIndices);
+                    var otherTile = GetTileAtmosphere(gridAtmosphere, otherIndices);
                     if (otherTile != null)
                         AddActiveTile(gridAtmosphere, otherTile);
                 }
@@ -523,12 +523,12 @@ namespace Content.Server.Atmos.EntitySystems
         {
             var tileAtmosphere = GetTileAtmosphere(gridAtmosphere, tile);
 
-            if (tileAtmosphere != null)
-                return tileAtmosphere;
+            // Please note, you might run into a race condition when using this or GetTileAtmosphere.
+            // The race condition occurs when a tile goes from being space to not-space, and then something
+            // attempts to get the tile atmosphere for it before it has been revalidated by atmos.
+            // The tile atmosphere will get revalidated on the next atmos tick, however.
 
-            // That tile must be space, or something has gone horribly wrong!
-            DebugTools.Assert(IsTileSpace(mapGrid, tile));
-            return new TileAtmosphere(mapGrid.Index, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
+            return tileAtmosphere ?? new TileAtmosphere(mapGrid.Index, tile, new GasMixture(Atmospherics.CellVolume) {Temperature = Atmospherics.TCMB}, true);
         }
 
         #endregion

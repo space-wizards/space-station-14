@@ -21,7 +21,7 @@ namespace Content.Shared.MobState.State
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
+            EntitySystem.Get<StandingStateSystem>().Down(entity.Uid);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {

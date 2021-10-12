@@ -245,7 +245,7 @@ namespace Content.Client.Preferences.UI
                 ToggleMode = true;
                 Group = group;
 
-                _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+                _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)

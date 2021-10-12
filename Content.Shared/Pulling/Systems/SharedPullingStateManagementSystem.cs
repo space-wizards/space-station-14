@@ -108,9 +108,10 @@ namespace Content.Shared.Pulling
 
                 pullable.PullJoint = _jointSystem.CreateDistanceJoint(pullablePhysics.Owner.Uid, pullerPhysics.Owner.Uid, id:$"pull-joint-{pullablePhysics.Owner.Uid}");
                 pullable.PullJoint.CollideConnected = false;
+                // This maximum has to be there because if the object is constrained too closely, the clamping goes backwards and asserts.
+                pullable.PullJoint.MaxLength = Math.Max(1.0f, length);
                 pullable.PullJoint.Length = length * 0.75f;
                 pullable.PullJoint.MinLength = 0f;
-                pullable.PullJoint.MaxLength = length;
                 pullable.PullJoint.Stiffness = 1f;
 
                 // Messaging

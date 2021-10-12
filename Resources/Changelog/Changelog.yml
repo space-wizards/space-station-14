@@ -2312,3 +2312,109 @@ Entries:
   - {message: '''AHelp'' next to the options menu.', type: Add}
   id: 412
   time: '2021-10-06T15:25:28.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes a bunch of weirdly rotated stuff on Saltern., type: Fix}
+  id: 413
+  time: '2021-10-07T04:55:39.708225+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
+  id: 414
+  time: '2021-10-07T06:59:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
+  id: 415
+  time: '2021-10-08T07:37:18.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
+  id: 416
+  time: '2021-10-08T10:26:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Added a warning dialog to the observe button, no more misclicks.',
+    type: Add}
+  id: 417
+  time: '2021-10-08T14:22:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle rotation is now enabled., type: Add}
+  id: 418
+  time: '2021-10-08T23:55:11.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added grilles., type: Add}
+  id: 419
+  time: '2021-10-09T08:54:56.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
+  id: 420
+  time: '2021-10-09T11:06:34.0000000+00:00'
+- author: 20kdc
+  changes: []
+  id: 421
+  time: '2021-10-09T13:48:53.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
+  id: 422
+  time: '2021-10-09T13:49:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
+  id: 423
+  time: '2021-10-09T16:23:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: small light sources like computers no longer cast shadows to improve
+      performance., type: Tweak}
+  id: 424
+  time: '2021-10-09T16:26:45.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
+  id: 425
+  time: '2021-10-09T16:33:24.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Fixed certain vending machines having very large ambient light radius
+      and shining through walls., type: Fix}
+  id: 426
+  time: '2021-10-09T18:15:06.131590+00:00'
+- author: moony
+  changes:
+  - {and allows you to see the round end screen.: null, message: The Restart Round
+      vote no longer instantly ends the round, type: tweak}
+  id: 427
+  time: '2021-10-09T18:18:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Blast doors and shutters have been added, though they aren''t mapped
+      in yet.', type: Add}
+  id: 428
+  time: '2021-10-10T10:43:50.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix airlocks not auto-closing anymore., type: Fix}
+  id: 429
+  time: '2021-10-10T13:59:27.943854+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
+  id: 430
+  time: '2021-10-11T23:44:30.123871+00:00'
+- author: moony
+  changes:
+  - {message: Central Command has installed a bluespace railgun. Pray they do not
+      use it., type: Add}
+  id: 431
+  time: '2021-10-12T05:11:09.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
+      option, type: Fix}
+  id: 432
+  time: '2021-10-12T08:01:23.0000000+00:00'

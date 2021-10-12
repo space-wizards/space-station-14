@@ -1,5 +1,7 @@
+using System;
 using System.Linq;
 using Content.Server.Items;
+using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
@@ -8,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -21,6 +24,7 @@ namespace Content.Server.Stunnable
 {
     public class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -117,20 +121,22 @@ namespace Content.Server.Stunnable
         {
             if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
 
+            // TODO: Make slowdown inflicted customizable.
+
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             if (!stunnable.SlowedDown)
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    stunnable.Paralyze(comp.ParalyzeTime);
+                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
                 else
-                    stunnable.Slowdown(comp.SlowdownTime);
+                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    stunnable.Paralyze(comp.ParalyzeTime);
+                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
                 else
-                    stunnable.Slowdown(comp.SlowdownTime);
+                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
             }
 
 

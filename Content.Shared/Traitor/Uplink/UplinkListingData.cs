@@ -8,11 +8,11 @@ namespace Content.Shared.Traitor.Uplink
     [Serializable, NetSerializable]
     public class UplinkListingData : ComponentState, IEquatable<UplinkListingData>
     {
-        public string ItemId;
-        public int Price;
-        public UplinkCategory Category;
-        public string Description;
-        public string ListingName;
+        public readonly string ItemId;
+        public readonly int Price;
+        public readonly UplinkCategory Category;
+        public readonly string Description;
+        public readonly string ListingName;
 
         public UplinkListingData(string listingName, string itemId,
             int price, UplinkCategory category,
