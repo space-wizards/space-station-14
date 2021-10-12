@@ -65,15 +65,6 @@ namespace Content.Shared.Verbs
     }
 
     /// <summary>
-    ///     Event used to toggle visibility of all context menu entities.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class SetSeeAllContextEvent : EntityEventArgs
-    {
-        public MenuVisibility MenuVisibility;
-    }
-
-    /// <summary>
     ///    Request primary interaction verbs. This includes both use-in-hand and interacting with external entities.
     /// </summary>
     /// <remarks>

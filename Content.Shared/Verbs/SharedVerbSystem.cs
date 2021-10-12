@@ -1,96 +1,10 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Examine;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.Tag;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
-
-        /// <summary>
-        ///     Get all of the entities in an area for displaying on the context menu.
-        /// </summary>
-        /// <param name="buffer">Whether we should slightly extend the entity search area.</param>
-        public bool TryGetEntityMenuEntities(IEntity player, MapCoordinates targetPos,
-            [NotNullWhen(true)] out List<IEntity>? menuEntities, MenuVisibility visibility, bool buffer = false, bool includeInventory = false)
-        {
-            menuEntities = null;
-
-            // Check if we have LOS to the clicked-location.
-            if ((visibility & MenuVisibility.NoFov) == 0 &&
-                !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
-                return false;
-
-            // Get entities
-            var length = buffer ? 1.0f : 0.5f;
-            var entities = _lookup.GetEntitiesIntersecting(
-                    targetPos.MapId,
-                    Box2.CenteredAround(targetPos.Position, (length, length)))
-                .ToList();
-
-            if (entities.Count == 0)
-                return false;
-
-            if (visibility == MenuVisibility.All)
-            {
-                menuEntities = entities;
-                return true;
-            }
-
-            // remove any entities in containers
-            if ((visibility & MenuVisibility.InContainer) == 0)
-            {
-                foreach (var entity in entities.ToList())
-                {
-                    if (!player.IsInSameOrTransparentContainer(entity, userSeeInsideSelf: includeInventory))
-                        entities.Remove(entity);
-                }
-            }
-
-            // remove any invisible entities
-            if ((visibility & MenuVisibility.Invisible) == 0)
-            {
-                foreach (var entity in entities.ToList())
-                {
-                    if (entity.HasTag("HideContextMenu"))
-                        entities.Remove(entity);
-                }
-            }
-
-            // Remove any entities that do not have LOS
-            if ((visibility & MenuVisibility.NoFov) == 0)
-            {
-                var playerPos = player.Transform.MapPosition;
-                foreach (var entity in entities.ToList())
-                {
-                    if (!ExamineSystemShared.InRangeUnOccluded(
-                        playerPos,
-                        entity.Transform.MapPosition,
-                        ExamineSystemShared.ExamineRange,
-                        null))
-                    {
-                        entities.Remove(entity);
-                    }
-                }
-            }
-
-            if (entities.Count == 0)
-                return false;
-
-            menuEntities = entities;
-            return true;
-        }
-
         /// <summary>
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
@@ -150,16 +64,5 @@ namespace Content.Shared.Verbs
                     RaiseLocalEvent(verb.ExecutionEventArgs);
             }
         }
-    }
-
-    [Flags, Serializable]
-    public enum MenuVisibility
-    {
-        // What entities can a user see on the entity menu?
-        Default = 0,          // They can only see entities in FoV.
-        NoFov = 1 << 0,         // They ignore FoV restrictions
-        InContainer = 1 << 1,   // They can see through containers.
-        Invisible = 1 << 2,   // They can see entities without sprites and the "HideContextMenu" tag is ignored.
-        All = NoFov | InContainer | Invisible
     }
 }

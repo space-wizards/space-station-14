@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using Content.Shared.GameTicking;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
-using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -14,52 +10,12 @@ namespace Content.Server.Verbs
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-        /// <summary>
-        ///     List of players that can see all entities on the context menu, ignoring normal visibility rules.
-        /// </summary>
-        public readonly Dictionary<IPlayerSession, MenuVisibility> PlayerContextMenuVisibility = new();
-
         public override void Initialize()
         {
             base.Initialize();
 
-            IoCManager.InjectDependencies(this);
-
-            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeNetworkEvent<RequestServerVerbsEvent>(HandleVerbRequest);
             SubscribeNetworkEvent<ExecuteVerbEvent>(HandleTryExecuteVerb);
-
-            _playerManager.PlayerStatusChanged += PlayerStatusChanged;
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _playerManager.PlayerStatusChanged -= PlayerStatusChanged;
-        }
-
-        private void PlayerStatusChanged(object? sender, SessionStatusEventArgs args)
-        {
-            if (args.NewStatus == SessionStatus.Disconnected)
-                PlayerContextMenuVisibility.Remove(args.Session);
-        }
-
-        public void Reset(RoundRestartCleanupEvent ev)
-        {
-            foreach (var player in PlayerContextMenuVisibility.Keys)
-            {
-                SetSeeAllContextEvent args = new() { MenuVisibility = MenuVisibility.Default };
-                RaiseNetworkEvent(args, player.ConnectedClient);
-            }
-
-            PlayerContextMenuVisibility.Clear();
-        }
-
-        public void SetMenuVisibility(IPlayerSession player, MenuVisibility visibility)
-        {
-            PlayerContextMenuVisibility[player] = visibility;
-            SetSeeAllContextEvent args = new() { MenuVisibility = visibility };
-            RaiseNetworkEvent(args, player.ConnectedClient);
         }
 
         /// <summary>
@@ -82,18 +38,20 @@ namespace Content.Server.Verbs
             }
 
             // Get the list of verbs. This effectively also checks that the requested verb is in fact a valid verb that
-            // the user can perform. In principle, this might waste time checking & preparing unrelated verbs even
-            // though we know precisely which one we want. However, MOST entities will only have 1 or 2 verbs of a given
-            // type. The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs. So maybe
-            // the debug verbs should be made a separate type?
+            // the user can perform.
             var verbs = GetLocalVerbs(targetEntity, userEntity, args.Type)[args.Type];
+
+            // Note that GetLocalVerbs might waste time checking & preparing unrelated verbs even though we know
+            // precisely which one we want to run. However, MOST entities will only have 1 or 2 verbs of a given type.
+            // The one exception here is the "other" verb type, which has 3-4 verbs + all the debug verbs.
 
             // Find the requested verb.
             if (verbs.TryGetValue(args.RequestedVerb, out var verb))
                 ExecuteVerb(verb);
             else
-                // 404 Verb not found
-                Logger.Warning($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");
+                // 404 Verb not found. Note that this could happen due to something as simple as opening the verb menu, walking away, then trying
+                // to run the pickup-item verb. So maybe this shouldn't even be logged?
+                Logger.Info($"{nameof(HandleTryExecuteVerb)} called by player {session} with an invalid verb: {args.RequestedVerb.Category?.Text} {args.RequestedVerb.Text}");
         }
 
         private void HandleVerbRequest(RequestServerVerbsEvent args, EntitySessionEventArgs eventArgs)
@@ -106,37 +64,17 @@ namespace Content.Server.Verbs
                 return;
             }
 
-            var user = player.AttachedEntity;
-
-            if (user == null)
+            if (player.AttachedEntity == null)
             {
                 Logger.Warning($"{nameof(HandleVerbRequest)} called by player {player} with no attached entity.");
                 return;
             }
 
-            // Can the user see through walls?
-            var ignoreFov = EntityManager.TryGetComponent(user.Uid, out EyeComponent? eye) && !eye.DrawFov;
-            var visibility = PlayerContextMenuVisibility.GetValueOrDefault(player);
-            if (ignoreFov) visibility |= MenuVisibility.NoFov;
+            // We do not verify that the user has access to the requested entity. The individual verbs should check
+            // this, and some verbs (e.g. view variables) won't even care about whether an entity is accessible through
+            // the entity menu or not.
 
-            // Validate input (check that the user can see the entity). Here, we set includeInventory: true to override
-            // some visibility checks, so that users can interact with items in their own entity container (inventory).
-            TryGetEntityMenuEntities(user,
-                target.Transform.MapPosition,
-                out var entities,
-                visibility,
-                buffer: true,
-                includeInventory: true);
-
-            VerbsResponseEvent response;
-            if (entities != null && entities.Contains(target))
-                response = new(args.EntityUid, GetLocalVerbs(target, user, args.Type));
-            else
-            {
-                // The user should not be seeing this entity.
-                response = new(args.EntityUid, null);
-            }
-
+            var response = new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(target, player.AttachedEntity, args.Type));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
     }

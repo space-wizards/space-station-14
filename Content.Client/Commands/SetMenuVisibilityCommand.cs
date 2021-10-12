@@ -1,14 +1,12 @@
-using Content.Server.Administration;
-using Content.Shared.Administration;
-using Content.Shared.Verbs;
-using Robust.Server.Player;
+using Content.Client.Verbs;
+using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Verbs
+namespace Content.Client.Commands
 {
-    [AdminCommand(AdminFlags.Debug)]
-    public class SetMenuVisibilityCommand : IConsoleCommand
+    [UsedImplicitly]
+    internal sealed class SetMenuVisibilityCommand : IConsoleCommand
     {
         public const string CommandName = "menuvis";
 
@@ -21,14 +19,7 @@ namespace Content.Server.Verbs
             if (!TryParseArguments(shell, args, out var visibility))
                 return;
 
-            var player = shell.Player as IPlayerSession;
-            if (player == null)
-            {
-                shell.WriteLine("You need to be a player to use this command.");
-                return;
-            }
-
-            EntitySystem.Get<VerbSystem>().SetMenuVisibility(player, visibility);
+            EntitySystem.Get<VerbSystem>().Visibility = visibility;
         }
 
         private bool TryParseArguments(IConsoleShell shell, string[] args, out MenuVisibility visibility)
