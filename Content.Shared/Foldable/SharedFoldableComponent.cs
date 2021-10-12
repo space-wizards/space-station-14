@@ -16,17 +16,5 @@ namespace Content.Shared.Foldable
         {
             FoldedState
         }
-
-        [Serializable, NetSerializable]
-        public class FoldedMessage : EntityEventArgs
-        {
-            public bool Folded;
-
-            public FoldedMessage(bool folded)
-            {
-                Folded = folded;
-            }
-        }
-
     }
 }
