@@ -42,7 +42,6 @@ namespace Content.Server.Foldable
             return TrySetFolded(comp, !comp.IsFolded);
         }
 
-
         /// <summary>
         /// Try to fold/unfold
         /// </summary>
@@ -69,7 +68,6 @@ namespace Content.Server.Foldable
             return true;
         }
 
-
         /// <summary>
         /// Set the folded state of the given <see cref="FoldableComponent"/>
         /// </summary>
@@ -87,7 +85,6 @@ namespace Content.Server.Foldable
             if (component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
                 physicsComponent.CanCollide = !component.IsFolded;
         }
-
 
         /// <summary>
         /// Tries to deploy the foldable in front of the user
@@ -130,7 +127,6 @@ namespace Content.Server.Foldable
         }
 
 
-
         #region Event handlers
 
         // When clicked in hand, unfold in front of the user
@@ -156,8 +152,6 @@ namespace Content.Server.Foldable
             // Else, let it be picked up
         }
 
-
-
         /// <summary>
         /// Prevents foldable objects to be picked up when unfolded
         /// </summary>
@@ -172,8 +166,6 @@ namespace Content.Server.Foldable
         }
 
         #endregion
-
-
 
         #region Verb
 
