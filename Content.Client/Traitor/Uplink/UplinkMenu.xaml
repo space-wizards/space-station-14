@@ -1,4 +1,4 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+<SS14Window xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             Title="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
             MinSize="512 512"
@@ -23,7 +23,8 @@
                             <!-- Category buttons are added here by code -->
                         </BoxContainer>
                     </PanelContainer>
-                    <ScrollContainer HorizontalExpand="True"
+                    <ScrollContainer Name="UplinkListingsScroll"
+                                     HorizontalExpand="True"
                                      VerticalExpand="True"
                                      SizeFlagsStretchRatio="2"
                                      HScrollEnabled="False"
