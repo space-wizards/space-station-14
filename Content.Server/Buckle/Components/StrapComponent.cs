@@ -159,7 +159,7 @@ namespace Content.Server.Buckle.Components
             // Update the visuals of the strap object
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
-                appearance.SetData(StrapVisuals.BuckledState, true);
+                appearance.SetData("StrapState", true);
             }
 
             SendMessage(new StrapMessage(buckle.Owner, Owner));
@@ -178,7 +178,7 @@ namespace Content.Server.Buckle.Components
             {
                 if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
                 {
-                    appearance.SetData(StrapVisuals.BuckledState, false);
+                    appearance.SetData("StrapState", false);
                 }
 
                 _occupiedSize -= buckle.Size;

@@ -14,20 +14,8 @@ namespace Content.Server.Foldable
     [ComponentReference(typeof(SharedFoldableComponent))]
     public class FoldableComponent : SharedFoldableComponent
     {
-        private bool _isFolded = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsFolded
-        {
-            get => _isFolded;
-            set
-            {
-                // Update visuals only if the value has changed
-                if (_isFolded != value && Owner.TryGetComponent(out AppearanceComponent? appearance))
-                    appearance.SetData(FoldableVisuals.FoldedState, value);
-                _isFolded = value;
-            }
-        }
+        [ViewVariables]
+        public bool isFolded = false;
 
         public bool CanBeFolded => !Owner.IsInContainer();
 
@@ -37,7 +25,7 @@ namespace Content.Server.Foldable
 
             // Update appearance
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(FoldableVisuals.FoldedState, _isFolded);
+                appearance.SetData("FoldedState", isFolded);
         }
     }
 }
