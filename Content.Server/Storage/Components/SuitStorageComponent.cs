@@ -1,19 +1,12 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Content.Server.CharacterAppearance.Components;
-using Content.Server.EUI;
-using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
-using Content.Server.Storage;
 using Content.Shared.Storage;
 using Content.Shared.Tag;
-using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
-using Content.Shared.MobState;
 using Content.Shared.Sound;
-using Content.Shared.Popups;
 using Content.Shared.Physics;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
@@ -21,14 +14,11 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.Maths;
 using Robust.Shared.Containers;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using Content.Shared.Placeable;
 
 namespace Content.Server.Storage.Components
 {
@@ -68,6 +58,8 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
+        [ViewVariables]
+        public bool UiKnownPowerState;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -108,9 +100,6 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         public Container Contents = default!;
-
-        [ViewVariables]
-        public bool UiKnownPowerState = false;
         protected override void Initialize()
         {
             base.Initialize();
@@ -371,12 +360,7 @@ namespace Content.Server.Storage.Components
 
         private bool CanDispense(int index)
         {
-            if(Open)
-            {
-                return true;
-            }
-
-            return false;
+            return Open;
         }
 
         public virtual Vector2 ContentsDumpPosition()
@@ -391,14 +375,17 @@ namespace Content.Server.Storage.Components
             switch (message.Button)
             {
                 case UiButton.Open:
-                    if(CanOpen()) OpenStorage();
+                    if(CanOpen() && Powered) OpenStorage();
                     break;
 
                 case UiButton.Close:
-                    if(CanClose()) CloseStorage();
+                    if(CanClose() && Powered) CloseStorage();
                     break;
                 case UiButton.Dispense:
-                    if(message.ItemId != null && obj.Session.AttachedEntityUid != null && CanDispense((int)message.ItemId)){
+                    if(message.ItemId != null &&
+                    obj.Session.AttachedEntityUid != null &&
+                    CanDispense((int)message.ItemId))
+                    {
                         DispenseItem((int)message.ItemId);
                     }
                     break;

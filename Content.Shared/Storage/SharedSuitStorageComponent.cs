@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -14,14 +13,14 @@ namespace Content.Shared.Storage
         public class SuitStorageBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly Dictionary<int, string?> Contents;
-            public readonly bool UiKnownPowerState;
+            public readonly bool Powered;
             public readonly bool Open;
 
-            public SuitStorageBoundUserInterfaceState(Dictionary<int, string?> contents, bool open, bool uiKnownPowerState)
+            public SuitStorageBoundUserInterfaceState(Dictionary<int, string?> contents, bool open, bool powered)
             {
-                Open = open;
                 Contents = contents;
-                UiKnownPowerState = uiKnownPowerState;
+                Open = open;
+                Powered = powered;
             }
         }
 

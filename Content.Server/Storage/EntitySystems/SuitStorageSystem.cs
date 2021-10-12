@@ -1,17 +1,9 @@
-using System.Collections.Generic;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
-using Content.Shared.Preferences;
 using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Content.Server.Storage.Components;
-using Content.Server.UserInterface;
-using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 using static Content.Shared.Storage.SharedSuitStorageComponent;
-using Robust.Shared.Log;
 
 namespace Content.Server.Storage
 {
@@ -21,23 +13,20 @@ namespace Content.Server.Storage
         {
             SubscribeLocalEvent<SuitStorageComponent, InteractHandEvent>(OnSuitStorageInteractHand);
             SubscribeLocalEvent<SuitStorageComponent, InteractUsingEvent>(OnSuitStorageInteractObject);
-        }
-
-        public void Update()
-        {
-            foreach (var (suitStorage, power) in EntityManager.EntityQuery<SuitStorageComponent, ApcPowerReceiverComponent>(true))
-            {
-                if (suitStorage.UiKnownPowerState != power.Powered)
-                {
-                    // Must be *before* update
-                    suitStorage.UiKnownPowerState = power.Powered;
-                    UpdateUserInterface(suitStorage);
-                }
-            }
+            SubscribeLocalEvent<SuitStorageComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         public void UpdateUserInterface(SuitStorageComponent comp)
         {
+            foreach (var suitStorage in EntityManager.EntityQuery<SuitStorageComponent>(true))
+            {
+                bool powered = suitStorage.Powered;
+                if(suitStorage.UiKnownPowerState != powered){
+                    suitStorage.UiKnownPowerState = powered;
+                    UpdateUserInterface(suitStorage);
+                }
+            }
+
             comp.UserInterface?.SetState(
                 new SuitStorageBoundUserInterfaceState(
                     comp.ContainedItemNameLookup(),
@@ -49,7 +38,7 @@ namespace Content.Server.Storage
         private void OnSuitStorageInteractHand(EntityUid uid, SuitStorageComponent component, InteractHandEvent args)
         {
             UpdateUserInterface(component);
-            if (!component.Powered || !args.User.TryGetComponent(out ActorComponent? actor))
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
             component.UserInterface?.Open(actor.PlayerSession);
@@ -59,6 +48,10 @@ namespace Content.Server.Storage
         private void OnSuitStorageInteractObject(EntityUid uid, SuitStorageComponent component, InteractUsingEvent args)
         {
             component.AddToContents(args.Used);
+        }
+
+        private void OnPowerChanged(EntityUid uid, SuitStorageComponent component, PowerChangedEvent args){
+            UpdateUserInterface(component);
         }
     }
 }

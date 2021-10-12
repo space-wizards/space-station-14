@@ -4,8 +4,6 @@ using System.Diagnostics;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.IoC;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -20,9 +18,11 @@ namespace Content.Client.Storage.UI
         private readonly BoxContainer _contentsList;
         private SuitStorageBoundUserInterfaceState? _lastUpdate;
         private SuitStorageButton? _selectedButton;
+        private bool _powered;
         public readonly Button OpenStorageButton;
         public readonly Button CloseStorageButton;
         public readonly Button DispenseButton;
+        public readonly Label PowerLabel;
         public int? SelectedItem;
 
         public SuitStorageWindow(Dictionary<int, string?> contentsManager)
@@ -39,6 +39,9 @@ namespace Content.Client.Storage.UI
                 Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
+                    (PowerLabel = new Label(){
+                        Text = Loc.GetString("suit-storage-power-label")
+                    }),
                     (OpenStorageButton = new Button
                     {
                         Text = Loc.GetString("suit-storage-open-button")
@@ -74,14 +77,14 @@ namespace Content.Client.Storage.UI
 
         public void Populate(SuitStorageBoundUserInterfaceState state)
         {
+            _powered = state.Powered;
+            _lastUpdate = state;
             //Ignore useless updates or we can't interact with the UI
             //TODO: come up with a better comparision, probably write a comparator because '.Equals' doesn't work
-            if (_lastUpdate == null || _lastUpdate.Contents.Count != state.Contents.Count)
-            {
-                _contentsManager = state.Contents;
-                BuildStorageList();
-            }
-            _lastUpdate = state;
+            if (_lastUpdate == null || _lastUpdate.Contents.Count != state.Contents.Count) return;
+            _contentsManager = state.Contents;
+            BuildStorageList();
+            BuildPowerDisplay();
         }
 
         private void BuildStorageList()
@@ -109,6 +112,12 @@ namespace Content.Client.Storage.UI
 
                 _contentsList.AddChild(button);
             }
+        }
+
+        private void BuildPowerDisplay()
+        {
+            PowerLabel.Text = Loc.GetString("suit-storage-power-label") + " " +
+            (_powered ? Loc.GetString("suit-storage-powered") : Loc.GetString("suit-storage-unpowered"));
         }
 
         private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
