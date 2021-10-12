@@ -13,3 +13,6 @@
     - type: ItemActions
       actions:
         - actionType: ToggleMagboots
+    - type: Tag
+      tags:
+        - MagBoots

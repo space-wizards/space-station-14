@@ -18,3 +18,6 @@
   - type: PressureProtection
     highPressureMultiplier: 0.75
     lowPressureMultiplier: 100
+  - type: Tag
+    tags:
+      - HardsuitOuter

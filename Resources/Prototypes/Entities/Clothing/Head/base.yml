@@ -29,6 +29,9 @@
   - type: PressureProtection
     highPressureMultiplier: 0.5
     lowPressureMultiplier: 100
+  - type: Tag
+    tags:
+      - HardsuitHelmet
 
 - type: entity
   abstract: true

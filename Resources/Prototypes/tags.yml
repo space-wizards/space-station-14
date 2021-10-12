@@ -210,6 +210,15 @@
 
 - type: Tag
   id: EmitterBolt
-  
+
 - type: Tag
   id: HideContextMenu
+
+- type: Tag
+  id: HardsuitHelmet
+
+- type: Tag
+  id: HardsuitOuter
+
+- type: Tag
+  id: MagBoots
