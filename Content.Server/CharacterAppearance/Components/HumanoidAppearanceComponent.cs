@@ -1,50 +1,33 @@
 using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
+using Content.Shared.CharacterAppearance.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.CharacterAppearance.Components
 {
-    [RegisterComponent]
-    public sealed class HumanoidAppearanceComponent : SharedHumanoidAppearanceComponent
+    public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
-        public override HumanoidCharacterAppearance Appearance
+        public override void Initialize()
         {
-            get => base.Appearance;
-            set
-            {
-                base.Appearance = value;
-
-                if (Owner.TryGetComponent(out SharedBodyComponent? body))
-                {
-                    foreach (var (part, _) in body.Parts)
-                    {
-                        if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
-                        {
-                            continue;
-                        }
-
-                        sprite.Color = value.SkinColor;
-                    }
-                }
-            }
+            SubscribeNetworkEvent<HumanoidAppearanceProfileChangedEvent>(UpdateSkinColor);
         }
 
-        protected override void Startup()
+        public void UpdateSkinColor(HumanoidAppearanceProfileChangedEvent args)
         {
-            base.Startup();
+            if (!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
+            var profile = args.Profile;
 
-            if (Appearance != null! && Owner.TryGetComponent(out SharedBodyComponent? body))
+            if (owner.TryGetComponent(out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {
-                    if (!part.Owner.TryGetComponent(out SpriteComponent? sprite))
+                    if (part.Owner.TryGetComponent(out SpriteComponent? sprite))
                     {
-                        continue;
+                        sprite!.Color = profile.Appearance.SkinColor;
                     }
 
-                    sprite.Color = Appearance.SkinColor;
                 }
             }
         }

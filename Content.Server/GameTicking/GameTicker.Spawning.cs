@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Content.Server.Access.Components;
-using Content.Server.CharacterAppearance.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -12,6 +11,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
@@ -171,7 +171,7 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
                 entity.Name = profile.Name;
             }
 

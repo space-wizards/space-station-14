@@ -8,6 +8,7 @@ using Content.Shared.Body.Part.Property;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Slot;
 using Content.Shared.Body.Template;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Movement.Components;
@@ -179,6 +180,7 @@ namespace Content.Shared.Body.Components
 
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner.Uid, args);
                 component.BodyPartRemoved(args);
             }
 

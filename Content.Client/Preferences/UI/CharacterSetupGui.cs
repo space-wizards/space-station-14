@@ -5,6 +5,7 @@ using Content.Client.Lobby.UI;
 using Content.Client.Parallax;
 using Content.Client.Resources;
 using Content.Client.Stylesheets;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client.GameObjects;
@@ -246,7 +247,7 @@ namespace Content.Client.Preferences.UI
                 Group = group;
 
                 _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
-                _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)
                 {
