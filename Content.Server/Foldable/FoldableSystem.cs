@@ -14,6 +14,7 @@ using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
@@ -24,7 +25,7 @@ namespace Content.Server.Foldable
     [UsedImplicitly]
     public sealed class FoldableSystem : EntitySystem
     {
-        private InteractionSystem _interactionSystem => EntitySystemManager.GetEntitySystem<InteractionSystem>();
+        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {
