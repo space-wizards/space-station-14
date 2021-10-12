@@ -125,7 +125,7 @@ namespace Content.Shared.Stunnable
             if (!_standingStateSystem.Down(uid, standingState:standingState, appearance:appearance))
                 return;
 
-            stunnable.KnockdownTimer = (_gameTiming.CurTime, _gameTiming.CurTime + time);;
+            stunnable.KnockdownTimer = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
             SetAlert(uid, stunnable, alerts);
 
@@ -144,8 +144,8 @@ namespace Content.Shared.Stunnable
             // Optional component.
             Resolve(uid, ref alerts, false);
 
-            Stun(uid, time, stunnable, alerts);
             Knockdown(uid, time, stunnable, alerts);
+            Stun(uid, time, stunnable, alerts);
         }
 
         /// <summary>
