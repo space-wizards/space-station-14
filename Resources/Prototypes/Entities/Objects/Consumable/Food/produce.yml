@@ -114,6 +114,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -171,6 +172,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -193,6 +195,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -215,6 +218,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -340,6 +344,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -364,6 +369,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -452,6 +458,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 3
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
