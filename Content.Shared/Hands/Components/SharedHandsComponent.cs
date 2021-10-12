@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -585,6 +587,12 @@ namespace Content.Shared.Hands.Components
         /// </summary>
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
+            // I need to put this here even if I shouldn't, until hands system is ported to ECS
+            if (!IoCManager.Resolve<IEntitySystemManager>()
+                .GetEntitySystem<EffectBlockerSystem>()
+                .CanBePickedUp(entity))
+                return false;
+
             var handContainer = hand.Container;
             if (handContainer == null)
                 return false;

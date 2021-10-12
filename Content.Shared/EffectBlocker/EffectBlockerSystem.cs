@@ -46,15 +46,6 @@ namespace Content.Shared.EffectBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IEffectBlocker>())
-            {
-                if (!blocker.CanBePickedUp())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
     }
