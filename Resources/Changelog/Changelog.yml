@@ -2406,3 +2406,9 @@ Entries:
   - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
   id: 430
   time: '2021-10-11T23:44:30.123871+00:00'
+- author: moony
+  changes:
+  - {message: Central Command has installed a bluespace railgun. Pray they do not
+      use it., type: Add}
+  id: 431
+  time: '2021-10-12T05:11:09.0000000+00:00'
