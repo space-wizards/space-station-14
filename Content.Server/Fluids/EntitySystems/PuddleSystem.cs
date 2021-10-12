@@ -52,7 +52,7 @@ namespace Content.Server.Fluids.EntitySystems
             base.Shutdown();
             _mapManager.TileChanged -= HandleTileChanged;
         }
-        
+
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
             if (puddleComponent.Owner.Deleted || puddleComponent.EmptyHolder ||
@@ -69,7 +69,7 @@ namespace Content.Server.Fluids.EntitySystems
             appearanceComponent.SetData(PuddleVisuals.VolumeScale, volumeScale);
             appearanceComponent.SetData(PuddleVisuals.SolutionColor, puddleSolution.Color);
         }
-        
+
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
             if ((puddleComponent.SlipThreshold == ReagentUnit.New(-1) ||
@@ -159,6 +159,12 @@ namespace Content.Server.Fluids.EntitySystems
                 out var solution)
                 ? solution.CurrentVolume
                 : ReagentUnit.Zero;
+        }
+
+        public void EnsureAddSolution(PuddleComponent puddleComponent, Solution addedSolution, bool sound)
+        {
+            _solutionContainerSystem.EnsureSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName);
+            TryAddSolution(puddleComponent, addedSolution, sound);
         }
 
         public bool TryAddSolution(PuddleComponent puddleComponent, Solution solution,
