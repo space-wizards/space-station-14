@@ -281,7 +281,8 @@ namespace Content.Client.Entry
             "TabletopGame",
             "LitOnPowered",
             "TriggerOnSignalReceived",
-            "ToggleDoorOnTrigger"
+            "ToggleDoorOnTrigger",
+            "SuitStorage"
         };
     }
 }
