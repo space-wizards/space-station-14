@@ -56,6 +56,9 @@ namespace Content.Shared.Storage
     [Serializable]
     public enum SuitStorageVisuals
     {
-        Open
+        Open,
+        ContainsHelmet,
+        ContainsSuit,
+        ContainsBoots
     }
 }

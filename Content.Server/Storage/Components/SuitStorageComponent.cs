@@ -187,15 +187,45 @@ namespace Content.Server.Storage.Components
 
         private void UpdateAppearance()
         {
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
-            {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
-            }
-
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
                 appearance.SetData(SuitStorageVisuals.Open, Open);
+
+                IReadOnlyList<IEntity> containedEntities = Contents.ContainedEntities;
+                string[]? whitelistTags = _whitelist != null ? _whitelist.Tags : null;
+                if(whitelistTags != null && _whitelist != null)
+                {
+                    bool containsHelmet = false;
+                    bool containsSuit = false;
+                    bool ContainsBoots = false;
+                    foreach (string tag in whitelistTags)
+                    {
+                        foreach (IEntity item in containedEntities)
+                        {
+                            if(item.HasTag(tag))
+                            {
+                                switch(tag)
+                                {
+                                    case "HardsuitHelmet":
+                                        containsHelmet = true;
+                                    break;
+                                    case "HardsuitOuter":
+                                        containsSuit = true;
+                                    break;
+                                    case "MagBoots":
+                                        ContainsBoots = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    appearance.SetData(SuitStorageVisuals.ContainsHelmet, containsHelmet);
+                    appearance.SetData(SuitStorageVisuals.ContainsSuit, containsSuit);
+                    appearance.SetData(SuitStorageVisuals.ContainsBoots, ContainsBoots);
+                }
             }
+
+
         }
 
         private void UpdateContentsLookup()
@@ -254,6 +284,7 @@ namespace Content.Server.Storage.Components
             }
 
             UpdateUserInterface();
+            UpdateAppearance();
 
             return true;
         }
@@ -334,6 +365,7 @@ namespace Content.Server.Storage.Components
                 }
 
                 UpdateUserInterface();
+                UpdateAppearance();
             }
         }
 

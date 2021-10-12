@@ -33,6 +33,15 @@
         },
         {
             "name": "super2"
+        },
+        {
+            "name": "helm"
+        },
+        {
+            "name": "suit"
+        },
+        {
+            "name": "storage"
         }
     ]
 }

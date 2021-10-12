@@ -16,6 +16,15 @@
       - state: open
         visible: false
         map: ["enum.SuitStorageVisualLayers.Opening"]
+      - state: helm
+        visible: false
+        map: ["enum.SuitStorageVisualLayers.Helmet"]
+      - state: suit
+        visible: false
+        map: ["enum.SuitStorageVisualLayers.Suit"]
+      - state: storage
+        visible: false
+        map: ["enum.SuitStorageVisualLayers.Boots"]
   - type: MovedByPressure
   - type: DamageOnHighSpeedImpact
     damage:
