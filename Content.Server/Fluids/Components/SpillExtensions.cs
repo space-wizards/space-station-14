@@ -160,7 +160,7 @@ namespace Content.Server.Fluids.Components
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
 
-            puddleSystem.EnsureAddSolution(newPuddleComponent, solution, sound);
+            puddleSystem.TryAddSolution(newPuddleComponent, solution, sound);
 
             return newPuddleComponent;
         }

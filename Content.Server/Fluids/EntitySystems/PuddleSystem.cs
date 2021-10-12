@@ -39,6 +39,13 @@ namespace Content.Server.Fluids.EntitySystems
             SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
+            SubscribeLocalEvent<PuddleComponent, ComponentInit>(OnInit);
+        }
+
+        private void OnInit(EntityUid uid, PuddleComponent component, ComponentInit args)
+        {
+            var solution =  _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+            solution.MaxVolume = ReagentUnit.New(1000);
         }
 
         private void OnUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
@@ -159,12 +166,6 @@ namespace Content.Server.Fluids.EntitySystems
                 out var solution)
                 ? solution.CurrentVolume
                 : ReagentUnit.Zero;
-        }
-
-        public void EnsureAddSolution(PuddleComponent puddleComponent, Solution addedSolution, bool sound)
-        {
-            _solutionContainerSystem.EnsureSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName);
-            TryAddSolution(puddleComponent, addedSolution, sound);
         }
 
         public bool TryAddSolution(PuddleComponent puddleComponent, Solution solution,

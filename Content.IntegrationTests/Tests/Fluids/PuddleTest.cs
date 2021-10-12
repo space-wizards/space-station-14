@@ -146,46 +146,46 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.True(sGridEntity.Paused);
             });
 
-            float sEvaporateTime = default;
-            PuddleComponent sPuddle = null;
-            EvaporationComponent sEvaporation;
+            float evaporateTime = default;
+            PuddleComponent puddle = null;
+            EvaporationComponent evaporation;
             var amount = 2;
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(amount));
-                sPuddle = solution.SpillAt(sCoordinates, "PuddleSmear");
+                puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
-                Assert.NotNull(sPuddle);
+                Assert.NotNull(puddle);
 
-                sEvaporation = sPuddle.Owner.GetComponent<EvaporationComponent>();
+                evaporation = puddle.Owner.GetComponent<EvaporationComponent>();
 
-                sPuddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+                puddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
 
-                Assert.True(sPuddle.Owner.Paused);
+                Assert.True(puddle.Owner.Paused);
 
                 // Check that the puddle is going to evaporate
-                Assert.Positive(sEvaporation.EvaporateTime);
+                Assert.Positive(evaporation.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
-                Assert.That(sEvaporation.Accumulator, Is.EqualTo(0f));
+                Assert.That(evaporation.Accumulator, Is.EqualTo(0f));
 
-                sEvaporateTime = sEvaporation.EvaporateTime;
+                evaporateTime = evaporation.EvaporateTime;
             });
 
             // Wait enough time for it to evaporate if it was unpaused
-            var sTimeToWait = (5 + (int)Math.Ceiling(amount * sEvaporateTime * sGameTiming.TickRate));
+            var sTimeToWait = (5 + (int)Math.Ceiling(amount * evaporateTime * sGameTiming.TickRate));
             await server.WaitRunTicks(sTimeToWait);
 
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
             {
-                Assert.True(sPuddle.Owner.Paused);
+                Assert.True(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(sPuddle.Owner.Deleted);
+                Assert.False(puddle.Owner.Deleted);
             });
 
             // Unpause the map
@@ -196,10 +196,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             {
                 Assert.False(sPauseManager.IsMapPaused(sMapId));
                 Assert.False(sPauseManager.IsGridPaused(sGridId));
-                Assert.False(sPuddle.Owner.Paused);
+                Assert.False(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(sPuddle.Owner.Deleted);
+                Assert.False(puddle.Owner.Deleted);
             });
 
             // Wait enough time for it to evaporate
@@ -209,16 +209,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 // Check that the puddle is unpaused
-                Assert.False(sPuddle.Owner.Paused);
+                Assert.False(puddle.Owner.Paused);
 
-                // Check that the puddle has evaporated some of its volume
-                Assert.That(sPuddle.CurrentVolume, Is.LessThan(sPuddleStartingVolume));
-
-                // If its new volume is zero it should have been deleted
-                if (sPuddle.CurrentVolume == ReagentUnit.Zero)
-                {
-                    Assert.True(sPuddle.Deleted);
-                }
+                // Check that puddle has been deleted
+                Assert.True(puddle.Deleted);
             });
         }
     }
