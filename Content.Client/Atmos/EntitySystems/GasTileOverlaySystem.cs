@@ -152,8 +152,7 @@ namespace Content.Client.Atmos.EntitySystems
 
             var overlays = chunk.GetData(indices);
 
-            return new GasOverlayEnumerator(overlays,
-                in Frames, in FireFrames, in FrameCounter, in FireFrameCounter);
+            return new GasOverlayEnumerator(overlays, this);
         }
 
         public override void FrameUpdate(float frameTime)
