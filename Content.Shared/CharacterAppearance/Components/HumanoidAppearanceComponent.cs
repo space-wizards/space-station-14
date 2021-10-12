@@ -1,3 +1,6 @@
+using Content.Shared.CharacterAppearance;
+using Content.Shared.CharacterAppearance.Systems;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -7,18 +10,19 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.CharacterAppearance.Components
 {
     [RegisterComponent]
+    [NetworkedComponent]
     public class HumanoidAppearanceComponent : Component
     {
         public override string Name => "HumanoidAppearance";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public HumanoidCharacterAppearance Appearance = HumanoidCharacterAppearance.Default();
+        [ViewVariables]
+        public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Sex Sex;
+        [ViewVariables]
+        public Sex Sex { get; set; } = default!;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public Gender Gender;
+        [ViewVariables]
+        public Gender Gender { get; set; } = default!;
 
         [DataField("categoriesHair")]
         [ViewVariables]

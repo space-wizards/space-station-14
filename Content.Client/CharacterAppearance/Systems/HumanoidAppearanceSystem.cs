@@ -3,13 +3,15 @@ using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
+using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.CharacterAppearance
+namespace Content.Client.CharacterAppearance.Systems
 {
     public class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
     {
@@ -18,16 +20,30 @@ namespace Content.Client.CharacterAppearance
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<HumanoidAppearanceProfileChangedEvent>(UpdateLooks);
-            SubscribeNetworkEvent<HumanoidAppearanceProfileChangedEvent>(UpdateLooks);
+            SubscribeLocalEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
+            SubscribeNetworkEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        public void UpdateLooks(HumanoidAppearanceProfileChangedEvent args)
+        private void ProfileUpdate(HumanoidAppearanceProfileChangedEvent args)
         {
-            if(!EntityManager.TryGetEntity(args.Uid, out var owner)) return;
-            var characterProfile = args.Profile;
+            if (!EntityManager.GetEntity(args.Uid).TryGetComponent(out HumanoidAppearanceComponent? component))
+                return;
+
+            Logger.DebugS("HAS", "HUMANOIDAPPEARANCE CLIENT UPDATE");
+            component.Appearance = args.Appearance;
+            Logger.DebugS("HAS", $"{component.Appearance}, {args.Appearance}");
+            component.Sex = args.Sex;
+            Logger.DebugS("HAS", $"{component.Sex}, {args.Sex}");
+            component.Gender = args.Gender;
+            Logger.DebugS("HAS", $"{component.Gender}, {args.Gender}");
+            UpdateLooks(args.Uid, component);
+        }
+
+        public void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component)
+        {
+            if(!EntityManager.TryGetEntity(uid, out var owner)) return;
 
             if (!owner.TryGetComponent(out SpriteComponent? sprite)
                 || !owner.TryGetComponent(out HumanoidAppearanceComponent? profile))
@@ -39,24 +55,26 @@ namespace Content.Client.CharacterAppearance
                 {
                     if (part.Owner.TryGetComponent(out SpriteComponent? partSprite))
                     {
-                        partSprite!.Color = characterProfile.Appearance.SkinColor;
+                        partSprite!.Color = component.Appearance.SkinColor;
                     }
 
                 }
             }
 
             sprite.LayerSetColor(HumanoidVisualLayers.Hair,
-                profile.CanColorHair ? characterProfile.Appearance.HairColor : Color.White);
+                component.CanColorHair ? component.Appearance.HairColor : Color.White);
             sprite.LayerSetColor(HumanoidVisualLayers.FacialHair,
-                profile.CanColorFacialHair ? characterProfile.Appearance.FacialHairColor : Color.White);
+                component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White);
 
-            sprite.LayerSetColor(HumanoidVisualLayers.Eyes, characterProfile.Appearance.EyeColor);
+            sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
 
-            sprite.LayerSetState(HumanoidVisualLayers.Chest, profile.Sex == Sex.Male ? "torso_m" : "torso_f");
-            sprite.LayerSetState(HumanoidVisualLayers.Head, profile.Sex == Sex.Male ? "head_m" : "head_f");
+            Logger.DebugS("HAS", $"Component: {component.Sex}, EventArgs: {component.Sex}");
+
+            sprite.LayerSetState(HumanoidVisualLayers.Chest, component.Sex == Sex.Male ? "torso_m" : "torso_f");
+            sprite.LayerSetState(HumanoidVisualLayers.Head, component.Sex == Sex.Male ? "head_m" : "head_f");
 
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
-                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, profile.Sex == Sex.Female);
+                sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, component.Sex == Sex.Female);
 
             if (owner.TryGetComponent<CuffableComponent>(out var cuffed))
             {
@@ -67,16 +85,16 @@ namespace Content.Client.CharacterAppearance
                 sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, false);
             }
 
-            var hairStyle = characterProfile.Appearance.HairStyleId;
+            var hairStyle = component.Appearance.HairStyleId;
             if (string.IsNullOrWhiteSpace(hairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, profile.CategoriesHair))
+                !_accessoryManager.IsValidAccessoryInCategory(hairStyle, component.CategoriesHair))
             {
                 hairStyle = HairStyles.DefaultHairStyle;
             }
 
-            var facialHairStyle = characterProfile.Appearance.FacialHairStyleId;
+            var facialHairStyle = component.Appearance.FacialHairStyleId;
             if (string.IsNullOrWhiteSpace(facialHairStyle) ||
-                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, profile.CategoriesFacialHair))
+                !_accessoryManager.IsValidAccessoryInCategory(facialHairStyle, component.CategoriesFacialHair))
             {
                 facialHairStyle = HairStyles.DefaultFacialHairStyle;
             }
