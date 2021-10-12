@@ -7,7 +7,7 @@ namespace Content.Shared.Foldable
     /// <summary>
     /// Foldable component allows you to "fold" an entity and pick it up as an item. First made for rollerbeds and wheelchairs
     /// </summary>
-    public class SharedFoldableComponent : Component
+    public abstract class SharedFoldableComponent : Component
     {
         public override string Name => "Foldable";
 
