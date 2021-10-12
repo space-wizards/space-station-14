@@ -28,6 +28,7 @@
     # For now, these components make it usable.
   - type: Drink
     solution: food
+    isOpen: true
   - type: DrawableSolution
     solution: food
   - type: RefillableSolution
