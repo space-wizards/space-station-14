@@ -5,6 +5,7 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Timing;
@@ -15,12 +16,20 @@ namespace Content.Client.Storage.UI
 {
     public sealed class SuitStorageWindow : SS14Window
     {
+        private Dictionary<int, string?> _contentsManager;
+        private readonly BoxContainer _contentsList;
+        private SuitStorageBoundUserInterfaceState? _lastUpdate;
+        private SuitStorageButton? _selectedButton;
         public readonly Button OpenStorageButton;
         public readonly Button CloseStorageButton;
+        public readonly Button DispenseButton;
+        public int? SelectedItem;
 
-        public SuitStorageWindow()
+        public SuitStorageWindow(Dictionary<int, string?> contentsManager)
         {
             SetSize = MinSize = (250, 300);
+
+            _contentsManager = contentsManager;
 
             //TODO change to suit storage
             Title = Loc.GetString("suit-storage-window-title");
@@ -37,14 +46,90 @@ namespace Content.Client.Storage.UI
                     (CloseStorageButton = new Button
                     {
                         Text = Loc.GetString("suit-storage-close-button")
-                    })
+                    }),
+                    (DispenseButton = new Button
+                    {
+                        Text = Loc.GetString("suit-storage-dispense-button")
+                    }),
+                    new Label(){
+                        Text = Loc.GetString("suit-storage-stored-items-label")
+                    },
+                    new ScrollContainer
+                    {
+                        MinSize = new Vector2(200.0f, 0.0f),
+                        VerticalExpand = true,
+                        Children =
+                        {
+                            (_contentsList = new BoxContainer
+                            {
+                                Orientation = LayoutOrientation.Vertical
+                            })
+                        }
+                    }
                 }
             });
+
+            BuildStorageList();
         }
 
         public void Populate(SuitStorageBoundUserInterfaceState state)
         {
+            //Ignore useless updates or we can't interact with the UI
+            //TODO: come up with a better comparision, probably write a comparator because '.Equals' doesn't work
+            if (_lastUpdate == null || _lastUpdate.Contents.Count != state.Contents.Count)
+            {
+                _contentsManager = state.Contents;
+                BuildStorageList();
+            }
+            _lastUpdate = state;
+        }
 
+        private void BuildStorageList()
+        {
+            _contentsList.RemoveAllChildren();
+            _selectedButton = null;
+
+            foreach (var item in _contentsManager)
+            {
+                var button = new SuitStorageButton
+                {
+                    Item = item.Value ?? string.Empty,
+                    Id = item.Key
+                };
+                button.ActualButton.OnToggled += OnItemButtonToggled;
+                var entityLabelText = item.Value;
+
+                button.EntityLabel.Text = entityLabelText;
+
+                if (item.Key == SelectedItem)
+                {
+                    _selectedButton = button;
+                    _selectedButton.ActualButton.Pressed = true;
+                }
+
+                _contentsList.AddChild(button);
+            }
+        }
+
+        private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
+        {
+            var item = (SuitStorageButton) args.Button.Parent!;
+            if (_selectedButton == item)
+            {
+                _selectedButton = null;
+                SelectedItem = null;
+                return;
+            }
+            else if (_selectedButton != null)
+            {
+                _selectedButton.ActualButton.Pressed = false;
+            }
+
+            _selectedButton = null;
+            SelectedItem = null;
+
+            _selectedButton = item;
+            SelectedItem = item.Id;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)
@@ -55,7 +140,7 @@ namespace Content.Client.Storage.UI
         [DebuggerDisplay("cloningbutton {" + nameof(Index) + "}")]
         private class SuitStorageButton : Control
         {
-            public string Scan { get; set; } = default!;
+            public string Item { get; set; } = default!;
             public int Id { get; set; }
             public Button ActualButton { get; private set; }
             public Label EntityLabel { get; private set; }

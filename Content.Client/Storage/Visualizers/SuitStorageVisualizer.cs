@@ -9,11 +9,6 @@ namespace Content.Client.Storage.Visualizers
     [UsedImplicitly]
     public sealed class SuitStorageVisualizer : AppearanceVisualizer
     {
-        [DataField("state_open")]
-        private string? _stateOpen;
-        [DataField("state_closed")]
-        private string? _stateClosed;
-
         public override void InitializeEntity(IEntity entity)
         {
             if (!entity.TryGetComponent(out ISpriteComponent? sprite))

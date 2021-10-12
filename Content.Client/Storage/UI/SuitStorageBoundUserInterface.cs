@@ -20,7 +20,7 @@ namespace Content.Client.Storage.UI
             base.Open();
 
 
-            _window = new SuitStorageWindow();
+            _window = new SuitStorageWindow(new Dictionary<int, string?>());
             _window.OnClose += Close;
             _window.OpenStorageButton.OnPressed += _ =>
             {
@@ -29,6 +29,13 @@ namespace Content.Client.Storage.UI
             _window.CloseStorageButton.OnPressed += _ =>
             {
                 SendMessage(new SuitStorageUiButtonPressedMessage(UiButton.Close));
+            };
+            _window.DispenseButton.OnPressed += _ =>
+            {
+                if (_window.SelectedItem != null)
+                {
+                    SendMessage(new SuitStorageUiButtonPressedMessage(UiButton.Dispense, (int) _window.SelectedItem));
+                }
             };
             _window.OpenCentered();
         }

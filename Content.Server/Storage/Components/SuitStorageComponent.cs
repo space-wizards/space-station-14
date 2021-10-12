@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Content.Server.CharacterAppearance.Components;
 using Content.Server.EUI;
@@ -7,6 +8,7 @@ using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Server.Storage;
 using Content.Shared.Storage;
+using Content.Shared.Tag;
 using Content.Shared.Interaction;
 using Content.Shared.Whitelist;
 using Content.Shared.MobState;
@@ -40,6 +42,7 @@ namespace Content.Server.Storage.Components
             CollisionGroup.SmallImpassable);
 
         private const float MaxSize = 1.0f;
+        private Dictionary<int, IEntity> ContentsLookup = new Dictionary<int, IEntity>();
 
         [ViewVariables]
         [DataField("IsCollidableWhenOpen")]
@@ -62,6 +65,9 @@ namespace Content.Server.Storage.Components
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
+
+        [ViewVariables]
+        public bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
         public BoundUserInterface? UserInterface =>
@@ -102,14 +108,14 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         public Container Contents = default!;
+
+        [ViewVariables]
+        public bool UiKnownPowerState = false;
         protected override void Initialize()
         {
             base.Initialize();
 
-            if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
-            {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
-            }
+            Contents = Owner.EnsureContainer<Container>(nameof(EntityStorageComponent));
 
             if (UserInterface != null)
             {
@@ -162,6 +168,7 @@ namespace Content.Server.Storage.Components
         {
             return true;
         }
+
         protected void CloseStorage()
         {
             Open = false;
@@ -189,6 +196,22 @@ namespace Content.Server.Storage.Components
             {
                 appearance.SetData(SuitStorageVisuals.Open, Open);
             }
+        }
+
+        private void UpdateContentsLookup()
+        {
+            ContentsLookup.Clear();
+            int index = 0;
+            foreach (var item in Contents.ContainedEntities)
+            {
+                ContentsLookup.Add(index, item);
+                index++;
+            }
+        }
+
+        public Dictionary<int, string?> ContainedItemNameLookup()
+        {
+            return ContentsLookup.ToDictionary(m => m.Key, m => (string?)m.Value.Name);
         }
 
         protected IEnumerable<IEntity> DetermineCollidingEntities()
@@ -229,6 +252,9 @@ namespace Content.Server.Storage.Components
             {
                 body.CanCollide = false;
             }
+
+            UpdateUserInterface();
+
             return true;
         }
 
@@ -244,12 +270,16 @@ namespace Content.Server.Storage.Components
                 }
             }
 
-            return Contents.CanInsert(entity) && Insert(entity);
+            return CanInsert(entity) && Insert(entity);
         }
 
         public bool CanInsert(IEntity toinsert)
         {
             DebugTools.Assert(!Deleted);
+
+            if(!Open){
+                return false;
+            }
 
             // cannot insert into itself.
             if (Owner == toinsert)
@@ -264,10 +294,62 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            if(CheckForDoubles(toinsert)){
+                return false;
+            }
+
             // Crucial, prevent circular insertion.
             return !toinsert.Transform.ContainsEntity(Owner.Transform);
 
             //Improvement: Traverse the entire tree to make sure we are not creating a loop.
+        }
+
+        private bool CheckForDoubles(IEntity toinsert)
+        {
+            IReadOnlyList<IEntity> containedEntities = Contents.ContainedEntities;
+            if(_whitelist == null) return false;
+            string[]? whitelistTags = _whitelist.Tags;
+            if(whitelistTags == null) return false;
+
+            foreach (string tag in whitelistTags)
+            {
+                foreach (IEntity item in containedEntities)
+                {
+                    if(item.HasTag(tag) && toinsert.HasTag(tag)) return true;
+                }
+            }
+            return false;
+        }
+
+        private void DispenseItem(int index)
+        {
+            ContentsLookup.TryGetValue(index, out IEntity? contained);
+
+            if (contained != null && Contents.Remove(contained))
+            {
+                contained.Transform.WorldPosition = ContentsDumpPosition();
+                if (contained.TryGetComponent<IPhysBody>(out var physics))
+                {
+                    physics.CanCollide = true;
+                }
+
+                UpdateUserInterface();
+            }
+        }
+
+        private bool CanDispense(int index)
+        {
+            if(Open)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public virtual Vector2 ContentsDumpPosition()
+        {
+            return Owner.Transform.WorldPosition;
         }
 
         private void OnUiReceiveMessage(ServerBoundUserInterfaceMessage obj)
@@ -283,10 +365,20 @@ namespace Content.Server.Storage.Components
                 case UiButton.Close:
                     if(CanClose()) CloseStorage();
                     break;
-
+                case UiButton.Dispense:
+                    if(message.ItemId != null && obj.Session.AttachedEntityUid != null && CanDispense((int)message.ItemId)){
+                        DispenseItem((int)message.ItemId);
+                    }
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void UpdateUserInterface()
+        {
+            UpdateContentsLookup();
+            EntitySystem.Get<SuitStorageSystem>().UpdateUserInterface(this);
         }
     }
 }

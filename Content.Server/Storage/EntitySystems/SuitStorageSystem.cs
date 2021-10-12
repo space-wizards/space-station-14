@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using Content.Shared.GameTicking;
 using Content.Shared.Interaction;
 using Content.Shared.Preferences;
+using Content.Server.Power.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Content.Server.Storage.Components;
@@ -17,30 +17,39 @@ namespace Content.Server.Storage
 {
     internal sealed class SuitStorageSystem : EntitySystem
     {
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<SuitStorageComponent, InteractHandEvent>(OnSuitStorageInteractHand);
             SubscribeLocalEvent<SuitStorageComponent, InteractUsingEvent>(OnSuitStorageInteractObject);
         }
 
-        public void UpdateUserInterface(EntityUid uid,
-        SuitStorageComponent? suitStorage = null)
+        public void Update()
         {
-            if (!Resolve(uid, ref suitStorage))
-                return;
+            foreach (var (suitStorage, power) in EntityManager.EntityQuery<SuitStorageComponent, ApcPowerReceiverComponent>(true))
+            {
+                if (suitStorage.UiKnownPowerState != power.Powered)
+                {
+                    // Must be *before* update
+                    suitStorage.UiKnownPowerState = power.Powered;
+                    UpdateUserInterface(suitStorage);
+                }
+            }
+        }
 
-            _userInterfaceSystem.TrySetUiState(uid, SuitStorageUIKey.Key,
+        public void UpdateUserInterface(SuitStorageComponent comp)
+        {
+            comp.UserInterface?.SetState(
                 new SuitStorageBoundUserInterfaceState(
-                    suitStorage.Open,
-                    true
+                    comp.ContainedItemNameLookup(),
+                    comp.Open,
+                    comp.UiKnownPowerState
                     ));
         }
 
         private void OnSuitStorageInteractHand(EntityUid uid, SuitStorageComponent component, InteractHandEvent args)
         {
-            UpdateUserInterface(uid, component);
-            if (!args.User.TryGetComponent(out ActorComponent? actor))
+            UpdateUserInterface(component);
+            if (!component.Powered || !args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
             component.UserInterface?.Open(actor.PlayerSession);

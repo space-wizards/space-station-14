@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -12,20 +13,23 @@ namespace Content.Shared.Storage
         [Serializable, NetSerializable]
         public class SuitStorageBoundUserInterfaceState : BoundUserInterfaceState
         {
-            public readonly bool SuitPresent;
+            public readonly Dictionary<int, string?> Contents;
+            public readonly bool UiKnownPowerState;
             public readonly bool Open;
 
-            public SuitStorageBoundUserInterfaceState(bool open, bool suitPresent)
+            public SuitStorageBoundUserInterfaceState(Dictionary<int, string?> contents, bool open, bool uiKnownPowerState)
             {
-                SuitPresent = suitPresent;
                 Open = open;
+                Contents = contents;
+                UiKnownPowerState = uiKnownPowerState;
             }
         }
 
         public enum UiButton
         {
             Open,
-            Close
+            Close,
+            Dispense
         }
 
         [Serializable, NetSerializable]
@@ -38,11 +42,12 @@ namespace Content.Shared.Storage
         public class SuitStorageUiButtonPressedMessage : BoundUserInterfaceMessage
         {
             public readonly UiButton Button;
-            public readonly int? ScanId;
+            public readonly int? ItemId;
 
-            public SuitStorageUiButtonPressedMessage(UiButton button)
+            public SuitStorageUiButtonPressedMessage(UiButton button, int? itemId = null)
             {
                 Button = button;
+                ItemId = itemId;
             }
         }
     }
