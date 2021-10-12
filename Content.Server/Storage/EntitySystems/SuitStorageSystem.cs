@@ -47,7 +47,7 @@ namespace Content.Server.Storage
 
         private void OnSuitStorageInteractObject(EntityUid uid, SuitStorageComponent component, InteractUsingEvent args)
         {
-            component.AddToContents(args.Used);
+            component.AddToContents(args.Used, args.User);
         }
 
         private void OnPowerChanged(EntityUid uid, SuitStorageComponent component, PowerChangedEvent args){

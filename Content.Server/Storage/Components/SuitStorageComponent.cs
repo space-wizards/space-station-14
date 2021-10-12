@@ -8,9 +8,11 @@ using Content.Shared.Tag;
 using Content.Shared.Whitelist;
 using Content.Shared.Sound;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using Robust.Shared.GameObjects;
 using Robust.Server.GameObjects;
@@ -278,7 +280,7 @@ namespace Content.Server.Storage.Components
             return true;
         }
 
-        public bool AddToContents(IEntity entity)
+        public bool AddToContents(IEntity entity, IEntity? player = null)
         {
             if (entity == Owner) return false;
             if (entity.TryGetComponent(out PhysicsComponent? entityPhysicsComponent))
@@ -290,10 +292,10 @@ namespace Content.Server.Storage.Components
                 }
             }
 
-            return CanInsert(entity) && Insert(entity);
+            return CanInsert(entity, player) && Insert(entity);
         }
 
-        public bool CanInsert(IEntity toinsert)
+        public bool CanInsert(IEntity toinsert, IEntity? player = null)
         {
             DebugTools.Assert(!Deleted);
 
@@ -303,18 +305,25 @@ namespace Content.Server.Storage.Components
 
             // cannot insert into itself.
             if (Owner == toinsert)
+            {
+                if(player == null) return false;
+                player.PopupMessageCursor(Loc.GetString("suit-storage-self-insert"));
                 return false;
-
+            }
             // no, you can't put maps or grids into containers
             if (toinsert.HasComponent<IMapComponent>() || toinsert.HasComponent<IMapGridComponent>())
                 return false;
 
             if (_whitelist != null && !_whitelist.IsValid(toinsert))
             {
+                if(player == null) return false;
+                player.PopupMessageCursor(Loc.GetString("suit-storage-whitelist-fail"));
                 return false;
             }
 
             if(CheckForDoubles(toinsert)){
+                if(player == null) return false;
+                player.PopupMessageCursor(Loc.GetString("suit-storage-already-contains-same-item-type"));
                 return false;
             }
 
@@ -376,10 +385,16 @@ namespace Content.Server.Storage.Components
             {
                 case UiButton.Open:
                     if(CanOpen() && Powered) OpenStorage();
+                    if(!Powered && obj.Session.AttachedEntity != null){
+                        obj.Session.AttachedEntity.PopupMessageCursor(Loc.GetString("suit-storage-device-not-powered"));
+                    }
                     break;
 
                 case UiButton.Close:
                     if(CanClose() && Powered) CloseStorage();
+                    if(!Powered && obj.Session.AttachedEntity != null){
+                        obj.Session.AttachedEntity.PopupMessageCursor(Loc.GetString("suit-storage-device-not-powered"));
+                    }
                     break;
                 case UiButton.Dispense:
                     if(message.ItemId != null &&
