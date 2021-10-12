@@ -10,8 +10,16 @@
   description: A small plastic pack with condiments to put on your food.
   components:
   - type: Drink
+    solution: food
     openSounds:
       collection: packetOpenSounds
+  - type: DrawableSolution
+    solution: food
+  - type: InjectableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
+    # Note NOT refillable
   - type: SolutionContainerManager
     solutions:
       food:
