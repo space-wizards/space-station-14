@@ -46,7 +46,7 @@
 #  time: 20
 #  reagents:
 #    Flour: 15
-#    Salt: 5
+#    TableSalt: 5
 #    Pepper: 5
 #  solids:
 #    FoodMeat: 5
@@ -97,7 +97,7 @@
 #  time: 10
 #  reagents:
 #    Flour: 15
-#    Salt: 1
+#    TableSalt: 1
 #    Pepper: 1
 
 - type: microwaveMealRecipe
@@ -255,7 +255,7 @@
 #  time: 10
 #  reagents:
 #    Flour: 10
-#    Salt: 2
+#    TableSalt: 2
 #  solids:
 #    FoodGarlic: 1
 #    FoodCheeseSlice: 1
@@ -317,7 +317,7 @@
 #  result: FoodMeatSteak
 #  time: 10
 #  reagents:
-#    Salt: 1
+#    TableSalt: 1
 #    Pepper: 1
 #  solids:
 #    FoodMeat: 1

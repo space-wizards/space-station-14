@@ -250,7 +250,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: Salt
+        - ReagentId: TableSalt
           Quantity: 10
   - type: Sprite
     layers:
