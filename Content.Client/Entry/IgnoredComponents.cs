@@ -282,7 +282,10 @@ namespace Content.Client.Entry
             "LitOnPowered",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
-            "SuitStorage"
+            "SuitStorage",
+            "DeviceNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection"
         };
     }
 }

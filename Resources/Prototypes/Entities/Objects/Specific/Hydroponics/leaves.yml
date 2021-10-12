@@ -30,7 +30,7 @@
     count: 1
   - type: SolutionContainerManager
     solutions:
-      produce:
+      food:
         reagents:
         - ReagentId: THC
           Quantity: 2
@@ -50,7 +50,7 @@
     count: 1
   - type: SolutionContainerManager
     solutions:
-      produce:
+      food:
         reagents:
         - ReagentId: THC
           Quantity: 10
@@ -85,7 +85,7 @@
     count: 1
   - type: SolutionContainerManager
     solutions:
-      produce:
+      food:
         reagents:
         - ReagentId: Nicotine
           Quantity: 2
@@ -105,7 +105,7 @@
     count: 1
   - type: SolutionContainerManager
     solutions:
-      produce:
+      food:
         reagents:
         - ReagentId: Nicotine
           Quantity: 10

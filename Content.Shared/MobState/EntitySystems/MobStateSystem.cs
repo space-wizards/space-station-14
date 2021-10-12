@@ -3,6 +3,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
@@ -16,6 +17,8 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
+            SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
+            // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
         }
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
@@ -28,7 +31,7 @@ namespace Content.Shared.MobState.EntitySystems
         {
             component.UpdateState(args.Damageable.TotalDamage);
         }
-		
+
         private void OnMoveAttempt(EntityUid uid, MobStateComponent component, MovementAttemptEvent args)
         {
             switch (component.CurrentState)
@@ -40,6 +43,12 @@ namespace Content.Shared.MobState.EntitySystems
                 default:
                     return;
             }
+        }
+
+        private void OnStandAttempt(EntityUid uid, MobStateComponent component, StandAttemptEvent args)
+        {
+            if(component.IsIncapacitated())
+                args.Cancel();
         }
     }
 }
