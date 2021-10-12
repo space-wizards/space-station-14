@@ -15,6 +15,7 @@
       soundHit: /Audio/Effects/bang.ogg
     - type: InteractionOutline
     - type: Physics
+      bodyType: Dynamic
       fixtures:
         - shape:
             !type:PhysShapeAabb

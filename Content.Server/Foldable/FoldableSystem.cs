@@ -102,7 +102,7 @@ namespace Content.Server.Foldable
         {
             var coords = user.Transform.Coordinates;
             var offsetCoords = user.Transform.Coordinates.Offset(
-                (user.Transform.WorldRotation - Math.PI/2).ToVec().Normalized
+                (user.Transform.LocalRotation - Math.PI/2).ToVec().Normalized
             );
 
             // Check nothing blocks the way
