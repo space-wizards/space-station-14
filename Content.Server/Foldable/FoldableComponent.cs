@@ -7,9 +7,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Foldable
 {
 
-    /// <inheritdoc cref="SharedFoldableComponent"/>
+    /// <summary>
+    /// Used to create "foldable structures" that you can pickup like an item when folded. Used for rollerbeds and wheelchairs
+    /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(FoldableComponent))]
     public class FoldableComponent : Component
     {
         public override string Name => "Foldable";
