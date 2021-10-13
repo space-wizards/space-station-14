@@ -2436,3 +2436,8 @@ Entries:
   - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
   id: 435
   time: '2021-10-13T08:03:12.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes are available to Cargo, type: Add}
+  id: 436
+  time: '2021-10-13T17:14:34.0000000+00:00'
