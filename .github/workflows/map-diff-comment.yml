@@ -49,10 +49,8 @@ jobs:
       - name: Install dependencies
         if: steps.cache-primes.outputs.cache-hit != 'true'
         run: dotnet restore
-      - name: Build
-        run: dotnet build --configuration Release --no-restore /p:WarningsAsErrors= /m
       - name: Create map images
-        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build
+        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build --no-restore --configuration Release
       - name: Upload map images
         uses: devicons/public-upload-to-imgur@main
         id: new_map_images
