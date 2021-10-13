@@ -17,8 +17,7 @@ namespace Content.Server.CharacterAppearance.Systems
 
         private void UpdateSkinColor(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent _)
         {
-            SharedBodyComponent? body = null;
-            if (Resolve(uid, ref body))
+            if (EntityManager.TryGetComponent<SharedBodyComponent>(uid, out SharedBodyComponent?  body))
             {
                 foreach (var (part, _) in body.Parts)
                 {

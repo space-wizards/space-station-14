@@ -122,7 +122,6 @@ namespace Content.Client.CharacterAppearance.Systems
             // TODO BODY Layer color, sprite and state
             foreach (var layer in layers)
                 sprite.LayerSetVisible(layer, false);
-
         }
     }
 }
