@@ -319,11 +319,6 @@ namespace Content.Shared.MobState.Components
             Dirty();
         }
 
-        bool IActionBlocker.CanSpeak()
-        {
-            return CurrentState?.CanSpeak() ?? true;
-        }
-
         bool IActionBlocker.CanDrop()
         {
             return CurrentState?.CanDrop() ?? true;

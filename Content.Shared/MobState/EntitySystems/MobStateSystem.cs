@@ -4,6 +4,7 @@ using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
 using Content.Shared.Pulling.Events;
+using Content.Shared.Speech;
 using Content.Shared.Standing;
 using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
@@ -20,12 +21,15 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
+            SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
         }
+
+        #region ActionBlocker
 
         private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
         {
@@ -70,6 +74,19 @@ namespace Content.Shared.MobState.EntitySystems
                     break;
             }
         }
+
+        private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        #endregion
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)
         {

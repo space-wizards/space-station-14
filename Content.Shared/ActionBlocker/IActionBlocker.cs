@@ -10,9 +10,6 @@ namespace Content.Shared.ActionBlocker
     [Obsolete("Use events instead")]
     public interface IActionBlocker
     {
-        [Obsolete("Use SpeakAttemptEvent instead")]
-        bool CanSpeak() => true;
-
         [Obsolete("Use DropAttemptEvent instead")]
         bool CanDrop() => true;
 
