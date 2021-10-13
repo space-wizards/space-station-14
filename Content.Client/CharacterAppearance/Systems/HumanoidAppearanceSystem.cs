@@ -53,7 +53,7 @@ namespace Content.Client.CharacterAppearance.Systems
             UpdateLooks(args.Uid, component);
         }
 
-        public void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component)
+        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component)
         {
             if(!EntityManager.TryGetEntity(uid, out var owner)) return;
             if (!owner.TryGetComponent(out SpriteComponent? sprite)) return;

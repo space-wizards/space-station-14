@@ -60,7 +60,7 @@ namespace Content.Server.CharacterAppearance.Systems
             UpdateSkinColor(args.Uid, component);
         }
 
-        public void UpdateSkinColor(EntityUid uid, HumanoidAppearanceComponent component)
+        private void UpdateSkinColor(EntityUid uid, HumanoidAppearanceComponent component)
         {
             if (!EntityManager.TryGetEntity(uid, out var owner)) return;
 
