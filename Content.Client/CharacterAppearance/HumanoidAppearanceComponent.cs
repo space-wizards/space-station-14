@@ -46,7 +46,8 @@ namespace Content.Client.CharacterAppearance
 
         private void UpdateLooks()
         {
-            if (Appearance is null! ||
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (Appearance == null ||
                 !Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
