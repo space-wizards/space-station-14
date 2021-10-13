@@ -23,6 +23,13 @@ namespace Content.Shared.CharacterAppearance.Systems
             UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender);
         }
 
+        // The magic mirror otherwise wouldn't work. (it directly modifies the component server-side)
+        public void ForceAppearanceUpdate(EntityUid uid, HumanoidAppearanceComponent? component = null)
+        {
+            if (!Resolve(uid, ref component)) return;
+            component.Dirty();
+        }
+
         private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
         {
             if (!Resolve(uid, ref component)) return;
@@ -35,12 +42,6 @@ namespace Content.Shared.CharacterAppearance.Systems
 
             RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender));
         }
-
-        private void SyncAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
-        {
-            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender));
-        }
-
 
         private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
         {
