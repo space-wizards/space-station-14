@@ -16,34 +16,17 @@ namespace Content.MapRenderer.Extensions
 
         public static DirectoryInfo Resources()
         {
-            var root = RepositoryRoot();
-
-            root.MoveTo("Resources");
-
-            return root;
-        }
-
-        public static DirectoryInfo Workflows()
-        {
-            var root = RepositoryRoot().CreateSubdirectory(".github/workflows");
-
-            return root;
+            return new DirectoryInfo($"{RepositoryRoot()}{Path.DirectorySeparatorChar}Resources");
         }
 
         public static DirectoryInfo Maps()
         {
-            var resources = Resources();
-            var mapImages = resources.CreateSubdirectory("Maps");
-
-            return mapImages;
+            return new DirectoryInfo($"{Resources()}{Path.DirectorySeparatorChar}Maps");
         }
 
         public static DirectoryInfo MapImages()
         {
-            var resources = Resources();
-            var mapImages = resources.CreateSubdirectory("MapImages");
-
-            return mapImages;
+            return new DirectoryInfo($"{Resources()}{Path.DirectorySeparatorChar}MapImages");
         }
     }
 }
