@@ -33,7 +33,7 @@ namespace Content.Shared.MobState.State
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<StandingStateSystem>().Stand(entity);
+            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
         }
 
         public override bool CanInteract()
