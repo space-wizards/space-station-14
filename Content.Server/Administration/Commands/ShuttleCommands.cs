@@ -1,6 +1,7 @@
 using System;
 using Content.Server.RoundEnd;
 using Content.Shared.Administration;
+using Content.Shared.Localizations;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -20,7 +21,7 @@ namespace Content.Server.Administration.Commands
             var loc = IoCManager.Resolve<ILocalizationManager>();
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
-            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], @"%m\:ss", loc.DefaultCulture, out var timeSpan))
+            if (args.Length == 1 && TimeSpan.TryParseExact(args[0], Localization.TimeSpanMinutesFormats, loc.DefaultCulture, out var timeSpan))
             {
                 EntitySystem.Get<RoundEndSystem>().RequestRoundEnd(timeSpan, false);
             }
