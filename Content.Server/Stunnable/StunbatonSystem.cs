@@ -10,6 +10,7 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
@@ -62,7 +63,7 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            if (args.Entity.HasComponent<StunnableComponent>())
+            if (args.Entity.HasComponent<StunnedComponent>())
             {
                 args.CanInteract = true;
                 StunEntity(args.Entity, comp);
@@ -119,24 +120,24 @@ namespace Content.Server.Stunnable
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
+            if (!entity.TryGetComponent(out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            if (!stunnable.SlowedDown)
+            if (!EntityManager.HasComponent<SlowedDownComponent>(entity.Uid))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
 
 

@@ -40,7 +40,6 @@ namespace Content.Server.Buckle.Components
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
         [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
-        [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -336,7 +335,7 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable is { KnockedDown: true }
+            if (Owner.HasComponent<KnockedDownComponent>()
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
