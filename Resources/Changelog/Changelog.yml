@@ -2429,3 +2429,10 @@ Entries:
   - {message: Removed single line that broke crayons., type: Remove}
   id: 434
   time: '2021-10-13T06:56:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
+      somewhat fixed', type: Fix}
+  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
+  id: 435
+  time: '2021-10-13T08:03:12.0000000+00:00'
