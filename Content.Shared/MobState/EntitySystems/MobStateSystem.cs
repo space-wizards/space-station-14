@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.Events;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
@@ -22,6 +23,8 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
+            SubscribeLocalEvent<MobStateComponent, EquipAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<MobStateComponent, UnequipAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
@@ -76,6 +79,28 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnEquipAttempt(EntityUid uid, MobStateComponent component, EquipAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, UnequipAttemptEvent args)
         {
             switch (component.CurrentState)
             {

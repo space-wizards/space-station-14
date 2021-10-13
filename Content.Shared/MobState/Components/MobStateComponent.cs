@@ -338,16 +338,6 @@ namespace Content.Shared.MobState.Components
         {
             return CurrentState?.CanAttack() ?? true;
         }
-
-        bool IActionBlocker.CanEquip()
-        {
-            return CurrentState?.CanEquip() ?? true;
-        }
-
-        bool IActionBlocker.CanUnequip()
-        {
-            return CurrentState?.CanUnequip() ?? true;
-        }
     }
 
     [Serializable, NetSerializable]

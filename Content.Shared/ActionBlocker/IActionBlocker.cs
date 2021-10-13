@@ -21,11 +21,5 @@ namespace Content.Shared.ActionBlocker
 
         [Obsolete("Use AttackAttemptEvent instead")]
         bool CanAttack() => true;
-
-        [Obsolete("Use EquipAttemptEvent instead")]
-        bool CanEquip() => true;
-
-        [Obsolete("Use UnequipAttemptEvent instead")]
-        bool CanUnequip() => true;
     }
 }

@@ -190,15 +190,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanEquip())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -212,15 +203,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new UnequipAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanUnequip())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }

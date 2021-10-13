@@ -1,6 +1,5 @@
 using System;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -22,8 +21,7 @@ namespace Content.Shared.Cuffs.Components
         bool IActionBlocker.CanPickup() => CanStillInteract;
         bool IActionBlocker.CanDrop() => CanStillInteract;
         bool IActionBlocker.CanAttack() => CanStillInteract;
-        bool IActionBlocker.CanEquip() => CanStillInteract;
-        bool IActionBlocker.CanUnequip() => CanStillInteract;
+
         #endregion
 
         [Serializable, NetSerializable]

@@ -34,11 +34,6 @@ namespace Content.Shared.MobState.State
 
         public virtual void UpdateState(IEntity entity, int threshold) { }
 
-        public virtual bool CanSpeak()
-        {
-            return true;
-        }
-
         public virtual bool CanDrop()
         {
             return true;
@@ -55,16 +50,6 @@ namespace Content.Shared.MobState.State
         }
 
         public virtual bool CanAttack()
-        {
-            return true;
-        }
-
-        public virtual bool CanEquip()
-        {
-            return true;
-        }
-
-        public virtual bool CanUnequip()
         {
             return true;
         }

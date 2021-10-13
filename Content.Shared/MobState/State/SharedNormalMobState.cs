@@ -22,11 +22,6 @@ namespace Content.Shared.MobState.State
             }
         }
 
-        public override bool CanSpeak()
-        {
-            return true;
-        }
-
         public override bool CanDrop()
         {
             return true;
@@ -43,16 +38,6 @@ namespace Content.Shared.MobState.State
         }
 
         public override bool CanAttack()
-        {
-            return true;
-        }
-
-        public override bool CanEquip()
-        {
-            return true;
-        }
-
-        public override bool CanUnequip()
         {
             return true;
         }
