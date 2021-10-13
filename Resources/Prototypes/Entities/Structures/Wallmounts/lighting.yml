@@ -73,6 +73,7 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
@@ -158,6 +159,7 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer

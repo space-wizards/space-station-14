@@ -101,6 +101,7 @@
     voltage: Apc
   - type: Apc
     voltage: Apc
+  - type: ExtensionCableProvider
   - type: UserInterface
     interfaces:
     - key: enum.ApcUiKey.Key

@@ -971,7 +971,7 @@ namespace Content.IntegrationTests.Tests.Power
                 var apcEnt = _entityManager.SpawnEntity("ApcDummy", grid.ToCoordinates(0, 0));
                 var apcExtensionEnt = _entityManager.SpawnEntity("CableApcExtension", grid.ToCoordinates(0, 0));
                 var powerReceiverEnt = _entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, 2));
-                
+
                 receiver = powerReceiverEnt.GetComponent<ApcPowerReceiverComponent>();
                 var battery = apcEnt.GetComponent<BatteryComponent>();
                 apcNetBattery = apcEnt.GetComponent<PowerNetworkBatteryComponent>();

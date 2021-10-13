@@ -13,6 +13,7 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         public ExtensionCableProviderComponent? Provider { get; set; }
 
+        [ViewVariables]
         public bool Connectable = false;
 
         /// <summary>
