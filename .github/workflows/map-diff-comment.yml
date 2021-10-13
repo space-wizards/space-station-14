@@ -50,7 +50,7 @@ jobs:
         if: steps.cache-primes.outputs.cache-hit != 'true'
         run: dotnet restore
       - name: Create map images
-        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-build --no-restore
+        run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-restore --configuration Release
       - name: Upload map images
         uses: devicons/public-upload-to-imgur@main
         id: new_map_images
