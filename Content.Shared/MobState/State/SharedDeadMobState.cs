@@ -94,11 +94,6 @@ namespace Content.Shared.MobState.State
             return false;
         }
 
-        public override bool CanChangeDirection()
-        {
-            return false;
-        }
-
         public bool CanShiver()
         {
             return false;

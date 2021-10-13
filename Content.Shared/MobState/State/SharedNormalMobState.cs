@@ -71,10 +71,5 @@ namespace Content.Shared.MobState.State
         {
             return true;
         }
-
-        public override bool CanChangeDirection()
-        {
-            return true;
-        }
     }
 }
