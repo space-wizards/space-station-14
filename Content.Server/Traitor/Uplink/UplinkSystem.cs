@@ -33,7 +33,7 @@ namespace Content.Server.Traitor.Uplink
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
-            SubscribeLocalEvent<UplinkComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<UplinkComponent, UseInHandEvent>(OnUseHand);
             SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
             SubscribeLocalEvent<UplinkComponent, UplinkRequestUpdateInterfaceMessage>(OnRequestUpdateUI);
 
@@ -70,7 +70,7 @@ namespace Content.Server.Traitor.Uplink
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
         }
 
-        private void OnInteractHand(EntityUid uid, UplinkComponent component, InteractHandEvent args)
+        private void OnUseHand(EntityUid uid, UplinkComponent component, UseInHandEvent args)
         {
             if (args.Handled)
                 return;
@@ -78,6 +78,9 @@ namespace Content.Server.Traitor.Uplink
             // check if uplinks activates directly or use some proxy, like a PDA
             if (!component.ActivatesInHands)
                 return;
+            if (component.UplinkAccount == null)
+                return;
+
             if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
