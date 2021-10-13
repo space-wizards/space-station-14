@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Interaction.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -7,6 +8,25 @@ namespace Content.Shared.Ghost
 {
     public abstract class SharedGhostSystem : EntitySystem
     {
+        public override void Initialize()
+        {
+            base.Initialize();
+            SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnUseAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnInteractAttempt);
+        }
+
+        private void OnUseAttempt(EntityUid uid, SharedGhostComponent component, UseAttemptEvent args)
+        {
+            if (!component.CanGhostInteract)
+                args.Cancel();
+        }
+
+        private void OnInteractAttempt(EntityUid uid, SharedGhostComponent component, InteractionAttemptEvent args)
+        {
+            if (!component.CanGhostInteract)
+                args.Cancel();
+        }
+
         public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)
         {
             if (component.CanReturnToBody == canReturn)

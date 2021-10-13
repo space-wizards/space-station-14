@@ -22,21 +22,6 @@ namespace Content.Shared.MobState.State
             }
         }
 
-        public override bool CanInteract()
-        {
-            return true;
-        }
-
-        public override bool CanUse()
-        {
-            return true;
-        }
-
-        public override bool CanThrow()
-        {
-            return true;
-        }
-
         public override bool CanSpeak()
         {
             return true;

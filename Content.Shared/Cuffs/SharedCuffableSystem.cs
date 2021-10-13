@@ -1,4 +1,5 @@
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Interaction.Events;
 using Content.Shared.Movement;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
@@ -12,6 +13,8 @@ namespace Content.Shared.Cuffs
             base.Initialize();
             SubscribeLocalEvent<SharedCuffableComponent, StopPullingEvent>(HandleStopPull);
             SubscribeLocalEvent<SharedCuffableComponent, MovementAttemptEvent>(HandleMoveAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, UseAttemptEvent>(OnUseAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
         }
 
         private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
@@ -30,6 +33,18 @@ namespace Content.Shared.Cuffs
             {
                 args.Cancel();
             }
+        }
+
+        private void OnUseAttempt(EntityUid uid, SharedCuffableComponent component, UseAttemptEvent args)
+        {
+            if (!component.CanStillInteract)
+                args.Cancel();
+        }
+
+        private void OnInteractAttempt(EntityUid uid, SharedCuffableComponent component, InteractionAttemptEvent args)
+        {
+            if (!component.CanStillInteract)
+                args.Cancel();
         }
     }
 }

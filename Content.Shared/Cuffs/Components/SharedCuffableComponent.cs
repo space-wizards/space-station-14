@@ -19,8 +19,6 @@ namespace Content.Shared.Cuffs.Components
 
         #region ActionBlockers
 
-        bool IActionBlocker.CanInteract() => CanStillInteract;
-        bool IActionBlocker.CanUse() => CanStillInteract;
         bool IActionBlocker.CanPickup() => CanStillInteract;
         bool IActionBlocker.CanDrop() => CanStillInteract;
         bool IActionBlocker.CanAttack() => CanStillInteract;

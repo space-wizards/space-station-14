@@ -44,21 +44,6 @@ namespace Content.Shared.MobState.State
             }
         }
 
-        public override bool CanInteract()
-        {
-            return false;
-        }
-
-        public override bool CanUse()
-        {
-            return false;
-        }
-
-        public override bool CanThrow()
-        {
-            return false;
-        }
-
         public override bool CanSpeak()
         {
             return false;

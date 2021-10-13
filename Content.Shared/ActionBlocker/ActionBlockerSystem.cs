@@ -42,15 +42,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanInteract())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -65,15 +56,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanUse())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -87,15 +69,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new ThrowAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanThrow())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }

@@ -5,6 +5,7 @@ using Content.Shared.MobState.State;
 using Content.Shared.Movement;
 using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
+using Content.Shared.Throwing;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.EntitySystems
@@ -16,6 +17,9 @@ namespace Content.Shared.MobState.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
+            SubscribeLocalEvent<MobStateComponent, UseAttemptEvent>(OnUseAttempt);
+            SubscribeLocalEvent<MobStateComponent, InteractionAttemptEvent>(OnInteractAttempt);
+            SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
@@ -24,6 +28,39 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnUseAttempt(EntityUid uid, MobStateComponent component, UseAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnInteractAttempt(EntityUid uid, MobStateComponent component, InteractionAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnThrowAttempt(EntityUid uid, MobStateComponent component, ThrowAttemptEvent args)
         {
             switch (component.CurrentState)
             {
