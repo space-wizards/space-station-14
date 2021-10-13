@@ -329,11 +329,6 @@ namespace Content.Shared.MobState.Components
             return CurrentState?.CanPickup() ?? true;
         }
 
-        bool IActionBlocker.CanEmote()
-        {
-            return CurrentState?.CanEmote() ?? true;
-        }
-
         bool IActionBlocker.CanAttack()
         {
             return CurrentState?.CanAttack() ?? true;

@@ -67,10 +67,8 @@ namespace Content.Shared.Ghost
             CanGhostInteract = state.CanGhostInteract;
         }
 
-        public bool CanThrow() => false;
         public bool CanDrop() => CanGhostInteract;
         public bool CanPickup() => CanGhostInteract;
-        public bool CanEmote() => false;
         public bool CanAttack() => false;
     }
 

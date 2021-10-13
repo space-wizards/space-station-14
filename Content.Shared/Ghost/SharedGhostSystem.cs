@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -13,6 +14,7 @@ namespace Content.Shared.Ghost
             base.Initialize();
             SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnInteractAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnEmoteAttempt);
         }
 
         private void OnUseAttempt(EntityUid uid, SharedGhostComponent component, UseAttemptEvent args)
@@ -25,6 +27,11 @@ namespace Content.Shared.Ghost
         {
             if (!component.CanGhostInteract)
                 args.Cancel();
+        }
+
+        private void OnEmoteAttempt(EntityUid uid, SharedGhostComponent component, EmoteAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)
