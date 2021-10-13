@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.CharacterAppearance;
+using Content.Client.CharacterAppearance.Systems;
 using Content.Client.Lobby.UI;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -901,7 +901,7 @@ namespace Content.Client.Preferences.UI
             if (Profile is null)
                 return;
 
-            EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, Profile);
+            EntitySystem.Get<HumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, Profile);
             LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy, Profile);
         }
 

@@ -20,18 +20,39 @@ namespace Content.Client.CharacterAppearance.Systems
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnHumanoidAppearanceInit);
             SubscribeLocalEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
             SubscribeNetworkEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private void ProfileUpdate(HumanoidAppearanceProfileChangedEvent args)
+        private void OnHumanoidAppearanceInit(EntityUid uid, HumanoidAppearanceComponent component, ComponentInit _)
         {
-            if (!EntityManager.GetEntity(args.Uid).TryGetComponent(out HumanoidAppearanceComponent? component))
+            Logger.DebugS("HAS", $"Attempting to sync {uid}'s HumanoidAppearanceComponent now.");
+            RaiseNetworkEvent(new HumanoidAppearanceComponentInitEvent(uid));
+        }
+
+        public override void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
+        {
+            if (!EntityManager.GetEntity(uid).TryGetComponent(out HumanoidAppearanceComponent? component))
                 return;
 
-            Logger.DebugS("HAS", "HUMANOIDAPPEARANCE CLIENT UPDATE");
+            var humanoid = (HumanoidCharacterProfile) profile;
+            var profileChangeEvent = new HumanoidAppearanceProfileChangedEvent(uid, humanoid);
+            RaiseLocalEvent(profileChangeEvent);
+        }
+
+
+        private void ProfileUpdate(HumanoidAppearanceProfileChangedEvent args)
+        {
+            // either it exists, or the event's been handled
+            // (this is literally sent twice)
+            if (!EntityManager.TryGetEntity(args.Uid, out var entity)) return;
+            Logger.DebugS("HAS", $"HUMANOIDAPPEARANCE CLIENT UPDATE TO ENTITY ${args.Uid}");
+            if (!entity.TryGetComponent(out HumanoidAppearanceComponent? component))
+                return;
+
             component.Appearance = args.Appearance;
             Logger.DebugS("HAS", $"{component.Appearance}, {args.Appearance}");
             component.Sex = args.Sex;

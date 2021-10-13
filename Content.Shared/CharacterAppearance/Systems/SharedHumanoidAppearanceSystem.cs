@@ -9,8 +9,9 @@ using Robust.Shared.Log;
 
 namespace Content.Shared.CharacterAppearance.Systems
 {
-    public class SharedHumanoidAppearanceSystem : EntitySystem
+    public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
+        /*
         public override void Initialize()
         {
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnHumanoidAppearanceInit);
@@ -19,20 +20,19 @@ namespace Content.Shared.CharacterAppearance.Systems
         private void OnHumanoidAppearanceInit(EntityUid uid, HumanoidAppearanceComponent component, ComponentInit _)
         {
             // we tell the server that a new apperance component exists
+            // So this works, but it *works*. Every time a component is created,
+            // even if it's a client-side component, this is called.
+            // This means that it runs at Theta((player count * 2) - 1),
+            // echoing every single time the client inits the component
+            //
+            // For obvious reasons, this is not ideal. This should run
+            // at O(player count - 1) at the worst.
             RaiseNetworkEvent(new HumanoidAppearanceComponentInitEvent(uid));
         }
+        */
 
-
-        public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
-        {
-            if (!EntityManager.GetEntity(uid).TryGetComponent(out HumanoidAppearanceComponent? component))
-                return;
-
-            var humanoid = (HumanoidCharacterProfile) profile;
-
-            RaiseLocalEvent(new HumanoidAppearanceProfileChangedEvent(uid, humanoid));
-            RaiseNetworkEvent(new HumanoidAppearanceProfileChangedEvent(uid, humanoid));
-        }
+        // *points at systems* you motherfuckers update your Own God Damn Profiles
+        public abstract void UpdateFromProfile(EntityUid uid, ICharacterProfile profile);
 
         // Scaffolding until Body is moved to ECS.
         public void BodyPartAdded(EntityUid uid, BodyPartAddedEventArgs args)
@@ -44,69 +44,69 @@ namespace Content.Shared.CharacterAppearance.Systems
         {
             RaiseNetworkEvent(new HumanoidAppearanceBodyPartRemovedEvent(uid, args));
         }
-    }
 
-    // Scaffolding until Body is moved to ECS.
-    [Serializable, NetSerializable]
-    public class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
-    {
-        public EntityUid Uid { get; }
-        public BodyPartAddedEventArgs Args { get; }
-
-        public HumanoidAppearanceBodyPartAddedEvent(EntityUid uid, BodyPartAddedEventArgs args)
+        // Scaffolding until Body is moved to ECS.
+        [Serializable, NetSerializable]
+        public class HumanoidAppearanceBodyPartAddedEvent : EntityEventArgs
         {
-            Uid = uid;
-            Args = args;
-        }
-    }
+            public EntityUid Uid { get; }
+            public BodyPartAddedEventArgs Args { get; }
 
-    [Serializable, NetSerializable]
-    public class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
-    {
-        public EntityUid Uid { get; }
-        public BodyPartRemovedEventArgs Args { get; }
-
-        public HumanoidAppearanceBodyPartRemovedEvent(EntityUid uid, BodyPartRemovedEventArgs args)
-        {
-            Uid = uid;
-            Args = args;
+            public HumanoidAppearanceBodyPartAddedEvent(EntityUid uid, BodyPartAddedEventArgs args)
+            {
+                Uid = uid;
+                Args = args;
+            }
         }
 
-    }
-
-    [Serializable, NetSerializable]
-    public class HumanoidAppearanceComponentInitEvent : EntityEventArgs
-    {
-        public EntityUid Uid { get; }
-
-        public HumanoidAppearanceComponentInitEvent(EntityUid uid)
+        [Serializable, NetSerializable]
+        public class HumanoidAppearanceBodyPartRemovedEvent : EntityEventArgs
         {
-            Uid = uid;
-        }
-    }
+            public EntityUid Uid { get; }
+            public BodyPartRemovedEventArgs Args { get; }
 
-    [Serializable, NetSerializable]
-    public class HumanoidAppearanceProfileChangedEvent : EntityEventArgs
-    {
-        public EntityUid Uid { get; }
-        public HumanoidCharacterAppearance Appearance { get; }
-        public Sex Sex { get; }
-        public Gender Gender { get; }
+            public HumanoidAppearanceBodyPartRemovedEvent(EntityUid uid, BodyPartRemovedEventArgs args)
+            {
+                Uid = uid;
+                Args = args;
+            }
 
-        public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterProfile profile)
-        {
-            Uid = uid;
-            Appearance = profile.Appearance;
-            Sex = profile.Sex;
-            Gender = profile.Gender;
         }
 
-        public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
+        [Serializable, NetSerializable]
+        public class HumanoidAppearanceComponentInitEvent : EntityEventArgs
         {
-            Uid = uid;
-            Appearance = appearance;
-            Sex = sex;
-            Gender = gender;
+            public EntityUid Uid { get; }
+
+            public HumanoidAppearanceComponentInitEvent(EntityUid uid)
+            {
+                Uid = uid;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class HumanoidAppearanceProfileChangedEvent : EntityEventArgs
+        {
+            public EntityUid Uid { get; }
+            public HumanoidCharacterAppearance Appearance { get; }
+            public Sex Sex { get; }
+            public Gender Gender { get; }
+
+            public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterProfile profile)
+            {
+                Uid = uid;
+                Appearance = profile.Appearance;
+                Sex = profile.Sex;
+                Gender = profile.Gender;
+            }
+
+            public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
+            {
+                Uid = uid;
+                Appearance = appearance;
+                Sex = sex;
+                Gender = gender;
+            }
         }
     }
 }
