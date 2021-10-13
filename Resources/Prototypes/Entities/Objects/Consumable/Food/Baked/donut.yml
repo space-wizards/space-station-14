@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodDonutBase
   abstract: true
   description: Goes great with robust coffee.
