@@ -798,7 +798,7 @@ namespace Content.Server.Botany.Components
                 return DoHarvest(user);
             }
 
-            if (usingItem.HasComponent<ProduceComponent>())
+            if (usingItem.TryGetComponent<ProduceComponent>(out var produce))
             {
                 user.PopupMessageCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", Owner),
@@ -808,7 +808,7 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem, ProduceComponent.SolutionName, out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
                     solutionSystem.TryAddSolution(usingItem.Uid, solution2,

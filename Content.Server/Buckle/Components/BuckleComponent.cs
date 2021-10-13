@@ -130,11 +130,11 @@ namespace Content.Server.Buckle.Components
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid, false, false);
                     ownTransform.LocalRotation = Angle.Zero;
                     break;
             }
@@ -339,11 +339,11 @@ namespace Content.Server.Buckle.Components
             if (_stunnable is { KnockedDown: true }
                 || (_mobState?.IsIncapacitated() ?? false))
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
             }
 
             _mobState?.CurrentState?.EnterState(Owner);

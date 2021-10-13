@@ -143,9 +143,6 @@
         !type:PhysShapeAabb
           bounds: "-0.2,-0.2,0.2,0.2"
       hard: false
-      layer:
-        - Impassable
-        - MobImpassable
       mask:
         - Opaque
   - type: Projectile
