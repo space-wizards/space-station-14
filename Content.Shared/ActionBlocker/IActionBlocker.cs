@@ -39,8 +39,5 @@ namespace Content.Shared.ActionBlocker
 
         [Obsolete("Use UnequipAttemptEvent instead")]
         bool CanUnequip() => true;
-
-        [Obsolete("Use ChangeDirectionAttemptEvent instead")]
-        bool CanChangeDirection() => true;
     }
 }
