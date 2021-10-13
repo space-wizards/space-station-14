@@ -18,7 +18,7 @@ namespace Content.Shared.Localizations
         {
             @"m\:ss",
             @"mm\:ss",
-            @"m",
+            @"%m",
             @"mm"
         };
 
