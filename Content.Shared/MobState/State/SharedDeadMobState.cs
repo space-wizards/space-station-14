@@ -43,15 +43,5 @@ namespace Content.Shared.MobState.State
                 physics.CanCollide = true;
             }
         }
-
-        public override bool CanDrop()
-        {
-            return false;
-        }
-
-        public override bool CanPickup()
-        {
-            return false;
-        }
     }
 }

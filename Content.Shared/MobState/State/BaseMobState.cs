@@ -33,15 +33,5 @@ namespace Content.Shared.MobState.State
         public virtual void ExitState(IEntity entity) { }
 
         public virtual void UpdateState(IEntity entity, int threshold) { }
-
-        public virtual bool CanDrop()
-        {
-            return true;
-        }
-
-        public virtual bool CanPickup()
-        {
-            return true;
-        }
     }
 }

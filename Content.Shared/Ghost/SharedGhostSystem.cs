@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -16,6 +18,8 @@ namespace Content.Shared.Ghost
             SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttackAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnDropAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnPickupAttempt);
         }
 
         private void OnUseAttempt(EntityUid uid, SharedGhostComponent component, UseAttemptEvent args)
@@ -38,6 +42,18 @@ namespace Content.Shared.Ghost
         private void OnAttackAttempt(EntityUid uid, SharedGhostComponent component, AttackAttemptEvent args)
         {
             args.Cancel();
+        }
+
+        private void OnDropAttempt(EntityUid uid, SharedGhostComponent component, DropAttemptEvent args)
+        {
+            if (!component.CanGhostInteract)
+                args.Cancel();
+        }
+
+        private void OnPickupAttempt(EntityUid uid, SharedGhostComponent component, PickupAttemptEvent args)
+        {
+            if (!component.CanGhostInteract)
+                args.Cancel();
         }
 
         public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)

@@ -21,15 +21,5 @@ namespace Content.Shared.MobState.State
                 appearance.SetData(DamageStateVisuals.State, DamageState.Alive);
             }
         }
-
-        public override bool CanDrop()
-        {
-            return true;
-        }
-
-        public override bool CanPickup()
-        {
-            return true;
-        }
     }
 }

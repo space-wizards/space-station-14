@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Alert;
-using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -34,16 +33,6 @@ namespace Content.Shared.MobState.State
             base.ExitState(entity);
 
             EntitySystem.Get<StandingStateSystem>().Stand(entity);
-        }
-
-        public override bool CanDrop()
-        {
-            return false;
-        }
-
-        public override bool CanPickup()
-        {
-            return false;
         }
     }
 }

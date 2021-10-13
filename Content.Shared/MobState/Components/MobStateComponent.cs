@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Content.Shared.MobState.State;
@@ -24,7 +23,7 @@ namespace Content.Shared.MobState.Components
     [RegisterComponent]
     [ComponentReference(typeof(IMobStateComponent))]
     [NetworkedComponent()]
-    public class MobStateComponent : Component, IMobStateComponent, IActionBlocker
+    public class MobStateComponent : Component, IMobStateComponent
     {
         public override string Name => "MobState";
 
@@ -317,16 +316,6 @@ namespace Content.Shared.MobState.Components
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
             Dirty();
-        }
-
-        bool IActionBlocker.CanDrop()
-        {
-            return CurrentState?.CanDrop() ?? true;
-        }
-
-        bool IActionBlocker.CanPickup()
-        {
-            return CurrentState?.CanPickup() ?? true;
         }
     }
 

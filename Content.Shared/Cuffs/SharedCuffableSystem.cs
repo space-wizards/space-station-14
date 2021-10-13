@@ -1,6 +1,8 @@
 using Content.Shared.Cuffs.Components;
+using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.Movement;
 using Content.Shared.Pulling.Components;
 using Robust.Shared.GameObjects;
@@ -19,6 +21,8 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, EquipAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, UnequipAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, AttackAttemptEvent>(OnAttackAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, DropAttemptEvent>(OnDropAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, PickupAttemptEvent>(OnPickupAttempt);
         }
 
         private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
@@ -64,6 +68,18 @@ namespace Content.Shared.Cuffs
         }
 
         private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)
+        {
+            if (!component.CanStillInteract)
+                args.Cancel();
+        }
+
+        private void OnDropAttempt(EntityUid uid, SharedCuffableComponent component, DropAttemptEvent args)
+        {
+            if (!component.CanStillInteract)
+                args.Cancel();
+        }
+
+        private void OnPickupAttempt(EntityUid uid, SharedCuffableComponent component, PickupAttemptEvent args)
         {
             if (!component.CanStillInteract)
                 args.Cancel();

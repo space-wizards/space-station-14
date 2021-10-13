@@ -1,6 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Item;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
@@ -26,6 +28,8 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, EquipAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<MobStateComponent, UnequipAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
+            SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
+            SubscribeLocalEvent<MobStateComponent, PickupAttemptEvent>(OnPickupAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
@@ -113,6 +117,28 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         private void OnAttackAttempt(EntityUid uid, MobStateComponent component, AttackAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
+        }
+
+        private void OnPickupAttempt(EntityUid uid, MobStateComponent component, PickupAttemptEvent args)
         {
             switch (component.CurrentState)
             {
