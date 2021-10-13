@@ -19,6 +19,18 @@
       ]
     },
     {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.4,
+          0.2,
+          0.4,
+          0.1
+        ]
+      ]
+    },
+    {
       "name": "deny-unshaded",
       "delays": [
         [
