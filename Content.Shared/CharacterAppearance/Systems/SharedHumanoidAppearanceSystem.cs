@@ -1,21 +1,59 @@
 using System;
 using Content.Shared.Body.Part;
+using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.CharacterAppearance.Systems
 {
     public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
-        // I tried to make this a shared method - apparently,
-        // updating components doesn't exactly work in the
-        // shared namespace? It's an abstract method for now,
-        // until somebody can fix this.
-        public abstract void OnAppearanceChange(ChangedHumanoidAppearanceEvent args);
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentGetState>(OnAppearanceGetState);
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentHandleState>(OnAppearanceHandleState);
+        }
 
-        public abstract void UpdateFromProfile(EntityUid uid, ICharacterProfile profile);
+        public void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
+        {
+            var humanoid = (HumanoidCharacterProfile) profile;
+            UpdateAppearance(uid, humanoid.Appearance, humanoid.Sex, humanoid.Gender);
+        }
+
+        private void UpdateAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
+        {
+            if (!Resolve(uid, ref component)) return;
+
+            component.Appearance = appearance;
+            component.Sex = sex;
+            component.Gender = gender;
+
+            component.Dirty();
+
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender));
+        }
+
+        private void SyncAppearance(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender, HumanoidAppearanceComponent? component = null)
+        {
+            RaiseLocalEvent(uid, new ChangedHumanoidAppearanceEvent(appearance, sex, gender));
+        }
+
+
+        private void OnAppearanceGetState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentGetState args)
+        {
+            args.State = new HumanoidAppearanceComponentState(component.Appearance, component.Sex, component.Gender);
+        }
+
+        private void OnAppearanceHandleState(EntityUid uid, HumanoidAppearanceComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not HumanoidAppearanceComponentState state)
+                return;
+
+            UpdateAppearance(uid, state.Appearance, state.Sex, state.Gender);
+        }
 
         // Scaffolding until Body is moved to ECS.
         public void BodyPartAdded(EntityUid uid, BodyPartAddedEventArgs args)
@@ -57,35 +95,21 @@ namespace Content.Shared.CharacterAppearance.Systems
         }
 
         [Serializable, NetSerializable]
-        public class HumanoidAppearanceComponentInitEvent : EntityEventArgs
-        {
-            public EntityUid Uid { get; }
-
-            public HumanoidAppearanceComponentInitEvent(EntityUid uid)
-            {
-                Uid = uid;
-            }
-        }
-
-        [Serializable, NetSerializable]
         public class ChangedHumanoidAppearanceEvent : EntityEventArgs
         {
-            public EntityUid Uid { get; }
             public HumanoidCharacterAppearance Appearance { get; }
             public Sex Sex { get; }
             public Gender Gender { get; }
 
-            public ChangedHumanoidAppearanceEvent(EntityUid uid, HumanoidCharacterProfile profile)
+            public ChangedHumanoidAppearanceEvent(HumanoidCharacterProfile profile)
             {
-                Uid = uid;
                 Appearance = profile.Appearance;
                 Sex = profile.Sex;
                 Gender = profile.Gender;
             }
 
-            public ChangedHumanoidAppearanceEvent(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
+            public ChangedHumanoidAppearanceEvent(HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
             {
-                Uid = uid;
                 Appearance = appearance;
                 Sex = sex;
                 Gender = gender;

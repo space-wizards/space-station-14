@@ -3,7 +3,6 @@ using Content.Shared.Body.Components;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.CharacterAppearance.Systems;
-using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,46 +18,19 @@ namespace Content.Client.CharacterAppearance.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnHumanoidAppearanceInit);
-            SubscribeLocalEvent<ChangedHumanoidAppearanceEvent>(OnAppearanceChange);
-            SubscribeNetworkEvent<ChangedHumanoidAppearanceEvent>(OnAppearanceChange);
+            base.Initialize();
+
+            SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateLooks);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
-        private void OnHumanoidAppearanceInit(EntityUid uid, HumanoidAppearanceComponent component, ComponentInit _)
+        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)
         {
-            RaiseNetworkEvent(new HumanoidAppearanceComponentInitEvent(uid));
-        }
-
-        public override void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
-        {
-            if (!EntityManager.TryGetEntity(uid, out var entity)) return;
-            if (!entity.HasComponent<HumanoidAppearanceComponent>()) return;
-
-            var humanoid = (HumanoidCharacterProfile) profile;
-            var appearanceChangeEvent = new ChangedHumanoidAppearanceEvent(uid, humanoid);
-            RaiseLocalEvent(appearanceChangeEvent);
-        }
-
-        public override void OnAppearanceChange(ChangedHumanoidAppearanceEvent args)
-        {
-            if (!EntityManager.TryGetEntity(args.Uid, out var entity)) return;
-            if (!entity.TryGetComponent(out HumanoidAppearanceComponent? component))
+            if(!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 return;
 
-            component.Appearance = args.Appearance;
-            component.Sex = args.Sex;
-            component.Gender = args.Gender;
-            UpdateLooks(args.Uid, component);
-        }
-
-        private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component)
-        {
-            if(!EntityManager.TryGetEntity(uid, out var owner)) return;
-            if (!owner.TryGetComponent(out SpriteComponent? sprite)) return;
-
-            if (owner.TryGetComponent(out SharedBodyComponent? body))
+            if (EntityManager.TryGetComponent(uid, out SharedBodyComponent? body))
             {
                 foreach (var (part, _) in body.Parts)
                 {
@@ -83,7 +55,7 @@ namespace Content.Client.CharacterAppearance.Systems
             if (sprite.LayerMapTryGet(HumanoidVisualLayers.StencilMask, out _))
                 sprite.LayerSetVisible(HumanoidVisualLayers.StencilMask, component.Sex == Sex.Female);
 
-            if (owner.TryGetComponent<CuffableComponent>(out var cuffed))
+            if (EntityManager.TryGetComponent<CuffableComponent>(uid, out var cuffed))
             {
                 sprite.LayerSetVisible(HumanoidVisualLayers.Handcuffs, !cuffed.CanStillInteract);
             }

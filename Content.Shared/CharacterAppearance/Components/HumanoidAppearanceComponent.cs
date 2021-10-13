@@ -1,9 +1,11 @@
+using System;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Systems;
 using Robust.Shared.Analyzers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,10 +20,10 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         public HumanoidCharacterAppearance Appearance { get; set; } = HumanoidCharacterAppearance.Default();
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public Sex Sex { get; set; } = default!;
 
-        [ViewVariables]
+        [ViewVariables(VVAccess.ReadWrite)]
         public Gender Gender { get; set; } = default!;
 
         [DataField("categoriesHair")]
@@ -39,7 +41,22 @@ namespace Content.Shared.CharacterAppearance.Components
         [ViewVariables]
         [DataField("canColorFacialHair")]
         public bool CanColorFacialHair { get; set; } = true;
+    }
 
+    [Serializable, NetSerializable]
+    public sealed class HumanoidAppearanceComponentState : ComponentState
+    {
+        public HumanoidCharacterAppearance Appearance { get; }
+        public Sex Sex { get; }
+        public Gender Gender { get; }
 
+        public HumanoidAppearanceComponentState(HumanoidCharacterAppearance appearance,
+            Sex sex,
+            Gender gender)
+        {
+            Appearance = appearance;
+            Sex = sex;
+            Gender = gender;
+        }
     }
 }

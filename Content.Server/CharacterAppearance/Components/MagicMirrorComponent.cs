@@ -91,7 +91,7 @@ namespace Content.Server.CharacterAppearance.Components
                     break;
             }
 
-            EntitySystem.Get<HumanoidAppearanceSystem>().UpdateAppearance(obj.Session.AttachedEntity.Uid);
+            // EntitySystem.Get<HumanoidAppearanceSystem>().UpdateAppearance(obj.Session.AttachedEntity.Uid);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
