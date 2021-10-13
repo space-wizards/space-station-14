@@ -1,9 +1,10 @@
 using Content.Shared.Sound;
 using Content.Shared.Whitelist;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
@@ -13,42 +14,94 @@ using System.Collections.Generic;
 namespace Content.Shared.Containers.ItemSlots
 {
     /// <summary>
-    ///     Used for entities that can hold items in different slots
-    ///     Allows basic insert/eject interaction
+    ///     Used for entities that can hold items in different slots. Needed by ItemSlotSystem to support basic
+    ///     insert/eject interactions.
     /// </summary>
     [RegisterComponent]
+    [Friend(typeof(SharedItemSlotsSystem))]
     public class SharedItemSlotsComponent : Component
     {
         public override string Name => "ItemSlots";
 
-        [ViewVariables] [DataField("slots")] public Dictionary<string, ItemSlot> Slots = new();
+        [ViewVariables]
+        public Dictionary<string, ItemSlot> Slots = new();
     }
 
+    [Serializable, NetSerializable]
+    public sealed class ItemSlotManagerState : ComponentState
+    {
+        public readonly Dictionary<string, bool> SlotLocked;
+
+        public ItemSlotManagerState(Dictionary<string, ItemSlot> slots)
+        {
+            SlotLocked = new(slots.Count);
+
+            foreach (var (key, slot) in slots)
+            {
+                SlotLocked[key] = slot.Locked;
+            }
+        }
+    }
+
+    /// <summary>
+    ///     This is effectively a wrapper for a ContainerSlot that adds content functionality like entity whitelists and
+    ///     insert/eject sounds.
+    /// </summary>
     [Serializable]
     [DataDefinition]
+    [Friend(typeof(SharedItemSlotsSystem))]
     public class ItemSlot
     {
-        [ViewVariables] [DataField("whitelist")] public EntityWhitelist? Whitelist;
-        [ViewVariables] [DataField("insertSound")] public SoundSpecifier? InsertSound;
-        [ViewVariables] [DataField("ejectSound")] public SoundSpecifier? EjectSound;
+        [DataField("whitelist")]
+        public EntityWhitelist? Whitelist;
+
+        [DataField("insertSound")]
+        public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
+
+        [DataField("ejectSound")]
+        public SoundSpecifier? EjectSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
         /// </summary>
-        [ViewVariables] public string Name
-        {
-            get => _name != string.Empty
-                ? Loc.GetString(_name)
-                : ContainerSlot.ContainedEntity?.Name ?? string.Empty;
-            set => _name = value;
-        }
-        [DataField("name")] private string _name = string.Empty;
+        /// <remarks>
+        ///     This will be passed through Loc.GetString. If the name is an empty string, then verbs will use the name
+        ///     of the currently held or currently inserted entity instead.
+        /// </remarks>
+        [DataField("name")]
+        public string Name = string.Empty;
 
-        [DataField("item", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        [ViewVariables] public string? StartingItem;
+        [DataField("startingItem", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? StartingItem;
+
+        /// <summary>
+        ///     Whether or not an item can currently be ejected or inserted from this slot.
+        /// </summary>
+        /// <remarks>
+        ///     This doesn't have to mean the slot is somehow physically locked. In the case of the item cabinet, the
+        ///     cabinet may simply be closed at the moment and needs to be opened first.
+        /// </remarks>
+        [DataField("locked")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool Locked = false;
+
+        /// <summary>
+        ///     Whether the item slots system will attempt to eject this item to the user's hands when interacted with.
+        /// </summary>
+        /// <remarks>
+        ///     For most item slots, this is probably not the case (eject is usually an alt-click interaction). But
+        ///     there are some exceptions. For example item cabinets and charging stations should probably eject their
+        ///     contents when clicked on normally.
+        /// </remarks>
+        [DataField("ejectOnInteract")]
+        public bool EjectOnInteract = false;
 
         [ViewVariables] public ContainerSlot ContainerSlot = default!;
 
-        public bool HasEntity => ContainerSlot.ContainedEntity != null;
+        public string ID => ContainerSlot.ID;
+
+        // Convenience properties
+        public bool HasItem => ContainerSlot.ContainedEntity != null;
+        public IEntity? Item => ContainerSlot.ContainedEntity;
     }
 }

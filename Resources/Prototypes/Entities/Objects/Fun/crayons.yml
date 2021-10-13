@@ -33,6 +33,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonWhite
 
 - type: entity
@@ -52,6 +54,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonWhite
 
 - type: entity
@@ -71,6 +75,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonBlack
 
 - type: entity
@@ -90,6 +96,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonRed
 
 - type: entity
@@ -109,6 +117,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonOrange
 
 - type: entity
@@ -128,6 +138,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonYellow
 
 - type: entity
@@ -147,6 +159,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonGreen
 
 - type: entity
@@ -166,6 +180,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonBlue
 
 - type: entity
@@ -185,6 +201,8 @@
     capacity: 5
   - type: Tag
     tags:
+    - Write
+    - Crayon
     - CrayonPurple
 
 - type: entity

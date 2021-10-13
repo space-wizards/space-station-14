@@ -33,23 +33,17 @@
       type: PDABoundUserInterface
     - key: enum.UplinkUiKey.Key
       type: UplinkBoundUserInterface
-  - type: ItemSlots
-    slots:
-      pdaPenSlot:
-        item: "Pen"
-        whitelist:
-          tags:
-            - Write
-      pdaIdSlot:
-        name: ID Card
-        insertSound:
-          path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound:
-          path: /Audio/Machines/id_swipe.ogg
-        whitelist:
-          components:
-            - IdCard
   - type: PDA
+    penSlot:
+      startingItem: Pen
+      whitelist:
+        tags:
+        - Write
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
   - type: DoorBumpOpener
 
 - type: entity
@@ -98,6 +92,21 @@
   description: Looks can be deceiving.
   components:
   - type: PDA
+    idSlot:
+      name: ID Card
+      # Maybe this is a bad idea
+      insertSound:
+        path: /Audio/Items/bikehorn.ogg
+      ejectSound:
+        path: /Audio/Items/bikehorn.ogg
+      whitelist:
+        components:
+        - IdCard
+    penSlot:
+      startingItem: CrayonOrange # wheres the pink one?
+      whitelist:
+        tags:
+        - Write
     idCard: ClownIDCard
   - type: Appearance
     visuals:
@@ -133,6 +142,11 @@
   description: Suprisingly not on mute.
   components:
   - type: PDA
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
     idCard: MimeIDCard
   - type: Appearance
     visuals:

@@ -1,4 +1,2 @@
-item-slots-try-insert-no-hands = You have no hands.
-
-# EjectItemVerb
-eject-item-verb-text-default = Eject {$item}
+take-item-verb-text = Take {$subject}
+place-item-verb-text = Place {$subject}

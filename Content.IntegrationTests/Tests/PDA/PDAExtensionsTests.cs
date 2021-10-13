@@ -79,7 +79,7 @@ namespace Content.IntegrationTests.Tests.PDA
 
                 var itemSlots = dummyPda.GetComponent<SharedItemSlotsComponent>();
                 sEntityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>()
-                    .TryInsertContent(itemSlots, pdaIdCard, pdaComponent.IdSlot);
+                    .TryInsert(dummyPda.Uid, pdaComponent.IdSlot, pdaIdCard);
                 var pdaContainedId = pdaComponent.ContainedID;
 
                 // The PDA in the hand should be found first

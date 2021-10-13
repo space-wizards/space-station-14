@@ -1,3 +1,4 @@
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -23,8 +24,8 @@ namespace Content.Server.Cabinet
         /// <summary>
         ///     The slot name, used to get the actual item slot from the ItemSlotsComponent.
         /// </summary>
-        [DataField("cabinetSlot")]
-        public string CabinetSlot = "cabinetSlot";
+        [DataField("cabinetSlot", required: true)]
+        public ItemSlot CabinetSlot = default!;
 
         /// <summary>
         ///     Whether the cabinet is currently open or not.
