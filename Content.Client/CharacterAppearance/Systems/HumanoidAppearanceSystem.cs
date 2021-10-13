@@ -7,7 +7,6 @@ using Content.Shared.Preferences;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
@@ -21,54 +20,43 @@ namespace Content.Client.CharacterAppearance.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnHumanoidAppearanceInit);
-            SubscribeLocalEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
-            SubscribeNetworkEvent<HumanoidAppearanceProfileChangedEvent>(ProfileUpdate);
+            SubscribeLocalEvent<ChangedHumanoidAppearanceEvent>(OnAppearanceChange);
+            SubscribeNetworkEvent<ChangedHumanoidAppearanceEvent>(OnAppearanceChange);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
             SubscribeNetworkEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
         private void OnHumanoidAppearanceInit(EntityUid uid, HumanoidAppearanceComponent component, ComponentInit _)
         {
-            Logger.DebugS("HAS", $"Attempting to sync {uid}'s HumanoidAppearanceComponent now.");
             RaiseNetworkEvent(new HumanoidAppearanceComponentInitEvent(uid));
         }
 
         public override void UpdateFromProfile(EntityUid uid, ICharacterProfile profile)
         {
-            if (!EntityManager.GetEntity(uid).TryGetComponent(out HumanoidAppearanceComponent? component))
-                return;
+            if (!EntityManager.TryGetEntity(uid, out var entity)) return;
+            if (!entity.HasComponent<HumanoidAppearanceComponent>()) return;
 
             var humanoid = (HumanoidCharacterProfile) profile;
-            var profileChangeEvent = new HumanoidAppearanceProfileChangedEvent(uid, humanoid);
-            RaiseLocalEvent(profileChangeEvent);
+            var appearanceChangeEvent = new ChangedHumanoidAppearanceEvent(uid, humanoid);
+            RaiseLocalEvent(appearanceChangeEvent);
         }
 
-
-        private void ProfileUpdate(HumanoidAppearanceProfileChangedEvent args)
+        public override void OnAppearanceChange(ChangedHumanoidAppearanceEvent args)
         {
-            // either it exists, or the event's been handled
-            // (this is literally sent twice)
             if (!EntityManager.TryGetEntity(args.Uid, out var entity)) return;
-            Logger.DebugS("HAS", $"HUMANOIDAPPEARANCE CLIENT UPDATE TO ENTITY ${args.Uid}");
             if (!entity.TryGetComponent(out HumanoidAppearanceComponent? component))
                 return;
 
             component.Appearance = args.Appearance;
-            Logger.DebugS("HAS", $"{component.Appearance}, {args.Appearance}");
             component.Sex = args.Sex;
-            Logger.DebugS("HAS", $"{component.Sex}, {args.Sex}");
             component.Gender = args.Gender;
-            Logger.DebugS("HAS", $"{component.Gender}, {args.Gender}");
             UpdateLooks(args.Uid, component);
         }
 
         public void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component)
         {
             if(!EntityManager.TryGetEntity(uid, out var owner)) return;
-
-            if (!owner.TryGetComponent(out SpriteComponent? sprite)
-                || !owner.TryGetComponent(out HumanoidAppearanceComponent? profile))
-                return;
+            if (!owner.TryGetComponent(out SpriteComponent? sprite)) return;
 
             if (owner.TryGetComponent(out SharedBodyComponent? body))
             {
@@ -88,8 +76,6 @@ namespace Content.Client.CharacterAppearance.Systems
                 component.CanColorFacialHair ? component.Appearance.FacialHairColor : Color.White);
 
             sprite.LayerSetColor(HumanoidVisualLayers.Eyes, component.Appearance.EyeColor);
-
-            Logger.DebugS("HAS", $"Component: {component.Sex}, EventArgs: {component.Sex}");
 
             sprite.LayerSetState(HumanoidVisualLayers.Chest, component.Sex == Sex.Male ? "torso_m" : "torso_f");
             sprite.LayerSetState(HumanoidVisualLayers.Head, component.Sex == Sex.Male ? "head_m" : "head_f");

@@ -1,37 +1,20 @@
 using System;
 using Content.Shared.Body.Part;
-using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Preferences;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
-using Robust.Shared.Log;
 
 namespace Content.Shared.CharacterAppearance.Systems
 {
     public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
-        /*
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<HumanoidAppearanceComponent, ComponentInit>(OnHumanoidAppearanceInit);
-        }
+        // I tried to make this a shared class - apparently,
+        // updating components doesn't exactly work in the
+        // shared namespace? It's an abstract method for now,
+        // until somebody can fix this.
+        public abstract void OnAppearanceChange(ChangedHumanoidAppearanceEvent args);
 
-        private void OnHumanoidAppearanceInit(EntityUid uid, HumanoidAppearanceComponent component, ComponentInit _)
-        {
-            // we tell the server that a new apperance component exists
-            // So this works, but it *works*. Every time a component is created,
-            // even if it's a client-side component, this is called.
-            // This means that it runs at Theta((player count * 2) - 1),
-            // echoing every single time the client inits the component
-            //
-            // For obvious reasons, this is not ideal. This should run
-            // at O(player count - 1) at the worst.
-            RaiseNetworkEvent(new HumanoidAppearanceComponentInitEvent(uid));
-        }
-        */
-
-        // *points at systems* you motherfuckers update your Own God Damn Profiles
         public abstract void UpdateFromProfile(EntityUid uid, ICharacterProfile profile);
 
         // Scaffolding until Body is moved to ECS.
@@ -85,14 +68,14 @@ namespace Content.Shared.CharacterAppearance.Systems
         }
 
         [Serializable, NetSerializable]
-        public class HumanoidAppearanceProfileChangedEvent : EntityEventArgs
+        public class ChangedHumanoidAppearanceEvent : EntityEventArgs
         {
             public EntityUid Uid { get; }
             public HumanoidCharacterAppearance Appearance { get; }
             public Sex Sex { get; }
             public Gender Gender { get; }
 
-            public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterProfile profile)
+            public ChangedHumanoidAppearanceEvent(EntityUid uid, HumanoidCharacterProfile profile)
             {
                 Uid = uid;
                 Appearance = profile.Appearance;
@@ -100,7 +83,7 @@ namespace Content.Shared.CharacterAppearance.Systems
                 Gender = profile.Gender;
             }
 
-            public HumanoidAppearanceProfileChangedEvent(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
+            public ChangedHumanoidAppearanceEvent(EntityUid uid, HumanoidCharacterAppearance appearance, Sex sex, Gender gender)
             {
                 Uid = uid;
                 Appearance = appearance;
