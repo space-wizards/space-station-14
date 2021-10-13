@@ -18,6 +18,7 @@ namespace Content.Shared.Cuffs
             SubscribeLocalEvent<SharedCuffableComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, EquipAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<SharedCuffableComponent, UnequipAttemptEvent>(OnUnequipAttempt);
+            SubscribeLocalEvent<SharedCuffableComponent, AttackAttemptEvent>(OnAttackAttempt);
         }
 
         private void HandleMoveAttempt(EntityUid uid, SharedCuffableComponent component, MovementAttemptEvent args)
@@ -57,6 +58,12 @@ namespace Content.Shared.Cuffs
         }
 
         private void OnUnequipAttempt(EntityUid uid, SharedCuffableComponent component, UnequipAttemptEvent args)
+        {
+            if (!component.CanStillInteract)
+                args.Cancel();
+        }
+
+        private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)
         {
             if (!component.CanStillInteract)
                 args.Cancel();

@@ -69,7 +69,6 @@ namespace Content.Shared.Ghost
 
         public bool CanDrop() => CanGhostInteract;
         public bool CanPickup() => CanGhostInteract;
-        public bool CanAttack() => false;
     }
 
     [Serializable, NetSerializable]

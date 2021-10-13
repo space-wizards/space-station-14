@@ -158,15 +158,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanAttack())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 

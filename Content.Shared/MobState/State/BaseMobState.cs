@@ -43,10 +43,5 @@ namespace Content.Shared.MobState.State
         {
             return true;
         }
-
-        public virtual bool CanAttack()
-        {
-            return true;
-        }
     }
 }

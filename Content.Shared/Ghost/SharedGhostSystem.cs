@@ -15,6 +15,7 @@ namespace Content.Shared.Ghost
             SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnUseAttempt);
             SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnInteractAttempt);
             SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnEmoteAttempt);
+            SubscribeLocalEvent<SharedGhostComponent, AttackAttemptEvent>(OnAttackAttempt);
         }
 
         private void OnUseAttempt(EntityUid uid, SharedGhostComponent component, UseAttemptEvent args)
@@ -30,6 +31,11 @@ namespace Content.Shared.Ghost
         }
 
         private void OnEmoteAttempt(EntityUid uid, SharedGhostComponent component, EmoteAttemptEvent args)
+        {
+            args.Cancel();
+        }
+
+        private void OnAttackAttempt(EntityUid uid, SharedGhostComponent component, AttackAttemptEvent args)
         {
             args.Cancel();
         }

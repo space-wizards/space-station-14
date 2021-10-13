@@ -15,8 +15,5 @@ namespace Content.Shared.ActionBlocker
 
         [Obsolete("Use PickupAttemptEvent instead")]
         bool CanPickup() => true;
-
-        [Obsolete("Use AttackAttemptEvent instead")]
-        bool CanAttack() => true;
     }
 }

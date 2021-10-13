@@ -31,10 +31,5 @@ namespace Content.Shared.MobState.State
         {
             return true;
         }
-
-        public override bool CanAttack()
-        {
-            return true;
-        }
     }
 }
