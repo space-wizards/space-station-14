@@ -60,9 +60,8 @@ namespace Content.Client.Traitor.Uplink
             }
 
             var listingName = listing.ListingName == string.Empty ? prototype.Name : listing.ListingName;
+            var listingDesc = listing.Description == string.Empty ? prototype.Description : listing.Description;
             var listingPrice = listing.Price;
-            var listingDesc = "This is the primary repo for Space Station 14. To prevent people forking RobustToolbox, a " +
-                "\"content\" pack is loaded by the client and server. This content pack contains everything needed to play the game on one specific server.";
             var canBuy = _loggedInUplinkAccount?.DataBalance >= listing.Price;
 
             var newListing = new UplinkListingControl(listingName, listingDesc, listingPrice, canBuy);

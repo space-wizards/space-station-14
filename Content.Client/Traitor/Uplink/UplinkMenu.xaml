@@ -11,11 +11,6 @@
                 <RichTextLabel Name="BalanceInfoProtected"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
-                <Label Text="{Loc 'uplink-user-interface-search-label'}"
-                       HorizontalAlignment="Right"/>
-                <LineEdit Name="SearchBar"
-                      MinWidth="200"
-                      HorizontalAlignment="Right"/>
             </BoxContainer>
             <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
