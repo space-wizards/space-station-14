@@ -9,7 +9,7 @@ namespace Content.Shared.CharacterAppearance.Systems
 {
     public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     {
-        // I tried to make this a shared class - apparently,
+        // I tried to make this a shared method - apparently,
         // updating components doesn't exactly work in the
         // shared namespace? It's an abstract method for now,
         // until somebody can fix this.
