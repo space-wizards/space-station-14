@@ -24,8 +24,8 @@ namespace Content.Server.Cabinet
         /// <summary>
         ///     The slot name, used to get the actual item slot from the ItemSlotsComponent.
         /// </summary>
-        [DataField("cabinetSlot", required: true)]
-        public ItemSlot CabinetSlot = default!;
+        [DataField("cabinetSlot")]
+        public ItemSlot CabinetSlot = new();
 
         /// <summary>
         ///     Whether the cabinet is currently open or not.

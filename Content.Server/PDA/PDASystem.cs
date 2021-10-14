@@ -26,12 +26,12 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
-            SubscribeLocalEvent<PDAComponent, ComponentShutdown>(OnComponentShutdown);
+            SubscribeLocalEvent<PDAComponent, ComponentRemove>(OnComponentRemove);
 
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
-            SubscribeLocalEvent<PDAComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
-            SubscribeLocalEvent<PDAComponent, EntRemovedFromContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<PDAComponent, EntInsertedIntoContainerMessage>(OnItemInserted);
+            SubscribeLocalEvent<PDAComponent, EntRemovedFromContainerMessage>(OnItemRemoved);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
 
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
@@ -50,7 +50,7 @@ namespace Content.Server.PDA
             _itemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
         }
 
-        private void OnComponentShutdown(EntityUid uid, PDAComponent pda, ComponentShutdown args)
+        private void OnComponentRemove(EntityUid uid, PDAComponent pda, ComponentRemove args)
         {
             _itemSlotsSystem.RemoveItemSlot(uid, pda.IdSlot);
             _itemSlotsSystem.RemoveItemSlot(uid, pda.PenSlot);
@@ -70,10 +70,19 @@ namespace Content.Server.PDA
             args.Handled = OpenUI(pda, args.User);
         }
 
-        private void OnContainerModified(EntityUid uid, PDAComponent pda, ContainerModifiedMessage args)
+        private void OnItemInserted(EntityUid uid, PDAComponent pda, EntInsertedIntoContainerMessage args)
         {
             if (args.Container.ID == pda.IdSlot.ID)
-                pda.ContainedID = pda.IdSlot.Item?.GetComponentOrNull<IdCardComponent>();
+                pda.ContainedID = args.Entity.GetComponentOrNull<IdCardComponent>();
+
+            UpdatePDAAppearance(pda);
+            UpdatePDAUserInterface(pda);
+        }
+
+        private void OnItemRemoved(EntityUid uid, PDAComponent pda, EntRemovedFromContainerMessage args)
+        {
+            if (args.Container.ID == pda.IdSlot.ID)
+                pda.ContainedID = null;
 
             UpdatePDAAppearance(pda);
             UpdatePDAUserInterface(pda);
@@ -135,6 +144,7 @@ namespace Content.Server.PDA
 
         private void OnUIMessage(PDAComponent pda, ServerBoundUserInterfaceMessage msg)
         {
+            // cast EntityUid? to EntityUid
             if (msg.Session.AttachedEntityUid is not EntityUid playerUid)
                 return;
 

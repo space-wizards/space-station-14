@@ -97,7 +97,9 @@
     idCard: ClownIDCard
     penSlot:
       startingItem: CrayonOrange # no pink crayon?!?
-      # Maybe this is a bad idea. At least they can't spam alt-click it without removing their ID card first.
+      # Maybe this is a bad idea. 
+      # At least they can't just spam alt-click it. 
+      # You need to remove the ID & alternate between inserting and ejecting
       ejectSound: /Audio/Items/bikehorn.ogg
       whitelist:
         tags:

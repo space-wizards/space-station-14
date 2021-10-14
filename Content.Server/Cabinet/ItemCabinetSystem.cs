@@ -21,8 +21,8 @@ namespace Content.Server.Cabinet
             base.Initialize();
 
             SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<ItemCabinetComponent, ComponentRemove>(OnComponentRemove);
             SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
-            SubscribeLocalEvent<ItemCabinetComponent, ComponentShutdown>(OnComponentShutdown);
 
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
@@ -35,16 +35,15 @@ namespace Content.Server.Cabinet
         {
             _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
         }
+        private void OnComponentRemove(EntityUid uid, ItemCabinetComponent cabinet, ComponentRemove args)
+        {
+            _itemSlotsSystem.RemoveItemSlot(uid, cabinet.CabinetSlot);
+        }
 
         private void OnComponentStartup(EntityUid uid, ItemCabinetComponent cabinet, ComponentStartup args)
         {
             UpdateAppearance(uid, cabinet);
             _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
-        }
-
-        private void OnComponentShutdown(EntityUid uid, ItemCabinetComponent cabinet, ComponentShutdown args)
-        {
-            _itemSlotsSystem.RemoveItemSlot(uid, cabinet.CabinetSlot);
         }
 
         private void UpdateAppearance(EntityUid uid,
@@ -85,13 +84,13 @@ namespace Content.Server.Cabinet
             args.Verbs.Add(toggleVerb);
         }
 
-        private void OnActivateInWorld(EntityUid uid, ItemCabinetComponent cabinet, ActivateInWorldEvent args)
+        private void OnActivateInWorld(EntityUid uid, ItemCabinetComponent comp, ActivateInWorldEvent args)
         {
             if (args.Handled)
                 return;
 
             args.Handled = true;
-            ToggleItemCabinet(uid, cabinet);
+            ToggleItemCabinet(uid, comp);
         }
 
         /// <summary>

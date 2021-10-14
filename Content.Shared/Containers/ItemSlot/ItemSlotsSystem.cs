@@ -27,7 +27,7 @@ namespace Content.Shared.Containers.ItemSlots
             base.Initialize();
 
             SubscribeLocalEvent<ItemSlotsComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<ItemSlotsComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<ItemSlotsComponent, ComponentInit>(Oninitialize);
 
             SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
@@ -55,16 +55,16 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void OnShutdown(EntityUid uid, ItemSlotsComponent itemSlots, ComponentShutdown args)
+        private void Oninitialize(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
         {
-            foreach (var slot in itemSlots.Slots.Values)
+            foreach (var (id, slot) in itemSlots.Slots)
             {
-                slot.ContainerSlot.Shutdown();
+                slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             }
         }
 
         /// <summary>
-        ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure it has an item
+        ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure the slot has an item
         ///     container.
         /// </summary>
         public void AddItemSlot(EntityUid uid, string id, ItemSlot slot)
@@ -77,11 +77,17 @@ namespace Content.Shared.Containers.ItemSlots
 
         public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
-            if (!Resolve(uid, ref itemSlots))
+            slot.ContainerSlot.Shutdown();
+
+            // Don't log missing resolves. when an entity has all it's components removed, the ItemSlotsComponent may
+            // have been removed before some other component that added an item slot.
+            if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return;
 
             itemSlots.Slots.Remove(slot.ID);
-            slot.ContainerSlot.Shutdown();
+
+            if (itemSlots.Slots.Count == 0)
+                EntityManager.RemoveComponent(uid, itemSlots);
         }
         #endregion
 

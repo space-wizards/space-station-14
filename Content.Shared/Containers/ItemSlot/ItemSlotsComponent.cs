@@ -24,6 +24,7 @@ namespace Content.Shared.Containers.ItemSlots
         public override string Name => "ItemSlots";
 
         [ViewVariables]
+        [DataField("slots")]
         public Dictionary<string, ItemSlot> Slots = new();
     }
 

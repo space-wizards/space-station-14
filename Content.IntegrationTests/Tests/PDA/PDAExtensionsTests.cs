@@ -29,13 +29,12 @@ namespace Content.IntegrationTests.Tests.PDA
   id: {PdaDummy}
   name: {PdaDummy}
   components:
-  - type: ItemSlots
-    slots:
-      pdaIdSlot:
-        whitelist:
-          components:
-            - IdCard
   - type: PDA
+    idSlot:
+      name: ID Card
+      whitelist:
+        components:
+        - IdCard
   - type: Item";
 
         [Test]
