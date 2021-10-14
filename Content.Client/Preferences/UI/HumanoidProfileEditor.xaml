@@ -1,16 +1,14 @@
 <Control xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
-         xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI"
-         xmlns:style="clr-namespace:Content.Client.Stylesheets">
+         xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI">
     <BoxContainer Orientation="Horizontal">
-        <!-- Left 'side' (vBox) -->
+        <!-- Left side -->
         <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
-            <!-- MiddleContainer -->
+            <!-- Middle container -->
             <BoxContainer Orientation="Horizontal" SeparationOverride="10">
-                <!-- leftColumn -->
+                <!-- Name box-->
                 <BoxContainer Orientation="Vertical">
-                    <!-- Randomizer -->
                     <prefUi:HighlightedContainer>
                         <BoxContainer Orientation="Vertical">
                             <prefUi:HighlightedContainer>
@@ -31,9 +29,8 @@
                         </BoxContainer>
                     </prefUi:HighlightedContainer>
                 </BoxContainer>
-                <!-- Right Column -->
+                <!-- Import/Export -->
                 <BoxContainer Orientation="Vertical">
-                    <!-- Import/Export -->
                     <prefUi:HighlightedContainer>
                         <BoxContainer Orientation="Horizontal">
                             <Button Text="{Loc 'humanoid-profile-editor-import-button'}" Disabled="True"
@@ -60,7 +57,6 @@
                                 <prefUi:HighlightedContainer>
                                     <BoxContainer Orientation="Horizontal">
                                         <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
-                                        <!-- Remember to add these to a button group sexButtonGroup. -->
                                         <Button Name="CSexMale" Text="{Loc 'humanoid-profile-editor-sex-male-button'}" />
                                         <Button Name="CSexFemale" Text="{Loc 'humanoid-profile-editor-sex-female-button'}" />
                                     </BoxContainer>

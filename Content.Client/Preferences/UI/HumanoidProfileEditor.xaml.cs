@@ -48,23 +48,6 @@ namespace Content.Client.Preferences.UI
     [GenerateTypedNameReferences]
     public partial class HumanoidProfileEditor : Control
     {
-        public static readonly StyleBoxFlat HighlightedStyle = new()
-        {
-            BackgroundColor = new Color(47, 47, 53),
-            ContentMarginTopOverride = 10,
-            ContentMarginBottomOverride = 10,
-            ContentMarginLeftOverride = 10,
-            ContentMarginRightOverride = 10
-        };
-
-        private static Control HighlightedContainer()
-        {
-            return new PanelContainer
-            {
-                PanelOverride = HighlightedStyle
-            };
-        }
-
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
         private Button _nameRandomButton => CNameRandomize;
@@ -218,7 +201,6 @@ namespace Content.Client.Preferences.UI
                     Profile.Appearance.WithFacialHairStyleName(newStyle));
                 IsDirty = true;
             };
-            var test = HighlightedContainer();
 
             _facialHairPicker.OnHairColorPicked += newColor =>
             {
