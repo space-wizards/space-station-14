@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using System.Resources;
@@ -42,16 +43,6 @@ namespace Content.Shared.StatusEffect
                     {
                         TryRemoveStatusEffect(status.Owner.Uid, state.Key, status);
                     }
-
-                    if (state.Value.RelevantComponent == null) continue;
-                    var type = _componentFactory.GetRegistration(state.Value.RelevantComponent).Type;
-
-                    if (EntityManager.HasComponent(status.Owner.Uid, type))
-                        continue;
-
-                    var comp = (Component) _componentFactory.GetComponent(type);
-                    comp.Owner = status.Owner;
-                    EntityManager.AddComponent(status.Owner.Uid, comp);
                 }
             }
         }
@@ -77,18 +68,7 @@ namespace Content.Shared.StatusEffect
                     }
 
                     var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
-                    if (effect.Value.RelevantComponent != null)
-                    {
-                        // ugly! but addcomp has a constraint of : Component, whereas removecomp does not.. so
-                        TryAddStatusEffect(uid, effect.Key, time);
-
-                        component.ActiveEffects[effect.Key].RelevantComponent = effect.Value.RelevantComponent;
-
-                    }
-                    else
-                    {
-                        TryAddStatusEffect(uid, effect.Key, time);
-                    }
+                    TryAddStatusEffect(uid, effect.Key, time);
                 }
             }
         }

@@ -34,6 +34,9 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<KnockedDownComponent, ComponentInit>(OnKnockInit);
             SubscribeLocalEvent<KnockedDownComponent, ComponentRemove>(OnKnockRemove);
 
+            SubscribeLocalEvent<SlowedDownComponent, ComponentInit>(OnSlowInit);
+            SubscribeLocalEvent<SlowedDownComponent, ComponentRemove>(OnSlowRemove);
+
             SubscribeLocalEvent<SlowedDownComponent, ComponentGetState>(OnSlowGetState);
             SubscribeLocalEvent<SlowedDownComponent, ComponentHandleState>(OnSlowHandleState);
 
@@ -53,7 +56,6 @@ namespace Content.Shared.Stunnable
             SubscribeLocalEvent<StunnedComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<StunnedComponent, EquipAttemptEvent>(OnEquipAttempt);
             SubscribeLocalEvent<StunnedComponent, UnequipAttemptEvent>(OnUnequipAttempt);
-            SubscribeLocalEvent<StunnedComponent, StandAttemptEvent>(OnStandAttempt);
         }
 
         private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
@@ -92,6 +94,26 @@ namespace Content.Shared.Stunnable
         private void OnKnockRemove(EntityUid uid, KnockedDownComponent component, ComponentRemove args)
         {
             _standingStateSystem.Stand(uid);
+        }
+
+        private void OnSlowInit(EntityUid uid, SlowedDownComponent component, ComponentInit args)
+        {
+            // needs to be done so the client can also refresh when the addition is replicated,
+            // if the initial status effect addition wasn't predicted
+            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var move))
+            {
+                move.RefreshMovementSpeedModifiers();
+            }
+        }
+
+        private void OnSlowRemove(EntityUid uid, SlowedDownComponent component, ComponentRemove args)
+        {
+            if (EntityManager.TryGetComponent<MovementSpeedModifierComponent>(uid, out var move))
+            {
+                component.SprintSpeedModifier = 1.0f;
+                component.WalkSpeedModifier = 1.0f;
+                move.RefreshMovementSpeedModifiers();
+            }
         }
 
         // TODO STUN: Make events for different things. (Getting modifiers, attempt events, informative events...)
@@ -232,11 +254,6 @@ namespace Content.Shared.Stunnable
         }
 
         private void OnUnequipAttempt(EntityUid uid, StunnedComponent stunned, UnequipAttemptEvent args)
-        {
-            args.Cancel();
-        }
-
-        private void OnStandAttempt(EntityUid uid, StunnedComponent stunned, StandAttemptEvent args)
         {
             args.Cancel();
         }
