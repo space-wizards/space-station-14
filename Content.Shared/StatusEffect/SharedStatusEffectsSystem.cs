@@ -195,7 +195,7 @@ namespace Content.Shared.StatusEffect
             if (state.RelevantComponent != null)
             {
                 var type = _componentFactory.GetRegistration(state.RelevantComponent).Type;
-                //EntityManager.RemoveComponent(uid, type);
+                EntityManager.RemoveComponent(uid, type);
             }
 
             if (proto.Alert != null && alerts != null)
