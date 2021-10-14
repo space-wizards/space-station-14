@@ -49,8 +49,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
-  - type: Window
+  - type: IconSmooth
+    key: windows
     base: window
+  - type: Window
   - type: Construction
     graph: window
     node: window
