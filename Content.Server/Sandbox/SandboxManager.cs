@@ -135,9 +135,9 @@ namespace Content.Server.Sandbox
                     if (pda.ContainedID == null)
                     {
                         var newID = CreateFreshId();
-                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
+                        if (pda.Owner.TryGetComponent(out ItemSlotsComponent? itemSlots))
                         {
-                            _entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
+                            _entityManager.EntitySysManager.GetEntitySystem<ItemSlotsSystem>().
                                 TryInsert(wornItem.Owner.Uid, pda.IdSlot, newID);
                         }
                     }

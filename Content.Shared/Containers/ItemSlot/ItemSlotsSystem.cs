@@ -18,7 +18,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// <summary>
     ///     A class that handles interactions related to inserting/ejecting items into/from an item slot.
     /// </summary>
-    public class SharedItemSlotsSystem : EntitySystem
+    public class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
@@ -26,24 +26,24 @@ namespace Content.Shared.Containers.ItemSlots
         {
             base.Initialize();
 
-            SubscribeLocalEvent<SharedItemSlotsComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<SharedItemSlotsComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<ItemSlotsComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<ItemSlotsComponent, ComponentShutdown>(OnShutdown);
 
-            SubscribeLocalEvent<SharedItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<SharedItemSlotsComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<ItemSlotsComponent, InteractUsingEvent>(OnInteractUsing);
+            SubscribeLocalEvent<ItemSlotsComponent, InteractHandEvent>(OnInteractHand);
 
-            SubscribeLocalEvent<SharedItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
-            SubscribeLocalEvent<SharedItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetAlternativeVerbsEvent>(AddEjectVerbs);
+            SubscribeLocalEvent<ItemSlotsComponent, GetInteractionVerbsEvent>(AddInteractionVerbsVerbs);
 
-            SubscribeLocalEvent<SharedItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
-            SubscribeLocalEvent<SharedItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
+            SubscribeLocalEvent<ItemSlotsComponent, ComponentGetState>(GetItemSlotsState);
+            SubscribeLocalEvent<ItemSlotsComponent, ComponentHandleState>(HandleItemSlotsState);
         }
 
         #region ComponentManagement
         /// <summary>
         ///     Spawn in starting items for any item slots that should have one.
         /// </summary>
-        private void OnStartup(EntityUid uid, SharedItemSlotsComponent itemSlots, ComponentStartup args)
+        private void OnStartup(EntityUid uid, ItemSlotsComponent itemSlots, ComponentStartup args)
         {
             foreach (var slot in itemSlots.Slots.Values)
             {
@@ -55,7 +55,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void OnShutdown(EntityUid uid, SharedItemSlotsComponent itemSlots, ComponentShutdown args)
+        private void OnShutdown(EntityUid uid, ItemSlotsComponent itemSlots, ComponentShutdown args)
         {
             foreach (var slot in itemSlots.Slots.Values)
             {
@@ -64,12 +64,12 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
-        ///     Given a new item slot, store it in the <see cref="SharedItemSlotsComponent"/> and ensure it has an item
+        ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure it has an item
         ///     container.
         /// </summary>
         public void RegisterItemSlot(EntityUid uid, string id, ItemSlot slot)
         {
-            var itemSlots = EntityManager.EnsureComponent<SharedItemSlotsComponent>(uid);
+            var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
             ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             DebugTools.Assert(!itemSlots.Slots.ContainsKey(id));
             itemSlots.Slots.Add(id, slot);
@@ -80,7 +80,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Attempt to take an item from a slot, if any are set to EjectOnInteract.
         /// </summary>
-        private void OnInteractHand(EntityUid uid, SharedItemSlotsComponent itemSlots, InteractHandEvent args)
+        private void OnInteractHand(EntityUid uid, ItemSlotsComponent itemSlots, InteractHandEvent args)
         {
             if (args.Handled)
                 return;
@@ -105,7 +105,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     other interactions to still happen (e.g., open UI, or toggle-open), despite the user holding an item.
         ///     Maybe this is undesirable.
         /// </remarks>
-        private void OnInteractUsing(EntityUid uid, SharedItemSlotsComponent itemSlots, InteractUsingEvent args)
+        private void OnInteractUsing(EntityUid uid, ItemSlotsComponent itemSlots, InteractUsingEvent args)
         {
             if (args.Handled)
                 return;
@@ -170,7 +170,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Tries to insert item into a specific slot.
         /// </summary>
         /// <returns>False if failed to insert item</returns>
-        public bool TryInsert(EntityUid uid, string id, IEntity item, SharedItemSlotsComponent? itemSlots = null)
+        public bool TryInsert(EntityUid uid, string id, IEntity item, ItemSlotsComponent? itemSlots = null)
         {
             if (!Resolve(uid, ref itemSlots))
                 return false;
@@ -230,7 +230,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot.
         /// </summary>
         /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted</returns>
-        public bool TryEject(EntityUid uid, string id, [NotNullWhen(true)] out IEntity? item, SharedItemSlotsComponent? itemSlots = null)
+        public bool TryEject(EntityUid uid, string id, [NotNullWhen(true)] out IEntity? item, ItemSlotsComponent? itemSlots = null)
         {
             item = null;
 
@@ -262,7 +262,7 @@ namespace Content.Shared.Containers.ItemSlots
         #endregion
 
         #region Verbs
-        private void AddEjectVerbs(EntityUid uid, SharedItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
+        private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -293,7 +293,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void AddInteractionVerbsVerbs(EntityUid uid, SharedItemSlotsComponent itemSlots, GetInteractionVerbsEvent args)
+        private void AddInteractionVerbsVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetInteractionVerbsEvent args)
         {
             if (args.Hands == null || !args.CanAccess || !args.CanInteract)
                 return;
@@ -351,7 +351,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Get the contents of some item slot.
         /// </summary>
-        public IEntity? GetItem(EntityUid uid, string id, SharedItemSlotsComponent? itemSlots = null)
+        public IEntity? GetItem(EntityUid uid, string id, ItemSlotsComponent? itemSlots = null)
         {
             if (!Resolve(uid, ref itemSlots))
                 return null;
@@ -362,7 +362,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Lock an item slot. This stops items from being inserted into or ejected from this slot.
         /// </summary>
-        public void SetLock(EntityUid uid, string id, bool locked, SharedItemSlotsComponent? itemSlots = null)
+        public void SetLock(EntityUid uid, string id, bool locked, ItemSlotsComponent? itemSlots = null)
         {
             if (!Resolve(uid, ref itemSlots))
                 return;
@@ -376,7 +376,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// <summary>
         ///     Lock an item slot. This stops items from being inserted into or ejected from this slot.
         /// </summary>
-        public void SetLock(SharedItemSlotsComponent itemSlots, ItemSlot slot, bool locked)
+        public void SetLock(ItemSlotsComponent itemSlots, ItemSlot slot, bool locked)
         {
             slot.Locked = locked;
             itemSlots.Dirty();
@@ -389,7 +389,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Note that the slot's ContainerSlot performs its own networking, so we don't need to send information
         ///     about the contained entity.
         /// </remarks>
-        private void HandleItemSlotsState(EntityUid uid, SharedItemSlotsComponent component, ref ComponentHandleState args)
+        private void HandleItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is not ItemSlotManagerState state)
                 return;
@@ -400,7 +400,7 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
-        private void GetItemSlotsState(EntityUid uid, SharedItemSlotsComponent component, ref ComponentGetState args)
+        private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
         {
             args.State = new ItemSlotManagerState(component.Slots);
         }

@@ -18,8 +18,8 @@ namespace Content.Shared.Containers.ItemSlots
     ///     insert/eject interactions.
     /// </summary>
     [RegisterComponent]
-    [Friend(typeof(SharedItemSlotsSystem))]
-    public class SharedItemSlotsComponent : Component
+    [Friend(typeof(ItemSlotsSystem))]
+    public class ItemSlotsComponent : Component
     {
         public override string Name => "ItemSlots";
 
@@ -49,7 +49,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// </summary>
     [Serializable]
     [DataDefinition]
-    [Friend(typeof(SharedItemSlotsSystem))]
+    [Friend(typeof(ItemSlotsSystem))]
     public class ItemSlot
     {
         [DataField("whitelist")]

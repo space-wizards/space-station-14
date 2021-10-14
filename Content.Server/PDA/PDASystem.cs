@@ -17,7 +17,7 @@ namespace Content.Server.PDA
 {
     public class PDASystem : EntitySystem
     {
-        [Dependency] private readonly SharedItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly UplinkSystem _uplinkSystem = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 

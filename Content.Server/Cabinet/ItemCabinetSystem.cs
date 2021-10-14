@@ -14,7 +14,7 @@ namespace Content.Server.Cabinet
 {
     public class ItemCabinetSystem : EntitySystem
     {
-        [Dependency] private readonly SharedItemSlotsSystem _itemSlotsSystem = default!;
+        [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
 
         public override void Initialize()
         {
