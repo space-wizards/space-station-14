@@ -65,7 +65,7 @@ namespace Content.Server.Buckle.Components
         /// Don't change it unless you really have to
         /// </summary>
         [DataField("maxBuckleDistance", required: false)]
-        public float MaxBuckleDistance = 0.2f;
+        public float MaxBuckleDistance = .3f;
 
         /// <summary>
         /// You can specify the offset the entity will have after unbuckling.

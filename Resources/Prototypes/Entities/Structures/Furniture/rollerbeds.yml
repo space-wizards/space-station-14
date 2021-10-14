@@ -4,6 +4,8 @@
   name: rollerbed
   description: Used to carry patients around without damaging them.
   components:
+    - type: Transform
+      noRot: true
     - type: Item
       size: 5
     - type: Sprite
@@ -15,7 +17,6 @@
       soundHit: /Audio/Effects/bang.ogg
     - type: InteractionOutline
     - type: Physics
-      bodyType: Dynamic
       fixtures:
         - shape:
             !type:PhysShapeAabb
