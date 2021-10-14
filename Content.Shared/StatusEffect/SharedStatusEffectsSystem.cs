@@ -97,8 +97,12 @@ namespace Content.Shared.StatusEffect
 
             if (TryAddStatusEffect(uid, key, time, status, alerts))
             {
-                var comp = EntityManager.AddComponent<T>(uid);
-                status.ActiveEffects[key].RelevantComponent = comp.Name;
+                // If they already have the comp, we just won't bother updating anything.
+                if (!EntityManager.HasComponent<T>(uid))
+                {
+                    var comp = EntityManager.AddComponent<T>(uid);
+                    status.ActiveEffects[key].RelevantComponent = comp.Name;
+                }
                 return true;
             }
 
@@ -117,6 +121,9 @@ namespace Content.Shared.StatusEffect
         /// <remarks>
         ///     This obviously does not add any actual 'effects' on its own. Use the generic overload,
         ///     which takes in a component type, if you want to automatically add and remove a component.
+        ///
+        ///     If the effect already exists, it will simply replace the cooldown with the new one given.
+        ///     If you want special 'effect merging' behavior, do it your own damn self!
         /// </remarks>
         public bool TryAddStatusEffect(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status=null,
@@ -134,16 +141,52 @@ namespace Content.Shared.StatusEffect
             var proto = _prototypeManager.Index<StatusEffectPrototype>(key);
 
             ValueTuple<TimeSpan, TimeSpan> cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
-            status.ActiveEffects.Add(key, new StatusEffectState(cooldown, null));
+
+            // If they already have this status effect, just bulldoze its cooldown in favor of the new one
+            // and keep the relevant component the same.
+            if (HasStatusEffect(uid, key, status))
+            {
+                status.ActiveEffects[key] = new StatusEffectState(cooldown, status.ActiveEffects[key].RelevantComponent);
+            }
+            else
+            {
+                status.ActiveEffects.Add(key, new StatusEffectState(cooldown, null));
+            }
 
             if (proto.Alert != null && alerts != null)
             {
-                alerts.ShowAlert(proto.Alert.Value, cooldown: cooldown);
+                alerts.ShowAlert(proto.Alert.Value, cooldown: GetAlertCooldown(uid, proto.Alert.Value, status));
             }
 
             status.Dirty();
             // event?
             return true;
+        }
+
+        /// <summary>
+        ///     Finds the maximum cooldown among all status effects with the same alert
+        /// </summary>
+        /// <remarks>
+        ///     This is mostly for stuns, since Stun and Knockdown share an alert key. Other times this pretty much
+        ///     will not be useful.
+        /// </remarks>
+        private (TimeSpan, TimeSpan)? GetAlertCooldown(EntityUid uid, AlertType alert, StatusEffectsComponent status)
+        {
+            (TimeSpan, TimeSpan)? maxCooldown = null;
+            foreach (var kvp in status.ActiveEffects)
+            {
+                var proto = _prototypeManager.Index<StatusEffectPrototype>(kvp.Key);
+
+                if (proto.Alert == alert)
+                {
+                    if (maxCooldown == null || kvp.Value.Cooldown.Item2 > maxCooldown.Value.Item2)
+                    {
+                        maxCooldown = kvp.Value.Cooldown;
+                    }
+                }
+            }
+
+            return maxCooldown;
         }
 
         /// <summary>
@@ -250,11 +293,6 @@ namespace Content.Shared.StatusEffect
             if (!status.AllowedEffects.Contains(key) && !proto.AlwaysAllowed)
                 return false;
 
-            // not our job!! handle updating it yourself, since different effects probably want to merge
-            // active/adding effects differently.
-            if (status.ActiveEffects.ContainsKey(key))
-                return false;
-
             return true;
         }
 
@@ -307,6 +345,23 @@ namespace Content.Shared.StatusEffect
             return true;
         }
 
-        // TODO remove/add time from an effect
+        /// <summary>
+        ///     Use if you want to set a cooldown directly.
+        /// </summary>
+        /// <remarks>
+        ///     Not used internally; just sets it itself.
+        /// </remarks>
+        public bool TrySetTime(EntityUid uid, string key, TimeSpan time,
+            StatusEffectsComponent? status = null)
+        {
+            if (!Resolve(uid, ref status, true))
+                return false;
+
+            if (!HasStatusEffect(uid, key, status))
+                return false;
+
+            status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+            return true;
+        }
     }
 }
