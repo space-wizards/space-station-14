@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodNoodlesBase
   abstract: true
   description: Now that's a nice pasta!
@@ -14,7 +14,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 25
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
