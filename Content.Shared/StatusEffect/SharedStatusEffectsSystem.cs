@@ -182,7 +182,7 @@ namespace Content.Shared.StatusEffect
             StatusEffectsComponent? status=null,
             SharedAlertsComponent? alerts=null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
             if (!status.ActiveEffects.ContainsKey(key))
                 return false;
@@ -221,7 +221,7 @@ namespace Content.Shared.StatusEffect
             StatusEffectsComponent? status = null,
             SharedAlertsComponent? alerts = null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             Resolve(uid, ref alerts, false);
