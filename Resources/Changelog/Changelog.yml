@@ -2445,3 +2445,9 @@ Entries:
   changes: []
   id: 437
   time: '2021-10-13T21:04:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
+      hit., type: Tweak}
+  id: 438
+  time: '2021-10-14T18:02:08.0000000+00:00'
