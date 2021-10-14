@@ -26,12 +26,13 @@ namespace Content.Server.PDA
             base.Initialize();
 
             SubscribeLocalEvent<PDAComponent, ComponentInit>(OnComponentInit);
+            SubscribeLocalEvent<PDAComponent, ComponentShutdown>(OnComponentShutdown);
 
             SubscribeLocalEvent<PDAComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<PDAComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<PDAComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<PDAComponent, EntRemovedFromContainerMessage>(OnContainerModified);
             SubscribeLocalEvent<PDAComponent, LightToggleEvent>(OnLightToggle);
-
-            SubscribeLocalEvent<PDAComponent, ContainerModifiedMessage>(OnContainerModified);
 
             SubscribeLocalEvent<PDAComponent, UplinkInitEvent>(OnUplinkInit);
             SubscribeLocalEvent<PDAComponent, UplinkRemovedEvent>(OnUplinkRemoved);
@@ -45,8 +46,14 @@ namespace Content.Server.PDA
 
             if (pda.IdCard != null)
                 pda.IdSlot.StartingItem = pda.IdCard;
-            _itemSlotsSystem.RegisterItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
-            _itemSlotsSystem.RegisterItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
+            _itemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-id", pda.IdSlot);
+            _itemSlotsSystem.AddItemSlot(uid, $"{pda.Name}-pen", pda.PenSlot);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, PDAComponent pda, ComponentShutdown args)
+        {
+            _itemSlotsSystem.RemoveItemSlot(uid, pda.IdSlot);
+            _itemSlotsSystem.RemoveItemSlot(uid, pda.PenSlot);
         }
 
         private void OnUse(EntityUid uid, PDAComponent pda, UseInHandEvent args)

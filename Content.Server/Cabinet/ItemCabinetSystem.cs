@@ -22,22 +22,29 @@ namespace Content.Server.Cabinet
 
             SubscribeLocalEvent<ItemCabinetComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<ItemCabinetComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<ItemCabinetComponent, ComponentShutdown>(OnComponentShutdown);
 
             SubscribeLocalEvent<ItemCabinetComponent, ActivateInWorldEvent>(OnActivateInWorld);
             SubscribeLocalEvent<ItemCabinetComponent, GetActivationVerbsEvent>(AddToggleOpenVerb);
 
-            SubscribeLocalEvent<ItemCabinetComponent, ContainerModifiedMessage>(OnContainerModified);
+            SubscribeLocalEvent<ItemCabinetComponent, EntInsertedIntoContainerMessage>(OnContainerModified);
+            SubscribeLocalEvent<ItemCabinetComponent, EntRemovedFromContainerMessage>(OnContainerModified);
         }
 
         private void OnComponentInit(EntityUid uid, ItemCabinetComponent cabinet, ComponentInit args)
         {
-            _itemSlotsSystem.RegisterItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
+            _itemSlotsSystem.AddItemSlot(uid, cabinet.Name, cabinet.CabinetSlot);
         }
 
         private void OnComponentStartup(EntityUid uid, ItemCabinetComponent cabinet, ComponentStartup args)
         {
             UpdateAppearance(uid, cabinet);
             _itemSlotsSystem.SetLock(uid, cabinet.CabinetSlot.ID, !cabinet.Opened);
+        }
+
+        private void OnComponentShutdown(EntityUid uid, ItemCabinetComponent cabinet, ComponentShutdown args)
+        {
+            _itemSlotsSystem.RemoveItemSlot(uid, cabinet.CabinetSlot);
         }
 
         private void UpdateAppearance(EntityUid uid,

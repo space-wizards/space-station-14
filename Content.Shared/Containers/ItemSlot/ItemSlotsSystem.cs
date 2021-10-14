@@ -67,12 +67,21 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Given a new item slot, store it in the <see cref="ItemSlotsComponent"/> and ensure it has an item
         ///     container.
         /// </summary>
-        public void RegisterItemSlot(EntityUid uid, string id, ItemSlot slot)
+        public void AddItemSlot(EntityUid uid, string id, ItemSlot slot)
         {
             var itemSlots = EntityManager.EnsureComponent<ItemSlotsComponent>(uid);
-            ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
+            slot.ContainerSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(itemSlots.Owner, id);
             DebugTools.Assert(!itemSlots.Slots.ContainsKey(id));
-            itemSlots.Slots.Add(id, slot);
+            itemSlots.Slots[id] = slot;
+        }
+
+        public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
+        {
+            if (!Resolve(uid, ref itemSlots))
+                return;
+
+            itemSlots.Slots.Remove(slot.ID);
+            slot.ContainerSlot.Shutdown();
         }
         #endregion
 
@@ -141,7 +150,6 @@ namespace Content.Shared.Containers.ItemSlots
         {
             slot.ContainerSlot.Insert(item);
             // ContainerSlot automatically raises a directed EntInsertedIntoContainerMessage
-            // This also inherits from the more general ContainerModifiedMessage
 
             if (slot.InsertSound != null)
                 SoundSystem.Play(Filter.Pvs(uid), slot.InsertSound.GetSound(), uid);
@@ -204,7 +212,6 @@ namespace Content.Shared.Containers.ItemSlots
         {
             slot.ContainerSlot.Remove(item);
             // ContainerSlot automatically raises a directed EntRemovedFromContainerMessage
-            // This also inherits from the more general ContainerModifiedMessage
 
             if (slot.EjectSound != null)
                 SoundSystem.Play(Filter.Pvs(uid), slot.EjectSound.GetSound(), uid);

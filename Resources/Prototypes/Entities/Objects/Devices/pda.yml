@@ -41,6 +41,8 @@
         - Write
     idSlot:
       name: ID Card
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
       whitelist:
         components:
         - IdCard
@@ -92,22 +94,14 @@
   description: Looks can be deceiving.
   components:
   - type: PDA
-    idSlot:
-      name: ID Card
-      # Maybe this is a bad idea
-      insertSound:
-        path: /Audio/Items/bikehorn.ogg
-      ejectSound:
-        path: /Audio/Items/bikehorn.ogg
-      whitelist:
-        components:
-        - IdCard
+    idCard: ClownIDCard
     penSlot:
-      startingItem: CrayonOrange # wheres the pink one?
+      startingItem: CrayonOrange # no pink crayon?!?
+      # Maybe this is a bad idea. At least they can't spam alt-click it without removing their ID card first.
+      ejectSound: /Audio/Items/bikehorn.ogg
       whitelist:
         tags:
         - Write
-    idCard: ClownIDCard
   - type: Appearance
     visuals:
       - type: PDAVisualizer
@@ -142,12 +136,12 @@
   description: Suprisingly not on mute.
   components:
   - type: PDA
+    idCard: MimeIDCard
     idSlot:
       name: ID Card
       whitelist:
         components:
         - IdCard
-    idCard: MimeIDCard
   - type: Appearance
     visuals:
       - type: PDAVisualizer

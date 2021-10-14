@@ -47,7 +47,6 @@ namespace Content.Shared.Containers.ItemSlots
     ///     This is effectively a wrapper for a ContainerSlot that adds content functionality like entity whitelists and
     ///     insert/eject sounds.
     /// </summary>
-    [Serializable]
     [DataDefinition]
     [Friend(typeof(ItemSlotsSystem))]
     public class ItemSlot
@@ -56,10 +55,12 @@ namespace Content.Shared.Containers.ItemSlots
         public EntityWhitelist? Whitelist;
 
         [DataField("insertSound")]
-        public SoundSpecifier? InsertSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/batrifle_magin.ogg");
+        public SoundSpecifier? InsertSound;
+        // maybe default to /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg ??
 
         [DataField("ejectSound")]
-        public SoundSpecifier? EjectSound = new SoundPathSpecifier("/Audio/Machines/id_swipe.ogg");
+        public SoundSpecifier? EjectSound;
+        // maybe default to /Audio/Machines/id_swipe.ogg?
 
         /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
@@ -96,7 +97,8 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("ejectOnInteract")]
         public bool EjectOnInteract = false;
 
-        [ViewVariables] public ContainerSlot ContainerSlot = default!;
+        [ViewVariables]
+        public ContainerSlot ContainerSlot = default!;
 
         public string ID => ContainerSlot.ID;
 
