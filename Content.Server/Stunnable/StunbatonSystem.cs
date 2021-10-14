@@ -9,6 +9,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Jittering;
 using Content.Shared.Popups;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
@@ -26,6 +27,7 @@ namespace Content.Server.Stunnable
     public class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -140,6 +142,7 @@ namespace Content.Server.Stunnable
                     _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
 
+            _jitterSystem.DoJitter(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime));
 
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;

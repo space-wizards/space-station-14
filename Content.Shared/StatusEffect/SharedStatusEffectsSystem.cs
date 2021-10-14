@@ -245,9 +245,9 @@ namespace Content.Shared.StatusEffect
             // don't log since stuff calling this prolly doesn't care if we don't actually have it
             if (!Resolve(uid, ref status, false))
                 return false;
-            if (!_prototypeManager.HasIndex<StatusEffectPrototype>(key))
+            if (!_prototypeManager.TryIndex<StatusEffectPrototype>(key, out var proto))
                 return false;
-            if (!status.AllowedEffects.Contains(key))
+            if (!status.AllowedEffects.Contains(key) && !proto.AlwaysAllowed)
                 return false;
 
             // not our job!! handle updating it yourself, since different effects probably want to merge

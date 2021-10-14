@@ -12,5 +12,12 @@ namespace Content.Shared.StatusEffect
 
         [DataField("alert")]
         public AlertType? Alert { get; }
+
+        /// <summary>
+        ///     Whether a status effect should be able to apply to any entity,
+        ///     regardless of whether it is in ALlowedEffects or not.
+        /// </summary>
+        [DataField("alwaysAllowed")]
+        public bool AlwaysAllowed { get; }
     }
 }

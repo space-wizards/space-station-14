@@ -11,3 +11,7 @@
 
 - type: statusEffect
   id: SlowedDown
+
+- type: statusEffect
+  id: Jitter
+  alwaysAllowed: true
