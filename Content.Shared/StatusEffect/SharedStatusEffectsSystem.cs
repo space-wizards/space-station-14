@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
+using System.Resources;
 using Content.Shared.Alert;
 using Robust.Shared.Exceptions;
 using Robust.Shared.GameObjects;
@@ -14,6 +16,7 @@ namespace Content.Shared.StatusEffect
     public class SharedStatusEffectsSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
@@ -39,21 +42,54 @@ namespace Content.Shared.StatusEffect
                     {
                         TryRemoveStatusEffect(status.Owner.Uid, state.Key, status);
                     }
+
+                    if (state.Value.RelevantComponent == null) continue;
+                    var type = _componentFactory.GetRegistration(state.Value.RelevantComponent).Type;
+
+                    if (EntityManager.HasComponent(status.Owner.Uid, type))
+                        continue;
+
+                    var comp = (Component) _componentFactory.GetComponent(type);
+                    comp.Owner = status.Owner;
+                    EntityManager.AddComponent(status.Owner.Uid, comp);
                 }
             }
         }
 
-        private void OnGetState(EntityUid uid, StatusEffectsComponent component, ComponentGetState args)
+        private void OnGetState(EntityUid uid, StatusEffectsComponent component, ref ComponentGetState args)
         {
             args.State = new StatusEffectsComponentState(component.ActiveEffects, component.AllowedEffects);
         }
 
-        private void OnHandleState(EntityUid uid, StatusEffectsComponent component, ComponentHandleState args)
+        private void OnHandleState(EntityUid uid, StatusEffectsComponent component, ref ComponentHandleState args)
         {
             if (args.Current is StatusEffectsComponentState state)
             {
-                component.ActiveEffects = state.ActiveEffects;
                 component.AllowedEffects = state.AllowedEffects;
+
+                foreach (var effect in state.ActiveEffects)
+                {
+                    // don't bother with anything if we already have it
+                    if (component.ActiveEffects.ContainsKey(effect.Key))
+                    {
+                        component.ActiveEffects[effect.Key] = effect.Value;
+                        continue;
+                    }
+
+                    var time = effect.Value.Cooldown.Item2 - effect.Value.Cooldown.Item1;
+                    if (effect.Value.RelevantComponent != null)
+                    {
+                        // ugly! but addcomp has a constraint of : Component, whereas removecomp does not.. so
+                        TryAddStatusEffect(uid, effect.Key, time);
+
+                        component.ActiveEffects[effect.Key].RelevantComponent = effect.Value.RelevantComponent;
+
+                    }
+                    else
+                    {
+                        TryAddStatusEffect(uid, effect.Key, time);
+                    }
+                }
             }
         }
 
@@ -81,7 +117,8 @@ namespace Content.Shared.StatusEffect
 
             if (TryAddStatusEffect(uid, key, time, status, alerts))
             {
-                status.ActiveEffects[key].RelevantComponent = EntityManager.AddComponent<T>(uid);
+                var comp = EntityManager.AddComponent<T>(uid);
+                status.ActiveEffects[key].RelevantComponent = comp.Name;
                 return true;
             }
 
@@ -157,7 +194,8 @@ namespace Content.Shared.StatusEffect
             var state = status.ActiveEffects[key];
             if (state.RelevantComponent != null)
             {
-                EntityManager.RemoveComponent(uid, state.RelevantComponent);
+                var type = _componentFactory.GetRegistration(state.RelevantComponent).Type;
+                //EntityManager.RemoveComponent(uid, type);
             }
 
             if (proto.Alert != null && alerts != null)
@@ -224,7 +262,8 @@ namespace Content.Shared.StatusEffect
         public bool CanApplyEffect(EntityUid uid, string key,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status, true))
+            // don't log since stuff calling this prolly doesn't care if we don't actually have it
+            if (!Resolve(uid, ref status, false))
                 return false;
             if (!_prototypeManager.HasIndex<StatusEffectPrototype>(key))
                 return false;

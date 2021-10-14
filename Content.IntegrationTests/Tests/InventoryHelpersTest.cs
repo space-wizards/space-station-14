@@ -24,7 +24,9 @@ namespace Content.IntegrationTests.Tests
   id: InventoryStunnableDummy
   components:
   - type: Inventory
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
 
 - type: entity
   name: InventoryJumpsuitJanitorDummy

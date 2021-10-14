@@ -27,6 +27,7 @@ namespace Content.Shared.StatusEffect
     /// <summary>
     ///     Holds information about an active status effect.
     /// </summary>
+    [Serializable, NetSerializable]
     public class StatusEffectState
     {
         /// <summary>
@@ -35,12 +36,12 @@ namespace Content.Shared.StatusEffect
         public ValueTuple<TimeSpan, TimeSpan> Cooldown;
 
         /// <summary>
-        ///     The relevant component that was added alongside the effect,
-        ///     if any.
+        ///     The name of the relevant component that
+        ///     was added alongside the effect, if any.
         /// </summary>
-        public Component? RelevantComponent;
+        public string? RelevantComponent;
 
-        public StatusEffectState(ValueTuple<TimeSpan, TimeSpan> cooldown, Component? relevantComponent=null)
+        public StatusEffectState(ValueTuple<TimeSpan, TimeSpan> cooldown, string? relevantComponent=null)
         {
             Cooldown = cooldown;
             RelevantComponent = relevantComponent;
