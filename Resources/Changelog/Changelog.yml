@@ -2481,3 +2481,9 @@ Entries:
   - {message: Admins can spawn ready to use uplinks., type: Add}
   id: 443
   time: '2021-10-15T10:49:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Black gloves and the captain's gloves now protect you against burn damage
+      from replacing lightbulbs., type: Tweak}
+  id: 444
+  time: '2021-10-15T11:07:27.972020+00:00'
