@@ -19,7 +19,7 @@
       - VaultImpassable
       - SmallImpassable
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
+    sprite: Structures/Furniture/chairs.rsi
     noRot: true
   - type: Strap
     position: Stand
@@ -50,7 +50,6 @@
   - type: Rotatable
   - type: Sprite
     state: chair
-    color: "#8e9799"
   - type: Physics
     fixtures:
     - shape:
@@ -72,8 +71,7 @@
   components:
   - type: Anchorable
   - type: Sprite
-    state: stool_base
-    color: "#8e9799"
+    state: stool
   - type: Physics
     bodyType: Static
     fixtures:
@@ -99,7 +97,7 @@
     rotateWhileAnchored: true
   - type: Anchorable
   - type: Sprite
-    state: bar_stool
+    state: bar
   - type: Physics
     bodyType: Static
     fixtures:
@@ -122,7 +120,7 @@
   - type: Rotatable
     rotateWhileAnchored: true
   - type: Sprite
-    state: officechair_white
+    state: office-white
   - type: Physics
     fixtures:
     - shape:
@@ -142,7 +140,7 @@
   parent: ChairOfficeLight
   components:
   - type: Sprite
-    state: officechair_dark
+    state: office-dark
   - type: Construction
     graph: seat
     node: chairOfficeDark
@@ -157,7 +155,7 @@
     anchored: true
   - type: Anchorable
   - type: Sprite
-    state: comfychair_preview
+    state: comfy
   - type: Physics
     bodyType: Static
     fixtures:
@@ -178,8 +176,7 @@
   parent: SeatBase
   components:
   - type: Sprite
-    state: wooden_chair
-    color: "white"
+    state: wooden
   - type: Rotatable
   - type: Physics
     fixtures:
@@ -226,8 +223,7 @@
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/Furniture/furniture.rsi
-    state: shuttle_chair
+    state: shuttle
     netsync: false
   - type: Physics
     bodyType: Static
