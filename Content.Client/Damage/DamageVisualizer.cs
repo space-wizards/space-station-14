@@ -27,8 +27,6 @@ namespace Content.Client.Damage
     {
         /// <summary>
         ///     Damage thresholds between damage state changes.
-        ///     In order for a sprite to be valid here, it must
-        ///     take the form of {state}{group}{threshold}.
         ///
         ///     If there are any negative thresholds, or there is
         ///     less than one threshold, the visualizer is marked
@@ -62,8 +60,8 @@ namespace Content.Client.Damage
         /// <remarks>
         ///     Layers can be disabled here by passing
         ///     the layer's name as a key to SetData,
-        ///     and passing in a bool set to either 'true'
-        ///     to disable it, or 'false' to enable it.
+        ///     and passing in a bool set to either 'false'
+        ///     to disable it, or 'true' to enable it.
         ///     Setting the layer as disabled will make it
         ///     completely invisible.
         /// </remarks>
