@@ -60,7 +60,7 @@ namespace Content.Server.Administration.Commands
             target.GetComponentOrNull<HungerComponent>()?.ResetFood();
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
 
-            EntitySystem.Get<SharedStatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
+            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 
             if (target.TryGetComponent(out FlammableComponent? flammable))
             {

@@ -65,11 +65,8 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            if (args.Entity.HasComponent<StunnedComponent>())
-            {
-                args.CanInteract = true;
-                StunEntity(args.Entity, comp);
-            }
+            args.CanInteract = true;
+            StunEntity(args.Entity, comp);
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)

@@ -15,7 +15,7 @@ namespace Content.Server.MobState.States
 
             if (entity.TryGetComponent(out StatusEffectsComponent? stun))
             {
-                EntitySystem.Get<SharedStatusEffectsSystem>().TryRemoveStatusEffect(entity.Uid, "Stun");
+                EntitySystem.Get<StatusEffectsSystem>().TryRemoveStatusEffect(entity.Uid, "Stun");
             }
         }
     }

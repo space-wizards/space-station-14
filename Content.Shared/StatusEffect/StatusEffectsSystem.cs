@@ -14,7 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffect
 {
-    public class SharedStatusEffectsSystem : EntitySystem
+    public sealed class StatusEffectsSystem : EntitySystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
@@ -138,7 +138,7 @@ namespace Content.Shared.StatusEffect
             // is fine
             var proto = _prototypeManager.Index<StatusEffectPrototype>(key);
 
-            ValueTuple<TimeSpan, TimeSpan> cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+            (TimeSpan, TimeSpan) cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
 
             // If they already have this status effect, just bulldoze its cooldown in favor of the new one
             // and keep the relevant component the same.
@@ -371,7 +371,7 @@ namespace Content.Shared.StatusEffect
         /// <param name="status">The status effects component to use, if any.</param>
         /// <returns>False if the status effect was not active, true otherwise.</returns>
         public bool TryGetTime(EntityUid uid, string key,
-            [NotNullWhen(true)] out ValueTuple<TimeSpan, TimeSpan>? time,
+            [NotNullWhen(true)] out (TimeSpan, TimeSpan)? time,
             StatusEffectsComponent? status = null)
         {
             if (!Resolve(uid, ref status, false) || !HasStatusEffect(uid, key, status))

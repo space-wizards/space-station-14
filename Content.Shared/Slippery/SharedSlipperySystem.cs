@@ -18,7 +18,7 @@ namespace Content.Shared.Slippery
     public abstract class SharedSlipperySystem : EntitySystem
     {
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
-        [Dependency] private readonly SharedStatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         private List<SlipperyComponent> _slipped = new();
 
@@ -56,7 +56,7 @@ namespace Content.Shared.Slippery
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || _statusEffectsSystem.CanApplyEffect(uid, "Stun"))
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
             {
                 return false;
             }

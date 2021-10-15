@@ -10,7 +10,7 @@ namespace Content.Shared.StatusEffect
 {
     [RegisterComponent]
     [NetworkedComponent]
-    [Friend(typeof(SharedStatusEffectsSystem))]
+    [Friend(typeof(StatusEffectsSystem))]
     public class StatusEffectsComponent : Component
     {
         public override string Name => "StatusEffects";
@@ -33,7 +33,7 @@ namespace Content.Shared.StatusEffect
         /// <summary>
         ///     The start and end times of the status effect.
         /// </summary>
-        public ValueTuple<TimeSpan, TimeSpan> Cooldown;
+        public (TimeSpan, TimeSpan) Cooldown;
 
         /// <summary>
         ///     The name of the relevant component that
@@ -41,7 +41,7 @@ namespace Content.Shared.StatusEffect
         /// </summary>
         public string? RelevantComponent;
 
-        public StatusEffectState(ValueTuple<TimeSpan, TimeSpan> cooldown, string? relevantComponent=null)
+        public StatusEffectState((TimeSpan, TimeSpan) cooldown, string? relevantComponent=null)
         {
             Cooldown = cooldown;
             RelevantComponent = relevantComponent;

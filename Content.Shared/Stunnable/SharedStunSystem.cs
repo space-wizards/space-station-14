@@ -26,7 +26,7 @@ namespace Content.Shared.Stunnable
     public abstract class SharedStunSystem : EntitySystem
     {
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
-        [Dependency] private readonly SharedStatusEffectsSystem _statusEffectSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
