@@ -87,7 +87,7 @@ namespace Content.Shared.Slippery
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.TryParalyze(component.Owner.Uid, TimeSpan.FromSeconds(5));
+            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
             component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 
