@@ -10,23 +10,25 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class LowWallInTile : IConstructionCondition
+    public class EmptyOrWindowValidInTile : IConstructionCondition
     {
+        [DataField("tileNotBlocked")]
+        private readonly TileNotBlocked _tileNotBlocked = new();
+
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
-            var lowWall = false;
+            var result = false;
 
             foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
             {
                 if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
-                    lowWall = true;
-
-                // Already has a window.
-                if (entity.HasComponent<SharedWindowComponent>())
-                    return false;
+                    result = true;
             }
 
-            return lowWall;
+            if (!result)
+                result = _tileNotBlocked.Condition(user, location, direction);
+
+            return result;
         }
     }
 }
