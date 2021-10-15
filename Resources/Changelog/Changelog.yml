@@ -2487,3 +2487,8 @@ Entries:
       from replacing lightbulbs., type: Tweak}
   id: 444
   time: '2021-10-15T11:07:27.972020+00:00'
+- author: Zumorica
+  changes:
+  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
+  id: 445
+  time: '2021-10-15T12:46:50.053991+00:00'
