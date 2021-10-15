@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Tweak # One of the following: Add, Remove, Tweak, Fix
+    message: Balanced SSS weapon spawns to be more fair.

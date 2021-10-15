@@ -374,10 +374,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 39
-  type: SuspicionRifleMagazineSpawner
+  type: SuspicionRifleSpawner
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -13.5,-6.5
+  - pos: 6.5,7.5
     parent: 853
     type: Transform
 - uid: 40
@@ -513,10 +512,11 @@ entities:
 - uid: 57
   type: ToyPhazon
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 9.449931,16.636608
+  - pos: 9.5,17.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 58
   type: APCElectronics
   components:
@@ -18260,8 +18260,8 @@ entities:
 - uid: 1322
   type: Poweredlight
   components:
-  - rot: 3.141592697301183 rad
-    pos: 5.5,-22
+  - rot: 3.141592653589793 rad
+    pos: 1.5,-21.5
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -18272,8 +18272,8 @@ entities:
 - uid: 1323
   type: Poweredlight
   components:
-  - rot: 3.141592697301183 rad
-    pos: 1.5,-22
+  - rot: 3.141592653589793 rad
+    pos: 5.5,-21.5
     parent: 853
     type: Transform
   - powerLoad: 0
@@ -20488,7 +20488,7 @@ entities:
 - uid: 1617
   type: Grille
   components:
-  - rot: 4.371139006309477E-08 rad
+  - rot: 3.141592653589793 rad
     pos: 40.5,1.5
     parent: 853
     type: Transform
@@ -22698,7 +22698,7 @@ entities:
 - uid: 1938
   type: Window
   components:
-  - rot: 4.371139006309477E-08 rad
+  - rot: 3.141592653589793 rad
     pos: 40.5,1.5
     parent: 853
     type: Transform
@@ -52023,4 +52023,178 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
+- uid: 5158
+  type: Poweredlight
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: -2.5,25.5
+    parent: 853
+    type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
+  - containers:
+      light_bulb: !type:ContainerSlot {}
+    type: ContainerContainer
+- uid: 5162
+  type: SpawnMobCat
+  components:
+  - pos: 21.5,-14.5
+    parent: 853
+    type: Transform
+- uid: 5163
+  type: SpawnMobCorgi
+  components:
+  - pos: 8.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5164
+  type: SuspicionSMGSpawner
+  components:
+  - pos: -17.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5165
+  type: SuspicionRifleSpawner
+  components:
+  - pos: -21.5,16.5
+    parent: 853
+    type: Transform
+- uid: 5166
+  type: SuspicionLaunchersSpawner
+  components:
+  - pos: -24.5,20.5
+    parent: 853
+    type: Transform
+- uid: 5167
+  type: SuspicionRifleSpawner
+  components:
+  - pos: -19.5,8.5
+    parent: 853
+    type: Transform
+- uid: 5168
+  type: SuspicionSMGSpawner
+  components:
+  - pos: -29.5,7.5
+    parent: 853
+    type: Transform
+- uid: 5169
+  type: SuspicionRifleSpawner
+  components:
+  - pos: -29.5,1.5
+    parent: 853
+    type: Transform
+- uid: 5170
+  type: SuspicionSMGSpawner
+  components:
+  - pos: -29.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 5171
+  type: SuspicionLaunchersSpawner
+  components:
+  - pos: -17.5,-8.5
+    parent: 853
+    type: Transform
+- uid: 5172
+  type: SuspicionRifleSpawner
+  components:
+  - pos: -23.5,-15.5
+    parent: 853
+    type: Transform
+- uid: 5173
+  type: SuspicionSMGSpawner
+  components:
+  - pos: -13.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 5174
+  type: SuspicionLaunchersSpawner
+  components:
+  - pos: -9.5,-23.5
+    parent: 853
+    type: Transform
+- uid: 5175
+  type: SuspicionSMGSpawner
+  components:
+  - pos: -4.5,-24.5
+    parent: 853
+    type: Transform
+- uid: 5176
+  type: SuspicionRifleSpawner
+  components:
+  - pos: 7.5,-28.5
+    parent: 853
+    type: Transform
+- uid: 5177
+  type: SuspicionRevolverSpawner
+  components:
+  - pos: 12.5,-25.5
+    parent: 853
+    type: Transform
+- uid: 5178
+  type: SuspicionMeleeSpawner
+  components:
+  - pos: 10.5,-22.5
+    parent: 853
+    type: Transform
+- uid: 5179
+  type: SuspicionSniperSpawner
+  components:
+  - pos: 3.5,-30.5
+    parent: 853
+    type: Transform
+- uid: 5180
+  type: SuspicionLauncherAmmoSpawner
+  components:
+  - pos: 10.5,-20.5
+    parent: 853
+    type: Transform
+- uid: 5181
+  type: SuspicionGrenadesSpawner
+  components:
+  - pos: -1.5,-17.5
+    parent: 853
+    type: Transform
+- uid: 5182
+  type: SuspicionGrenadesSpawner
+  components:
+  - pos: -10.5,-6.5
+    parent: 853
+    type: Transform
+- uid: 5183
+  type: SuspicionSMGSpawner
+  components:
+  - pos: 10.5,7.5
+    parent: 853
+    type: Transform
+- uid: 5184
+  type: SuspicionShotgunSpawner
+  components:
+  - pos: 19.5,7.5
+    parent: 853
+    type: Transform
+- uid: 5185
+  type: SuspicionSMGSpawner
+  components:
+  - pos: 26.5,11.5
+    parent: 853
+    type: Transform
+- uid: 5186
+  type: SuspicionSMGSpawner
+  components:
+  - pos: 29.5,0.5
+    parent: 853
+    type: Transform
+- uid: 5187
+  type: SuspicionRifleMagazineSpawner
+  components:
+  - pos: 39.5,-1.5
+    parent: 853
+    type: Transform
+- uid: 5188
+  type: SuspicionLaunchersSpawner
+  components:
+  - pos: 51.5,-8.5
+    parent: 853
+    type: Transform
 ...
