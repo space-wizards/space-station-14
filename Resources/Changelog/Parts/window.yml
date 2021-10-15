@@ -1,4 +1,0 @@
-author: Zumorica
-changes:
-  - type: Tweak # One of the following: Add, Remove, Tweak, Fix
-    message: Adapts window construction to the new sprites and grilles.

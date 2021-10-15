@@ -2462,3 +2462,16 @@ Entries:
   - {message: Doors now shut properly on a rotated shuttle., type: Fix}
   id: 440
   time: '2021-10-15T03:04:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
+  - {message: Removes most of the cev-eris sprites, type: Remove}
+  - {message: Removed low walls, type: Remove}
+  - {message: Removed shelves, type: Remove}
+  id: 441
+  time: '2021-10-15T09:58:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
+  id: 442
+  time: '2021-10-15T10:21:58.640854+00:00'
