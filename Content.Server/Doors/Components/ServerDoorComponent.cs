@@ -467,10 +467,9 @@ namespace Content.Server.Doors.Components
                 var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
-                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
+                foreach(var _ in broadPhaseSystem.GetCollidingEntities(physicsComponent, -0.015f))
                 {
-                    if (((physicsComponent.CollisionMask & e.CollisionLayer) | (e.CollisionMask & physicsComponent.CollisionLayer)) != 0
-                        && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
+                    return true;
                 }
             }
             return false;
