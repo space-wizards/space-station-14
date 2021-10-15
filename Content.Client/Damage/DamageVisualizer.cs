@@ -338,13 +338,11 @@ namespace Content.Client.Damage
                 return;
 
             if (component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
-            {
                 if (disabledStatus != _disabled)
                     _disabled = disabledStatus;
 
-                if (_disabled)
-                    return;
-            }
+            if (_disabled)
+                return;
 
             HandleDamage(component);
         }
