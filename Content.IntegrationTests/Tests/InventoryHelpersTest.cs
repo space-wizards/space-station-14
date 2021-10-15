@@ -54,7 +54,6 @@ namespace Content.IntegrationTests.Tests
 
             IEntity human = null;
             InventoryComponent inventory = null;
-            StunnedComponent stun = null;
 
             server.Assert(() =>
             {
@@ -66,7 +65,6 @@ namespace Content.IntegrationTests.Tests
 
                 human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 inventory = human.GetComponent<InventoryComponent>();
-                stun = human.GetComponent<StunnedComponent>();
 
                 // Can't do the test if this human doesn't have the slots for it.
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
