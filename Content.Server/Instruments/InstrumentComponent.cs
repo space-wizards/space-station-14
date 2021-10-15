@@ -362,7 +362,7 @@ namespace Content.Server.Instruments
                 if (mob != null)
                 {
                     if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().Down(mob, false);
+                        EntitySystem.Get<StandingStateSystem>().Down(mob.Uid, false);
 
                     if (mob.TryGetComponent(out StunnableComponent? stun))
                     {

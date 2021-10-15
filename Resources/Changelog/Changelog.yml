@@ -2401,3 +2401,64 @@ Entries:
   - {message: Fix airlocks not auto-closing anymore., type: Fix}
   id: 429
   time: '2021-10-10T13:59:27.943854+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
+  id: 430
+  time: '2021-10-11T23:44:30.123871+00:00'
+- author: moony
+  changes:
+  - {message: Central Command has installed a bluespace railgun. Pray they do not
+      use it., type: Add}
+  id: 431
+  time: '2021-10-12T05:11:09.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
+      option, type: Fix}
+  id: 432
+  time: '2021-10-12T08:01:23.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes thrown slippery items causing the thrower to become horizontal
+      when they shouldn't., type: Fix}
+  id: 433
+  time: '2021-10-12T19:59:18.230928+00:00'
+- author: Jazpixel
+  changes:
+  - {message: Removed single line that broke crayons., type: Remove}
+  id: 434
+  time: '2021-10-13T06:56:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
+      somewhat fixed', type: Fix}
+  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
+  id: 435
+  time: '2021-10-13T08:03:12.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes are available to Cargo, type: Add}
+  id: 436
+  time: '2021-10-13T17:14:34.0000000+00:00'
+- author: PJB3005
+  changes: []
+  id: 437
+  time: '2021-10-13T21:04:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
+      hit., type: Tweak}
+  id: 438
+  time: '2021-10-14T18:02:08.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Add solar control computer board to the lathe, so solar panels can
+      actually be controlled in theory', type: Add}
+  id: 439
+  time: '2021-10-15T00:05:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
+  id: 440
+  time: '2021-10-15T03:04:23.0000000+00:00'

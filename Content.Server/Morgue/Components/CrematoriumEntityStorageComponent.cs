@@ -142,7 +142,7 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
+                EntitySystem.Get<StandingStateSystem>().Down(victim.Uid, false);
             }
             else
             {
