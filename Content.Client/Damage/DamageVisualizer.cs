@@ -5,32 +5,95 @@ using Content.Shared.Damage.Prototypes;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Damage
 {
+    /// <summary>
+    ///     A simple visualizer for any entity with a DamageableComponent
+    ///     to display the status of how damaged it is.
+    ///
+    ///     Can either be an overlay for an entity, or target multiple
+    ///     layers on the same entity.
+    ///
+    ///     This can be disabled dynamically by passing into SetData,
+    ///     key DamageVisualizerKeys.Disabled, value bool
+    ///     (DamageVisualizerKeys lives in Content.Shared.Damage)
+    /// </summary>
     public class DamageVisualizer : AppearanceVisualizer
     {
+        /// <summary>
+        ///     Damage thresholds between damage state changes.
+        ///     In order for a sprite to be valid here, it must
+        ///     take the form of {state}{group}{threshold}.
+        ///
+        ///     If there are any negative thresholds, or there is
+        ///     less than one threshold, the visualizer is marked
+        ///     as invalid.
+        /// </summary>
+        /// <remarks>
+        ///     A 'zeroth' threshold is automatically added,
+        ///     and this list is automatically sorted for
+        ///     efficiency beforehand. As such, the zeroth
+        ///     threshold is not required - and negative
+        ///     thresholds are automatically caught as
+        ///     invalid. The zeroth threshold automatically
+        ///     sets all layers to invisible, so a sprite
+        ///     isn't required for it.
+        /// </remarks>
         [DataField("thresholds", required: true)]
         private List<int> _thresholds = new();
 
-        // If target layer(s) are defined, then all damageSprites will
-        // automatically set themselves on those layer - if you just
-        // want an overlay sprite, keep this undefined.
+        /// <summary>
+        ///     Layers to target, by layerMapKey.
+        ///     If a target layer map key is invalid
+        ///     (in essence, undefined), then the target
+        ///     layer is removed from the list for efficiency.
+        ///
+        ///     If no layers are valid, then the visualizer
+        ///     is marked as invalid.
+        ///
+        ///     If this is not defined, however, the visualizer
+        ///     instead adds an overlay to the sprite.
+        /// </summary>
+        /// <remarks>
+        ///     Layers can be disabled here by passing
+        ///     the layer's name as a key to SetData,
+        ///     and passing in a bool set to either 'true'
+        ///     to disable it, or 'false' to enable it.
+        ///     Setting the layer as disabled will make it
+        ///     completely invisible.
+        /// </remarks>
         [DataField("targetLayers")]
         private readonly List<string>? _targetLayers;
 
-        // Keyed by damage group identifier.
+        /// <summary>
+        ///     The actual sprites for every damage group
+        ///     that the entity should display visually.
+        ///
+        ///     This is keyed by a damage group identifier
+        ///     (for example, Brute), and has a value
+        ///     of a ResourcePath to a sprite's RSI.
+        /// </summary>
+        /// <remarks>
+        ///     Any of the sprites here must have states
+        ///     where the first part matches the target
+        ///     layer state, the second part matching
+        ///     to a target group, and the third part
+        ///     matching one of the defined thresholds
+        ///     above. If targetLayers is not defined,
+        ///     then instead, the first part must be
+        ///     'DamageOverlay'.
+        ///
+        ///     For example:
+        ///     Chest_Brute_33 - targets a chest layer, brute group, 33 damage
+        ///     DamageOverlay_Burn_25 - overlay, burn, 25 damage
+        /// </remarks>
         [DataField("damageSprites", required: true)]
         private readonly Dictionary<string, ResourcePath> _damageSprites = new();
-
-        // you can also just disable this entirely,
-        // (set DamageVisualizerKeys.Disabled to true)
-        // e.g., if you have an entity state where
-        // it can't be repaired but it still
-        // has this visualizer/a DamageableComponent
 
         // this is here to ensure that the last state of the
         // layer's visibility is cached (can't
@@ -58,10 +121,7 @@ namespace Content.Client.Damage
 
             if (_thresholds.Count < 1)
             {
-                // make a note saying that this isn't valid,
-                // and disable
-                //
-                // you need a minimum damage of something
+                Logger.ErrorS("DamageVisualizer", $"Thresholds were invalid for entity {entity.Name}. Thresholds: {_thresholds}");
                 _valid = false;
                 return;
             }
@@ -71,19 +131,13 @@ namespace Content.Client.Damage
 
             if (_thresholds[0] != 0)
             {
-                // the add and sort will always mean
-                // that the lower threshold should be zero,
-                // if not, then this isn't valid
-                // (negative damage???)
-
+                Logger.ErrorS("DamageVisualizer", $"Thresholds were invalid for entity {entity.Name}. Thresholds: {_thresholds}");
                 _valid = false;
                 return;
             }
 
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            // ensure that what damage is given here is supported
-            // otherwise we have to check every key to ensure
-            // that they're all valid
+
             if (damageComponent.DamageContainerID != null)
             {
                 if (prototypeManager.TryIndex<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
@@ -91,13 +145,8 @@ namespace Content.Client.Damage
                     foreach (string damageType in _damageSprites.Keys)
                         // I did initially think about doing per type as well,
                         // but I then realized that the API for DamageSpecifiers
-                        // doesn't exactly support getting it per type,
-                        //
-                        // meaning that I would have to either cache the existing
-                        // prototype group, or enumerate through them. Unless
-                        // somebody finds a way around that, it'll support only
-                        // groups for now.
-
+                        // doesn't exactly support getting it per type, without
+                        // enumerating through several layers of groups.
                         if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
                             _damageSprites.Remove(damageType);
@@ -106,7 +155,6 @@ namespace Content.Client.Damage
             }
             else // oh boy! time to enumerate through every single group!
             {
-                // no clue if there's a way to ensure any of these exist or not
                 var damagePrototypeIdList = prototypeManager.EnumeratePrototypes<DamageGroupPrototype>()
                     .Select((p, _) => p.ID)
                     .ToList();
@@ -117,7 +165,7 @@ namespace Content.Client.Damage
 
             if (_damageSprites.Keys.Count == 0)
             {
-                // every key was invalid! this no longer works
+                Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity.Name}.");
                 _valid = false;
                 return;
             }
@@ -140,7 +188,7 @@ namespace Content.Client.Damage
                         string? layerState = spriteComponent.LayerGetState(index).ToString();
                         if (layerState == null)
                             continue;
-                        int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(sprite, $"{layerState}{group}0"), index + 1);
+                        int newLayer = spriteComponent.AddLayer($"{layerState}_{group}_0", sprite, index + 1);
                         spriteComponent.LayerMapSet($"{layer}{group}", newLayer);
                     }
                     appearanceComponent.SetData(layer, true);
@@ -150,10 +198,7 @@ namespace Content.Client.Damage
 
                 if (_targetLayers.Count == 0)
                 {
-                    // every single target layer was invalid -
-                    // someone using this component might not
-                    // want an overlay, so instead we
-                    // ensure that
+                    Logger.ErrorS("DamageVisualizer", $"Target layers were invalid for entity {entity.Name}.");
                     _valid = false;
                     return;
                 }
@@ -162,12 +207,9 @@ namespace Content.Client.Damage
             {
                 foreach (var (group, sprite) in _damageSprites)
                 {
-                    int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(sprite, $"DamageOverlay{group}0"));
+                    int newLayer = spriteComponent.AddLayerState($"DamageOverlay_{group}_0", sprite);
                     spriteComponent.LayerMapSet($"DamageOverlay{group}", newLayer);
                 }
-                // Compared to the above, this is not toggleable.
-                // Disable the visualizer by setting the relevant key
-                // to disabled.
             }
         }
 
@@ -202,12 +244,8 @@ namespace Content.Client.Damage
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
-            // we only need the changed groups,
-            // DamageSystem only sends the delta
-            // between two states as key values
             foreach (var (damageGroup, _) in specifier.DamageDict)
             {
-                // logic goes here
                 int threshold = 0;
                 int thresholdIndex = _thresholds.BinarySearch(damageComponent.DamagePerGroup[damageGroup]);
 
@@ -220,7 +258,6 @@ namespace Content.Client.Damage
                     }
                     else
                     {
-                        // we've hit the max limit
                         threshold = _thresholds[thresholdIndex];
                     }
                 }
@@ -258,7 +295,7 @@ namespace Content.Client.Damage
                                     spriteComponent.LayerSetVisible(spriteLayer, true);
                                     _layerToggles[layerMapName] = true;
                                 }
-                                spriteComponent.LayerSetState(spriteLayer, $"{layerState}{damageGroup}{threshold}");
+                                spriteComponent.LayerSetState(spriteLayer, $"{layerState}_{damageGroup}_{threshold}");
                             }
                         }
                 }
@@ -274,7 +311,7 @@ namespace Content.Client.Damage
                         else
                         {
                             spriteComponent.LayerSetVisible(spriteLayer, true);
-                            spriteComponent.LayerSetState(spriteLayer, $"DamageOverlay{damageGroup}{threshold}");
+                            spriteComponent.LayerSetState(spriteLayer, $"DamageOverlay_{damageGroup}_{threshold}");
                         }
                     }
                 }
