@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from cev-eris at https://github.com/discordia-space/CEV-Eris/commit/59fe5dd2841f47a8abce60eecb9fafad34282bd0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/c6e3401f2e7e1e55c57060cdf956a98ef1fefc24",
   "size": {
     "x": 32,
     "y": 32
@@ -14,16 +14,10 @@
       "name": "bolted_unlit"
     },
     {
-      "name": "locked"
-    },
-    {
       "name": "closed"
     },
     {
-      "name": "closed_unlit",
-      "delays": [
-        []
-      ]
+      "name": "closed_unlit"
     },
     {
       "name": "closing",
@@ -31,8 +25,6 @@
         [
           0.1,
           0.1,
-          0.07,
-          0.07,
           0.07,
           0.07,
           0.07,
@@ -44,19 +36,22 @@
       "name": "closing_unlit",
       "delays": [
         [
-          0.25,
+          0.1,
+          0.1,
           0.07,
           0.07,
           0.07,
-          0.07,
-          0.15
+          0.2
         ]
       ]
     },
     {
-      "name": "deny_unlit",
+      "name": "deny",
       "delays": [
         [
+          0.1,
+          0.1,
+          0.1,
           0.1,
           0.1,
           0.1
@@ -64,7 +59,12 @@
       ]
     },
     {
-      "name": "open"
+      "name": "open",
+      "delays": [
+        [
+          1
+        ]
+      ]
     },
     {
       "name": "opening",
@@ -72,8 +72,6 @@
         [
           0.1,
           0.1,
-          0.07,
-          0.07,
           0.07,
           0.07,
           0.07,
@@ -90,7 +88,7 @@
           0.07,
           0.07,
           0.07,
-          0.25
+          0.2
         ]
       ]
     },
@@ -103,21 +101,24 @@
           0.07,
           0.07,
           0.07,
-          0.07,
-          0.27
+          0.2
         ]
       ]
     },
     {
-      "name": "panel_open"
+      "name": "panel_open",
+      "delays": [
+        [
+          1
+        ]
+      ]
     },
     {
       "name": "panel_opening",
       "delays": [
         [
-          0.2,
-          0.07,
-          0.07,
+          0.1,
+          0.1,
           0.07,
           0.07,
           0.07,
@@ -126,7 +127,7 @@
       ]
     },
     {
-      "name": "spark",
+      "name": "sparks",
       "delays": [
         [
           0.1,

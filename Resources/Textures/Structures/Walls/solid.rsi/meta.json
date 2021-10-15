@@ -43,244 +43,66 @@
       "directions": 4
     },
     {
-      "name": "reinf_construct-0",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-0"
     },
     {
-      "name": "reinf_construct-1",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-1"
     },
     {
-      "name": "reinf_construct-2",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-2"
     },
     {
-      "name": "reinf_construct-3",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-3"
     },
     {
-      "name": "reinf_construct-4",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-4"
     },
     {
-      "name": "reinf_construct-5",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_construct-5"
     },
     {
-      "name": "reinf_cult",
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "reinf_metal",
-      "delays": [
-        [
-          1
-        ]
-      ]
-    },
-    {
-      "name": "reinf_over",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinf_cult"
     },
     {
       "name": "reinf_over0",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over1",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over2",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over3",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over4",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over5",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over6",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
       "name": "reinf_over7",
-      "directions": 4,
-      "delays": [
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ],
-        [
-          1
-        ]
-      ]
+      "directions": 4
     },
     {
-      "name": "rgeneric",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "rgeneric"
     },
     {
-      "name": "wall_girder",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "wall_girder"
     },
     {
-      "name": "reinforced_wall_girder",
-      "delays": [
-        [
-          1
-        ]
-      ]
+      "name": "reinforced_wall_girder"
     }
   ]
 }
