@@ -88,9 +88,7 @@ namespace Content.Shared.StatusEffect
             SharedAlertsComponent? alerts=null)
             where T: Component, new()
         {
-            if (EntityManager.HasComponent<T>(uid))
-                return false;
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             Resolve(uid, ref alerts, false);
@@ -129,7 +127,7 @@ namespace Content.Shared.StatusEffect
             StatusEffectsComponent? status=null,
             SharedAlertsComponent? alerts=null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
             if (!CanApplyEffect(uid, key, status))
                 return false;
@@ -268,7 +266,7 @@ namespace Content.Shared.StatusEffect
         public bool HasStatusEffect(EntityUid uid, string key,
             StatusEffectsComponent? status=null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
             if (!status.ActiveEffects.ContainsKey(key))
                 return false;
@@ -306,7 +304,7 @@ namespace Content.Shared.StatusEffect
         public bool TryAddTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             if (!HasStatusEffect(uid, key, status))
@@ -328,7 +326,7 @@ namespace Content.Shared.StatusEffect
         public bool TryRemoveTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             if (!HasStatusEffect(uid, key, status))
@@ -354,13 +352,35 @@ namespace Content.Shared.StatusEffect
         public bool TrySetTime(EntityUid uid, string key, TimeSpan time,
             StatusEffectsComponent? status = null)
         {
-            if (!Resolve(uid, ref status, true))
+            if (!Resolve(uid, ref status, false))
                 return false;
 
             if (!HasStatusEffect(uid, key, status))
                 return false;
 
             status.ActiveEffects[key].Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + time);
+            return true;
+        }
+
+        /// <summary>
+        ///     Gets the cooldown for a given status effect on an entity.
+        /// </summary>
+        /// <param name="uid">The entity to check for status effects on.</param>
+        /// <param name="key">The status effect to get time for.</param>
+        /// <param name="time">Out var for the time, if it exists.</param>
+        /// <param name="status">The status effects component to use, if any.</param>
+        /// <returns>False if the status effect was not active, true otherwise.</returns>
+        public bool TryGetTime(EntityUid uid, string key,
+            [NotNullWhen(true)] out ValueTuple<TimeSpan, TimeSpan>? time,
+            StatusEffectsComponent? status = null)
+        {
+            if (!Resolve(uid, ref status, false) || !HasStatusEffect(uid, key, status))
+            {
+                time = null;
+                return false;
+            }
+
+            time = status.ActiveEffects[key].Cooldown;
             return true;
         }
     }
