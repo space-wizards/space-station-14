@@ -8,7 +8,6 @@ using Robust.Shared.Log;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 
-#nullable enable
 
 namespace Content.Server.EUI
 {

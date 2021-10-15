@@ -1,6 +1,5 @@
-#nullable enable
 using System;
-using Content.Shared.Chemistry.Solution;
+using Content.Shared.Chemistry.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -49,16 +48,6 @@ namespace Content.Shared.Kitchen.Components
             public ReagentGrinderEjectChamberContentMessage(EntityUid entityID)
             {
                 EntityID = entityID;
-            }
-        }
-
-        [Serializable, NetSerializable]
-        public class ReagentGrinderVaporizeReagentIndexedMessage : BoundUserInterfaceMessage
-        {
-            public Solution.ReagentQuantity ReagentQuantity;
-            public ReagentGrinderVaporizeReagentIndexedMessage(Solution.ReagentQuantity reagentQuantity)
-            {
-                ReagentQuantity = reagentQuantity;
             }
         }
 

@@ -1,17 +1,15 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.DoAfter;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen.Components;
 using Content.Shared.MobState;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -34,8 +32,6 @@ namespace Content.Server.Kitchen.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            SpriteComponent? sprite;
-
             if (_meatParts == 0)
             {
                 return;
@@ -45,10 +41,7 @@ namespace Content.Server.Kitchen.Components
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
                 var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
-                if (meat != null)
-                {
-                    meat.Name = _meatName;
-                }
+                meat.Name = _meatName;
             }
 
             if (_meatParts != 0)
@@ -57,10 +50,7 @@ namespace Content.Server.Kitchen.Components
             }
             else
             {
-                if (Owner.TryGetComponent(out sprite))
-                {
-                    sprite.LayerSetState(0, "spike");
-                }
+                UpdateAppearance();
 
                 eventArgs.User.PopupMessage(_meatSource0);
             }
@@ -73,6 +63,14 @@ namespace Content.Server.Kitchen.Components
         {
             TrySpike(eventArgs.Dragged, eventArgs.User);
             return true;
+        }
+
+        private void UpdateAppearance()
+        {
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(KitchenSpikeVisuals.Status, (_meatParts > 0) ? KitchenSpikeStatus.Bloody : KitchenSpikeStatus.Empty);
+            }
         }
 
         private bool Spikeable(IEntity user, IEntity victim, [NotNullWhen(true)] out SharedButcherableComponent? butcherable)
@@ -152,17 +150,13 @@ namespace Content.Server.Kitchen.Components
             _meatName = Loc.GetString("comp-kitchen-spike-meat-name", ("victim", victim));
 
             // TODO: Visualizer
-            if (Owner.TryGetComponent<SpriteComponent>(out var sprite))
-            {
-                sprite.LayerSetState(0, "spikebloody");
-            }
+            UpdateAppearance();
 
             Owner.PopupMessageEveryone(Loc.GetString("comp-kitchen-spike-kill", ("user", user), ("victim", victim)));
             // TODO: Need to be able to leave them on the spike to do DoT, see ss13.
             victim.Delete();
 
-            if (SpikeSound != null)
-                SoundSystem.Play(Filter.Pvs(Owner), SpikeSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), SpikeSound.GetSound(), Owner);
         }
 
         SuicideKind ISuicideAct.Suicide(IEntity victim, IChatManager chat)

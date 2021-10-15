@@ -17,6 +17,8 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.FocusRadio);
             common.AddFunction(ContentKeyFunctions.FocusOOC);
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
+            common.AddFunction(ContentKeyFunctions.FocusConsoleChat);
+            common.AddFunction(ContentKeyFunctions.FocusDeadChat);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
@@ -24,18 +26,20 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
+            common.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             var human = contexts.GetContext("human");
             human.AddFunction(ContentKeyFunctions.SwapHands);
             human.AddFunction(ContentKeyFunctions.Drop);
             human.AddFunction(ContentKeyFunctions.ActivateItemInHand);
+            human.AddFunction(ContentKeyFunctions.AltActivateItemInHand);
             human.AddFunction(ContentKeyFunctions.OpenCharacterMenu);
             human.AddFunction(ContentKeyFunctions.ActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+            human.AddFunction(ContentKeyFunctions.AltActivateItemInWorld);
             human.AddFunction(ContentKeyFunctions.TryPullObject);
             human.AddFunction(ContentKeyFunctions.MovePulledObject);
             human.AddFunction(ContentKeyFunctions.ReleasePulledObject);
-            human.AddFunction(ContentKeyFunctions.OpenContextMenu);
             human.AddFunction(ContentKeyFunctions.OpenCraftingMenu);
             human.AddFunction(ContentKeyFunctions.OpenInventoryMenu);
             human.AddFunction(ContentKeyFunctions.SmartEquipBackpack);
@@ -72,13 +76,22 @@ namespace Content.Client.Input
             common.AddFunction(ContentKeyFunctions.Loadout8);
             common.AddFunction(ContentKeyFunctions.Loadout9);
 
+            var aghost = contexts.New("aghost", "common");
+            aghost.AddFunction(EngineKeyFunctions.MoveUp);
+            aghost.AddFunction(EngineKeyFunctions.MoveDown);
+            aghost.AddFunction(EngineKeyFunctions.MoveLeft);
+            aghost.AddFunction(EngineKeyFunctions.MoveRight);
+            aghost.AddFunction(EngineKeyFunctions.Walk);
+            aghost.AddFunction(ContentKeyFunctions.SwapHands);
+            aghost.AddFunction(ContentKeyFunctions.Drop);
+            aghost.AddFunction(ContentKeyFunctions.ThrowItemInHand);
+
             var ghost = contexts.New("ghost", "common");
             ghost.AddFunction(EngineKeyFunctions.MoveUp);
             ghost.AddFunction(EngineKeyFunctions.MoveDown);
             ghost.AddFunction(EngineKeyFunctions.MoveLeft);
             ghost.AddFunction(EngineKeyFunctions.MoveRight);
             ghost.AddFunction(EngineKeyFunctions.Walk);
-            ghost.AddFunction(ContentKeyFunctions.OpenContextMenu);
 
             common.AddFunction(ContentKeyFunctions.OpenEntitySpawnWindow);
             common.AddFunction(ContentKeyFunctions.OpenSandboxWindow);

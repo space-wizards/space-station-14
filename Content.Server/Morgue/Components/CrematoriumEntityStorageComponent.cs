@@ -1,25 +1,22 @@
-#nullable enable
 using System.Threading;
 using Content.Server.Act;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Notification;
 using Content.Server.Players;
+using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Morgue;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Standing;
-using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -34,11 +31,15 @@ namespace Content.Server.Morgue.Components
     {
         public override string Name => "CrematoriumEntityStorage";
 
+        [DataField("cremateStartSound")] private SoundSpecifier _cremateStartSound = new SoundPathSpecifier("/Audio/Items/lighter1.ogg");
+        [DataField("crematingSound")] private SoundSpecifier _crematingSound = new SoundPathSpecifier("/Audio/Effects/burning.ogg");
+        [DataField("cremateFinishSound")] private SoundSpecifier _cremateFinishSound = new SoundPathSpecifier("/Audio/Machines/ding.ogg");
+
         [ViewVariables]
         public bool Cooking { get; private set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
-        private int _burnMilis = 3000;
+        private int _burnMilis = 5000;
 
         private CancellationTokenSource? _cremateCancelToken;
 
@@ -50,7 +51,7 @@ namespace Content.Server.Morgue.Components
             {
                 if (Appearance.TryGetData(CrematoriumVisuals.Burning, out bool isBurning) && isBurning)
                 {
-                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning",("owner", Owner)) + "\n");
+                    message.AddMarkup(Loc.GetString("crematorium-entity-storage-component-on-examine-details-is-burning", ("owner", Owner)) + "\n");
                 }
 
                 if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
@@ -68,7 +69,8 @@ namespace Content.Server.Morgue.Components
         {
             if (Cooking)
             {
-                if (!silent) Owner.PopupMessage(user, Loc.GetString("crematorium-entity-storage-component-is-cooking-safety-message"));
+                if (!silent)
+                    Owner.PopupMessage(user, Loc.GetString("crematorium-entity-storage-component-is-cooking-safety-message"));
                 return false;
             }
             return base.CanOpen(user, silent);
@@ -78,6 +80,8 @@ namespace Content.Server.Morgue.Components
         {
             if (Cooking) return;
             if (Open) return;
+
+            SoundSystem.Play(Filter.Pvs(Owner), _cremateStartSound.GetSound(), Owner);
 
             Cremate();
         }
@@ -89,6 +93,8 @@ namespace Content.Server.Morgue.Components
 
             Appearance?.SetData(CrematoriumVisuals.Burning, true);
             Cooking = true;
+
+            SoundSystem.Play(Filter.Pvs(Owner), _crematingSound.GetSound(), Owner);
 
             _cremateCancelToken?.Cancel();
 
@@ -116,7 +122,8 @@ namespace Content.Server.Morgue.Components
 
                 TryOpenStorage(Owner);
 
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/ding.ogg", Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), _cremateFinishSound.GetSound(), Owner);
+
             }, _cremateCancelToken.Token);
         }
 
@@ -135,7 +142,7 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
+                EntitySystem.Get<StandingStateSystem>().Down(victim.Uid, false);
             }
             else
             {
@@ -145,27 +152,6 @@ namespace Content.Server.Morgue.Components
             Cremate();
 
             return SuicideKind.Heat;
-        }
-
-        [Verb]
-        private sealed class CremateVerb : Verb<CrematoriumEntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Cooking || component.Open)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("cremate-verb-get-data-text");
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, CrematoriumEntityStorageComponent component)
-            {
-                component.TryCremate();
-            }
         }
     }
 }

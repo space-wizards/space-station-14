@@ -1,0 +1,49 @@
+- type: damageModifierSet
+  id: Metallic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+  flatReductions:
+    Blunt: 5
+
+# Like metallic, but without flat reduction so it can be damaged with fists.
+- type: damageModifierSet
+  id: FlimsyMetallic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+
+- type: damageModifierSet
+  id: Inflatable
+  coefficients:
+    Blunt: 0.5
+    Piercing: 2.0
+    Heat: 0.5
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+
+- type: damageModifierSet
+  id: Glass
+  coefficients:
+    Blunt: 0.5
+    Slash: 0.5
+    Piercing: 1.5
+    Heat: 0
+    Shock: 0
+  flatReductions:
+    Blunt: 5
+
+- type: damageModifierSet
+  id: Wood
+  coefficients:
+    Blunt: 0.5
+    Slash: 2.0
+    Piercing: 1.0
+    Heat: 2.0
+  flatReductions:
+    Blunt: 5

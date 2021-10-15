@@ -1,4 +1,5 @@
-﻿using Content.Shared.Recycling;
+﻿using Content.Shared.Conveyor;
+using Content.Shared.Recycling;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -9,11 +10,11 @@ namespace Content.Client.Recycling
     [UsedImplicitly]
     public class RecyclerVisualizer : AppearanceVisualizer
     {
-        [DataField("state_clean")]
-        private string? _stateClean;
+        [DataField("state_on")]
+        private string _stateOn = "grinder-o1";
 
-        [DataField("state_bloody")]
-        private string? _stateBloody;
+        [DataField("state_off")]
+        private string _stateOff = "grinder-o0";
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -25,10 +26,7 @@ namespace Content.Client.Recycling
                 return;
             }
 
-            appearance.TryGetData(RecyclerVisuals.Bloody, out bool bloody);
-            sprite.LayerSetState(RecyclerVisualLayers.Bloody, bloody
-                ? _stateBloody
-                : _stateClean);
+            UpdateAppearance(appearance, sprite);
         }
 
         public override void OnChangeData(AppearanceComponent component)
@@ -40,15 +38,28 @@ namespace Content.Client.Recycling
                 return;
             }
 
-            component.TryGetData(RecyclerVisuals.Bloody, out bool bloody);
-            sprite.LayerSetState(RecyclerVisualLayers.Bloody, bloody
-                ? _stateBloody
-                : _stateClean);
+            UpdateAppearance(component, sprite);
+        }
+
+        private void UpdateAppearance(AppearanceComponent component, ISpriteComponent sprite)
+        {
+            var state = _stateOff;
+            if (component.TryGetData(ConveyorVisuals.State, out ConveyorState conveyorState) && conveyorState != ConveyorState.Off)
+            {
+                state = _stateOn;
+            }
+
+            if (component.TryGetData(RecyclerVisuals.Bloody, out bool bloody) && bloody)
+            {
+                state += "bld";
+            }
+
+            sprite.LayerSetState(RecyclerVisualLayers.Main, state);
         }
     }
 
     public enum RecyclerVisualLayers : byte
     {
-        Bloody
+        Main
     }
 }

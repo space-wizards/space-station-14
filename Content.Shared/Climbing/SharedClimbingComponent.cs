@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Physics;
@@ -30,10 +29,8 @@ namespace Content.Shared.Climbing
             }
         }
 
-        bool IActionBlocker.CanMove() => !OwnerIsTransitioning;
-
         [ViewVariables]
-        protected virtual bool OwnerIsTransitioning
+        public virtual bool OwnerIsTransitioning
         {
             get => _ownerIsTransitioning;
             set

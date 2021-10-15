@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Radiation;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,7 +20,7 @@ namespace Content.Server.Radiation
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _duration;
-        private float _radsPerSecond = 40f;
+        private float _radsPerSecond = 8f;
         private float _range = 5f;
         private TimeSpan _endTime;
         private bool _draw = true;
@@ -57,7 +58,7 @@ namespace Content.Server.Radiation
             }
         }
 
-        [DataField("sound")] public string? Sound { get; set; } = "/Audio/Weapons/Guns/Gunshots/laser3.ogg";
+        [DataField("sound")] public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/laser3.ogg");
 
         [DataField("range")]
         public override float Range
@@ -92,8 +93,7 @@ namespace Content.Server.Radiation
                 _endTime = currentTime + TimeSpan.FromSeconds(_duration);
             }
 
-            if(!string.IsNullOrEmpty(Sound))
-                SoundSystem.Play(Filter.Pvs(Owner), Sound, Owner.Transform.Coordinates);
+            SoundSystem.Play(Filter.Pvs(Owner), Sound.GetSound(), Owner);
 
             Dirty();
         }
@@ -108,7 +108,7 @@ namespace Content.Server.Radiation
             if (!Decay || Owner.Deleted)
                 return;
 
-            if(_duration <= 0f)
+            if (_duration <= 0f)
                 Owner.QueueDelete();
 
             _duration -= frameTime;

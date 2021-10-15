@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules;
 using Content.Server.Hands.Components;
@@ -14,18 +14,22 @@ using Content.Server.Traitor;
 using Content.Server.TraitorDeathMatch.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Inventory;
 using Content.Shared.MobState;
-using Content.Shared.PDA;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Content.Server.Traitor.Uplink.Components;
+using Content.Shared.Traitor.Uplink;
+using Content.Server.Traitor.Uplink;
+using Content.Shared.Damage.Prototypes;
+using Content.Server.Traitor.Uplink.Account;
 
 namespace Content.Server.GameTicking.Presets
 {
@@ -37,6 +41,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public string PDAPrototypeName => "CaptainPDA";
         public string BeltPrototypeName => "ClothingBeltJanitorFilled";
@@ -99,13 +104,19 @@ namespace Content.Server.GameTicking.Presets
                 inventory.Equip(EquipmentSlotDefines.Slots.BACKPACK, newTmp.GetComponent<ItemComponent>());
 
                 // Like normal traitors, they need access to a traitor account.
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity.Uid, startingBalance);
-                var pdaComponent = newPDA.GetComponent<PDAComponent>();
-                pdaComponent.InitUplinkAccount(uplinkAccount);
+                var uplinkAccount = new UplinkAccount(startingBalance, mind.OwnedEntity.Uid);
+                var accounts = _entityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
+
+                _entityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount, newPDA);
+
                 _allOriginalNames[uplinkAccount] = mind.OwnedEntity.Name;
 
                 // The PDA needs to be marked with the correct owner.
-                pdaComponent.SetPDAOwner(mind.OwnedEntity.Name);
+                var pda = newPDA.GetComponent<PDAComponent>();
+                _entityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                    .SetOwner(pda, mind.OwnedEntity.Name);
                 newPDA.AddComponent<TraitorDeathMatchReliableOwnerTagComponent>().UserId = mind.UserId;
             }
 
@@ -158,14 +169,16 @@ namespace Content.Server.GameTicking.Presets
             // On failure, the returned target is the location that we're already at.
             var bestTargetDistanceFromNearest = -1.0f;
             // Need the random shuffle or it stuffs the first person into Atmospherics pretty reliably
-            var ents = _entityManager.ComponentManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
+            var ents = _entityManager.EntityQuery<SpawnPointComponent>().Select(x => x.Owner).ToList();
             _robustRandom.Shuffle(ents);
             var foundATarget = false;
             bestTarget = EntityCoordinates.Invalid;
+            var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
             foreach (var entity in ents)
             {
-                if (!entity.Transform.Coordinates.IsTileAirProbablySafe())
+                if (!atmosphereSystem.IsTileMixtureProbablySafe(entity.Transform.Coordinates))
                     continue;
+
                 var distanceFromNearest = float.PositiveInfinity;
                 foreach (var existing in existingPlayerPoints)
                 {
@@ -189,12 +202,9 @@ namespace Content.Server.GameTicking.Presets
             {
                 if (mobState.IsCritical())
                 {
-                    // TODO: This is copy/pasted from ghost code. Really, IDamagableComponent needs a method to reliably kill the target.
-                    if (entity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        damageable.ChangeDamage(DamageType.Asphyxiation, 100, true);
-                    }
+                    // TODO BODY SYSTEM KILL
+                    var damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Asphyxiation"), 100);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(entity.Uid, damage, true);
                 }
                 else if (!mobState.IsDead())
                 {
@@ -215,14 +225,14 @@ namespace Content.Server.GameTicking.Presets
         {
             var lines = new List<string>();
             lines.Add("traitor-death-match-end-round-description-first-line");
-            foreach (var pda in _entityManager.ComponentManager.EntityQuery<PDAComponent>())
+            foreach (var uplink in _entityManager.EntityQuery<UplinkComponent>(true))
             {
-                var uplink = pda.SyndicateUplinkAccount;
-                if (uplink != null && _allOriginalNames.ContainsKey(uplink))
+                var uplinkAcc = uplink.UplinkAccount;
+                if (uplinkAcc != null && _allOriginalNames.ContainsKey(uplinkAcc))
                 {
                     lines.Add(Loc.GetString("traitor-death-match-end-round-description-entry",
-                                            ("originalName", _allOriginalNames[uplink]),
-                                            ("tcBalance", uplink.Balance)));
+                                            ("originalName", _allOriginalNames[uplinkAcc]),
+                                            ("tcBalance", uplinkAcc.Balance)));
                 }
             }
             return string.Join('\n', lines);

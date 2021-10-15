@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Shared.ActionBlocker;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -13,6 +12,9 @@ namespace Content.Shared.EffectBlocker
     [UsedImplicitly]
     public class EffectBlockerSystem : EntitySystem
     {
+        // TODO: Make these methods not static. Maybe move them to their relevant EntitySystems?
+        // TODO: Add EntityUid overloads.
+
         public static bool CanFall(IEntity entity)
         {
             var canFall = true;

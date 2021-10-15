@@ -13,6 +13,7 @@ using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -28,7 +29,7 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -96,7 +97,11 @@ namespace Content.Server.GameTicking
             AddManifestEntry(character.Name, jobId);
             AddSpawnedPosition(jobId);
             EquipIdCard(mob, character.Name, jobPrototype);
-            jobPrototype.Special?.AfterEquip(mob);
+
+            foreach (var jobSpecial in jobPrototype.Special)
+            {
+                jobSpecial.AfterEquip(mob);
+            }
 
             Preset?.OnSpawnPlayerCompleted(player, mob, lateJoin);
         }
@@ -144,7 +149,8 @@ namespace Content.Server.GameTicking
 
             var mob = SpawnObserverMob();
             mob.Name = name;
-            mob.GetComponent<GhostComponent>().CanReturnToBody = false;
+            var ghost = mob.GetComponent<GhostComponent>();
+            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
             data.Mind.TransferTo(mob);
 
             _playersInLobby[player] = LobbyPlayerStatus.Observer;
@@ -155,7 +161,7 @@ namespace Content.Server.GameTicking
         private IEntity SpawnPlayerMob(Job job, HumanoidCharacterProfile? profile, bool lateJoin = true)
         {
             var coordinates = lateJoin ? GetLateJoinSpawnPoint() : GetJobSpawnPoint(job.Prototype.ID);
-            var entity = _entityManager.SpawnEntity(PlayerPrototypeName, coordinates);
+            var entity = EntityManager.SpawnEntity(PlayerPrototypeName, coordinates);
 
             if (job.StartingGear != null)
             {
@@ -175,7 +181,7 @@ namespace Content.Server.GameTicking
         private IEntity SpawnObserverMob()
         {
             var coordinates = GetObserverSpawnPoint();
-            return _entityManager.SpawnEntity(ObserverPrototypeName, coordinates);
+            return EntityManager.SpawnEntity(ObserverPrototypeName, coordinates);
         }
         #endregion
 
@@ -187,9 +193,9 @@ namespace Content.Server.GameTicking
                 foreach (var slot in EquipmentSlotDefines.AllSlots)
                 {
                     var equipmentStr = startingGear.GetGear(slot, profile);
-                    if (equipmentStr != string.Empty)
+                    if (!string.IsNullOrEmpty(equipmentStr))
                     {
-                        var equipmentEntity = _entityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
+                        var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, entity.Transform.Coordinates);
                         inventory.Equip(slot, equipmentEntity.GetComponent<ItemComponent>());
                     }
                 }
@@ -200,7 +206,7 @@ namespace Content.Server.GameTicking
                 var inhand = startingGear.Inhand;
                 foreach (var (hand, prototype) in inhand)
                 {
-                    var inhandEntity = _entityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
+                    var inhandEntity = EntityManager.SpawnEntity(prototype, entity.Transform.Coordinates);
                     handsComponent.TryPickupEntity(hand, inhandEntity, checkActionBlocker: false);
                 }
             }
@@ -228,7 +234,8 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                .SetOwner(pdaComponent, characterName);
         }
         #endregion
 
@@ -244,7 +251,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Job && point.Job?.ID == jobId)
                     _possiblePositions.Add(transform.Coordinates);
@@ -262,7 +269,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.LateJoin) _possiblePositions.Add(transform.Coordinates);
             }
@@ -280,7 +287,7 @@ namespace Content.Server.GameTicking
 
             _possiblePositions.Clear();
 
-            foreach (var (point, transform) in ComponentManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
+            foreach (var (point, transform) in EntityManager.EntityQuery<SpawnPointComponent, ITransformComponent>())
             {
                 if (point.SpawnType == SpawnPointType.Observer)
                     _possiblePositions.Add(transform.Coordinates);

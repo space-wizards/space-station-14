@@ -1,18 +1,17 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -29,35 +28,49 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
+        public static string SolutionName = "food";
 
-        [ViewVariables] [DataField("useSound")] protected virtual string? UseSound { get; set; } = "/Audio/Items/eatfood.ogg";
+        [ViewVariables]
+        [DataField("useSound")]
+        private SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
-        [ViewVariables] [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))] protected virtual string? TrashPrototype { get; set; }
+        [ViewVariables]
+        [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        private string? TrashPrototype { get; set; }
 
-        [ViewVariables] [DataField("transferAmount")] protected virtual ReagentUnit TransferAmount { get; set; } = ReagentUnit.New(5);
+        [ViewVariables]
+        [DataField("transferAmount")]
+        private ReagentUnit? TransferAmount { get; set; } = ReagentUnit.New(5);
 
-        [DataField("utensilsNeeded")] private UtensilType _utensilsNeeded = UtensilType.None;
+        [DataField("utensilsNeeded")]
+        private UtensilType _utensilsNeeded = UtensilType.None;
+
+        [DataField("eatMessage")]
+        private string _eatMessage = "food-nom";
 
         [ViewVariables]
         public int UsesRemaining
         {
             get
             {
-                if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
                 {
                     return 0;
                 }
 
+                if (TransferAmount == null)
+                    return solution.CurrentVolume == 0 ? 0 : 1;
+
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int)Math.Ceiling((solution.CurrentVolume / TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (ReagentUnit)TransferAmount).Float()));
             }
         }
 
         protected override void Initialize()
         {
             base.Initialize();
-            Owner.EnsureComponentWarn<SolutionContainerComponent>();
+            // Owner.EnsureComponentWarn<SolutionContainerManager>();
         }
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
@@ -83,9 +96,10 @@ namespace Content.Server.Nutrition.Components
             return true;
         }
 
-        public virtual bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
+        public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+            var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
+            if (!solutionContainerSys.TryGetSolution(Owner, SolutionName, out var solution))
             {
                 return false;
             }
@@ -98,6 +112,7 @@ namespace Content.Server.Nutrition.Components
             if (UsesRemaining <= 0)
             {
                 user.PopupMessage(Loc.GetString("food-component-try-use-food-is-empty", ("entity", Owner)));
+                DeleteAndSpawnTrash(user);
                 return false;
             }
 
@@ -110,7 +125,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             var utensils = utensilUsed != null
-                ? new List<UtensilComponent> {utensilUsed}
+                ? new List<UtensilComponent> { utensilUsed }
                 : null;
 
             if (_utensilsNeeded != UtensilType.None)
@@ -134,7 +149,8 @@ namespace Content.Server.Nutrition.Components
 
                 if (!types.HasFlag(_utensilsNeeded))
                 {
-                    trueTarget.PopupMessage(user, Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
+                    trueTarget.PopupMessage(user,
+                        Loc.GetString("food-you-need-to-hold-utensil", ("utensil", _utensilsNeeded)));
                     return false;
                 }
             }
@@ -144,12 +160,13 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            var transferAmount = ReagentUnit.Min(TransferAmount, solution.CurrentVolume);
-            var split = solution.SplitSolution(transferAmount);
+            var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
+            var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
             if (firstStomach == null)
             {
+                solutionContainerSys.TryAddSolution(Owner.Uid, solution, split);
                 trueTarget.PopupMessage(user, Loc.GetString("food-you-cannot-eat-any-more"));
                 return false;
             }
@@ -160,12 +177,9 @@ namespace Content.Server.Nutrition.Components
 
             firstStomach.TryTransferSolution(split);
 
-            if (UseSound != null)
-            {
-                SoundSystem.Play(Filter.Pvs(trueTarget), UseSound, trueTarget, AudioParams.Default.WithVolume(-1f));
-            }
+            SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
-            trueTarget.PopupMessage(user, Loc.GetString("food-nom"));
+            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage));
 
             // If utensils were used
             if (utensils != null)
@@ -187,6 +201,15 @@ namespace Content.Server.Nutrition.Components
                 return true;
             }
 
+            DeleteAndSpawnTrash(user);
+
+            return true;
+        }
+
+
+
+        private void DeleteAndSpawnTrash(IEntity user)
+        {
             //We're empty. Become trash.
             var position = Owner.Transform.Coordinates;
             var finisher = Owner.EntityManager.SpawnEntity(TrashPrototype, position);
@@ -208,8 +231,6 @@ namespace Content.Server.Nutrition.Components
             {
                 Owner.Delete();
             }
-
-            return true;
         }
     }
 }

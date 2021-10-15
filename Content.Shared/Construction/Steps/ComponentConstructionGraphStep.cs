@@ -1,8 +1,7 @@
-﻿#nullable enable
+﻿using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -22,9 +21,9 @@ namespace Content.Shared.Construction.Steps
             return false;
         }
 
-        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            message.AddMarkup(string.IsNullOrEmpty(Name)
+            examinedEvent.Message.AddMarkup(string.IsNullOrEmpty(Name)
                 ? Loc.GetString(
                     "construction-insert-entity-with-component",
                     ("componentName", Component))// Terrible.

@@ -41,12 +41,44 @@
 			"name": "syringe4"
 		},
 		{
-      "name": "inhand-left",
+      "name": "0-inhand-left",
       "directions": 4
     },
     {
-      "name": "inhand-right",
+      "name": "0-inhand-right",
       "directions": 4
-    }
+    },
+		{
+			"name": "1-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "1-inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "2-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "2-inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "3-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "3-inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "4-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "4-inhand-right",
+			"directions": 4
+		}
 	]
 }

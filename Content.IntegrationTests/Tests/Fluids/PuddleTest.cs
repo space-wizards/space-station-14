@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
-using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Chemistry.Solution;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -149,6 +148,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             float sEvaporateTime = default;
             PuddleComponent sPuddle = null;
+            Solution solution = null;
             ReagentUnit sPuddleStartingVolume = default;
 
             // Spawn a puddle

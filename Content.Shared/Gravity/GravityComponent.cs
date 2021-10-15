@@ -1,9 +1,11 @@
 using System;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Log;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Gravity
@@ -13,6 +15,9 @@ namespace Content.Shared.Gravity
     public sealed class GravityComponent : Component
     {
         public override string Name => "Gravity";
+
+        [DataField("gravityShakeSound")]
+        public SoundSpecifier GravityShakeSound { get; set; } = new SoundPathSpecifier("/Audio/Effects/alert.ogg");
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled
@@ -49,7 +54,7 @@ namespace Content.Shared.Gravity
         }
 
         [Serializable, NetSerializable]
-        protected sealed class GravityComponentState : ComponentState
+        private sealed class GravityComponentState : ComponentState
         {
             public bool Enabled { get; }
 

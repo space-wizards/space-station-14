@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -30,6 +29,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     The tiles that have had their atmos data updated since last tick
@@ -59,8 +59,6 @@ namespace Content.Server.Atmos.EntitySystems
         /// </summary>
         private float _updateCooldown;
 
-        private AtmosphereSystem _atmosphereSystem = default!;
-
         private int _thresholds;
 
         public override void Initialize()
@@ -69,7 +67,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
 
-            _atmosphereSystem = Get<AtmosphereSystem>();
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             _mapManager.OnGridRemoved += OnGridRemoved;
             var configManager = IoCManager.Resolve<IConfigurationManager>();
@@ -145,14 +142,14 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     Checks whether the overlay-relevant data for a gas tile has been updated.
         /// </summary>
-        /// <param name="gam"></param>
+        /// <param name="grid"></param>
         /// <param name="oldTile"></param>
         /// <param name="indices"></param>
         /// <param name="overlayData"></param>
         /// <returns>true if updated</returns>
-        private bool TryRefreshTile(GridAtmosphereComponent gam, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
+        private bool TryRefreshTile(GridId grid, GasOverlayData oldTile, Vector2i indices, out GasOverlayData overlayData)
         {
-            var tile = gam.GetTile(indices);
+            var tile = _atmosphereSystem.GetTileAtmosphereOrCreateSpace(grid, indices);
 
             if (tile == null)
             {
@@ -272,7 +269,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 var gridEntityId = grid.GridEntityId;
 
-                if (!EntityManager.GetEntity(gridEntityId).TryGetComponent(out GridAtmosphereComponent? gam))
+                if (!EntityManager.TryGetComponent(gridEntityId, out GridAtmosphereComponent? gam))
                 {
                     continue;
                 }
@@ -288,7 +285,7 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var chunk = GetOrCreateChunk(gridId, invalid);
 
-                    if (!TryRefreshTile(gam, chunk.GetData(invalid), invalid, out var data)) continue;
+                    if (!TryRefreshTile(grid.Index, chunk.GetData(invalid), invalid, out var data)) continue;
 
                     if (!updatedTiles.TryGetValue(chunk, out var tiles))
                     {

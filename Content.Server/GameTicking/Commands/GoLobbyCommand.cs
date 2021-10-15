@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using Content.Server.Administration;
 using Content.Shared;
 using Content.Shared.Administration;

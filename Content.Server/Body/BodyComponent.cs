@@ -1,30 +1,27 @@
-#nullable enable
-using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Mind.Components;
 using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Slot;
-using Content.Shared.MobState;
-using Content.Shared.Movement.Components;
 using Content.Shared.Random.Helpers;
+using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Player;
-using Robust.Shared.Players;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Body
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(IGhostOnMove))]
-    public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
+    public class BodyComponent : SharedBodyComponent, IGhostOnMove
     {
         private Container _partContainer = default!;
+
+        [DataField("gibSound")] private SoundSpecifier _gibSound = new SoundCollectionSpecifier("gib");
 
         protected override bool CanAddPart(string slotId, SharedBodyPartComponent part)
         {
@@ -86,23 +83,11 @@ namespace Content.Server.Body
             }
         }
 
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
-        {
-            if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
-                mobState.IsDead() &&
-                Owner.TryGetComponent(out MindComponent? mind) &&
-                mind.HasMind)
-            {
-                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind.Mind!, true);
-            }
-        }
-
         public override void Gib(bool gibParts = false)
         {
             base.Gib(gibParts);
 
-            SoundSystem.Play(Filter.Pvs(Owner), AudioHelpers.GetRandomFileFromSoundCollection("gib"), Owner.Transform.Coordinates,
-                    AudioHelpers.WithVariation(0.025f));
+            SoundSystem.Play(Filter.Pvs(Owner), _gibSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.025f));
 
             if (Owner.TryGetComponent(out ContainerManagerComponent? container))
             {

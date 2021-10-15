@@ -1,9 +1,7 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Power.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;

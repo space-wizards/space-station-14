@@ -4,9 +4,10 @@ using Content.Server.Construction.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 
 namespace Content.Server.Atmos.Piping.EntitySystems
@@ -14,6 +15,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
     [UsedImplicitly]
     public class AtmosUnsafeUnanchorSystem : EntitySystem
     {
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<AtmosUnsafeUnanchorComponent, BeforeUnanchoredEvent>(OnBeforeUnanchored);
@@ -22,10 +25,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnUnanchorAttempt(EntityUid uid, AtmosUnsafeUnanchorComponent component, UnanchorAttemptEvent args)
         {
-            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (!component.Owner.Transform.Coordinates.TryGetTileAir(out var environment, EntityManager))
+            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates) is not {} environment)
                 return;
 
             foreach (var node in nodes.Nodes.Values)
@@ -43,15 +46,11 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnBeforeUnanchored(EntityUid uid, AtmosUnsafeUnanchorComponent component, BeforeUnanchoredEvent args)
         {
-            if (!component.Enabled || !ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
+            if (!component.Enabled || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodes))
                 return;
 
-            if (!component.Owner.Transform.Coordinates.TryGetTileAtmosphere(out var environment))
-                environment = null;
-
-            var environmentPressure = environment?.Air?.Pressure ?? 0f;
-            var environmentVolume = environment?.Air?.Volume ?? Atmospherics.CellVolume;
-            var environmentTemperature = environment?.Air?.Volume ?? Atmospherics.TCMB;
+            if (_atmosphereSystem.GetTileMixture(component.Owner.Transform.Coordinates, true) is not {} environment)
+                environment = GasMixture.SpaceGas;
 
             var lost = 0f;
             var timesLost = 0;
@@ -60,24 +59,22 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             {
                 if (node is not PipeNode pipe) continue;
 
-                var difference = pipe.Air.Pressure - environmentPressure;
-                lost += difference * environmentVolume / (environmentTemperature * Atmospherics.R);
+                var difference = pipe.Air.Pressure - environment.Pressure;
+                lost += difference * environment.Volume / (environment.Temperature * Atmospherics.R);
                 timesLost++;
             }
 
             var sharedLoss = lost / timesLost;
             var buffer = new GasMixture();
 
-            var atmosphereSystem = Get<AtmosphereSystem>();
-
             foreach (var node in nodes.Nodes.Values)
             {
                 if (node is not PipeNode pipe) continue;
 
-                atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
+                _atmosphereSystem.Merge(buffer, pipe.Air.Remove(sharedLoss));
             }
 
-            environment?.AssumeAir(buffer);
+            _atmosphereSystem.Merge(environment, buffer);
         }
     }
 }

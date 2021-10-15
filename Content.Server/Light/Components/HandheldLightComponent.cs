@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Clothing.Components;
 using Content.Server.Items;
@@ -9,10 +8,10 @@ using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Actions.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Light.Component;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Rounding;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -46,9 +45,9 @@ namespace Content.Server.Light.Components
 
         [ViewVariables] protected override bool HasCell => _cellSlot.HasCell;
 
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public string? TurnOnSound = "/Audio/Items/flashlight_toggle.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public string? TurnOnFailSound = "/Audio/Machines/button.ogg";
-        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public string? TurnOffSound = "/Audio/Items/flashlight_toggle.ogg";
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnSound")] public SoundSpecifier TurnOnSound = new SoundPathSpecifier("/Audio/Items/flashlight_on.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOnFailSound")] public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+        [ViewVariables(VVAccess.ReadWrite)] [DataField("turnOffSound")] public SoundSpecifier TurnOffSound = new SoundPathSpecifier("/Audio/Items/flashlight_off.ogg");
 
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
@@ -108,7 +107,7 @@ namespace Content.Server.Light.Components
             return Activated ? TurnOff() : TurnOn(user);
         }
 
-        private bool TurnOff(bool makeNoise = true)
+        public bool TurnOff(bool makeNoise = true)
         {
             if (!Activated)
             {
@@ -122,13 +121,13 @@ namespace Content.Server.Light.Components
 
             if (makeNoise)
             {
-                if (TurnOffSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOffSound.GetSound(), Owner);
             }
 
             return true;
         }
 
-        private bool TurnOn(IEntity user)
+        public bool TurnOn(IEntity user)
         {
             if (Activated)
             {
@@ -137,7 +136,7 @@ namespace Content.Server.Light.Components
 
             if (Cell == null)
             {
-                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-missing-message"));
                 UpdateLightAction();
                 return false;
@@ -148,7 +147,7 @@ namespace Content.Server.Light.Components
             // Simple enough.
             if (Wattage > Cell.CurrentCharge)
             {
-                if (TurnOnFailSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound, Owner);
+                SoundSystem.Play(Filter.Pvs(Owner), TurnOnFailSound.GetSound(), Owner);
                 Owner.PopupMessage(user, Loc.GetString("handheld-light-component-cell-dead-message"));
                 UpdateLightAction();
                 return false;
@@ -159,7 +158,7 @@ namespace Content.Server.Light.Components
             SetState(true);
             Owner.EntityManager.EventBus.QueueEvent(EventSource.Local, new ActivateHandheldLightMessage(this));
 
-            if (TurnOnSound != null) SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound, Owner);
+            SoundSystem.Play(Filter.Pvs(Owner), TurnOnSound.GetSound(), Owner);
             return true;
         }
 
@@ -177,12 +176,12 @@ namespace Content.Server.Light.Components
 
             if (Owner.TryGetComponent(out ClothingComponent? clothing))
             {
-                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
+                clothing.ClothingEquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
 
             if (Owner.TryGetComponent(out ItemComponent? item))
             {
-                item.EquippedPrefix = Loc.GetString(on ? "handheld-light-component-on-state" : "handheld-light-component-off-state");
+                item.EquippedPrefix = Loc.GetString(on ? "on" : "off");
             }
         }
 
@@ -234,7 +233,7 @@ namespace Content.Server.Light.Components
 
             var currentCharge = Cell.CurrentCharge;
 
-            if (MathHelper.CloseTo(currentCharge, 0) || Wattage > currentCharge)
+            if (MathHelper.CloseToPercent(currentCharge, 0) || Wattage > currentCharge)
                 return 0;
 
             return (byte?) ContentHelpers.RoundToNearestLevels(currentCharge / Cell.MaxCharge * 255, 255, StatusLevels);
@@ -243,26 +242,6 @@ namespace Content.Server.Light.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             return new HandheldLightComponentState(GetLevel());
-        }
-
-        [Verb]
-        public sealed class ToggleLightVerb : Verb<HandheldLightComponent>
-        {
-            protected override void GetData(IEntity user, HandheldLightComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("toggle-light-verb-get-data-text");
-            }
-
-            protected override void Activate(IEntity user, HandheldLightComponent component)
-            {
-                component.ToggleStatus(user);
-            }
         }
     }
 

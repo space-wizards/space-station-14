@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Content.Server.Ghost.Components;
@@ -7,9 +6,9 @@ using Content.Server.Pointing.Components;
 using Content.Server.Visible;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Input;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -32,6 +31,7 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
 
         private static readonly TimeSpan PointDelay = TimeSpan.FromSeconds(0.5f);
 
@@ -89,6 +89,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
+            var mapCoords = coords.ToMap(EntityManager);
             var player = (session as IPlayerSession)?.ContentData()?.Mind?.CurrentEntity;
             if (player == null)
             {
@@ -113,16 +114,16 @@ namespace Content.Server.Pointing.EntitySystems
                 return false;
             }
 
-            if (EntitySystem.Get<ActionBlockerSystem>().CanChangeDirection(player))
+            if (_actionBlockerSystem.CanChangeDirection(player))
             {
-                var diff = coords.ToMapPos(EntityManager) - player.Transform.MapPosition.Position;
+                var diff = mapCoords.Position - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
                     player.Transform.LocalRotation = new Angle(diff);
                 }
             }
 
-            var arrow = EntityManager.SpawnEntity("pointingarrow", coords);
+            var arrow = EntityManager.SpawnEntity("pointingarrow", mapCoords);
 
             var layer = (int) VisibilityFlags.Normal;
             if (player.TryGetComponent(out VisibilityComponent? playerVisibility))
@@ -136,7 +137,7 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 var ent = playerSession.ContentData()?.Mind?.CurrentEntity;
 
-                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) != 0))
+                if (ent is null || (!ent.TryGetComponent<EyeComponent>(out var eyeComp) || (eyeComp.VisibilityMask & layer) == 0))
                     return false;
 
                 return ent.Transform.MapPosition.InRange(player.Transform.MapPosition, PointingRange);
@@ -160,8 +161,14 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                var tileRef = _mapManager.GetGrid(coords.GetGridId(EntityManager)).GetTileRef(coords);
-                var tileDef = _tileDefinitionManager[tileRef.Tile.TypeId];
+                TileRef? tileRef = null;
+
+                if (_mapManager.TryFindGridAt(mapCoords, out var grid))
+                {
+                    tileRef = grid.GetTileRef(grid.WorldToTile(mapCoords.Position));
+                }
+
+                var tileDef = _tileDefinitionManager[tileRef?.Tile.TypeId ?? 0];
 
                 selfMessage = Loc.GetString("pointing-system-point-at-tile", ("tileName", tileDef.DisplayName));
 
@@ -179,11 +186,33 @@ namespace Content.Server.Pointing.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddPointingVerb);
+
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.Point, new PointerInputCmdHandler(TryPoint))
                 .Register<PointingSystem>();
+        }
+
+        private void AddPointingVerb(GetOtherVerbsEvent args)
+        {
+            if (args.Hands == null)
+                return;
+
+            //Check if the object is already being pointed at
+            if (args.Target.HasComponent<PointingArrowComponent>())
+                return;
+
+            if (!args.User.TryGetComponent<ActorComponent>(out var actor)  ||
+                !InRange(args.User, args.Target.Transform.Coordinates))
+                return;
+
+            Verb verb = new();
+            verb.Text = Loc.GetString("pointing-verb-get-data-text");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/point.svg.192dpi.png";
+            verb.Act = () => TryPoint(actor.PlayerSession, args.Target.Transform.Coordinates, args.Target.Uid); ;
+            args.Verbs.Add(verb);
         }
 
         public override void Shutdown()
@@ -196,7 +225,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in ComponentManager.EntityQuery<PointingArrowComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
             {
                 component.Update(frameTime);
             }

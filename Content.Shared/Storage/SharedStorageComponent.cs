@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,7 +28,7 @@ namespace Content.Shared.Storage
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {
-            return args.Target.TryGetComponent(out SharedPlaceableSurfaceComponent? placeable) &&
+            return args.Target.TryGetComponent(out PlaceableSurfaceComponent? placeable) &&
                    placeable.IsPlaceable;
         }
 

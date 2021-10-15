@@ -1,11 +1,10 @@
-#nullable enable
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Hands.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
@@ -17,6 +16,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
@@ -38,6 +38,8 @@ namespace Content.Server.Disposal.Tube.Components
             physics.BodyType == BodyType.Static;
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(DisposalTaggerUiKey.Key);
+
+        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
@@ -116,7 +118,7 @@ namespace Content.Server.Disposal.Tube.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         /// <summary>
@@ -148,34 +150,7 @@ namespace Content.Server.Disposal.Tube.Components
             base.OnRemove();
             UserInterface?.CloseAll();
         }
-
-        [Verb]
-        public sealed class ConfigureVerb : Verb<DisposalTaggerComponent>
-        {
-            protected override void GetData(IEntity user, DisposalTaggerComponent component, VerbData data)
-            {
-
-                var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out ActorComponent? actor) || !groupController.CanAdminMenu(actor.PlayerSession))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("configure-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, DisposalTaggerComponent component)
-            {
-                if (user.TryGetComponent(out ActorComponent? actor))
-                {
-                    component.OpenUserInterface(actor);
-                }
-            }
-        }
-
-        private void OpenUserInterface(ActorComponent actor)
+        public void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
             UserInterface?.Open(actor.PlayerSession);

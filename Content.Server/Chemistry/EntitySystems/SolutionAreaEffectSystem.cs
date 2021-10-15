@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using Content.Server.Chemistry.Components;
 using JetBrains.Annotations;
@@ -11,7 +10,7 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         public override void Update(float frameTime)
         {
-            foreach (var inception in ComponentManager.EntityQuery<SolutionAreaEffectInceptionComponent>().ToArray())
+            foreach (var inception in EntityManager.EntityQuery<SolutionAreaEffectInceptionComponent>().ToArray())
             {
                 inception.InceptionUpdate(frameTime);
             }

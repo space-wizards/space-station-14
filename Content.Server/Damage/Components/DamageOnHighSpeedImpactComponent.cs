@@ -1,38 +1,26 @@
-﻿using System;
-using Content.Server.Stunnable.Components;
-using Content.Shared.Audio;
+using System;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Robust.Shared.Audio;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Physics.Collision;
-using Robust.Shared.Physics.Dynamics;
-using Robust.Shared.Player;
-using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Damage.Components
 {
+    /// <summary>
+    /// Should the entity take damage / be stunned if colliding at a speed above MinimumSpeed?
+    /// </summary>
     [RegisterComponent]
-    public class DamageOnHighSpeedImpactComponent : Component, IStartCollide
+    internal sealed class DamageOnHighSpeedImpactComponent : Component
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override string Name => "DamageOnHighSpeedImpact";
 
-        [DataField("damage")]
-        public DamageType Damage { get; set; } = DamageType.Blunt;
         [DataField("minimumSpeed")]
         public float MinimumSpeed { get; set; } = 20f;
-        [DataField("baseDamage")]
-        public int BaseDamage { get; set; } = 5;
         [DataField("factor")]
         public float Factor { get; set; } = 1f;
-        [DataField("soundHit")]
-        public string SoundHit { get; set; } = "";
+        [DataField("soundHit", required: true)]
+        public SoundSpecifier SoundHit { get; set; } = default!;
         [DataField("stunChance")]
         public float StunChance { get; set; } = 0.25f;
         [DataField("stunMinimumDamage")]
@@ -41,30 +29,11 @@ namespace Content.Server.Damage.Components
         public float StunSeconds { get; set; } = 1f;
         [DataField("damageCooldown")]
         public float DamageCooldown { get; set; } = 2f;
-        private TimeSpan _lastHit = TimeSpan.Zero;
 
-        void IStartCollide.CollideWith(Fixture ourFixture, Fixture otherFixture, in Manifold manifold)
-        {
-            if (!Owner.TryGetComponent(out IDamageableComponent? damageable)) return;
+        internal TimeSpan LastHit = TimeSpan.Zero;
 
-            var speed = ourFixture.Body.LinearVelocity.Length;
-
-            if (speed < MinimumSpeed) return;
-
-            if (!string.IsNullOrEmpty(SoundHit))
-                SoundSystem.Play(Filter.Pvs(otherFixture.Body.Owner), SoundHit, otherFixture.Body.Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-0.125f));
-
-            if ((_gameTiming.CurTime - _lastHit).TotalSeconds < DamageCooldown)
-                return;
-
-            _lastHit = _gameTiming.CurTime;
-
-            var damage = (int) (BaseDamage * (speed / MinimumSpeed) * Factor);
-
-            if (Owner.TryGetComponent(out StunnableComponent? stun) && _robustRandom.Prob(StunChance))
-                stun.Stun(StunSeconds);
-
-            damageable.ChangeDamage(Damage, damage, false, otherFixture.Body.Owner);
-        }
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
     }
 }

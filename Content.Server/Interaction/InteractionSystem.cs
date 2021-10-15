@@ -8,18 +8,20 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Pulling;
 using Content.Server.Timing;
+using Content.Server.Verbs;
 using Content.Shared.ActionBlocker;
 using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Pulling.Components;
 using Content.Shared.Rotatable;
 using Content.Shared.Throwing;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -46,14 +48,20 @@ namespace Content.Server.Interaction
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private readonly VerbSystem _verbSystem = default!;
+        [Dependency] private readonly PullingSystem _pullSystem = default!;
 
         public override void Initialize()
         {
             SubscribeNetworkEvent<DragDropRequestEvent>(HandleDragDropRequestEvent);
+            SubscribeNetworkEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
 
             CommandBinds.Builder
                 .Bind(EngineKeyFunctions.Use,
                     new PointerInputCmdHandler(HandleUseInteraction))
+                .Bind(ContentKeyFunctions.AltActivateItemInWorld,
+                    new PointerInputCmdHandler(HandleAltUseInteraction))
                 .Bind(ContentKeyFunctions.WideAttack,
                     new PointerInputCmdHandler(HandleWideAttack))
                 .Bind(ContentKeyFunctions.ActivateItemInWorld,
@@ -99,6 +107,34 @@ namespace Content.Server.Interaction
             return true;
         }
         #endregion
+
+        /// <summary>
+        ///     Handles the event were a client uses an item in their inventory or in their hands, either by
+        ///     alt-clicking it or pressing 'E' while hovering over it.
+        /// </summary>
+        private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
+        {
+            if (!EntityManager.TryGetEntity(msg.ItemUid, out var item))
+            {
+                Logger.WarningS("system.interaction",
+                    $"Client sent inventory interaction with an invalid target item. Session={args.SenderSession}");
+                return;
+            }
+
+            // client sanitization
+            if (!ValidateClientInput(args.SenderSession, item.Transform.Coordinates, msg.ItemUid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Inventory interaction validation failed.  Session={args.SenderSession}");
+                return;
+            }
+
+            if (msg.AltInteract)
+                // Use 'UserInteraction' function - behaves as if the user alt-clicked the item in the world.
+                UserInteraction(userEntity, item.Transform.Coordinates, msg.ItemUid, msg.AltInteract);
+            else
+                // User used 'E'. We want to activate it, not simulate clicking on the item
+                InteractionActivate(userEntity, item);
+        }
 
         #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
@@ -175,9 +211,15 @@ namespace Content.Server.Interaction
 
         private void InteractionActivate(IEntity user, IEntity used)
         {
-            var actionBlocker = Get<ActionBlockerSystem>();
+            if (used.TryGetComponent<UseDelayComponent>(out var delayComponent))
+            {
+                if (delayComponent.ActiveDelay)
+                    return;
 
-            if (!actionBlocker.CanInteract(user) || ! actionBlocker.CanUse(user))
+                delayComponent.BeginDelay();
+            }
+
+            if (!_actionBlockerSystem.CanInteract(user) || ! _actionBlockerSystem.CanUse(user))
                 return;
 
             // all activates should only fire when in range / unobstructed
@@ -241,6 +283,20 @@ namespace Content.Server.Interaction
             return true;
         }
 
+        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            // client sanitization
+            if (!ValidateClientInput(session, coords, uid, out var userEntity))
+            {
+                Logger.InfoS("system.interaction", $"Alt-use input validation failed");
+                return true;
+            }
+
+            UserInteraction(userEntity, coords, uid, altInteract : true );
+
+            return true;
+        }
+
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
@@ -258,24 +314,36 @@ namespace Content.Server.Interaction
             if (!InRangeUnobstructed(userEntity, pulledObject, popup: true))
                 return false;
 
-            if (!pulledObject.TryGetComponent(out PullableComponent? pull))
+            if (!pulledObject.TryGetComponent(out SharedPullableComponent? pull))
                 return false;
 
-            return pull.TogglePull(userEntity);
+            return _pullSystem.TogglePull(userEntity, pull);
         }
 
-        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid)
+        /// <summary>
+        ///     Resolves user interactions with objects.
+        /// </summary>
+        /// <remarks>
+        ///     Checks Whether combat mode is enabled and whether the user can actually interact with the given entity.
+        /// </remarks>
+        /// <param name="altInteract">Whether to use default or alternative interactions (usually as a result of
+        /// alt+clicking). If combat mode is enabled, the alternative action is to perform the default non-combat
+        /// interaction. Having an item in the active hand also disables alternative interactions.</param>
+        public async void UserInteraction(IEntity user, EntityCoordinates coordinates, EntityUid clickedUid, bool altInteract = false )
         {
-            if (user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            // TODO COMBAT Consider using alt-interact for advanced combat? maybe alt-interact disarms?
+            if (!altInteract && user.TryGetComponent(out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
+
                 DoAttack(user, coordinates, false, clickedUid);
                 return;
+
             }
 
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // Get entity clicked upon from UID if valid UID, if not assume no entity clicked upon and null
@@ -289,7 +357,7 @@ namespace Content.Server.Interaction
                 return;
             }
 
-            // Verify user has a hand, and find what object he is currently holding in his active hand
+            // Verify user has a hand, and find what object they are currently holding in their active hand
             if (!user.TryGetComponent<IHandsComponent>(out var hands))
                 return;
 
@@ -313,23 +381,27 @@ namespace Content.Server.Interaction
             }
             else
             {
-                // We are close to the nearby object and the object isn't contained in our active hand
-                // InteractUsing/AfterInteract: We will either use the item on the nearby object
-                if (item != null)
+                // We are close to the nearby object.
+                if (altInteract)
+                    // Perform alternative interactions, using context menu verbs.
+                    AltInteract(user, target);
+                else if (item != null && item != target)
+                    // We are performing a standard interaction with an item, and the target isn't the same as the item
+                    // currently in our hand. We will use the item in our hand on the nearby object via InteractUsing
                     await InteractUsing(user, item, target, coordinates);
-                // InteractHand/Activate: Since our hand is empty we will use InteractHand/Activate
-                else
+                else if (item == null)
+                    // Since our hand is empty we will use InteractHand/Activate
                     InteractHand(user, target);
             }
         }
 
         private bool ValidateInteractAndFace(IEntity user, EntityCoordinates coordinates)
         {
-            // Verify user is on the same map as the entity he clicked on
+            // Verify user is on the same map as the entity they clicked on
             if (coordinates.GetMapId(_entityManager) != user.Transform.MapID)
             {
                 Logger.WarningS("system.interaction",
-                    $"User entity named {user.Name} clicked on a map he isn't located on");
+                    $"User entity named {user.Name} clicked on a map they aren't located on");
                 return false;
             }
 
@@ -344,7 +416,7 @@ namespace Content.Server.Interaction
             if (diff.LengthSquared <= 0.01f)
                 return;
             var diffAngle = Angle.FromWorldVec(diff);
-            if (Get<ActionBlockerSystem>().CanChangeDirection(user))
+            if (_actionBlockerSystem.CanChangeDirection(user))
             {
                 user.Transform.WorldRotation = diffAngle;
             }
@@ -353,7 +425,7 @@ namespace Content.Server.Interaction
                 if (user.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
                 {
                     // We're buckled to another object. Is that object rotatable?
-                    if (buckle.BuckledTo!.Owner.TryGetComponent(out SharedRotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
+                    if (buckle.BuckledTo!.Owner.TryGetComponent(out RotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
                     {
                         // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
                         // (Since the user being buckled to it holds it down with their weight.)
@@ -387,6 +459,18 @@ namespace Content.Server.Interaction
             return false;
         }
 
+        private async Task<bool> InteractDoBefore(
+            IEntity user,
+            IEntity used,
+            IEntity? target,
+            EntityCoordinates clickLocation,
+            bool canReach)
+        {
+            var ev = new BeforeInteractEvent(user, used, target, clickLocation, canReach);
+            RaiseLocalEvent(used.Uid, ev, false);
+            return ev.Handled;
+        }
+
         /// <summary>
         /// Uses a item/object on an entity
         /// Finds components with the InteractUsing interface and calls their function
@@ -394,7 +478,10 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task InteractUsing(IEntity user, IEntity used, IEntity target, EntityCoordinates clickLocation)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
+                return;
+
+            if (await InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -418,13 +505,35 @@ namespace Content.Server.Interaction
         }
 
         /// <summary>
+        ///     Alternative interactions on an entity.
+        /// </summary>
+        /// <remarks>
+        ///     Uses the context menu verb list, and acts out the highest priority alternative interaction verb.
+        /// </remarks>
+        public void AltInteract(IEntity user, IEntity target)
+        {
+            // Get list of alt-interact verbs
+            GetAlternativeVerbsEvent getVerbEvent = new(user, target);
+            RaiseLocalEvent(target.Uid, getVerbEvent);
+
+            foreach (var verb in getVerbEvent.Verbs)
+            {
+                if (verb.Disabled)
+                    continue;
+
+                _verbSystem.TryExecuteVerb(verb);
+                break;
+            }
+        }
+
+        /// <summary>
         /// Uses an empty hand on an entity
         /// Finds components with the InteractHand interface and calls their function
         /// NOTE: Does not have an InRangeUnobstructed check
         /// </summary>
         public void InteractHand(IEntity user, IEntity target)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(user))
+            if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -455,11 +564,14 @@ namespace Content.Server.Interaction
         /// </summary>
         /// <param name="user"></param>
         /// <param name="used"></param>
-        public void TryUseInteraction(IEntity user, IEntity used)
+        public void TryUseInteraction(IEntity user, IEntity used, bool altInteract = false)
         {
-            if (user != null && used != null && Get<ActionBlockerSystem>().CanUse(user))
+            if (user != null && used != null && _actionBlockerSystem.CanUse(user))
             {
-                UseInteraction(user, used);
+                if (altInteract)
+                    AltInteract(user, used);
+                else
+                    UseInteraction(user, used);
             }
         }
 
@@ -473,8 +585,8 @@ namespace Content.Server.Interaction
             {
                 if (delayComponent.ActiveDelay)
                     return;
-                else
-                    delayComponent.BeginDelay();
+
+                delayComponent.BeginDelay();
             }
 
             var useMsg = new UseInHandEvent(user, used);
@@ -501,7 +613,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryThrowInteraction(IEntity user, IEntity item)
         {
-            if (user == null || item == null || !Get<ActionBlockerSystem>().CanThrow(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanThrow(user)) return false;
 
             ThrownInteraction(user, item);
             return true;
@@ -618,7 +730,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public bool TryDroppedInteraction(IEntity user, IEntity item, bool intentional)
         {
-            if (user == null || item == null || !Get<ActionBlockerSystem>().CanDrop(user)) return false;
+            if (user == null || item == null || !_actionBlockerSystem.CanDrop(user)) return false;
 
             DroppedInteraction(user, item, intentional);
             return true;
@@ -696,6 +808,9 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
+            if (await InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+                return true;
+
             if (target != null)
             {
                 var rangedMsg = new RangedInteractEvent(user, used, target, clickLocation);
@@ -715,10 +830,7 @@ namespace Content.Server.Interaction
                 }
             }
 
-            if (inRangeUnobstructed)
-                return await InteractDoAfter(user, used, target, clickLocation, false);
-            else
-                return await InteractDoAfter(user, used, null, clickLocation, false);
+            return await InteractDoAfter(user, used, inRangeUnobstructed ? target : null, clickLocation, false);
         }
 
         public void DoAttack(IEntity user, EntityCoordinates coordinates, bool wideAttack, EntityUid targetUid = default)
@@ -726,7 +838,7 @@ namespace Content.Server.Interaction
             if (!ValidateInteractAndFace(user, coordinates))
                 return;
 
-            if (!Get<ActionBlockerSystem>().CanAttack(user))
+            if (!_actionBlockerSystem.CanAttack(user))
                 return;
 
             IEntity? targetEnt = null;
@@ -749,7 +861,7 @@ namespace Content.Server.Interaction
                     return;
             }
 
-            // Verify user has a hand, and find what object he is currently holding in his active hand
+            // Verify user has a hand, and find what object they are currently holding in their active hand
             if (user.TryGetComponent<IHandsComponent>(out var hands))
             {
                 var item = hands.GetActiveHand?.Owner;

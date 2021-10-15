@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage;
 
 namespace Content.Server.Destructible.Thresholds.Triggers
 {
@@ -14,6 +13,6 @@ namespace Content.Server.Destructible.Thresholds.Triggers
         ///     dependencies from, if any.
         /// </param>
         /// <returns>true if this trigger has been reached, false otherwise.</returns>
-        bool Reached(IDamageableComponent damageable, DestructibleSystem system);
+        bool Reached(DamageableComponent damageable, DestructibleSystem system);
     }
 }

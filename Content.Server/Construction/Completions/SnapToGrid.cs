@@ -1,4 +1,3 @@
-#nullable enable
 using System.Threading.Tasks;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Construction;

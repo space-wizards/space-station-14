@@ -17,13 +17,13 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Enums;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Network;
 using Robust.Shared.Utility;
 using YamlDotNet.RepresentationModel;
 
-#nullable enable
 
 namespace Content.Server.Administration.Managers
 {
@@ -252,8 +252,9 @@ namespace Content.Server.Administration.Managers
                 var name = session.Name;
                 var username = session.AttachedEntity?.Name ?? string.Empty;
                 var antag = session.ContentData()?.Mind?.AllRoles.Any(r => r.Antagonist) ?? false;
+                var uid = session.AttachedEntity?.Uid ?? EntityUid.Invalid;
 
-                netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag));
+                netMsg.PlayersInfo.Add(new AdminMenuPlayerListMessage.PlayerInfo(name, username, antag, uid));
             }
 
             _netMgr.ServerSendMessage(netMsg, senderSession.ConnectedClient);

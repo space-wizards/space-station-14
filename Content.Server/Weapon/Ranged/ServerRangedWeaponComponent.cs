@@ -1,16 +1,17 @@
 using System;
-using Content.Server.Atmos;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Interaction.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Hands;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -47,6 +48,16 @@ namespace Content.Server.Weapon.Ranged
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("canHotspot")]
         private bool _canHotspot = true;
+
+        [DataField("clumsyWeaponHandlingSound")]
+        private SoundSpecifier _clumsyWeaponHandlingSound = new SoundPathSpecifier("/Audio/Items/bikehorn.ogg");
+
+        [DataField("clumsyWeaponShotSound")]
+        private SoundSpecifier _clumsyWeaponShotSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/bang.ogg");
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("clumsyDamage")]
+        public DamageSpecifier? ClumsyDamage;
 
         public Func<bool>? WeaponCanFireHandler;
         public Func<IEntity, bool>? UserCanFireHandler;
@@ -139,7 +150,8 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if(!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode) {
+            if (!user.TryGetComponent(out CombatModeComponent? combat) || !combat.IsInCombatMode)
+            {
                 return;
             }
 
@@ -157,24 +169,25 @@ namespace Content.Server.Weapon.Ranged
 
             _lastFireTime = curTime;
 
-            if (ClumsyCheck && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
+            if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Items/bikehorn.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+                //Wound them
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
 
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/Gunshots/bang.ogg",
-                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
-
-                if (user.TryGetComponent(out IDamageableComponent? health))
-                {
-                    health.ChangeDamage(DamageType.Blunt, 10, false, user);
-                    health.ChangeDamage(DamageType.Heat, 5, false, user);
-                }
-
+                // Knock them down
                 if (user.TryGetComponent(out StunnableComponent? stun))
                 {
-                    stun.Paralyze(3f);
+                    EntitySystem.Get<StunSystem>().Paralyze(user.Uid, TimeSpan.FromSeconds(3f), stun);
                 }
+
+                // Apply salt to the wound ("Honk!")
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponHandlingSound.GetSound(),
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
+
+                SoundSystem.Play(
+                    Filter.Pvs(Owner), _clumsyWeaponShotSound.GetSound(),
+                    Owner.Transform.Coordinates, AudioParams.Default.WithMaxDistance(5));
 
                 user.PopupMessage(Loc.GetString("server-ranged-weapon-component-try-fire-clumsy"));
 
@@ -182,9 +195,9 @@ namespace Content.Server.Weapon.Ranged
                 return;
             }
 
-            if (_canHotspot && user.Transform.Coordinates.TryGetTileAtmosphere(out var tile))
+            if (_canHotspot)
             {
-                tile.HotspotExpose(700, 50);
+                EntitySystem.Get<AtmosphereSystem>().HotspotExpose(user.Transform.Coordinates, 700, 50);
             }
             FireHandler?.Invoke(user, targetPos);
         }

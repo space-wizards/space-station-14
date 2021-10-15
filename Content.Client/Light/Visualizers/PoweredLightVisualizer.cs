@@ -1,6 +1,6 @@
-#nullable enable
 using System;
 using Content.Shared.Light;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -18,7 +18,7 @@ namespace Content.Client.Light.Visualizers
     {
         [DataField("minBlinkingTime")] private float _minBlinkingTime = 0.5f;
         [DataField("maxBlinkingTime")] private float _maxBlinkingTime = 2;
-        [DataField("blinkingSound")] private string? _blinkingSound;
+        [DataField("blinkingSound")] private SoundSpecifier? _blinkingSound = default;
 
         private bool _wasBlinking;
 
@@ -29,7 +29,6 @@ namespace Content.Client.Light.Visualizers
             base.OnChangeData(component);
 
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite)) return;
-            if (!component.Owner.TryGetComponent(out PointLightComponent? light)) return;
             if (!component.TryGetData(PoweredLightVisuals.BulbState, out PoweredLightState state)) return;
 
             switch (state)
@@ -37,33 +36,26 @@ namespace Content.Client.Light.Visualizers
                 case PoweredLightState.Empty:
                     sprite.LayerSetState(PoweredLightLayers.Base, "empty");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.Off:
                     sprite.LayerSetState(PoweredLightLayers.Base, "off");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.On:
-                    if (component.TryGetData(PoweredLightVisuals.BulbColor, out Color color))
-                        light.Color = color;
                     if (component.TryGetData(PoweredLightVisuals.Blinking, out bool isBlinking))
                         ToggleBlinkingAnimation(component, isBlinking);
                     if (!isBlinking)
                     {
                         sprite.LayerSetState(PoweredLightLayers.Base, "on");
-                        light.Enabled = true;
                     }
                     break;
                 case PoweredLightState.Broken:
                     sprite.LayerSetState(PoweredLightLayers.Base, "broken");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
                 case PoweredLightState.Burned:
                     sprite.LayerSetState(PoweredLightLayers.Base, "burn");
                     ToggleBlinkingAnimation(component, false);
-                    light.Enabled = false;
                     break;
             }
         }
@@ -97,7 +89,7 @@ namespace Content.Client.Light.Visualizers
             var randomTime = random.NextFloat() *
                 (_maxBlinkingTime - _minBlinkingTime) + _minBlinkingTime;
 
-            var blinkingAnim =  new Animation()
+            var blinkingAnim = new Animation()
             {
                 Length = TimeSpan.FromSeconds(randomTime),
                 AnimationTracks =
@@ -123,16 +115,16 @@ namespace Content.Client.Light.Visualizers
                         }
                     }
                 }
-             };
+            };
 
             if (_blinkingSound != null)
             {
                 blinkingAnim.AnimationTracks.Add(new AnimationTrackPlaySound()
                 {
                     KeyFrames =
-                        {
-                            new AnimationTrackPlaySound.KeyFrame(_blinkingSound, 0.5f)
-                        }
+                {
+                    new AnimationTrackPlaySound.KeyFrame(_blinkingSound.GetSound(), 0.5f)
+                }
                 });
             }
 

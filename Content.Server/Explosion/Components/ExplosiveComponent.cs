@@ -1,11 +1,23 @@
-using Content.Shared.Acts;
+using Content.Server.Destructible.Thresholds.Behaviors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Explosion.Components
 {
+    /// <summary>
+    ///     Specifies an explosion range should this entity be exploded.
+    /// </summary>
+    /// <remarks>
+    ///     Explosions can be caused by:
+    ///     <list type="bullet">
+    ///         <item>Reaching a damage threshold that causes a <see cref="ExplodeBehavior"/></item>
+    ///         <item>Being triggered via the <see cref="ExplodeOnTriggerComponent"/></item>
+    ///         <item>Manually by some other system via functions in <see cref="ExplosionHelper"/> (for example, chemistry's
+    ///         <see cref="ExplosionReactionEffect"/>).</item>
+    ///     </list>
+    /// </remarks>
     [RegisterComponent]
-    public class ExplosiveComponent : Component, ITimerTrigger, IDestroyAct
+    public class ExplosiveComponent : Component
     {
         public override string Name => "Explosive";
 
@@ -18,31 +30,6 @@ namespace Content.Server.Explosion.Components
         [DataField("flashRange")]
         public int FlashRange;
 
-        public bool Exploding { get; private set; } = false;
-
-        public bool Explosion()
-        {
-            if (Exploding)
-            {
-                return false;
-            }
-            else
-            {
-                Exploding = true;
-                Owner.SpawnExplosion(DevastationRange, HeavyImpactRange, LightImpactRange, FlashRange);
-                Owner.QueueDelete();
-                return true;
-            }
-        }
-
-        bool ITimerTrigger.Trigger(TimerTriggerEventArgs eventArgs)
-        {
-            return Explosion();
-        }
-
-        void IDestroyAct.OnDestroy(DestructionEventArgs eventArgs)
-        {
-            Explosion();
-        }
+        public bool Exploding { get; set; } = false;
     }
 }

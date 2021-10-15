@@ -7,37 +7,16 @@ namespace Content.Shared.Ghost
 {
     public abstract class SharedGhostSystem : EntitySystem
     {
-        public override void Initialize()
+        public void SetCanReturnToBody(SharedGhostComponent component, bool canReturn)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<SharedGhostComponent, GhostChangeCanReturnToBodyEvent>(OnGhostChangeCanReturnToBody);
-        }
-
-        private void OnGhostChangeCanReturnToBody(EntityUid uid, SharedGhostComponent component, GhostChangeCanReturnToBodyEvent args)
-        {
-            if (component.CanReturnToBody == args.CanReturnToBody)
+            if (component.CanReturnToBody == canReturn)
             {
                 return;
             }
 
-            component.CanReturnToBody = args.CanReturnToBody;
+            component.CanReturnToBody = canReturn;
             component.Dirty();
         }
-    }
-
-    /// <summary>
-    ///     Raised to change the value of <see cref="SharedGhostComponent.CanReturnToBody"/>
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class GhostChangeCanReturnToBodyEvent : EntityEventArgs
-    {
-        public GhostChangeCanReturnToBodyEvent(bool canReturnToBody)
-        {
-            CanReturnToBody = canReturnToBody;
-        }
-
-        public bool CanReturnToBody { get; }
     }
 
     [Serializable, NetSerializable]

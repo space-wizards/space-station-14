@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -12,28 +11,30 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<BatteryComponent, NetworkBatteryPreSync>(PreSync);
-            SubscribeLocalEvent<BatteryComponent, NetworkBatteryPostSync>(PostSync);
+            SubscribeLocalEvent<NetworkBatteryPreSync>(PreSync);
+            SubscribeLocalEvent<NetworkBatteryPostSync>(PostSync);
         }
 
-        private void PreSync(EntityUid uid, BatteryComponent component, NetworkBatteryPreSync args)
+        private void PreSync(NetworkBatteryPreSync ev)
         {
-            var networkBattery = ComponentManager.GetComponent<PowerNetworkBatteryComponent>(uid);
-
-            networkBattery.NetworkBattery.Capacity = component.MaxCharge;
-            networkBattery.NetworkBattery.CurrentStorage = component.CurrentCharge;
+            foreach (var (bat, netBat) in EntityManager.EntityQuery<BatteryComponent, PowerNetworkBatteryComponent>())
+            {
+                netBat.NetworkBattery.Capacity = bat.MaxCharge;
+                netBat.NetworkBattery.CurrentStorage = bat.CurrentCharge;
+            }
         }
 
-        private void PostSync(EntityUid uid, BatteryComponent component, NetworkBatteryPostSync args)
+        private void PostSync(NetworkBatteryPostSync ev)
         {
-            var networkBattery = ComponentManager.GetComponent<PowerNetworkBatteryComponent>(uid);
-
-            component.CurrentCharge = networkBattery.NetworkBattery.CurrentStorage;
+            foreach (var (bat, netBat) in EntityManager.EntityQuery<BatteryComponent, PowerNetworkBatteryComponent>())
+            {
+                bat.CurrentCharge = netBat.NetworkBattery.CurrentStorage;
+            }
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in ComponentManager.EntityQuery<BatteryComponent>())
+            foreach (var comp in EntityManager.EntityQuery<BatteryComponent>())
             {
                 comp.OnUpdate(frameTime);
             }

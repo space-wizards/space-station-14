@@ -1,11 +1,11 @@
-#nullable enable
 using System;
 using Content.Server.Access.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -13,6 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
@@ -27,6 +28,8 @@ namespace Content.Server.Power.Components
         public override string Name => "Apc";
 
         public bool MainBreakerEnabled { get; private set; } = true;
+
+        [DataField("onReceiveMessageSound")] private SoundSpecifier _onReceiveMessageSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         private ApcChargeState _lastChargeState;
 
@@ -45,6 +48,10 @@ namespace Content.Server.Power.Components
         private const float HighPowerThreshold = 0.9f;
 
         private const int VisualsChangeDelay = 1;
+
+        private static readonly Color LackColor = Color.FromHex("#d1332e");
+        private static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
+        private static readonly Color FullColor = Color.FromHex("#3db83b");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
@@ -82,7 +89,7 @@ namespace Content.Server.Power.Components
             if (serverMsg.Message is ApcToggleMainBreakerMessage)
             {
                 var user = serverMsg.Session.AttachedEntity;
-                if(user == null) return;
+                if (user == null) return;
 
                 if (_accessReader == null || _accessReader.IsAllowed(user))
                 {
@@ -90,7 +97,7 @@ namespace Content.Server.Power.Components
                     Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;
 
                     _uiDirty = true;
-                    SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _onReceiveMessageSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
                 }
                 else
                 {
@@ -111,6 +118,18 @@ namespace Content.Server.Power.Components
                 if (Owner.TryGetComponent(out AppearanceComponent? appearance))
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
+                }
+
+                if (Owner.TryGetComponent(out SharedPointLightComponent? light))
+                {
+                    light.Color = newState switch
+                    {
+                        ApcChargeState.Lack => LackColor,
+                        ApcChargeState.Charging => ChargingColor,
+                        ApcChargeState.Full => FullColor,
+                        _ => LackColor
+                    };
+                    light.Dirty();
                 }
             }
 
@@ -172,7 +191,7 @@ namespace Content.Server.Power.Components
             }
 
             var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
-            if (!MathHelper.CloseTo(delta, 0, 0.1f) && delta < 0)
+            if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
             }

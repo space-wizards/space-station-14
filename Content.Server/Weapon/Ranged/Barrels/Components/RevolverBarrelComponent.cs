@@ -1,11 +1,9 @@
 using System;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
-using Content.Shared.Verbs;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -60,13 +58,13 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         // Sounds
         [DataField("soundEject")]
-        private string _soundEject = "/Audio/Weapons/Guns/MagOut/revolver_magout.ogg";
+        private SoundSpecifier _soundEject = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
         [DataField("soundInsert")]
-        private string _soundInsert = "/Audio/Weapons/Guns/MagIn/revolver_magin.ogg";
+        private SoundSpecifier _soundInsert = new SoundPathSpecifier("/Audio/Weapons/Guns/MagIn/revolver_magin.ogg");
 
         [DataField("soundSpin")]
-        private string _soundSpin = "/Audio/Weapons/Guns/Misc/revolver_spin.ogg";
+        private SoundSpecifier _soundSpin = new SoundPathSpecifier("/Audio/Weapons/Guns/Misc/revolver_spin.ogg");
 
         void ISerializationHooks.BeforeSerialization()
         {
@@ -96,7 +94,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _currentSlot,
                 FireRateSelector,
                 slotsSpent,
-                SoundGunshot);
+                SoundGunshot.GetSound());
         }
 
         protected override void Initialize()
@@ -164,10 +162,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     _currentSlot = i;
                     _ammoSlots[i] = entity;
                     _ammoContainer.Insert(entity);
-                    if (_soundInsert != null)
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), _soundInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
                     Dirty();
                     UpdateAppearance();
@@ -194,10 +189,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             var random = _random.Next(_ammoSlots.Length - 1);
             _currentSlot = random;
-            if (!string.IsNullOrEmpty(_soundSpin))
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundSpin, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            SoundSystem.Play(Filter.Pvs(Owner), _soundSpin.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             Dirty();
         }
 
@@ -248,10 +240,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_ammoContainer.ContainedEntities.Count > 0)
             {
-                if (_soundEject != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-1));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundEject.GetSound(), Owner, AudioParams.Default.WithVolume(-1));
             }
 
             // May as well point back at the end?
@@ -276,35 +265,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
             return TryInsertBullet(eventArgs.User, eventArgs.Using);
-        }
-
-        [Verb]
-        private sealed class SpinRevolverVerb : Verb<RevolverBarrelComponent>
-        {
-            protected override void GetData(IEntity user, RevolverBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("spin-revolver-verb-get-data-text");
-                if (component.Capacity <= 1)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Visibility = component.ShotsLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
-                data.IconTexture = "/Textures/Interface/VerbIcons/refresh.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, RevolverBarrelComponent component)
-            {
-                component.Spin();
-                component.Owner.PopupMessage(user, Loc.GetString("spin-revolver-verb-on-activate"));
-            }
         }
     }
 }

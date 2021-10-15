@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
@@ -42,8 +41,7 @@ namespace Content.Shared.Crayon
     public enum CrayonVisuals
     {
         State,
-        Color,
-        Rotation
+        Color
     }
 
     [Serializable, NetSerializable]

@@ -4,7 +4,8 @@ using Content.Server.Items;
 using Content.Shared.Clothing;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -31,6 +32,9 @@ namespace Content.Server.Clothing.Components
 
         [DataField("HeatResistance")]
         private int _heatResistance = 323;
+
+        [DataField("EquipSound")]
+        public SoundSpecifier? EquipSound { get; set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public int HeatResistance => _heatResistance;
@@ -91,7 +95,7 @@ namespace Content.Server.Clothing.Components
             return false;
         }
 
-        private bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
+        public bool TryEquip(InventoryComponent inv, Slots slot, IEntity user)
         {
             if (!inv.Equip(slot, this, true, out var reason))
             {

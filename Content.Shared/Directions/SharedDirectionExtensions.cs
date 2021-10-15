@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Content.Shared.Maps;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;

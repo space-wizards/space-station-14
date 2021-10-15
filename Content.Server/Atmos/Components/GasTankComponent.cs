@@ -1,10 +1,7 @@
-#nullable enable
-#nullable disable warnings
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Respiratory;
 using Content.Server.Explosion;
-using Content.Server.Interfaces;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.UserInterface;
@@ -18,7 +15,7 @@ using Content.Shared.Audio;
 using Content.Shared.DragDrop;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Verbs;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -47,6 +44,8 @@ namespace Content.Server.Atmos.Components
         [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
+
+        [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
         [DataField("air")] [ViewVariables] public GasMixture Air { get; set; } = new();
 
@@ -109,10 +108,11 @@ namespace Content.Server.Atmos.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
+            message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
             if (IsConnected)
             {
-                message.AddMarkup(Loc.GetString("gas-tank-connected"));
+                message.AddText("\n");
+                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
             }
         }
 
@@ -279,11 +279,11 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    tileAtmos?.AssumeAir(Air);
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if(environment != null)
+                        atmosphereSystem.Merge(environment, Air);
 
-                    SoundSystem.Play(Filter.Pvs(Owner), "Audio/Effects/spray.ogg", Owner.Transform.Coordinates,
-                        AudioHelpers.WithVariation(0.125f));
+                    SoundSystem.Play(Filter.Pvs(Owner), _ruptureSound.GetSound(), Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.125f));
 
                     Owner.QueueDelete();
                     return;
@@ -297,12 +297,12 @@ namespace Content.Server.Atmos.Components
             {
                 if (_integrity <= 0)
                 {
-                    var tileAtmos = Owner.Transform.Coordinates.GetTileAtmosphere();
-                    if (tileAtmos == null)
+                    var environment = atmosphereSystem.GetTileMixture(Owner.Transform.Coordinates, true);
+                    if (environment == null)
                         return;
 
                     var leakedGas = Air.RemoveRatio(0.25f);
-                    tileAtmos.AssumeAir(leakedGas);
+                    atmosphereSystem.Merge(environment, leakedGas);
                 }
                 else
                 {
@@ -319,37 +319,6 @@ namespace Content.Server.Atmos.Components
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             DisconnectFromInternals(eventArgs.User);
-        }
-
-        /// <summary>
-        /// Open interaction window
-        /// </summary>
-        [Verb]
-        private sealed class ControlVerb : Verb<GasTankComponent>
-        {
-            public override bool RequireInteractionRange => true;
-
-            protected override void GetData(IEntity user, GasTankComponent component, VerbData data)
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                if (!user.HasComponent<ActorComponent>())
-                {
-                    return;
-                }
-
-                data.Visibility = VerbVisibility.Visible;
-                data.Text = Loc.GetString("control-verb-open-control-panel-text");
-            }
-
-            protected override void Activate(IEntity user, GasTankComponent component)
-            {
-                if (!user.TryGetComponent<ActorComponent>(out var actor))
-                {
-                    return;
-                }
-
-                component.OpenInterface(actor.PlayerSession);
-            }
         }
     }
 

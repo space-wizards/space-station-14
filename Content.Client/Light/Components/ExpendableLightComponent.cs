@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Light.Component;
+using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 
 namespace Content.Client.Light.Components
@@ -9,6 +10,6 @@ namespace Content.Client.Light.Components
     [RegisterComponent]
     public class ExpendableLightComponent : SharedExpendableLightComponent
     {
-
+        public IPlayingAudioStream? PlayingStream { get; set; }
     }
 }

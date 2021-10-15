@@ -18,7 +18,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnStartup(EntityUid uid, AtmosPipeColorComponent component, ComponentStartup args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(PipeColorVisuals.Color, component.Color);
@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private void OnShutdown(EntityUid uid, AtmosPipeColorComponent component, ComponentShutdown args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(PipeColorVisuals.Color, Color.White);
@@ -36,7 +36,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         {
             component.Color = color;
 
-            if (!ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (!EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
                 return;
 
             appearance.SetData(PipeColorVisuals.Color, color);

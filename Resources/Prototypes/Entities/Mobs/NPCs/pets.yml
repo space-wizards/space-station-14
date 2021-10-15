@@ -4,7 +4,7 @@
 - type: entity
   name: corgi
   parent: SimpleMobBase
-  id: CorgiMob_Content
+  id: MobCorgi
   description: Finally, a space corgi!
   components:
   - type: Sprite
@@ -17,7 +17,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.50,-0.25,0.30,0.25"
+          bounds: "-0.25,-0.50,0.25,0.30"
       mass: 10
       mask:
       - Impassable
@@ -32,9 +32,9 @@
       dead: corgi_dead
 
 - type: entity
-  name: ian
-  parent: CorgiMob_Content
-  id: IanMob_Content
+  name: Ian
+  parent: MobCorgi
+  id: MobCorgiOld
   description: Favorite pet corgi.
   components:
   - type: Sprite
@@ -52,7 +52,7 @@
 - type: entity
   name: cat
   parent: SimpleMobBase
-  id: CatMob_Content
+  id: MobCat
   description: Feline pet, very funny.
   components:
   - type: Sprite
@@ -65,7 +65,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.20,0.30,0.20"
+          bounds: "-0.20,-0.45,0.20,0.30"
       mass: 10
       mask:
       - Impassable
@@ -81,8 +81,8 @@
 
 - type: entity
   name: calico cat
-  id: CatCalicoMob_Content
-  parent: CatMob_Content
+  id: MobCatCalico
+  parent: MobCat
   description: Feline pet, very funny.
   components:
   - type: Sprite
@@ -99,8 +99,8 @@
 
 - type: entity
   name: caracal cat
-  id: CatCaracalMob_Content
-  parent: CatMob_Content
+  id: MobCatCaracal
+  parent: MobCat
   description: Hilarious.
   components:
   - type: Sprite
@@ -118,7 +118,7 @@
 - type: entity
   name: sloth
   parent: SimpleMobBase
-  id: SlothMob_Content
+  id: MobSloth
   description: Very slow animal. For people with low energy.
   components:
   - type: MovementSpeedModifier
@@ -134,7 +134,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.45,-0.35,0.15,0.35"
+          bounds: "-0.35,-0.45,0.35,0.15"
       mass: 10
       mask:
       - Impassable

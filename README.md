@@ -18,6 +18,8 @@ The [HackMD Wiki](https://hackmd.io/@ss14/docs/wiki) has documentation on SS14s 
 
 We are happy to accept contributions from anybody. Get in Discord if you want to help. We've got a [list of issues](https://github.com/space-wizards/space-station-14-content/issues) that need to be done and anybody can pick them up. Don't be afraid to ask for help either!
 
+We are not currently accepting translations of the game on our main repository. If you would like to translate the game into another language consider creating a fork or contributing to a fork.
+
 ## Building
 
 1. Clone this repo.

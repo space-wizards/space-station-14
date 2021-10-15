@@ -15,7 +15,6 @@ using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 
-#nullable enable
 
 namespace Content.Server.Preferences.Managers
 {

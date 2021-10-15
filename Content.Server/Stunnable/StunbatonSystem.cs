@@ -1,5 +1,7 @@
-﻿using System.Linq;
+using System;
+using System.Linq;
 using Content.Server.Items;
+using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
@@ -7,8 +9,8 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -22,6 +24,7 @@ namespace Content.Server.Stunnable
 {
     public class StunbatonSystem : EntitySystem
     {
+        [Dependency] private readonly StunSystem _stunSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -31,7 +34,7 @@ namespace Content.Server.Stunnable
             SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
             SubscribeLocalEvent<StunbatonComponent, MeleeInteractEvent>(OnMeleeInteract);
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<StunbatonComponent, ThrowCollideEvent>(OnThrowCollide);
+            SubscribeLocalEvent<StunbatonComponent, ThrowDoHitEvent>(OnThrowCollide);
             SubscribeLocalEvent<StunbatonComponent, PowerCellChangedEvent>(OnPowerCellChanged);
             SubscribeLocalEvent<StunbatonComponent, InteractUsingEvent>(OnInteractUsing);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
@@ -42,7 +45,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated || !args.HitEntities.Any())
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             foreach (IEntity entity in args.HitEntities)
@@ -56,7 +59,7 @@ namespace Content.Server.Stunnable
             if (!comp.Activated)
                 return;
 
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
             if (args.Entity.HasComponent<StunnableComponent>())
@@ -81,9 +84,9 @@ namespace Content.Server.Stunnable
             }
         }
 
-        private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowCollideEvent args)
+        private void OnThrowCollide(EntityUid uid, StunbatonComponent comp, ThrowDoHitEvent args)
         {
-            if (!ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
+            if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot)) return;
             if (!comp.Activated || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse)) return;
 
             StunEntity(args.Target, comp);
@@ -102,43 +105,45 @@ namespace Content.Server.Stunnable
             if (!Get<ActionBlockerSystem>().CanInteract(args.User))
                 return;
 
-            if (ComponentManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
+            if (EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var cellslot))
                 cellslot.InsertCell(args.Used);
         }
 
         private void OnExamined(EntityUid uid, StunbatonComponent comp, ExaminedEvent args)
         {
-            args.Message.AddText("\n");
             var msg = comp.Activated
                 ? Loc.GetString("comp-stunbaton-examined-on")
                 : Loc.GetString("comp-stunbaton-examined-off");
-            args.Message.AddMarkup(msg);
+            args.PushMarkup(msg);
         }
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
             if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), "/Audio/Weapons/egloves.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
-            if(!stunnable.SlowedDown)
+            // TODO: Make slowdown inflicted customizable.
+
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
+            if (!stunnable.SlowedDown)
             {
-                if(_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    stunnable.Paralyze(comp.ParalyzeTime);
+                if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
+                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
                 else
-                    stunnable.Slowdown(comp.SlowdownTime);
+                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
             }
             else
             {
-                if(_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    stunnable.Paralyze(comp.ParalyzeTime);
+                if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
+                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
                 else
-                    stunnable.Slowdown(comp.SlowdownTime);
+                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
             }
 
 
-            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse)) return;
+            if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
+                return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             TurnOff(comp);
         }
 
@@ -152,7 +157,7 @@ namespace Content.Server.Stunnable
             if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
                 !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
 
-            SoundSystem.Play(Filter.Pvs(comp.Owner), AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(Filter.Pvs(comp.Owner), comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
             item.EquippedPrefix = "off";
             // TODO stunbaton visualizer
             sprite.LayerSetState(0, "stunbaton_off");
@@ -167,7 +172,8 @@ namespace Content.Server.Stunnable
             }
 
             if (!comp.Owner.TryGetComponent<SpriteComponent>(out var sprite) ||
-                !comp.Owner.TryGetComponent<ItemComponent>(out var item)) return;
+                !comp.Owner.TryGetComponent<ItemComponent>(out var item))
+                return;
 
             var playerFilter = Filter.Pvs(comp.Owner);
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot))
@@ -175,19 +181,19 @@ namespace Content.Server.Stunnable
 
             if (slot.Cell == null)
             {
-                SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-missing-cell"));
                 return;
             }
 
             if (slot.Cell != null && slot.Cell.CurrentCharge < comp.EnergyPerUse)
             {
-                SoundSystem.Play(playerFilter, "/Audio/Machines/button.ogg", comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+                SoundSystem.Play(playerFilter, comp.TurnOnFailSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
                 user.PopupMessage(Loc.GetString("comp-stunbaton-activated-dead-cell"));
                 return;
             }
 
-            SoundSystem.Play(playerFilter, AudioHelpers.GetRandomFileFromSoundCollection("sparks"), comp.Owner.Transform.Coordinates, AudioHelpers.WithVariation(0.25f));
+            SoundSystem.Play(playerFilter, comp.SparksSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             item.EquippedPrefix = "on";
             sprite.LayerSetState(0, "stunbaton_on");

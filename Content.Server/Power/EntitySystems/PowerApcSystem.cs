@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -17,7 +16,7 @@ namespace Content.Server.Power.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var apc in ComponentManager.EntityQuery<ApcComponent>())
+            foreach (var apc in EntityManager.EntityQuery<ApcComponent>())
             {
                 apc.Update();
             }

@@ -1,10 +1,12 @@
+using Content.Shared.Sound;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Flash.Components
 {
-    [RegisterComponent]
+    [RegisterComponent, Friend(typeof(FlashSystem))]
     public class FlashComponent : Component
     {
         public override string Name => "Flash";
@@ -28,6 +30,10 @@ namespace Content.Server.Flash.Components
         [DataField("slowTo")]
         [ViewVariables(VVAccess.ReadWrite)]
         public float SlowTo { get; set; } = 0.5f;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("sound")]
+        public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
 
         public bool Flashing;
 

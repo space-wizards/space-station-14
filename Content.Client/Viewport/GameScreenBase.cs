@@ -14,6 +14,7 @@ using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Configuration;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
@@ -145,7 +146,7 @@ namespace Content.Client.Viewport
             foreach (var entity in entities)
             {
                 if (entity.TryGetComponent<ClickableComponent>(out var component)
-                    && entity.Transform.IsMapTransform
+                    && !entity.IsInContainer()
                     && component.CheckClick(coordinates.Position, out var drawDepthClicked, out var renderOrder))
                 {
                     foundEntities.Add((entity, drawDepthClicked, renderOrder));
@@ -234,7 +235,7 @@ namespace Content.Client.Viewport
                 entityToClick = GetEntityUnderPosition(mousePosWorld)?.Uid ?? EntityUid.Invalid;
 
                 coordinates = MapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
-                    EntityCoordinates.FromMap(EntityManager, MapManager, mousePosWorld);
+                    EntityCoordinates.FromMap(MapManager, mousePosWorld);
             }
 
             var message = new FullInputCmdMessage(Timing.CurTick, Timing.TickFraction, funcId, kArgs.State,

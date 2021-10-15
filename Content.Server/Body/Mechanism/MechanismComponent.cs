@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.UserInterface;
@@ -7,8 +6,7 @@ using Content.Shared.Body.Mechanism;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Surgery;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;

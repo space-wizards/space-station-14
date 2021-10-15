@@ -1,12 +1,11 @@
-﻿#nullable enable
-using Content.Shared.Administration;
+﻿using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.VarEdit)]
     public class DeleteComponent : IConsoleCommand
     {
         public string Command => "deletecomponent";
@@ -32,14 +31,14 @@ namespace Content.Server.Administration.Commands
                     }
 
                     var componentType = registration.Type;
-                    var components = entityManager.ComponentManager.GetAllComponents(componentType, true);
+                    var components = entityManager.GetAllComponents(componentType, true);
 
                     var i = 0;
 
                     foreach (var component in components)
                     {
                         var uid = component.Owner.Uid;
-                        entityManager.ComponentManager.RemoveComponent(uid, component);
+                        entityManager.RemoveComponent(uid, component);
                         i++;
                     }
 

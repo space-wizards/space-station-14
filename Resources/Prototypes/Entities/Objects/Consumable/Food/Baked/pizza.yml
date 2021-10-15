@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodPizzaBase
   abstract: true
   components:
@@ -10,17 +10,20 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pizza.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 15
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: SliceableFood
     count: 8
   - type: Item
     size: 8
+  - type: Tag
+    tags:
+    - Pizza
 
 - type: entity
   parent: FoodPizzaBase
@@ -29,14 +32,19 @@
   components:
   - type: Food
     trash: FoodPlateSmall
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
+        maxVol: 6
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
   - type: Item
     size: 1
+  - type: Tag
+    tags:
+    - Pizza
 
 # Pizza
 
@@ -277,4 +285,14 @@
     layers:
     - state: plate-slice
     - state: moldy-slice
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note: Keep FoodPizzaMoldySlice & FoodPizzaSliceBase roughly in sync
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Toxin
+          Quantity: 2
 # Tastes like stale crust, rancid cheese, mushroom.

@@ -46,7 +46,7 @@ namespace Content.Client.Atmos.Visualizers
             }
         }
 
-        private enum Layers
+        private enum Layers : byte
         {
             ConnectedToPort,
         }

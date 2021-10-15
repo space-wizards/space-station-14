@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Server.ParticleAccelerator.Components;
+﻿using Content.Server.ParticleAccelerator.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -24,7 +23,7 @@ namespace Content.Server.ParticleAccelerator.EntitySystems
             component.OnAnchorChanged();
         }
 
-        private static void RotateEvent(RotateEvent ev)
+        private static void RotateEvent(ref RotateEvent ev)
         {
             if (ev.Sender.TryGetComponent(out ParticleAcceleratorPartComponent? part))
             {

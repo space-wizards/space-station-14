@@ -4,9 +4,6 @@
   desc: It's a little piece of Eden.
   physicalDesc: crisp
   color: "#FDAD01"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceBerry
@@ -14,9 +11,6 @@
   desc: A delicious blend of several different kinds of berries.
   physicalDesc: sweet
   color: "#660099"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceBanana
@@ -24,9 +18,6 @@
   desc: The raw essence of a banana. HONK.
   physicalDesc: crisp
   color: "#FFE777"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 #TODO: port on_mob_life: restore eyesight
 #if(..())
@@ -45,9 +36,6 @@
   desc: It's like a carrot, but less crunchy.
   physicalDesc: crisp
   color: "#FF8820"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceLime
@@ -55,9 +43,6 @@
   desc: The sweet-sour juice of limes.
   physicalDesc: citric
   color: "#99bb43"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceLemon
@@ -65,9 +50,6 @@
   desc: This juice is VERY sour.
   physicalDesc: citric
   color: "#fff690"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceGrape
@@ -75,9 +57,6 @@
   desc: Freshly squeezed juice from red grapes. Quite sweet.
   physicalDesc: crisp
   color: "#512284"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
 
@@ -93,9 +72,6 @@
   desc: Both delicious AND rich in Vitamin C. What more do you need?
   physicalDesc: citric
   color: "#E78108"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceTomato
@@ -103,9 +79,6 @@
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
   color: "#731008"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 # /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
 
@@ -120,9 +93,6 @@
   desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
   physicalDesc: aromatic #maybe should be 'sickly'?
   color: "#6600CC"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuiceWatermelon
@@ -130,9 +100,6 @@
   desc: The delicious juice of a watermelon.
   physicalDesc: sweet
   color: "#EF3520"
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 - type: reagent
   id: JuicePineapple
@@ -140,9 +107,6 @@
   desc: The delicious juice of a pineapple.
   physicalDesc: tropical
   color: yellow
-  metabolism:
-    - !type:DefaultDrink
-      rate: 1
 
 # - type: reagent
 #   id: PotatoJuice
@@ -150,6 +114,3 @@
 #   desc: Juice of the potato. Bleh.
 #   physicalDesc: starchy
 #   color: "#302000"
-#   metabolism:
-#     - !type:DefaultDrink
-#       rate: 1

@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Pulling.Components;
@@ -15,8 +14,6 @@ namespace Content.Shared.Cuffs.Components
     {
         public override string Name => "Cuffable";
 
-        [ComponentDependency] private readonly SharedPullableComponent? _pullable = default!;
-
         [ViewVariables]
         public bool CanStillInteract { get; set; } = true;
 
@@ -29,8 +26,6 @@ namespace Content.Shared.Cuffs.Components
         bool IActionBlocker.CanAttack() => CanStillInteract;
         bool IActionBlocker.CanEquip() => CanStillInteract;
         bool IActionBlocker.CanUnequip() => CanStillInteract;
-        bool IActionBlocker.CanMove() => _pullable == null || !_pullable.BeingPulled || CanStillInteract;
-
         #endregion
 
         [Serializable, NetSerializable]

@@ -1,4 +1,3 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
@@ -20,7 +19,8 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
-        private int _nextId = 1;
+        private readonly Dictionary<PowerNetworkBatteryComponent, float> _lastSupply = new();
+
         private readonly BatteryRampPegSolver _solver = new();
 
         public override void Initialize()
@@ -51,7 +51,7 @@ namespace Content.Server.Power.EntitySystems
         private void ApcPowerReceiverShutdown(EntityUid uid, ApcPowerReceiverComponent component,
             ComponentShutdown args)
         {
-            _powerState.Loads.Remove(component.NetworkLoad.Id);
+            _powerState.Loads.Free(component.NetworkLoad.Id);
         }
 
         private static void ApcPowerReceiverPaused(
@@ -69,7 +69,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ComponentShutdown args)
         {
-            _powerState.Batteries.Remove(component.NetworkBattery.Id);
+            _powerState.Batteries.Free(component.NetworkBattery.Id);
         }
 
         private static void BatteryPaused(EntityUid uid, PowerNetworkBatteryComponent component, EntityPausedEvent args)
@@ -84,7 +84,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerConsumerShutdown(EntityUid uid, PowerConsumerComponent component, ComponentShutdown args)
         {
-            _powerState.Loads.Remove(component.NetworkLoad.Id);
+            _powerState.Loads.Free(component.NetworkLoad.Id);
         }
 
         private static void PowerConsumerPaused(EntityUid uid, PowerConsumerComponent component, EntityPausedEvent args)
@@ -99,7 +99,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerSupplierShutdown(EntityUid uid, PowerSupplierComponent component, ComponentShutdown args)
         {
-            _powerState.Supplies.Remove(component.NetworkSupply.Id);
+            _powerState.Supplies.Free(component.NetworkSupply.Id);
         }
 
         private static void PowerSupplierPaused(EntityUid uid, PowerSupplierComponent component, EntityPausedEvent args)
@@ -114,7 +114,7 @@ namespace Content.Server.Power.EntitySystems
 
         public void DestroyPowerNet(PowerNet powerNet)
         {
-            _powerState.Networks.Remove(powerNet.NetworkNode.Id);
+            _powerState.Networks.Free(powerNet.NetworkNode.Id);
         }
 
         public void QueueReconnectPowerNet(PowerNet powerNet)
@@ -129,7 +129,7 @@ namespace Content.Server.Power.EntitySystems
 
         public void DestroyApcNet(ApcNet apcNet)
         {
-            _powerState.Networks.Remove(apcNet.NetworkNode.Id);
+            _powerState.Networks.Free(apcNet.NetworkNode.Id);
         }
 
         public void QueueReconnectApcNet(ApcNet apcNet)
@@ -151,6 +151,14 @@ namespace Content.Server.Power.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
+
+            // Setup for events.
+            {
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
+                {
+                    _lastSupply[powerNetBattery] = powerNetBattery.CurrentSupply;
+                }
+            }
 
             // Reconnect networks.
             {
@@ -176,70 +184,81 @@ namespace Content.Server.Power.EntitySystems
             }
 
             // Synchronize batteries
-            foreach (var battery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
-            {
-                RaiseLocalEvent(battery.Owner.Uid, new NetworkBatteryPreSync());
-            }
+            RaiseLocalEvent(new NetworkBatteryPreSync());
 
             // Run power solver.
             _solver.Tick(frameTime, _powerState);
 
             // Synchronize batteries, the other way around.
-            foreach (var battery in ComponentManager.EntityQuery<PowerNetworkBatteryComponent>())
-            {
-                RaiseLocalEvent(battery.Owner.Uid, new NetworkBatteryPostSync());
-            }
+            RaiseLocalEvent(new NetworkBatteryPostSync());
 
             // Send events where necessary.
             {
-                foreach (var apcReceiver in ComponentManager.EntityQuery<ApcPowerReceiverComponent>())
+                foreach (var apcReceiver in EntityManager.EntityQuery<ApcPowerReceiverComponent>())
                 {
                     var recv = apcReceiver.NetworkLoad.ReceivingPower;
                     ref var last = ref apcReceiver.LastPowerReceived;
 
-                    if (!MathHelper.CloseTo(recv, last))
+                    if (!MathHelper.CloseToPercent(recv, last))
                     {
                         last = recv;
                         apcReceiver.ApcPowerChanged();
                     }
                 }
 
-                foreach (var consumer in ComponentManager.EntityQuery<PowerConsumerComponent>())
+                foreach (var consumer in EntityManager.EntityQuery<PowerConsumerComponent>())
                 {
                     var newRecv = consumer.NetworkLoad.ReceivingPower;
                     ref var lastRecv = ref consumer.LastReceived;
-                    if (!MathHelper.CloseTo(lastRecv, newRecv))
+                    if (!MathHelper.CloseToPercent(lastRecv, newRecv))
                     {
                         lastRecv = newRecv;
                         var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
                         RaiseLocalEvent(consumer.Owner.Uid, msg);
                     }
                 }
+
+                foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
+                {
+                    if (!_lastSupply.TryGetValue(powerNetBattery, out var lastPowerSupply))
+                    {
+                        lastPowerSupply = 0f;
+                    }
+
+                    var currentSupply = powerNetBattery.CurrentSupply;
+
+                    if (lastPowerSupply == 0f && currentSupply != 0f)
+                    {
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = true});
+                    }
+                    else if (lastPowerSupply > 0f && currentSupply == 0f)
+                    {
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = false});
+                    }
+                }
+
+                _lastSupply.Clear();
             }
         }
 
         private void AllocLoad(PowerState.Load load)
         {
-            load.Id = AllocId();
-            _powerState.Loads.Add(load.Id, load);
+            _powerState.Loads.Allocate(out load.Id) = load;
         }
 
         private void AllocSupply(PowerState.Supply supply)
         {
-            supply.Id = AllocId();
-            _powerState.Supplies.Add(supply.Id, supply);
+            _powerState.Supplies.Allocate(out supply.Id) = supply;
         }
 
         private void AllocBattery(PowerState.Battery battery)
         {
-            battery.Id = AllocId();
-            _powerState.Batteries.Add(battery.Id, battery);
+            _powerState.Batteries.Allocate(out battery.Id) = battery;
         }
 
         private void AllocNetwork(PowerState.Network network)
         {
-            network.Id = AllocId();
-            _powerState.Networks.Add(network.Id, network);
+            _powerState.Networks.Allocate(out network.Id) = network;
         }
 
         private static void DoReconnectApcNet(ApcNet net)
@@ -303,18 +322,13 @@ namespace Content.Server.Power.EntitySystems
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
             }
         }
-
-        private PowerState.NodeId AllocId()
-        {
-            return new(_nextId++);
-        }
     }
 
     /// <summary>
     ///     Raised before power network simulation happens, to synchronize battery state from
     ///     components like <see cref="BatteryComponent"/> into <see cref="PowerNetworkBatteryComponent"/>.
     /// </summary>
-    public sealed class NetworkBatteryPreSync : EntityEventArgs
+    public struct NetworkBatteryPreSync
     {
     }
 
@@ -322,7 +336,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Raised after power network simulation happens, to synchronize battery charge changes from
     ///     <see cref="PowerNetworkBatteryComponent"/> to components like <see cref="BatteryComponent"/>.
     /// </summary>
-    public sealed class NetworkBatteryPostSync : EntityEventArgs
+    public struct NetworkBatteryPostSync
     {
     }
 
@@ -339,6 +353,14 @@ namespace Content.Server.Power.EntitySystems
             ReceivedPower = receivedPower;
             DrawRate = drawRate;
         }
+    }
+
+    /// <summary>
+    /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
+    /// </summary>
+    public sealed class PowerNetBatterySupplyEvent : EntityEventArgs
+    {
+        public bool Supply { get; init;  }
     }
 
     public struct PowerStatistics

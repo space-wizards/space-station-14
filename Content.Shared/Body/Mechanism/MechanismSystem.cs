@@ -1,5 +1,4 @@
-﻿#nullable enable
-using JetBrains.Annotations;
+﻿using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.Body.Mechanism
@@ -11,7 +10,7 @@ namespace Content.Shared.Body.Mechanism
         {
             base.Update(frameTime);
 
-            foreach (var mechanism in ComponentManager.EntityQuery<SharedMechanismComponent>(true))
+            foreach (var mechanism in EntityManager.EntityQuery<SharedMechanismComponent>(true))
             {
                 mechanism.Update(frameTime);
             }

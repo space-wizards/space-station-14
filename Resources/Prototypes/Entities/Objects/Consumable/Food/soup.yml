@@ -5,31 +5,37 @@
   components:
   - type: Food
     trash: FoodBowlBig
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
-    trash: BowlBigTrash
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/bowl.rsi
     netsync: false
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOtherOnHit
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: Spillable
+    solution: food
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -404,12 +410,13 @@
   id: FoodSoupMiso
   description: Salty, fishy soup, best had with ramen.
   components:
+  - type: Food
+    trash: FoodBowlFancy
   - type: Sprite
     layers:
     - state: bowl2
     - state: milo
-  - type: SolutionContainer
-    trash: FoodBowlFancy
+  - type: SolutionContainerManager
 # Tastes like miso.
 
 - type: entity

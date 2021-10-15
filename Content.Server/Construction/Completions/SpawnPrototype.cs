@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Construction;
 using Content.Shared.Prototypes;
@@ -28,7 +27,7 @@ namespace Content.Server.Construction.Completions
             {
                 var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
                 var stack = stackEnt.GetComponent<StackComponent>();
-                EntitySystem.Get<StackSystem>().SetCount(stackEnt.Uid, stack, Amount);
+                EntitySystem.Get<StackSystem>().SetCount(stackEnt.Uid, Amount, stack);
             }
             else
             {

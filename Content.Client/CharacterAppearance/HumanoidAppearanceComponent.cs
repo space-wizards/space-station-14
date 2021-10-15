@@ -1,4 +1,4 @@
-﻿using Content.Client.Cuffs.Components;
+using Content.Client.Cuffs.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.CharacterAppearance;
@@ -46,7 +46,8 @@ namespace Content.Client.CharacterAppearance
 
         private void UpdateLooks()
         {
-            if (Appearance is null! ||
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (Appearance == null ||
                 !Owner.TryGetComponent(out SpriteComponent? sprite))
             {
                 return;
@@ -120,15 +121,10 @@ namespace Content.Client.CharacterAppearance
                 return;
             }
 
-            var layer = args.Part.ToHumanoidLayer();
-
-            if (layer == null)
-            {
-                return;
-            }
-
+            var layers = args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
-            sprite.LayerSetVisible(layer, true);
+            foreach (var layer in layers)
+                sprite.LayerSetVisible(layer, true);
         }
 
         public void BodyPartRemoved(BodyPartRemovedEventArgs args)
@@ -143,15 +139,10 @@ namespace Content.Client.CharacterAppearance
                 return;
             }
 
-            var layer = args.Part.ToHumanoidLayer();
-
-            if (layer == null)
-            {
-                return;
-            }
-
+            var layers = args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
-            sprite.LayerSetVisible(layer, false);
+            foreach (var layer in layers)
+                sprite.LayerSetVisible(layer, false);
         }
     }
 }

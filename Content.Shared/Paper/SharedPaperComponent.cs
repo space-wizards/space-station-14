@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
@@ -56,6 +55,19 @@ namespace Content.Shared.Paper
             Write,
             CrossOut,
             Stamp
+        }
+
+        [Serializable, NetSerializable]
+        public enum PaperVisuals : byte
+        {
+            Status
+        }
+
+        [Serializable, NetSerializable]
+        public enum PaperStatus : byte
+        {
+            Blank,
+            Written
         }
 
     }

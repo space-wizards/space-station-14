@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Shared.Administration;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -7,7 +6,7 @@ using System.Linq;
 
 namespace Content.Server.Administration.Commands
 {
-    [AdminCommand(AdminFlags.Admin)]
+    [AdminCommand(AdminFlags.Spawn)]
     public class DeleteEntitiesWithId : IConsoleCommand
     {
         public string Command => "deleteewi";

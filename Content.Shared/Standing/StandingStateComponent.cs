@@ -1,5 +1,7 @@
 using System;
 using Content.Shared.EffectBlocker;
+using Content.Shared.Sound;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -9,15 +11,15 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.Standing
 {
-    [RegisterComponent]
-    [NetworkedComponent]
+    [Friend(typeof(StandingStateSystem))]
+    [RegisterComponent, NetworkedComponent]
     public sealed class StandingStateComponent : Component, IEffectBlocker
     {
         public override string Name => "StandingState";
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSoundCollection")]
-        public string? DownSoundCollection { get; } = "BodyFall";
+        public SoundSpecifier DownSoundCollection { get; } = new SoundCollectionSpecifier("BodyFall");
 
         [ViewVariables]
         [DataField("standing")]

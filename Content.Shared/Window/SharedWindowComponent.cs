@@ -1,18 +1,11 @@
-﻿#nullable enable
-using System;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Window
 {
+    [NetworkedComponent]
     public class SharedWindowComponent : Component
     {
         public override string Name => "Window";
-    }
-
-    [Serializable, NetSerializable]
-    public enum WindowVisuals
-    {
-        Damage
     }
 }

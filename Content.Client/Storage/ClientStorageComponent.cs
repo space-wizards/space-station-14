@@ -1,10 +1,13 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Client.Animations;
 using Content.Client.Hands;
+using Content.Client.Items.Components;
+using Content.Client.UserInterface.Controls;
 using Content.Shared.DragDrop;
+using Content.Shared.Stacks;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
@@ -13,9 +16,12 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Players;
+using static Robust.Client.UserInterface.Control;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Storage
 {
@@ -29,7 +35,6 @@ namespace Content.Client.Storage
         private int StorageSizeUsed;
         private int StorageCapacityMax;
         private StorageWindow? _window;
-        private SharedBagState _bagState;
 
         public override IReadOnlyList<IEntity> StoredEntities => _storedEntities;
 
@@ -46,6 +51,8 @@ namespace Content.Client.Storage
             base.OnAdd();
 
             _window = new StorageWindow(this) {Title = Owner.Name};
+            _window.EntityList.GenerateItem += GenerateButton;
+            _window.EntityList.ItemPressed += Interact;
         }
 
         protected override void OnRemove()
@@ -77,15 +84,12 @@ namespace Content.Client.Storage
                 //Updates what we are storing for the UI
                 case StorageHeldItemsMessage msg:
                     HandleStorageMessage(msg);
-                    ChangeStorageVisualization(_bagState);
                     break;
                 //Opens the UI
                 case OpenStorageUIMessage _:
-                    ChangeStorageVisualization(SharedBagState.Open);
                     ToggleUI();
                     break;
                 case CloseStorageUIMessage _:
-                    ChangeStorageVisualization(SharedBagState.Close);
                     CloseUI();
                     break;
                 case AnimateInsertingEntitiesMessage msg:
@@ -103,7 +107,7 @@ namespace Content.Client.Storage
             _storedEntities = storageState.StoredEntities.Select(id => Owner.EntityManager.GetEntity(id)).ToList();
             StorageSizeUsed = storageState.StorageSizeUsed;
             StorageCapacityMax = storageState.StorageSizeMax;
-            _window?.BuildEntityList();
+            _window?.BuildEntityList(storageState.StoredEntities.ToList());
         }
 
         /// <summary>
@@ -119,7 +123,7 @@ namespace Content.Client.Storage
 
                 if (Owner.EntityManager.TryGetEntity(entityId, out var entity))
                 {
-                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.WorldPosition);
+                    ReusableAnimations.AnimateEntityPickup(entity, initialPosition, Owner.Transform.LocalPosition);
                 }
             }
         }
@@ -132,22 +136,35 @@ namespace Content.Client.Storage
             if (_window == null) return;
 
             if (_window.IsOpen)
+            {
                 _window.Close();
+                ChangeStorageVisualization(SharedBagState.Close);
+            }
             else
+            {
                 _window.OpenCentered();
+                ChangeStorageVisualization(SharedBagState.Open);
+            }
         }
 
         private void CloseUI()
         {
-            _window?.Close();
+            if (_window == null) return;
+
+            _window.Close();
+            ChangeStorageVisualization(SharedBagState.Close);
+
         }
 
         private void ChangeStorageVisualization(SharedBagState state)
         {
-            _bagState = state;
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
             {
                 appearanceComponent.SetData(SharedBagOpenVisuals.BagState, state);
+                if (Owner.HasComponent<ItemCounterComponent>())
+                {
+                    appearanceComponent.SetData(StackVisuals.Hide, state == SharedBagState.Close);
+                }
             }
         }
 
@@ -172,13 +189,53 @@ namespace Content.Client.Storage
         }
 
         /// <summary>
+        /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
+        /// </summary>
+        private void GenerateButton(EntityUid entityUid, Control button)
+        {
+            if (!Owner.EntityManager.TryGetEntity(entityUid, out var entity))
+                return;
+
+            entity.TryGetComponent(out ISpriteComponent? sprite);
+            entity.TryGetComponent(out ItemComponent? item);
+
+            button.AddChild(new BoxContainer
+            {
+                Orientation = LayoutOrientation.Horizontal,
+                SeparationOverride = 2,
+                Children =
+                {
+                    new SpriteView
+                    {
+                        HorizontalAlignment = HAlignment.Left,
+                        VerticalAlignment = VAlignment.Center,
+                        MinSize = new Vector2(32.0f, 32.0f),
+                        OverrideDirection = Direction.South,
+                        Sprite = sprite
+                    },
+                    new Label
+                    {
+                        HorizontalExpand = true,
+                        ClipText = true,
+                        Text = entity.Name
+                    },
+                    new Label
+                    {
+                        Align = Label.AlignMode.Right,
+                        Text = item?.Size.ToString() ?? Loc.GetString("no-item-size")
+                    }
+                }
+            });
+        }
+
+        /// <summary>
         /// GUI class for client storage component
         /// </summary>
         private class StorageWindow : SS14Window
         {
-            private Control VSplitContainer;
-            private readonly VBoxContainer _entityList;
+            private Control _vBox;
             private readonly Label _information;
+            public readonly EntityListDisplay EntityList;
             public ClientStorageComponent StorageEntity;
 
             private readonly StyleBoxFlat _hoveredBox = new() { BackgroundColor = Color.Black.WithAlpha(0.35f) };
@@ -188,19 +245,20 @@ namespace Content.Client.Storage
             {
                 StorageEntity = storageEntity;
                 SetSize = (200, 320);
-                Title = "Storage Item";
+                Title = Loc.GetString("comp-storage-window-title");
                 RectClipContent = true;
 
                 var containerButton = new ContainerButton
                 {
+                    Name = "StorageContainerButton",
                     MouseFilter = MouseFilterMode.Pass,
                 };
+                Contents.AddChild(containerButton);
 
                 var innerContainerButton = new PanelContainer
                 {
                     PanelOverride = _unHoveredBox,
                 };
-
 
                 containerButton.AddChild(innerContainerButton);
                 containerButton.OnPressed += args =>
@@ -213,40 +271,30 @@ namespace Content.Client.Storage
                     }
                 };
 
-                VSplitContainer = new VBoxContainer()
+                _vBox = new BoxContainer()
                 {
+                    Orientation = LayoutOrientation.Vertical,
                     MouseFilter = MouseFilterMode.Ignore,
                 };
-                containerButton.AddChild(VSplitContainer);
+                containerButton.AddChild(_vBox);
                 _information = new Label
                 {
-                    Text = "Items: 0 Volume: 0/0 Stuff",
+                    Text = Loc.GetString("comp-storage-window-volume", ("itemCount", 0), ("usedVolume", 0), ("maxVolume", 0)),
                     VerticalAlignment = VAlignment.Center
                 };
-                VSplitContainer.AddChild(_information);
+                _vBox.AddChild(_information);
 
-                var listScrollContainer = new ScrollContainer
+                EntityList = new EntityListDisplay
                 {
-                    VerticalExpand = true,
-                    HorizontalExpand = true,
-                    HScrollEnabled = false,
-                    VScrollEnabled = true,
+                    Name = "EntityListContainer",
                 };
-                _entityList = new VBoxContainer
-                {
-                    HorizontalExpand = true
-                };
-                listScrollContainer.AddChild(_entityList);
-                VSplitContainer.AddChild(listScrollContainer);
-
-                Contents.AddChild(containerButton);
-
-                listScrollContainer.OnMouseEntered += args =>
+                _vBox.AddChild(EntityList);
+                EntityList.OnMouseEntered += args =>
                 {
                     innerContainerButton.PanelOverride = _hoveredBox;
                 };
 
-                listScrollContainer.OnMouseExited += args =>
+                EntityList.OnMouseExited += args =>
                 {
                     innerContainerButton.PanelOverride = _unHoveredBox;
                 };
@@ -261,118 +309,20 @@ namespace Content.Client.Storage
             /// <summary>
             /// Loops through stored entities creating buttons for each, updates information labels
             /// </summary>
-            public void BuildEntityList()
+            public void BuildEntityList(List<EntityUid> entityUids)
             {
-                _entityList.DisposeAllChildren();
-
-                var storageList = StorageEntity.StoredEntities;
-
-                var storedGrouped = storageList.GroupBy(e => e).Select(e => new
-                {
-                    Entity = e.Key,
-                    Amount = e.Count()
-                });
-
-                foreach (var group in storedGrouped)
-                {
-                    var entity = group.Entity;
-                    var button = new EntityButton()
-                    {
-                        EntityUid = entity.Uid,
-                        MouseFilter = MouseFilterMode.Stop,
-                    };
-                    button.ActualButton.OnToggled += OnItemButtonToggled;
-                    //Name and Size labels set
-                    button.EntityName.Text = entity.Name;
-
-                    button.EntitySize.Text = group.Amount.ToString();
-
-                    //Gets entity sprite and assigns it to button texture
-                    if (entity.TryGetComponent(out ISpriteComponent? sprite))
-                    {
-                        button.EntitySpriteView.Sprite = sprite;
-                    }
-
-                    _entityList.AddChild(button);
-                }
+                EntityList.PopulateList(entityUids);
 
                 //Sets information about entire storage container current capacity
                 if (StorageEntity.StorageCapacityMax != 0)
                 {
-                    _information.Text = String.Format("Items: {0}, Stored: {1}/{2}", storageList.Count,
-                        StorageEntity.StorageSizeUsed, StorageEntity.StorageCapacityMax);
+                    _information.Text = Loc.GetString("comp-storage-window-volume", ("itemCount", entityUids.Count),
+                        ("usedVolume", StorageEntity.StorageSizeUsed), ("maxVolume", StorageEntity.StorageCapacityMax));
                 }
                 else
                 {
-                    _information.Text = String.Format("Items: {0}", storageList.Count);
+                    _information.Text = Loc.GetString("comp-storage-window-volume-unlimited", ("itemCount", entityUids.Count));
                 }
-            }
-
-            /// <summary>
-            /// Function assigned to button toggle which removes the entity from storage
-            /// </summary>
-            /// <param name="args"></param>
-            private void OnItemButtonToggled(BaseButton.ButtonToggledEventArgs args)
-            {
-                if (args.Button.Parent is not EntityButton button)
-                {
-                    return;
-                }
-
-                args.Button.Pressed = false;
-                StorageEntity.Interact(button.EntityUid);
-            }
-        }
-
-        /// <summary>
-        /// Button created for each entity that represents that item in the storage UI, with a texture, and name and size label
-        /// </summary>
-        private class EntityButton : Control
-        {
-            public EntityUid EntityUid { get; set; }
-            public Button ActualButton { get; }
-            public SpriteView EntitySpriteView { get; }
-            public Label EntityName { get; }
-            public Label EntitySize { get; }
-
-            public EntityButton()
-            {
-                ActualButton = new Button
-                {
-                    HorizontalExpand = true,
-                    VerticalExpand = true,
-                    ToggleMode = true,
-                    MouseFilter = MouseFilterMode.Stop
-                };
-                AddChild(ActualButton);
-
-                var hBoxContainer = new HBoxContainer();
-                EntitySpriteView = new SpriteView
-                {
-                    MinSize = new Vector2(32.0f, 32.0f),
-                    OverrideDirection = Direction.South
-                };
-                EntityName = new Label
-                {
-                    VerticalAlignment = VAlignment.Center,
-                    HorizontalExpand = true,
-                    Margin = new Thickness(0, 0, 6, 0),
-                    Text = "Backpack",
-                    ClipText = true
-                };
-
-                hBoxContainer.AddChild(EntitySpriteView);
-                hBoxContainer.AddChild(EntityName);
-
-                EntitySize = new Label
-                {
-                    VerticalAlignment = VAlignment.Bottom,
-                    Text = "Size 6",
-                    Align = Label.AlignMode.Right,
-                };
-
-                hBoxContainer.AddChild(EntitySize);
-                AddChild(hBoxContainer);
             }
         }
     }

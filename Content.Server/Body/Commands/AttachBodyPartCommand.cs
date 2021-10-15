@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
@@ -100,7 +99,7 @@ namespace Content.Server.Body.Commands
                 return;
             }
 
-            body.SetPart($"{nameof(AttachBodyPartVerb)}-{partEntity.Uid}", part);
+            body.SetPart($"AttachBodyPartVerb-{partEntity.Uid}", part);
         }
     }
 }

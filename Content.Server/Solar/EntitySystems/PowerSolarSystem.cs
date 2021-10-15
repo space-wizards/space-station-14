@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Linq;
 using Content.Server.Solar.Components;
@@ -87,7 +86,7 @@ namespace Content.Server.Solar.EntitySystems
 
             TotalPanelPower = 0;
 
-            foreach (var panel in ComponentManager.EntityQuery<SolarPanelComponent>(true))
+            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>(true))
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;
@@ -138,7 +137,7 @@ namespace Content.Server.Solar.EntitySystems
                 // Determine if the solar panel is occluded, and zero out coverage if so.
                 // FIXME: The "Opaque" collision group doesn't seem to work right now.
                 var ray = new CollisionRay(entity.Transform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
-                var rayCastResults = EntitySystem.Get<SharedBroadPhaseSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
+                var rayCastResults = Get<SharedPhysicsSystem>().IntersectRay(entity.Transform.MapID, ray, SunOcclusionCheckDistance, entity);
                 if (rayCastResults.Any())
                     coverage = 0;
             }

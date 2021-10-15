@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.GameObjects;
@@ -22,6 +21,9 @@ namespace Content.Shared.Doors
 
         [ComponentDependency]
         protected readonly IPhysBody? PhysicsComponent = null;
+
+        [Dependency]
+        protected readonly IGameTiming _gameTiming = default!;
 
         [ViewVariables]
         private DoorState _state = DoorState.Closed;

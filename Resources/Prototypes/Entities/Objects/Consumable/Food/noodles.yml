@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodNoodlesBase
   abstract: true
   description: Now that's a nice pasta!
@@ -11,13 +11,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 25
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Noodles
 

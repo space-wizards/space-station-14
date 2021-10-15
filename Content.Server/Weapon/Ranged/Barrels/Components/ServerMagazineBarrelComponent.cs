@@ -4,12 +4,10 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
-using Content.Shared.Verbs;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
@@ -35,8 +33,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         [ViewVariables]
         private ContainerSlot _chamberContainer = default!;
-        [ViewVariables] public bool HasMagazine => _magazineContainer.ContainedEntity != null;
-        private ContainerSlot _magazineContainer = default!;
+        [ViewVariables] public bool HasMagazine => MagazineContainer.ContainedEntity != null;
+        public ContainerSlot MagazineContainer = default!;
 
         [ViewVariables] public MagazineType MagazineTypes => _magazineTypes;
         [DataField("magazineTypes")]
@@ -55,7 +53,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                     count++;
                 }
 
-                var magazine = _magazineContainer.ContainedEntity;
+                var magazine = MagazineContainer.ContainedEntity;
                 if (magazine != null)
                 {
                     count += magazine.GetComponent<RangedMagazineComponent>().ShotsLeft;
@@ -71,7 +69,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             {
                 // Chamber
                 var count = 1;
-                var magazine = _magazineContainer.ContainedEntity;
+                var magazine = MagazineContainer.ContainedEntity;
                 if (magazine != null)
                 {
                     count += magazine.GetComponent<RangedMagazineComponent>().Capacity;
@@ -97,18 +95,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 if (value)
                 {
                     TryEjectChamber();
-                    if (_soundBoltOpen != null)
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
                 else
                 {
                     TryFeedChamber();
-                    if (_soundBoltClosed != null)
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
+                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
                 }
 
                 _boltOpen = value;
@@ -128,18 +120,18 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private AppearanceComponent? _appearanceComponent;
 
         // Sounds
-        [DataField("soundBoltOpen")]
-        private string? _soundBoltOpen = default;
-        [DataField("soundBoltClosed")]
-        private string? _soundBoltClosed = default;
-        [DataField("soundRack")]
-        private string? _soundRack = default;
-        [DataField("soundMagInsert")]
-        private string? _soundMagInsert = default;
-        [DataField("soundMagEject")]
-        private string? _soundMagEject = default;
+        [DataField("soundBoltOpen", required: true)]
+        private SoundSpecifier _soundBoltOpen = default!;
+        [DataField("soundBoltClosed", required: true)]
+        private SoundSpecifier _soundBoltClosed = default!;
+        [DataField("soundRack", required: true)]
+        private SoundSpecifier _soundRack = default!;
+        [DataField("soundMagInsert", required: true)]
+        private SoundSpecifier _soundMagInsert = default!;
+        [DataField("soundMagEject", required: true)]
+        private SoundSpecifier _soundMagEject = default!;
         [DataField("soundAutoEject")]
-        private string _soundAutoEject = "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg";
+        private SoundSpecifier _soundAutoEject = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
 
         private List<MagazineType> GetMagazineTypes()
         {
@@ -159,7 +151,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             (int, int)? count = null;
-            var magazine = _magazineContainer.ContainedEntity;
+            var magazine = MagazineContainer.ContainedEntity;
             if (magazine != null && magazine.TryGetComponent(out RangedMagazineComponent? rangedMagazineComponent))
             {
                 count = (rangedMagazineComponent.ShotsLeft, rangedMagazineComponent.Capacity);
@@ -169,7 +161,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 _chamberContainer.ContainedEntity != null,
                 FireRateSelector,
                 count,
-                SoundGunshot);
+                SoundGunshot.GetSound());
         }
 
         protected override void Initialize()
@@ -182,12 +174,12 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             _chamberContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-chamber");
-            _magazineContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-magazine", out var existing);
+            MagazineContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-magazine", out var existing);
 
             if (!existing && _magFillPrototype != null)
             {
                 var magEntity = Owner.EntityManager.SpawnEntity(_magFillPrototype, Owner.Transform.Coordinates);
-                _magazineContainer.Insert(magEntity);
+                MagazineContainer.Insert(magEntity);
             }
             Dirty();
         }
@@ -228,10 +220,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_chamberContainer.ContainedEntity == null && !BoltOpen)
             {
-                if (_soundBoltOpen != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltOpen.GetSound(), Owner, AudioParams.Default.WithVolume(-5));
 
                 if (Owner.TryGetContainer(out var container))
                 {
@@ -243,10 +232,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (manual)
             {
-                if (_soundRack != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundRack, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundRack.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
             }
 
             Dirty();
@@ -256,7 +242,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private void UpdateAppearance()
         {
             _appearanceComponent?.SetData(BarrelBoltVisuals.BoltOpen, BoltOpen);
-            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, _magazineContainer.ContainedEntity != null);
+            _appearanceComponent?.SetData(MagazineBarrelVisuals.MagLoaded, MagazineContainer.ContainedEntity != null);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoCount, ShotsLeft);
             _appearanceComponent?.SetData(AmmoVisuals.AmmoMax, Capacity);
         }
@@ -271,10 +257,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (BoltOpen)
             {
-                if (_soundBoltClosed != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-5));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundBoltClosed.GetSound(), Owner, AudioParams.Default.WithVolume(-5));
                 Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-use-entity-bolt-closed"));
                 BoltOpen = false;
                 return true;
@@ -313,7 +296,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             // Try and pull a round from the magazine to replace the chamber if possible
-            var magazine = _magazineContainer.ContainedEntity;
+            var magazine = MagazineContainer.ContainedEntity;
             var nextRound = magazine?.GetComponent<RangedMagazineComponent>().TakeAmmo();
 
             if (nextRound == null)
@@ -325,12 +308,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
             if (_autoEjectMag && magazine != null && magazine.GetComponent<RangedMagazineComponent>().ShotsLeft == 0)
             {
-                if (_soundAutoEject != null)
-                {
-                    SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                }
+                SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
-                _magazineContainer.Remove(magazine);
+                MagazineContainer.Remove(magazine);
                 SendNetworkMessage(new MagazineAutoEjectMessage());
             }
             return true;
@@ -338,7 +318,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public void RemoveMagazine(IEntity user)
         {
-            var mag = _magazineContainer.ContainedEntity;
+            var mag = MagazineContainer.ContainedEntity;
 
             if (mag == null)
             {
@@ -351,11 +331,8 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 return;
             }
 
-            _magazineContainer.Remove(mag);
-            if (_soundMagEject != null)
-            {
-                SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-            }
+            MagazineContainer.Remove(mag);
+            SoundSystem.Play(Filter.Pvs(Owner), _soundMagEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
             if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
@@ -366,44 +343,59 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             UpdateAppearance();
         }
 
+        public bool CanInsertMagazine(IEntity user, IEntity magazine, bool quiet = true)
+        {
+            if (!magazine.TryGetComponent(out RangedMagazineComponent? magazineComponent))
+            {
+                return false;
+            }
+
+            if ((MagazineTypes & magazineComponent.MagazineType) == 0)
+            {
+                if (!quiet)
+                    Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-magazine-type"));
+                return false;
+            }
+
+            if (magazineComponent.Caliber != _caliber)
+            {
+                if (!quiet)
+                    Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-caliber"));
+                return false;
+            }
+
+            if (_magNeedsOpenBolt && !BoltOpen)
+            {
+                if (!quiet)
+                    Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-bolt-closed"));
+                return false;
+            }
+
+            if (MagazineContainer.ContainedEntity == null)
+            {
+                return true;
+            }
+
+            if (!quiet)
+                Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-already-holding-magazine"));
+            return false;
+        }
+
+        public void InsertMagazine(IEntity user, IEntity magazine)
+        {
+            SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
+            Owner.PopupMessage(user, Loc.GetString("server-magazine-barrel-component-interact-using-success"));
+            MagazineContainer.Insert(magazine);
+            Dirty();
+            UpdateAppearance();
+        }
+
         public override async Task<bool> InteractUsing(InteractUsingEventArgs eventArgs)
         {
-            // Insert magazine
-            if (eventArgs.Using.TryGetComponent(out RangedMagazineComponent? magazineComponent))
+            if (CanInsertMagazine(eventArgs.User, eventArgs.Using, quiet: false))
             {
-                if ((MagazineTypes & magazineComponent.MagazineType) == 0)
-                {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-magazine-type"));
-                    return false;
-                }
-
-                if (magazineComponent.Caliber != _caliber)
-                {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-wrong-caliber"));
-                    return false;
-                }
-
-                if (_magNeedsOpenBolt && !BoltOpen)
-                {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-bolt-closed"));
-                    return false;
-                }
-
-                if (_magazineContainer.ContainedEntity == null)
-                {
-                    if (_soundMagInsert != null)
-                    {
-                        SoundSystem.Play(Filter.Pvs(Owner), _soundMagInsert, Owner.Transform.Coordinates, AudioParams.Default.WithVolume(-2));
-                    }
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-success"));
-                    _magazineContainer.Insert(eventArgs.Using);
-                    Dirty();
-                    UpdateAppearance();
-                    return true;
-                }
-
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("server-magazine-barrel-component-interact-using-already-holding-magazine"));
-                return false;
+                InsertMagazine(eventArgs.User, eventArgs.Using);
+                return true;
             }
 
             // Insert 1 ammo
@@ -441,83 +433,11 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             base.Examine(message, inDetailsRange);
 
-            message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine", ("caliber",Caliber)));
+            message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine", ("caliber", Caliber)));
 
             foreach (var magazineType in GetMagazineTypes())
             {
-                message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine-magazine-type",("magazineType", magazineType)));
-            }
-        }
-
-        [Verb]
-        private sealed class EjectMagazineVerb : Verb<ServerMagazineBarrelComponent>
-        {
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-magazine-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                if (component.MagNeedsOpenBolt)
-                {
-                    data.Visibility = component.HasMagazine && component.BoltOpen
-                        ? VerbVisibility.Visible
-                        : VerbVisibility.Disabled;
-                    return;
-                }
-
-                data.Visibility = component.HasMagazine ? VerbVisibility.Visible : VerbVisibility.Disabled;
-            }
-
-            protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
-            {
-                component.RemoveMagazine(user);
-            }
-        }
-
-        [Verb]
-        private sealed class OpenBoltVerb : Verb<ServerMagazineBarrelComponent>
-        {
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("open-bolt-verb-get-data-text");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
-            {
-                component.BoltOpen = true;
-            }
-        }
-
-        [Verb]
-        private sealed class CloseBoltVerb : Verb<ServerMagazineBarrelComponent>
-        {
-            protected override void GetData(IEntity user, ServerMagazineBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("close-bolt-verb-get-data-text");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
-            }
-
-            protected override void Activate(IEntity user, ServerMagazineBarrelComponent component)
-            {
-                component.BoltOpen = false;
+                message.AddMarkup("\n" + Loc.GetString("server-magazine-barrel-component-on-examine-magazine-type", ("magazineType", magazineType)));
             }
         }
     }

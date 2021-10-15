@@ -1,4 +1,3 @@
-#nullable enable
 using Content.Server.Power.NodeGroups;
 
 namespace Content.Server.Power.Components

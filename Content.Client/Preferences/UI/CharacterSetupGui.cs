@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Client.CharacterAppearance;
+using Content.Client.Info;
 using Content.Client.Lobby.UI;
 using Content.Client.Parallax;
 using Content.Client.Resources;
@@ -17,18 +18,20 @@ using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Preferences.UI
 {
     public class CharacterSetupGui : Control
     {
-        private readonly VBoxContainer _charactersVBox;
+        private readonly BoxContainer _charactersVBox;
         private readonly Button _createNewCharacterButton;
         private readonly IEntityManager _entityManager;
         private readonly HumanoidProfileEditor _humanoidProfileEditor;
         private readonly IClientPreferencesManager _preferencesManager;
         public readonly Button CloseButton;
         public readonly Button SaveButton;
+        public readonly Button RulesButton;
 
         public CharacterSetupGui(
             IEntityManager entityManager,
@@ -62,12 +65,17 @@ namespace Content.Client.Preferences.UI
 
             margin.AddChild(panel);
 
-            var vBox = new VBoxContainer {SeparationOverride = 0};
+            var vBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical,
+                SeparationOverride = 0
+            };
 
             margin.AddChild(vBox);
 
-            var topHBox = new HBoxContainer
+            var topHBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 MinSize = (0, 40),
                 Children =
                 {
@@ -78,12 +86,19 @@ namespace Content.Client.Preferences.UI
                         StyleClasses = {StyleNano.StyleClassLabelHeadingBigger},
                         VAlign = Label.VAlignMode.Center,
                     },
-                    (SaveButton = new Button
+                    (RulesButton = new Button
                     {
                         HorizontalExpand = true,
                         HorizontalAlignment = HAlignment.Right,
+                        Text = Loc.GetString("character-setup-gui-character-setup-rules-button"),
+                        StyleClasses = {StyleNano.StyleClassButtonBig},
+
+                    }),
+                    (SaveButton = new Button
+                    {
                         Text = Loc.GetString("character-setup-gui-character-setup-save-button"),
                         StyleClasses = {StyleNano.StyleClassButtonBig},
+
                     }),
                     (CloseButton = new Button
                     {
@@ -104,14 +119,18 @@ namespace Content.Client.Preferences.UI
                 }
             });
 
-            var hBox = new HBoxContainer
+            var hBox = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 VerticalExpand = true,
                 SeparationOverride = 0
             };
             vBox.AddChild(hBox);
 
-            _charactersVBox = new VBoxContainer();
+            _charactersVBox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
 
             hBox.AddChild(new ScrollContainer
             {
@@ -145,6 +164,7 @@ namespace Content.Client.Preferences.UI
 
             UpdateUI();
 
+            RulesButton.OnPressed += _ => new InfoWindow().Open();
             preferencesManager.OnServerDataLoaded += UpdateUI;
         }
 
@@ -225,7 +245,7 @@ namespace Content.Client.Preferences.UI
                 ToggleMode = true;
                 Group = group;
 
-                _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+                _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
                 _previewDummy.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
                 var humanoid = profile as HumanoidCharacterProfile;
                 if (humanoid != null)
@@ -271,8 +291,9 @@ namespace Content.Client.Preferences.UI
                     preferencesManager.DeleteCharacter(profile);
                 };
 
-                var internalHBox = new HBoxContainer
+                var internalHBox = new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     HorizontalExpand = true,
                     SeparationOverride = 0,
                     Children =

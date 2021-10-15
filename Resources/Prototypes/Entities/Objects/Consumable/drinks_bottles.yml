@@ -4,27 +4,41 @@
   abstract: true
   components:
   - type: Drink
-    openSounds: bottleOpenSounds
-  - type: SolutionContainer
-    maxVol: 100
+    openSounds:
+      collection: bottleOpenSounds
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
   - type: SolutionTransfer
-    transferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Sprite
     state: icon
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
   - type: DamageOtherOnHit
-    amount: 10
+    damage:
+      types:
+        Blunt: 10
   - type: Spillable
+    solution: drink
   - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 5
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: GlassBreak
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
       - !type:SpillBehavior { }
       - !type:SpawnEntitiesBehavior
         spawn:
@@ -43,11 +57,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/absinthebottle.rsi
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Absinthe
-        Quantity: 100
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Absinthe
+          Quantity: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -66,12 +82,13 @@
   name: Magm-Ale
   description: A true dorf's drink of choice.
   components:
-  - type: SolutionContainer
-    maxVol: 100
-    contents:
-      reagents:
-      - ReagentId: Ale
-        Quantity: 100
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Ale
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
@@ -93,11 +110,13 @@
   name: cognac bottle
   description: A sweet and strongly alchoholic drink, made after numerous distillations and years of maturing. You might as well not scream 'SHITCURITY' this time.
   components:
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Cognac
-        Quantity: 100
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cognac
+          Quantity: 100
+        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -111,11 +130,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
-  - type: SolutionContainer
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
         - ReagentId: Gin
           Quantity: 100
+        maxVol: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -134,12 +155,13 @@
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
-  - type: SolutionContainer
-    maxVol: 80
-    contents:
-      reagents:
-      - ReagentId: Water
-        Quantity: 80
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Water
+          Quantity: 80
+        maxVol: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
 
@@ -205,12 +227,13 @@
   name: vodka bottle
   description: Aah, vodka. Prime choice of drink AND fuel by Russians worldwide.
   components:
-  - type: SolutionContainer
-    maxVol: 80
-    contents:
-      reagents:
-      - ReagentId: Vodka
-        Quantity: 80
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 80
+        reagents:
+        - ReagentId: Vodka
+          Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
@@ -221,12 +244,13 @@
   name: uncle git's special reserve
   description: A premium single-malt whiskey, gently matured inside the tunnels of a nuclear shelter. TUNNEL WHISKEY RULES.
   components:
-  - type: SolutionContainer
-    maxVol: 80
-    contents:
-      reagents:
-      - ReagentId: Whiskey
-        Quantity: 80
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 80
+        reagents:
+        - ReagentId: Whiskey
+          Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
@@ -237,11 +261,12 @@
   name: doublebearded bearded special wine bottle
   description: A faint aura of unease and asspainery surrounds the bottle.
   components:
-  - type: SolutionContainer
-    maxVol: 80
-    contents:
-      reagents:
-      - ReagentId: Wine
-        Quantity: 80
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 80
+        reagents:
+        - ReagentId: Wine
+          Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi

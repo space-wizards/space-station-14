@@ -1,9 +1,9 @@
-﻿#nullable enable
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Broadphase;
 
 namespace Content.Shared.Spawning
@@ -16,9 +16,9 @@ namespace Content.Shared.Spawning
             EntityCoordinates coordinates,
             CollisionGroup collisionLayer,
             in Box2? box = null,
-            SharedBroadPhaseSystem? physicsManager = null)
+            SharedPhysicsSystem? physicsManager = null)
         {
-            physicsManager ??= EntitySystem.Get<SharedBroadPhaseSystem>();
+            physicsManager ??= EntitySystem.Get<SharedPhysicsSystem>();
             var mapCoordinates = coordinates.ToMap(entityManager);
 
             return entityManager.SpawnIfUnobstructed(prototypeName, mapCoordinates, collisionLayer, box, physicsManager);
@@ -30,10 +30,10 @@ namespace Content.Shared.Spawning
             MapCoordinates coordinates,
             CollisionGroup collisionLayer,
             in Box2? box = null,
-            SharedBroadPhaseSystem? collision = null)
+            SharedPhysicsSystem? collision = null)
         {
-            var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered);
-            collision ??= EntitySystem.Get<SharedBroadPhaseSystem>();
+            var boxOrDefault = box.GetValueOrDefault(Box2.UnitCentered).Translated(coordinates.Position);
+            collision ??= EntitySystem.Get<SharedPhysicsSystem>();
 
             foreach (var body in collision.GetCollidingEntities(coordinates.MapId, in boxOrDefault))
             {
@@ -61,7 +61,7 @@ namespace Content.Shared.Spawning
             CollisionGroup collisionLayer,
             [NotNullWhen(true)] out IEntity? entity,
             Box2? box = null,
-            SharedBroadPhaseSystem? physicsManager = null)
+            SharedPhysicsSystem? physicsManager = null)
         {
             entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, physicsManager);
 
@@ -75,7 +75,7 @@ namespace Content.Shared.Spawning
             CollisionGroup collisionLayer,
             [NotNullWhen(true)] out IEntity? entity,
             in Box2? box = null,
-            SharedBroadPhaseSystem? physicsManager = null)
+            SharedPhysicsSystem? physicsManager = null)
         {
             entity = entityManager.SpawnIfUnobstructed(prototypeName, coordinates, collisionLayer, box, physicsManager);
 

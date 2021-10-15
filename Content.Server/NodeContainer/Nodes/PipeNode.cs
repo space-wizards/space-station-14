@@ -1,8 +1,6 @@
-#nullable enable
 using System.Collections.Generic;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Interfaces;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
@@ -123,7 +121,7 @@ namespace Content.Server.NodeContainer.Nodes
         /// <summary>
         ///     Rotates the <see cref="PipeDirection"/> when the entity is rotated, and re-calculates the <see cref="IPipeNet"/>.
         /// </summary>
-        void IRotatableNode.RotateEvent(RotateEvent ev)
+        void IRotatableNode.RotateEvent(ref RotateEvent ev)
         {
             if (!RotationsEnabled) return;
             var diff = ev.NewRotation - ev.OldRotation;
@@ -175,7 +173,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -198,7 +196,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)

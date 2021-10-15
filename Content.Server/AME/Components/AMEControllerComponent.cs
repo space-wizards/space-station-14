@@ -1,4 +1,3 @@
-#nullable enable
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
@@ -9,14 +8,15 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.AME.Components
@@ -27,11 +27,14 @@ namespace Content.Server.AME.Components
     public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
-        [ViewVariables] private bool _injecting;
+        private bool _injecting;
+        [ViewVariables] public bool Injecting => _injecting;
         [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;
         private PowerSupplierComponent? _powerSupplier;
+        [DataField("clickSound")] private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
+        [DataField("injectSound")] private SoundSpecifier _injectSound = new SoundPathSpecifier("/Audio/Effects/bang.ogg");
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
@@ -72,7 +75,7 @@ namespace Content.Server.AME.Components
 
         internal void OnUpdate(float frameTime)
         {
-            if(!_injecting)
+            if (!_injecting)
             {
                 return;
             }
@@ -85,11 +88,11 @@ namespace Content.Server.AME.Components
             }
 
             var jar = _jarSlot.ContainedEntity;
-            if(jar is null)
+            if (jar is null)
                 return;
 
             jar.TryGetComponent<AMEFuelContainerComponent>(out var fuelJar);
-            if(fuelJar != null && _powerSupplier != null)
+            if (fuelJar != null && _powerSupplier != null)
             {
                 var availableInject = fuelJar.FuelAmount >= InjectionAmount ? InjectionAmount : fuelJar.FuelAmount;
                 _powerSupplier.MaxSupply = group.InjectFuel(availableInject, out var overloading);
@@ -102,7 +105,7 @@ namespace Content.Server.AME.Components
 
             UpdateDisplay(_stability);
 
-            if(_stability <= 0) { group.ExplodeCores(); }
+            if (_stability <= 0) { group.ExplodeCores(); }
 
         }
 
@@ -131,6 +134,12 @@ namespace Content.Server.AME.Components
         }
 
         private void OnPowerChanged(PowerChangedMessage e)
+        {
+            UpdateUserInterface();
+        }
+
+        // Used to update core count
+        public void OnAMENodeGroupUpdate()
         {
             UpdateUserInterface();
         }
@@ -214,7 +223,7 @@ namespace Content.Server.AME.Components
                     break;
             }
 
-            GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
+            GetAMENodeGroup()?.UpdateCoreVisuals();
 
             UpdateUserInterface();
             ClickSound();
@@ -226,7 +235,7 @@ namespace Content.Server.AME.Components
                 return;
 
             var jar = _jarSlot.ContainedEntity;
-            if(jar is null)
+            if (jar is null)
                 return;
 
             _jarSlot.Remove(jar);
@@ -259,7 +268,7 @@ namespace Content.Server.AME.Components
 
         private void UpdateDisplay(int stability)
         {
-            if(_appearance == null) { return; }
+            if (_appearance == null) { return; }
 
             _appearance.TryGetData<string>(AMEControllerVisuals.DisplayState, out var state);
 
@@ -288,7 +297,7 @@ namespace Content.Server.AME.Components
 
         private bool IsMasterController()
         {
-            if(GetAMENodeGroup()?.MasterController == this)
+            if (GetAMENodeGroup()?.MasterController == this)
             {
                 return true;
             }
@@ -312,12 +321,12 @@ namespace Content.Server.AME.Components
 
         private void ClickSound()
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Machines/machine_switch.ogg", Owner, AudioParams.Default.WithVolume(-2f));
+            SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
         }
 
         private void InjectSound(bool overloading)
         {
-            SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Effects/bang.ogg", Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
+            SoundSystem.Play(Filter.Pvs(Owner), _injectSound.GetSound(), Owner, AudioParams.Default.WithVolume(overloading ? 10f : 0f));
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs args)

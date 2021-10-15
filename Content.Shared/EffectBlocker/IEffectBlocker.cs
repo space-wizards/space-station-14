@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Content.Shared.ActionBlocker;
+﻿using Content.Shared.ActionBlocker;
 
 namespace Content.Shared.EffectBlocker
 {

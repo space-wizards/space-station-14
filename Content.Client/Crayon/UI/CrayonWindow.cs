@@ -9,6 +9,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Crayon.UI
 {
@@ -27,7 +28,10 @@ namespace Content.Client.Crayon.UI
             Title = Loc.GetString("crayon-window-title");
             Owner = owner;
 
-            var vbox = new VBoxContainer();
+            var vbox = new BoxContainer
+            {
+                Orientation = LayoutOrientation.Vertical
+            };
             Contents.AddChild(vbox);
 
             _search = new LineEdit();

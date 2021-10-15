@@ -1,4 +1,4 @@
-#nullable enable
+using System.Collections.Generic;
 using Content.Server.Storage.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Directions;
@@ -6,13 +6,15 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
+using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
@@ -44,6 +46,9 @@ namespace Content.Server.Morgue.Components
         [DataField("doSoulBeep")]
         public bool DoSoulBeep = true;
 
+        [DataField("occupantHasSoulAlarmSound")]
+        private SoundSpecifier _occupantHasSoulAlarmSound = new SoundPathSpecifier("/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg");
+
         [ViewVariables]
         [ComponentDependency] protected readonly AppearanceComponent? Appearance = null;
 
@@ -56,13 +61,15 @@ namespace Content.Server.Morgue.Components
 
         public override Vector2 ContentsDumpPosition()
         {
-            if (_tray != null) return _tray.Transform.WorldPosition;
+            if (_tray != null)
+                return _tray.Transform.WorldPosition;
             return base.ContentsDumpPosition();
         }
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
+                return false;
             return base.AddToContents(entity);
         }
 
@@ -73,7 +80,8 @@ namespace Content.Server.Morgue.Components
                 collisionMask: CollisionGroup.Impassable | CollisionGroup.VaultImpassable
             ))
             {
-                if(!silent) Owner.PopupMessage(user, Loc.GetString("morgue-entity-storage-component-cannot-open-no-space"));
+                if (!silent)
+                    Owner.PopupMessage(user, Loc.GetString("morgue-entity-storage-component-cannot-open-no-space"));
                 return false;
             }
 
@@ -112,8 +120,10 @@ namespace Content.Server.Morgue.Components
             foreach (var entity in Contents.ContainedEntities)
             {
                 count++;
-                if (!hasMob && entity.HasComponent<SharedBodyComponent>()) hasMob = true;
-                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null) hasSoul = true;
+                if (!hasMob && entity.HasComponent<SharedBodyComponent>())
+                    hasMob = true;
+                if (!hasSoul && entity.TryGetComponent<ActorComponent>(out var actor) && actor.PlayerSession != null)
+                    hasSoul = true;
             }
             Appearance?.SetData(MorgueVisuals.HasContents, count > 0);
             Appearance?.SetData(MorgueVisuals.HasMob, hasMob);
@@ -133,13 +143,29 @@ namespace Content.Server.Morgue.Components
             }
         }
 
+        protected override IEnumerable<IEntity> DetermineCollidingEntities()
+        {
+            if (_tray == null)
+            {
+                yield break;
+            }
+
+            var entityLookup = IoCManager.Resolve<IEntityLookup>();
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray))
+            {
+                yield return entity;
+            }
+        }
+
         //Called every 10 seconds
         public void Update()
         {
             CheckContents();
 
-            if(DoSoulBeep && Appearance !=null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
-                SoundSystem.Play(Filter.Pvs(Owner), "/Audio/Weapons/Guns/EmptyAlarm/smg_empty_alarm.ogg", Owner);
+            if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
+            {
+                SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
+            }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
@@ -159,7 +185,8 @@ namespace Content.Server.Morgue.Components
                 else if (Appearance.TryGetData(MorgueVisuals.HasContents, out bool hasContents) && hasContents)
                 {
                     message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-has-contents"));
-                } else
+                }
+                else
                 {
                     message.AddMarkup(Loc.GetString("morgue-entity-storage-component-on-examine-details-empty"));
                 }
