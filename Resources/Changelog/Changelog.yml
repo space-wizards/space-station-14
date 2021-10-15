@@ -2492,3 +2492,8 @@ Entries:
   - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
   id: 445
   time: '2021-10-15T12:46:50.053991+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
+  id: 446
+  time: '2021-10-15T22:21:14.743072+00:00'
