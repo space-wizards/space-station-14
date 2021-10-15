@@ -64,16 +64,25 @@ namespace Content.Server.RCD.Systems
                 return;
 
             // FIXME: Make this work properly. Right now it relies on the click location being on a grid, which is bad.
-            if (!args.ClickLocation.IsValid(EntityManager))
+            var clickLocationMod = args.ClickLocation;
+            // Initial validity check
+            if (!clickLocationMod.IsValid(EntityManager))
                 return;
-
-            var gridID = args.ClickLocation.GetGridId(EntityManager);
+            // Try to fix it (i.e. if clicking on space)
+            // Note: Ideally there'd be a better way, but there isn't right now.
+            var gridID = clickLocationMod.GetGridId(EntityManager);
+            if (!gridID.IsValid())
+            {
+                clickLocationMod = clickLocationMod.AlignWithClosestGridTile();
+                gridID = clickLocationMod.GetGridId(EntityManager);
+            }
+            // Check if fixing it failed / get final grid ID
             if (!gridID.IsValid())
                 return;
 
             var mapGrid = _mapManager.GetGrid(gridID);
-            var tile = mapGrid.GetTileRef(args.ClickLocation);
-            var snapPos = mapGrid.TileIndicesFor(args.ClickLocation);
+            var tile = mapGrid.GetTileRef(clickLocationMod);
+            var snapPos = mapGrid.TileIndicesFor(clickLocationMod);
 
             //No changing mode mid-RCD
             var startingMode = rcd.Mode;
@@ -99,7 +108,7 @@ namespace Content.Server.RCD.Systems
             {
                 //Floor mode just needs the tile to be a space tile (subFloor)
                 case RcdMode.Floors:
-                    mapGrid.SetTile(args.ClickLocation, new Tile(_tileDefinitionManager["floor_steel"].TileId));
+                    mapGrid.SetTile(clickLocationMod, new Tile(_tileDefinitionManager["floor_steel"].TileId));
                     break;
                 //We don't want to place a space tile on something that's already a space tile. Let's do the inverse of the last check.
                 case RcdMode.Deconstruct:
