@@ -24,7 +24,9 @@ namespace Content.IntegrationTests.Tests
   id: InventoryStunnableDummy
   components:
   - type: Inventory
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
 
 - type: entity
   name: InventoryJumpsuitJanitorDummy
@@ -52,7 +54,6 @@ namespace Content.IntegrationTests.Tests
 
             IEntity human = null;
             InventoryComponent inventory = null;
-            StunnableComponent stun = null;
 
             server.Assert(() =>
             {
@@ -64,7 +65,6 @@ namespace Content.IntegrationTests.Tests
 
                 human = entityMan.SpawnEntity("InventoryStunnableDummy", MapCoordinates.Nullspace);
                 inventory = human.GetComponent<InventoryComponent>();
-                stun = human.GetComponent<StunnableComponent>();
 
                 // Can't do the test if this human doesn't have the slots for it.
                 Assert.That(inventory.HasSlot(Slots.INNERCLOTHING));
@@ -76,7 +76,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(inventory.TryGetSlotItem(Slots.INNERCLOTHING, out ItemComponent uniform));
                 Assert.That(uniform.Owner.Prototype != null && uniform.Owner.Prototype.ID == "InventoryJumpsuitJanitorDummy");
 
-                EntitySystem.Get<StunSystem>().Stun(human.Uid, TimeSpan.FromSeconds(1f), stun);
+                EntitySystem.Get<StunSystem>().TryStun(human.Uid, TimeSpan.FromSeconds(1f));
 
                 // Since the mob is stunned, they can't equip this.
                 Assert.That(inventory.SpawnItemInSlot(Slots.IDCARD, "InventoryIDCardDummy", true), Is.False);
