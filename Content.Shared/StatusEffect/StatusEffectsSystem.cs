@@ -216,7 +216,13 @@ namespace Content.Shared.StatusEffect
             if (state.RelevantComponent != null)
             {
                 var type = _componentFactory.GetRegistration(state.RelevantComponent).Type;
-                EntityManager.RemoveComponent(uid, type);
+
+                // Make sure the component is actually there first.
+                // Maybe a badmin badminned the component away,
+                // or perhaps, on the client, the component deletion sync
+                // was faster than prediction could predict. Either way, let's not assume the component exists.
+                if(EntityManager.HasComponent(uid, type))
+                    EntityManager.RemoveComponent(uid, type);
             }
 
             if (proto.Alert != null && alerts != null)
