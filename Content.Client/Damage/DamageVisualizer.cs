@@ -38,10 +38,8 @@ namespace Content.Client.Damage
         private Dictionary<string, bool> _layerToggles = new();
         // this is here to ensure that layers stay disabled
         private Dictionary<string, bool> _disabledLayers = new();
-        private Dictionary<string, int> _lastThresholds = new();
 
-        // in case misvalidation occurs
-        private bool _disabledForValidation = false;
+        private bool _valid = true;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -64,7 +62,7 @@ namespace Content.Client.Damage
                 // and disable
                 //
                 // you need a minimum damage of something
-                _disabledForValidation = true;
+                _valid = false;
                 return;
             }
 
@@ -78,7 +76,7 @@ namespace Content.Client.Damage
                 // if not, then this isn't valid
                 // (negative damage???)
 
-                _disabledForValidation = true;
+                _valid = false;
                 return;
             }
 
@@ -90,7 +88,6 @@ namespace Content.Client.Damage
             {
                 if (prototypeManager.TryIndex<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
                 {
-                    // this is valid, OmniSharp, why do you Do This
                     foreach (string damageType in _damageSprites.Keys)
                         // I did initially think about doing per type as well,
                         // but I then realized that the API for DamageSpecifiers
@@ -121,7 +118,7 @@ namespace Content.Client.Damage
             if (_damageSprites.Keys.Count == 0)
             {
                 // every key was invalid! this no longer works
-                _disabledForValidation = true;
+                _valid = false;
                 return;
             }
 
@@ -131,22 +128,34 @@ namespace Content.Client.Damage
                 {
                     if (!spriteComponent.LayerMapTryGet(layer, out int index))
                     {
-                        foreach (var (group, sprite) in _damageSprites)
-                        {
-                            if (spriteComponent.LayerGetState(index) == null)
-                                continue;
+                        _targetLayers.Remove(layer);
+                        continue;
+                    }
 
-                            string? layerState = spriteComponent.LayerGetState(index).ToString();
-                            if (layerState == null)
-                                continue;
-                            int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(sprite, $"{layerState}{group}0"), index + 1);
-                            spriteComponent.LayerMapSet($"{layer}{group}", newLayer);
-                        }
+                    foreach (var (group, sprite) in _damageSprites)
+                    {
+                        if (spriteComponent.LayerGetState(index) == null)
+                            continue;
 
+                        string? layerState = spriteComponent.LayerGetState(index).ToString();
+                        if (layerState == null)
+                            continue;
+                        int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(sprite, $"{layerState}{group}0"), index + 1);
+                        spriteComponent.LayerMapSet($"{layer}{group}", newLayer);
                     }
                     appearanceComponent.SetData(layer, true);
                     _layerToggles.Add(layer, true);
                     _disabledLayers.Add(layer, false);
+                }
+
+                if (_targetLayers.Count == 0)
+                {
+                    // every single target layer was invalid -
+                    // someone using this component might not
+                    // want an overlay, so instead we
+                    // ensure that
+                    _valid = false;
+                    return;
                 }
             }
             else
@@ -165,15 +174,13 @@ namespace Content.Client.Damage
         public override void OnChangeData(AppearanceComponent component)
         {
             if (component.GetData<bool>(DamageVisualizerKeys.Disabled)
-                || _disabledForValidation)
+                || !_valid)
                 return;
 
-            component.TryGetData<DamageSpecifier>(DamageVisualizerKeys.DamageSpecifier, out DamageSpecifier? specifier);
-
-            HandleDamage(component, specifier);
+            HandleDamage(component);
         }
 
-        private void HandleDamage(AppearanceComponent component, DamageSpecifier? specifier)
+        private void HandleDamage(AppearanceComponent component)
         {
             if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
                 return;
@@ -191,7 +198,7 @@ namespace Content.Client.Damage
                 }
             }
 
-            if (specifier == null
+            if (!component.TryGetData<DamageSpecifier>(DamageVisualizerKeys.DamageSpecifier, out DamageSpecifier? specifier)
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
