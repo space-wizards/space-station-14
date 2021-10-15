@@ -8,7 +8,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Damage
 {
@@ -91,7 +90,10 @@ namespace Content.Client.Damage
         ///     DamageOverlay_Burn_25 - overlay, burn, 25 damage
         /// </remarks>
         [DataField("damageSprites", required: true)]
-        private readonly Dictionary<string, ResourcePath> _damageSprites = new();
+        private readonly Dictionary<string, string> _damageSprites = new();
+
+        [DataField("overlay")]
+        private readonly bool _overlay = true;
 
         // this is here to ensure that the last state of the
         // layer's visibility is cached (can't
@@ -101,6 +103,7 @@ namespace Content.Client.Damage
         private Dictionary<string, bool> _disabledLayers = new();
 
         private bool _valid = true;
+        private bool _disabled = false;
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -141,10 +144,6 @@ namespace Content.Client.Damage
                 if (prototypeManager.TryIndex<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
                 {
                     foreach (string damageType in _damageSprites.Keys)
-                        // I did initially think about doing per type as well,
-                        // but I then realized that the API for DamageSpecifiers
-                        // doesn't exactly support getting it per type, without
-                        // enumerating through several layers of groups.
                         if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
                             _damageSprites.Remove(damageType);
@@ -186,7 +185,7 @@ namespace Content.Client.Damage
                         string? layerState = spriteComponent.LayerGetState(index).ToString();
                         if (layerState == null)
                             continue;
-                        int newLayer = spriteComponent.AddLayer($"{layerState}_{group}_0", sprite, index + 1);
+                        int newLayer = spriteComponent.AddBlankLayer(index + 1);
                         spriteComponent.LayerMapSet($"{layer}{group}", newLayer);
                     }
                     appearanceComponent.SetData(layer, true);
@@ -205,7 +204,7 @@ namespace Content.Client.Damage
             {
                 foreach (var (group, sprite) in _damageSprites)
                 {
-                    int newLayer = spriteComponent.AddLayerState($"DamageOverlay_{group}_0", sprite);
+                    int newLayer = spriteComponent.AddBlankLayer();
                     spriteComponent.LayerMapSet($"DamageOverlay{group}", newLayer);
                 }
             }
@@ -213,9 +212,17 @@ namespace Content.Client.Damage
 
         public override void OnChangeData(AppearanceComponent component)
         {
-            if (component.GetData<bool>(DamageVisualizerKeys.Disabled)
-                || !_valid)
+            if (!_valid)
                 return;
+
+            if (component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
+            {
+                if (disabledStatus != _disabled)
+                    _disabled = disabledStatus;
+
+                if (_disabled)
+                    return;
+            }
 
             HandleDamage(component);
         }
@@ -242,22 +249,15 @@ namespace Content.Client.Damage
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
-            foreach (var (damageGroup, _) in specifier.DamageDict)
+            foreach (var (damageGroup, damage) in specifier.GetDamagePerGroup())
             {
                 int threshold = 0;
-                int thresholdIndex = _thresholds.BinarySearch(damageComponent.DamagePerGroup[damageGroup]);
+                int thresholdIndex = _thresholds.BinarySearch(damage);
 
                 if (thresholdIndex < 0)
                 {
-                    thresholdIndex ^= thresholdIndex;
-                    if (damageComponent.DamagePerGroup[damageGroup] < _thresholds[thresholdIndex])
-                    {
-                        threshold = _thresholds[thresholdIndex - 1];
-                    }
-                    else
-                    {
-                        threshold = _thresholds[thresholdIndex];
-                    }
+                    thresholdIndex = ~thresholdIndex;
+                    threshold = _thresholds[thresholdIndex - 1];
                 }
                 else
                 {
@@ -266,6 +266,7 @@ namespace Content.Client.Damage
 
                 if (_targetLayers != null)
                 {
+                    Logger.DebugS("DamageVisualizer", "Attempting to set target layers now.");
                     foreach (var layerMapName in _targetLayers)
                         if (_damageSprites.ContainsKey(damageGroup) && !_disabledLayers[layerMapName])
                         {
@@ -299,9 +300,19 @@ namespace Content.Client.Damage
                 }
                 else
                 {
+                    Logger.DebugS("DamageVisualizer", "Attempting to set overlay now.");
                     if (_damageSprites.ContainsKey(damageGroup))
                     {
                         spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+                        if (spriteLayer + 1 < spriteComponent.AllLayers.Count())
+                        {
+                            // ensure that the overlay is always on top
+                            Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
+                            spriteComponent.RemoveLayer(spriteLayer);
+                            spriteLayer = spriteComponent.AddBlankLayer();
+                            spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
+                        }
+
                         if (threshold == 0)
                         {
                             spriteComponent.LayerSetVisible(spriteLayer, false);
