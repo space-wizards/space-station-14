@@ -53,24 +53,6 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: low wall
-  id: LowWall
-  graph: lowWall
-  startNode: start
-  targetNode: lowWall
-  category: Structures
-  description: A low wall used for mounting windows.
-  conditions:
-    - !type:NoWindowsInTile {}
-    - !type:TileNotBlocked {}
-  icon:
-    sprite: Structures/Walls/low_wall.rsi
-    state: metal
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-
-- type: construction
   name: grille
   id: Grille
   graph: grille
