@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Content.Client.Stylesheets;
 using Content.Shared.Input;
@@ -7,12 +8,16 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Robust.Shared.Log;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Robust.Client.UserInterface.CustomControls;
 
 namespace Content.Client.EscapeMenu.UI.Tabs
 {
@@ -27,6 +32,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         };
 
         [Dependency] private readonly IInputManager _inputManager = default!;
+        [Dependency] private readonly IConfigurationManager _cfg = default!;
 
         private BindButton? _currentlyRebinding;
 
@@ -34,6 +40,20 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             new();
 
         private readonly List<Action> _deferCommands = new();
+
+        private void HandleToggleEnglishHotkeyCheckbox(BaseButton.ButtonToggledEventArgs args)
+        {
+            _cfg.SetCVar(CVars.DisplayEnglishHotkeys, args.Pressed);
+            _cfg.SaveToFile();
+
+            _inputManager.UpdateKeys();
+
+            foreach (var item in _keyControls)
+            {
+                item.Value.BindButton1.UpdateText();
+                item.Value.BindButton2.UpdateText();
+            }
+        }
 
         public KeyRebindTab()
         {
@@ -73,6 +93,18 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 KeybindsContainer.AddChild(control);
                 _keyControls.Add(function, control);
             }
+
+            void AddCheckBox(string checkBoxName, bool currentState = false, Action<BaseButton.ButtonToggledEventArgs>? callBackOnClick = null)
+            {
+                CheckBox newCheckBox = new CheckBox() { Text = Loc.GetString(checkBoxName)};
+                newCheckBox.Pressed = currentState;
+                newCheckBox.OnToggled += callBackOnClick;
+
+                KeybindsContainer.AddChild(newCheckBox);
+            }
+
+            AddHeader("ui-options-header-general");
+            AddCheckBox("ui-options-hotkey-lang", _cfg.GetCVar(CVars.DisplayEnglishHotkeys), HandleToggleEnglishHotkeyCheckbox);
 
             AddHeader("ui-options-header-movement");
             AddButton(EngineKeyFunctions.MoveUp);

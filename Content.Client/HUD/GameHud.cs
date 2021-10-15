@@ -113,6 +113,7 @@ namespace Content.Client.HUD
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
+        [Dependency] private static readonly IConfigurationManager _cfg = default!;
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
@@ -612,16 +613,23 @@ namespace Content.Client.HUD
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
+                _inputManager.OnKeyUpdated += OnKeyBindingChanged;
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
+                _inputManager.OnKeyUpdated -= OnKeyBindingChanged;
             }
 
 
             private void OnKeyBindingChanged(IKeyBinding obj)
+            {
+                _label.Text = ShortKeyName(_function);
+            }
+            
+            private void OnKeyBindingChanged()
             {
                 _label.Text = ShortKeyName(_function);
             }
