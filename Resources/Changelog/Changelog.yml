@@ -2475,3 +2475,9 @@ Entries:
   - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
   id: 442
   time: '2021-10-15T10:21:58.640854+00:00'
+- author: Macoron
+  changes:
+  - {message: Uplinks UI now have description of items., type: Add}
+  - {message: Admins can spawn ready to use uplinks., type: Add}
+  id: 443
+  time: '2021-10-15T10:49:59.0000000+00:00'
