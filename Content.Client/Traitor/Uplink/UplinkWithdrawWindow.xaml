@@ -1,5 +1,5 @@
 <SS14Window xmlns="https://spacestation14.io"
-            Title="Withdraw TC"
+            Title="{Loc 'uplink-user-interface-withdraw-title'}"
             MinSize="256 128">
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
@@ -15,12 +15,12 @@
         <BoxContainer Orientation="Horizontal"
                       VerticalExpand="True"
                       VerticalAlignment="Bottom">
-            <Button Name="WithdrawButton"
-                    Text="Withdraw"
+            <Button Name="ApplyButton"
+                    Text="{Loc 'uplink-user-interface-withdraw-withdraw-button'}"
                     HorizontalAlignment="Left"
                     HorizontalExpand="True"/>
             <Button Name="CancelButton"
-                    Text="Cancel"
+                    Text="{Loc 'uplink-user-interface-withdraw-cancel-button'}"
                     HorizontalAlignment="Right"
                     HorizontalExpand="True"/>
         </BoxContainer>
