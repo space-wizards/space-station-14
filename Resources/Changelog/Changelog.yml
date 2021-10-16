@@ -2524,3 +2524,8 @@ Entries:
       structures and objects., type: Add}
   id: 450
   time: '2021-10-16T20:34:05.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
+  id: 451
+  time: '2021-10-16T23:11:06.0000000+00:00'
