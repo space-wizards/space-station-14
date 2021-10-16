@@ -18,8 +18,7 @@ namespace Content.Server.NodeContainer
     public class NodeContainerComponent : Component, IExamine
     {
         public override string Name => "NodeContainer";
-
-        [DataField("nodes")] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
+        [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 
         [DataField("examinable")] private bool _examinable = false;
 

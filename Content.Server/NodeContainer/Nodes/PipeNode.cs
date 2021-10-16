@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -104,6 +103,7 @@ namespace Content.Server.NodeContainer.Nodes
         public override void OnContainerStartup()
         {
             base.OnContainerStartup();
+            PipeDirection = PipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
             OnConnectedDirectionsNeedsUpdating();
         }
 
