@@ -144,6 +144,7 @@ namespace Content.Client.Damage
         private Dictionary<object, string> _layerMapKeyStates = new();
 
         private Dictionary<string, int> _lastThresholdPerGroup = new();
+        private string _topMostLayerKey = default!;
 
         // deals with the edge case of human damage visuals not
         // being in color without making a Dict<Dict<Dict<Dict<Dict<Dict...
@@ -352,6 +353,7 @@ namespace Content.Client.Damage
                     {
                         int newLayer = spriteComponent.AddBlankLayer();
                         spriteComponent.LayerMapSet($"DamageOverlay{group}", newLayer);
+                        _topMostLayerKey = $"DamageOverlay{group}";
                     }
             }
         }
@@ -408,6 +410,23 @@ namespace Content.Client.Damage
             if (!component.TryGetData<DamageSpecifier>(DamageVisualizerKeys.DamageSpecifierDelta, out DamageSpecifier? delta)
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
+
+            if (_overlay && _damageOverlaySprites != null && _targetLayers == null)
+            {
+                if (spriteComponent[_topMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
+                {
+                    foreach (var (damageGroup, _) in _damageOverlaySprites)
+                    {
+                        Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
+                        spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+                        spriteComponent.RemoveLayer(spriteLayer);
+                        spriteLayer = spriteComponent.AddBlankLayer();
+                        spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
+                        // this is somewhat iffy since it constantly reallocates
+                        _topMostLayerKey = $"DamageOverlay{damageGroup}";
+                    }
+                }
+            }
 
             foreach (var (damageGroup, _) in delta.GetDamagePerGroup())
             {
@@ -485,14 +504,6 @@ namespace Content.Client.Damage
                         if (_damageOverlaySprites.ContainsKey(damageGroup))
                         {
                             spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
-                            if (spriteLayer + 1 < spriteComponent.AllLayers.Count())
-                            {
-                                // ensure that the overlay is always on top
-                                Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
-                                spriteComponent.RemoveLayer(spriteLayer);
-                                spriteLayer = spriteComponent.AddBlankLayer();
-                                spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
-                            }
 
                             if (threshold == 0)
                             {
