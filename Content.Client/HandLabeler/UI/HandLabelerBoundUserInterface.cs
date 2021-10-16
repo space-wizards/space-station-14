@@ -1,7 +1,6 @@
 using Content.Shared.HandLabeler;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using static Robust.Client.UserInterface.Controls.LineEdit;
 
 namespace Content.Client.HandLabeler.UI
 {
