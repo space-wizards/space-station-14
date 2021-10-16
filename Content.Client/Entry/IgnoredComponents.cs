@@ -284,7 +284,8 @@ namespace Content.Client.Entry
             "ToggleDoorOnTrigger",
             "DeviceNetworkConnection",
             "WiredNetworkConnection",
-            "WirelessNetworkConnection"
+            "WirelessNetworkConnection",
+            "GhostRadio"
         };
     }
 }
