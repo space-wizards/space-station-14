@@ -12,7 +12,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.CharacterAppearance.Components
 {
     [RegisterComponent]
-    [Friend(typeof(SharedHumanoidAppearanceSystem))]
+    [Friend(typeof(SharedHumanoidAppearanceSystem), typeof(SharedMagicMirrorComponent))]
     [NetworkedComponent]
     public class HumanoidAppearanceComponent : Component
     {
