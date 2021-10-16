@@ -20,7 +20,7 @@ namespace Content.Server.Tools.Components
         [DataDefinition]
         public class ToolEntry
         {
-            [DataField("behavior", required:true)]
+            [DataField("behavior", required: true)]
             public PrototypeFlags<ToolQualityPrototype> Behavior { get; } = new();
 
             [DataField("useSound")]
@@ -32,8 +32,8 @@ namespace Content.Server.Tools.Components
             [DataField("sprite")]
             public SpriteSpecifier? Sprite { get; } = null;
         }
-        
-        [DataField("entries", required:true)]
+
+        [DataField("entries", required: true)]
         public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
 
         [ViewVariables]
