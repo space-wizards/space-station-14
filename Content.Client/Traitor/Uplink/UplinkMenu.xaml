@@ -11,7 +11,7 @@
                 <RichTextLabel Name="BalanceInfoProtected"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
-                <Button Name="WithdrawButtonProtected"
+                <Button Name="WithdrawButton"
                         Text="Withdraw"
                         HorizontalAlignment="Right"
                         MinWidth="64"/>
