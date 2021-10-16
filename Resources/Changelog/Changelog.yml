@@ -2497,3 +2497,9 @@ Entries:
   - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
   id: 446
   time: '2021-10-15T22:21:14.743072+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: ChemMaster UI has been repaired., type: Fix}
+  - {message: Pills are now edible again., type: Fix}
+  id: 447
+  time: '2021-10-16T12:56:21.0000000+00:00'
