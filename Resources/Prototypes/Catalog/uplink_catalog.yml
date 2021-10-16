@@ -5,6 +5,7 @@
   category: Weapons
   itemId: PistolClarissa
   price: 6
+  icon: /Textures/Objects/Weapons/Guns/Pistols/clarissa.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkRevolverInspector
@@ -18,6 +19,7 @@
   category: Weapons
   itemId: PistolMandella
   price: 8
+  icon: /Textures/Objects/Weapons/Guns/Pistols/mandella.rsi/icon.png
 
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
@@ -99,6 +101,7 @@
   category: Ammo
   itemId: SLMagnum
   price: 2
+  icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
 # Bundles
 
@@ -107,24 +110,28 @@
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledSMG
   price: 14
+  icon: /Textures/Objects/Weapons/Guns/SMGs/c20r.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkBojevicBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledShotgun
   price: 13
+  icon: /Textures/Objects/Weapons/Guns/Shotguns/bojevic.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkL6SawBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledLMG
   price: 18
+  icon: /Textures/Objects/Weapons/Guns/LMGs/l6.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkGrenadeLauncherBundle
   category: Bundles
   itemId: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   price: 25
+  icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
 
 # Tools
 

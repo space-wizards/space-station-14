@@ -7,6 +7,7 @@ using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Client.Utility;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
@@ -66,8 +67,8 @@ namespace Content.Client.Traitor.Uplink
             var listingPrice = listing.Price;
             var canBuy = _loggedInUplinkAccount?.DataBalance >= listing.Price;
 
-            Texture? texture = null;
-            if (prototype.TryGetComponent("Sprite", out SpriteComponent? sprite))
+            var texture = listing.Icon?.Frame0();
+            if (texture == null && prototype.TryGetComponent("Sprite", out SpriteComponent? sprite))
                 texture = sprite.Icon?.Default;
 
             var newListing = new UplinkListingControl(listingName, listingDesc, listingPrice, canBuy, texture);
