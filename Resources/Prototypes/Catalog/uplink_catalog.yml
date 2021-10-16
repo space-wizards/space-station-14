@@ -4,6 +4,8 @@
   id: UplinkPistolClarissa
   category: Weapons
   itemId: PistolClarissa
+  name: Clarissa
+  description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
   icon: /Textures/Objects/Weapons/Guns/Pistols/clarissa.rsi/icon.png
 
@@ -11,6 +13,8 @@
   id: UplinkRevolverInspector
   category: Weapons
   itemId: RevolverInspector
+  name: Inspector
+  description: A .40 magnum caliber revolver. Still quite deadly, despite its ancient design.
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
@@ -18,6 +22,8 @@
   id: UplinkPistolMandella
   category: Weapons
   itemId: PistolMandella
+  name: Mandella
+  description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
   icon: /Textures/Objects/Weapons/Guns/Pistols/mandella.rsi/icon.png
 
