@@ -7,6 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.HandLabeler
 {
+    /// <summary>
+    /// A system that lets players see the contents of a label on an object.
+    /// </summary>
     [UsedImplicitly]
     public class LabelSystem : EntitySystem
     {

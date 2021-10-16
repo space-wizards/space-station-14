@@ -14,6 +14,9 @@ using System;
 
 namespace Content.Server.HandLabeler
 {
+    /// <summary>
+    /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
+    /// </summary>
     [UsedImplicitly]
     public class HandLabelerSystem : EntitySystem
     {

@@ -15,7 +15,7 @@ namespace Content.Shared.HandLabeler
     }
 
     /// <summary>
-    /// Represents a <see cref="GasCanisterComponent"/> state that can be sent to the client
+    /// Represents a <see cref="HandLabelerComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
     public class HandLabelerBoundUserInterfaceState : BoundUserInterfaceState
