@@ -1185,8 +1185,7 @@ entities:
 - uid: 141
   type: WallSolid
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -15.5,-1.5
+  - pos: -15.5,-1.5
     parent: 853
     type: Transform
 - uid: 142
@@ -21451,8 +21450,7 @@ entities:
 - uid: 1617
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 40.5,1.5
+  - pos: 40.5,1.5
     parent: 853
     type: Transform
 - uid: 1618
@@ -22086,6 +22084,8 @@ entities:
   - pos: -37.5,26.5
     parent: 853
     type: Transform
+  - supplyRate: 1268
+    type: PowerSupplier
 - uid: 1713
   type: WallReinforced
   components:
@@ -23713,8 +23713,7 @@ entities:
 - uid: 1938
   type: Window
   components:
-  - rot: 3.141592653589793 rad
-    pos: 40.5,1.5
+  - pos: 40.5,1.5
     parent: 853
     type: Transform
 - uid: 1939
@@ -28340,6 +28339,8 @@ entities:
   - pos: -37.5,25.5
     parent: 853
     type: Transform
+  - supplyRate: 1269
+    type: PowerSupplier
 - uid: 2560
   type: CableApcExtension
   components:
@@ -52076,6 +52077,8 @@ entities:
   - pos: -37.5,27.5
     parent: 853
     type: Transform
+  - supplyRate: 1268
+    type: PowerSupplier
 - uid: 5044
   type: SolarPanel
   components:
@@ -53279,36 +53282,48 @@ entities:
   - pos: -35.5,23.5
     parent: 853
     type: Transform
+  - supplyRate: 1268
+    type: PowerSupplier
 - uid: 5201
   type: SolarPanel
   components:
   - pos: -35.5,22.5
     parent: 853
     type: Transform
+  - supplyRate: 1269
+    type: PowerSupplier
 - uid: 5202
   type: SolarPanel
   components:
   - pos: -35.5,21.5
     parent: 853
     type: Transform
+  - supplyRate: 1268
+    type: PowerSupplier
 - uid: 5203
   type: SolarPanel
   components:
   - pos: -37.5,23.5
     parent: 853
     type: Transform
+  - supplyRate: 1269
+    type: PowerSupplier
 - uid: 5204
   type: SolarPanel
   components:
   - pos: -37.5,22.5
     parent: 853
     type: Transform
+  - supplyRate: 1269
+    type: PowerSupplier
 - uid: 5205
   type: SolarPanel
   components:
   - pos: -37.5,21.5
     parent: 853
     type: Transform
+  - supplyRate: 1269
+    type: PowerSupplier
 - uid: 5206
   type: WallReinforced
   components:
@@ -53977,15 +53992,13 @@ entities:
   - pos: 20.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
-    type: PowerSupplier
 - uid: 5297
   type: SolarPanel
   components:
   - pos: 20.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5298
   type: SolarPanel
@@ -53993,7 +54006,7 @@ entities:
   - pos: 20.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5299
   type: SolarPanel
@@ -54007,7 +54020,7 @@ entities:
   - pos: 22.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1268
     type: PowerSupplier
 - uid: 5301
   type: SolarPanel
@@ -54015,7 +54028,7 @@ entities:
   - pos: 22.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5302
   type: SolarPanel
@@ -54023,7 +54036,7 @@ entities:
   - pos: 22.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
+  - supplyRate: 1268
     type: PowerSupplier
 - uid: 5303
   type: SolarPanel
@@ -54037,7 +54050,7 @@ entities:
   - pos: 24.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5305
   type: SolarPanel
@@ -54045,7 +54058,7 @@ entities:
   - pos: 24.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5306
   type: SolarPanel
@@ -54053,7 +54066,7 @@ entities:
   - pos: 24.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5307
   type: SolarPanel
@@ -54061,15 +54074,13 @@ entities:
   - pos: 26.5,-27.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
-    type: PowerSupplier
 - uid: 5308
   type: SolarPanel
   components:
   - pos: 26.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 1283
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5309
   type: SolarPanel
@@ -54077,7 +54088,7 @@ entities:
   - pos: 26.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1268
     type: PowerSupplier
 - uid: 5310
   type: SolarPanel
@@ -54085,7 +54096,7 @@ entities:
   - pos: 26.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
+  - supplyRate: 1269
     type: PowerSupplier
 - uid: 5311
   type: SolarPanel
@@ -54099,24 +54110,18 @@ entities:
   - pos: 18.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
-    type: PowerSupplier
 - uid: 5313
   type: SolarPanel
   components:
   - pos: 18.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
-    type: PowerSupplier
 - uid: 5314
   type: SolarPanel
   components:
   - pos: 18.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1282
-    type: PowerSupplier
 - uid: 5315
   type: CableApcExtension
   components:
@@ -68009,526 +68014,451 @@ entities:
 - uid: 6466
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,15.5
+  - pos: 49.5,15.5
     parent: 853
     type: Transform
 - uid: 6467
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,16.5
+  - pos: 49.5,16.5
     parent: 853
     type: Transform
 - uid: 6468
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 50.5,16.5
+  - pos: 50.5,16.5
     parent: 853
     type: Transform
 - uid: 6469
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 51.5,16.5
+  - pos: 51.5,16.5
     parent: 853
     type: Transform
 - uid: 6470
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 52.5,16.5
+  - pos: 52.5,16.5
     parent: 853
     type: Transform
 - uid: 6471
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 53.5,16.5
+  - pos: 53.5,16.5
     parent: 853
     type: Transform
 - uid: 6472
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 53.5,17.5
+  - pos: 53.5,17.5
     parent: 853
     type: Transform
 - uid: 6473
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 53.5,18.5
+  - pos: 53.5,18.5
     parent: 853
     type: Transform
 - uid: 6474
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 53.5,19.5
+  - pos: 53.5,19.5
     parent: 853
     type: Transform
 - uid: 6475
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 53.5,20.5
+  - pos: 53.5,20.5
     parent: 853
     type: Transform
 - uid: 6476
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 52.5,20.5
+  - pos: 52.5,20.5
     parent: 853
     type: Transform
 - uid: 6477
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 51.5,20.5
+  - pos: 51.5,20.5
     parent: 853
     type: Transform
 - uid: 6478
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 50.5,20.5
+  - pos: 50.5,20.5
     parent: 853
     type: Transform
 - uid: 6479
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,20.5
+  - pos: 49.5,20.5
     parent: 853
     type: Transform
 - uid: 6480
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 48.5,20.5
+  - pos: 48.5,20.5
     parent: 853
     type: Transform
 - uid: 6481
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 48.5,21.5
+  - pos: 48.5,21.5
     parent: 853
     type: Transform
 - uid: 6482
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 48.5,22.5
+  - pos: 48.5,22.5
     parent: 853
     type: Transform
 - uid: 6483
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 48.5,23.5
+  - pos: 48.5,23.5
     parent: 853
     type: Transform
 - uid: 6484
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 47.5,23.5
+  - pos: 47.5,23.5
     parent: 853
     type: Transform
 - uid: 6485
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 46.5,23.5
+  - pos: 46.5,23.5
     parent: 853
     type: Transform
 - uid: 6486
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 45.5,23.5
+  - pos: 45.5,23.5
     parent: 853
     type: Transform
 - uid: 6487
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 44.5,23.5
+  - pos: 44.5,23.5
     parent: 853
     type: Transform
 - uid: 6488
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 43.5,23.5
+  - pos: 43.5,23.5
     parent: 853
     type: Transform
 - uid: 6489
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 42.5,23.5
+  - pos: 42.5,23.5
     parent: 853
     type: Transform
 - uid: 6490
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 41.5,23.5
+  - pos: 41.5,23.5
     parent: 853
     type: Transform
 - uid: 6491
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 40.5,23.5
+  - pos: 40.5,23.5
     parent: 853
     type: Transform
 - uid: 6492
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 39.5,23.5
+  - pos: 39.5,23.5
     parent: 853
     type: Transform
 - uid: 6493
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 38.5,23.5
+  - pos: 38.5,23.5
     parent: 853
     type: Transform
 - uid: 6494
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 37.5,23.5
+  - pos: 37.5,23.5
     parent: 853
     type: Transform
 - uid: 6495
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 36.5,23.5
+  - pos: 36.5,23.5
     parent: 853
     type: Transform
 - uid: 6496
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 36.5,23.5
+  - pos: 36.5,23.5
     parent: 853
     type: Transform
 - uid: 6497
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 36.5,22.5
+  - pos: 36.5,22.5
     parent: 853
     type: Transform
 - uid: 6498
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 36.5,21.5
+  - pos: 36.5,21.5
     parent: 853
     type: Transform
 - uid: 6499
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 40.5,21.5
+  - pos: 40.5,21.5
     parent: 853
     type: Transform
 - uid: 6500
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 40.5,22.5
+  - pos: 40.5,22.5
     parent: 853
     type: Transform
 - uid: 6501
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 40.5,20.5
+  - pos: 40.5,20.5
     parent: 853
     type: Transform
 - uid: 6502
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 36.5,20.5
+  - pos: 36.5,20.5
     parent: 853
     type: Transform
 - uid: 6503
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 44.5,20.5
+  - pos: 44.5,20.5
     parent: 853
     type: Transform
 - uid: 6504
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 44.5,22.5
+  - pos: 44.5,22.5
     parent: 853
     type: Transform
 - uid: 6505
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 44.5,21.5
+  - pos: 44.5,21.5
     parent: 853
     type: Transform
 - uid: 6506
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 35.5,20.5
+  - pos: 35.5,20.5
     parent: 853
     type: Transform
 - uid: 6507
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 35.5,21.5
+  - pos: 35.5,21.5
     parent: 853
     type: Transform
 - uid: 6508
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 35.5,22.5
+  - pos: 35.5,22.5
     parent: 853
     type: Transform
 - uid: 6509
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 35.5,23.5
+  - pos: 35.5,23.5
     parent: 853
     type: Transform
 - uid: 6510
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 35.5,24.5
+  - pos: 35.5,24.5
     parent: 853
     type: Transform
 - uid: 6511
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 34.5,24.5
+  - pos: 34.5,24.5
     parent: 853
     type: Transform
 - uid: 6512
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 33.5,24.5
+  - pos: 33.5,24.5
     parent: 853
     type: Transform
 - uid: 6513
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 32.5,24.5
+  - pos: 32.5,24.5
     parent: 853
     type: Transform
 - uid: 6514
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,24.5
+  - pos: 31.5,24.5
     parent: 853
     type: Transform
 - uid: 6515
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,23.5
+  - pos: 31.5,23.5
     parent: 853
     type: Transform
 - uid: 6516
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,22.5
+  - pos: 31.5,22.5
     parent: 853
     type: Transform
 - uid: 6517
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,21.5
+  - pos: 31.5,21.5
     parent: 853
     type: Transform
 - uid: 6518
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 31.5,20.5
+  - pos: 31.5,20.5
     parent: 853
     type: Transform
 - uid: 6519
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 30.5,20.5
+  - pos: 30.5,20.5
     parent: 853
     type: Transform
 - uid: 6520
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 30.5,19.5
+  - pos: 30.5,19.5
     parent: 853
     type: Transform
 - uid: 6521
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,19.5
+  - pos: 29.5,19.5
     parent: 853
     type: Transform
 - uid: 6522
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,18.5
+  - pos: 29.5,18.5
     parent: 853
     type: Transform
 - uid: 6523
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,17.5
+  - pos: 29.5,17.5
     parent: 853
     type: Transform
 - uid: 6524
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,16.5
+  - pos: 29.5,16.5
     parent: 853
     type: Transform
 - uid: 6525
   type: WallReinforced
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 29.5,15.5
+  - pos: 29.5,15.5
     parent: 853
     type: Transform
 - uid: 6526
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 32.5,20.5
+  - pos: 32.5,20.5
     parent: 853
     type: Transform
 - uid: 6527
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 33.5,20.5
+  - pos: 33.5,20.5
     parent: 853
     type: Transform
 - uid: 6528
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 34.5,20.5
+  - pos: 34.5,20.5
     parent: 853
     type: Transform
 - uid: 6529
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 37.5,20.5
+  - pos: 37.5,20.5
     parent: 853
     type: Transform
 - uid: 6530
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 38.5,20.5
+  - pos: 38.5,20.5
     parent: 853
     type: Transform
 - uid: 6531
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 39.5,20.5
+  - pos: 39.5,20.5
     parent: 853
     type: Transform
 - uid: 6532
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 41.5,20.5
+  - pos: 41.5,20.5
     parent: 853
     type: Transform
 - uid: 6533
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 42.5,20.5
+  - pos: 42.5,20.5
     parent: 853
     type: Transform
 - uid: 6534
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 43.5,20.5
+  - pos: 43.5,20.5
     parent: 853
     type: Transform
 - uid: 6535
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 45.5,20.5
+  - pos: 45.5,20.5
     parent: 853
     type: Transform
 - uid: 6536
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 46.5,20.5
+  - pos: 46.5,20.5
     parent: 853
     type: Transform
 - uid: 6537
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 47.5,20.5
+  - pos: 47.5,20.5
     parent: 853
     type: Transform
 - uid: 6538
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,19.5
+  - pos: 49.5,19.5
     parent: 853
     type: Transform
 - uid: 6539
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,18.5
+  - pos: 49.5,18.5
     parent: 853
     type: Transform
 - uid: 6540
   type: PlasmaWindow
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 49.5,17.5
+  - pos: 49.5,17.5
     parent: 853
     type: Transform
 - uid: 6541
