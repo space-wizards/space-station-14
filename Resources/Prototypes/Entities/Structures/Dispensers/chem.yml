@@ -6,10 +6,7 @@
   components:
   - type: Sprite
     sprite: Structures/dispensers.rsi
-    state: industrial_dispenser
-  - type: Icon
-    sprite: Structures/dispensers.rsi
-    state: industrial_dispenser
+    state: industrial-working
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
   - type: ApcPowerReceiver

@@ -19,7 +19,6 @@ namespace Content.Shared.Interaction
     public abstract class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;

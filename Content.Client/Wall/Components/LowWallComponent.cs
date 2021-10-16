@@ -206,7 +206,7 @@ namespace Content.Client.Wall.Components
             {
                 if (Owner.EntityManager.TryGetComponent(entity, out WindowComponent? window))
                 {
-                    window.UpdateSprite();
+                    //window.UpdateSprite();
                 }
             }
         }

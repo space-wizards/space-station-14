@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.Interaction.Events;
 using Content.Shared.MobState.Components;
 using Content.Shared.MobState.State;
 using Content.Shared.Movement;
@@ -14,11 +15,23 @@ namespace Content.Shared.MobState.EntitySystems
         {
             base.Initialize();
 
+            SubscribeLocalEvent<MobStateComponent, ChangeDirectionAttemptEvent>(OnChangeDirectionAttempt);
             SubscribeLocalEvent<MobStateComponent, StartPullAttemptEvent>(OnStartPullAttempt);
             SubscribeLocalEvent<MobStateComponent, DamageChangedEvent>(UpdateState);
             SubscribeLocalEvent<MobStateComponent, MovementAttemptEvent>(OnMoveAttempt);
             SubscribeLocalEvent<MobStateComponent, StandAttemptEvent>(OnStandAttempt);
             // Note that there's no check for Down attempts because if a mob's in crit or dead, they can be downed...
+        }
+
+        private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
+        {
+            switch (component.CurrentState)
+            {
+                case SharedDeadMobState:
+                case SharedCriticalMobState:
+                    args.Cancel();
+                    break;
+            }
         }
 
         private void OnStartPullAttempt(EntityUid uid, MobStateComponent component, StartPullAttemptEvent args)

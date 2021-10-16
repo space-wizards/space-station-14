@@ -9,7 +9,9 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Jittering;
 using Content.Shared.Popups;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
@@ -25,6 +27,7 @@ namespace Content.Server.Stunnable
     public class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
         public override void Initialize()
@@ -62,11 +65,8 @@ namespace Content.Server.Stunnable
             if (!EntityManager.TryGetComponent<PowerCellSlotComponent>(uid, out var slot) || slot.Cell == null || !slot.Cell.TryUseCharge(comp.EnergyPerUse))
                 return;
 
-            if (args.Entity.HasComponent<StunnableComponent>())
-            {
-                args.CanInteract = true;
-                StunEntity(args.Entity, comp);
-            }
+            args.CanInteract = true;
+            StunEntity(args.Entity, comp);
         }
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
@@ -119,26 +119,27 @@ namespace Content.Server.Stunnable
 
         private void StunEntity(IEntity entity, StunbatonComponent comp)
         {
-            if (!entity.TryGetComponent(out StunnableComponent? stunnable) || !comp.Activated) return;
+            if (!entity.TryGetComponent(out StatusEffectsComponent? status) || !comp.Activated) return;
 
             // TODO: Make slowdown inflicted customizable.
 
             SoundSystem.Play(Filter.Pvs(comp.Owner), comp.StunSound.GetSound(), comp.Owner, AudioHelpers.WithVariation(0.25f));
-            if (!stunnable.SlowedDown)
+            if (!EntityManager.HasComponent<SlowedDownComponent>(entity.Uid))
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceNoSlowdown))
-                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
             else
             {
                 if (_robustRandom.Prob(comp.ParalyzeChanceWithSlowdown))
-                    _stunSystem.Paralyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), stunnable);
+                    _stunSystem.TryParalyze(entity.Uid, TimeSpan.FromSeconds(comp.ParalyzeTime), status);
                 else
-                    _stunSystem.Slowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, stunnable);
+                    _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
 
+            _jitterSystem.DoJitter(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime));
 
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;
