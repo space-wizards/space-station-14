@@ -351,8 +351,11 @@ namespace Content.Client.Damage
                 if (_damageOverlaySprites != null)
                     foreach (var (group, sprite) in _damageOverlaySprites)
                     {
-                        int newLayer = spriteComponent.AddBlankLayer();
+                        int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath(sprite.Sprite), $"DamageOverlay_{group}_{_thresholds[1]}"));
                         spriteComponent.LayerMapSet($"DamageOverlay{group}", newLayer);
+                        if (sprite.Color != null)
+                            spriteComponent.LayerSetColor(newLayer, Color.FromHex(sprite.Color));
+                        spriteComponent.LayerSetVisible(newLayer, false);
                         _topMostLayerKey = $"DamageOverlay{group}";
                     }
             }
@@ -407,7 +410,7 @@ namespace Content.Client.Damage
                 }
             }
 
-            if (!component.TryGetData<DamageSpecifier>(DamageVisualizerKeys.DamageSpecifierDelta, out DamageSpecifier? delta)
+            if (!component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta)
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
@@ -415,12 +418,12 @@ namespace Content.Client.Damage
             {
                 if (spriteComponent[_topMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
                 {
-                    foreach (var (damageGroup, _) in _damageOverlaySprites)
+                    foreach (var (damageGroup, sprite) in _damageOverlaySprites)
                     {
                         Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
                         spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
                         spriteComponent.RemoveLayer(spriteLayer);
-                        spriteLayer = spriteComponent.AddBlankLayer();
+                        spriteLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath(sprite.Sprite), $"DamageOverlay_{damageGroup}_{_thresholds[1]}"), spriteLayer);
                         spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
                         // this is somewhat iffy since it constantly reallocates
                         _topMostLayerKey = $"DamageOverlay{damageGroup}";
@@ -428,7 +431,7 @@ namespace Content.Client.Damage
                 }
             }
 
-            foreach (var (damageGroup, _) in delta.GetDamagePerGroup())
+            foreach (var damageGroup in delta)
             {
                 if (!_overlay && damageGroup != _damageGroup)
                     continue;
@@ -460,61 +463,71 @@ namespace Content.Client.Damage
                 {
                     Logger.DebugS("DamageVisualizer", "Attempting to set target layers now.");
                     foreach (var layerMapKey in _targetLayerMapKeys)
-                        if (_overlay && _damageOverlaySprites != null)
-                        {
-                            if (_damageOverlaySprites.ContainsKey(damageGroup) && !_disabledLayers[layerMapKey])
-                            {
-                                string layerState = _layerMapKeyStates[layerMapKey];
-                                spriteComponent.LayerMapTryGet($"{layerMapKey}{damageGroup}", out int spriteLayer);
-
-                                if (threshold == 0 && spriteComponent[spriteLayer].Visible)
-                                {
-                                    spriteComponent.LayerSetVisible(spriteLayer, false);
-                                }
-                                else
-                                {
-                                    if (!spriteComponent[spriteLayer].Visible)
-                                    {
-                                        spriteComponent.LayerSetVisible(spriteLayer, true);
-                                    }
-                                    spriteComponent.LayerSetState(spriteLayer, $"{layerState}_{damageGroup}_{threshold}");
-                                }
-                            }
-                        }
-                        else
-                        {
-                            string layerState = _layerMapKeyStates[layerMapKey];
-                            spriteComponent.LayerMapTryGet(layerMapKey, out int spriteLayer);
-
-                            if (threshold == 0)
-                            {
-                                spriteComponent.LayerSetState(spriteLayer, layerState);
-                            }
-                            else
-                            {
-                                spriteComponent.LayerSetState(spriteLayer, $"{layerState}_{damageGroup}_{threshold}");
-                            }
-                        }
+                        UpdateTargetLayer(spriteComponent, layerMapKey, damageGroup, threshold);
                 }
                 else
                 {
                     Logger.DebugS("DamageVisualizer", "Attempting to set overlay now.");
-                    if (_damageOverlaySprites != null)
-                    {
-                        if (_damageOverlaySprites.ContainsKey(damageGroup))
-                        {
-                            spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+                    UpdateOverlay(spriteComponent, damageGroup, threshold);
+                }
+            }
+        }
 
-                            if (threshold == 0)
-                            {
-                                spriteComponent.LayerSetVisible(spriteLayer, false);
-                            }
-                            else
-                            {
-                                spriteComponent.LayerSetVisible(spriteLayer, true);
-                                spriteComponent.LayerSetState(spriteLayer, $"DamageOverlay_{damageGroup}_{threshold}");
-                            }
+        private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, string damageGroup, int threshold)
+        {
+            if (_overlay && _damageOverlaySprites != null)
+            {
+                if (_damageOverlaySprites.ContainsKey(damageGroup) && !_disabledLayers[layerMapKey])
+                {
+                    string layerState = _layerMapKeyStates[layerMapKey];
+                    spriteComponent.LayerMapTryGet($"{layerMapKey}{damageGroup}", out int spriteLayer);
+
+                    if (threshold == 0 && spriteComponent[spriteLayer].Visible)
+                    {
+                        spriteComponent.LayerSetVisible(spriteLayer, false);
+                    }
+                    else
+                    {
+                        if (!spriteComponent[spriteLayer].Visible)
+                        {
+                            spriteComponent.LayerSetVisible(spriteLayer, true);
                         }
+                        spriteComponent.LayerSetState(spriteLayer, $"{layerState}_{damageGroup}_{threshold}");
+                    }
+                }
+            }
+            else
+            {
+                string layerState = _layerMapKeyStates[layerMapKey];
+                spriteComponent.LayerMapTryGet(layerMapKey, out int spriteLayer);
+
+                if (threshold == 0)
+                {
+                    spriteComponent.LayerSetState(spriteLayer, layerState);
+                }
+                else
+                {
+                    spriteComponent.LayerSetState(spriteLayer, $"{layerState}_{damageGroup}_{threshold}");
+                }
+            }
+        }
+
+        private void UpdateOverlay(SpriteComponent spriteComponent, string damageGroup, int threshold)
+        {
+            if (_damageOverlaySprites != null)
+            {
+                if (_damageOverlaySprites.ContainsKey(damageGroup))
+                {
+                    spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+
+                    if (threshold == 0)
+                    {
+                        spriteComponent.LayerSetVisible(spriteLayer, false);
+                    }
+                    else
+                    {
+                        spriteComponent.LayerSetVisible(spriteLayer, true);
+                        spriteComponent.LayerSetState(spriteLayer, $"DamageOverlay_{damageGroup}_{threshold}");
                     }
                 }
             }
