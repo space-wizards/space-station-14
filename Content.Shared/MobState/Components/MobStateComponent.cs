@@ -368,11 +368,6 @@ namespace Content.Shared.MobState.Components
         {
             return CurrentState?.CanUnequip() ?? true;
         }
-
-        bool IActionBlocker.CanChangeDirection()
-        {
-            return CurrentState?.CanChangeDirection() ?? true;
-        }
     }
 
     [Serializable, NetSerializable]

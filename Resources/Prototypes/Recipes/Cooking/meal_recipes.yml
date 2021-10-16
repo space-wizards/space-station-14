@@ -46,8 +46,8 @@
 #  time: 20
 #  reagents:
 #    Flour: 15
-#    Salt: 5
-#    Pepper: 5
+#    TableSalt: 5
+#    Blackpepper: 5
 #  solids:
 #    FoodMeat: 5
 #    FoodCheeseSlice: 3
@@ -97,8 +97,8 @@
 #  time: 10
 #  reagents:
 #    Flour: 15
-#    Salt: 1
-#    Pepper: 1
+#    TableSalt: 1
+#    Blackpepper: 1
 
 - type: microwaveMealRecipe
   id: RecipeCreamCheeseBread
@@ -255,7 +255,7 @@
 #  time: 10
 #  reagents:
 #    Flour: 10
-#    Salt: 2
+#    TableSalt: 2
 #  solids:
 #    FoodGarlic: 1
 #    FoodCheeseSlice: 1
@@ -314,11 +314,11 @@
 #- type: microwaveMealRecipe
 #  id: RecipeMeatSteak
 #  name: meat steak recipe
-#  result: FoodMeatSteak
+#  result: FoodMeatCooked
 #  time: 10
 #  reagents:
-#    Salt: 1
-#    Pepper: 1
+#    TableSalt: 1
+#    Blackpepper: 1
 #  solids:
 #    FoodMeat: 1
 

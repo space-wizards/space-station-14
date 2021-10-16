@@ -83,10 +83,5 @@ namespace Content.Shared.MobState.State
         {
             return true;
         }
-
-        public virtual bool CanChangeDirection()
-        {
-            return true;
-        }
     }
 }
