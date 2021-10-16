@@ -50,10 +50,7 @@ namespace Content.Server.HandLabeler
                 return;
             }
 
-            if (!target.TryGetComponent<LabelComponent>(out LabelComponent? label))
-            {
-                label = target.AddComponent<LabelComponent>();
-            }
+            LabelComponent label = target.EnsureComponent<LabelComponent>();
 
             if (label.OriginalName != null)
                 target.Name = label.OriginalName;
