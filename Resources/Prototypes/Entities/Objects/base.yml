@@ -35,4 +35,3 @@
     noRot: false
   - type: Pullable
   - type: ExplosionLaunched
-  - type: Label

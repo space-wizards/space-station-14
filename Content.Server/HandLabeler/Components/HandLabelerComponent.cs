@@ -1,3 +1,6 @@
+using System;
+using Content.Server.Items;
+using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -16,5 +19,8 @@ namespace Content.Server.HandLabeler.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxLabelChars")]
         public int MaxLabelChars { get; set; } = 50;
+
+        [DataField("whitelist")]
+        public EntityWhitelist Whitelist = new();
     }
 }

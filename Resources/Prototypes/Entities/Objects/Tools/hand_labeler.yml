@@ -8,7 +8,7 @@
       sprite: Objects/Tools/hand_labeler.rsi
       state: hand_labeler
     - type: Item
-    - type: ItemCooldown
+      sprite: Objects/Tools/hand_labeler.rsi
     - type: UseDelay
       delay: 2.0
     - type: UserInterface
@@ -16,3 +16,8 @@
         - key: enum.HandLabelerUiKey.Key
           type: HandLabelerBoundUserInterface
     - type: HandLabeler
+      whitelist:
+        components:
+          - Item
+        tags:
+          - Structure

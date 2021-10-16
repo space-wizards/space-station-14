@@ -34,15 +34,15 @@ namespace Content.Server.HandLabeler
 
         private void AfterInteractOn(EntityUid uid, HandLabelerComponent handLabeler, AfterInteractEvent args)
         {
-            if (args.Target == null || !args.Target.TryGetComponent(out LabelComponent? label))
+            if (args.Target == null || !handLabeler.Whitelist.IsValid(args.Target))
                 return;
 
-            AddLabelTo(uid, handLabeler, label, out string? result);
+            AddLabelTo(uid, handLabeler, args.Target, out string? result);
             if (result != null)
                 handLabeler.Owner.PopupMessage(args.User, result);
         }
 
-        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, LabelComponent target, out string? result)
+        private void AddLabelTo(EntityUid uid, HandLabelerComponent? handLabeler, IEntity target, out string? result)
         {
             if (!Resolve(uid, ref handLabeler))
             {
@@ -50,20 +50,25 @@ namespace Content.Server.HandLabeler
                 return;
             }
 
-            if (target.OriginalName != null)
-                target.Owner.Name = target.OriginalName;
-            target.OriginalName = null;
+            if (!target.TryGetComponent<LabelComponent>(out LabelComponent? label))
+            {
+                label = target.AddComponent<LabelComponent>();
+            }
+
+            if (label.OriginalName != null)
+                target.Name = label.OriginalName;
+            label.OriginalName = null;
 
             if (handLabeler.AssignedLabel == string.Empty)
             {
-                target.CurrentLabel = null;
+                label.CurrentLabel = null;
                 result = Loc.GetString("hand-labeler-successfully-removed");
                 return;
             }
 
-            target.OriginalName = target.Owner.Name;
-            target.Owner.Name += $" ({handLabeler.AssignedLabel})";
-            target.CurrentLabel = handLabeler.AssignedLabel;
+            label.OriginalName = target.Name;
+            target.Name += $" ({handLabeler.AssignedLabel})";
+            label.CurrentLabel = handLabeler.AssignedLabel;
             result = Loc.GetString("hand-labeler-successfully-applied");
         }
 
