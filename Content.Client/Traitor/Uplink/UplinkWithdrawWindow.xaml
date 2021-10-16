@@ -1,0 +1,28 @@
+<SS14Window xmlns="https://spacestation14.io"
+            Title="Withdraw TC"
+            MinSize="256 128">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True">
+            <Slider Name="WithdrawSlider"
+                    HorizontalExpand="True"/>
+            <Label Name="WithdrawAmountLabel"
+                   HorizontalExpand="True"
+                   Margin="8 0"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal"
+                      VerticalExpand="True"
+                      VerticalAlignment="Bottom">
+            <Button Name="WithdrawButton"
+                    Text="Withdraw"
+                    HorizontalAlignment="Left"
+                    HorizontalExpand="True"/>
+            <Button Name="CancelButton"
+                    Text="Cancel"
+                    HorizontalAlignment="Right"
+                    HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

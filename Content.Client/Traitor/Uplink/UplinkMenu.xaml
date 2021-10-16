@@ -11,6 +11,10 @@
                 <RichTextLabel Name="BalanceInfoProtected"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
+                <Button Name="WithdrawButtonProtected"
+                        Text="Withdraw"
+                        HorizontalAlignment="Right"
+                        MinWidth="64"/>
             </BoxContainer>
             <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>

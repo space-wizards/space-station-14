@@ -19,8 +19,11 @@ namespace Content.Client.Traitor.Uplink
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
+        private UplinkAccountData? _uplinkAccount;
+
         private UplinkMenu? _menu;
         private UplinkMenuPopup? _failPopup;
+        private UplinkWithdrawWindow? _withdrawPopup;
 
         public UplinkBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
@@ -54,6 +57,25 @@ namespace Content.Client.Traitor.Uplink
                 SendMessage(new UplinkRequestUpdateInterfaceMessage());
 
             };
+
+            _menu.WithdrawButton.OnButtonDown += args =>
+            {
+                if (_withdrawPopup != null || _uplinkAccount == null)
+                    return;
+
+                _withdrawPopup = new UplinkWithdrawWindow(_uplinkAccount.DataBalance);
+                _withdrawPopup.OpenCentered();
+
+                _menu.OnClose += () =>
+                {
+                    _withdrawPopup?.Dispose();
+                    _withdrawPopup = null;
+                };
+                _withdrawPopup.OnClose += () =>
+                {
+                    _withdrawPopup = null;
+                };
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -69,7 +91,9 @@ namespace Content.Client.Traitor.Uplink
             {
                 case UplinkUpdateState msg:
                 {
+                    _uplinkAccount = msg.Account;
                     _menu.CurrentLoggedInAccount = msg.Account;
+
                     var balance = msg.Account.DataBalance;
                     string weightedColor = balance switch
                     {
@@ -89,6 +113,8 @@ namespace Content.Client.Traitor.Uplink
                     {
                         _menu.AddListingGui(item);
                     }
+
+                    _menu.WithdrawButton.Disabled = msg.Account.DataBalance <= 0;
 
                     break;
                 }
