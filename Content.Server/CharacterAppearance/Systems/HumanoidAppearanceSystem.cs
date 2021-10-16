@@ -25,7 +25,6 @@ namespace Content.Server.CharacterAppearance.Systems
                     {
                         sprite!.Color = component.Appearance.SkinColor;
                     }
-
                 }
             }
         }
