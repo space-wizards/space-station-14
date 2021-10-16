@@ -21,8 +21,8 @@ namespace Content.Client.CharacterAppearance.Systems
             base.Initialize();
 
             SubscribeLocalEvent<HumanoidAppearanceComponent, ChangedHumanoidAppearanceEvent>(UpdateLooks);
-            SubscribeNetworkEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
-            SubscribeNetworkEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
+            SubscribeLocalEvent<HumanoidAppearanceBodyPartAddedEvent>(BodyPartAdded);
+            SubscribeLocalEvent<HumanoidAppearanceBodyPartRemovedEvent>(BodyPartRemoved);
         }
 
         private void UpdateLooks(EntityUid uid, HumanoidAppearanceComponent component, ChangedHumanoidAppearanceEvent args)

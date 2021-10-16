@@ -59,12 +59,12 @@ namespace Content.Shared.CharacterAppearance.Systems
         // Scaffolding until Body is moved to ECS.
         public void BodyPartAdded(EntityUid uid, BodyPartAddedEventArgs args)
         {
-            RaiseNetworkEvent(new HumanoidAppearanceBodyPartAddedEvent(uid, args));
+            RaiseLocalEvent(new HumanoidAppearanceBodyPartAddedEvent(uid, args));
         }
 
         public void BodyPartRemoved(EntityUid uid, BodyPartRemovedEventArgs args)
         {
-            RaiseNetworkEvent(new HumanoidAppearanceBodyPartRemovedEvent(uid, args));
+            RaiseLocalEvent(new HumanoidAppearanceBodyPartRemovedEvent(uid, args));
         }
 
         // Scaffolding until Body is moved to ECS.
