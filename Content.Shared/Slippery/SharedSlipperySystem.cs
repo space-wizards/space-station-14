@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.EffectBlocker;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -17,6 +18,7 @@ namespace Content.Shared.Slippery
     public abstract class SharedSlipperySystem : EntitySystem
     {
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         private List<SlipperyComponent> _slipped = new();
 
@@ -30,7 +32,7 @@ namespace Content.Shared.Slippery
         {
             var otherUid = args.OtherFixture.Body.Owner.Uid;
 
-            if (!CanSlip(component, otherUid, out _)) return;
+            if (!CanSlip(component, otherUid)) return;
 
             if (!_slipped.Contains(component))
                 _slipped.Add(component);
@@ -49,14 +51,13 @@ namespace Content.Shared.Slippery
             }
         }
 
-        public bool CanSlip(SlipperyComponent component, EntityUid uid, [NotNullWhen(true)] out StunnableComponent? stunnableComponent)
+        public bool CanSlip(SlipperyComponent component, EntityUid uid)
         {
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !EntityManager.TryGetComponent<StunnableComponent>(uid, out stunnableComponent))
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
             {
-                stunnableComponent = null;
                 return false;
             }
 
@@ -65,9 +66,9 @@ namespace Content.Shared.Slippery
 
         private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!CanSlip(component, otherBody.Owner.Uid, out var stun)) return false;
+            if (!CanSlip(component, otherBody.Owner.Uid)) return false;
 
-            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed || stun.KnockedDown)
+            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
                 return false;
             }
@@ -86,7 +87,7 @@ namespace Content.Shared.Slippery
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.Paralyze(stun.Owner.Uid, TimeSpan.FromSeconds(5), stun);
+            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
             component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 

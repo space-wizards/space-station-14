@@ -272,15 +272,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanChangeDirection())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -292,15 +283,6 @@ namespace Content.Shared.ActionBlocker
         public bool CanShiver(IEntity entity)
         {
             var ev = new ShiverAttemptEvent(entity);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanShiver())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
@@ -315,15 +297,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new SweatAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanSweat())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }

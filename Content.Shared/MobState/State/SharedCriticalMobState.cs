@@ -33,7 +33,7 @@ namespace Content.Shared.MobState.State
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<StandingStateSystem>().Stand(entity);
+            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
         }
 
         public override bool CanInteract()
@@ -82,11 +82,6 @@ namespace Content.Shared.MobState.State
         }
 
         public override bool CanUnequip()
-        {
-            return false;
-        }
-
-        public override bool CanChangeDirection()
         {
             return false;
         }

@@ -30,7 +30,7 @@ namespace Content.Server.GameTicking.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            EntitySystem.Get<GameTicker>().EndRound();
+            EntitySystem.Get<GameTicker>().RestartRound();
         }
     }
 }
