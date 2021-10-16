@@ -2518,3 +2518,9 @@ Entries:
       set a bit east of library.', type: Add}
   id: 449
   time: '2021-10-16T20:02:40.0000000+00:00'
+- author: Watermelon914
+  changes:
+  - {message: Adds hand labelers which allow you to append and remove labels from
+      structures and objects., type: Add}
+  id: 450
+  time: '2021-10-16T20:34:05.0000000+00:00'
