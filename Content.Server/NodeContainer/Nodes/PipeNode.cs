@@ -103,6 +103,7 @@ namespace Content.Server.NodeContainer.Nodes
         public override void OnContainerStartup()
         {
             base.OnContainerStartup();
+            //HACK: THIS LINE RIGHT HERE IS A FILTHY HACK AND I HATE IT --moony
             PipeDirection = PipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
             OnConnectedDirectionsNeedsUpdating();
         }
