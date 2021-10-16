@@ -2462,3 +2462,38 @@ Entries:
   - {message: Doors now shut properly on a rotated shuttle., type: Fix}
   id: 440
   time: '2021-10-15T03:04:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
+  - {message: Removes most of the cev-eris sprites, type: Remove}
+  - {message: Removed low walls, type: Remove}
+  - {message: Removed shelves, type: Remove}
+  id: 441
+  time: '2021-10-15T09:58:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
+  id: 442
+  time: '2021-10-15T10:21:58.640854+00:00'
+- author: Macoron
+  changes:
+  - {message: Uplinks UI now have description of items., type: Add}
+  - {message: Admins can spawn ready to use uplinks., type: Add}
+  id: 443
+  time: '2021-10-15T10:49:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Black gloves and the captain's gloves now protect you against burn damage
+      from replacing lightbulbs., type: Tweak}
+  id: 444
+  time: '2021-10-15T11:07:27.972020+00:00'
+- author: Zumorica
+  changes:
+  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
+  id: 445
+  time: '2021-10-15T12:46:50.053991+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
+  id: 446
+  time: '2021-10-15T22:21:14.743072+00:00'

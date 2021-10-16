@@ -15,9 +15,6 @@ namespace Content.Shared.Jittering
         public override string Name => "Jittering";
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public TimeSpan EndTime { get; set; }
-
-        [ViewVariables(VVAccess.ReadWrite)]
         public float Amplitude { get; set; }
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,13 +27,11 @@ namespace Content.Shared.Jittering
     [Serializable, NetSerializable]
     public class JitteringComponentState : ComponentState
     {
-        public TimeSpan EndTime { get; }
         public float Amplitude { get; }
         public float Frequency { get; }
 
-        public JitteringComponentState(TimeSpan endTime, float amplitude, float frequency)
+        public JitteringComponentState(float amplitude, float frequency)
         {
-            EndTime = endTime;
             Amplitude = amplitude;
             Frequency = frequency;
         }

@@ -11,6 +11,13 @@
       "name": "base"
     },
     {
+      "name": "empty"
+    },
+    {
+      "name": "smooth",
+      "directions": 4
+    },
+    {
       "name": "book-0"
     },
     {
