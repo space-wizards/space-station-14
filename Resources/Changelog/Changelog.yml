@@ -2503,3 +2503,9 @@ Entries:
   - {message: Pills are now edible again., type: Fix}
   id: 447
   time: '2021-10-16T12:56:21.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
+      in on the station chatter., type: Add}
+  id: 448
+  time: '2021-10-16T19:04:35.0000000+00:00'
