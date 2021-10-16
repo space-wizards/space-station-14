@@ -1,4 +1,6 @@
 using System;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.MachineLinking.Events;
@@ -24,8 +26,10 @@ namespace Content.Server.Light.EntitySystems
         {
             base.Initialize();
             SubscribeLocalEvent<PoweredLightComponent, GhostBooEvent>(OnGhostBoo);
-            SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<PoweredLightComponent, DamageChangedEvent>(HandleLightDamaged);
+
+            SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
+            SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
 
             SubscribeLocalEvent<LitOnPoweredComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<LitOnPoweredComponent, PowerNetBatterySupplyEvent>(OnPowerSupply);
@@ -87,6 +91,21 @@ namespace Content.Server.Light.EntitySystems
                 case "state":
                     component.ToggleLight();
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Turns the light on or of when receiving a <see cref="DeviceNetworkConstants.CmdSetState"/> command.
+        /// The light is turned on or of according to the <see cref="DeviceNetworkConstants.StateEnabled"/> value
+         /// </summary>
+        private void OnPacketReceived(EntityUid uid, PoweredLightComponent component, PacketSentEvent args)
+        {
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
+            if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
+
+            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            {
+                light.Enabled = enabled;
             }
         }
 

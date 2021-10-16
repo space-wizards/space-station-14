@@ -286,7 +286,9 @@ namespace Content.Client.Entry
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
             "ExtensionCableReceiver",
-            "ExtensionCableProvider"
+            "ExtensionCableProvider",
+            "ApcNetworkConnection",
+            "ApcNetSwitch"
         };
     }
 }

@@ -24,14 +24,14 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ExtensionCableReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
         }
 
-        private void SendProviderConnected(EntityUid receiverUid)
+        private void SendProviderConnected(EntityUid receiverUid, ExtensionCableProviderComponent provider)
         {
-            RaiseLocalEvent(receiverUid, new ProviderConnectedEvent(), broadcast: false);
+            RaiseLocalEvent(receiverUid, new ProviderConnectedEvent(provider), broadcast: false);
         }
 
-        private void SendProviderDisconnected(EntityUid receiverUid)
+        private void SendProviderDisconnected(EntityUid receiverUid, ExtensionCableProviderComponent? provider)
         {
-            RaiseLocalEvent(receiverUid, new ProviderDisconnectedEvent(), broadcast: false);
+            RaiseLocalEvent(receiverUid, new ProviderDisconnectedEvent(provider), broadcast: false);
         }
 
         private void SendReceiverConnected(EntityUid providerUid, ExtensionCableReceiverComponent receiver)
@@ -62,7 +62,7 @@ namespace Content.Server.Power.EntitySystems
                 receiver.Provider?.LinkedReceivers.Remove(receiver);
                 receiver.Provider = provider;
                 provider.LinkedReceivers.Add(receiver);
-                SendProviderConnected(receiver.Owner.Uid);
+                SendProviderConnected(receiver.Owner.Uid, provider);
                 SendReceiverConnected(uid, receiver);
             }
         }
@@ -80,7 +80,7 @@ namespace Content.Server.Power.EntitySystems
             foreach (var receiver in receivers)
             {
                 receiver.Provider = null;
-                SendProviderDisconnected(receiver.Owner.Uid);
+                SendProviderDisconnected(receiver.Owner.Uid, provider);
                 SendReceiverDisconnected(provider.Owner.Uid, receiver);
             }
 
@@ -121,7 +121,7 @@ namespace Content.Server.Power.EntitySystems
 
             var provider = receiver.Provider;
             receiver.Provider = null;
-            SendProviderDisconnected(uid);
+            SendProviderDisconnected(uid, provider);
 
             if (provider != null)
                 SendReceiverDisconnected(provider.Owner.Uid, receiver);
@@ -148,7 +148,7 @@ namespace Content.Server.Power.EntitySystems
             if (receiver.Provider == null) return;
 
             receiver.Provider.LinkedReceivers.Remove(receiver);
-            SendProviderDisconnected(uid);
+            SendProviderDisconnected(uid, receiver.Provider);
             SendReceiverDisconnected(receiver.Provider.Owner.Uid, receiver);
         }
 
@@ -165,7 +165,7 @@ namespace Content.Server.Power.EntitySystems
             else
             {
                 receiver.Connectable = false;
-                SendProviderDisconnected(uid);
+                SendProviderDisconnected(uid, receiver.Provider);
 
                 if (receiver.Provider != null)
                     SendReceiverDisconnected(receiver.Provider.Owner.Uid, receiver);
@@ -179,7 +179,7 @@ namespace Content.Server.Power.EntitySystems
             if (!TryFindAvailableProvider(receiver.Owner, receiver.ReceptionRange, out var provider)) return;
 
             receiver.Provider = provider;
-            SendProviderConnected(receiver.Owner.Uid);
+            SendProviderConnected(receiver.Owner.Uid, provider);
             SendReceiverConnected(provider.Owner.Uid, receiver);
         }
 
@@ -215,14 +215,30 @@ namespace Content.Server.Power.EntitySystems
         /// </summary>
         public class ProviderConnectedEvent : EntityEventArgs
         {
+            /// <summary>
+            /// The <see cref="ExtensionCableProviderComponent"/> that connected.
+            /// </summary>
+            public ExtensionCableProviderComponent Provider;
 
+            public ProviderConnectedEvent(ExtensionCableProviderComponent provider)
+            {
+                Provider = provider;
+            }
         }
         /// <summary>
         /// Sent when a <see cref="ExtensionCableProviderComponent"/> disconnects from a <see cref="ExtensionCableReceiverComponent"/>
         /// </summary>
         public class ProviderDisconnectedEvent : EntityEventArgs
         {
+            /// <summary>
+            /// The <see cref="ExtensionCableProviderComponent"/> that disconnected.
+            /// </summary>
+            public ExtensionCableProviderComponent? Provider;
 
+            public ProviderDisconnectedEvent(ExtensionCableProviderComponent? provider)
+            {
+                Provider = provider;
+            }
         }
         /// <summary>
         /// Sent when a <see cref="ExtensionCableReceiverComponent"/> connects to a <see cref="ExtensionCableProviderComponent"/>

@@ -75,6 +75,9 @@
         Heat: 20
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: 3
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
@@ -161,6 +164,9 @@
         Heat: 20
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: 3
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer

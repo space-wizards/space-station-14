@@ -203,7 +203,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void BroadcastPacket(NetworkPacket packet)
         {
-            var receivers = ConnectionsForFrequency(packet.Frequency, packet.NetId);
+            var receivers = ConnectionsForFrequency(packet.NetId, packet.Frequency);
             SendToConnections(receivers, packet);
         }
 
