@@ -288,7 +288,10 @@ namespace Content.Client.Entry
             "ExtensionCableReceiver",
             "ExtensionCableProvider",
             "ApcNetworkConnection",
-            "ApcNetSwitch"
+            "ApcNetSwitch",
+            "HandLabeler",
+            "Label",
+            "GhostRadio"
         };
     }
 }

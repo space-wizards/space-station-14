@@ -2497,3 +2497,30 @@ Entries:
   - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
   id: 446
   time: '2021-10-15T22:21:14.743072+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: ChemMaster UI has been repaired., type: Fix}
+  - {message: Pills are now edible again., type: Fix}
+  id: 447
+  time: '2021-10-16T12:56:21.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
+      in on the station chatter., type: Add}
+  id: 448
+  time: '2021-10-16T19:04:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Saltern''s security substation''s protective APC is now inside the
+      security substation chamber, which has been made a little bigger accordingly.',
+    type: Tweak}
+  - {message: 'Saltern now has solars - north set in north-west maintenance, south
+      set a bit east of library.', type: Add}
+  id: 449
+  time: '2021-10-16T20:02:40.0000000+00:00'
+- author: Watermelon914
+  changes:
+  - {message: Adds hand labelers which allow you to append and remove labels from
+      structures and objects., type: Add}
+  id: 450
+  time: '2021-10-16T20:34:05.0000000+00:00'
