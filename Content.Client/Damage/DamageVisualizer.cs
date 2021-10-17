@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -564,7 +562,6 @@ namespace Content.Client.Damage
 
         private void ReorderOverlaySprite(SpriteComponent spriteComponent, DamageVisualizerSprite sprite, string key, string statePrefix, int threshold)
         {
-            Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
             spriteComponent.LayerMapTryGet(key, out int spriteLayer);
             bool visibility = spriteComponent[spriteLayer].Visible;
             spriteComponent.RemoveLayer(spriteLayer);
@@ -607,13 +604,11 @@ namespace Content.Client.Damage
 
             if (_targetLayers != null)
             {
-                Logger.DebugS("DamageVisualizer", "Attempting to set target layers now.");
                 foreach (var layerMapKey in _targetLayerMapKeys)
                     UpdateTargetLayer(spriteComponent, layerMapKey, threshold);
             }
             else
             {
-                Logger.DebugS("DamageVisualizer", "Attempting to set overlay now.");
                 UpdateOverlay(spriteComponent, threshold);
             }
         }
@@ -653,13 +648,11 @@ namespace Content.Client.Damage
 
                 if (_targetLayers != null)
                 {
-                    Logger.DebugS("DamageVisualizer", "Attempting to set target layers now.");
                     foreach (var layerMapKey in _targetLayerMapKeys)
                         UpdateTargetLayer(spriteComponent, layerMapKey, damageGroup, threshold);
                 }
                 else
                 {
-                    Logger.DebugS("DamageVisualizer", "Attempting to set overlay now.");
                     UpdateOverlay(spriteComponent, damageGroup, threshold);
                 }
             }
