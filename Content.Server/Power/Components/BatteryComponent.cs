@@ -32,7 +32,7 @@ namespace Content.Server.Power.Components
         /// <summary>
         /// True if the battery is fully charged.
         /// </summary>
-        [ViewVariables] public bool IsFullyCharged => MathHelper.CloseTo(CurrentCharge, MaxCharge);
+        [ViewVariables] public bool IsFullyCharged => MathHelper.CloseToPercent(CurrentCharge, MaxCharge);
 
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 

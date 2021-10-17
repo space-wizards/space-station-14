@@ -38,7 +38,8 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
   - type: Damageable
-    resistances: glassResistances
+    damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,6 +61,9 @@
     openPanelVisible: true
   - type: Door
     weldable: false
+    crushDamage:
+      types:
+        Blunt: 10
     openSound:
       path: /Audio/Machines/windoor_open.ogg
     closeSound:
@@ -81,6 +85,11 @@
         animatedPanel: false
         openUnlitVisible: true
       - type: WiresVisualizer
+  - type: Airtight
+    fixVacuum: true
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+      - South
   - type: Construction
     graph: windoor
     node: windoor
@@ -90,11 +99,6 @@
   parent: BaseWindoor
   abstract: true
   components:
-  - type: Airtight
-    fixVacuum: true
-    noAirWhenFullyAirBlocked: false
-    airBlockedDirection:
-    - South
   - type: Sprite
     netsync: false
     drawdepth: FloorObjects

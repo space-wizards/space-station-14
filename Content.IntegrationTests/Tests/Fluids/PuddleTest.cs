@@ -120,6 +120,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             float sEvaporateTime = default;
             PuddleComponent sPuddle = null;
+            Solution solution = null;
             ReagentUnit sPuddleStartingVolume = default;
 
             // Spawn a puddle

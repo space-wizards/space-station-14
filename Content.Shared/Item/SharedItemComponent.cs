@@ -109,7 +109,7 @@ namespace Content.Shared.Item
         /// <summary>
         ///     If a player can pick up this item.
         /// </summary>
-        public bool CanPickup(IEntity user)
+        public bool CanPickup(IEntity user, bool popup = true)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
@@ -120,7 +120,7 @@ namespace Content.Shared.Item
             if (!Owner.TryGetComponent(out IPhysBody? physics) || physics.BodyType == BodyType.Static)
                 return false;
 
-            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: true);
+            return user.InRangeUnobstructed(Owner, ignoreInsideBlocker: true, popup: popup);
         }
 
         void IEquipped.Equipped(EquippedEventArgs eventArgs)

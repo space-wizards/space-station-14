@@ -34,8 +34,8 @@ namespace Content.Shared.Disposal
             var otherBody = args.BodyB.Owner.Uid;
 
             // Items dropped shouldn't collide but items thrown should
-            if (ComponentManager.HasComponent<SharedItemComponent>(otherBody) &&
-                !ComponentManager.HasComponent<ThrownItemComponent>(otherBody))
+            if (EntityManager.HasComponent<SharedItemComponent>(otherBody) &&
+                !EntityManager.HasComponent<ThrownItemComponent>(otherBody))
             {
                 args.Cancel();
                 return;

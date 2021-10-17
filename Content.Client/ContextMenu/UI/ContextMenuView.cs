@@ -1,4 +1,3 @@
-﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -73,11 +72,11 @@ namespace Content.Client.ContextMenu.UI
 
             var entitySpriteStates = GroupEntities(entities);
             var orderedStates = entitySpriteStates.ToList();
-            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype!.Name, y.First().Prototype!.Name));
+            orderedStates.Sort((x, y) => string.CompareOrdinal(x.First().Prototype?.Name, y.First().Prototype?.Name));
             AddToUI(orderedStates);
 
             _userInterfaceManager.ModalRoot.AddChild(rootContextMenu);
-            var size = rootContextMenu.List.CombinedMinimumSize;
+            var size = rootContextMenu.List.DesiredSize;
             var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, size);
             rootContextMenu.Open(box);
         }
@@ -92,7 +91,7 @@ namespace Content.Client.ContextMenu.UI
             AddToUI(orderedStates, stack);
 
             _userInterfaceManager.ModalRoot.AddChild(childContextMenu);
-            var size = childContextMenu.List.CombinedMinimumSize;
+            var size = childContextMenu.List.DesiredSize;
             childContextMenu.Open(UIBox2.FromDimensions(position + (stack.Width, 0), size));
         }
 

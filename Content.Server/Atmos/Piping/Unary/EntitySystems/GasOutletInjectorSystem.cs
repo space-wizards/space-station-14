@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!injector.Enabled)
                 return;
 
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(injector.InletName, out PipeNode? inlet))

@@ -5,7 +5,6 @@ using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -104,6 +103,8 @@ namespace Content.Server.NodeContainer.Nodes
         public override void OnContainerStartup()
         {
             base.OnContainerStartup();
+            //HACK: THIS LINE RIGHT HERE IS A FILTHY HACK AND I HATE IT --moony
+            PipeDirection = PipeDirection.RotatePipeDirection(Owner.Transform.LocalRotation);
             OnConnectedDirectionsNeedsUpdating();
         }
 
@@ -173,7 +174,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetInDir(position, pipeDir.ToDirection()))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)
@@ -196,7 +197,7 @@ namespace Content.Server.NodeContainer.Nodes
             var position = Owner.Transform.Coordinates;
             foreach (var entity in grid.GetLocal(position))
             {
-                if (!Owner.EntityManager.ComponentManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
+                if (!Owner.EntityManager.TryGetComponent<NodeContainerComponent>(entity, out var container))
                     continue;
 
                 foreach (var node in container.Nodes.Values)

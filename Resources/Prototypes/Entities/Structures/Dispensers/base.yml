@@ -4,6 +4,8 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Transform
+    anchored: true
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
@@ -29,7 +31,8 @@
   - type: Anchorable
   - type: Pullable
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

@@ -1,7 +1,7 @@
 - type: entity
   name: Civilian
-  parent: BaseHumanMob_Content
-  id: HumanMob_Civilian
+  parent: MobHumanBase
+  id: MobCivilian
   description: A miserable pile of secrets.
   components:
   - type: UtilityAI
@@ -17,8 +17,8 @@
 
 - type: entity
   name: Spirate
-  parent: BaseHumanMob_Content
-  id: HumanMob_Spirate
+  parent: MobHumanBase
+  id: MobSpirate
   description: Yarr!
   components:
   - type: UtilityAI

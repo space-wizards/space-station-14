@@ -55,7 +55,7 @@ namespace Content.Shared.Audio
         public static string GetRandomFileFromSoundCollection(string name)
         {
             var soundCollection = IoCManager.Resolve<IPrototypeManager>().Index<SoundCollectionPrototype>(name);
-            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles);
+            return IoCManager.Resolve<IRobustRandom>().Pick(soundCollection.PickFiles).ToString();
         }
     }
 }

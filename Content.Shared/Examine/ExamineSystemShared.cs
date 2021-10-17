@@ -33,6 +33,9 @@ namespace Content.Shared.Examine
 
         private static bool IsInDetailsRange(IEntity examiner, IEntity entity)
         {
+            if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
+                return true;
+
             return examiner.InRangeUnobstructed(entity, ExamineDetailsRange, ignoreInsideBlocker: true) &&
                    examiner.IsInSameOrNoContainer(entity);
         }
@@ -189,13 +192,15 @@ namespace Content.Shared.Examine
             message.PushColor(Color.DarkGray);
 
             // Raise the event and let things that subscribe to it change the message...
-            RaiseLocalEvent(entity.Uid, new ExaminedEvent(message, entity, examiner, IsInDetailsRange(examiner, entity)));
+            var isInDetailsRange = IsInDetailsRange(examiner, entity);
+            var examinedEvent = new ExaminedEvent(message, entity, examiner, isInDetailsRange, doNewline);
+            RaiseLocalEvent(entity.Uid, examinedEvent);
 
             //Add component statuses from components that report one
             foreach (var examineComponent in entity.GetAllComponents<IExamine>())
             {
                 var subMessage = new FormattedMessage();
-                examineComponent.Examine(subMessage, IsInDetailsRange(examiner, entity));
+                examineComponent.Examine(subMessage, isInDetailsRange);
                 if (subMessage.Tags.Count == 0)
                     continue;
 
@@ -214,15 +219,17 @@ namespace Content.Shared.Examine
 
     /// <summary>
     ///     Raised when an entity is examined.
-    ///     You have to manually add a newline at the start, and perform cleanup (popping state) at the end.
     /// </summary>
     public class ExaminedEvent : EntityEventArgs
     {
         /// <summary>
         ///     The message that will be displayed as the examine text.
-        ///     Use the methods it exposes to change it, and don't forget to add a newline at the start!
-        ///     Input/Output parameter.
+        /// For most use cases, you probably want to use <see cref="PushMarkup"/> and similar instead to modify this,
+        /// since it handles newlines and such correctly.
         /// </summary>
+        /// <seealso cref="PushMessage"/>
+        /// <seealso cref="PushMarkup"/>
+        /// <seealso cref="PushText"/>
         public FormattedMessage Message { get; }
 
         /// <summary>
@@ -240,12 +247,54 @@ namespace Content.Shared.Examine
         /// </summary>
         public bool IsInDetailsRange { get; }
 
-        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange)
+        private bool _doNewLine;
+
+        public ExaminedEvent(FormattedMessage message, IEntity examined, IEntity examiner, bool isInDetailsRange, bool doNewLine)
         {
             Message = message;
             Examined = examined;
             Examiner = examiner;
             IsInDetailsRange = isInDetailsRange;
+            _doNewLine = doNewLine;
+        }
+
+        /// <summary>
+        /// Push another message into this examine result, on its own line.
+        /// </summary>
+        /// <seealso cref="PushMarkup"/>
+        /// <seealso cref="PushText"/>
+        public void PushMessage(FormattedMessage message)
+        {
+            if (message.Tags.Count == 0)
+                return;
+
+            if (_doNewLine)
+                Message.AddText("\n");
+
+            Message.AddMessage(message);
+            _doNewLine = true;
+        }
+
+        /// <summary>
+        /// Push another message parsed from markup into this examine result, on its own line.
+        /// </summary>
+        /// <seealso cref="PushText"/>
+        /// <seealso cref="PushMessage"/>
+        public void PushMarkup(string markup)
+        {
+            PushMessage(FormattedMessage.FromMarkup(markup));
+        }
+
+        /// <summary>
+        /// Push another message containing raw text into this examine result, on its own line.
+        /// </summary>
+        /// <seealso cref="PushMarkup"/>
+        /// <seealso cref="PushMessage"/>
+        public void PushText(string text)
+        {
+            var msg = new FormattedMessage();
+            msg.AddText(text);
+            PushMessage(msg);
         }
     }
 }

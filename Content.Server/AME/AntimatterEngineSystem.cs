@@ -15,7 +15,7 @@ namespace Content.Server.AME
             _accumulatedFrameTime += frameTime;
             if (_accumulatedFrameTime >= 10)
             {
-                foreach (var comp in ComponentManager.EntityQuery<AMEControllerComponent>(true))
+                foreach (var comp in EntityManager.EntityQuery<AMEControllerComponent>(true))
                 {
                     comp.OnUpdate(frameTime);
                 }

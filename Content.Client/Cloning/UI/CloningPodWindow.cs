@@ -116,7 +116,7 @@ namespace Content.Client.Cloning.UI
             _cloningProgressBar.MaxValue = state.Maximum;
             UpdateProgress();
             _mindState.Text = Loc.GetString(state.MindPresent ? "cloning-pod-mind-present-text" : "cloning-pod-no-activity-text");
-            _mindState.FontColorOverride = state.MindPresent ? Color.Green : Color.Red;
+            _mindState.FontColorOverride = state.MindPresent ? Color.LimeGreen : Color.Red;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

@@ -24,18 +24,20 @@
     state: on
   - type: PointLight
     radius: 10
-    energy: 1.4
-    softness: 1.1
+    energy: 0.8
+    softness: 1
     offset: "0, -0.5"
   - type: SignalReceiver
     inputs:
-      - name: toggle
+      - name: state
+        type: bool
   - type: UserInterface
     interfaces:
       - key: enum.SignalReceiverUiKey.Key
         type: SignalPortSelectorBoundUserInterface
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -68,6 +70,9 @@
     enabled: false
   - type: PoweredLight
     bulb: Tube
+    damage:
+      types:
+        Heat: 20
   - type: ApcPowerReceiver
   - type: Appearance
     visuals:
@@ -85,6 +90,9 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: False
+    damage:
+      types:
+        Heat: 20
 
 - type: entity
   name: small light
@@ -107,6 +115,7 @@
       softness: 1.1
       enabled: true
     - type: Damageable
+      damageContainer: Inorganic
     - type: Destructible
       thresholds:
       - trigger:
@@ -146,6 +155,9 @@
       layer: [ Passable ]
   - type: PoweredLight
     bulb: Bulb
+    damage:
+      types:
+        Heat: 20
   - type: ApcPowerReceiver
   - type: Appearance
     visuals:
@@ -160,3 +172,6 @@
     state: empty
   - type: PoweredLight
     hasLampOnSpawn: False
+    damage:
+      types:
+        Heat: 20

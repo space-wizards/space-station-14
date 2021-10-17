@@ -14,8 +14,8 @@
     QuickEquip: false
   - type: ItemCooldown
   - type: EmitSoundOnUse
-    sound: 
+    sound:
       collection: BikeHorn
-    semitoneVariation: 6
+    variation: 0.125
   - type: UseDelay
     delay: 0.5

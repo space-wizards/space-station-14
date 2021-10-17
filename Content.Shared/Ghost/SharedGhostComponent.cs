@@ -69,11 +69,11 @@ namespace Content.Shared.Ghost
 
         public bool CanInteract() => CanGhostInteract;
         public bool CanUse() => CanGhostInteract;
-        public bool CanThrow() => false;
+        public bool CanThrow() => CanGhostInteract;
         public bool CanDrop() => CanGhostInteract;
         public bool CanPickup() => CanGhostInteract;
         public bool CanEmote() => false;
-        public bool CanAttack() => false;
+        public bool CanAttack() => CanGhostInteract;
     }
 
     [Serializable, NetSerializable]

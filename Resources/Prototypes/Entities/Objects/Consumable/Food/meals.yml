@@ -4,7 +4,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodMealBase
   abstract: true
   description: A delicious meal, cooked with love.
@@ -16,7 +16,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
@@ -104,6 +104,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        # Note that this acts as the limiter against injecting anything.
         maxVol: 1
         reagents:
         - ReagentId: Nutriment

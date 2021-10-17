@@ -1,12 +1,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Stack;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -18,12 +21,17 @@ namespace Content.Server.Construction.Components
     [RegisterComponent]
     public class WelderRefinableComponent : Component, IInteractUsing
     {
-        [ViewVariables]
         [DataField("refineResult")]
         private HashSet<string>? _refineResult = new() { };
-        [ViewVariables]
+
         [DataField("refineTime")]
         private float _refineTime = 2f;
+
+        [DataField("refineFuel")]
+        private float _refineFuel = 0f;
+
+        [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _qualityNeeded = "Welding";
 
         private bool _beingWelded;
 
@@ -38,9 +46,12 @@ namespace Content.Server.Construction.Components
             // check if someone is already welding object
             if (_beingWelded)
                 return false;
+
             _beingWelded = true;
 
-            if (!await tool.UseTool(eventArgs.User, Owner, _refineTime, ToolQuality.Welding))
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
+            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, _refineFuel, _refineTime, _qualityNeeded))
             {
                 // failed to veld - abort refine
                 _beingWelded = false;
@@ -59,7 +70,7 @@ namespace Content.Server.Construction.Components
                 // TODO: If something has a stack... Just use a prototype with a single thing in the stack.
                 // This is not a good way to do it.
                 if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
-                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, stack, 1);
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid,1, stack);
             }
 
             return true;

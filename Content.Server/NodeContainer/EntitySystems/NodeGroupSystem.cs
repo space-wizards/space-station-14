@@ -337,7 +337,7 @@ namespace Content.Server.NodeContainer.EntitySystems
         {
             var msg = new NodeVis.MsgData();
 
-            var allNetworks = ComponentManager
+            var allNetworks = EntityManager
                 .EntityQuery<NodeContainerComponent>()
                 .SelectMany(nc => nc.Nodes.Values)
                 .Select(n => (BaseNodeGroup?) n.NodeGroup)

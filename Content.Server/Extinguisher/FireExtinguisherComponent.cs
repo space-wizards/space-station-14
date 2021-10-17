@@ -3,7 +3,7 @@ using Content.Server.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -17,7 +17,6 @@ namespace Content.Server.Extinguisher
     public class FireExtinguisherComponent : Component, IAfterInteract
     {
         public override string Name => "FireExtinguisher";
-        private const string SolutionName = "fireExtinguisher";
 
         [DataField("refillSound")] SoundSpecifier _refillSound = new SoundPathSpecifier("/Audio/Effects/refill.ogg");
 
@@ -35,7 +34,7 @@ namespace Content.Server.Extinguisher
             var targetEntity = eventArgs.Target;
             if (eventArgs.Target.HasComponent<ReagentTankComponent>()
                 && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
-                && solutionContainerSystem.TryGetSolution(Owner, SolutionName, out var container))
+                && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
             {
                 var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)

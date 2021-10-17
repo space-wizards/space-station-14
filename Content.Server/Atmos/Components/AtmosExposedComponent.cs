@@ -5,26 +5,21 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Components
 {
+    // TODO: Kill this. With fire.
     /// <summary>
     /// Represents that entity can be exposed to Atmos
     /// </summary>
     [RegisterComponent]
-    public class AtmosExposedComponent
-    : Component
+    public class AtmosExposedComponent : Component
     {
         public override string Name => "AtmosExposed";
 
         [ViewVariables]
         [ComponentDependency] private readonly TemperatureComponent? _temperatureComponent = null;
 
-        [ViewVariables]
-        [ComponentDependency] private readonly BarotraumaComponent? _barotraumaComponent = null;
-
-        [ViewVariables]
-        [ComponentDependency] private readonly FlammableComponent? _flammableComponent = null;
-
         public void Update(GasMixture air, float frameDelta, AtmosphereSystem atmosphereSystem)
         {
+            // TODO: I'm coming for you next, TemperatureComponent... Fear me for I am death, destroyer of shitcode.
             if (_temperatureComponent != null)
             {
                 var temperatureDelta = air.Temperature - _temperatureComponent.CurrentTemperature;
@@ -33,10 +28,6 @@ namespace Content.Server.Atmos.Components
                 _temperatureComponent.ReceiveHeat(heat);
                 _temperatureComponent.Update();
             }
-
-            _barotraumaComponent?.Update(air.Pressure);
-
-            _flammableComponent?.Update(air);
         }
     }
 }

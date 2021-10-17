@@ -29,6 +29,10 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -36,6 +40,7 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Spillable
+    solution: beaker
   - type: Drink
     isOpen: true
   - type: Appearance
@@ -44,6 +49,8 @@
       maxFillLevels: 6
       fillBaseName: beaker
   - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
   - type: Destructible
     thresholds:
     - trigger:
@@ -62,9 +69,18 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand
-    amount: 5
+    damage:
+      types:
+        Blunt: 10 # glass resistance set reduces damage. Need to land twice (w/o hitting wall)
   - type: DamageOtherOnHit
-    amount: 5
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 2
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   name: large beaker
@@ -156,6 +172,7 @@
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
   - type: Spillable
+    solution: dropper
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
@@ -189,6 +206,7 @@
   - type: Injector
     injectOnly: false
   - type: Spillable
+    solution: injector
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
@@ -222,5 +240,5 @@
     eatMessage: food-swallow
   - type: SolutionContainerManager
     solutions:
-      pill:
+      food:
         maxVol: 50

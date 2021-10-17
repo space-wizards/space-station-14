@@ -12,6 +12,9 @@
     state: haycutters
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
     - Cutting
@@ -34,6 +37,9 @@
     sprite: Objects/Tools/Cowtools/moodriver.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 10
   - type: Tool
     qualities:
     - Screwing
@@ -53,6 +59,9 @@
     sprite: Objects/Tools/Cowtools/wronch.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
     - Anchoring
@@ -73,6 +82,9 @@
     sprite: Objects/Tools/Cowtools/cowbar.rsi
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: Tool
     qualities:
     - Prying
@@ -94,7 +106,7 @@
     sprite: Objects/Tools/Cowtools/mooltitool.rsi
   - type: Tool
     qualities:
-    - Multitool
+    - Pulsing
   - type: SignalLinker
 
 - type: entity
@@ -116,6 +128,9 @@
     HeldPrefix: off
   - type: ItemCooldown
   - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 10
   - type: ItemStatus
   - type: SolutionContainerManager
     solutions:

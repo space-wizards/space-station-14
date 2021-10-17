@@ -1,6 +1,6 @@
 - type: entity
   name: Slime Person
-  parent: HumanMob_Content
+  parent: MobHuman
   id: BaseSlimePerson
   description: A miserable pile of slime.
   abstract: true
@@ -93,3 +93,4 @@
     - type: Body
       template: HumanoidTemplate
       preset: SlimePreset
+    - type: DoorBumpOpener

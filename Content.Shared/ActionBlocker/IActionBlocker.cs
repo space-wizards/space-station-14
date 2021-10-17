@@ -39,14 +39,5 @@ namespace Content.Shared.ActionBlocker
 
         [Obsolete("Use UnequipAttemptEvent instead")]
         bool CanUnequip() => true;
-
-        [Obsolete("Use ChangeDirectionAttemptEvent instead")]
-        bool CanChangeDirection() => true;
-
-        [Obsolete("Use ShiverAttemptEvent instead")]
-        bool CanShiver() => true;
-
-        [Obsolete("Use SweatAttemptEvent instead")]
-        bool CanSweat() => true;
     }
 }

@@ -228,7 +228,23 @@ namespace Content.Shared.Hands.Components
             }
         }
 
-        private bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
+        /// <summary>
+        ///     Returns the number of hands that have no items in them.
+        /// </summary>
+        /// <returns></returns>
+        public int GetFreeHands()
+        {
+            int acc = 0;
+            foreach (var hand in Hands)
+            {
+                if (hand.HeldEntity == null)
+                    acc += 1;
+            }
+
+            return acc;
+        }
+
+        public bool TryGetHandHoldingEntity(IEntity entity, [NotNullWhen(true)] out Hand? handFound)
         {
             handFound = null;
 
@@ -418,6 +434,7 @@ namespace Content.Shared.Hands.Components
                 Logger.Error($"{nameof(SharedHandsComponent)} on {Owner} could not remove {heldEntity} from {handContainer}.");
                 return;
             }
+
             OnHeldEntityRemovedFromHand(heldEntity, hand.ToHandState());
 
             HandsModified();

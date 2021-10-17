@@ -1,8 +1,9 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Shared.Examine;
 using Content.Shared.Input;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -12,6 +13,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Players;
@@ -37,6 +39,8 @@ namespace Content.Client.Examine
         public override void Initialize()
         {
             IoCManager.InjectDependencies(this);
+
+            SubscribeLocalEvent<GetOtherVerbsEvent>(AddExamineVerb);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine))
@@ -83,6 +87,18 @@ namespace Content.Client.Examine
 
             DoExamine(_examinedEntity);
             return true;
+        }
+
+        private void AddExamineVerb(GetOtherVerbsEvent args)
+        {
+            if (!CanExamine(args.User, args.Target))
+                return;
+
+            Verb verb = new();
+            verb.Act = () => DoExamine(args.Target) ;
+            verb.Text = Loc.GetString("examine-verb-name");
+            verb.IconTexture = "/Textures/Interface/VerbIcons/examine.svg.192dpi.png";
+            args.Verbs.Add(verb);
         }
 
         public async void DoExamine(IEntity entity)

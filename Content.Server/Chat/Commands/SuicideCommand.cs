@@ -5,12 +5,11 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Server.Notification;
 using Content.Server.Players;
+using Content.Server.Popups;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Damage.Prototypes;
+using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -30,13 +29,14 @@ namespace Content.Server.Chat.Commands
 
         public string Help => Loc.GetString("suicide-command-help-text");
 
-        private void DealDamage(ISuicideAct suicide, IChatManager chat, IDamageableComponent damageableComponent, IEntity source, IEntity target)
+        private void DealDamage(ISuicideAct suicide, IChatManager chat, IEntity target)
         {
             var kind = suicide.Suicide(target, chat);
             if (kind != SuicideKind.Special)
             {
+                // TODO SUICIDE ..heh.. anyway, someone should fix this mess.
                 var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                damageableComponent.TrySetDamage(kind switch
+                DamageSpecifier damage = new(kind switch
                     {
                         SuicideKind.Blunt => prototypeManager.Index<DamageTypePrototype>("Blunt"),
                         SuicideKind.Slash => prototypeManager.Index<DamageTypePrototype>("Slash"),
@@ -51,6 +51,7 @@ namespace Content.Server.Chat.Commands
                         _ => prototypeManager.Index<DamageTypePrototype>("Blunt")
                     },
                 200);
+                EntitySystem.Get<DamageableSystem>().TryChangeDamage(target.Uid, damage, true);
             }
         }
 
@@ -77,7 +78,6 @@ namespace Content.Server.Chat.Commands
                 return;
             }
 
-            var dmgComponent = owner.GetComponent<IDamageableComponent>();
             //TODO: needs to check if the mob is actually alive
             //TODO: maybe set a suicided flag to prevent resurrection?
 
@@ -90,7 +90,7 @@ namespace Content.Server.Chat.Commands
 
                 if (suicide != null)
                 {
-                    DealDamage(suicide, chat, dmgComponent, itemComponent.Owner, owner);
+                    DealDamage(suicide, chat, owner);
                     return;
                 }
             }
@@ -106,7 +106,7 @@ namespace Content.Server.Chat.Commands
                     var suicide = entity.GetAllComponents<ISuicideAct>().FirstOrDefault();
                     if (suicide != null)
                     {
-                        DealDamage(suicide, chat, dmgComponent, entity, owner);
+                        DealDamage(suicide, chat, owner);
                         return;
                     }
                 }
@@ -119,7 +119,8 @@ namespace Content.Server.Chat.Commands
             var selfMessage = Loc.GetString("suicide-command-default-text-self");
             owner.PopupMessage(selfMessage);
 
-            dmgComponent.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Piercing"), 200);
+            DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Bloodloss"), 200);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(owner.Uid, damage, true);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.
