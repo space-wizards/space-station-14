@@ -143,7 +143,7 @@
 - type: reagent
   id: Radium
   name: radium
-  desc: A radioactive metal, silvery-white in it's pure form. It glows due to it's radioactivity and is highly toxic.
+  desc: A radioactive metal, silvery-white in its pure form. It glows due to its radioactivity and is highly toxic.
   physicalDesc: glowing
   color: "#00ff04"
   meltingPoint: 700.0
@@ -181,7 +181,7 @@
 - type: reagent
   id: Sodium
   name: sodium
-  desc: A silvery-white alkali metal. Highly reactive in it's pure form.
+  desc: A silvery-white alkali metal. Highly reactive in its pure form. #thanks visne <3
   physicalDesc: metallic
   color: "#c6c8cc"
   meltingPoint: 97.8

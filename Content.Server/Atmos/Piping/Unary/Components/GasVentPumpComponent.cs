@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public VentPressureBound PressureChecks { get; set; } = VentPressureBound.ExternalBound;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("externalPressureBound")]
         public float ExternalPressureBound { get; set; } = Atmospherics.OneAtmosphere;
 
         [ViewVariables(VVAccess.ReadWrite)]

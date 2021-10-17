@@ -67,6 +67,7 @@
     - Stun
     - KnockedDown
     - SlowedDown
+    - Stutter
   # Other
   - type: Inventory
   - type: Clickable
