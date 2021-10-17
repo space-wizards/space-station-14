@@ -23,4 +23,15 @@ namespace Content.Shared.Traitor.Uplink
 
         }
     }
+
+    [Serializable, NetSerializable]
+    public sealed class UplinkTryWithdrawTC : BoundUserInterfaceMessage
+    {
+        public int TC;
+
+        public UplinkTryWithdrawTC(int tc)
+        {
+            TC = tc;
+        }
+    }
 }

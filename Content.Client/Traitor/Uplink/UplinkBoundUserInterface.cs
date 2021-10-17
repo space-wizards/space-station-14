@@ -42,6 +42,11 @@ namespace Content.Client.Traitor.Uplink
                 SendMessage(new UplinkRequestUpdateInterfaceMessage());
 
             };
+
+            _menu.OnWithdrawAttempt += (tc) =>
+            {
+                SendMessage(new UplinkTryWithdrawTC(tc));
+            };
         }
         protected override void UpdateState(BoundUserInterfaceState state)
         {
