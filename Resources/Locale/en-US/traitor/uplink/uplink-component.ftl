@@ -11,4 +11,3 @@ uplink-user-interface-search-label = Search
 uplink-user-interface-withdraw-title = Withdraw TC
 uplink-user-interface-withdraw-withdraw-button = Withdraw
 uplink-user-interface-withdraw-cancel-button = Cancel
-uplink-user-interface-withdraw-label = {$balance} TC

@@ -70,6 +70,7 @@ namespace Content.Client.Traitor.Uplink
             if (!disposing)
                 return;
 
+            _menu?.Close();
             _menu?.Dispose();
         }
     }
