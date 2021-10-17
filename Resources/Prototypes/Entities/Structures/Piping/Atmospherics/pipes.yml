@@ -6,8 +6,9 @@
   placement:
     mode: SnapgridCenter
   components:
-  - type: Item
-    size: 10
+# Re-add when containers no longer pick up anchored items.
+#  - type: Item
+#    size: 10
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
