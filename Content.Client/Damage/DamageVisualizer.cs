@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -401,8 +403,8 @@ namespace Content.Client.Damage
             if (_overlay && _damageOverlaySprites != null && _targetLayers == null)
                 CheckOverlayOrdering(spriteComponent);
 
-            if (component.TryGetData<DamageVisualizerKeys>(DamageVisualizerKeys.DamageUpdateGroups, out var update)
-                && update == DamageVisualizerKeys.ForceUpdate)
+            if (component.TryGetData<bool>(DamageVisualizerKeys.ForceUpdate, out bool update)
+                && update)
             {
                 ForceUpdateLayers(damageComponent, spriteComponent);
                 return;
@@ -519,7 +521,6 @@ namespace Content.Client.Damage
                 UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent);
             }
         }
-
 
         private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, string damageGroup, int threshold)
         {
