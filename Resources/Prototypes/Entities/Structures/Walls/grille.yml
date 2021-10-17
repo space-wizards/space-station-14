@@ -4,6 +4,7 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: CanBuildWindowOnTop
     - type: Sprite
       netsync: false
       drawdepth: Walls

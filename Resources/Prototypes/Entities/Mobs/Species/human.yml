@@ -62,8 +62,12 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
-  # StatusEffects
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
   # Other
   - type: Inventory
   - type: Clickable
