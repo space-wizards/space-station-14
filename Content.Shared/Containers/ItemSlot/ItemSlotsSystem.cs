@@ -55,6 +55,9 @@ namespace Content.Shared.Containers.ItemSlots
             }
         }
 
+        /// <summary>
+        ///     Ensure item slots have containers.
+        /// </summary>
         private void Oninitialize(EntityUid uid, ItemSlotsComponent itemSlots, ComponentInit args)
         {
             foreach (var (id, slot) in itemSlots.Slots)
@@ -75,12 +78,16 @@ namespace Content.Shared.Containers.ItemSlots
             itemSlots.Slots[id] = slot;
         }
 
+        /// <summary>
+        ///     Remove an item slot. This should generally be called whenever a component that added a slot is being
+        ///     removed.
+        /// </summary>
         public void RemoveItemSlot(EntityUid uid, ItemSlot slot, ItemSlotsComponent? itemSlots = null)
         {
             slot.ContainerSlot.Shutdown();
 
-            // Don't log missing resolves. when an entity has all it's components removed, the ItemSlotsComponent may
-            // have been removed before some other component that added an item slot.
+            // Don't log missing resolves. when an entity has all of its components removed, the ItemSlotsComponent may
+            // have been removed before some other component that added an item slot (and is now trying to remove it).
             if (!Resolve(uid, ref itemSlots, logMissing: false))
                 return;
 
@@ -173,7 +180,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            // check if item allowed in whitelist
+            // check if item allowed by the whitelist
             if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
                 return false;
 
@@ -260,8 +267,10 @@ namespace Content.Shared.Containers.ItemSlots
         ///     Try to eject item from a slot directly into a user's hands. If they have no hands, the item will still
         ///     be ejected onto the floor.
         /// </summary>
-        /// <returns>False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise,
-        /// even if the user has no hands.</returns>
+        /// <returns>
+        ///     False if the id is not valid, the item slot is locked, or it has no item inserted. True otherwise, even
+        ///     if the user has no hands.
+        /// </returns>
         public bool TryEjectToHands(EntityUid uid, ItemSlot slot, EntityUid user)
         {
             if (!TryEject(uid, slot, out var item))
@@ -277,11 +286,11 @@ namespace Content.Shared.Containers.ItemSlots
         #region Verbs
         private void AddEjectVerbs(EntityUid uid, ItemSlotsComponent itemSlots, GetAlternativeVerbsEvent args)
         {
-            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+            if (args.Hands == null || !args.CanAccess ||!args.CanInteract ||
+                !_actionBlockerSystem.CanPickup(args.User))
+            {
                 return;
-
-            // Here, we intentionally do not check the "can pickup" action blocker.
-            // If they cannot pick up the item, it will simply be ejected onto the floor.
+            }
 
             foreach (var slot in itemSlots.Slots.Values)
             {
@@ -312,26 +321,29 @@ namespace Content.Shared.Containers.ItemSlots
                 return;
 
             // If there are any slots that eject on left-click, add a "Take <item>" verb.
-            foreach (var slot in itemSlots.Slots.Values)
+            if (_actionBlockerSystem.CanPickup(args.User))
             {
-                if (!slot.EjectOnInteract || slot.Locked || !slot.HasItem)
-                    continue;
+                foreach (var slot in itemSlots.Slots.Values)
+                {
+                    if (!slot.EjectOnInteract || slot.Locked || !slot.HasItem)
+                        continue;
 
-                var verbSubject = slot.Name != string.Empty
-                    ? Loc.GetString(slot.Name)
-                    : slot.Item!.Name ?? string.Empty;
+                    var verbSubject = slot.Name != string.Empty
+                        ? Loc.GetString(slot.Name)
+                        : slot.Item!.Name ?? string.Empty;
 
-                Verb takeVerb = new();
-                takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
-                takeVerb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
-                takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
-                args.Verbs.Add(takeVerb);
+                    Verb takeVerb = new();
+                    takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
+                    takeVerb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
+                    takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
+                    args.Verbs.Add(takeVerb);
+                }
             }
 
+            // Next, add the insert-item verbs
             if (args.Using == null || !_actionBlockerSystem.CanDrop(args.User))
                 return;
 
-            // Add verbs to insert the held item into any applicable slots
             foreach (var slot in itemSlots.Slots.Values)
             {
                 if (!CanInsert(args.Using, slot))
