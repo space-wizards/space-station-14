@@ -112,7 +112,7 @@ namespace Content.Server.Traitor.Uplink.Account
             stackUid = stackEntity.Uid;
 
             // set right amount in stack
-            _stackSystem.SetCount(stackUid.Value, tc);
+            _stackSystem.SetCount(stackUid.Value, actTC);
             return true;
         }
     }
