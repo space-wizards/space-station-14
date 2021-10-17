@@ -1,0 +1,32 @@
+- type: entity
+  name: Holoparasite
+  parent: SimpleMobBase
+  id: MobHoloparasite
+  description: A mezmirising whirl of hard-light patterns given human form. It's owner must be somewhere nearby..
+  components:
+  - type: GhostTakeoverAvailable
+    makeSentient: true
+    name: Holoparasite
+    description: A mezmirising whirl of hard-light patterns given human form. It's owner must be somewhere nearby..
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mouse-0
+      sprite: Mobs/Aliens/Guardians/guardians.rsi
+  - type: Physics
+    bodyType: Dynamic
+    fixtures:
+    - shape:
+        !type:PhysShapeAabb
+          bounds: "-0.40,-0.30,0.40,0.45"
+      mass: 10
+      mask:
+      - Impassable
+      - VaultImpassable
+      - SmallImpassable
+      layer:
+      - Opaque
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 10
+    baseSprintSpeed : 10
