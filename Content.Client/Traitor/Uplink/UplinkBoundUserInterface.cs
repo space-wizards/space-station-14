@@ -17,7 +17,6 @@ namespace Content.Client.Traitor.Uplink
     public class UplinkBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
 
         private UplinkMenu? _menu;
 

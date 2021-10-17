@@ -151,9 +151,11 @@ namespace Content.Server.Traitor.Uplink
 
             // try to put it into players hands
             if (player.TryGetComponent(out SharedHandsComponent? hands))
-            {
                 hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
-            }
+
+            // play buying sound
+            SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
+                    uplink.Owner, AudioParams.Default.WithVolume(-2f));
 
             UpdateUserInterface(uplink);
         }
