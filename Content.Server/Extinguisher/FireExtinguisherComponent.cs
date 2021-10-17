@@ -71,7 +71,7 @@ namespace Content.Server.Extinguisher
 
                     SoundSystem.Play(Filter.Pvs(Owner), _refillSound.GetSound(), Owner);
                     eventArgs.Target.PopupMessage(eventArgs.User,
-                        Loc.GetString("spray-component-after-interact-refilled-message", ("owner", Owner)));
+                        Loc.GetString("fire-extingusiher-component-after-interact-refilled-message", ("owner", Owner)));
                 }
 
                 return true;
