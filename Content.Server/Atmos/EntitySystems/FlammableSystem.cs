@@ -4,6 +4,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -207,11 +208,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    if (flammable.Owner.TryGetComponent(out TemperatureComponent? temp))
-                    {
-                        temp.ReceiveHeat(200 * flammable.FireStacks);
-                    }
-
+                    EntitySystem.Get<TemperatureSystem>().ReceiveHeat(flammable.Owner.Uid, 200 * flammable.FireStacks);
                     // TODO ATMOS Fire resistance from armor
                     var damageScale = Math.Min((int) (flammable.FireStacks * 2.5f), 10);
                     _damageableSystem.TryChangeDamage(flammable.Owner.Uid, flammable.Damage * damageScale);
