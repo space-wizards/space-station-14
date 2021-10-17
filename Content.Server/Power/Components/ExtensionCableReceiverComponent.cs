@@ -1,11 +1,13 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Server.Power.EntitySystems;
+using Robust.Shared.Analyzers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
-    //TODO: Make friends
     [RegisterComponent]
+    [Friend(typeof(ExtensionCableSystem))]
     public class ExtensionCableReceiverComponent : Component
     {
         public override string Name => "ExtensionCableReceiver";
