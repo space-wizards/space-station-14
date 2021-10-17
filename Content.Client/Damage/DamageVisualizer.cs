@@ -451,14 +451,20 @@ namespace Content.Client.Damage
                 {
                     Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
                     spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+                    bool visibility = spriteComponent[spriteLayer].Visible;
+                    int threshold = _lastThresholdPerGroup[damageGroup];
                     spriteComponent.RemoveLayer(spriteLayer);
-                    spriteLayer = spriteComponent.AddLayer(
-                        new SpriteSpecifier.Rsi(
-                            new ResourcePath(sprite.Sprite),
-                            $"DamageOverlay_{damageGroup}_{_thresholds[1]}"
-                        ),
-                        spriteLayer);
+                    if (threshold == 0)
+                        spriteLayer = spriteComponent.AddBlankLayer();
+                    else
+                        spriteLayer = spriteComponent.AddLayer(
+                            new SpriteSpecifier.Rsi(
+                                new ResourcePath(sprite.Sprite),
+                                $"DamageOverlay_{damageGroup}_{threshold}"
+                            ),
+                            spriteLayer);
                     spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
+                    spriteComponent.LayerSetVisible(spriteLayer, visibility);
                     // this is somewhat iffy since it constantly reallocates
                     _topMostLayerKey = $"DamageOverlay{damageGroup}";
                 }
