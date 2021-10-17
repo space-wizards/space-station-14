@@ -20,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task AndTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ExtraPrototypes = Prototypes
             });
@@ -39,8 +39,8 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var mapId = sMapManager.GetAllMapIds().First();
-                var coordinates = new MapCoordinates(0, 0, mapId);
+                var gridId = sMapManager.GetAllGrids().First().GridEntityId;
+                var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
