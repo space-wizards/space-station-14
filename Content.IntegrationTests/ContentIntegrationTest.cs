@@ -123,7 +123,6 @@ namespace Content.IntegrationTests
 
         protected ServerIntegrationInstance StartServerDummyTicker(ServerIntegrationOptions options = null)
         {
-            return StartServer(options);
             options ??= new ServerContentIntegrationOption();
 
             // Load content resources, but not config and user data.
@@ -167,8 +166,19 @@ namespace Content.IntegrationTests
 
         private bool ShouldPool(IntegrationOptions options)
         {
-            if (options is ClientContentIntegrationOption {ContentBeforeIoC: { }} ||
-                options is ServerContentIntegrationOption {ContentBeforeIoC: { }})
+            if (!options.Pool)
+            {
+                return false;
+            }
+
+            if (options.CVarOverrides.TryGetValue(CCVars.GameDummyTicker.Name, out var dummy) &&
+                dummy == "true")
+            {
+                return false;
+            }
+
+            if (options is ClientContentIntegrationOption {ContentBeforeIoC: { }}
+                        or ServerContentIntegrationOption {ContentBeforeIoC: { }})
             {
                 return false;
             }
