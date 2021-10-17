@@ -18,30 +18,17 @@ namespace Content.Client.Traitor.Uplink
         {
             RobustXamlLoader.Load(this);
 
-            UpdateSliderValue(WithdrawSlider.Value);
-
-            WithdrawSlider.MinValue = 0;
+            // setup withdraw slider
+            WithdrawSlider.MinValue = 1;
             WithdrawSlider.MaxValue = tcCount;
-            WithdrawSlider.OnValueChanged += args => UpdateSliderValue(args.Value);
 
+            // and buttons
             ApplyButton.OnButtonDown += _ =>
             {
-                var valueInt = (int) WithdrawSlider.Value;
-                OnWithdrawAttempt?.Invoke(valueInt);
-
+                OnWithdrawAttempt?.Invoke(WithdrawSlider.Value);
                 Close();
             };
-
             CancelButton.OnButtonDown += _ => Close();
-        }
-
-        private void UpdateSliderValue(float value)
-        {
-            var valueInt = (int) value;
-            var msg = Loc.GetString("uplink-user-interface-withdraw-label", ("balance", valueInt));
-            WithdrawAmountLabel.Text = msg;
-
-            ApplyButton.Disabled = valueInt <= 0;
         }
     }
 }

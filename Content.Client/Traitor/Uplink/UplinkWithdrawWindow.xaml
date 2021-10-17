@@ -4,14 +4,8 @@
     <BoxContainer Orientation="Vertical"
                   HorizontalExpand="True"
                   VerticalExpand="True">
-        <BoxContainer Orientation="Horizontal"
-                      HorizontalExpand="True">
-            <Slider Name="WithdrawSlider"
-                    HorizontalExpand="True"/>
-            <Label Name="WithdrawAmountLabel"
-                   HorizontalExpand="True"
-                   Margin="8 0"/>
-        </BoxContainer>
+        <SliderIntInput Name="WithdrawSlider"
+                        HorizontalExpand="True"/>
         <BoxContainer Orientation="Horizontal"
                       VerticalExpand="True"
                       VerticalAlignment="Bottom">
