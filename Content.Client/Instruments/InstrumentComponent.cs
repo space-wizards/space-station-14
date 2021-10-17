@@ -76,6 +76,22 @@ namespace Content.Client.Instruments
         }
 
         /// <summary>
+        ///     Volume boost (via velocity
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool VolumeBoost
+        {
+            get => _renderer?.VolumeBoost ?? false;
+            set
+            {
+                if (_renderer != null)
+                {
+                    _renderer.VolumeBoost = value;
+                }
+            }
+        }
+
+        /// <summary>
         ///     Changes the instrument the midi renderer will play.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]

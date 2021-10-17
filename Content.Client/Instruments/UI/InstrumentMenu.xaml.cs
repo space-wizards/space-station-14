@@ -40,6 +40,7 @@ namespace Content.Client.Instruments.UI
                 LoopButton.Pressed = _owner.Instrument.LoopMidi;
                 StopButton.Disabled = !_owner.Instrument.IsMidiOpen;
                 PlaybackSlider.MouseFilter = _owner.Instrument.IsMidiOpen ? MouseFilterMode.Pass : MouseFilterMode.Ignore;
+                BoostCheckBox.Pressed = _owner.Instrument.VolumeBoost;
             }
 
             if (!_midiManager.IsAvailable)
@@ -55,8 +56,9 @@ namespace Content.Client.Instruments.UI
             StopButton.OnPressed += MidiStopButtonOnPressed;
             PlaybackSlider.OnValueChanged += PlaybackSliderSeek;
             PlaybackSlider.OnKeyBindUp += PlaybackSliderKeyUp;
+            BoostCheckBox.OnToggled += BoostCheckBoxOnToggled;
 
-            MinSize = SetSize = (400, 150);
+            MinSize = SetSize = (400, 200);
         }
 
         private void InstrumentOnMidiPlaybackEnded()
@@ -171,6 +173,12 @@ namespace Content.Client.Instruments.UI
             if (args.Function != EngineKeyFunctions.UIClick || _owner.Instrument == null) return;
 
             _owner.Instrument.PlayerTick = (int)Math.Ceiling((double) PlaybackSlider.Value);
+        }
+
+        private void BoostCheckBoxOnToggled(ButtonToggledEventArgs obj)
+        {
+            if (_owner.Instrument != null)
+                _owner.Instrument.VolumeBoost = obj.Pressed;
         }
 
         protected override void FrameUpdate(FrameEventArgs args)

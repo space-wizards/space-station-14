@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using Content.Server.Administration.Managers;
 using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
@@ -20,6 +21,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Instruments
 {
@@ -36,6 +38,7 @@ namespace Content.Server.Instruments
             IThrown
     {
         private InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly IAdminManager _adminManager = default!;
 
         /// <summary>
         ///     The client channel currently playing the instrument, or null if there's none.
@@ -74,6 +77,10 @@ namespace Content.Server.Instruments
         private bool _allowProgramChange;
         [DataField("respectMidiLimits")]
         private bool _respectMidiLimits = true;
+
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("adminOnly")]
+        public bool AdminOnly { get; set; } = false;
 
         public override byte InstrumentProgram { get => _instrumentProgram;
             set
@@ -318,8 +325,13 @@ namespace Content.Server.Instruments
             if (!user.TryGetComponent(out ActorComponent? actor)) return;
 
             if ((!Handheld && InstrumentPlayer != null)
-                || (Handheld && actor.PlayerSession != InstrumentPlayer)
-                || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+                || (Handheld && actor.PlayerSession != InstrumentPlayer)) return;
+
+            if (!_adminManager.IsAdmin(actor.PlayerSession))
+            {
+                if (AdminOnly) return;
+                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user)) return;
+            }
 
             InstrumentPlayer = actor.PlayerSession;
             OpenUserInterface(InstrumentPlayer);

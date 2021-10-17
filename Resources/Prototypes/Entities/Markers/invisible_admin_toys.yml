@@ -1,0 +1,19 @@
+- type: entity
+  name: Invisible Admin MIDI Supersynth Marker
+  id: InvisibleSupersynthMarker
+  parent: MarkerBase
+  components:
+    - type: Instrument
+      allowPercussion: true
+      allowProgramChange: true
+      respectMidiLimits: false
+      adminOnly: true
+    - type: Sprite
+      layers:
+        - state: green
+        - texture: Objects/Fun/Instruments/h_synthesizer.rsi/icon.png
+    - type: UserInterface
+      interfaces:
+      - key: enum.InstrumentUiKey.Key
+        type: InstrumentBoundUserInterface
+

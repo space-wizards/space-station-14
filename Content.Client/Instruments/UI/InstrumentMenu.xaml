@@ -20,6 +20,7 @@
             <Slider Name="PlaybackSlider" HorizontalExpand="True" />
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="0.125" />
         </BoxContainer>
+        <CheckBox Name="BoostCheckBox" Text="{Loc instrument-menu-volume-boost-checkbox}" HorizontalExpand="True" />
     </BoxContainer>
     <PanelContainer Name="UnavailableOverlay" Visible="False" MouseFilter="Stop">
         <PanelContainer.PanelOverride>
