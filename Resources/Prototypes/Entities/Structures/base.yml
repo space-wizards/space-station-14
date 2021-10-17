@@ -19,6 +19,9 @@
       mask:
       - Impassable
   - type: Pullable
+  - type: Tag
+    tags:
+      - Structure
 
 - type: entity
   # This means that it's not anchored on spawn.
@@ -46,3 +49,6 @@
       mask:
       - VaultImpassable
   - type: Anchorable
+
+- type: Tag
+  id: Structure
