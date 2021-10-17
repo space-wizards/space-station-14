@@ -8,6 +8,7 @@ namespace Content.Shared.Damage
     {
         Disabled,
         DamageSpecifierDelta,
-        DamageUpdateGroups
+        DamageUpdateGroups,
+        ForceUpdate
     }
 }

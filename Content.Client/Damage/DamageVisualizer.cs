@@ -28,6 +28,11 @@ namespace Content.Client.Damage
     ///     This can be disabled dynamically by passing into SetData,
     ///     key DamageVisualizerKeys.Disabled, value bool
     ///     (DamageVisualizerKeys lives in Content.Shared.Damage)
+    ///
+    ///     Damage layers, if targetting layers, can also be dynamically
+    ///     disabled if needed by passing into SetData, the name/enum
+    ///     of the sprite layer, and then passing in a bool value
+    ///     (true to enable, false to disable).
     /// </summary>
     public class DamageVisualizer : AppearanceVisualizer
     {
@@ -87,20 +92,6 @@ namespace Content.Client.Damage
         ///     (for example, Brute), and has a value
         ///     of a DamageVisualizerSprite (see below)
         /// </summary>
-        /// <remarks>
-        ///     Any of the sprites here must have states
-        ///     where the first part matches the target
-        ///     layer state, the second part matching
-        ///     to a target group, and the third part
-        ///     matching one of the defined thresholds
-        ///     above. If targetLayers is not defined,
-        ///     then instead, the first part must be
-        ///     'DamageOverlay'.
-        ///
-        ///     For example:
-        ///     Chest_Brute_33 - targets a chest layer, brute group, 33 damage
-        ///     DamageOverlay_Burn_25 - overlay, burn, 25 damage
-        /// </remarks>
         [DataField("damageOverlaySprites")]
         private readonly Dictionary<string, DamageVisualizerSprite>? _damageOverlaySprites;
 
@@ -135,7 +126,6 @@ namespace Content.Client.Damage
         [DataField("damageGroup")]
         private readonly string? _damageGroup;
 
-        private Dictionary<object, bool> _layerToggles = new();
         // this is here to ensure that layers stay disabled
         private Dictionary<object, bool> _disabledLayers = new();
         // this is here to ensure that targetted layers
@@ -151,10 +141,26 @@ namespace Content.Client.Damage
         [DataDefinition]
         internal class DamageVisualizerSprite
         {
+            /// <summary>
+            ///     The RSI path for the damage visualizer
+            ///     group overlay.
+            /// </summary>
+            /// <remarks>
+            ///     States in here will require one of two
+            ///     forms:
+            ///     - {base_state}_{group}_{threshold} if targetting
+            ///       a static layer on a sprite (either as an
+            ///       overlay or as a state change)
+            ///     - DamageOverlay_{group_{threshold} if not
+            ///       targetting a layer on a sprite.
+            /// </remarks>
             [DataField("sprite", required: true)]
             public readonly string Sprite = default!;
-            // downstream this is going to support changing,
-            // and you Better Be Ready For Not-Red Blood
+
+            /// <summary>
+            ///     The color of this sprite overlay.
+            ///     Supports only hexadecimal format.
+            /// </summary>
             [DataField("color")]
             public readonly string? Color;
         }
@@ -335,13 +341,17 @@ namespace Content.Client.Damage
                     {
                         foreach (var (group, sprite) in _damageOverlaySprites)
                         {
-                            int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath(sprite.Sprite), $"{layerState}_{group}_{_thresholds[1]}"), index);
+                            int newLayer = spriteComponent.AddLayer(
+                                new SpriteSpecifier.Rsi(
+                                    new ResourcePath(sprite.Sprite),
+                                    $"{layerState}_{group}_{_thresholds[1]}"
+                                ),
+                                index);
                             spriteComponent.LayerMapSet($"{layer}{group}", newLayer);
                             if (sprite.Color != null)
                                 spriteComponent.LayerSetColor(newLayer, Color.FromHex(sprite.Color));
                             spriteComponent.LayerSetVisible(newLayer, false);
                         }
-                        _layerToggles.Add(layer, false);
                         _disabledLayers.Add(layer, false);
                     }
                 }
@@ -351,7 +361,10 @@ namespace Content.Client.Damage
                 if (_damageOverlaySprites != null)
                     foreach (var (group, sprite) in _damageOverlaySprites)
                     {
-                        int newLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath(sprite.Sprite), $"DamageOverlay_{group}_{_thresholds[1]}"));
+                        int newLayer = spriteComponent.AddLayer(
+                            new SpriteSpecifier.Rsi(
+                                new ResourcePath(sprite.Sprite),
+                                $"DamageOverlay_{group}_{_thresholds[1]}"));
                         spriteComponent.LayerMapSet($"DamageOverlay{group}", newLayer);
                         if (sprite.Color != null)
                             spriteComponent.LayerSetColor(newLayer, Color.FromHex(sprite.Color));
@@ -378,59 +391,80 @@ namespace Content.Client.Damage
 
         private void HandleDamage(AppearanceComponent component)
         {
-            if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent))
-                return;
-
-            if (_targetLayers != null && _damageOverlaySprites != null)
-            {
-                foreach (object layer in _targetLayerMapKeys)
-                {
-                    bool? layerStatus = null;
-                    switch (layer)
-                    {
-                        case Enum layerEnum:
-                            if (component.TryGetData<bool>(layerEnum, out var layerStateEnum))
-                                layerStatus = layerStateEnum;
-                            break;
-                        case string layerString:
-                            if (component.TryGetData<bool>(layerString, out var layerStateString))
-                                layerStatus = layerStateString;
-                            break;
-                    }
-
-                    if (layerStatus == null)
-                        continue;
-
-                    if (_disabledLayers[layer] != (bool) layerStatus)
-                    {
-                        _disabledLayers[layer] = (bool) layerStatus;
-                        foreach (string damageGroup in _damageOverlaySprites.Keys)
-                            spriteComponent.LayerSetVisible($"{layer}{damageGroup}", _disabledLayers[layer]);
-                    }
-                }
-            }
-
-            if (!component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta)
+            if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent)
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
+            if (_targetLayers != null && _damageOverlaySprites != null)
+                UpdateDisabledLayers(spriteComponent, component);
+
             if (_overlay && _damageOverlaySprites != null && _targetLayers == null)
+                CheckOverlayOrdering(spriteComponent);
+
+            if (component.TryGetData<DamageVisualizerKeys>(DamageVisualizerKeys.DamageUpdateGroups, out var update)
+                && update == DamageVisualizerKeys.ForceUpdate)
             {
-                if (spriteComponent[_topMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
-                {
-                    foreach (var (damageGroup, sprite) in _damageOverlaySprites)
-                    {
-                        Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
-                        spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
-                        spriteComponent.RemoveLayer(spriteLayer);
-                        spriteLayer = spriteComponent.AddLayer(new SpriteSpecifier.Rsi(new ResourcePath(sprite.Sprite), $"DamageOverlay_{damageGroup}_{_thresholds[1]}"), spriteLayer);
-                        spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
-                        // this is somewhat iffy since it constantly reallocates
-                        _topMostLayerKey = $"DamageOverlay{damageGroup}";
-                    }
-                }
+                ForceUpdateLayers(damageComponent, spriteComponent);
+                return;
             }
 
+            if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
+                UpdateDamageVisuals(delta, damageComponent, spriteComponent);
+        }
+
+        private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component)
+        {
+            foreach (object layer in _targetLayerMapKeys)
+            {
+                bool? layerStatus = null;
+                switch (layer)
+                {
+                    case Enum layerEnum:
+                        if (component.TryGetData<bool>(layerEnum, out var layerStateEnum))
+                            layerStatus = layerStateEnum;
+                        break;
+                    case string layerString:
+                        if (component.TryGetData<bool>(layerString, out var layerStateString))
+                            layerStatus = layerStateString;
+                        break;
+                }
+
+                if (layerStatus == null)
+                    continue;
+
+                if (_disabledLayers[layer] != (bool) layerStatus)
+                {
+                    _disabledLayers[layer] = (bool) layerStatus;
+                    foreach (string damageGroup in _damageOverlaySprites!.Keys)
+                        spriteComponent.LayerSetVisible($"{layer}{damageGroup}", _disabledLayers[layer]);
+                }
+            }
+        }
+
+        private void CheckOverlayOrdering(SpriteComponent spriteComponent)
+        {
+            if (spriteComponent[_topMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
+            {
+                foreach (var (damageGroup, sprite) in _damageOverlaySprites!)
+                {
+                    Logger.DebugS("DamageVisualizer", "Attempting to re-order overlay to top.");
+                    spriteComponent.LayerMapTryGet($"DamageOverlay{damageGroup}", out int spriteLayer);
+                    spriteComponent.RemoveLayer(spriteLayer);
+                    spriteLayer = spriteComponent.AddLayer(
+                        new SpriteSpecifier.Rsi(
+                            new ResourcePath(sprite.Sprite),
+                            $"DamageOverlay_{damageGroup}_{_thresholds[1]}"
+                        ),
+                        spriteLayer);
+                    spriteComponent.LayerMapSet($"DamageOverlay{damageGroup}", spriteLayer);
+                    // this is somewhat iffy since it constantly reallocates
+                    _topMostLayerKey = $"DamageOverlay{damageGroup}";
+                }
+            }
+        }
+
+        private void UpdateDamageVisuals(List<string> delta, DamageableComponent damageComponent, SpriteComponent spriteComponent)
+        {
             foreach (var damageGroup in delta)
             {
                 if (!_overlay && damageGroup != _damageGroup)
@@ -471,7 +505,21 @@ namespace Content.Client.Damage
                     UpdateOverlay(spriteComponent, damageGroup, threshold);
                 }
             }
+
         }
+
+        private void ForceUpdateLayers(DamageableComponent damageComponent, SpriteComponent spriteComponent)
+        {
+            if (_damageOverlaySprites != null)
+            {
+                UpdateDamageVisuals(_damageOverlaySprites.Keys.ToList(), damageComponent, spriteComponent);
+            }
+            else if (_damageGroup != null)
+            {
+                UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent);
+            }
+        }
+
 
         private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, string damageGroup, int threshold)
         {
