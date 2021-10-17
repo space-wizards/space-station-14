@@ -285,7 +285,9 @@ namespace Content.Client.Entry
             "DeviceNetworkConnection",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
-            "GhostRadio"
+            "HandLabeler",
+            "Label",
+            "GhostRadio",
         };
     }
 }
