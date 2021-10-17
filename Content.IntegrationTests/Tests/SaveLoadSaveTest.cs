@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests
 
             IMapGrid grid = default;
 
-            // Load stationstation.yml as uninitialized map, and save it to ensure it's up to date.
+            // Load saltern.yml as uninitialized map, and save it to ensure it's up to date.
             server.Post(() =>
             {
                 var mapId = mapManager.CreateMap();
