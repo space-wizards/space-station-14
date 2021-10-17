@@ -44,3 +44,27 @@
               prototype: SheetSteel1
               amount: 1
             - !type:DeleteEntity {}
+
+- type: constructionGraph
+  id: lightSwitch
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: lightSwitch
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 2.0
+    - node: lightSwitch
+      entity: ApcNetSwitch
+      edges:
+        - to: start
+          steps:
+            - tool: Screwing
+              doAfter: 2.0
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 1
+            - !type:DeleteEntity {}

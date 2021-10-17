@@ -56,6 +56,9 @@
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
+    - type: Construction
+      graph: lightSwitch
+      node: lightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetworkComponent
       deviceNetId: 3
