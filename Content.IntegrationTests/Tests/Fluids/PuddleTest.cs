@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Fluids
         [Test]
         public async Task TilePuddleTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -42,7 +42,7 @@ namespace Content.IntegrationTests.Tests.Fluids
         [Test]
         public async Task SpaceNoPuddleTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
