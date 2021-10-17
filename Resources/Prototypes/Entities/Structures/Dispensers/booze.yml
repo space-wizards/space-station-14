@@ -4,8 +4,9 @@
   description: A booze dispenser with a single slot for a container to be filled.
   parent: ReagentDispenserBase
   components:
+  - type: Rotatable
   - type: Sprite
     sprite: Structures/dispensers.rsi
-    state: booze_dispenser
+    state: booze
   - type: ReagentDispenser
     pack: BoozeDispenserInventory

@@ -30,6 +30,7 @@
     sprite: Clothing/Hands/Gloves/Color/black.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/black.rsi
+    HeatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase
@@ -118,3 +119,4 @@
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/yellow.rsi
+    HeatResistance: 1400

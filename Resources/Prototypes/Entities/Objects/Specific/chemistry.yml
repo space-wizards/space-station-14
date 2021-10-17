@@ -240,5 +240,5 @@
     eatMessage: food-swallow
   - type: SolutionContainerManager
     solutions:
-      pill:
+      food:
         maxVol: 50
