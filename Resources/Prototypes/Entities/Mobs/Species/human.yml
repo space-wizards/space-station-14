@@ -253,7 +253,7 @@
       - "enum.HumanoidVisualLayers.LLeg"
       - "enum.HumanoidVisualLayers.RArm"
       - "enum.HumanoidVisualLayers.RLeg"
-      damageOverlaySprites:
+      damageOverlayGroups:
         Brute:
           sprite: Mobs/Effects/brute_damage.rsi
           color: "#FF0000"
