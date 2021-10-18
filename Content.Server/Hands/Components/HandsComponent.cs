@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Act;
+using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Server.Pulling;
