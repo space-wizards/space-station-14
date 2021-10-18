@@ -112,7 +112,7 @@ namespace Content.Server.Temperature.Systems
 
         }
 
-        public class OnTemperatureChangeEvent
+        public class OnTemperatureChangeEvent : EntityEventArgs
         {
             public float CurrentTemperature { get; }
             public float LastTemperature { get; }
