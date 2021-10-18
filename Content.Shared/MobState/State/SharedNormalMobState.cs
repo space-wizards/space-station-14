@@ -14,7 +14,7 @@ namespace Content.Shared.MobState.State
         public override void EnterState(IEntity entity)
         {
             base.EnterState(entity);
-            EntitySystem.Get<StandingStateSystem>().Stand(entity);
+            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
@@ -68,11 +68,6 @@ namespace Content.Shared.MobState.State
         }
 
         public override bool CanUnequip()
-        {
-            return true;
-        }
-
-        public override bool CanChangeDirection()
         {
             return true;
         }

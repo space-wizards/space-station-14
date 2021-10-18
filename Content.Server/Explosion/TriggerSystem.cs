@@ -1,9 +1,11 @@
 using System;
+using Content.Server.Doors.Components;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
 using Content.Shared.Acts;
 using Content.Shared.Audio;
+using Content.Shared.Doors;
 using Content.Shared.Physics;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -52,6 +54,7 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(HandleSoundTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
+            SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
 
             SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnStartup);
@@ -107,6 +110,25 @@ namespace Content.Server.Explosion
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
             EntityManager.QueueDeleteEntity(uid);
+        }
+
+        private void HandleDoorTrigger(EntityUid uid, ToggleDoorOnTriggerComponent component, TriggerEvent args)
+        {
+            if (EntityManager.TryGetComponent<ServerDoorComponent>(uid, out var door))
+            {
+                switch (door.State)
+                {
+                    case SharedDoorComponent.DoorState.Open:
+                        door.Close();
+                        break;
+                    case SharedDoorComponent.DoorState.Closed:
+                        door.Open();
+                        break;
+                    case SharedDoorComponent.DoorState.Closing:
+                    case SharedDoorComponent.DoorState.Opening:
+                        break;
+                }
+            }
         }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, StartCollideEvent args)

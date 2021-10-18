@@ -1,7 +1,9 @@
 using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -24,6 +26,7 @@ namespace Content.Server.Atmos.Commands
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
             var mixture = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
@@ -41,17 +44,41 @@ namespace Content.Server.Atmos.Commands
 
                 var gridId = new GridId(i);
 
-                if (!mapManager.TryGetGrid(gridId, out _))
+                if (!mapManager.TryGetGrid(gridId, out var mapGrid))
                 {
                     shell.WriteError($"Grid \"{i}\" doesn't exist.");
                     continue;
                 }
 
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                if (!entityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
                 {
+                    shell.WriteError($"Grid \"{i}\" has no atmosphere component, try addatmos.");
+                    continue;
+                }
+
+                foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
+                {
+                    var tile = tileMain.Air;
+                    if (tile == null)
+                        continue;
+
                     tile.Clear();
-                    atmosphereSystem.Merge(tile, mixture);
+                    var blocker = false;
+                    foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
+                    {
+                        if (!entityManager.TryGetComponent(entUid, out TagComponent? tags))
+                            continue;
+                        if (tags.HasTag("AtmosFixBlocking"))
+                        {
+                            blocker = true;
+                            break;
+                        }
+                    }
+                    if (!blocker)
+                        atmosphereSystem.Merge(tile, mixture);
                     tile.Temperature = mixture.Temperature;
+
+                    atmosphereSystem.InvalidateTile(gridAtmosphere, indices);
                 }
             }
         }
