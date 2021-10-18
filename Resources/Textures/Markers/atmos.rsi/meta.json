@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "MIT",
+  "copyright": "Custom for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "base"
+    },
+    {
+      "name": "vaccum"
+    },
+    {
+      "name": "oxygen"
+    },
+    {
+      "name": "nitrogen"
+    },
+    {
+      "name": "plasma"
+    },
+    {
+      "name": "watervapour"
+    }
+  ]
+}
