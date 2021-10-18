@@ -1,0 +1,13 @@
+- type: entity
+  name: Atmos Fix Blocker Marker
+  id: AtmosFixBlockerMarker
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - texture: Objects/Specific/Atmos/gasanalyzer.rsi/icon.png
+    - type: Tag
+      tags:
+        - AtmosFixBlocking
+

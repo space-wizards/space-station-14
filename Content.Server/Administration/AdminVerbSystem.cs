@@ -1,9 +1,11 @@
+using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
+using Content.Server.Explosion;
 using Content.Server.Ghost.Roles;
 using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
@@ -11,6 +13,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Verbs;
 using Content.Shared.Administration;
+using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -20,6 +23,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Timing;
+using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Administration
 {
@@ -30,10 +35,10 @@ namespace Content.Server.Administration
     {
         [Dependency] private readonly IConGroupController _groupController = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
-        
+
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
@@ -96,6 +101,23 @@ namespace Content.Server.Administration
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/sentient.svg.192dpi.png";
                 verb.Act = () => MakeSentientCommand.MakeSentient(args.Target);
+                args.Verbs.Add(verb);
+            }
+
+            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("explode-verb-get-data-text");
+                verb.Category = VerbCategory.Debug;
+                verb.Act = () =>
+                {
+                    var coords = args.Target.Transform.Coordinates;
+                    Timer.Spawn(_gameTiming.TickPeriod, () => ExplosionHelper.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    if (args.Target.TryGetComponent(out SharedBodyComponent? body))
+                    {
+                        body.Gib();
+                    }
+                };
                 args.Verbs.Add(verb);
             }
 

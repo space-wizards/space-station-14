@@ -1,0 +1,70 @@
+- type: entity
+  abstract: true
+  id: BaseApc
+  name: APC
+  description: A control terminal for the area's electrical systems.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+    castShadows: false
+  - type: Clickable
+  - type: AccessReader
+    access: [["Engineering"]]
+  - type: InteractionOutline
+  - type: Physics
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.25,0.3,0.25"
+        layer: [ Passable ]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    netsync: false
+    sprite: Structures/Power/apc.rsi
+    state: apc0
+  - type: Appearance
+    visuals:
+    - type: ApcVisualizer
+  - type: Battery
+    maxCharge: 10000
+    startingCharge: 10000
+  - type: ExaminableBattery
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: BatteryCharger
+    voltage: Medium
+  - type: PowerProvider
+    voltage: Apc
+  - type: Apc
+    voltage: Apc
+  - type: UserInterface
+    interfaces:
+    - key: enum.ApcUiKey.Key
+      type: ApcBoundUserInterface
+  - type: Construction
+    graph: apc
+    node: apc
+  - type: PowerNetworkBattery
+    maxSupply: 10000
+    maxChargeRate: 5000
+    supplyRampTolerance: 1000
+    supplyRampRate: 500

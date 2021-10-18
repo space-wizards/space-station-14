@@ -1,6 +1,8 @@
+using System;
 using Content.Server.Flash.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -11,6 +13,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -25,6 +28,7 @@ namespace Content.Server.Flash
     {
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()
         {
@@ -127,10 +131,8 @@ namespace Content.Server.Flash
                 flashable.Dirty();
             }
 
-            if (EntityManager.TryGetComponent<StunnableComponent>(target, out var stunnableComponent))
-            {
-                stunnableComponent.Slowdown(flashDuration / 1000f, slowTo, slowTo);
-            }
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f),
+                slowTo, slowTo);
 
             if (displayPopup && user != null && target != user)
             {

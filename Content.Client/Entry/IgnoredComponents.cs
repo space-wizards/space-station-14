@@ -279,7 +279,15 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "AmbientOnPowered",
             "TabletopGame",
-            "LitOnPowered"
+            "LitOnPowered",
+            "TriggerOnSignalReceived",
+            "ToggleDoorOnTrigger",
+            "DeviceNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection",
+            "HandLabeler",
+            "Label",
+            "GhostRadio",
         };
     }
 }

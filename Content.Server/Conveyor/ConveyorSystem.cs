@@ -1,13 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Items;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -20,6 +23,7 @@ namespace Content.Server.Conveyor
 {
     public class ConveyorSystem : EntitySystem
     {
+        [Dependency] private StunSystem _stunSystem = default!;
         [Dependency] private IEntityLookup _entityLookup = default!;
 
         public override void Initialize()
@@ -58,11 +62,8 @@ namespace Content.Server.Conveyor
                 signal != TwoWayLeverSignal.Middle)
             {
                 args.Cancel();
-                if (args.Attemptee.TryGetComponent<StunnableComponent>(out var stunnableComponent))
-                {
-                    stunnableComponent.Paralyze(2);
-                    component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
-                }
+                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f));
+                component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
             }
         }
 

@@ -84,7 +84,7 @@ namespace Content.Server.Light.EntitySystems
         {
             switch (args.Port)
             {
-                case "toggle":
+                case "state":
                     component.ToggleLight();
                     break;
             }
