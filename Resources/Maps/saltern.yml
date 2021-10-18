@@ -53979,96 +53979,72 @@ entities:
   - pos: 20.5,-27.5
     parent: 853
     type: Transform
-  - supplyRate: 119
-    type: PowerSupplier
 - uid: 5296
   type: SolarPanel
   components:
   - pos: 20.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5297
   type: SolarPanel
   components:
   - pos: 20.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5298
   type: SolarPanel
   components:
   - pos: 20.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5299
   type: SolarPanel
   components:
   - pos: 22.5,-27.5
     parent: 853
     type: Transform
-  - supplyRate: 121
-    type: PowerSupplier
 - uid: 5300
   type: SolarPanel
   components:
   - pos: 22.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5301
   type: SolarPanel
   components:
   - pos: 22.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5302
   type: SolarPanel
   components:
   - pos: 22.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 121
-    type: PowerSupplier
 - uid: 5303
   type: SolarPanel
   components:
   - pos: 24.5,-27.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5304
   type: SolarPanel
   components:
   - pos: 24.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5305
   type: SolarPanel
   components:
   - pos: 24.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 121
-    type: PowerSupplier
 - uid: 5306
   type: SolarPanel
   components:
   - pos: 24.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 121
-    type: PowerSupplier
 - uid: 5307
   type: SolarPanel
   components:
@@ -54081,8 +54057,6 @@ entities:
   - pos: 26.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 122
-    type: PowerSupplier
 - uid: 5309
   type: SolarPanel
   components:
@@ -54095,40 +54069,30 @@ entities:
   - pos: 26.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5311
   type: SolarPanel
   components:
   - pos: 18.5,-27.5
     parent: 853
     type: Transform
-  - supplyRate: 119
-    type: PowerSupplier
 - uid: 5312
   type: SolarPanel
   components:
   - pos: 18.5,-28.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5313
   type: SolarPanel
   components:
   - pos: 18.5,-29.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5314
   type: SolarPanel
   components:
   - pos: 18.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 120
-    type: PowerSupplier
 - uid: 5315
   type: CableApcExtension
   components:

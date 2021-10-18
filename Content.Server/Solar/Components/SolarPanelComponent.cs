@@ -73,9 +73,7 @@ namespace Content.Server.Solar.Components
         protected override void Initialize()
         {
             base.Initialize();
-
-            Owner.EnsureComponentWarn<PowerSupplierComponent>();
-
+            
             UpdateSupply();
         }
 
