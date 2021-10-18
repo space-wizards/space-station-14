@@ -2549,3 +2549,9 @@ Entries:
   - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
   id: 455
   time: '2021-10-18T22:47:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Security gear will now actually protect you against attacks., type: Add}
+  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
+  id: 456
+  time: '2021-10-18T23:24:37.0000000+00:00'
