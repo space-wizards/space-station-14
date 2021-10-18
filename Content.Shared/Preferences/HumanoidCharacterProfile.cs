@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Content.Shared.CCVar;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.Dataset;
 using Content.Shared.GameTicking;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
+using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -272,11 +275,12 @@ namespace Content.Shared.Preferences
                 name = Name;
             }
 
-            // TODO: Avoid Z̨͇̙͉͎̭͔̼̿͋A͚̖̞̗̞͈̓̾̀ͩͩ̔L̟ͮ̈͝G̙O͍͎̗̺̺ͫ̀̽͊̓͝ͅ tier shenanigans.
-            // And other stuff like RTL overrides and such.
-            // Probably also emojis...
-
             name = name.Trim();
+
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.AsciiNames))
+            {
+                name = Regex.Replace(name, @"[^\u0000-\u007F]+", string.Empty);
+            }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);
 
