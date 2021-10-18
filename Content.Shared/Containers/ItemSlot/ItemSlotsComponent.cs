@@ -29,11 +29,11 @@ namespace Content.Shared.Containers.ItemSlots
     }
 
     [Serializable, NetSerializable]
-    public sealed class ItemSlotManagerState : ComponentState
+    public sealed class ItemSlotsComponentState : ComponentState
     {
         public readonly Dictionary<string, bool> SlotLocked;
 
-        public ItemSlotManagerState(Dictionary<string, ItemSlot> slots)
+        public ItemSlotsComponentState(Dictionary<string, ItemSlot> slots)
         {
             SlotLocked = new(slots.Count);
 

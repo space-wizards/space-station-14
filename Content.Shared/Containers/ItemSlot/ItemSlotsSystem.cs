@@ -416,7 +416,7 @@ namespace Content.Shared.Containers.ItemSlots
         /// </remarks>
         private void HandleItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentHandleState args)
         {
-            if (args.Current is not ItemSlotManagerState state)
+            if (args.Current is not ItemSlotsComponentState state)
                 return;
 
             foreach (var (id, locked) in state.SlotLocked)
@@ -427,7 +427,7 @@ namespace Content.Shared.Containers.ItemSlots
 
         private void GetItemSlotsState(EntityUid uid, ItemSlotsComponent component, ref ComponentGetState args)
         {
-            args.State = new ItemSlotManagerState(component.Slots);
+            args.State = new ItemSlotsComponentState(component.Slots);
         }
     }
 }
