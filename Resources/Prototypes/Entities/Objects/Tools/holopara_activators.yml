@@ -1,0 +1,10 @@
+- type: entity
+  name: holoparasite projector
+  id: HoloparaIjector
+  parent: BaseItem
+  description: A immesly complex artwork of handheld machinery, allowing the user to host a holoparasite guardian. Should come with an insturction booklet.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/plates.rsi
+    state: plate-small-trash
+    netsync: false
