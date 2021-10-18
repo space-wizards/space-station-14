@@ -419,7 +419,6 @@ namespace Content.Shared.Interaction
             return false;
         }
 
-
         #region ActivateItemInWorld
         /// <summary>
         /// Activates the IActivate behavior of an object
@@ -730,7 +729,6 @@ namespace Content.Shared.Interaction
         }
         #endregion
         #endregion
-
     }
 
     /// <summary>

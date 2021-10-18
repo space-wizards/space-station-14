@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Act;
-using Content.Server.Interaction;
 using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Server.Pulling;
@@ -15,7 +14,6 @@ using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -222,26 +220,6 @@ namespace Content.Server.Hands.Components
             }
             return false;
         }
-
-        /// <summary>
-        ///     Attempts to put an item into the active hand, or any other hand if it cannot.
-        /// </summary>
-        public bool PutInHand(ItemComponent item, bool checkActionBlocker = true)
-        {
-            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
-        }
-
-        /// <summary>
-        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
-        /// </summary>
-        public void PutInHandOrDrop(ItemComponent item, bool checkActionBlocker = true)
-        {
-            var entity = item.Owner;
-
-            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
-                entity.Transform.Coordinates = Owner.Transform.Coordinates;
-        }
-
         #endregion
     }
 }

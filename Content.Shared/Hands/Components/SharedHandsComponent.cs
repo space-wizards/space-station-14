@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -750,6 +751,25 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
         /// </summary>
+        public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            var entity = item.Owner;
+
+            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+                entity.Transform.Coordinates = Owner.Transform.Coordinates;
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
         public bool TryPutInActiveHandOrAny(IEntity entity, bool checkActionBlocker = true)
         {
             return TryPutInAnyHand(entity, GetActiveHand(), checkActionBlocker);
@@ -788,20 +808,6 @@ namespace Content.Shared.Hands.Components
         }
 
         protected virtual void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState) { }
-
-        protected virtual void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop) { }
-
-        protected virtual void DoEquippedHandInteraction(IEntity entity, HandState handState) { }
-
-        protected virtual void DoHandSelectedInteraction(IEntity entity) { }
-
-        protected virtual void DoHandDeselectedInteraction(IEntity entity) { }
-
-        protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
-
-        protected virtual void DoUse(IEntity heldEntity, bool altInteract = false) { }
-
-        protected virtual void DoActivate(IEntity heldEntity) { }
 
         protected virtual void HandlePickupAnimation(IEntity entity) { }
     }
