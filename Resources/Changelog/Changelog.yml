@@ -2544,3 +2544,8 @@ Entries:
   - {message: Pipe rotation is less chaotic evil., type: Fix}
   id: 454
   time: '2021-10-18T11:42:30.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
+  id: 455
+  time: '2021-10-18T22:47:27.0000000+00:00'
