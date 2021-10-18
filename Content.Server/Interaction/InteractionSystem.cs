@@ -131,21 +131,6 @@ namespace Content.Server.Interaction
                 InteractionActivate(userEntity, item);
         }
 
-        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
-        {
-            if (!ValidateClientInput(session, coords, uid, out var user))
-            {
-                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
-                return false;
-            }
-
-            if (!EntityManager.TryGetEntity(uid, out var used))
-                return false;
-
-            InteractionActivate(user, used);
-            return true;
-        }
-
         #region Drag drop
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
@@ -188,6 +173,23 @@ namespace Content.Server.Interaction
                     return;
                 }
             }
+        }
+        #endregion
+
+        #region ActivateItemInWorld
+        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        {
+            if (!ValidateClientInput(session, coords, uid, out var user))
+            {
+                Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
+                return false;
+            }
+
+            if (!EntityManager.TryGetEntity(uid, out var used))
+                return false;
+
+            InteractionActivate(user, used);
+            return true;
         }
         #endregion
 
