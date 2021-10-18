@@ -169,8 +169,8 @@ namespace Content.Shared.Containers.ItemSlots
         }
 
         /// <summary>
-        ///     Can a given item be inserted into a slot. Unless otherwise specified, this will return false if the slot is
-        ///     already filled.
+        ///     Check whether a given item can be inserted into a slot. Unless otherwise specified, this will return
+        ///     false if the slot is already filled.
         /// </summary>
         public bool CanInsert(IEntity item, ItemSlot slot, bool swap = false)
         {
@@ -180,11 +180,13 @@ namespace Content.Shared.Containers.ItemSlots
             if (!swap && slot.HasItem)
                 return false;
 
-            // check if item allowed by the whitelist
             if (slot.Whitelist != null && !slot.Whitelist.IsValid(item))
                 return false;
 
-            return slot.ContainerSlot.CanInsert(item);
+            // We should also check ContainerSlot.CanInsert, but that prevents swapping interactions. Given that
+            // ContainerSlot.CanInsert gets called when the item is actually inserted anyways, we can just get away with
+            // fudging CanInsert and not performing those checks.
+            return true;
         }
 
         /// <summary>
@@ -346,7 +348,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Using, slot))
+                if (!CanInsert(args.Using, slot, swap: true))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -368,6 +370,13 @@ namespace Content.Shared.Containers.ItemSlots
                 }
 
                 insertVerb.Act = () => Insert(uid, slot, args.Using);
+                if (slot.HasItem)
+                {
+                    // This action will swap out the item already in the slot. For something like ID card consoles which
+                    // have more than one slot with the same whitelist, we want to prioritize slotting into empty slots.
+                    insertVerb.Priority = -1;
+                }
+
                 args.Verbs.Add(insertVerb);
             }
         }
