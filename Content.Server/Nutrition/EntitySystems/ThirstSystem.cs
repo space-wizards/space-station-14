@@ -15,7 +15,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (_accumulatedFrameTime > 1)
             {
-                foreach (var component in EntityManager.EntityQuery<ThirstComponent>(true))
+                foreach (var component in EntityManager.EntityQuery<ThirstComponent>())
                 {
                     component.OnUpdate(_accumulatedFrameTime);
                 }
