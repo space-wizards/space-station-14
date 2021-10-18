@@ -331,7 +331,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
         /// </summary>
-        public bool TryPutEntityIntoContainer(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -346,7 +346,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of a hand directly under the player.
         /// </summary>
-        public bool TryDropHandToFloor(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
@@ -357,7 +357,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop a held entity directly under the player.
         /// </summary>
-        public bool TryDropEntityToFloor(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -687,7 +687,7 @@ namespace Content.Shared.Hands.Components
             DoInteraction(activeHeldEntity, heldEntity);
         }
 
-        public void UseActiveHeldEntity(bool altInteract = false)
+        public void ActivateItem(bool altInteract = false)
         {
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;

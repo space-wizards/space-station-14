@@ -195,38 +195,6 @@ namespace Content.Server.Hands.Components
         }
 
         /// <summary>
-        ///     Attempts to use the active held item.
-        /// </summary>
-        public void ActivateItem()
-        {
-            UseActiveHeldEntity();
-        }
-
-        /// <summary>
-        ///     Tries to drop the contents of a hand directly under the player.
-        /// </summary>
-        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropHandToFloor(handName, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to drop an entity in a hand directly under the player.
-        /// </summary>
-        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
-        {
-            return TryDropEntityToFloor(entity, checkActionBlocker, intentionalDrop);
-        }
-
-        /// <summary>
-        ///     Tries to unequip contents of a hand directly into a container.
-        /// </summary>
-        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
-        {
-            return TryPutEntityIntoContainer(entity, targetContainer, checkActionBlocker);
-        }
-
-        /// <summary>
         ///     Tries to get the ItemComponent on the entity held by a hand.
         /// </summary>
         public ItemComponent? GetItem(string handName)
