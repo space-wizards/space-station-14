@@ -50,44 +50,6 @@ namespace Content.Server.Hands.Components
             }
         }
 
-        protected override void DoEquippedHandInteraction(IEntity entity, HandState handState)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().EquippedHandInteraction(Owner, entity, handState);
-        }
-
-        protected override void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
-        }
-
-        protected override void DoHandSelectedInteraction(IEntity entity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandSelectedInteraction(Owner, entity);
-        }
-
-        protected override void DoHandDeselectedInteraction(IEntity entity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>().HandDeselectedInteraction(Owner, entity);
-        }
-
-        protected override async void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity)
-        {
-            await _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
-        }
-
-        protected override void DoActivate(IEntity heldEntity)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryInteractionActivate(Owner, heldEntity);
-        }
-
-        protected override void DoUse(IEntity heldEntity, bool altInteract = false)
-        {
-            _entitySystemManager.GetEntitySystem<InteractionSystem>()
-                .TryUseInteraction(Owner, heldEntity, altInteract);
-        }
-
         protected override void HandlePickupAnimation(IEntity entity)
         {
             var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);

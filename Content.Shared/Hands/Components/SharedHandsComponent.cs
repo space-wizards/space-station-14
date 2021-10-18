@@ -452,7 +452,7 @@ namespace Content.Shared.Hands.Components
 
             RemoveHeldEntityFromHand(hand);
 
-            DoDroppedInteraction(heldEntity, intentionalDrop);
+            EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
 
             heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
@@ -622,7 +622,7 @@ namespace Content.Shared.Hands.Components
                 return;
             }
 
-            DoEquippedHandInteraction(entity, hand.ToHandState());
+            EntitySystem.Get<SharedInteractionSystem>().EquippedHandInteraction(Owner, entity, hand.ToHandState());
 
             if (hand.Name == ActiveHand)
                 SelectActiveHeldEntity();
@@ -673,7 +673,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to interact with the item in a hand using the active held item.
         /// </summary>
-        public void InteractHandWithActiveHand(string handName)
+        public async void InteractHandWithActiveHand(string handName)
         {
             if (!TryGetActiveHeldEntity(out var activeHeldEntity))
                 return;
@@ -684,7 +684,8 @@ namespace Content.Shared.Hands.Components
             if (activeHeldEntity == heldEntity)
                 return;
 
-            DoInteraction(activeHeldEntity, heldEntity);
+            await EntitySystem.Get<SharedInteractionSystem>()
+                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
         }
 
         public void ActivateItem(bool altInteract = false)
@@ -692,7 +693,8 @@ namespace Content.Shared.Hands.Components
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            DoUse(heldEntity, altInteract);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryUseInteraction(Owner, heldEntity, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -700,7 +702,8 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return;
 
-            DoActivate(heldEntity);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
         }
 
         /// <summary>
@@ -730,13 +733,13 @@ namespace Content.Shared.Hands.Components
         private void DeselectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandDeselectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, entity);
         }
 
         private void SelectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandSelectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandSelectedInteraction(Owner, entity);
         }
 
         private void HandCountChanged()
