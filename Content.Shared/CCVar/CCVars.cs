@@ -440,7 +440,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("viewport.snap_tolerance_margin", 64, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         public static readonly CVarDef<int> ViewportSnapToleranceClip =
-            CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY);
+            CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
