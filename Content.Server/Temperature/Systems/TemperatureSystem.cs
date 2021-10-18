@@ -4,11 +4,14 @@ using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 
 namespace Content.Server.Temperature.Systems
 {
     public class TemperatureSystem : EntitySystem
     {
+        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+
         public override void Initialize()
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(ChangeDamage);
@@ -99,12 +102,12 @@ namespace Content.Server.Temperature.Systems
             if (args.CurrentTemperature >= temperature.HeatDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((args.CurrentTemperature - temperature.HeatDamageThreshold) * temperature.TempDamageCoefficient);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.HeatDamage * tempDamage);
             }
             else if (args.CurrentTemperature <= temperature.ColdDamageThreshold)
             {
                 int tempDamage = (int) Math.Floor((temperature.ColdDamageThreshold - args.CurrentTemperature) * temperature.TempDamageCoefficient);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
+                _damageableSystem.TryChangeDamage(uid, temperature.ColdDamage * tempDamage);
             }
 
         }

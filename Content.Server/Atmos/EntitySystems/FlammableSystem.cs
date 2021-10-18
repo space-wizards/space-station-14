@@ -28,6 +28,7 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
 
         private const float MinimumFireStacks = -10f;
         private const float MaximumFireStacks = 20f;
@@ -208,7 +209,7 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    EntitySystem.Get<TemperatureSystem>().ReceiveHeat(flammable.Owner.Uid, 200 * flammable.FireStacks);
+                    _temperatureSystem.ReceiveHeat(flammable.Owner.Uid, 200 * flammable.FireStacks);
                     // TODO ATMOS Fire resistance from armor
                     var damageScale = Math.Min((int) (flammable.FireStacks * 2.5f), 10);
                     _damageableSystem.TryChangeDamage(flammable.Owner.Uid, flammable.Damage * damageScale);
