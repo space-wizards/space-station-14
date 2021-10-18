@@ -495,10 +495,13 @@ namespace Content.Client.Damage
             }
 
             if (_trackAllDamage)
+            {
                 UpdateDamageVisuals(damageComponent, spriteComponent);
-
-            if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
+            }
+            else if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
+            {
                 UpdateDamageVisuals(delta, damageComponent, spriteComponent);
+            }
         }
 
         private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component)
