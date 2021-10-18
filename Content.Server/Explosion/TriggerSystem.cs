@@ -17,6 +17,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using System;
 using System.Threading;
+using Content.Server.Construction.Components;
+using Content.Shared.Trigger;
 using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.Explosion
@@ -56,7 +58,6 @@ namespace Content.Server.Explosion
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<ToggleDoorOnTriggerComponent, TriggerEvent>(HandleDoorTrigger);
 
-            SubscribeLocalEvent<ExplosiveComponent, DestructionEventArgs>(HandleDestruction);
             SubscribeLocalEvent<TriggerOnProximityComponent, ComponentStartup>(OnStartup);
 
             SubscribeLocalEvent<TriggerOnProximityComponent, UnanchoredEvent>(OnUnanchor);
@@ -66,7 +67,7 @@ namespace Content.Server.Explosion
         private void OnStartup(EntityUid uid, TriggerOnProximityComponent component, ComponentStartup args)
         {
             component.Enabled = component.Enabled && (!component.RequiresAnchored ||
-                                                      ComponentManager.GetComponent<ITransformComponent>(uid).Anchored);
+                                                      EntityManager.GetComponent<ITransformComponent>(uid).Anchored);
 
             SetProximityFixture(uid, component, component.Enabled, true);
         }
@@ -158,10 +159,27 @@ namespace Content.Server.Explosion
             if (!component.Colliding.Add(uid) ||
                 component.NextTrigger > curTime) return;
 
+            SetProximityAppearance(uid, component);
             Trigger(component.Owner);
             component.NextTrigger = TimeSpan.FromSeconds(curTime.TotalSeconds + component.Cooldown);
 
             SetRepeating(uid, component);
+        }
+
+        private void SetProximityAppearance(EntityUid uid, TriggerOnProximityComponent component)
+        {
+            if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+            {
+                appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Active);
+                if (component.AnimationDuration > 0f)
+                {
+                    Timer.Spawn(TimeSpan.FromSeconds(component.AnimationDuration), () =>
+                    {
+                        if (appearanceComponent.Deleted) return;
+                        appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive);
+                    });
+                }
+            }
         }
 
         private void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, EndCollideEvent args)
@@ -180,6 +198,8 @@ namespace Content.Server.Explosion
 
             if (!component.Repeating || !(component.Cooldown > 0f)) return;
 
+            // TODO: Should just use an update + accumulator for this and also have a velocity threshold so people walking don't trigger it.
+            // also need to reduce cooldown to 1.5s I think (once threshold in).
             component.RepeatCancelTokenSource = new CancellationTokenSource();
 
             Timer.Spawn((int) (component.Cooldown * 1000), () =>
@@ -188,6 +208,7 @@ namespace Content.Server.Explosion
                     !EntityManager.TryGetEntity(uid, out var entity) ||
                     component.Deleted) return;
 
+                SetProximityAppearance(uid, component);
                 component.NextTrigger = TimeSpan.FromSeconds(_gameTiming.CurTime.TotalSeconds + component.Cooldown);
                 Trigger(entity);
                 SetRepeating(uid, component);
@@ -197,12 +218,17 @@ namespace Content.Server.Explosion
         public void SetProximityFixture(EntityUid uid, TriggerOnProximityComponent component, bool value, bool force = false)
         {
             if (component.Enabled == value && !force ||
-                !ComponentManager.TryGetComponent(uid, out PhysicsComponent? body)) return;
+                !EntityManager.TryGetComponent(uid, out PhysicsComponent? body)) return;
 
             component.Enabled = value;
 
             if (value)
             {
+                if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+                {
+                    appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Inactive);
+                }
+
                 // Already has it so don't worry about it.
                 if (body.GetFixture(TriggerOnProximityComponent.FixtureID) != null) return;
 
@@ -214,6 +240,11 @@ namespace Content.Server.Explosion
             }
             else
             {
+                if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
+                {
+                    appearanceComponent.SetData(ProximityTriggerVisualState.State, ProximityTriggerVisuals.Off);
+                }
+
                 // Don't disable token in case we get enabled and re-enabled multiple times before it's triggered.
                 var fixture = body.GetFixture(TriggerOnProximityComponent.FixtureID);
 

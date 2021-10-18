@@ -31,6 +31,13 @@ namespace Content.Server.Explosion.Components
         public IPhysShape Shape { get; set; } = default!;
 
         /// <summary>
+        /// How long the the proximity trigger animation plays for.
+        /// </summary>
+        [ViewVariables]
+        [DataField("animationDuration")]
+        public float AnimationDuration = 0.3f;
+
+        /// <summary>
         /// Whether the entity needs to be anchored for the proximity to work.
         /// </summary>
         [ViewVariables]

@@ -48,7 +48,7 @@
       size: 2
       sprite: Objects/Weapons/Melee/flash.rsi
     - type: ItemCooldown
-        
+
 - type: entity
   name: portable flasher
   parent: BaseStructure
@@ -56,7 +56,7 @@
   description: An ultrabright flashbulb with a proximity trigger, useful for making an area security-only.
   components:
     - type: SoundOnTrigger
-      sound: 
+      sound:
         path: /Audio/Weapons/flash.ogg
     - type: FlashOnTrigger
       repeating: true
@@ -68,8 +68,12 @@
           radius: 2
     - type: Anchorable
     - type: Sprite
+      netsync: false
       sprite: Objects/Weapons/pflash.rsi
-      state: "off"
+      layers:
+        - state: "off"
+          map: ["enum.ProximityTriggerVisualLayers.Base"]
+    - type: InteractionOutline
     - type: Physics
       fixtures:
       - shape:
@@ -83,4 +87,8 @@
         - Opaque
         - MobImpassable
         mass: 70
+    - type: Appearance
+      visuals:
+      - type: ProximityTriggerVisualizer
+        animationState: flashing
 
