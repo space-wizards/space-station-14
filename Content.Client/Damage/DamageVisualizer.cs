@@ -36,7 +36,6 @@ namespace Content.Client.Damage
     /// </summary>
     public class DamageVisualizer : AppearanceVisualizer
     {
-
         [Dependency] IPrototypeManager _prototypeManager = default!;
         /// <summary>
         ///     Damage thresholds between damage state changes.
@@ -126,23 +125,39 @@ namespace Content.Client.Damage
         [DataField("damageGroup")]
         private readonly string? _damageGroup;
 
-        // Avoids duplication. Set this if you have child classes
-        // that share similar overlays, and you don't want to
-        // create the same exact sprite a million times
+        /// <summary>
+        ///     Set this if you want incoming damage to be
+        ///     divided.
+        /// </summary>
+        /// <remarks>
+        ///     This is more useful if you have similar
+        ///     damage sprites inbetween entities,
+        ///     but with different damage thresholds
+        ///     and you want to avoid duplicating
+        ///     these sprites.
+        /// </remarks>
         [DataField("damageDivisor")]
         private float _divisor = 1;
 
-        // Set this to track all damage, instead of specific groups.
-        // Useful if what you have is destroyable in any damage case.
+        /// <summary>
+        ///     Set this to track all damage, instead of specific groups.
+        /// </summary>
+        /// <remarks>
+        ///     This will only work if you have damageOverlay
+        ///     defined - otherwise, it will not work.
+        /// </remarks>
         [DataField("trackAllDamage")]
         private readonly bool _trackAllDamage = false;
-        // This is the overlay sprite used, if _trackAllDamage is
-        // enabled (since you can't exactly define a group when
-        // summing damage). Supports no complex per-group layering,
-        // just an actually simple damage overlay.
+        /// <summary>
+        ///     This is the overlay sprite used, if _trackAllDamage is
+        //      enabled. Supports no complex per-group layering,
+        ///     just an actually simple damage overlay. See
+        ///     DamageVisualizerSprite for more information.
+        /// </summary>
         [DataField("damageOverlay")]
         private readonly DamageVisualizerSprite? _damageOverlay;
-        // The last damage threshold tracked.
+        // The last damage threshold tracked. This is
+        // only used when _trackAllDamage is true.
         private int _lastDamageThreshold = 0;
 
         // this is here to ensure that layers stay disabled
@@ -165,13 +180,21 @@ namespace Content.Client.Damage
             ///     group overlay.
             /// </summary>
             /// <remarks>
-            ///     States in here will require one of two
+            ///     States in here will require one of four
             ///     forms:
+            ///
+            ///     If tracking damage groups:
             ///     - {base_state}_{group}_{threshold} if targetting
             ///       a static layer on a sprite (either as an
             ///       overlay or as a state change)
-            ///     - DamageOverlay_{group_{threshold} if not
+            ///     - DamageOverlay_{group}_{threshold} if not
             ///       targetting a layer on a sprite.
+            ///
+            ///     If not tracking damage groups:
+            ///     - {base_state}_{threshold} if it is targetting
+            ///       a layer
+            ///     - DamageOverlay_{threshold} if not targetting
+            ///       a layer.
             /// </remarks>
             [DataField("sprite", required: true)]
             public readonly string Sprite = default!;
@@ -277,7 +300,6 @@ namespace Content.Client.Damage
             {
                 Logger.WarningS("DamageVisualizer", $"Damage overlay sprites and damage group are both defined on {entity.Name}.");
             }
-
         }
 
         private void InitializeVisualizer(IEntity entity)
@@ -299,32 +321,30 @@ namespace Content.Client.Damage
                 return;
             }
 
-            if (damageComponent.DamageContainerID != null)
+            if (damageComponent.DamageContainerID != null
+                && _prototypeManager.TryIndex<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
             {
-                if (_prototypeManager.TryIndex<DamageContainerPrototype>(damageComponent.DamageContainerID, out var damageContainer))
+                if (_damageOverlayGroups != null)
                 {
-                    if (_damageOverlayGroups != null)
+                    foreach (string damageType in _damageOverlayGroups.Keys)
                     {
-                        foreach (string damageType in _damageOverlayGroups.Keys)
+                        if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
-                            if (!damageContainer.SupportedGroups.Contains(damageType))
-                            {
-                                _damageOverlayGroups.Remove(damageType);
-                            }
-                            _lastThresholdPerGroup.Add(damageType, 0);
+                            _damageOverlayGroups.Remove(damageType);
                         }
+                        _lastThresholdPerGroup.Add(damageType, 0);
                     }
-                    else if (_damageGroup != null)
+                }
+                else if (_damageGroup != null)
+                {
+                    if (!damageContainer.SupportedGroups.Contains(_damageGroup))
                     {
-                        if (!damageContainer.SupportedGroups.Contains(_damageGroup))
-                        {
-                            Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity.Name}.");
-                            _valid = false;
-                            return;
-                        }
+                        Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity.Name}.");
+                        _valid = false;
+                        return;
+                    }
 
-                        _lastThresholdPerGroup.Add(_damageGroup, 0);
-                    }
+                    _lastThresholdPerGroup.Add(_damageGroup, 0);
                 }
             }
             else // oh boy! time to enumerate through every single group!
@@ -580,7 +600,6 @@ namespace Content.Client.Damage
             spriteComponent.LayerSetVisible(spriteLayer, visibility);
             // this is somewhat iffy since it constantly reallocates
             _topMostLayerKey = key;
-
         }
 
         private void UpdateDamageVisuals(DamageableComponent damageComponent, SpriteComponent spriteComponent)
@@ -673,7 +692,9 @@ namespace Content.Client.Damage
                 UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent);
             }
             else if (_damageOverlay != null)
+            {
                 UpdateDamageVisuals(damageComponent, spriteComponent);
+            }
         }
 
         private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, int threshold)
