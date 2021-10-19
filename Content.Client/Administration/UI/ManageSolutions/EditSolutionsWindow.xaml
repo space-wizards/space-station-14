@@ -1,6 +1,6 @@
 <SS14Window
     Title="{Loc 'admin-solutions-window-title'}"
-    SetSize="300 400"
+    SetSize="270 300"
     Margin="4 0"
     xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
@@ -8,9 +8,10 @@
             <Label Text ="{Loc 'admin-solutions-window-solution-label'}" Margin="0 0 10 0"/>
             <OptionButton Name="SolutionOption" HorizontalExpand="True"/>
         </BoxContainer>
-        <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True"  Margin="0 4"/>
+        <Label Name="TotalLabel" HorizontalExpand="True"  Margin="0 4"/>
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True" Margin="0 4">
             <BoxContainer Name="ReagentList" Orientation="Vertical"/>
         </ScrollContainer>
+        <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True"  Margin="0 4"/>
     </BoxContainer>
 </SS14Window>

@@ -1,1 +1,1 @@
-admin-solution-manager-verb-get-data-text = Manage Solutions
+admin-solution-manager-verb-get-data-text = Edit Solutions

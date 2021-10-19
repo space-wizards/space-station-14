@@ -6,6 +6,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
+using System;
 
 namespace Content.Server.Administration.Commands
 {
@@ -55,7 +56,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine($"Failed to parse quantity");
                 return;
             }
-            var quantity = ReagentUnit.New(quantityFloat);
+            var quantity = ReagentUnit.New(MathF.Abs(quantityFloat));
 
             if (quantityFloat > 0)
                 EntitySystem.Get<SolutionContainerSystem>().TryAddReagent(uid, solution, args[2], quantity, out var _);

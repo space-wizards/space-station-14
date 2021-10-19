@@ -13,6 +13,7 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -36,7 +37,8 @@ namespace Content.Server.Administration
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-
+        [Dependency] private readonly AdminSolutionsSystem _adminSolutionsSystem = default!;
+        
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
@@ -182,6 +184,18 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () => config.OpenUserInterface(actor);
+                args.Verbs.Add(verb);
+            }
+
+            // Add Solution Manager verb
+            if (_groupController.CanCommand(player, "addreagent") &&
+                args.Target.HasComponent<SolutionContainerManagerComponent>())
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("admin-solution-manager-verb-get-data-text");
+                verb.Category = VerbCategory.Debug;
+                verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
+                verb.Act = () => _adminSolutionsSystem.OpenEui(player, args.Target.Uid);
                 args.Verbs.Add(verb);
             }
         }

@@ -116,7 +116,7 @@ namespace Content.Server.Body.Metabolism
                 removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
             }
 
-            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
+            solutionsSys.TryRemoveAllReagents(body!.Owner.Uid, solution, removeReagents);
         }
     }
 }

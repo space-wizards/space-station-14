@@ -21,6 +21,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
         private string _targetSolution;
         private ReagentPrototype? _selectedReagent;
 
+        // FloatSpinBox does not (yet?) play nice with xaml
+        private FloatSpinBox _quantitySpin = new(1, 2) { Value = 10, HorizontalExpand = true};
+
         public AddReagentWindow(EntityUid targetEntity, string targetSolution)
         {
             IoCManager.InjectDependencies(this);
@@ -31,10 +34,12 @@ namespace Content.Client.Administration.UI.ManageSolutions
             _targetEntity = targetEntity;
             _targetSolution = targetSolution;
 
+            QuantityBox.AddChild(_quantitySpin);
+
             ReagentList.OnItemSelected += ReagentListSelected;
             ReagentList.OnItemDeselected += ReagentListDeselected;
             SearchBar.OnTextChanged += SearchTextChanged;
-            QuantitySpin.OnValueChanged += QuantityChanged;
+            _quantitySpin.OnValueChanged += QuantityChanged;
             AddButton.OnPressed += AddReagent;
 
             UpdateReagentPrototypes();
@@ -51,7 +56,8 @@ namespace Content.Client.Administration.UI.ManageSolutions
             if (_selectedReagent == null)
                 return;
 
-            var command = $"addreagent {_targetEntity} {_targetSolution} {_selectedReagent.ID} {QuantitySpin.Value}";
+            var quantity = _quantitySpin.Value.ToString("F2");
+            var command = $"addreagent {_targetEntity} {_targetSolution} {_selectedReagent.ID} {quantity}";
             _consoleHost.ExecuteCommand(command);
         }
 
@@ -85,7 +91,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             }
 
             AddButton.Text = Loc.GetString("admin-add-reagent-window-add",
-                ("quantity", QuantitySpin.Value.ToString("F2")),
+                ("quantity", _quantitySpin.Value.ToString("F2")),
                 ("reagent", _selectedReagent.ID));
 
             AddButton.Disabled = false;
