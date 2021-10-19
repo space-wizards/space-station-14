@@ -26,7 +26,7 @@ We are not currently accepting translations of the game on our main repository. 
 2. Run `RUN_THIS.py` to init submodules and download the engine.
 3. Compile the solution.
 
-[More detailed instructions on building the project.](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)
+[More detailed instructions on building the project.](https://docs.spacestation14.io/getting-started/dev-setup)
 
 ## License
 
