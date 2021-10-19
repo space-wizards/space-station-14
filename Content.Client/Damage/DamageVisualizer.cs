@@ -37,6 +37,7 @@ namespace Content.Client.Damage
     public class DamageVisualizer : AppearanceVisualizer
     {
         [Dependency] IPrototypeManager _prototypeManager = default!;
+        [Dependency] IEntityManager _entityManager = default!;
         /// <summary>
         ///     Damage thresholds between damage state changes.
         ///
@@ -79,9 +80,6 @@ namespace Content.Client.Damage
         /// </remarks>
         [DataField("targetLayers")]
         private List<string>? _targetLayers;
-        // This is where all the keys are stored after the
-        // entity is initialized.
-        private List<object> _targetLayerMapKeys = new();
 
         /// <summary>
         ///     The actual sprites for every damage group
@@ -150,25 +148,12 @@ namespace Content.Client.Damage
         private readonly bool _trackAllDamage = false;
         /// <summary>
         ///     This is the overlay sprite used, if _trackAllDamage is
-        //      enabled. Supports no complex per-group layering,
+        ///     enabled. Supports no complex per-group layering,
         ///     just an actually simple damage overlay. See
         ///     DamageVisualizerSprite for more information.
         /// </summary>
         [DataField("damageOverlay")]
         private readonly DamageVisualizerSprite? _damageOverlay;
-        // The last damage threshold tracked. This is
-        // only used when _trackAllDamage is true.
-        private int _lastDamageThreshold = 0;
-
-        // this is here to ensure that layers stay disabled
-        private Dictionary<object, bool> _disabledLayers = new();
-        // this is here to ensure that targetted layers
-        // have their original states within their layermaps
-        // kept
-        private Dictionary<object, string> _layerMapKeyStates = new();
-
-        private Dictionary<string, int> _lastThresholdPerGroup = new();
-        private string _topMostLayerKey = default!;
 
         // deals with the edge case of human damage visuals not
         // being in color without making a Dict<Dict<Dict<Dict<Dict<Dict...
@@ -208,7 +193,21 @@ namespace Content.Client.Damage
         }
 
         private bool _valid = true;
-        private bool _disabled = false;
+
+        // This is all the per-entity data.
+        // Everything else is pre-defined in the visualizer
+        // prototype.
+
+        public class DamageVisualizerEntityData
+        {
+            public List<object> TargetLayerMapKeys = new();
+            public bool Disabled = false;
+            public int LastDamageThreshold = 0;
+            public Dictionary<object, bool> DisabledLayers = new();
+            public Dictionary<object, string> LayerMapKeyStates = new();
+            public Dictionary<string, int> LastThresholdPerGroup = new();
+            public string TopMostLayerKey = default!;
+        }
 
         public override void InitializeEntity(IEntity entity)
         {
@@ -309,7 +308,7 @@ namespace Content.Client.Damage
                 || !entity.TryGetComponent<AppearanceComponent>(out var appearanceComponent))
                 return;
 
-            appearanceComponent.SetData(DamageVisualizerKeys.Disabled, false);
+            var damageData = _entityManager.AddComponent<DamageVisualizerDataComponent>(entity);
 
             _thresholds.Add(0);
             _thresholds.Sort();
@@ -331,8 +330,9 @@ namespace Content.Client.Damage
                         if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
                             _damageOverlayGroups.Remove(damageType);
+                            continue;
                         }
-                        _lastThresholdPerGroup.Add(damageType, 0);
+                        damageData.LastThresholdPerGroup.Add(damageType, 0);
                     }
                 }
                 else if (_damageGroup != null)
@@ -344,7 +344,7 @@ namespace Content.Client.Damage
                         return;
                     }
 
-                    _lastThresholdPerGroup.Add(_damageGroup, 0);
+                    damageData.LastThresholdPerGroup.Add(_damageGroup, 0);
                 }
             }
             else // oh boy! time to enumerate through every single group!
@@ -356,8 +356,11 @@ namespace Content.Client.Damage
                     foreach (string damageType in _damageOverlayGroups.Keys)
                     {
                         if (!damagePrototypeIdList.Contains(damageType))
+                        {
                             _damageOverlayGroups.Remove(damageType);
-                        _lastThresholdPerGroup.Add(damageType, 0);
+                            continue;
+                        }
+                        damageData.LastThresholdPerGroup.Add(damageType, 0);
                     }
                 else if (_damageGroup != null)
                 {
@@ -368,17 +371,17 @@ namespace Content.Client.Damage
                         return;
                     }
 
-                    _lastThresholdPerGroup.Add(_damageGroup, 0);
+                    damageData.LastThresholdPerGroup.Add(_damageGroup, 0);
                 }
             }
 
-            if (_damageOverlayGroups != null)
-                if (_damageOverlayGroups.Keys.Count == 0)
-                {
-                    Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity.Name}.");
-                    _valid = false;
-                    return;
-                }
+            if (_damageOverlayGroups != null
+                && _damageOverlayGroups.Keys.Count == 0)
+            {
+                Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity.Name}.");
+                _valid = false;
+                return;
+            }
 
             if (_targetLayers != null && _targetLayers.Count > 0)
             {
@@ -398,17 +401,17 @@ namespace Content.Client.Damage
                         || spriteComponent.LayerGetState(index).ToString() == null)
                         continue;
 
-                    _targetLayerMapKeys.Add(key);
+                    damageData.TargetLayerMapKeys.Add(key);
                 };
 
-                if (_targetLayerMapKeys.Count == 0)
+                if (damageData.TargetLayerMapKeys.Count == 0)
                 {
                     Logger.ErrorS("DamageVisualizer", $"Target layers were invalid for entity {entity.Name}.");
                     _valid = false;
                     return;
                 }
 
-                foreach (object layer in _targetLayerMapKeys)
+                foreach (object layer in damageData.TargetLayerMapKeys)
                 {
                     int layerCount = spriteComponent.AllLayers.Count();
                     int index = spriteComponent.LayerMapGet(layer);
@@ -419,7 +422,7 @@ namespace Content.Client.Damage
                         index = index + 1;
                     }
 
-                    _layerMapKeyStates.Add(layer, layerState);
+                    damageData.LayerMapKeyStates.Add(layer, layerState);
 
                     if (_overlay && _damageOverlayGroups != null)
                     {
@@ -431,7 +434,7 @@ namespace Content.Client.Damage
                                 $"{layer}{group}",
                                 index);
                         }
-                        _disabledLayers.Add(layer, false);
+                        damageData.DisabledLayers.Add(layer, false);
                     }
                     else if (_damageOverlay != null)
                     {
@@ -440,7 +443,7 @@ namespace Content.Client.Damage
                             $"{layerState}_{_thresholds[1]}",
                             $"{layer}trackDamage",
                             index);
-                        _disabledLayers.Add(layer, false);
+                        damageData.DisabledLayers.Add(layer, false);
                     }
                 }
             }
@@ -454,7 +457,7 @@ namespace Content.Client.Damage
                             sprite,
                             $"DamageOverlay_{group}_{_thresholds[1]}",
                             $"DamageOverlay{group}");
-                        _topMostLayerKey = $"DamageOverlay{group}";
+                        damageData.TopMostLayerKey = $"DamageOverlay{group}";
                     }
                 }
                 else if (_damageOverlay != null)
@@ -463,9 +466,11 @@ namespace Content.Client.Damage
                         _damageOverlay,
                         $"DamageOverlay_{_thresholds[1]}",
                         "DamageOverlay");
-                    _topMostLayerKey = $"DamageOverlay";
+                    damageData.TopMostLayerKey = $"DamageOverlay";
                 }
             }
+
+            appearanceComponent.SetData("damageData", damageData);
         }
 
         private void AddDamageLayerToSprite(SpriteComponent spriteComponent, DamageVisualizerSprite sprite, string state, string mapKey, int? index = null)
@@ -485,48 +490,61 @@ namespace Content.Client.Damage
             if (!_valid)
                 return;
 
-            if (component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
-                if (disabledStatus != _disabled)
-                    _disabled = disabledStatus;
+            if (!component.Owner.TryGetComponent<DamageVisualizerDataComponent>(out var damageData))
+            {
+                // a call that changes data occurs somewhere around here,
+                // so we just return and let that new call occur
+                // since we don't have a 'post initialization hook'
+                // anywhere, and calling SetData in the entity
+                // during visualizer initialization
+                // doesn't... work.
+                return;
+            }
 
-            if (_disabled)
+            if (component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
+                if (disabledStatus != damageData.Disabled)
+                    damageData.Disabled = disabledStatus;
+
+            if (damageData.Disabled)
                 return;
 
-            HandleDamage(component);
+            HandleDamage(component, damageData);
         }
 
-        private void HandleDamage(AppearanceComponent component)
+        private void HandleDamage(AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
             if (!component.Owner.TryGetComponent<SpriteComponent>(out var spriteComponent)
                 || !component.Owner.TryGetComponent<DamageableComponent>(out var damageComponent))
                 return;
 
             if (_targetLayers != null && _damageOverlayGroups != null)
-                UpdateDisabledLayers(spriteComponent, component);
+                UpdateDisabledLayers(spriteComponent, component, damageData);
 
             if (_overlay && _damageOverlayGroups != null && _targetLayers == null)
-                CheckOverlayOrdering(spriteComponent);
+                CheckOverlayOrdering(spriteComponent, damageData);
 
             if (component.TryGetData<bool>(DamageVisualizerKeys.ForceUpdate, out bool update)
                 && update)
             {
-                ForceUpdateLayers(damageComponent, spriteComponent);
+                ForceUpdateLayers(damageComponent, spriteComponent, damageData);
                 return;
             }
 
             if (_trackAllDamage)
             {
-                UpdateDamageVisuals(damageComponent, spriteComponent);
+                UpdateDamageVisuals(damageComponent, spriteComponent, damageData);
             }
             else if (component.TryGetData<List<string>>(DamageVisualizerKeys.DamageUpdateGroups, out List<string>? delta))
             {
-                UpdateDamageVisuals(delta, damageComponent, spriteComponent);
+                UpdateDamageVisuals(delta, damageComponent, spriteComponent, damageData);
             }
+
+            component.SetData(component.Owner.Uid.ToString(), damageData);
         }
 
-        private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component)
+        private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualizerDataComponent damageData)
         {
-            foreach (object layer in _targetLayerMapKeys)
+            foreach (object layer in damageData.TargetLayerMapKeys)
             {
                 bool? layerStatus = null;
                 switch (layer)
@@ -544,28 +562,29 @@ namespace Content.Client.Damage
                 if (layerStatus == null)
                     continue;
 
-                if (_disabledLayers[layer] != (bool) layerStatus)
+                if (damageData.DisabledLayers[layer] != (bool) layerStatus)
                 {
-                    _disabledLayers[layer] = (bool) layerStatus;
+                    damageData.DisabledLayers[layer] = (bool) layerStatus;
                     if (!_trackAllDamage && _damageOverlayGroups != null)
                         foreach (string damageGroup in _damageOverlayGroups!.Keys)
-                            spriteComponent.LayerSetVisible($"{layer}{damageGroup}", _disabledLayers[layer]);
+                            spriteComponent.LayerSetVisible($"{layer}{damageGroup}", damageData.DisabledLayers[layer]);
                     else if (_trackAllDamage)
-                        spriteComponent.LayerSetVisible($"{layer}trackDamage", _disabledLayers[layer]);
+                        spriteComponent.LayerSetVisible($"{layer}trackDamage", damageData.DisabledLayers[layer]);
                 }
             }
         }
 
-        private void CheckOverlayOrdering(SpriteComponent spriteComponent)
+        private void CheckOverlayOrdering(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
-            if (spriteComponent[_topMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
+            if (spriteComponent[damageData.TopMostLayerKey] != spriteComponent[spriteComponent.AllLayers.Count() - 1])
             {
                 if (!_trackAllDamage && _damageOverlayGroups != null)
                 {
                     foreach (var (damageGroup, sprite) in _damageOverlayGroups)
                     {
-                        int threshold = _lastThresholdPerGroup[damageGroup];
+                        int threshold = damageData.LastThresholdPerGroup[damageGroup];
                         ReorderOverlaySprite(spriteComponent,
+                            damageData,
                             sprite,
                             $"DamageOverlay{damageGroup}",
                             $"DamageOverlay_{damageGroup}",
@@ -575,15 +594,16 @@ namespace Content.Client.Damage
                 else if (_trackAllDamage && _damageOverlay != null)
                 {
                     ReorderOverlaySprite(spriteComponent,
+                        damageData,
                         _damageOverlay,
                         $"DamageOverlay",
                         $"DamageOverlay",
-                        _lastDamageThreshold);
+                        damageData.LastDamageThreshold);
                 }
             }
         }
 
-        private void ReorderOverlaySprite(SpriteComponent spriteComponent, DamageVisualizerSprite sprite, string key, string statePrefix, int threshold)
+        private void ReorderOverlaySprite(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, DamageVisualizerSprite sprite, string key, string statePrefix, int threshold)
         {
             spriteComponent.LayerMapTryGet(key, out int spriteLayer);
             bool visibility = spriteComponent[spriteLayer].Visible;
@@ -599,10 +619,10 @@ namespace Content.Client.Damage
             spriteComponent.LayerMapSet(key, spriteLayer);
             spriteComponent.LayerSetVisible(spriteLayer, visibility);
             // this is somewhat iffy since it constantly reallocates
-            _topMostLayerKey = key;
+            damageData.TopMostLayerKey = key;
         }
 
-        private void UpdateDamageVisuals(DamageableComponent damageComponent, SpriteComponent spriteComponent)
+        private void UpdateDamageVisuals(DamageableComponent damageComponent, SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
             int damageTotal = (int) Math.Floor(damageComponent.TotalDamage / _divisor);
 
@@ -619,15 +639,15 @@ namespace Content.Client.Damage
                 threshold = _thresholds[thresholdIndex];
             }
 
-            if (threshold == _lastDamageThreshold)
+            if (threshold == damageData.LastDamageThreshold)
                 return;
 
-            _lastDamageThreshold = threshold;
+            damageData.LastDamageThreshold = threshold;
 
             if (_targetLayers != null)
             {
-                foreach (var layerMapKey in _targetLayerMapKeys)
-                    UpdateTargetLayer(spriteComponent, layerMapKey, threshold);
+                foreach (var layerMapKey in damageData.TargetLayerMapKeys)
+                    UpdateTargetLayer(spriteComponent, damageData, layerMapKey, threshold);
             }
             else
             {
@@ -635,7 +655,7 @@ namespace Content.Client.Damage
             }
         }
 
-        private void UpdateDamageVisuals(List<string> delta, DamageableComponent damageComponent, SpriteComponent spriteComponent)
+        private void UpdateDamageVisuals(List<string> delta, DamageableComponent damageComponent, SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
             foreach (var damageGroup in delta)
             {
@@ -662,16 +682,16 @@ namespace Content.Client.Damage
                     threshold = _thresholds[thresholdIndex];
                 }
 
-                if (!_lastThresholdPerGroup.TryGetValue(damageGroup, out int lastThreshold)
+                if (!damageData.LastThresholdPerGroup.TryGetValue(damageGroup, out int lastThreshold)
                     || threshold == lastThreshold)
                     continue;
 
-                _lastThresholdPerGroup[damageGroup] = threshold;
+                damageData.LastThresholdPerGroup[damageGroup] = threshold;
 
                 if (_targetLayers != null)
                 {
-                    foreach (var layerMapKey in _targetLayerMapKeys)
-                        UpdateTargetLayer(spriteComponent, layerMapKey, damageGroup, threshold);
+                    foreach (var layerMapKey in damageData.TargetLayerMapKeys)
+                        UpdateTargetLayer(spriteComponent, damageData, layerMapKey, damageGroup, threshold);
                 }
                 else
                 {
@@ -681,29 +701,29 @@ namespace Content.Client.Damage
 
         }
 
-        private void ForceUpdateLayers(DamageableComponent damageComponent, SpriteComponent spriteComponent)
+        private void ForceUpdateLayers(DamageableComponent damageComponent, SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
             if (_damageOverlayGroups != null)
             {
-                UpdateDamageVisuals(_damageOverlayGroups.Keys.ToList(), damageComponent, spriteComponent);
+                UpdateDamageVisuals(_damageOverlayGroups.Keys.ToList(), damageComponent, spriteComponent, damageData);
             }
             else if (_damageGroup != null)
             {
-                UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent);
+                UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent, damageData);
             }
             else if (_damageOverlay != null)
             {
-                UpdateDamageVisuals(damageComponent, spriteComponent);
+                UpdateDamageVisuals(damageComponent, spriteComponent, damageData);
             }
         }
 
-        private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, int threshold)
+        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, int threshold)
         {
             if (_overlay && _damageOverlayGroups != null)
             {
-                if (!_disabledLayers[layerMapKey])
+                if (!damageData.DisabledLayers[layerMapKey])
                 {
-                    string layerState = _layerMapKeyStates[layerMapKey];
+                    string layerState = damageData.LayerMapKeyStates[layerMapKey];
                     spriteComponent.LayerMapTryGet($"{layerMapKey}trackDamage", out int spriteLayer);
 
                     UpdateDamageLayerState(spriteComponent,
@@ -714,7 +734,7 @@ namespace Content.Client.Damage
             }
             else if (!_overlay)
             {
-                string layerState = _layerMapKeyStates[layerMapKey];
+                string layerState = damageData.LayerMapKeyStates[layerMapKey];
                 spriteComponent.LayerMapTryGet(layerMapKey, out int spriteLayer);
 
                 UpdateDamageLayerState(spriteComponent,
@@ -724,13 +744,13 @@ namespace Content.Client.Damage
             }
         }
 
-        private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, string damageGroup, int threshold)
+        private void UpdateTargetLayer(SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData, object layerMapKey, string damageGroup, int threshold)
         {
             if (_overlay && _damageOverlayGroups != null)
             {
-                if (_damageOverlayGroups.ContainsKey(damageGroup) && !_disabledLayers[layerMapKey])
+                if (_damageOverlayGroups.ContainsKey(damageGroup) && !damageData.DisabledLayers[layerMapKey])
                 {
-                    string layerState = _layerMapKeyStates[layerMapKey];
+                    string layerState = damageData.LayerMapKeyStates[layerMapKey];
                     spriteComponent.LayerMapTryGet($"{layerMapKey}{damageGroup}", out int spriteLayer);
 
                     UpdateDamageLayerState(spriteComponent,
@@ -741,7 +761,7 @@ namespace Content.Client.Damage
             }
             else if (!_overlay)
             {
-                string layerState = _layerMapKeyStates[layerMapKey];
+                string layerState = damageData.LayerMapKeyStates[layerMapKey];
                 spriteComponent.LayerMapTryGet(layerMapKey, out int spriteLayer);
 
                 UpdateDamageLayerState(spriteComponent,
