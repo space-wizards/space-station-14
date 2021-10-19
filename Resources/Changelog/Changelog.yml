@@ -2562,3 +2562,8 @@ Entries:
   - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
   id: 457
   time: '2021-10-19T07:13:44.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: freezers are rotatable now., type: Fix}
+  id: 458
+  time: '2021-10-19T07:22:41.0000000+00:00'
