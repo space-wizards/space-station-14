@@ -39,36 +39,6 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
-            SubscribeLocalEvent<DrinkComponent, DrinkOpenedChangedEvent>(OnOpenChanged);
-        }
-
-        private void OnOpenChanged(EntityUid uid, DrinkComponent component, DrinkOpenedChangedEvent args)
-        {
-            var owner = EntityManager.GetEntity(uid);
-
-            var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSys.TryGetSolution(owner, component.SolutionName, out _))
-            {
-                return;
-            }
-
-            if (owner.TryGetComponent(out AppearanceComponent? appearance))
-            {
-                appearance.SetData(DrinkCanStateVisual.Opened, args.NewOpened);
-            }
-
-            if (args.NewOpened)
-            {
-                var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
-                refillable.Solution = component.SolutionName;
-                var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
-                drainable.Solution = component.SolutionName;
-            }
-            else
-            {
-                owner.RemoveComponent<RefillableSolutionComponent>();
-                owner.RemoveComponent<DrainableSolutionComponent>();
-            }
         }
 
         public bool IsEmpty(EntityUid uid, DrinkComponent? component = null)
@@ -78,8 +48,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var owner = EntityManager.GetEntity(uid);
 
-            var drainAvailable = EntitySystem.Get<SolutionContainerSystem>()
-                .DrainAvailable(owner);
+            var drainAvailable = _solutionContainerSystem.DrainAvailable(owner);
             return drainAvailable <= 0;
         }
 
@@ -105,9 +74,32 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (opened != oldOpened)
             {
+                var owner = EntityManager.GetEntity(uid);
+
                 component.Opened = opened;
 
-                RaiseLocalEvent(uid, new DrinkOpenedChangedEvent(oldOpened, opened), false);
+                if (!_solutionContainerSystem.TryGetSolution(owner, component.SolutionName, out _))
+                {
+                    return;
+                }
+
+                if (owner.TryGetComponent(out AppearanceComponent? appearance))
+                {
+                    appearance.SetData(DrinkCanStateVisual.Opened, opened);
+                }
+
+                if (opened)
+                {
+                    var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
+                    refillable.Solution = component.SolutionName;
+                    var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
+                    drainable.Solution = component.SolutionName;
+                }
+                else
+                {
+                    owner.RemoveComponent<RefillableSolutionComponent>();
+                    owner.RemoveComponent<DrainableSolutionComponent>();
+                }
             }
         }
 
@@ -118,7 +110,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            TryUseDrink(uid, args.User, args.Target, component, true);
+            TryUseDrink(uid, args.User, args.Target, true, component);
         }
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
@@ -135,14 +127,14 @@ namespace Content.Server.Nutrition.EntitySystems
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetComponent(out SolutionContainerManagerComponent? existingDrainable))
             {
-                if (EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(owner) <= 0)
+                if (_solutionContainerSystem.DrainAvailable(owner) <= 0)
                 {
                     args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", owner)));
                     return;
                 }
             }
 
-            TryUseDrink(uid, args.User, args.User, component);
+            TryUseDrink(uid, args.User, args.User, false, component);
         }
 
         private void HandleLand(EntityUid uid, DrinkComponent component, LandEvent args)
@@ -200,7 +192,7 @@ namespace Content.Server.Nutrition.EntitySystems
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
 
-        private void TryUseDrink(EntityUid uid, IEntity user, IEntity target, DrinkComponent? component = null, bool forced = false)
+        private void TryUseDrink(EntityUid uid, IEntity user, IEntity target, bool forced, DrinkComponent? component = null)
         {
             if(!Resolve(uid, ref component))
                 return;
@@ -213,7 +205,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetDrainableSolution(component.Owner.Uid, out var interactions) ||
+            if (!_solutionContainerSystem.TryGetDrainableSolution(component.Owner.Uid, out var interactions) ||
                 interactions.DrainAvailable <= 0)
             {
                 if (!forced)
@@ -238,9 +230,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var solutionContainerSystem = EntitySystem.Get<SolutionContainerSystem>();
             var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
-            var drain = solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
+            var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 
             // All stomach are full or can't handle whatever solution we have.
@@ -255,7 +246,7 @@ namespace Content.Server.Nutrition.EntitySystems
                     return;
                 }
 
-                solutionContainerSystem.Refill(owner.Uid, interactions, drain);
+                _solutionContainerSystem.Refill(owner.Uid, interactions, drain);
                 return;
             }
 
@@ -268,18 +259,6 @@ namespace Content.Server.Nutrition.EntitySystems
             drain.DoEntityReaction(target, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(drain);
-        }
-    }
-
-    public class DrinkOpenedChangedEvent : EntityEventArgs
-    {
-        public bool OldOpened { get; }
-        public bool NewOpened { get; }
-
-        public DrinkOpenedChangedEvent(bool oldOpened, bool newOpened)
-        {
-            OldOpened = oldOpened;
-            NewOpened = newOpened;
         }
     }
 }

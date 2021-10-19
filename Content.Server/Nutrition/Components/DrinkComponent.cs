@@ -21,10 +21,13 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Nutrition.EntitySystems;
+using Robust.Shared.Analyzers;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+    [Friend(typeof(DrinkSystem))]
     public class DrinkComponent : Component
     {
         [DataField("solution")]
