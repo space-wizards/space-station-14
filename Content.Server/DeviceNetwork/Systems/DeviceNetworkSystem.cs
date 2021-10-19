@@ -195,7 +195,7 @@ namespace Content.Server.DeviceNetwork.Systems
             if (!TryGetConnectionWithAddress(packet.NetId, packet.Frequency, packet.Address, out var connection))
                 return;
 
-            var receivers = ConnectionsWithReceiveAll(packet.Frequency, packet.NetId);
+            var receivers = ConnectionsWithReceiveAll(packet.NetId, packet.Frequency);
             receivers.Add(connection);
 
             SendToConnections(receivers, packet);
@@ -203,7 +203,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         private void BroadcastPacket(NetworkPacket packet)
         {
-            var receivers = ConnectionsForFrequency(packet.Frequency, packet.NetId);
+            var receivers = ConnectionsForFrequency(packet.NetId, packet.Frequency);
             SendToConnections(receivers, packet);
         }
 

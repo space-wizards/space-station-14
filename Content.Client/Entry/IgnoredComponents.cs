@@ -289,7 +289,8 @@ namespace Content.Client.Entry
             "HandLabeler",
             "Label",
             "GhostRadio",
-            "Armor"
+            "Armor",
+            "DeviceNetwork"
         };
     }
 }

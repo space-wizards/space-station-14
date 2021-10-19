@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseItem
+  id: RemoteSignaler
+  name: Remote Signaler
+  description: Broadcasts a signal over the specified frequency.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/remotesignaler.rsi
+    state: signaler
+  - type: Clothing
+    QuickEquip: false
+    size: 5
+    Slots:
+      - Belt
+  - type: Signaler
+    frequency: 200
+  - type: DeviceNetwork
+    deviceNetId: 2 #Wireless network.
+    frequency: 200
+  - type: WirelessNetworkConnection
+    range: 3000

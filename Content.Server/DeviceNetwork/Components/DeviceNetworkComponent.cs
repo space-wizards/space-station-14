@@ -7,7 +7,7 @@ namespace Content.Server.DeviceNetwork.Components
     [RegisterComponent]
     public class DeviceNetworkComponent : Component
     {
-        public override string Name => "DeviceNetworkComponent";
+        public override string Name => "DeviceNetwork";
 
         /// <summary>
         /// The device networks netID this DeviceNetworkComponent connects to.
