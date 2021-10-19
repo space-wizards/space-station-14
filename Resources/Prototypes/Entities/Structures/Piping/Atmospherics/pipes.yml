@@ -54,7 +54,7 @@
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: BelowFloor
     netsync: false
-    noRot: true # TODO: This is a hack so pipe connectors don't look wrong.
+    noRot: true # TODO: This is a hack so pipe connectors don't look wrong. Also see BaseGasThermoMachine.
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
