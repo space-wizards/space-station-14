@@ -11,10 +11,8 @@ using Content.Server.Inventory.Components;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
-using Content.Server.Verbs;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -184,25 +182,6 @@ namespace Content.Server.Administration
                 verb.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
                 verb.Category = VerbCategory.Debug;
                 verb.Act = () => config.OpenUserInterface(actor);
-                args.Verbs.Add(verb);
-            }
-
-            // Add reagent verb
-            if (_adminManager.HasAdminFlag(player, AdminFlags.Fun) &&
-                args.Target.HasComponent<SolutionContainerManagerComponent>())
-            {
-                Verb verb = new();
-                verb.Text = Loc.GetString("admin-add-reagent-verb-get-data-text");
-                verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => _euiManager.OpenEui(new AdminAddReagentEui(args.Target), player);
-
-                // TODO CHEMISTRY
-                // Add reagent ui broke after solution refactor. Needs fixing
-                verb.Disabled = true;
-                verb.Tooltip = "Currently non functional after solution refactor.";
-                verb.Priority = -2;
-
                 args.Verbs.Add(verb);
             }
         }

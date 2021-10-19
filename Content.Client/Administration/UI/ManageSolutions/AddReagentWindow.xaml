@@ -1,0 +1,14 @@
+<SS14Window
+    MinSize="250 350"
+    Margin="4 0"
+    xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal" Margin ="0 5">
+            <Label Text="{Loc 'admin-add-reagent-window-amount-label'}" Margin="0 0 10 0"/>
+            <FloatSpinBox Name="QuantitySpin" Value="10" HorizontalExpand="True"/>
+        </BoxContainer>
+        <LineEdit Name="SearchBar" PlaceHolder="{Loc 'admin-add-reagent-window-search-placeholder'}" HorizontalExpand="True"  Margin ="0 5"/>
+        <ItemList Name="ReagentList" SelectMode="Single" VerticalExpand="True"  Margin ="0 5"/>
+        <Button Name="AddButton" HorizontalExpand="True" Margin ="0 5" />
+    </BoxContainer>
+</SS14Window>

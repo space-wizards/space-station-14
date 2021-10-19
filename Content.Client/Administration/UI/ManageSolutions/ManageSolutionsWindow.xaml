@@ -1,0 +1,13 @@
+<SS14Window
+    Title="{Loc 'admin-solutions-window-title'}"
+    MinSize="250 320"
+    Margin="4"
+    xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.45">
+        <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+            <Label Text ="{Loc 'admin-solutions-window-solution-label'}"/>
+            <OptionButton Name="SolutionOption" MinWidth="100"/>
+        </BoxContainer>
+        <Button Name="AddButton" Text="{Loc 'admin-solutions-window-add-new-button'}" HorizontalExpand="True" />
+    </BoxContainer>
+</SS14Window>
