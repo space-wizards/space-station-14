@@ -11,6 +11,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Administration.UI.ManageSolutions
 {
+    /// <summary>
+    ///     A debug window that allows you to add a reagent to a solution. Intended to be used with <see cref="EditSolutionsWindow"/>
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class AddReagentWindow : SS14Window
     {
@@ -51,6 +54,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateAddButton();
         }
 
+        /// <summary>
+        ///     Execute the console command to add the selected reagent.
+        /// </summary>
         private void AddReagent(BaseButton.ButtonEventArgs obj)
         {
             if (_selectedReagent == null)
@@ -67,6 +73,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateAddButton();
         }
 
+        /// <param name="selectedSolution"></param>
         public void UpdateSolution(string? selectedSolution)
         {
             if (selectedSolution == null)
@@ -81,6 +88,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateAddButton();
         }
 
+        /// <summary>
+        ///     Set the Text & disabled-status of the button that actually adds the reagent.
+        /// </summary>
         private void UpdateAddButton()
         {
             AddButton.Disabled = true;
@@ -108,6 +118,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateReagentPrototypes(SearchBar.Text);
         }
 
+        /// <summary>
+        ///     Get a list of all reagent prototypes and show them in an item list.
+        /// </summary>
         private void UpdateReagentPrototypes(string? filter = null)
         {
             ReagentList.Clear();

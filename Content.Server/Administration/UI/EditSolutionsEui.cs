@@ -8,6 +8,9 @@ using Robust.Shared.IoC;
 
 namespace Content.Server.Administration.UI
 {
+    /// <summary>
+    ///     Admin Eui for displaying and editing the reagents in a solution.
+    /// </summary>
     [UsedImplicitly]
     public sealed class EditSolutionsEui : BaseEui
     {

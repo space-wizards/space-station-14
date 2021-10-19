@@ -5,6 +5,9 @@ using JetBrains.Annotations;
 
 namespace Content.Client.Administration.UI.ManageSolutions
 {
+    /// <summary>
+    ///     Admin Eui for displaying and editing the reagents in a solution.
+    /// </summary>
     [UsedImplicitly]
     public sealed class EditSolutionsEui : BaseEui
     {
@@ -29,8 +32,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
         public override void HandleState(EuiStateBase baseState)
         {
             var state = (EditSolutionsEuiState) baseState;
-            _window.SetTarget(state.Target);
+            _window.Target = state.Target;
             _window.UpdateSolutions(state.Solutions);
+            _window.UpdateReagents();
         }
     }
 }

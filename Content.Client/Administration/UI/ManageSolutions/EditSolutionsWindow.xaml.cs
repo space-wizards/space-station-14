@@ -12,12 +12,15 @@ using System.Collections.Generic;
 
 namespace Content.Client.Administration.UI.ManageSolutions
 {
+    /// <summary>
+    ///     A simple window that displays solutions and their contained reagents. Allows you to edit the reagent quantities and add new reagents.
+    /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class EditSolutionsWindow : SS14Window
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
-        private EntityUid _target = EntityUid.Invalid;
+        public EntityUid Target = EntityUid.Invalid;
         private string? _selectedSolution;
         private AddReagentWindow? _addReagentWindow;
         private Dictionary<string, Solution>? _solutions;
@@ -31,11 +34,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             AddButton.OnPressed += OpenAddReagentWindow;
         }
 
-        public void SetTarget(EntityUid target)
-        {
-            _target = target;
-        }
-
+        /// <summary>
+        ///     Update the capacity label and re-create the reagent list
+        /// </summary>
         public void UpdateReagents()
         {
             ReagentList.DisposeAllChildren();
@@ -56,6 +57,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             }
         }
 
+        /// <summary>
+        ///     Add a single reagent entry to the list
+        /// </summary>
         private void AddReagentEntry(Solution.ReagentQuantity reagent)
         {
             var box = new BoxContainer();
@@ -71,6 +75,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             ReagentList.AddChild(box);
         }
 
+        /// <summary>
+        ///     Execute a command to modify the reagents in the solution.
+        /// </summary>
         private void SetReagent(FloatSpinBox.FloatSpinBoxEventArgs args, string reagentId)
         {
             if (_solutions == null || _selectedSolution == null)
@@ -82,10 +89,13 @@ namespace Content.Client.Administration.UI.ManageSolutions
             if (MathF.Abs(delta) < 0.01)
                 return;
 
-            var command = $"addreagent {_target} {_selectedSolution} {reagentId} {delta}";
+            var command = $"addreagent {Target} {_selectedSolution} {reagentId} {delta}";
             _consoleHost.ExecuteCommand(command);
         }
 
+        /// <summary>
+        ///     Open a new window that has options to add new reagents to the solution.
+        /// </summary>
         private void OpenAddReagentWindow(BaseButton.ButtonEventArgs obj)
         {
             if (string.IsNullOrEmpty(_selectedSolution))
@@ -94,10 +104,13 @@ namespace Content.Client.Administration.UI.ManageSolutions
             _addReagentWindow?.Close();
             _addReagentWindow?.Dispose();
 
-            _addReagentWindow = new AddReagentWindow(_target, _selectedSolution);
+            _addReagentWindow = new AddReagentWindow(Target, _selectedSolution);
             _addReagentWindow.OpenCentered();
         }
 
+        /// <summary>
+        ///     When a new solution is selected, set _selectedSolution and update the reagent list.
+        /// </summary>
         private void SolutionSelected(OptionButton.ItemSelectedEventArgs args)
         {
             SolutionOption.SelectId(args.Id);
@@ -106,6 +119,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateReagents();
         }
 
+        /// <summary>
+        ///     Update the solution options.
+        /// </summary>
         public void UpdateSolutions(Dictionary<string, Solution>? solutions)
         {
             SolutionOption.Clear();
@@ -139,8 +155,6 @@ namespace Content.Client.Administration.UI.ManageSolutions
                 SolutionOption.Select(0);
                 _selectedSolution = (string?) SolutionOption.SelectedMetadata;
             }
-
-            UpdateReagents();
         }
     }
 }

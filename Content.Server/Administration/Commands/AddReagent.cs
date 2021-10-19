@@ -10,6 +10,9 @@ using System;
 
 namespace Content.Server.Administration.Commands
 {
+    /// <summary>
+    ///     Command that allows you to edit an existing solution by adding (or removing) reagents.
+    /// </summary>
     [AdminCommand(AdminFlags.Fun)]
     public class AddReagent : IConsoleCommand
     {
@@ -40,7 +43,7 @@ namespace Content.Server.Administration.Commands
             if (!man.Solutions.ContainsKey(args[1]))
             {
                 var validSolutions = string.Join(", ", man.Solutions.Keys);
-                shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions:\n{validSolutions}");
+                shell.WriteLine($"Entity does not have a \"{args[1]}\" solution. Valid solutions are:\n{validSolutions}");
                 return;
             }
             var solution = man.Solutions[args[1]];
