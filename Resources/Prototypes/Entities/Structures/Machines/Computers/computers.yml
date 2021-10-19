@@ -13,7 +13,7 @@
 - type: entity
   parent: ComputerBase
   id: ComputerShuttleBase
-  name: shuttle console
+  name: shuttle navigation console
   description: Used to pilot a shuttle by changing it's rotation and speed.
   abstract: true
   components:
@@ -28,7 +28,7 @@
 - type: entity
   parent: ComputerShuttleBase
   id: ComputerShuttle
-  name: shuttle console
+  name: shuttle navigation console
   description: Used to pilot a shuttle by changing it's rotation and speed. Whatever you're doing, do NOT press Z or R twice!
   components:
   - type: Appearance
@@ -40,8 +40,8 @@
 - type: entity
   parent: ComputerShuttleBase
   id: ComputerShuttleSyndie
-  name: syndicate shuttle console
-  description: Used to pilot a syndicate shuttle by changing it's rotation and speed. No, you can't use hyperdrive fuel to melt steel beams.
+  name: syndicate shuttle navigation console
+  description: Used to pilot a syndicate shuttle by changing it's rotation and speed. No, ramming into the station isn't a viable option.
   components:
   - type: Appearance
     visuals:
@@ -57,7 +57,7 @@
   parent: ComputerBase
   id: ComputerPowerMonitoring
   name: power monitoring computer
-  description: It monitors power levels across the station. Finally, you may know when the library needs some!
+  description: It monitors power levels across the station. Simply put- supply must meet demand.
   components:
   - type: Appearance
     visuals:
@@ -73,7 +73,7 @@
   parent: ComputerBase
   id: ComputerMedicalRecords
   name: medical records computer
-  description: Allows you to check medical records. This operates on a bold assumption nanotrasen keeps any.
+  description: Allows you to check medical records. That is assuming they are kept around.
   components:
   - type: Appearance
     visuals:
@@ -89,7 +89,7 @@
   parent: ComputerBase
   id: ComputerResearchAndDevelopment
   name: R&D computer
-  description: A computer allowing you to acess the research and development network. A cure for cancer can wait when we have clown tech to discover!
+  description: A computer allowing you to acess the research and development network. Works best with a sever room.
   components:
   - type: Appearance
     visuals:
