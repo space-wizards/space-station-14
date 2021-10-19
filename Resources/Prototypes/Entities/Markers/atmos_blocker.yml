@@ -1,7 +1,7 @@
 - type: entity
-  name: Atmos Fix Vaccum Marker
+  name: Atmos Fix Vacuum Marker
   id: AtmosFixBlockerMarker
-  description: "Vaccum, 20C"
+  description: "Vacuum, T20C"
   parent: MarkerBase
   components:
     - type: Sprite
@@ -11,14 +11,14 @@
           shader: unshaded
         - sprite: Markers/atmos.rsi
           shader: unshaded # }
-          state: vaccum
+          state: vacuum
     - type: AtmosFixMarker
       mode: 1
 
 - type: entity
   name: Atmos Fix Oxygen Marker
   id: AtmosFixOxygenMarker
-  description: "Oxygen @ gas miner pressure, 20C"
+  description: "Oxygen @ gas miner pressure, T20C"
   parent: MarkerBase
   components:
     - type: Sprite
@@ -35,7 +35,7 @@
 - type: entity
   name: Atmos Fix Nitrogen Marker
   id: AtmosFixNitrogenMarker
-  description: "Nitrogen @ gas miner pressure, 20C"
+  description: "Nitrogen @ gas miner pressure, T20C"
   parent: MarkerBase
   components:
     - type: Sprite
@@ -52,7 +52,7 @@
 - type: entity
   name: Atmos Fix Plasma Marker
   id: AtmosFixPlasmaMarker
-  description: "Plasma @ gas miner pressure, 20C"
+  description: "Plasma @ gas miner pressure, T20C"
   parent: MarkerBase
   components:
     - type: Sprite
