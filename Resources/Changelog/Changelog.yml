@@ -2555,3 +2555,10 @@ Entries:
   - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
   id: 456
   time: '2021-10-18T23:24:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
+      on the RefillableSolution workaround., type: Fix}
+  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
+  id: 457
+  time: '2021-10-19T07:13:44.0000000+00:00'
