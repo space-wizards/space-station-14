@@ -1,5 +1,4 @@
 <SS14Window
-    Title="{Loc 'admin-solutions-window-title'}"
     SetSize="270 300"
     Margin="4 0"
     xmlns="https://spacestation14.io">

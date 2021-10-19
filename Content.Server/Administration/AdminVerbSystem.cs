@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
@@ -14,11 +15,14 @@ using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -37,11 +41,15 @@ namespace Content.Server.Administration
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-        [Dependency] private readonly AdminSolutionsSystem _adminSolutionsSystem = default!;
-        
+
+        private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
+
+
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
+            SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
+            SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
         }
 
         private void AddDebugVerbs(GetOtherVerbsEvent args)
@@ -195,9 +203,51 @@ namespace Content.Server.Administration
                 verb.Text = Loc.GetString("admin-solution-manager-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
-                verb.Act = () => _adminSolutionsSystem.OpenEui(player, args.Target.Uid);
+                verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
                 args.Verbs.Add(verb);
             }
         }
+
+        #region SolutionsEui
+        private void OnSolutionChanged(EntityUid uid, SolutionContainerManagerComponent component, SolutionChangedEvent args)
+        {
+            foreach (var eui in _openSolutionUis.Values)
+            {
+                if (eui.Target == uid)
+                    eui.StateDirty();
+            }
+        }
+
+        private void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        {
+            if (session.AttachedEntity == null)
+                return;
+
+            if (_openSolutionUis.ContainsKey(session))
+                _openSolutionUis[session].Close();
+
+            var eui = _openSolutionUis[session] = new EditSolutionsEui(uid);
+            _euiManager.OpenEui(eui, session);
+            eui.StateDirty();
+        }
+
+        private void CloseEditSolutionsEui(IPlayerSession session)
+        {
+            if (_openSolutionUis.Remove(session, out var eui))
+            {
+                eui?.Close();
+            }
+        }
+
+        private void Reset(RoundRestartCleanupEvent ev)
+        {
+            foreach (var session in _openSolutionUis.Keys)
+            {
+                CloseEditSolutionsEui(session);
+            }
+
+            _openSolutionUis.Clear();
+        }
+        #endregion
     }
 }

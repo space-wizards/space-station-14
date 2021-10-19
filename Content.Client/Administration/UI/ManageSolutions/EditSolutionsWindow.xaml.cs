@@ -19,8 +19,9 @@ namespace Content.Client.Administration.UI.ManageSolutions
     public sealed partial class EditSolutionsWindow : SS14Window
     {
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
-        public EntityUid Target = EntityUid.Invalid;
+        private EntityUid _target = EntityUid.Invalid;
         private string? _selectedSolution;
         private AddReagentWindow? _addReagentWindow;
         private Dictionary<string, Solution>? _solutions;
@@ -32,6 +33,24 @@ namespace Content.Client.Administration.UI.ManageSolutions
 
             SolutionOption.OnItemSelected += SolutionSelected;
             AddButton.OnPressed += OpenAddReagentWindow;
+        }
+
+        public override void Close()
+        {
+            base.Close();
+            _addReagentWindow?.Close();
+            _addReagentWindow?.Dispose();
+        }
+
+        public void SetTargetEntity(EntityUid target)
+        {
+            _target = target;
+
+            var targetName = _entityManager.TryGetEntity(target, out var entity)
+                ? entity.Name
+                : string.Empty;
+
+            Title = Loc.GetString("admin-solutions-window-title", ("targetName", targetName));
         }
 
         /// <summary>
@@ -89,7 +108,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             if (MathF.Abs(delta) < 0.01)
                 return;
 
-            var command = $"addreagent {Target} {_selectedSolution} {reagentId} {delta}";
+            var command = $"addreagent {_target} {_selectedSolution} {reagentId} {delta}";
             _consoleHost.ExecuteCommand(command);
         }
 
@@ -104,7 +123,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             _addReagentWindow?.Close();
             _addReagentWindow?.Dispose();
 
-            _addReagentWindow = new AddReagentWindow(Target, _selectedSolution);
+            _addReagentWindow = new AddReagentWindow(_target, _selectedSolution);
             _addReagentWindow.OpenCentered();
         }
 
