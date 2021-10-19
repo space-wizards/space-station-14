@@ -1,6 +1,7 @@
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -57,9 +58,9 @@ namespace Content.Server.AI.Operators.Nutrition
                 return Outcome.Failed;
             }
 
-            if (drinkComponent.Deleted ||
-                drinkComponent.Empty ||
-                _owner.TryGetComponent(out ThirstComponent? thirstComponent) &&
+            var isEmpty = EntitySystem.Get<DrinkSystem>().IsEmpty(drinkComponent.Owner.Uid, drinkComponent);
+            if (drinkComponent.Deleted || isEmpty
+                                       || _owner.TryGetComponent(out ThirstComponent? thirstComponent) &&
                 thirstComponent.CurrentThirst >= thirstComponent.ThirstThresholds[ThirstThreshold.Okay])
             {
                 return Outcome.Success;
