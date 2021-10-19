@@ -72,6 +72,9 @@
   parent: DisposalUnitBase
   name: disposal unit
   components:
+  - type: Construction
+    graph: disposalMachine
+    node: disposal_unit
   - type: DisposalUnit
     flushTime: 2
   - type: UserInterface

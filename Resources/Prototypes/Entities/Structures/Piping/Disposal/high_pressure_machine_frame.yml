@@ -1,0 +1,48 @@
+﻿- type: entity
+  id: DisposalMachineFrame
+  name: High Pressure Machine Frame
+  description: A machine frame made to withstand the amount of pressure used in the station's disposal system.
+  placement:
+    mode: SnapgridCenter
+  components:
+    - type: Transform
+      anchored: true
+    - type: Physics
+      bodyType: Static
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.25,-0.4,0.25,0.4"
+          mass: 25
+          layer:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - Opaque
+          mask:
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Pullable
+    - type: Construction
+      graph: disposalMachine
+      node: frame
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:ChangeConstructionNodeBehavior
+              node: start
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Sprite
+      sprite: Structures/Piping/high_pressure_machine_frame.rsi
+      state: frame
