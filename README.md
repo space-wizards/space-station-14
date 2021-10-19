@@ -12,7 +12,7 @@ If you want to host or create content for SS14, this is the repo you need. It co
 
 ## Documentation/Wiki
 
-The [HackMD Wiki](https://hackmd.io/@ss14/docs/wiki) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
+Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
 
 ## Contributing
 
