@@ -515,8 +515,6 @@ namespace Content.Client.Damage
             {
                 UpdateDamageVisuals(delta, damageComponent, spriteComponent, damageData);
             }
-
-            component.SetData(component.Owner.Uid.ToString(), damageData);
         }
 
         private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualizerDataComponent damageData)
