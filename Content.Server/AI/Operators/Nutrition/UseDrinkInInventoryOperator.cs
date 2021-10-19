@@ -58,8 +58,7 @@ namespace Content.Server.AI.Operators.Nutrition
                 return Outcome.Failed;
             }
 
-            var isEmpty = EntitySystem.Get<DrinkSystem>().IsEmpty(drinkComponent.Owner.Uid, drinkComponent);
-            if (drinkComponent.Deleted || isEmpty
+            if (drinkComponent.Deleted || EntitySystem.Get<DrinkSystem>().IsEmpty(drinkComponent.Owner.Uid, drinkComponent)
                                        || _owner.TryGetComponent(out ThirstComponent? thirstComponent) &&
                 thirstComponent.CurrentThirst >= thirstComponent.ThirstThresholds[ThirstThreshold.Okay])
             {
