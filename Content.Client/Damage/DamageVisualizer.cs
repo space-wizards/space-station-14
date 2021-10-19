@@ -476,15 +476,7 @@ namespace Content.Client.Damage
                 return;
 
             if (!component.Owner.TryGetComponent<DamageVisualizerDataComponent>(out var damageData))
-            {
-                // a call that changes data occurs somewhere around here,
-                // so we just return and let that new call occur
-                // since we don't have a 'post initialization hook'
-                // anywhere, and calling SetData in the entity
-                // during visualizer initialization
-                // doesn't... work.
                 return;
-            }
 
             if (component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
                 if (disabledStatus != damageData.Disabled)
