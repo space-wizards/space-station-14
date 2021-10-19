@@ -49,6 +49,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "AtmosFixMarker",
             "CablePlacer",
             "Drink",
             "Food",
