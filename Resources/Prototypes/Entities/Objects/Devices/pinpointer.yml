@@ -1,0 +1,12 @@
+- type: entity
+  name: pinpointer
+  description: A handheld tracking device that locks onto certain signals.
+  parent: BaseItem
+  id: PinpointerBase
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/pinpointer.rsi
+    layers:
+    - state: pinpointer
+  - type: Item
+    sprite: Objects/Devices/pinpointer.rsi
