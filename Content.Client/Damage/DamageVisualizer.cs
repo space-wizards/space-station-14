@@ -194,21 +194,6 @@ namespace Content.Client.Damage
 
         private bool _valid = true;
 
-        // This is all the per-entity data.
-        // Everything else is pre-defined in the visualizer
-        // prototype.
-
-        public class DamageVisualizerEntityData
-        {
-            public List<object> TargetLayerMapKeys = new();
-            public bool Disabled = false;
-            public int LastDamageThreshold = 0;
-            public Dictionary<object, bool> DisabledLayers = new();
-            public Dictionary<object, string> LayerMapKeyStates = new();
-            public Dictionary<string, int> LastThresholdPerGroup = new();
-            public string TopMostLayerKey = default!;
-        }
-
         public override void InitializeEntity(IEntity entity)
         {
             base.InitializeEntity(entity);
