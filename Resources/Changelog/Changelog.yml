@@ -2567,3 +2567,8 @@ Entries:
   - {message: freezers are rotatable now., type: Fix}
   id: 458
   time: '2021-10-19T07:22:41.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Singularity field generators should be easier to move around., type: Tweak}
+  id: 459
+  time: '2021-10-19T07:24:07.0000000+00:00'
