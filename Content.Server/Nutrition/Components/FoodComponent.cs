@@ -28,7 +28,9 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
-        public static string SolutionName = "food";
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "food";
 
         [ViewVariables]
         [DataField("useSound")]

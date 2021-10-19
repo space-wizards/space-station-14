@@ -2503,3 +2503,72 @@ Entries:
   - {message: Pills are now edible again., type: Fix}
   id: 447
   time: '2021-10-16T12:56:21.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
+      in on the station chatter., type: Add}
+  id: 448
+  time: '2021-10-16T19:04:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Saltern''s security substation''s protective APC is now inside the
+      security substation chamber, which has been made a little bigger accordingly.',
+    type: Tweak}
+  - {message: 'Saltern now has solars - north set in north-west maintenance, south
+      set a bit east of library.', type: Add}
+  id: 449
+  time: '2021-10-16T20:02:40.0000000+00:00'
+- author: Watermelon914
+  changes:
+  - {message: Adds hand labelers which allow you to append and remove labels from
+      structures and objects., type: Add}
+  id: 450
+  time: '2021-10-16T20:34:05.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
+  id: 451
+  time: '2021-10-16T23:11:06.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
+  id: 452
+  time: '2021-10-16T23:23:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Added Hydroponics tray machine board, type: Add}
+  id: 453
+  time: '2021-10-18T06:12:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pipe rotation is less chaotic evil., type: Fix}
+  id: 454
+  time: '2021-10-18T11:42:30.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
+  id: 455
+  time: '2021-10-18T22:47:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Security gear will now actually protect you against attacks., type: Add}
+  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
+  id: 456
+  time: '2021-10-18T23:24:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
+      on the RefillableSolution workaround., type: Fix}
+  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
+  id: 457
+  time: '2021-10-19T07:13:44.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: freezers are rotatable now., type: Fix}
+  id: 458
+  time: '2021-10-19T07:22:41.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Singularity field generators should be easier to move around., type: Tweak}
+  id: 459
+  time: '2021-10-19T07:24:07.0000000+00:00'
