@@ -672,6 +672,8 @@ namespace Content.Client.Damage
             {
                 UpdateDamageVisuals(new List<string>(){ _damageGroup }, damageComponent, spriteComponent);
             }
+            else if (_damageOverlay != null)
+                UpdateDamageVisuals(damageComponent, spriteComponent);
         }
 
         private void UpdateTargetLayer(SpriteComponent spriteComponent, object layerMapKey, int threshold)
