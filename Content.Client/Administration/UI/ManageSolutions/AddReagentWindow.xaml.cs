@@ -18,7 +18,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
 
         private readonly EntityUid _targetEntity;
-        private readonly string _targetSolution;
+        private string _targetSolution;
         private ReagentPrototype? _selectedReagent;
 
         public AddReagentWindow(EntityUid targetEntity, string targetSolution)
@@ -51,7 +51,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
             if (_selectedReagent == null)
                 return;
 
-            var command = $"addreagent {_targetEntity} {_targetSolution} {_selectedReagent.ID}";
+            var command = $"addreagent {_targetEntity} {_targetSolution} {_selectedReagent.ID} {QuantitySpin.Value}";
             _consoleHost.ExecuteCommand(command);
         }
 
@@ -61,18 +61,26 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateAddButton();
         }
 
+        public void UpdateSolution(string? selectedSolution)
+        {
+            if (selectedSolution == null)
+            {
+                Close();
+                Dispose();
+                return;
+            }
+
+            _targetSolution = selectedSolution;
+            Title = Loc.GetString("admin-add-reagent-window-title", ("solution", _targetSolution));
+            UpdateAddButton();
+        }
+
         private void UpdateAddButton()
         {
             AddButton.Disabled = true;
             if (_selectedReagent == null)
             {
                 AddButton.Text = Loc.GetString("admin-add-reagent-window-add-invalid-reagent");
-                return;
-            }
-
-            if (QuantitySpin.Value <= 0)
-            {
-                AddButton.Text = Loc.GetString("admin-add-reagent-window-add-invalid-quantity");
                 return;
             }
 
