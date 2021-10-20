@@ -10,6 +10,9 @@ namespace Content.Shared.Devices
     {
         public override string Name => "Signaler";
 
+        public const int MaxFrequency = 300;
+        public const int MinFrequency = 1;
+
         [DataField("frequency")]
         public int Frequency = 100;
     }
@@ -25,7 +28,7 @@ namespace Content.Shared.Devices
     }
 
     /// <summary>
-    /// Represents a <see cref="GasCanisterComponent"/> state that can be sent to the client
+    /// Represents a <see cref="SharedSignalerComponent"/> state that can be sent to the client
     /// </summary>
     [Serializable, NetSerializable]
     public class SignalerBoundUserInterfaceState : BoundUserInterfaceState
@@ -33,6 +36,23 @@ namespace Content.Shared.Devices
         public int Frequency { get; }
 
         public SignalerBoundUserInterfaceState(int frequency)
+        {
+            Frequency = frequency;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class SignalerSendSignalMessage : BoundUserInterfaceMessage
+    {
+        public SignalerSendSignalMessage() {}
+    }
+
+    [Serializable, NetSerializable]
+    public class SignalerUpdateFrequencyMessage : BoundUserInterfaceMessage
+    {
+        public int Frequency { get; }
+
+        public SignalerUpdateFrequencyMessage( int frequency )
         {
             Frequency = frequency;
         }
