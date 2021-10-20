@@ -30,6 +30,12 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: SubFloorHide
+  - type: Electrified
+    onBump: false
+    requirePower: true
+    highVoltageNode: power
+    mediumVoltageNode: power
+    lowVoltageNode: power
   - type: CableVis
     node: power
 

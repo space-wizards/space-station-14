@@ -171,6 +171,9 @@ namespace Content.Server.Power.Pow3r
                     battery.LoadingDemandMarked = true;
                 }
 
+                network.LastAvailableSupplySum = availableSupplySum;
+                network.LastMaxSupplySum = maxSupplySum;
+
                 var met = Math.Min(demand, availableSupplySum);
 
                 if (met != 0)

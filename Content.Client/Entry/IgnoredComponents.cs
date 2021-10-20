@@ -58,6 +58,7 @@ namespace Content.Client.Entry
             "FloorTile",
             "ShuttleController",
             "HumanInventoryController",
+            "RandomInsulation",
             "UseDelay",
             "Pourable",
             "Paper",
