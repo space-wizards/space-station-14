@@ -70,9 +70,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if(!Resolve(uid, ref component))
                 return;
 
-            var oldOpened = component.Opened;
-
-            if (opened == oldOpened)
+            if (opened == component.Opened)
                 return;
 
             var owner = EntityManager.GetEntity(uid);
@@ -91,16 +89,15 @@ namespace Content.Server.Nutrition.EntitySystems
 
             if (opened)
             {
-                var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
-                refillable.Solution = component.SolutionName;
-                var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
-                drainable.Solution = component.SolutionName;
+                owner.EnsureComponent<RefillableSolutionComponent>().Solution = component.SolutionName;
+                owner.EnsureComponent<DrainableSolutionComponent>().Solution = component.SolutionName;
             }
             else
             {
                 owner.RemoveComponent<RefillableSolutionComponent>();
                 owner.RemoveComponent<DrainableSolutionComponent>();
             }
+            
         }
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
