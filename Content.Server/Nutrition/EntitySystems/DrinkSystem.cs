@@ -38,6 +38,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<DrinkComponent, ComponentInit>(OnDrinkInit);
             SubscribeLocalEvent<DrinkComponent, LandEvent>(HandleLand);
             SubscribeLocalEvent<DrinkComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<DrinkComponent, AfterInteractEvent>(AfterInteract);
             SubscribeLocalEvent<DrinkComponent, ExaminedEvent>(OnExamined);
         }
 
@@ -105,12 +106,16 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
         {
+            if (args.Handled)
+                return;
+            
             if (args.Target == null)
             {
                 return;
             }
 
-            TryUseDrink(uid, args.User, args.Target, true, component);
+            if (TryUseDrink(uid, args.User, args.Target, true, component))
+                args.Handled = true;
         }
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
@@ -194,17 +199,17 @@ namespace Content.Server.Nutrition.EntitySystems
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
 
-        private void TryUseDrink(EntityUid uid, IEntity user, IEntity target, bool forced, DrinkComponent? component = null)
+        private bool TryUseDrink(EntityUid uid, IEntity user, IEntity target, bool forced, DrinkComponent? component = null)
         {
             if(!Resolve(uid, ref component))
-                return;
+                return false;
 
             var owner = component.Owner;
 
             if (!component.Opened)
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", owner)));
-                return;
+                return false;
             }
 
             if (!_solutionContainerSystem.TryGetDrainableSolution(component.Owner.Uid, out var interactions) ||
@@ -215,21 +220,21 @@ namespace Content.Server.Nutrition.EntitySystems
                     target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", owner)));
                 }
 
-                return;
+                return false;
             }
 
             if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", owner)));
-                return;
+                return false;
             }
 
 
             if (user != target &&
                 !user.InRangeUnobstructed(target, popup: true))
             {
-                return;
+                return false;
             }
 
             var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
@@ -245,11 +250,11 @@ namespace Content.Server.Nutrition.EntitySystems
                     && !interactionEntity.HasComponent<RefillableSolutionComponent>())
                 {
                     drain.SpillAt(target, "PuddleSmear");
-                    return;
+                    return false;
                 }
 
                 _solutionContainerSystem.Refill(owner.Uid, interactions, drain);
-                return;
+                return false;
             }
 
             SoundSystem.Play(Filter.Pvs(target), component.UseSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
@@ -261,6 +266,8 @@ namespace Content.Server.Nutrition.EntitySystems
             drain.DoEntityReaction(target, ReactionMethod.Ingestion);
 
             firstStomach.TryTransferSolution(drain);
+
+            return true;
         }
     }
 }
