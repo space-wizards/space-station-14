@@ -2579,3 +2579,9 @@ Entries:
   - {message: Show valve status (open/closed) when examining manual valves., type: Add}
   id: 460
   time: '2021-10-19T21:46:31.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: NT took the tele-trashbags back. At least they left some normal ones
+      for us..., type: Fix}
+  id: 461
+  time: '2021-10-20T13:25:22.0000000+00:00'
