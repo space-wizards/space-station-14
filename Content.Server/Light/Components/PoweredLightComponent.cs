@@ -231,10 +231,10 @@ namespace Content.Server.Light.Components
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
+                    powerReceiver.Load = LightBulb.PowerUse;
                     if (powerReceiver.Powered && _on)
                     {
                         SetLight(true, LightBulb.Color);
-                        powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
