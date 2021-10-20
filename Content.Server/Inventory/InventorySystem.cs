@@ -3,6 +3,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.Inventory;
 using Content.Shared.Slippery;
+using Content.Shared.Damage;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -18,6 +19,7 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
             SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
+            SubscribeLocalEvent<Inventorycomponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
         }
 
@@ -47,6 +49,14 @@ namespace Content.Server.Inventory
         private void OnLowPressureEvent(EntityUid uid, InventoryComponent component, LowPressureEvent args)
         {
             RelayPressureEvent(component, args);
+        }
+
+        private void OnDamageModify(EntityUid uid, InventoryComponent component, DamageModifyEvent args)
+        {
+            foreach (var equipped in component.GetAllHeldItems())
+            {
+                RaiseLocalEvent(equipped.Uid, args, false);
+            }
         }
 
         private void RelayPressureEvent<T>(InventoryComponent component, T args) where T : PressureEvent

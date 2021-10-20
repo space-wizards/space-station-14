@@ -21,7 +21,7 @@ namespace Content.Server.Medical
         {
             base.Initialize();
 
-            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);            
+            SubscribeLocalEvent<MedicalScannerComponent, RelayMovementEntityEvent>(OnRelayMovement);
             SubscribeLocalEvent<MedicalScannerComponent, GetInteractionVerbsEvent>(AddInsertOtherVerb);
             SubscribeLocalEvent<MedicalScannerComponent, GetAlternativeVerbsEvent>(AddAlternativeVerbs);
         }
@@ -90,7 +90,7 @@ namespace Content.Server.Medical
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<MedicalScannerComponent>())
             {
                 comp.Update(frameTime);
             }

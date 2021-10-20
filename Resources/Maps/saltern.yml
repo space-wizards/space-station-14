@@ -69368,109 +69368,109 @@ entities:
     parent: 853
     type: Transform
 - uid: 6651
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 37.5,22.5
     parent: 853
     type: Transform
 - uid: 6652
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 37.5,21.5
     parent: 853
     type: Transform
 - uid: 6653
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 38.5,22.5
     parent: 853
     type: Transform
 - uid: 6654
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 38.5,21.5
     parent: 853
     type: Transform
 - uid: 6655
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 39.5,22.5
     parent: 853
     type: Transform
 - uid: 6656
-  type: AtmosFixBlockerMarker
+  type: AtmosFixOxygenMarker
   components:
   - pos: 39.5,21.5
     parent: 853
     type: Transform
 - uid: 6657
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 41.5,22.5
     parent: 853
     type: Transform
 - uid: 6658
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 41.5,21.5
     parent: 853
     type: Transform
 - uid: 6659
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 42.5,22.5
     parent: 853
     type: Transform
 - uid: 6660
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 42.5,21.5
     parent: 853
     type: Transform
 - uid: 6661
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 43.5,22.5
     parent: 853
     type: Transform
 - uid: 6662
-  type: AtmosFixBlockerMarker
+  type: AtmosFixNitrogenMarker
   components:
   - pos: 43.5,21.5
     parent: 853
     type: Transform
 - uid: 6663
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 45.5,22.5
     parent: 853
     type: Transform
 - uid: 6664
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 45.5,21.5
     parent: 853
     type: Transform
 - uid: 6665
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 46.5,22.5
     parent: 853
     type: Transform
 - uid: 6666
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 46.5,21.5
     parent: 853
     type: Transform
 - uid: 6667
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 47.5,22.5
     parent: 853
     type: Transform
 - uid: 6668
-  type: AtmosFixBlockerMarker
+  type: AtmosFixPlasmaMarker
   components:
   - pos: 47.5,21.5
     parent: 853
