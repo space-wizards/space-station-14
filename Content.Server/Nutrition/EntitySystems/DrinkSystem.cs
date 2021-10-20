@@ -135,9 +135,8 @@ namespace Content.Server.Nutrition.EntitySystems
                 }
             }
 
-            TryUseDrink(uid, args.User, args.User, false, component);
-
-            args.Handled = true;
+            if (TryUseDrink(uid, args.User, args.User, false, component))
+                args.Handled = true;
         }
 
         private void HandleLand(EntityUid uid, DrinkComponent component, LandEvent args)
