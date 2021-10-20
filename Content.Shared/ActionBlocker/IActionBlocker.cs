@@ -1,11 +1,10 @@
 ﻿using System;
-using Content.Shared.EffectBlocker;
 
 namespace Content.Shared.ActionBlocker
 {
     /// <summary>
     /// This interface gives components the ability to block certain actions from
-    /// being done by the owning entity. For effects see <see cref="IEffectBlocker"/>
+    /// being done by the owning entity.
     /// </summary>
     [Obsolete("Use events instead")]
     public interface IActionBlocker
