@@ -121,9 +121,10 @@ namespace Content.Server.Devices.Systems
             args.Handled = true;
         }
 
-        public void SetFrequency(EntityUid uid, int frequency, SharedSignalerComponent? signalerComponent = null)
+        public void SetFrequency(EntityUid uid, int frequency, SharedSignalerComponent? signalerComponent = null,
+            DeviceNetworkComponent? networkComponent = null)
         {
-            if (!Resolve(uid, ref signalerComponent))
+            if (!Resolve(uid, ref signalerComponent, ref networkComponent))
                 return;
 
             //clamp frequency between min and max values.
@@ -131,6 +132,7 @@ namespace Content.Server.Devices.Systems
                 SharedSignalerComponent.MaxFrequency);
 
             signalerComponent.Frequency = frequency;
+            networkComponent.Frequency = frequency;
 
             _userInterfaceSystem.TrySetUiState(uid, SignalerUiKey.Key, new SignalerBoundUserInterfaceState(frequency));
         }
