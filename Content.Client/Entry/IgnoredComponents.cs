@@ -59,6 +59,7 @@ namespace Content.Client.Entry
             "ShuttleController",
             "HumanInventoryController",
             "RandomInsulation",
+            "Electrified",
             "UseDelay",
             "Pourable",
             "Paper",
