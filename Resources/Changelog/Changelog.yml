@@ -2590,3 +2590,8 @@ Entries:
   - {message: Anti-matter engine actually generates power again., type: Fix}
   id: 462
   time: '2021-10-20T18:31:53.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Cable terminals can be built now., type: Add}
+  id: 463
+  time: '2021-10-20T20:25:02.0000000+00:00'
