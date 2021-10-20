@@ -2595,3 +2595,8 @@ Entries:
   - {message: Cable terminals can be built now., type: Add}
   id: 463
   time: '2021-10-20T20:25:02.0000000+00:00'
+- author: Fortune
+  changes:
+  - {message: Overdosing on meth will result in you dying about twice as fast., type: Add}
+  id: 464
+  time: '2021-10-20T20:30:55.0000000+00:00'
