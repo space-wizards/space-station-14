@@ -168,7 +168,6 @@ namespace Content.IntegrationTests
 
         private bool ShouldPool(IntegrationOptions options)
         {
-            return false;
             if (!options.Pool)
             {
                 return false;
