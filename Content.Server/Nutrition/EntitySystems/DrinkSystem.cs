@@ -108,7 +108,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             if (args.Handled)
                 return;
-            
+
             if (args.Target == null)
             {
                 return;
@@ -126,7 +126,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 //Do the opening stuff like playing the sounds.
                 SoundSystem.Play(Filter.Pvs(args.User), component.OpenSounds.GetSound(), args.User, AudioParams.Default);
 
-                SetOpen(uid, component, true);
+                SetOpen(uid, true, component);
                 return;
             }
 
@@ -165,7 +165,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnDrinkInit(EntityUid uid, DrinkComponent component, ComponentInit args)
         {
-            SetOpen(uid, component, component.DefaultToOpened);
+            SetOpen(uid, component.DefaultToOpened, component);
 
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetComponent(out DrainableSolutionComponent? existingDrainable))
