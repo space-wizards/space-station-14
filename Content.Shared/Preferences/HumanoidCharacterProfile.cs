@@ -264,7 +264,7 @@ namespace Content.Shared.Preferences
             string name;
             if (string.IsNullOrEmpty(Name))
             {
-                name = "Urist McHands";
+                name = RandomName();
             }
             else if (Name.Length > MaxNameLength)
             {
@@ -284,7 +284,7 @@ namespace Content.Shared.Preferences
 
             if (string.IsNullOrEmpty(name))
             {
-                name = "Urist McHands";
+                name = RandomName();
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);
@@ -346,6 +346,16 @@ namespace Content.Shared.Preferences
 
             _antagPreferences.Clear();
             _antagPreferences.AddRange(antags);
+
+            string RandomName()
+            {
+                if (Sex == null) return "Urist McHands"; // This shouldn't happen
+                var random = IoCManager.Resolve<IRobustRandom>();
+                var protoMan = IoCManager.Resolve<IPrototypeManager>();
+                var firstName = random.Pick(Sex.FirstNames(protoMan).Values);
+                var lastName = random.Pick(protoMan.Index<DatasetPrototype>("names_last"));
+                return $"{firstName} {lastName}";
+            }
         }
 
         public override bool Equals(object? obj)
