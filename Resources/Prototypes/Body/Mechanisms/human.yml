@@ -195,8 +195,7 @@
         - !type:HealthChange
           conditions:
             - !type:ReagentThreshold
-              min: 5
-              max: 1000
+              min: 10
           damage:
             types:
               Poison: 3 # this is added to the base damage of the meth.
