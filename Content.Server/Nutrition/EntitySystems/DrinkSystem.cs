@@ -49,8 +49,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var owner = EntityManager.GetEntity(uid);
 
-            var drainAvailable = _solutionContainerSystem.DrainAvailable(owner);
-            return drainAvailable <= 0;
+            return _solutionContainerSystem.DrainAvailable(owner) <= 0;
         }
 
         private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
