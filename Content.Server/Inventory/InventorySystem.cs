@@ -19,7 +19,7 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, EntRemovedFromContainerMessage>(HandleInvRemovedFromContainer);
             SubscribeLocalEvent<InventoryComponent, HighPressureEvent>(OnHighPressureEvent);
             SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
-            SubscribeLocalEvent<Inventorycomponent, DamageModifyEvent>(OnDamageModify);
+            SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
         }
 
