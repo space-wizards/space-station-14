@@ -1,5 +1,5 @@
 <SS14Window
-    SetSize="270 300"
+    SetSize="300 300"
     Margin="4 0"
     xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
