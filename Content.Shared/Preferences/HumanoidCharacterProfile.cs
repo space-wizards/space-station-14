@@ -277,9 +277,14 @@ namespace Content.Shared.Preferences
 
             name = name.Trim();
 
-            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.AsciiNames))
+            if (IoCManager.Resolve<IConfigurationManager>().GetCVar(CCVars.RestrictedNames))
             {
-                name = Regex.Replace(name, @"[^\u0000-\u007F]+", string.Empty);
+                name = Regex.Replace(name, @"[^A-Z,a-z,0-9, -]", string.Empty);
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                name = "Urist McHands";
             }
 
             var appearance = HumanoidCharacterAppearance.EnsureValid(Appearance);

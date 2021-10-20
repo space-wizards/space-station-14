@@ -467,9 +467,9 @@ namespace Content.Shared.CCVar
          */
 
         /// <summary>
-        /// Restricts IC character names to ASCII chars.
+        /// Restricts IC character names to alphanumeric chars.
         /// </summary>
-        public static readonly CVarDef<bool> AsciiNames =
-            CVarDef.Create("ic.ascii_names", true, CVar.SERVER | CVar.REPLICATED);
+        public static readonly CVarDef<bool> RestrictedNames =
+            CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
     }
 }
