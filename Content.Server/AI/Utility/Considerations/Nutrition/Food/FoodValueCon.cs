@@ -12,8 +12,8 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Food
         {
             var target = context.GetState<TargetEntityState>().GetValue();
 
-            if (target == null || target.Deleted ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, FoodComponent.SolutionName, out var food))
+            if (target == null || target.Deleted || !target.TryGetComponent<FoodComponent>(out var foodComp) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, foodComp.SolutionName, out var food))
             {
                 return 0.0f;
             }

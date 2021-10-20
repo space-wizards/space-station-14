@@ -2534,3 +2534,59 @@ Entries:
   - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
   id: 452
   time: '2021-10-16T23:23:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Added Hydroponics tray machine board, type: Add}
+  id: 453
+  time: '2021-10-18T06:12:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pipe rotation is less chaotic evil., type: Fix}
+  id: 454
+  time: '2021-10-18T11:42:30.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
+  id: 455
+  time: '2021-10-18T22:47:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Security gear will now actually protect you against attacks., type: Add}
+  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
+  id: 456
+  time: '2021-10-18T23:24:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
+      on the RefillableSolution workaround., type: Fix}
+  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
+  id: 457
+  time: '2021-10-19T07:13:44.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: freezers are rotatable now., type: Fix}
+  id: 458
+  time: '2021-10-19T07:22:41.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Singularity field generators should be easier to move around., type: Tweak}
+  id: 459
+  time: '2021-10-19T07:24:07.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Show set pressure when examining gas pumps., type: Add}
+  - {message: Show set rate when examining volumetric gas pumps., type: Add}
+  - {message: Show valve status (open/closed) when examining manual valves., type: Add}
+  id: 460
+  time: '2021-10-19T21:46:31.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: NT took the tele-trashbags back. At least they left some normal ones
+      for us..., type: Fix}
+  id: 461
+  time: '2021-10-20T13:25:22.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Anti-matter engine actually generates power again., type: Fix}
+  id: 462
+  time: '2021-10-20T18:31:53.0000000+00:00'
