@@ -110,15 +110,7 @@ namespace Content.IntegrationTests
                 IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             };
 
-            // Avoid funny race conditions with the database.
-            options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
-
-            // Disable holidays as some of them might mess with the map at round start.
-            options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
-
-            // Avoid loading a large map by default for integration tests if none has been specified.
-            if(!options.CVarOverrides.ContainsKey(CCVars.GameMap.Name))
-                options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+            SetServerTestCvars(options);
 
             return base.StartServer(options);
         }
@@ -164,6 +156,19 @@ namespace Content.IntegrationTests
             await StartConnectedPairShared(client, server);
 
             return (client, server);
+        }
+
+        private void SetServerTestCvars(IntegrationOptions options)
+        {
+            // Avoid funny race conditions with the database.
+            options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
+
+            // Disable holidays as some of them might mess with the map at round start.
+            options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
+
+            // Avoid loading a large map by default for integration tests if none has been specified.
+            if (!options.CVarOverrides.ContainsKey(CCVars.GameMap.Name))
+                options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
         }
 
         private bool ShouldPool(IntegrationOptions options)
@@ -229,6 +234,7 @@ namespace Content.IntegrationTests
             await base.OnServerReturn(server);
 
             await server.WaitIdleAsync();
+            SetServerTestCvars(server.Options);
 
             var systems = server.ResolveDependency<IEntitySystemManager>();
             var prototypes = server.ResolveDependency<IPrototypeManager>();
