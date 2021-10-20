@@ -1,0 +1,12 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            MinSize="200 100" Title="Signaler">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Frequency" Align="Center" HorizontalExpand="True"/>
+            <SpinBox Name="SignalFrequency" Align="Center" HorizontalExpand="True"/>
+        </BoxContainer>
+        <Button Name="SendSignalButton" Text="Send Signal"/>
+    </BoxContainer>
+</SS14Window>

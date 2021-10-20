@@ -1,9 +1,15 @@
+using Content.Server.Clothing.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Popups;
+using Content.Server.UserInterface;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Devices;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
+using Robust.Server.GameObjects;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Serilog;
@@ -34,22 +40,51 @@ namespace Content.Server.Devices.Systems
 
             if (args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command))
             {
-                //If that command is the PING command (you can check for your own command here)
+                //Make sure the command is a signaler ping.
                 if (command == NET_SIGNALER_PING)
                 {
                     var owner = EntityManager.GetEntity(uid);
-                    owner.PopupMessageEveryone("The Signaler beeps.");
+                    if (owner.TryGetContainer(out var container))
+                    {
+                        var viewer = container.Owner;
+                        viewer.PopupMessage(viewer, "You feel your signaler vibrate.");
+                    }
+                    else
+                    {
+                        owner.PopupMessageEveryone("BZZzzzz...", null, 5);
+                    }
                 }
             }
         }
 
+        private void OnCanisterInteractHand(EntityUid uid, SharedSignalerComponent component, InteractHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            component.Owner.GetUIOrNull(SignalerUiKey.Key)?.Open(actor.PlayerSession);
+            args.Handled = true;
+        }
+
         private void OnUse(EntityUid uid, SharedSignalerComponent component, UseInHandEvent args)
         {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            var boundInterface = component.Owner.GetUIOrNull(SignalerUiKey.Key);
+            boundInterface?.Open(actor.PlayerSession);
+
+            args.Handled = true;
+
+            return;
+
             var signalerPacket = new NetworkPayload()
            {
                [DeviceNetworkConstants.Command] = NET_SIGNALER_PING,
            };
            _deviceNetworkSystem.QueuePacket(uid, "", component.Frequency, signalerPacket, true);
+
+           args.Handled = true;
         }
     }
 }

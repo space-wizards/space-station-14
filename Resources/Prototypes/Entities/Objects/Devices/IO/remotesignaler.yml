@@ -19,3 +19,7 @@
     frequency: 200
   - type: WirelessNetworkConnection
     range: 3000
+  - type: UserInterface
+    interfaces:
+    - key: enum.SignalerUiKey.Key
+      type: SignalerBoundUserInterface
