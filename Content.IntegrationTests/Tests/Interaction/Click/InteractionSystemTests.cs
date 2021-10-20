@@ -1,3 +1,10 @@
+using System.Threading.Tasks;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction;
+using Content.Shared.Weapons.Melee;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -5,13 +12,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Reflection;
-using System.Threading.Tasks;
-using Content.Server.Hands.Components;
-using Content.Server.Interaction;
-using Content.Server.Items;
-using Content.Shared.Interaction;
-using Content.Shared.Weapons.Melee;
-using Content.Shared.Hands.Components;
 
 namespace Content.IntegrationTests.Tests.Interaction.Click
 {
@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {
@@ -107,7 +107,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionObstructionTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {
@@ -179,7 +179,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionInRangeTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {
@@ -249,7 +249,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InteractionOutOfRangeTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {
@@ -318,7 +318,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
         [Test]
         public async Task InsideContainerInteractionBlockTest()
         {
-            var server = StartServerDummyTicker(new ServerContentIntegrationOption
+            var server = StartServer(new ServerContentIntegrationOption
             {
                 ContentBeforeIoC = () =>
                 {

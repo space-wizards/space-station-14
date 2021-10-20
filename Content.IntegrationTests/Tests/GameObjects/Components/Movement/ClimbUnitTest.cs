@@ -2,7 +2,6 @@
 
 using System.Threading.Tasks;
 using Content.Server.Climbing.Components;
-using Content.Shared.Physics;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,7 +35,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Movement
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity human;
             IEntity table;

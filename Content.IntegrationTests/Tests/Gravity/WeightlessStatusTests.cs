@@ -4,7 +4,6 @@ using Content.Server.Gravity.EntitySystems;
 using Content.Shared.Acts;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates;
-using Content.Shared.Gravity;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -39,14 +38,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             await server.WaitAssertion(() =>
             {
-                var mapId = new MapId(1);
-                var gridId = new GridId(1);
-
-                if (!mapManager.TryGetGrid(gridId, out var grid))
-                {
-                    grid = mapManager.CreateGrid(mapId, gridId);
-                }
-
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.ToCoordinates();
                 human = entityManager.SpawnEntity("HumanDummy", coordinates);
 

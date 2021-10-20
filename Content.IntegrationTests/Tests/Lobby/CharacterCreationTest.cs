@@ -1,12 +1,8 @@
 using System.Threading.Tasks;
-using Content.Client;
 using Content.Client.Lobby;
 using Content.Client.Preferences;
-using Content.Client.State;
 using Content.Server.GameTicking;
-using Content.Server.Preferences;
 using Content.Server.Preferences.Managers;
-using Content.Shared;
 using Content.Shared.CCVar;
 using Content.Shared.Preferences;
 using NUnit.Framework;
@@ -50,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Lobby
             // Need to run them in sync to receive the messages.
             await RunTicksSync(client, server, 1);
 
-            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 60);
+            await WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, maxTicks: 600);
 
             Assert.NotNull(clientNetManager.ServerChannel);
 

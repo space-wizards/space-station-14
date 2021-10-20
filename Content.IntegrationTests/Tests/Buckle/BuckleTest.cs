@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var entityManager = IoCManager.Resolve<IEntityManager>();
                 var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-                var grid = mapManager.GetAllGrids().First();
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -227,7 +227,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var grid = mapManager.GetAllGrids().First();
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);
@@ -312,7 +312,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var grid = mapManager.GetAllGrids().First();
+                var grid = GetMainGrid(mapManager);
                 var coordinates = grid.GridEntityId.ToCoordinates();
 
                 human = entityManager.SpawnEntity(BuckleDummyId, coordinates);

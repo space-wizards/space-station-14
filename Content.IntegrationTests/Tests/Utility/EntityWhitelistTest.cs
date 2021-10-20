@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
 using NUnit.Framework;
-using NUnit.Framework.Internal;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 
@@ -70,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
             await server.WaitAssertion(() =>
             {
-                var mapId = new MapId(1);
+                var mapId = GetMainMapId(mapManager);
                 var mapCoordinates = new MapCoordinates(0, 0, mapId);
 
                 var validComponent = entityManager.SpawnEntity("ValidComponentDummy", mapCoordinates);

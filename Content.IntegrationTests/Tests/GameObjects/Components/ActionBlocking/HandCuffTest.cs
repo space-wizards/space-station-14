@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         public async Task Test()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             IEntity human;
             IEntity otherHuman;

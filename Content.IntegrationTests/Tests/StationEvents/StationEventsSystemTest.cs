@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.StationEvents
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             server.Assert(() =>
             {

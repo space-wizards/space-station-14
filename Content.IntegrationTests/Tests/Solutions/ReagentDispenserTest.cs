@@ -1,6 +1,5 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
@@ -14,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Solutions
         [Test]
         public async Task TestReagentDispenserInventory()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitIdleAsync();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 

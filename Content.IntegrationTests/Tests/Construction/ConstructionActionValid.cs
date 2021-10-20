@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphSpawnPrototypeValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphNodeEntityPrototypeValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -115,7 +115,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task ConstructionGraphEdgeValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 

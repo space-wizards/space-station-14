@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Entry;
 using Content.Client.IoC;
@@ -13,6 +14,7 @@ using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;
@@ -166,6 +168,7 @@ namespace Content.IntegrationTests
 
         private bool ShouldPool(IntegrationOptions options)
         {
+            return false;
             if (!options.Pool)
             {
                 return false;
@@ -173,6 +176,12 @@ namespace Content.IntegrationTests
 
             if (options.CVarOverrides.TryGetValue(CCVars.GameDummyTicker.Name, out var dummy) &&
                 dummy == "true")
+            {
+                return false;
+            }
+
+            if (options.CVarOverrides.TryGetValue(CCVars.GameLobbyEnabled.Name, out var lobby) &&
+                lobby == "true")
             {
                 return false;
             }
@@ -251,7 +260,7 @@ namespace Content.IntegrationTests
 
             if (!gameTicker.DummyTicker)
             {
-                await WaitUntil(server, () => gameTicker.RunLevel == GameRunLevel.InRound);
+                await WaitUntil(server, () => gameTicker.RunLevel == GameRunLevel.InRound, 600);
             }
         }
 
@@ -277,6 +286,10 @@ namespace Content.IntegrationTests
                 ticksAwaited += ticksToRun;
             }
 
+            if (!passed)
+            {
+                Assert.Fail($"Condition did not pass after {maxTicks} ticks. Tests ran: {string.Join('\n', instance.TestsRan)}");
+            }
             Assert.That(passed);
         }
 
@@ -303,6 +316,30 @@ namespace Content.IntegrationTests
                 await server.WaitRunTicks(1);
                 await client.WaitRunTicks(1);
             }
+        }
+
+        protected MapId GetMainMapId(IMapManager manager)
+        {
+            // TODO a heuristic that is not this bad
+            return manager.GetAllMapIds().Last();
+        }
+
+        protected IMapGrid GetMainGrid(IMapManager manager)
+        {
+            // TODO a heuristic that is not this bad
+            return manager.GetAllGrids().First();
+        }
+
+        protected TileRef GetMainTile(IMapGrid grid)
+        {
+            // TODO a heuristic that is not this bad
+            return grid.GetAllTiles().First();
+        }
+
+        protected EntityCoordinates GetMainEntityCoordinates(IMapManager manager)
+        {
+            var gridId = GetMainGrid(manager).GridEntityId;
+            return new EntityCoordinates(gridId, -1, -1);
         }
 
         protected sealed class ClientContentIntegrationOption : ClientIntegrationOptions

@@ -3,8 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.Storage.Components;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
-using YamlDotNet.RepresentationModel;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -14,7 +12,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestStorageFillPrototypes()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitIdleAsync();
             var protoManager = server.ResolveDependency<IPrototypeManager>();
 

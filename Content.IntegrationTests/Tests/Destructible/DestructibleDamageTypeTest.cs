@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
@@ -38,7 +37,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
             await server.WaitPost(() =>
             {
-                var gridId = sMapManager.GetAllGrids().First().GridEntityId;
+                var gridId = GetMainGrid(sMapManager).GridEntityId;
                 var coordinates = new EntityCoordinates(gridId, 0, 0);
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageTypeEntityId, coordinates);

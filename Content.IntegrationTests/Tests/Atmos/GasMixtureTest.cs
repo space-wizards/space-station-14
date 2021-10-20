@@ -14,7 +14,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestMerge()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 
@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(Atmospherics.BreathPercentage)]
         public async Task RemoveRatio(float ratio)
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             server.Assert(() =>
             {

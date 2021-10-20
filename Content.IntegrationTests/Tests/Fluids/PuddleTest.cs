@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
@@ -28,8 +27,8 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var solution = new Solution("water", ReagentUnit.New(20));
-                var grid = mapManager.GetAllGrids().First();
-                var (x, y) = grid.GetAllTiles().First().GridIndices;
+                var grid = GetMainGrid(mapManager);
+                var (x, y) = GetMainTile(grid).GridIndices;
                 var coordinates = new EntityCoordinates(grid.GridEntityId, x, y);
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
 
@@ -53,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Remove all tiles
             server.Post(() =>
             {
-                grid = mapManager.GetAllGrids().First();
+                grid = GetMainGrid(mapManager);
 
                 foreach (var tile in grid.GetAllTiles())
                 {

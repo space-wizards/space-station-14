@@ -3,7 +3,6 @@ using NUnit.Framework;
 using Robust.Server.Maps;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -34,7 +33,8 @@ namespace Content.IntegrationTests.Tests
                 var dir = new ResourcePath(mapPath).Directory;
                 resManager.UserData.CreateDir(dir);
 
-                var mapId = mapManager.CreateMap(new MapId(5));
+                var nextMapId = mapManager.NextMapId();
+                var mapId = mapManager.CreateMap(nextMapId);
 
                 {
                     var mapGrid = mapManager.CreateGrid(mapId);
@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests
 
                 mapLoader.SaveMap(mapId, mapPath);
 
-                mapManager.DeleteMap(new MapId(5));
+                mapManager.DeleteMap(nextMapId);
             });
             await server.WaitIdleAsync();
 

@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task NoSavedPostMapInitTest()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             await server.WaitIdleAsync();
 

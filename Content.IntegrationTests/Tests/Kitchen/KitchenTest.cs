@@ -1,9 +1,7 @@
 using System.Threading.Tasks;
-using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen;
 using NUnit.Framework;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Kitchen
@@ -14,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Kitchen
         [Test]
         public async Task TestRecipesValid()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
             await server.WaitIdleAsync();
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
