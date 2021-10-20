@@ -115,6 +115,7 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void OnUse(EntityUid uid, DrinkComponent component, UseInHandEvent args)
         {
+            if (args.Handled) return;
             if (!component.Opened)
             {
                 //Do the opening stuff like playing the sounds.
