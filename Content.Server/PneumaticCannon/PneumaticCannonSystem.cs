@@ -4,10 +4,12 @@ using System.Linq;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Camera;
+using Content.Server.CombatMode;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Nutrition.Components;
 using Content.Server.Storage.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Interaction;
 using Content.Shared.PneumaticCannon;
@@ -18,9 +20,12 @@ using Robust.Shared.Map;
 using Content.Server.Throwing;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
+using Content.Shared.CombatMode;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.StatusEffect;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Robust.Shared.Audio;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -33,6 +38,7 @@ namespace Content.Server.PneumaticCannon
     public class PneumaticCannonSystem : EntitySystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly AtmosphereSystem _atmos = default!;
 
         private HashSet<PneumaticCannonComponent> _currentlyFiring = new();
@@ -150,15 +156,19 @@ namespace Content.Server.PneumaticCannon
             }
         }
 
-        // todo maybe change to clickattack
         private void OnAfterInteract(EntityUid uid, PneumaticCannonComponent component, AfterInteractEvent args)
         {
+            if (EntityManager.TryGetComponent<SharedCombatModeComponent>(uid, out var combat)
+                && !combat.IsInCombatMode)
+                return;
+
             args.Handled = true;
+
             if (!HasGas(component) && component.GasTankRequired)
             {
                 args.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", component.Owner)));
-                // whizz sound
+                SoundSystem.Play(Filter.Pvs(args.Used.Uid), "/Audio/Items/hiss.ogg");
                 return;
             }
             AddToQueue(component, args.User, args.ClickLocation);
@@ -171,7 +181,7 @@ namespace Content.Server.PneumaticCannon
             if (storage.StoredEntities == null) return;
             if (storage.StoredEntities.Count == 0)
             {
-                // click sound
+                SoundSystem.Play(Filter.Pvs(comp.Owner.Uid), "/Audio/Weapons/click.ogg");
                 return;
             }
 
@@ -208,7 +218,7 @@ namespace Content.Server.PneumaticCannon
             {
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-fire-no-gas",
                     ("cannon", comp.Owner)));
-                // whizz sound
+                SoundSystem.Play(Filter.Pvs(comp.Owner.Uid), "/Audio/Items/hiss.ogg");
                 return;
             }
 
@@ -235,11 +245,10 @@ namespace Content.Server.PneumaticCannon
             // lasagna, anybody?
             ent.EnsureComponent<ForcefeedOnCollideComponent>();
 
-            if(data.User.TryGetComponent<StunnableComponent>(out var stunnable)
-               && comp.Power == PneumaticCannonPower.High
-               && !stunnable.Stunned)
+            if(data.User.TryGetComponent<StatusEffectsComponent>(out var status)
+               && comp.Power == PneumaticCannonPower.High)
             {
-                stunnable.Paralyze(comp.HighPowerStunTime);
+                _stun.TryParalyze(data.User.Uid, TimeSpan.FromSeconds(comp.HighPowerStunTime), status);
                 data.User.PopupMessage(Loc.GetString("pneumatic-cannon-component-power-stun",
                     ("cannon", comp.Owner)));
             }
