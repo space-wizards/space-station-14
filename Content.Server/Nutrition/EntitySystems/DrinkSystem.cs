@@ -97,7 +97,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 owner.RemoveComponent<RefillableSolutionComponent>();
                 owner.RemoveComponent<DrainableSolutionComponent>();
             }
-            
+
         }
 
         private void AfterInteract(EntityUid uid, DrinkComponent component, AfterInteractEvent args)
@@ -125,13 +125,11 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             var owner = EntityManager.GetEntity(uid);
-            if (owner.TryGetComponent(out SolutionContainerManagerComponent? existingDrainable))
+            if (owner.TryGetComponent(out SolutionContainerManagerComponent? existingDrainable)
+                && _solutionContainerSystem.DrainAvailable(owner) <= 0)
             {
-                if (_solutionContainerSystem.DrainAvailable(owner) <= 0)
-                {
-                    args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", owner)));
-                    return;
-                }
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", owner)));
+                return;
             }
 
             if (TryUseDrink(uid, args.User, args.User, false, component))
@@ -225,11 +223,9 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
 
-            if (user != target &&
-                !user.InRangeUnobstructed(target, popup: true))
-            {
+            if (user != target && !user.InRangeUnobstructed(target, popup: true))
                 return false;
-            }
+
 
             var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
