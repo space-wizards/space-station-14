@@ -90,10 +90,8 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 if (opened)
                 {
-                    var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
-                    refillable.Solution = component.SolutionName;
-                    var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
-                    drainable.Solution = component.SolutionName;
+                    owner.EnsureComponent<RefillableSolutionComponent>().Solution = component.SolutionName;
+                    owner.EnsureComponent<DrainableSolutionComponent>().Solution = component.SolutionName;
                 }
                 else
                 {
