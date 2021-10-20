@@ -1,10 +1,10 @@
-using Content.Client.Administration.Managers;
-using Content.Client.Administration.UI.ManageSolutions;
+using Content.Client.Administration.UI.Tabs.AtmosTab;
 using Content.Shared.Verbs;
 using Robust.Client.Console;
 using Robust.Client.ViewVariables;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
 
 namespace Content.Client.Verbs
 {
@@ -15,9 +15,6 @@ namespace Content.Client.Verbs
     {
         [Dependency] private readonly IClientConGroupController _clientConGroupController = default!;
         [Dependency] private readonly IViewVariablesManager _viewVariablesManager = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-
-        private EditSolutionsWindow? _solutionsWindow;
 
         public override void Initialize()
         {
@@ -26,6 +23,8 @@ namespace Content.Client.Verbs
 
         private void AddAdminVerbs(GetOtherVerbsEvent args)
         {
+            // Currently this is only the ViewVariables verb, but more admin-UI related verbs can be added here.
+
             // View variables verbs
             if (_clientConGroupController.CanViewVar())
             {

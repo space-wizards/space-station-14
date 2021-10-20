@@ -41,21 +41,16 @@ namespace Content.Client.Administration.UI.ManageSolutions
 
             ReagentList.OnItemSelected += ReagentListSelected;
             ReagentList.OnItemDeselected += ReagentListDeselected;
-            SearchBar.OnTextChanged += SearchTextChanged;
-            _quantitySpin.OnValueChanged += QuantityChanged;
+            SearchBar.OnTextChanged += (_) => UpdateReagentPrototypes(SearchBar.Text);
+            _quantitySpin.OnValueChanged += (_) => UpdateAddButton();
             AddButton.OnPressed += AddReagent;
 
             UpdateReagentPrototypes();
             UpdateAddButton();
         }
 
-        private void QuantityChanged(FloatSpinBox.FloatSpinBoxEventArgs obj)
-        {
-            UpdateAddButton();
-        }
-
         /// <summary>
-        ///     Execute the console command to add the selected reagent.
+        ///     Execute a console command that asks the server to add the selected reagent.
         /// </summary>
         private void AddReagent(BaseButton.ButtonEventArgs obj)
         {
@@ -73,7 +68,12 @@ namespace Content.Client.Administration.UI.ManageSolutions
             UpdateAddButton();
         }
 
-        /// <param name="selectedSolution"></param>
+        private void ReagentListDeselected(ItemList.ItemListDeselectedEventArgs obj)
+        {
+            _selectedReagent = null;
+            UpdateAddButton();
+        }
+
         public void UpdateSolution(string? selectedSolution)
         {
             if (selectedSolution == null)
@@ -89,7 +89,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
         }
 
         /// <summary>
-        ///     Set the Text & disabled-status of the button that actually adds the reagent.
+        ///     Set the Text and enabled/disabled status of the button that actually adds the reagent.
         /// </summary>
         private void UpdateAddButton()
         {
@@ -105,17 +105,6 @@ namespace Content.Client.Administration.UI.ManageSolutions
                 ("reagent", _selectedReagent.ID));
 
             AddButton.Disabled = false;
-        }
-
-        private void ReagentListDeselected(ItemList.ItemListDeselectedEventArgs obj)
-        {
-            _selectedReagent = null;
-            UpdateAddButton();
-        }
-
-        private void SearchTextChanged(LineEdit.LineEditEventArgs obj)
-        {
-            UpdateReagentPrototypes(SearchBar.Text);
         }
 
         /// <summary>

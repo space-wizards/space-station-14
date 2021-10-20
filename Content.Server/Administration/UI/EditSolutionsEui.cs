@@ -29,10 +29,26 @@ namespace Content.Server.Administration.UI
             StateDirty();
         }
 
+        public override void Closed()
+        {
+            base.Closed();
+            EntitySystem.Get<AdminVerbSystem>().CloseEditSolutionsEui(Player);
+        }
+
         public override EuiStateBase GetNewState()
         {
             var solutions = _entityManager.GetComponentOrNull<SolutionContainerManagerComponent>(Target)?.Solutions;
             return new EditSolutionsEuiState(Target, solutions);
+        }
+
+        public override void HandleMessage(EuiMessageBase msg)
+        {
+            switch (msg)
+            {
+                case EditSolutionsEuiMsg.Close:
+                    Close();
+                    break;
+            }
         }
     }
 }

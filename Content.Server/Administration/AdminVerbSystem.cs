@@ -44,7 +44,6 @@ namespace Content.Server.Administration
 
         private readonly Dictionary<IPlayerSession, EditSolutionsEui> _openSolutionUis = new();
 
-
         public override void Initialize()
         {
             SubscribeLocalEvent<GetOtherVerbsEvent>(AddDebugVerbs);
@@ -195,12 +194,12 @@ namespace Content.Server.Administration
                 args.Verbs.Add(verb);
             }
 
-            // Add Solution Manager verb
+            // Add verb to open Solution Editor
             if (_groupController.CanCommand(player, "addreagent") &&
                 args.Target.HasComponent<SolutionContainerManagerComponent>())
             {
                 Verb verb = new();
-                verb.Text = Loc.GetString("admin-solution-manager-verb-get-data-text");
+                verb.Text = Loc.GetString("edit-solutions-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
                 verb.IconTexture = "/Textures/Interface/VerbIcons/spill.svg.192dpi.png";
                 verb.Act = () => OpenEditSolutionsEui(player, args.Target.Uid);
@@ -218,7 +217,7 @@ namespace Content.Server.Administration
             }
         }
 
-        private void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
+        public void OpenEditSolutionsEui(IPlayerSession session, EntityUid uid)
         {
             if (session.AttachedEntity == null)
                 return;
@@ -231,12 +230,10 @@ namespace Content.Server.Administration
             eui.StateDirty();
         }
 
-        private void CloseEditSolutionsEui(IPlayerSession session)
+        public void CloseEditSolutionsEui(IPlayerSession session)
         {
             if (_openSolutionUis.Remove(session, out var eui))
-            {
                 eui?.Close();
-            }
         }
 
         private void Reset(RoundRestartCleanupEvent ev)

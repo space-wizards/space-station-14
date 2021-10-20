@@ -16,10 +16,12 @@ namespace Content.Client.Administration.UI.ManageSolutions
         public EditSolutionsEui()
         {
             _window = new EditSolutionsWindow();
+            _window.OnClose += () => SendMessage(new EditSolutionsEuiMsg.Close());
         }
 
         public override void Opened()
         {
+            base.Opened();
             _window.OpenCentered();
         }
 
