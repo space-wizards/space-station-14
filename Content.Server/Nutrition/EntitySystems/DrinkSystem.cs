@@ -66,7 +66,7 @@ namespace Content.Server.Nutrition.EntitySystems
             args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
         }
 
-        private void SetOpen(EntityUid uid, DrinkComponent? component = null, bool opened = false )
+        private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
         {
             if(!Resolve(uid, ref component))
                 return;
