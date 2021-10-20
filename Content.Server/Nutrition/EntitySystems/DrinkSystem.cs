@@ -72,34 +72,34 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var oldOpened = component.Opened;
 
-            if (opened != oldOpened)
+            if (opened == oldOpened)
+                return;
+
+            var owner = EntityManager.GetEntity(uid);
+
+            component.Opened = opened;
+
+            if (!_solutionContainerSystem.TryGetSolution(owner, component.SolutionName, out _))
             {
-                var owner = EntityManager.GetEntity(uid);
+                return;
+            }
 
-                component.Opened = opened;
+            if (owner.TryGetComponent(out AppearanceComponent? appearance))
+            {
+                appearance.SetData(DrinkCanStateVisual.Opened, opened);
+            }
 
-                if (!_solutionContainerSystem.TryGetSolution(owner, component.SolutionName, out _))
-                {
-                    return;
-                }
-
-                if (owner.TryGetComponent(out AppearanceComponent? appearance))
-                {
-                    appearance.SetData(DrinkCanStateVisual.Opened, opened);
-                }
-
-                if (opened)
-                {
-                    var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
-                    refillable.Solution = component.SolutionName;
-                    var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
-                    drainable.Solution = component.SolutionName;
-                }
-                else
-                {
-                    owner.RemoveComponent<RefillableSolutionComponent>();
-                    owner.RemoveComponent<DrainableSolutionComponent>();
-                }
+            if (opened)
+            {
+                var refillable = owner.EnsureComponent<RefillableSolutionComponent>();
+                refillable.Solution = component.SolutionName;
+                var drainable = owner.EnsureComponent<DrainableSolutionComponent>();
+                drainable.Solution = component.SolutionName;
+            }
+            else
+            {
+                owner.RemoveComponent<RefillableSolutionComponent>();
+                owner.RemoveComponent<DrainableSolutionComponent>();
             }
         }
 
@@ -109,9 +109,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
 
             if (args.Target == null)
-            {
                 return;
-            }
 
             if (TryUseDrink(uid, args.User, args.Target, true, component))
                 args.Handled = true;
