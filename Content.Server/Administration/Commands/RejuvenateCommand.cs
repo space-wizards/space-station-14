@@ -2,11 +2,15 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Administration;
 using Content.Shared.Damage;
+using Content.Shared.Jittering;
 using Content.Shared.MobState;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.StatusEffect;
+using Content.Shared.Stunnable;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -55,7 +59,8 @@ namespace Content.Server.Administration.Commands
             target.GetComponentOrNull<IMobStateComponent>()?.UpdateState(0);
             target.GetComponentOrNull<HungerComponent>()?.ResetFood();
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
-            target.GetComponentOrNull<StunnableComponent>()?.ResetStuns();
+
+            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 
             if (target.TryGetComponent(out FlammableComponent? flammable))
             {
@@ -70,6 +75,11 @@ namespace Content.Server.Administration.Commands
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))
             {
                 EntitySystem.Get<CreamPieSystem>().SetCreamPied(target.Uid, creamPied, false);
+            }
+
+            if (target.HasComponent<JitteringComponent>())
+            {
+                target.RemoveComponent<JitteringComponent>();
             }
         }
     }

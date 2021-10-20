@@ -74,36 +74,41 @@ namespace Content.Server.RoundEnd
             Timer.Spawn(CallCooldown, () => OnCallCooldownEnded?.Invoke(), _callCooldownEndedTokenSource.Token);
         }
 
-        public void RequestRoundEnd()
+        public void RequestRoundEnd(bool checkCooldown = true)
+        {
+            RequestRoundEnd(RoundEndCountdownTime, checkCooldown);
+        }
+
+        public void RequestRoundEnd(TimeSpan countdownTime, bool checkCooldown = true)
         {
             if (IsRoundEndCountdownStarted)
                 return;
 
-            if (!CanCall())
+            if (checkCooldown && !CanCall())
             {
                 return;
             }
 
             IsRoundEndCountdownStarted = true;
 
-            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", RoundEndCountdownTime.Minutes)), Loc.GetString("Station"));
+            _chatManager.DispatchStationAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",("minutes", countdownTime.Minutes)), Loc.GetString("Station"));
 
             SoundSystem.Play(Filter.Broadcast(), "/Audio/Announcements/shuttlecalled.ogg");
 
-            ExpectedCountdownEnd = _gameTiming.CurTime + RoundEndCountdownTime;
-            Timer.Spawn(RoundEndCountdownTime, EndRound, _roundEndCancellationTokenSource.Token);
+            ExpectedCountdownEnd = _gameTiming.CurTime + countdownTime;
+            Timer.Spawn(countdownTime, EndRound, _roundEndCancellationTokenSource.Token);
 
             ActivateCooldown();
 
             OnRoundEndCountdownStarted?.Invoke();
         }
 
-        public void CancelRoundEndCountdown()
+        public void CancelRoundEndCountdown( bool checkCooldown = true)
         {
             if (!IsRoundEndCountdownStarted)
                 return;
 
-            if (!CanCall())
+            if (checkCooldown && !CanCall())
             {
                 return;
             }
@@ -124,7 +129,7 @@ namespace Content.Server.RoundEnd
             OnRoundEndCountdownCancelled?.Invoke();
         }
 
-        private void EndRound()
+        public void EndRound()
         {
             OnRoundEndCountdownFinished?.Invoke();
             var gameTicker = Get<GameTicker>();

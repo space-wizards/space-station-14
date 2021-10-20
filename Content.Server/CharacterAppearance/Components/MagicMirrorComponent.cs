@@ -1,3 +1,4 @@
+using Content.Server.CharacterAppearance.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
@@ -89,6 +90,8 @@ namespace Content.Server.CharacterAppearance.Components
 
                     break;
             }
+
+            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(obj.Session.AttachedEntity.Uid);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

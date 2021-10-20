@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
+    netsync: false
     layers:
     - state: paper
   - type: Paper
@@ -13,14 +14,26 @@
     interfaces:
     - key: enum.PaperUiKey.Key
       type: PaperBoundUserInterface
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.PaperVisuals.Status
+        layer: 0
+        states:
+          # This default isn't actually explicitly used right now.
+          enum.PaperStatus.Blank: paper
+          enum.PaperStatus.Written: paper_words
 
 - type: entity
   parent: Paper
   id: PaperWritten
   abstract: true
   components:
+  - type: Paper
   - type: Sprite
     layers:
+    # Changing it here is fine - if the PaperStatus key is actually added,
+    #  something happened, so that ought to override this either way.
     - state: paper_words
 
 - type: entity

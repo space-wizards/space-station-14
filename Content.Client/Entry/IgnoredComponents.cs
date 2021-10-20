@@ -49,6 +49,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "AtmosFixMarker",
             "CablePlacer",
             "Drink",
             "Food",
@@ -280,6 +281,15 @@ namespace Content.Client.Entry
             "IncreaseDamageOnWield",
             "TabletopGame",
             "LitOnPowered",
+            "TriggerOnSignalReceived",
+            "ToggleDoorOnTrigger",
+            "DeviceNetworkConnection",
+            "WiredNetworkConnection",
+            "WirelessNetworkConnection",
+            "HandLabeler",
+            "Label",
+            "GhostRadio",
+            "Armor",
             "PneumaticCannon"
         };
     }

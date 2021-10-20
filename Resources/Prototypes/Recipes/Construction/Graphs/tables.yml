@@ -51,6 +51,12 @@
               amount: 1
               doAfter: 1
 
+        - to: TablePlasmaGlass
+          steps:
+            - material: PlasmaGlass
+              amount: 1
+              doAfter: 1
+
         - to: TableWood
           steps:
             - material: WoodPlank
@@ -67,24 +73,6 @@
               amount: 1
           steps:
             - tool: Anchoring
-              doAfter: 1
-
-        - to: TableBar
-          steps:
-            - material: Cloth
-              amount: 1
-              doAfter: 1
-
-    - node: TableBar
-      entity: TableBar
-      edges:
-        - to: Table
-          completed:
-            - !type:SpawnPrototype
-              prototype: MaterialCloth1
-              amount: 1
-          steps:
-            - tool: Prying
               doAfter: 1
 
     - node: TableReinforced
@@ -118,6 +106,18 @@
           completed:
             - !type:SpawnPrototype
               prototype: SheetRGlass1
+              amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+
+    - node: TablePlasmaGlass
+      entity: TablePlasmaGlass
+      edges:
+        - to: TableFrame
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetPGlass1
               amount: 1
           steps:
             - tool: Anchoring

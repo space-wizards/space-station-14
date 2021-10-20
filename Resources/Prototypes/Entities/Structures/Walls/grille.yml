@@ -1,0 +1,73 @@
+- type: entity
+  id: Grille
+  parent: BaseStructure
+  name: grille
+  description: A flimsy framework of iron rods.
+  components:
+    - type: CanBuildWindowOnTop
+    - type: Sprite
+      netsync: false
+      drawdepth: Walls
+      sprite: Structures/Walls/grille.rsi
+      state: grille
+    - type: Icon
+      sprite: Structures/Walls/grille.rsi
+      state: grille
+    - type: RCDDeconstructWhitelist
+    - type: Construction
+      graph: grille
+      node: grille
+      deconstructionTarget: start
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: FlimsyMetallic
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 20
+          behaviors:
+            - !type:ChangeConstructionNodeBehavior
+              node: grilleBroken
+            - !type:DoActsBehavior
+              acts: ["Breakage"]
+
+- type: entity
+  id: GrilleBroken
+  parent: Grille
+  name: grille
+  description: A flimsy framework of iron rods. It has seen better days.
+  components:
+    - type: Sprite
+      netsync: false
+      drawdepth: Walls
+      sprite: Structures/Walls/grille.rsi
+      state: grille_broken
+    - type: Icon
+      sprite: Structures/Walls/grille.rsi
+      state: grille_broken
+    - type: RCDDeconstructWhitelist
+    - type: Construction
+      graph: grille
+      node: grilleBroken
+      deconstructionTarget: start
+    - type: Physics
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.45,-0.45,0.45,0.45"
+          mass: 50
+          layer:
+            - Passable
+          mask:
+            - Passable
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10
+          behaviors:
+            - !type:ChangeConstructionNodeBehavior
+              node: start
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
