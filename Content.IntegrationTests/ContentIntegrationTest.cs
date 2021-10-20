@@ -69,9 +69,9 @@ namespace Content.IntegrationTests
             return base.StartClient(options);
         }
 
-        protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions? options = null)
+        protected override ServerIntegrationInstance StartServer(ServerIntegrationOptions options = null)
         {
-            options ??= new ServerContentIntegrationOption()
+            options ??= new ServerContentIntegrationOption
             {
                 FailureLogLevel = LogLevel.Warning,
             };
