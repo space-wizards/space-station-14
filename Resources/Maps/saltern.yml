@@ -13360,11 +13360,11 @@ entities:
       29,-31: 9
       29,-30: 9
       29,-29: 9
-      29,-27: 9
+      29,-27: 81
       30,-32: 9
-      30,-27: 9
+      30,-27: 82
       31,-32: 9
-      31,-27: 9
+      31,-27: 82
       -32,19: 9
       -32,20: 9
       -32,29: 9
@@ -13378,21 +13378,21 @@ entities:
       -31,29: 9
       -30,19: 9
       32,-32: 9
-      32,-27: 9
-      33,-28: 9
-      33,-27: 9
-      34,-32: 9
-      34,-31: 9
-      34,-30: 9
-      34,-29: 9
-      34,-28: 9
-      32,-37: 9
-      33,-37: 9
-      33,-36: 9
-      34,-36: 9
-      34,-35: 9
-      34,-34: 9
-      34,-33: 9
+      32,-27: 82
+      33,-28: 83
+      33,-27: 82
+      34,-32: 84
+      34,-31: 85
+      34,-30: 86
+      34,-29: 87
+      34,-28: 82
+      32,-37: 88
+      33,-37: 89
+      33,-36: 90
+      34,-36: 91
+      34,-35: 92
+      34,-34: 93
+      34,-33: 94
       -38,19: 9
       -38,29: 9
       -37,19: 9
@@ -13475,8 +13475,8 @@ entities:
       29,-33: 9
       30,-39: 9
       30,-38: 9
-      30,-37: 9
-      31,-37: 9
+      30,-37: 95
+      31,-37: 96
       30,21: 9
       31,25: 9
       50,15: 9
@@ -14403,6 +14403,182 @@ entities:
       moles:
       - 7.2998533
       - 27.461353
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51666
+      moles:
+      - 5.4562197
+      - 20.52578
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51666
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51667
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51686
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51672
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.516685
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51668
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 102.54218
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 100.27305
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.705765
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.56395
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.52849
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51962
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 99.51741
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 147.925
+      moles:
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+      - 0
+    - volume: 2500
+      temperature: 111.618744
+      moles:
+      - 0
+      - 0
       - 0
       - 0
       - 0
@@ -71344,63 +71520,78 @@ entities:
     parent: 853
     type: Transform
 - uid: 6752
-  type: ReinforcedWindow
+  type: GasPipeStraight
   components:
-  - pos: 29.5,-26.5
+  - rot: -1.5707963267948966 rad
+    pos: 37.5,21.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6753
-  type: ReinforcedWindow
+  type: GasPassiveGate
   components:
-  - pos: 30.5,-26.5
+  - rot: 1.5707963267948966 rad
+    pos: 28.5,20.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6754
-  type: ReinforcedWindow
+  type: GasPipeStraight
   components:
-  - pos: 31.5,-26.5
+  - rot: -1.5707963267948966 rad
+    pos: 30.5,21.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6755
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 32.5,-26.5
+  - pos: 53.5,19.5
     parent: 853
     type: Transform
 - uid: 6756
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 33.5,-26.5
+  - pos: 45.5,23.5
     parent: 853
     type: Transform
 - uid: 6757
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 33.5,-27.5
+  - pos: 45.5,24.5
     parent: 853
     type: Transform
 - uid: 6758
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 34.5,-27.5
+  - pos: 47.5,23.5
     parent: 853
     type: Transform
 - uid: 6759
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 34.5,-28.5
+  - pos: 46.5,23.5
     parent: 853
     type: Transform
 - uid: 6760
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 34.5,-29.5
+  - pos: 47.5,24.5
     parent: 853
     type: Transform
 - uid: 6761
-  type: ReinforcedWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 34.5,-30.5
+  - pos: 46.5,24.5
     parent: 853
     type: Transform
 - uid: 6762
@@ -71464,63 +71655,63 @@ entities:
     parent: 853
     type: Transform
 - uid: 6772
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 34.5,-31.5
+  - pos: 42.5,24.5
     parent: 853
     type: Transform
 - uid: 6773
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 34.5,-32.5
+  - pos: 43.5,23.5
     parent: 853
     type: Transform
 - uid: 6774
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 34.5,-33.5
+  - pos: 42.5,23.5
     parent: 853
     type: Transform
 - uid: 6775
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 34.5,-34.5
+  - pos: 43.5,24.5
     parent: 853
     type: Transform
 - uid: 6776
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 34.5,-35.5
+  - pos: 41.5,24.5
     parent: 853
     type: Transform
 - uid: 6777
-  type: ReinforcedWindow
+  type: AtmosFixNitrogenMarker
   components:
-  - pos: 33.5,-35.5
+  - pos: 41.5,23.5
     parent: 853
     type: Transform
 - uid: 6778
-  type: ReinforcedWindow
+  type: AtmosFixOxygenMarker
   components:
-  - pos: 33.5,-36.5
+  - pos: 37.5,23.5
     parent: 853
     type: Transform
 - uid: 6779
-  type: ReinforcedWindow
+  type: AtmosFixOxygenMarker
   components:
-  - pos: 32.5,-36.5
+  - pos: 37.5,24.5
     parent: 853
     type: Transform
 - uid: 6780
-  type: ReinforcedWindow
+  type: AtmosFixOxygenMarker
   components:
-  - pos: 31.5,-36.5
+  - pos: 38.5,24.5
     parent: 853
     type: Transform
 - uid: 6781
-  type: ReinforcedWindow
+  type: AtmosFixOxygenMarker
   components:
-  - pos: 30.5,-36.5
+  - pos: 39.5,24.5
     parent: 853
     type: Transform
 - uid: 6782
@@ -72026,16 +72217,11 @@ entities:
   - color: '#7F007FFF'
     type: AtmosPipeColor
 - uid: 6860
-  type: GasPipeStraight
+  type: AtmosFixOxygenMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 37.5,21.5
+  - pos: 38.5,23.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#007F7FFF'
-    type: AtmosPipeColor
 - uid: 6861
   type: Grille
   components:
@@ -72109,27 +72295,17 @@ entities:
     parent: 853
     type: Transform
 - uid: 6871
-  type: GasPassiveGate
+  type: AtmosFixOxygenMarker
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 28.5,20.5
+  - pos: 39.5,23.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#007F7FFF'
-    type: AtmosPipeColor
 - uid: 6872
-  type: GasPipeStraight
+  type: AtmosFixBlockerMarker
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 30.5,21.5
+  - pos: 32.5,24.5
     parent: 853
     type: Transform
-  - canCollide: False
-    type: Physics
-  - color: '#007F7FFF'
-    type: AtmosPipeColor
 - uid: 6873
   type: Grille
   components:
@@ -72285,7 +72461,7 @@ entities:
 - uid: 6894
   type: AtmosFixBlockerMarker
   components:
-  - pos: 53.5,19.5
+  - pos: 33.5,23.5
     parent: 853
     type: Transform
 - uid: 6895
@@ -72670,148 +72846,28 @@ entities:
 - uid: 6947
   type: AtmosFixBlockerMarker
   components:
-  - pos: 45.5,23.5
+  - pos: 33.5,24.5
     parent: 853
     type: Transform
 - uid: 6948
   type: AtmosFixBlockerMarker
   components:
-  - pos: 45.5,24.5
+  - pos: 34.5,23.5
     parent: 853
     type: Transform
 - uid: 6949
   type: AtmosFixBlockerMarker
   components:
-  - pos: 47.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6950
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 46.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6951
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 47.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6952
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 46.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6953
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 42.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6954
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 43.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6955
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 42.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6956
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 43.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6957
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 41.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6958
-  type: AtmosFixNitrogenMarker
-  components:
-  - pos: 41.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6959
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 37.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6960
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 37.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6961
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 38.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6962
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 39.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6963
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 38.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6964
-  type: AtmosFixOxygenMarker
-  components:
-  - pos: 39.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6965
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 32.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6966
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 33.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6967
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 33.5,24.5
-    parent: 853
-    type: Transform
-- uid: 6968
-  type: AtmosFixBlockerMarker
-  components:
-  - pos: 34.5,23.5
-    parent: 853
-    type: Transform
-- uid: 6969
-  type: AtmosFixBlockerMarker
-  components:
   - pos: 34.5,24.5
     parent: 853
     type: Transform
-- uid: 6970
+- uid: 6950
   type: PlasmaWindow
   components:
   - pos: 51.5,18.5
     parent: 853
     type: Transform
-- uid: 6971
+- uid: 6951
   type: GasPipeBend
   components:
   - rot: 1.5707963267948966 rad
