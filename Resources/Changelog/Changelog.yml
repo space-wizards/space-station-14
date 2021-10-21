@@ -2612,3 +2612,10 @@ Entries:
   - {message: Fixes mobs being on fire permanently, type: Fix}
   id: 466
   time: '2021-10-21T21:09:28.187458+00:00'
+- author: 20kdc
+  changes:
+  - {message: Saltern now uses SMES terminals, type: Add}
+  - {message: SMESes in solars, type: Add}
+  - {message: Nudge a trash spawner back in-bounds, type: Fix}
+  id: 467
+  time: '2021-10-21T21:25:21.0000000+00:00'
