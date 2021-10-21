@@ -15,11 +15,6 @@ namespace Content.Client.Light.Visualizers
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (component.TryGetData(ExpendableLightVisuals.Behavior, out string lightBehaviourID))
             {
                 if (component.Owner.TryGetComponent<LightBehaviourComponent>(out var lightBehaviour))
