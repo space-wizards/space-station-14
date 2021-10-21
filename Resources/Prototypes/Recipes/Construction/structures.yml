@@ -128,7 +128,7 @@
   id: ReinforcedPlasmaWindow
   graph: window
   startNode: start
-  targetNode: ReinforcedPlasmaWindow
+  targetNode: reinforcedplasmaWindow
   category: Structuress
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
