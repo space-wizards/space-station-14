@@ -68,7 +68,7 @@ grids:
   - ind: "-1,2"
     tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "1,1"
-    tiles: HwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAABoAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAaAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAGgAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAdAAAAHQAAAB4AAAAeAAAAHgAAABoAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAaAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+    tiles: HwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAeAAAAHgAAABoAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAHgAAAB4AAAAaAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAB4AAAAeAAAAGgAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAdAAAAHQAAAB4AAAAeAAAAHgAAABoAAAAfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB0AAAAdAAAAHgAAAB4AAAAaAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHQAAAB4AAAAeAAAAHwAAAB8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "0,2"
     tiles: GAAAABgAAAAYAAAAGAAAABgAAAAYAAAAGAAAABgAAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAB8AAAAfAAAAHwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
   - ind: "2,0"
@@ -16547,19 +16547,6 @@ entities:
       restitution: 0.1
     - shape: !type:PolygonShape
         vertices:
-        - 32,20
-        - 32,22
-        - 30,22
-        - 30,20
-      id: grid_chunk-30-20
-      mask:
-      - MapGrid
-      layer:
-      - MapGrid
-      mass: 4
-      restitution: 0.1
-    - shape: !type:PolygonShape
-        vertices:
         - 48,16
         - 48,26
         - 32,26
@@ -16617,6 +16604,32 @@ entities:
         - 48,16
         - 48,15
       id: grid_chunk-48-15
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 3
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,20
+        - 32,21
+        - 27,21
+        - 27,20
+      id: grid_chunk-27-20
+      mask:
+      - MapGrid
+      layer:
+      - MapGrid
+      mass: 5
+      restitution: 0.1
+    - shape: !type:PolygonShape
+        vertices:
+        - 32,21
+        - 32,22
+        - 29,22
+        - 29,21
+      id: grid_chunk-29-21
       mask:
       - MapGrid
       layer:
@@ -22307,6 +22320,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#FF0000FF'
+    type: AtmosPipeColor
 - uid: 1558
   type: GasVentScrubber
   components:
@@ -36168,6 +36183,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 3170
   type: CableApcExtension
   components:
@@ -45758,6 +45775,12 @@ entities:
     pos: -18.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4152
   type: hydroponicsTray
   components:
@@ -45765,6 +45788,12 @@ entities:
     pos: -19.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4153
   type: hydroponicsTray
   components:
@@ -45772,6 +45801,12 @@ entities:
     pos: -20.5,1.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4154
   type: hydroponicsTray
   components:
@@ -45779,6 +45814,12 @@ entities:
     pos: -20.5,0.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4155
   type: hydroponicsTray
   components:
@@ -45786,6 +45827,12 @@ entities:
     pos: -20.5,-0.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4156
   type: hydroponicsTray
   components:
@@ -45793,6 +45840,12 @@ entities:
     pos: -19.5,-0.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4157
   type: hydroponicsTray
   components:
@@ -45800,6 +45853,12 @@ entities:
     pos: -18.5,-0.5
     parent: 853
     type: Transform
+  - containers:
+      machine_board: !type:Container
+        ents: []
+      machine_parts: !type:Container
+        ents: []
+    type: ContainerContainer
 - uid: 4158
   type: WallSolid
   components:
@@ -53503,8 +53562,6 @@ entities:
   - pos: -31.5,25.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 5064
   type: ClosetMaintenanceFilledRandom
   components:
@@ -68204,6 +68261,8 @@ entities:
     pos: 31.5,19.5
     parent: 853
     type: Transform
+  - open: False
+    type: GasValve
   - canCollide: False
     type: Physics
   - color: '#0000FFFF'
@@ -68249,7 +68308,7 @@ entities:
   - color: '#0000FFFF'
     type: AtmosPipeColor
 - uid: 6368
-  type: GasPipeStraight
+  type: GasPassiveGate
   components:
   - rot: 1.5707963267948966 rad
     pos: 28.5,19.5
@@ -68257,18 +68316,18 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#0000FFFF'
+  - color: '#007F7FFF'
     type: AtmosPipeColor
 - uid: 6369
-  type: GasPipeStraight
+  type: GasPipeTJunction
   components:
-  - rot: 1.5707963267948966 rad
+  - rot: 3.141592653589793 rad
     pos: 27.5,19.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#0000FFFF'
+  - color: '#007F7FFF'
     type: AtmosPipeColor
 - uid: 6370
   type: GasPipeBend
@@ -68416,8 +68475,8 @@ entities:
 - uid: 6384
   type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,22.5
+  - rot: -1.5707963267948966 rad
+    pos: 34.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -68427,8 +68486,8 @@ entities:
 - uid: 6385
   type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,23.5
+  - rot: -1.5707963267948966 rad
+    pos: 35.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -68662,6 +68721,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6409
   type: GasPipeBend
   components:
@@ -68685,7 +68746,7 @@ entities:
     parent: 853
     type: Transform
 - uid: 6412
-  type: GasPipeStraight
+  type: GasValve
   components:
   - pos: 38.5,19.5
     parent: 853
@@ -68703,8 +68764,8 @@ entities:
 - uid: 6414
   type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,24.5
+  - rot: -1.5707963267948966 rad
+    pos: 32.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -68714,8 +68775,8 @@ entities:
 - uid: 6415
   type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,25.5
+  - rot: -1.5707963267948966 rad
+    pos: 33.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -68731,12 +68792,13 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
-  - color: '#0000FFFF'
+  - color: '#007F7FFF'
     type: AtmosPipeColor
 - uid: 6417
-  type: GasOutletInjector
+  type: GasPipeStraight
   components:
-  - pos: 36.5,26.5
+  - rot: -1.5707963267948966 rad
+    pos: 31.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
@@ -68816,6 +68878,8 @@ entities:
     pos: 45.5,19.5
     parent: 853
     type: Transform
+  - open: False
+    type: GasValve
   - canCollide: False
     type: Physics
   - color: '#7F007FFF'
@@ -69222,6 +69286,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6468
   type: GasPipeStraight
   components:
@@ -69230,6 +69296,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0000FFFF'
+    type: AtmosPipeColor
 - uid: 6469
   type: GasVentPump
   components:
@@ -69240,6 +69308,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6470
   type: GasPassiveVent
   components:
@@ -69250,6 +69320,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#0000FFFF'
+    type: AtmosPipeColor
 - uid: 6471
   type: Catwalk
   components:
@@ -69330,6 +69402,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6484
   type: GasPipeStraight
   components:
@@ -69338,6 +69412,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6485
   type: WallReinforced
   components:
@@ -69345,13 +69421,15 @@ entities:
     parent: 853
     type: Transform
 - uid: 6486
-  type: GasPipeBend
+  type: GasPipeStraight
   components:
   - pos: 38.5,20.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6487
   type: GasPipeStraight
   components:
@@ -69360,15 +69438,18 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6488
-  type: GasPipeStraight
+  type: GasPipeBend
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 37.5,20.5
+  - pos: 38.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6489
   type: Grille
   components:
@@ -69391,11 +69472,12 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6492
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,22.5
+  - pos: 38.5,22.5
     parent: 853
     type: Transform
 - uid: 6493
@@ -69417,11 +69499,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 6496
-  type: Catwalk
+  type: GasPipeBend
   components:
-  - pos: 36.5,21.5
+  - rot: -1.5707963267948966 rad
+    pos: 29.5,20.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6497
   type: GasMinerNitrogen
   components:
@@ -69436,6 +69523,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6499
   type: GasPassiveVent
   components:
@@ -69446,6 +69535,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6500
   type: GasVentPump
   components:
@@ -69456,6 +69547,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6501
   type: WallReinforced
   components:
@@ -69488,6 +69581,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6506
   type: ReinforcedWindow
   components:
@@ -69616,6 +69711,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6527
   type: WallReinforced
   components:
@@ -69630,6 +69727,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6529
   type: GasPipeStraight
   components:
@@ -69638,6 +69737,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6530
   type: GasPipeStraight
   components:
@@ -69646,6 +69747,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6531
   type: GasPipeStraight
   components:
@@ -69655,6 +69758,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6532
   type: GasPipeStraight
   components:
@@ -69664,6 +69769,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6533
   type: PlasmaCanister
   components:
@@ -69678,11 +69785,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0000FFFF'
+    type: AtmosPipeColor
 - uid: 6535
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,22.5
+  - pos: 39.5,22.5
     parent: 853
     type: Transform
 - uid: 6536
@@ -69944,12 +70052,16 @@ entities:
     parent: 853
     type: Transform
 - uid: 6573
-  type: Catwalk
+  type: GasPipeStraight
   components:
-  - rot: 1.5707963267948966 rad
-    pos: 38.5,19.5
+  - rot: -1.5707963267948966 rad
+    pos: 36.5,21.5
     parent: 853
     type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6574
   type: Catwalk
   components:
@@ -70572,6 +70684,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6648
   type: PlasmaWindow
   components:
@@ -70593,26 +70707,26 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 6651
-  type: GasPipeStraight
+  type: GasPipeBend
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,21.5
+  - rot: 1.5707963267948966 rad
+    pos: 29.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6652
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 39.5,20.5
+  - pos: 39.5,20.5
     parent: 853
     type: Transform
 - uid: 6653
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 38.5,20.5
+  - pos: 38.5,20.5
     parent: 853
     type: Transform
 - uid: 6654
@@ -70711,6 +70825,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6667
   type: GasVentPump
   components:
@@ -70721,6 +70837,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6668
   type: OxygenCanister
   components:
@@ -70748,19 +70866,19 @@ entities:
 - uid: 6672
   type: AtmosFixBlockerMarker
   components:
-  - pos: 51.5,19.5
+  - pos: 32.5,23.5
     parent: 853
     type: Transform
 - uid: 6673
   type: AtmosFixBlockerMarker
   components:
-  - pos: 51.5,18.5
+  - pos: 53.5,18.5
     parent: 853
     type: Transform
 - uid: 6674
   type: AtmosFixBlockerMarker
   components:
-  - pos: 51.5,17.5
+  - pos: 53.5,17.5
     parent: 853
     type: Transform
 - uid: 6675
@@ -71519,16 +71637,12 @@ entities:
   - pos: 21.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6801
   type: SolarPanel
   components:
   - pos: 19.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6802
   type: SolarPanel
   components:
@@ -71559,16 +71673,12 @@ entities:
   - pos: 19.5,-34.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6807
   type: SolarPanel
   components:
   - pos: 21.5,-34.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6808
   type: SolarPanel
   components:
@@ -71587,8 +71697,6 @@ entities:
   - pos: 23.5,-35.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6811
   type: SolarPanel
   components:
@@ -71631,8 +71739,6 @@ entities:
   - pos: 25.5,-35.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6818
   type: SolarPanel
   components:
@@ -71681,8 +71787,6 @@ entities:
   - pos: 23.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6826
   type: SolarPanel
   components:
@@ -71701,16 +71805,12 @@ entities:
   - pos: 27.5,-34.5
     parent: 853
     type: Transform
-  - supplyRate: 1413
-    type: PowerSupplier
 - uid: 6829
   type: SolarPanel
   components:
   - pos: 29.5,-34.5
     parent: 853
     type: Transform
-  - supplyRate: 1412
-    type: PowerSupplier
 - uid: 6830
   type: SolarPanel
   components:
@@ -71729,8 +71829,6 @@ entities:
   - pos: 29.5,-30.5
     parent: 853
     type: Transform
-  - supplyRate: 1412
-    type: PowerSupplier
 - uid: 6833
   type: SolarPanel
   components:
@@ -71817,6 +71915,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6847
   type: GasPipeStraight
   components:
@@ -71825,6 +71925,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6848
   type: GasPipeStraight
   components:
@@ -71833,6 +71935,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6849
   type: GasPipeStraight
   components:
@@ -71841,6 +71945,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6850
   type: Grille
   components:
@@ -71855,6 +71961,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6852
   type: Grille
   components:
@@ -71869,6 +71977,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6854
   type: Grille
   components:
@@ -71891,6 +72001,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#0000FFFF'
+    type: AtmosPipeColor
 - uid: 6857
   type: PlasmaWindow
   components:
@@ -71911,27 +72023,29 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#7F007FFF'
+    type: AtmosPipeColor
 - uid: 6860
-  type: GasPipeBend
+  type: GasPipeStraight
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,20.5
+  - rot: -1.5707963267948966 rad
+    pos: 37.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6861
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 37.5,20.5
+  - pos: 37.5,20.5
     parent: 853
     type: Transform
 - uid: 6862
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 36.5,20.5
+  - pos: 36.5,20.5
     parent: 853
     type: Transform
 - uid: 6863
@@ -71942,6 +72056,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6864
   type: Grille
   components:
@@ -71974,6 +72090,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6869
   type: GasPipeStraight
   components:
@@ -71982,6 +72100,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6870
   type: ReinforcedWindow
   components:
@@ -71989,26 +72109,31 @@ entities:
     parent: 853
     type: Transform
 - uid: 6871
-  type: GasPipeStraight
+  type: GasPassiveGate
   components:
-  - pos: 36.5,26.5
+  - rot: 1.5707963267948966 rad
+    pos: 28.5,20.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6872
   type: GasPipeStraight
   components:
-  - pos: 36.5,27.5
+  - rot: -1.5707963267948966 rad
+    pos: 30.5,21.5
     parent: 853
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6873
   type: Grille
   components:
-  - rot: 3.141592653589793 rad
-    pos: 32.5,20.5
+  - pos: 32.5,20.5
     parent: 853
     type: Transform
 - uid: 6874
@@ -72094,6 +72219,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#FF0000FF'
+    type: AtmosPipeColor
 - uid: 6887
   type: GasPipeStraight
   components:
@@ -72103,6 +72230,8 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+  - color: '#FF0000FF'
+    type: AtmosPipeColor
 - uid: 6888
   type: GasPassiveVent
   components:
@@ -72114,6 +72243,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 - uid: 6889
   type: GasVentPump
   components:
@@ -72125,6 +72256,8 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+  - color: '#FF0000FF'
+    type: AtmosPipeColor
 - uid: 6890
   type: Grille
   components:
@@ -72150,9 +72283,9 @@ entities:
     parent: 853
     type: Transform
 - uid: 6894
-  type: PlasmaWindow
+  type: AtmosFixBlockerMarker
   components:
-  - pos: 51.5,18.5
+  - pos: 53.5,19.5
     parent: 853
     type: Transform
 - uid: 6895
@@ -72534,4 +72667,159 @@ entities:
   - pos: 47.5,21.5
     parent: 853
     type: Transform
+- uid: 6947
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 45.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6948
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 45.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6949
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 47.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6950
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 46.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6951
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 47.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6952
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 46.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6953
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 42.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6954
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 43.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6955
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 42.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6956
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 43.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6957
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 41.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6958
+  type: AtmosFixNitrogenMarker
+  components:
+  - pos: 41.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6959
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 37.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6960
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 37.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6961
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 38.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6962
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 39.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6963
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 38.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6964
+  type: AtmosFixOxygenMarker
+  components:
+  - pos: 39.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6965
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 32.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6966
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 33.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6967
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 33.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6968
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 34.5,23.5
+    parent: 853
+    type: Transform
+- uid: 6969
+  type: AtmosFixBlockerMarker
+  components:
+  - pos: 34.5,24.5
+    parent: 853
+    type: Transform
+- uid: 6970
+  type: PlasmaWindow
+  components:
+  - pos: 51.5,18.5
+    parent: 853
+    type: Transform
+- uid: 6971
+  type: GasPipeBend
+  components:
+  - rot: 1.5707963267948966 rad
+    pos: 27.5,20.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
+  - color: '#007F7FFF'
+    type: AtmosPipeColor
 ...
