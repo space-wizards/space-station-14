@@ -16,6 +16,7 @@ namespace Content.Client.Damage
 
         public List<object> TargetLayerMapKeys = new();
         public bool Disabled = false;
+        public bool Valid = true;
         public int LastDamageThreshold = 0;
         public Dictionary<object, bool> DisabledLayers = new();
         public Dictionary<object, string> LayerMapKeyStates = new();
