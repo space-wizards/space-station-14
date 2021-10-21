@@ -461,5 +461,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+
+        /*
+         * IC
+         */
+
+        /// <summary>
+        /// Restricts IC character names to alphanumeric chars.
+        /// </summary>
+        public static readonly CVarDef<bool> RestrictedNames =
+            CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
     }
 }
