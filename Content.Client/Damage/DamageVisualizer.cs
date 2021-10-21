@@ -38,6 +38,8 @@ namespace Content.Client.Damage
     {
         [Dependency] IPrototypeManager _prototypeManager = default!;
         [Dependency] IEntityManager _entityManager = default!;
+
+        private const string _name = "DamageVisualizer";
         /// <summary>
         ///     Damage thresholds between damage state changes.
         ///
@@ -207,14 +209,14 @@ namespace Content.Client.Damage
         {
             if (_thresholds.Count < 1)
             {
-                Logger.ErrorS("DamageVisualizer", $"Thresholds were invalid for entity {entity}. Thresholds: {_thresholds}");
+                Logger.ErrorS(_name, $"Thresholds were invalid for entity {entity}. Thresholds: {_thresholds}");
                 damageData.Valid = false;
                 return;
             }
 
             if (_divisor == 0)
             {
-                Logger.ErrorS("DamageVisualizer", $"Divisor for {entity} is set to zero.");
+                Logger.ErrorS(_name, $"Divisor for {entity} is set to zero.");
                 damageData.Valid = false;
                 return;
             }
@@ -223,21 +225,21 @@ namespace Content.Client.Damage
             {
                 if (_damageOverlayGroups == null && _damageOverlay == null)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Enabled overlay without defined damage overlay sprites on {entity}.");
+                    Logger.ErrorS(_name, $"Enabled overlay without defined damage overlay sprites on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
 
                 if (_trackAllDamage && _damageOverlay == null)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Enabled all damage tracking without a damage overlay sprite on {entity}.");
+                    Logger.ErrorS(_name, $"Enabled all damage tracking without a damage overlay sprite on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
 
                 if (!_trackAllDamage && _damageOverlay != null)
                 {
-                    Logger.WarningS("DamageVisualizer", $"Disabled all damage tracking with a damage overlay sprite on {entity}.");
+                    Logger.WarningS(_name, $"Disabled all damage tracking with a damage overlay sprite on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
@@ -245,7 +247,7 @@ namespace Content.Client.Damage
 
                 if (_trackAllDamage && _damageOverlayGroups != null)
                 {
-                    Logger.WarningS("DamageVisualizer", $"Enabled all damage tracking with damage overlay groups on {entity}.");
+                    Logger.WarningS(_name, $"Enabled all damage tracking with damage overlay groups on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
@@ -254,21 +256,21 @@ namespace Content.Client.Damage
             {
                 if (_targetLayers == null)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Disabled overlay without target layers on {entity}.");
+                    Logger.ErrorS(_name, $"Disabled overlay without target layers on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
 
                 if (_damageOverlayGroups != null || _damageOverlay != null)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Disabled overlay with defined damage overlay sprites on {entity}.");
+                    Logger.ErrorS(_name, $"Disabled overlay with defined damage overlay sprites on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
 
                 if (_damageGroup == null)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Disabled overlay without defined damage group on {entity}.");
+                    Logger.ErrorS(_name, $"Disabled overlay without defined damage group on {entity}.");
                     damageData.Valid = false;
                     return;
                 }
@@ -276,12 +278,12 @@ namespace Content.Client.Damage
 
             if (_damageOverlayGroups != null && _damageGroup != null)
             {
-                Logger.WarningS("DamageVisualizer", $"Damage overlay sprites and damage group are both defined on {entity}.");
+                Logger.WarningS(_name, $"Damage overlay sprites and damage group are both defined on {entity}.");
             }
 
             if (_damageOverlay != null && _damageGroup != null)
             {
-                Logger.WarningS("DamageVisualizer", $"Damage overlay sprites and damage group are both defined on {entity}.");
+                Logger.WarningS(_name, $"Damage overlay sprites and damage group are both defined on {entity}.");
             }
         }
 
@@ -297,7 +299,7 @@ namespace Content.Client.Damage
 
             if (_thresholds[0] != 0)
             {
-                Logger.ErrorS("DamageVisualizer", $"Thresholds were invalid for entity {entity}. Thresholds: {_thresholds}");
+                Logger.ErrorS(_name, $"Thresholds were invalid for entity {entity}. Thresholds: {_thresholds}");
                 damageData.Valid = false;
                 return;
             }
@@ -316,6 +318,7 @@ namespace Content.Client.Damage
                     {
                         if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
+                            Logger.WarningS(_name, $"Damage key {damageType} was invalid for entity {entity}.");
                             _damageOverlayGroups.Remove(damageType);
                             continue;
                         }
@@ -323,13 +326,13 @@ namespace Content.Client.Damage
                         damageData.LastThresholdPerGroup.Add(damageType, 0);
                     }
                 }
-                // Are we tracking a single damage group, instead?
+                // Are we tracking a single damage group without overlay instead?
                 // See if that group is in our entity's damage container.
                 else if (!_overlay && _damageGroup != null)
                 {
                     if (!damageContainer.SupportedGroups.Contains(_damageGroup))
                     {
-                        Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity}.");
+                        Logger.ErrorS(_name, $"Damage keys were invalid for entity {entity}.");
                         damageData.Valid = false;
                         return;
                     }
@@ -357,7 +360,7 @@ namespace Content.Client.Damage
                 {
                     if (!damagePrototypeIdList.Contains(_damageGroup))
                     {
-                        Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity}.");
+                        Logger.ErrorS(_name, $"Damage keys were invalid for entity {entity}.");
                         damageData.Valid = false;
                         return;
                     }
@@ -372,7 +375,7 @@ namespace Content.Client.Damage
             if (_damageOverlayGroups != null
                 && _damageOverlayGroups.Keys.Count == 0)
             {
-                Logger.ErrorS("DamageVisualizer", $"Damage keys were invalid for entity {entity}.");
+                Logger.ErrorS(_name, $"Damage keys were invalid for entity {entity}.");
                 damageData.Valid = false;
                 return;
             }
@@ -402,7 +405,10 @@ namespace Content.Client.Damage
 
                     if (!spriteComponent.LayerMapTryGet(key, out int index)
                         || spriteComponent.LayerGetState(index).ToString() == null)
+                    {
+                        Logger.WarningS(_name, $"Layer at key {key} was invalid for entity {entity}.");
                         continue;
+                    }
 
                     damageData.TargetLayerMapKeys.Add(key);
                 };
@@ -412,7 +418,7 @@ namespace Content.Client.Damage
                 // invalidate the visualizer without crashing.
                 if (damageData.TargetLayerMapKeys.Count == 0)
                 {
-                    Logger.ErrorS("DamageVisualizer", $"Target layers were invalid for entity {entity}.");
+                    Logger.ErrorS(_name, $"Target layers were invalid for entity {entity}.");
                     damageData.Valid = false;
                     return;
                 }
