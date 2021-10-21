@@ -51,3 +51,40 @@
   - type: Item
     sprite: Objects/Misc/bureaucracy.rsi
     HeldPrefix: pen
+
+- type: entity
+  parent: BaseItem
+  id: PaperBin
+  name: paper bin
+  description: Contains all the paper you'll never need.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: paper_bin0
+  - type: Storage
+    # 5 * 30
+    capacity: 150
+    whitelist:
+      components: [Paper]
+  - type: Item
+    sprite: Objects/Misc/bureaucracy.rsi
+    # Assume that the size of 5 for paper is
+    # just because it tends to get into a right mess.
+    # A paper bin like this ought to be around the size of a laptop.
+    size: 30
+  - type: StorageFill
+    contents:
+    - id: Paper
+      amount: 30
+  - type: ItemCounter
+    count:
+      components: [Paper]
+  - type: Appearance
+    visuals:
+    - type: StackVisualizer
+      composite: false
+      stackLayers:
+      - paper_bin0
+      - paper_bin1
+
