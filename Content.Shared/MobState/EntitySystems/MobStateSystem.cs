@@ -39,7 +39,7 @@ namespace Content.Shared.MobState.EntitySystems
 
         #region ActionBlocker
 
-        private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
+        private void CheckAct(EntityUid uid, MobStateComponent component, CancellableEntityEventArgs args)
         {
             switch (component.CurrentState)
             {
@@ -48,105 +48,56 @@ namespace Content.Shared.MobState.EntitySystems
                     args.Cancel();
                     break;
             }
+        }
+
+        private void OnChangeDirectionAttempt(EntityUid uid, MobStateComponent component, ChangeDirectionAttemptEvent args)
+        {
+            CheckAct(uid, component, args);
         }
 
         private void OnUseAttempt(EntityUid uid, MobStateComponent component, UseAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnInteractAttempt(EntityUid uid, MobStateComponent component, InteractionAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnThrowAttempt(EntityUid uid, MobStateComponent component, ThrowAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnSpeakAttempt(EntityUid uid, MobStateComponent component, SpeakAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnEquipAttempt(EntityUid uid, MobStateComponent component, EquipAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnUnequipAttempt(EntityUid uid, MobStateComponent component, UnequipAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnAttackAttempt(EntityUid uid, MobStateComponent component, AttackAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnDropAttempt(EntityUid uid, MobStateComponent component, DropAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         private void OnPickupAttempt(EntityUid uid, MobStateComponent component, PickupAttemptEvent args)
         {
-            switch (component.CurrentState)
-            {
-                case SharedDeadMobState:
-                case SharedCriticalMobState:
-                    args.Cancel();
-                    break;
-            }
+            CheckAct(uid, component, args);
         }
 
         #endregion

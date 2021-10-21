@@ -43,46 +43,49 @@ namespace Content.Shared.Cuffs
             }
         }
 
-        private void OnUseAttempt(EntityUid uid, SharedCuffableComponent component, UseAttemptEvent args)
+        #region ActionBlocker
+
+        private void CheckAct(EntityUid uid, SharedCuffableComponent component, CancellableEntityEventArgs args)
         {
             if (!component.CanStillInteract)
                 args.Cancel();
+        }
+
+        private void OnUseAttempt(EntityUid uid, SharedCuffableComponent component, UseAttemptEvent args)
+        {
+            CheckAct(uid, component, args);
         }
 
         private void OnInteractAttempt(EntityUid uid, SharedCuffableComponent component, InteractionAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
 
         private void OnEquipAttempt(EntityUid uid, SharedCuffableComponent component, EquipAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
 
         private void OnUnequipAttempt(EntityUid uid, SharedCuffableComponent component, UnequipAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
 
         private void OnAttackAttempt(EntityUid uid, SharedCuffableComponent component, AttackAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
 
         private void OnDropAttempt(EntityUid uid, SharedCuffableComponent component, DropAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
 
         private void OnPickupAttempt(EntityUid uid, SharedCuffableComponent component, PickupAttemptEvent args)
         {
-            if (!component.CanStillInteract)
-                args.Cancel();
+            CheckAct(uid, component, args);
         }
+
+        #endregion
     }
 }
