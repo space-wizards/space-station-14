@@ -42,15 +42,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanInteract())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -64,15 +55,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new UseAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanUse())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
@@ -88,15 +70,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanThrow())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -110,15 +83,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new SpeakAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanSpeak())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
@@ -134,15 +98,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanDrop())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -156,15 +111,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new PickupAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanPickup())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
@@ -180,15 +126,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanEmote())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -202,15 +139,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new AttackAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanAttack())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
@@ -226,15 +154,6 @@ namespace Content.Shared.ActionBlocker
 
             RaiseLocalEvent(entity.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanEquip())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
-
             return !ev.Cancelled;
         }
 
@@ -248,15 +167,6 @@ namespace Content.Shared.ActionBlocker
             var ev = new UnequipAttemptEvent(entity);
 
             RaiseLocalEvent(entity.Uid, ev);
-
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
-            {
-                if (!blocker.CanUnequip())
-                {
-                    ev.Cancel();
-                    break;
-                }
-            }
 
             return !ev.Cancelled;
         }
