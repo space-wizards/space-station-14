@@ -119,6 +119,9 @@
   id: Ingot
 
 - type: Tag
+  id: IODevice
+
+- type: Tag
   id: JawsOfLife
 
 - type: Tag
@@ -210,7 +213,7 @@
 
 - type: Tag
   id: EmitterBolt
-  
+
 - type: Tag
   id: HideContextMenu
 

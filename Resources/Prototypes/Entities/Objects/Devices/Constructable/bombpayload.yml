@@ -1,0 +1,16 @@
+- type: entity
+  name: empty bomb payload
+  parent: BaseItem
+  id: EmptyBombPayload
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/bombpayload.rsi
+      state: bombcore-empty
+    - type: Construction
+      graph: EmptyBombPayloadGraph
+      node: emptyCase
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10

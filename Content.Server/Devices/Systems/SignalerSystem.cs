@@ -33,16 +33,21 @@ namespace Content.Server.Devices.Systems
 
         public override void Initialize()
         {
-            base.Initialize();
-
             SubscribeLocalEvent<SharedSignalerComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<DeviceNetworkComponent, PacketSentEvent>(OnPacketReceived);
             SubscribeLocalEvent<SharedSignalerComponent, GetOtherVerbsEvent>(AddTuneVerb);
             SubscribeLocalEvent<SharedSignalerComponent, ComponentStartup>(SyncInitialFrequency);
+            SubscribeLocalEvent<SharedSignalerComponent, IoDeviceInputEvent>(OnIOReceived);
 
             // Bound UI subscriptions
             SubscribeLocalEvent<SharedSignalerComponent, SignalerSendSignalMessage>(OnSendSignalRequest);
             SubscribeLocalEvent<SharedSignalerComponent, SignalerUpdateFrequencyMessage>(UpdateFrequency);
+        }
+
+        //when we receive an IO input, we activate the signaler.
+        private void OnIOReceived(EntityUid uid, SharedSignalerComponent component, IoDeviceInputEvent args)
+        {
+            SendSignal(uid);
         }
 
         private void SyncInitialFrequency(EntityUid uid, SharedSignalerComponent component, ComponentStartup args)
@@ -103,11 +108,18 @@ namespace Content.Server.Devices.Systems
                     {
                         var viewer = container.Owner;
                         viewer.PopupMessage(viewer, "You feel your signaler vibrate.");
+
+                        //if the device is in a container, try to apply an output signal to that container.
+                        //i'm not a big fan of this, but I can't think of an ideal way to do this other than maybe
+                        //a broadcast event? which then manually checks if the device is connected to this one?
+                        //dunno.
+                        RaiseLocalEvent(container.Owner.Uid, new IoDeviceOutputEvent());
                     }
                     else
                     {
                         owner.PopupMessageEveryone("BZZzzzz...", null, 5);
                     }
+
                 }
             }
         }

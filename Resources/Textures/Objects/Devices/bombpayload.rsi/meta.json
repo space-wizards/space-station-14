@@ -1,0 +1,31 @@
+{
+    "version": 1,
+
+    "license": "CC0-1.0",
+    "copyright": "Taken from https://github.com/tgstation/tgstation/blob/master/icons/obj/assemblies/new_assemblies.dmi",
+
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "bombcore-empty",
+            "directions": 1
+        },
+        {
+            "name": "bombcore-chem-half-filled",
+            "directions": 1
+        },
+        {
+            "name": "bombcore-chem-armed",
+            "directions": 1,
+            "delays": [[0.6, 0.6, 0.6]]
+        },
+        {
+            "name": "bombcore-exp-armed",
+            "directions": 1,
+            "delays": [[0.6, 0.6, 0.6]]
+        }
+    ]
+}

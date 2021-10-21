@@ -23,3 +23,6 @@
     interfaces:
     - key: enum.SignalerUiKey.Key
       type: SignalerBoundUserInterface
+  - type: Tag
+    tags:
+      - IODevice

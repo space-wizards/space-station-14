@@ -1,0 +1,12 @@
+- type: construction
+  name: empty bomb payload
+  id: emptyBombPayloadRecipe
+  graph: EmptyBombPayloadGraph
+  startNode: start
+  targetNode: emptyPayload
+  category: Weapons
+  description: An empty bomb payload. Can be used to make explosives.
+  icon:
+    sprite: Objects/Devices/bombpayload.rsi
+    state: bombcore-empty
+  objectType: Item

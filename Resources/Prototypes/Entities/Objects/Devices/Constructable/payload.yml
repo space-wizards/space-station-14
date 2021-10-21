@@ -1,0 +1,13 @@
+- type: entity
+  name: grenade casing
+  description: A grenade casing. Requires a trigger and a payload.
+  parent: BaseItem
+  id: ConstructableGrenade
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Grenades/chemgrenade.rsi
+      state: chem-grenade-0
+    - type: ConstructableGrenade
+    - type: Construction
+      graph: ConstructableGrenadeGraph
+      node: emptyCase

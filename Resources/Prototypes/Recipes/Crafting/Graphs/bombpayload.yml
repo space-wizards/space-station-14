@@ -1,0 +1,14 @@
+- type: constructionGraph
+  id: EmptyBombPayloadGraph
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: emptyPayload
+          steps:
+            - material: Plastic
+              amount: 1
+              doAfter: 3
+
+    - node: emptyPayload
+      entity: EmptyBombPayload
