@@ -653,8 +653,6 @@ namespace Content.Client.Damage
         /// </summary>
         private void UpdateDamageVisuals(DamageableComponent damageComponent, SpriteComponent spriteComponent, DamageVisualizerDataComponent damageData)
         {
-            int damageTotal = (int) Math.Floor(damageComponent.TotalDamage / _divisor);
-
             if (!CheckThresholdBoundary(damageTotal, damageData.LastDamageThreshold, out int threshold))
                 return;
 
