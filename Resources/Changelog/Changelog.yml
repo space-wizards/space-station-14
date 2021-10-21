@@ -2607,3 +2607,8 @@ Entries:
       "Urist McHands", type: Tweak}
   id: 465
   time: '2021-10-21T10:52:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes mobs being on fire permanently, type: Fix}
+  id: 466
+  time: '2021-10-21T21:09:28.187458+00:00'
