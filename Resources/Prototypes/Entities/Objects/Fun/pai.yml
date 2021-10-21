@@ -1,0 +1,23 @@
+# Placeholder PAIs, aka semi-automatic ghost roles
+
+- type: entity
+  parent: BaseItem
+  id: PersonalAI
+  name: personal ai device
+  description: Your electronic pal who's fun to be with!
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Devices/pda.rsi
+    layers:
+    - state: pda-lawyer # nobody's using this one
+    - state: pai_overlay
+      shader: unshaded
+  - type: PAI
+  - type: Examiner
+  - type: GhostRadio
+  - type: DoAfter
+  - type: Actions
+    innateActions:
+    - GhostBoo
+
