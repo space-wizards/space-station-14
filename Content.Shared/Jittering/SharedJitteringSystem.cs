@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Content.Shared.Alert;
+using Content.Shared.StatusEffect;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -13,17 +15,13 @@ namespace Content.Shared.Jittering
     public abstract class SharedJitteringSystem : EntitySystem
     {
         [Dependency] protected readonly IGameTiming GameTiming = default!;
+        [Dependency] protected readonly StatusEffectsSystem StatusEffects = default!;
 
         public float MaxAmplitude = 300f;
         public float MinAmplitude = 1f;
 
         public float MaxFrequency = 10f;
         public float MinFrequency = 1f;
-
-        /// <summary>
-        ///     List of jitter components to be removed, cached so we don't allocate it every tick.
-        /// </summary>
-        private readonly List<JitteringComponent> _removeList = new();
 
         public override void Initialize()
         {
@@ -33,7 +31,7 @@ namespace Content.Shared.Jittering
 
         private void OnGetState(EntityUid uid, JitteringComponent component, ref ComponentGetState args)
         {
-            args.State = new JitteringComponentState(component.EndTime, component.Amplitude, component.Frequency);
+            args.State = new JitteringComponentState(component.Amplitude, component.Frequency);
         }
 
         private void OnHandleState(EntityUid uid, JitteringComponent component, ref ComponentHandleState args)
@@ -41,7 +39,6 @@ namespace Content.Shared.Jittering
             if (args.Current is not JitteringComponentState jitteringState)
                 return;
 
-            component.EndTime = jitteringState.EndTime;
             component.Amplitude = jitteringState.Amplitude;
             component.Frequency = jitteringState.Frequency;
         }
@@ -59,56 +56,26 @@ namespace Content.Shared.Jittering
         /// <param name="amplitude">Jitteriness of the animation. See <see cref="MaxAmplitude"/> and <see cref="MinAmplitude"/>.</param>
         /// <param name="frequency">Frequency for jittering. See <see cref="MaxFrequency"/> and <see cref="MinFrequency"/>.</param>
         /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
-        public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 4f, bool forceValueChange = false)
+        /// <param name="status">The status effects component to modify.</param>
+        public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 4f, bool forceValueChange = false,
+            StatusEffectsComponent? status=null)
         {
-            var jittering = EntityManager.EnsureComponent<JitteringComponent>(uid);
-
-            var endTime = GameTiming.CurTime + time;
+            if (!Resolve(uid, ref status, false))
+                return;
 
             amplitude = Math.Clamp(amplitude, MinAmplitude, MaxAmplitude);
             frequency = Math.Clamp(frequency, MinFrequency, MaxFrequency);
 
-            if (forceValueChange || jittering.EndTime < endTime)
-                jittering.EndTime = endTime;
-
-            if(forceValueChange || jittering.Amplitude < amplitude)
-                jittering.Amplitude = amplitude;
-
-            if (forceValueChange || jittering.Frequency < frequency)
-                jittering.Frequency = frequency;
-
-            jittering.Dirty();
-        }
-
-        /// <summary>
-        ///     Immediately stops any jitter animation from an entity.
-        /// </summary>
-        /// <param name="uid">The entity in question.</param>
-        public void StopJitter(EntityUid uid)
-        {
-            if (!EntityManager.HasComponent<JitteringComponent>(uid))
-                return;
-
-            EntityManager.RemoveComponent<JitteringComponent>(uid);
-        }
-
-        public override void Update(float frameTime)
-        {
-            foreach (var jittering in EntityManager.EntityQuery<JitteringComponent>())
+            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, status))
             {
-                if(jittering.EndTime <= GameTiming.CurTime)
-                    _removeList.Add(jittering);
+                var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
+
+                if(forceValueChange || jittering.Amplitude < amplitude)
+                    jittering.Amplitude = amplitude;
+
+                if (forceValueChange || jittering.Frequency < frequency)
+                    jittering.Frequency = frequency;
             }
-
-            if (_removeList.Count == 0)
-                return;
-
-            foreach (var jittering in _removeList)
-            {
-                jittering.Owner.RemoveComponent<JitteringComponent>();
-            }
-
-            _removeList.Clear();
         }
     }
 }

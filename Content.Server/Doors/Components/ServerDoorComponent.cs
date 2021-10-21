@@ -565,8 +565,7 @@ namespace Content.Server.Doors.Components
                 if (e.Owner.HasComponent<DamageableComponent>())
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
-                if(e.Owner.TryGetComponent(out StunnableComponent? stun))
-                    EntitySystem.Get<StunSystem>().Paralyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime), stun);
+                EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));
             }
 
             // If we hit someone, open up after stun (opens right when stun ends)

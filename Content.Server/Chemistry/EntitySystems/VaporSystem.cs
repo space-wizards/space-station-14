@@ -78,7 +78,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public override void Update(float frameTime)
         {
             foreach (var (vaporComp, solution) in EntityManager
-                .EntityQuery<VaporComponent, SolutionContainerManagerComponent>(true))
+                .EntityQuery<VaporComponent, SolutionContainerManagerComponent>())
             {
                 foreach (var (_, value) in solution.Solutions)
                 {

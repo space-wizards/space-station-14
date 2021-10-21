@@ -27,7 +27,7 @@ namespace Content.Server.Radiation
                 _accumulator -= RadiationCooldown;
 
                 // All code here runs effectively every RadiationCooldown seconds, so use that as the "frame time".
-                foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>(true))
+                foreach (var comp in EntityManager.EntityQuery<RadiationPulseComponent>())
                 {
                     comp.Update(RadiationCooldown);
                     var ent = comp.Owner;
