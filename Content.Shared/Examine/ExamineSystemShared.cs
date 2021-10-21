@@ -33,6 +33,9 @@ namespace Content.Shared.Examine
 
         private static bool IsInDetailsRange(IEntity examiner, IEntity entity)
         {
+            if (entity.TryGetContainerMan(out var man) && man.Owner == examiner)
+                return true;
+
             return examiner.InRangeUnobstructed(entity, ExamineDetailsRange, ignoreInsideBlocker: true) &&
                    examiner.IsInSameOrNoContainer(entity);
         }

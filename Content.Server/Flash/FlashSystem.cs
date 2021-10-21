@@ -131,10 +131,8 @@ namespace Content.Server.Flash
                 flashable.Dirty();
             }
 
-            if (EntityManager.TryGetComponent<StunnableComponent>(target, out var stunnable))
-            {
-                _stunSystem.Slowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), slowTo, slowTo, stunnable);
-            }
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f),
+                slowTo, slowTo);
 
             if (displayPopup && user != null && target != user)
             {

@@ -53,24 +53,6 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: low wall
-  id: LowWall
-  graph: lowWall
-  startNode: start
-  targetNode: lowWall
-  category: Structures
-  description: A low wall used for mounting windows.
-  conditions:
-    - !type:NoWindowsInTile {}
-    - !type:TileNotBlocked {}
-  icon:
-    sprite: Structures/Walls/low_wall.rsi
-    state: metal
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-
-- type: construction
   name: grille
   id: Grille
   graph: grille
@@ -94,9 +76,9 @@
   startNode: start
   targetNode: window
   category: Structures
-  description: Clear. Must be built on top of a low wall.
+  description: Clear.
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/window.rsi
@@ -112,9 +94,9 @@
   startNode: start
   targetNode: reinforcedWindow
   category: Structures
-  description: Clear but tough. Must be built on top of a low wall.
+  description: Clear but tough.
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/reinforced_window.rsi
@@ -130,9 +112,9 @@
   startNode: start
   targetNode: plasmaWindow
   category: Structures
-  description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
+  description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/plasma_window.rsi

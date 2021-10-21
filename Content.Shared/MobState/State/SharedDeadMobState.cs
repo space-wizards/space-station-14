@@ -14,9 +14,9 @@ namespace Content.Shared.MobState.State
             var wake = entity.EnsureComponent<CollisionWakeComponent>();
             wake.Enabled = true;
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Down(entity);
+            standingState.Down(entity.Uid);
 
-            if (standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }
@@ -36,9 +36,9 @@ namespace Content.Shared.MobState.State
             }
 
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Stand(entity);
+            standingState.Stand(entity.Uid);
 
-            if (!standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (!standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = true;
             }

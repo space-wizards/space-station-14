@@ -12,7 +12,7 @@ If you want to host or create content for SS14, this is the repo you need. It co
 
 ## Documentation/Wiki
 
-The [HackMD Wiki](https://hackmd.io/@ss14/docs/wiki) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
+Our [docs site](https://docs.spacestation14.io/) has documentation on SS14s content, engine, game design and more. We also have lots of resources for new contributors to the project.
 
 ## Contributing
 
@@ -26,7 +26,7 @@ We are not currently accepting translations of the game on our main repository. 
 2. Run `RUN_THIS.py` to init submodules and download the engine.
 3. Compile the solution.
 
-[More detailed instructions on building the project.](https://hackmd.io/@ss14/docs/%2FBZkI4RlUQbm09QWrXCZ3kg)
+[More detailed instructions on building the project.](https://docs.spacestation14.io/getting-started/dev-setup)
 
 ## License
 

@@ -10,7 +10,7 @@ namespace Content.Server.Speech
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
 
-        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])");
+        public static readonly Regex SentenceRegex = new(@"(?<=[\.!\?])", RegexOptions.Compiled);
 
         public override void Initialize()
         {
