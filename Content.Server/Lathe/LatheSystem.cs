@@ -9,7 +9,7 @@ namespace Content.Server.Lathe
     {
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<LatheComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<LatheComponent>())
             {
                 if (comp.Producing == false && comp.Queue.Count > 0)
                 {

@@ -3,12 +3,14 @@ using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Content.Shared.Damage;
+using JetBrains.Annotations;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
     /// <summary>
     /// Default metabolism for medicine reagents.
     /// </summary>
+    [UsedImplicitly]
     public class HealthChange : ReagentEffect
     {
         /// <summary>
