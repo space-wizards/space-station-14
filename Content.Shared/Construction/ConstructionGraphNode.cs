@@ -11,10 +11,10 @@ namespace Content.Shared.Construction
     public class ConstructionGraphNode
     {
         [DataField("actions", serverOnly: true)]
-        private List<IGraphAction> _actions = new();
+        private IGraphAction[] _actions = Array.Empty<IGraphAction>();
 
         [DataField("edges")]
-        private List<ConstructionGraphEdge> _edges = new();
+        private ConstructionGraphEdge[] _edges = Array.Empty<ConstructionGraphEdge>();
 
         [ViewVariables]
         [DataField("node", required: true)]

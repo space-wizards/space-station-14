@@ -36,7 +36,7 @@ namespace Content.Server.Construction
     /// The server-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
-    internal class ConstructionSystem : SharedConstructionSystem
+    public partial class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
@@ -48,6 +48,9 @@ namespace Content.Server.Construction
         public override void Initialize()
         {
             base.Initialize();
+
+            InitializeGraphs();
+            InitializeSteps();
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
@@ -124,8 +127,8 @@ namespace Content.Server.Construction
 
             if (component.EdgeNestedStepProgress == null)
             {
-                if (component.EdgeStep < component.Edge?.Steps.Count)
-                    component.Edge.Steps[component.EdgeStep].DoExamine(args);
+                if (component.EdgeStepIndex < component.Edge?.Steps.Count)
+                    component.Edge.Steps[component.EdgeStepIndex].DoExamine(args);
                 return;
             }
 

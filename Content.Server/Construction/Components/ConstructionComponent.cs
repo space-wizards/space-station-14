@@ -12,6 +12,7 @@ using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,38 +24,39 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
 {
-    [RegisterComponent]
-    public partial class ConstructionComponent : Component, IInteractUsing
+    [RegisterComponent, Friend(typeof(ConstructionSystem))]
+    public class ConstructionComponent : Component, IInteractUsing
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override string Name => "Construction";
 
-        private bool _handling = false;
+        public bool _handling = false;
 
-        private TaskCompletionSource<object>? _handlingTask = null;
+        public TaskCompletionSource<object>? _handlingTask = null;
+
         [DataField("graph")]
-        private string _graphIdentifier = string.Empty;
+        public string _graphIdentifier = string.Empty;
         [DataField("node")]
-        private string _startingNodeIdentifier = string.Empty;
+        public string _startingNodeIdentifier = string.Empty;
         [DataField("defaultTarget")]
-        private string _startingTargetNodeIdentifier = string.Empty;
+        public string _startingTargetNodeIdentifier = string.Empty;
 
         [ViewVariables]
-        private HashSet<string> _containers = new();
+        public HashSet<string> _containers = new();
         [ViewVariables]
         public List<List<ConstructionGraphStep>>? EdgeNestedStepProgress = null;
 
-        private ConstructionGraphNode? _target = null;
+        public ConstructionGraphNode? _target = null;
 
         [ViewVariables]
-        public ConstructionGraphPrototype? GraphPrototype { get; private set; }
+        public ConstructionGraphPrototype? GraphPrototype { get; set; }
 
         [ViewVariables]
-        public ConstructionGraphNode? Node { get; private set; } = null;
+        public string? Node { get; set; } = null;
 
         [ViewVariables]
-        public ConstructionGraphEdge? Edge { get; private set; } = null;
+        public int? Edge { get; set; } = null;
 
         public IReadOnlyCollection<string> Containers => _containers;
 
@@ -74,17 +76,17 @@ namespace Content.Server.Construction.Components
         }
 
         [ViewVariables]
-        public ConstructionGraphEdge? TargetNextEdge { get; private set; } = null;
+        public ConstructionGraphEdge? TargetNextEdge { get; set; } = null;
 
         [ViewVariables]
-        public Queue<ConstructionGraphNode>? TargetPathfinding { get; private set; } = null;
+        public Queue<ConstructionGraphNode>? TargetPathfinding { get; set; } = null;
 
         [ViewVariables]
-        public int EdgeStep { get; private set; } = 0;
+        public int EdgeStepIndex { get; set; } = 0;
 
         [ViewVariables]
         [DataField("deconstructionTarget")]
-        public string DeconstructionNodeIdentifier { get; private set; } = "start";
+        public string DeconstructionNodeIdentifier { get; } = "start";
 
         /// <summary>
         ///     Attempts to set a new pathfinding target.
@@ -135,7 +137,7 @@ namespace Content.Server.Construction.Components
                 TargetPathfinding.Dequeue();
 
             // If we went the wrong way, we stop pathfinding.
-            if (Edge != null && TargetNextEdge != Edge && EdgeStep >= Edge.Steps.Count)
+            if (Edge != null && TargetNextEdge != Edge && EdgeStepIndex >= Edge.Steps.Count)
             {
                 ClearTarget();
                 return;
@@ -166,9 +168,9 @@ namespace Content.Server.Construction.Components
             return result;
         }
 
-        private async Task<bool> HandleNode(InteractUsingEventArgs eventArgs)
+        public async Task<bool> HandleNode(InteractUsingEventArgs eventArgs)
         {
-            EdgeStep = 0;
+            EdgeStepIndex = 0;
 
             if (Node == null || GraphPrototype == null) return false;
 
@@ -199,10 +201,10 @@ namespace Content.Server.Construction.Components
             return false;
         }
 
-        private async Task<bool> HandleStep(InteractUsingEventArgs eventArgs, ConstructionGraphEdge? edge = null, ConstructionGraphStep? step = null, bool nested = false)
+        public async Task<bool> HandleStep(InteractUsingEventArgs eventArgs, ConstructionGraphEdge? edge = null, ConstructionGraphStep? step = null, bool nested = false)
         {
             edge ??= Edge;
-            step ??= edge?.Steps[EdgeStep];
+            step ??= edge?.Steps[EdgeStepIndex];
 
             if (edge == null || step == null)
                 return false;
@@ -324,9 +326,9 @@ namespace Content.Server.Construction.Components
             if (nested && handled) return true;
             if (!handled) return false;
 
-            EdgeStep++;
+            EdgeStepIndex++;
 
-            if (edge.Steps.Count == EdgeStep)
+            if (edge.Steps.Count == EdgeStepIndex)
             {
                 await HandleCompletion(edge, eventArgs.User);
             }
@@ -336,9 +338,9 @@ namespace Content.Server.Construction.Components
             return true;
         }
 
-        private async Task<bool> HandleCompletion(ConstructionGraphEdge edge, IEntity user)
+        public async Task<bool> HandleCompletion(ConstructionGraphEdge edge, IEntity user)
         {
-            if (edge.Steps.Count != EdgeStep || GraphPrototype == null)
+            if (edge.Steps.Count != EdgeStepIndex || GraphPrototype == null)
             {
                 return false;
             }
@@ -379,19 +381,19 @@ namespace Content.Server.Construction.Components
             EdgeNestedStepProgress = null;
             TargetNextEdge = null;
             Edge = null;
-            EdgeStep = 0;
+            EdgeStepIndex = 0;
 
             UpdateTarget();
         }
 
-        private async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
+        public async Task<bool> HandleEdge(InteractUsingEventArgs eventArgs)
         {
-            if (Edge == null || EdgeStep >= Edge.Steps.Count) return false;
+            if (Edge == null || EdgeStepIndex >= Edge.Steps.Count) return false;
 
-            return await HandleStep(eventArgs, Edge, Edge.Steps[EdgeStep]);
+            return await HandleStep(eventArgs, Edge, Edge.Steps[EdgeStepIndex]);
         }
 
-        private async Task<bool> HandleEntityChange(ConstructionGraphNode node, IEntity? user = null)
+        public async Task<bool> HandleEntityChange(ConstructionGraphNode node, IEntity? user = null)
         {
             if (node.Entity == Owner.Prototype?.ID || string.IsNullOrEmpty(node.Entity)
             || GraphPrototype == null) return false;
