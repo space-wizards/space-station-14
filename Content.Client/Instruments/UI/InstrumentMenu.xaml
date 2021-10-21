@@ -27,6 +27,6 @@
         </PanelContainer.PanelOverride>
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" Align="Center"
                StyleClasses="LabelBig"
-               Text="{Loc 'MIDI support is currently&#x0a;not available on your platform.'}" />
+               Text="{Loc instruments-component-menu-no-midi-support}" />
     </PanelContainer>
 </SS14Window>
