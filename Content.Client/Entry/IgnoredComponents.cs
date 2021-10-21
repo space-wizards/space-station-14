@@ -63,6 +63,7 @@ namespace Content.Client.Entry
             "Paper",
             "Write",
             "Bloodstream",
+            "PAI",
             "TransformableContainer",
             "Mind",
             "StorageFill",
