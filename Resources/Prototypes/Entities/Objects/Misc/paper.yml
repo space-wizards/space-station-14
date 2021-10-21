@@ -87,4 +87,11 @@
       stackLayers:
       - paper_bin0
       - paper_bin1
+  - type: ItemSlots
+    slots:
+      penSlot:
+        item: "Pen"
+        whitelist:
+          tags:
+            - Write
 
