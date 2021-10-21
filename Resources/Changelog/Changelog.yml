@@ -2600,3 +2600,10 @@ Entries:
   - {message: Overdosing on meth will result in you dying about twice as fast., type: Add}
   id: 464
   time: '2021-10-20T20:30:55.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Character names are now restricted to alphanumerics by default., type: Tweak}
+  - {message: Completely invalid names are now randomized instead of defaulting to
+      "Urist McHands", type: Tweak}
+  id: 465
+  time: '2021-10-21T10:52:26.0000000+00:00'
