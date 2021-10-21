@@ -27,6 +27,12 @@ namespace Content.Shared.Atmos
         public const float OneAtmosphere = 101.325f;
 
         /// <summary>
+        ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
+        ///     This is used to initialize roundstart atmos rooms.
+        /// </summary>
+        public const float GasMinerDefaultMaxExternalPressure = 6500f;
+
+        /// <summary>
         ///     -270.3ºC in K. CMB stands for Cosmic Microwave Background.
         /// </summary>
         public const float TCMB = 2.7f;
@@ -56,6 +62,11 @@ namespace Content.Shared.Atmos
         ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        /// <summary>
+        ///     Moles in a 2.5 m^3 cell at GasMinerDefaultMaxExternalPressure kPa and 20ºC
+        /// </summary>
+        public const float MolesCellGasMiner = (GasMinerDefaultMaxExternalPressure * CellVolume / (T20C * R));
 
         /// <summary>
         ///     Compared against for superconduction.

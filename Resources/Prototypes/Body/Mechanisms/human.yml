@@ -188,10 +188,17 @@
         - !type:HealthChange
           damage:
             types:
-              Poison: 3 # 2.5
+              Poison: 2 # 2.5
         - !type:MovespeedModifier
           walkSpeedModifier: 1.3
           sprintSpeedModifier: 1.3
+        - !type:HealthChange
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+          damage:
+            types:
+              Poison: 4 # this is added to the base damage of the meth.
       Omnizine:
         effects:
         - !type:HealthChange

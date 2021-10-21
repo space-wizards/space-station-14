@@ -29,9 +29,24 @@ namespace Content.Server.Atmos.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var mixture = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
-            mixture.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
-            mixture.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+            var mixtures = new GasMixture[5];
+            for (var i = 0; i < mixtures.Length; i++)
+                mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+
+            // 0: Air
+            mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+            mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+
+            // 1: Vaccum
+
+            // 2: Oxygen (GM)
+            mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+
+            // 3: Nitrogen (GM)
+            mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
+
+            // 4: Plasma (GM)
+            mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
 
             foreach (var gid in args)
             {
@@ -63,19 +78,16 @@ namespace Content.Server.Atmos.Commands
                         continue;
 
                     tile.Clear();
-                    var blocker = false;
+                    var mixtureId = 0;
                     foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
                     {
-                        if (!entityManager.TryGetComponent(entUid, out TagComponent? tags))
+                        if (!entityManager.TryGetComponent(entUid, out AtmosFixMarkerComponent? afm))
                             continue;
-                        if (tags.HasTag("AtmosFixBlocking"))
-                        {
-                            blocker = true;
-                            break;
-                        }
+                        mixtureId = afm.Mode;
+                        break;
                     }
-                    if (!blocker)
-                        atmosphereSystem.Merge(tile, mixture);
+                    var mixture = mixtures[mixtureId];
+                    atmosphereSystem.Merge(tile, mixture);
                     tile.Temperature = mixture.Temperature;
 
                     atmosphereSystem.InvalidateTile(gridAtmosphere, indices);
