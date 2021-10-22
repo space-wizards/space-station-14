@@ -41,7 +41,7 @@ namespace Content.Server.RCD.Systems
 
             rcdComponent.CurrentAmmo = Math.Min(rcdComponent.MaxAmmo, rcdComponent.CurrentAmmo + component.RefillAmmo);
             rcdComponent.Owner.PopupMessage(args.User, Loc.GetString("rcd-ammo-component-after-interact-refilled-text"));
-            EntityManager.DeleteEntity(uid);
+            EntityManager.QueueDeleteEntity(uid);
 
             args.Handled = true;
         }
