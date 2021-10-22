@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Content.Server.Access.Components;
-using Content.Server.CharacterAppearance.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -12,6 +11,7 @@ using Content.Server.Players;
 using Content.Server.Roles;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost;
 using Content.Shared.Inventory;
@@ -29,7 +29,7 @@ namespace Content.Server.GameTicking
 {
     public partial class GameTicker
     {
-        private const string PlayerPrototypeName = "HumanMob_Content";
+        private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -171,7 +171,7 @@ namespace Content.Server.GameTicking
 
             if (profile != null)
             {
-                entity.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(profile);
+                EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(entity.Uid, profile);
                 entity.Name = profile.Name;
             }
 
@@ -234,7 +234,8 @@ namespace Content.Server.GameTicking
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
             accessTags.UnionWith(jobPrototype.Access);
-            pdaComponent.SetPDAOwner(characterName);
+            EntityManager.EntitySysManager.GetEntitySystem<PDASystem>()
+                .SetOwner(pdaComponent, characterName);
         }
         #endregion
 

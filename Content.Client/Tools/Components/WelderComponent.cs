@@ -2,43 +2,30 @@ using System;
 using Content.Client.Items.Components;
 using Content.Client.Message;
 using Content.Client.Stylesheets;
-using Content.Shared.Tool;
+using Content.Shared.Tools.Components;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.GameStates;
 using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Tools.Components
 {
-    [RegisterComponent]
-    [NetworkedComponent()]
-    public class WelderComponent : SharedToolComponent, IItemStatus
+    [RegisterComponent, Friend(typeof(ToolSystem), typeof(StatusControl))]
+    public class WelderComponent : SharedWelderComponent, IItemStatus
     {
         public override string Name => "Welder";
 
-        private ToolQuality _behavior;
-        [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
-        [ViewVariables] public float FuelCapacity { get; private set; }
-        [ViewVariables] public float Fuel { get; private set; }
-        [ViewVariables] public bool Activated { get; private set; }
-        [ViewVariables] public override ToolQuality Qualities => _behavior;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public bool UiUpdateNeeded { get; set; }
 
-        public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)
-        {
-            base.HandleComponentState(curState, nextState);
+        [ViewVariables]
+        public float FuelCapacity { get; set; }
 
-            if (curState is not WelderComponentState weld)
-                return;
-
-            FuelCapacity = weld.FuelCapacity;
-            Fuel = weld.Fuel;
-            Activated = weld.Activated;
-            _behavior = weld.Quality;
-            _uiUpdateNeeded = true;
-        }
+        [ViewVariables]
+        public float Fuel { get; set; }
 
         public Control MakeControl() => new StatusControl(this);
 
@@ -53,7 +40,7 @@ namespace Content.Client.Tools.Components
                 _label = new RichTextLabel {StyleClasses = {StyleNano.StyleClassItemStatus}};
                 AddChild(_label);
 
-                parent._uiUpdateNeeded = true;
+                parent.UiUpdateNeeded = true;
             }
 
             /// <inheritdoc />
@@ -61,12 +48,12 @@ namespace Content.Client.Tools.Components
             {
                 base.FrameUpdate(args);
 
-                if (!_parent._uiUpdateNeeded)
+                if (!_parent.UiUpdateNeeded)
                 {
                     return;
                 }
 
-                _parent._uiUpdateNeeded = false;
+                _parent.UiUpdateNeeded = false;
 
                 var fuelCap = _parent.FuelCapacity;
                 var fuel = _parent.Fuel;

@@ -543,11 +543,11 @@ namespace Content.Server.Storage.Components
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
-                    var coords = entity.Transform.Coordinates;
+                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
                         successfullyInserted.Add(entity.Uid);
-                        successfullyInsertedPositions.Add(coords);
+                        successfullyInsertedPositions.Add(position);
                     }
                 }
 
@@ -572,7 +572,7 @@ namespace Content.Server.Storage.Components
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
-                var position = eventArgs.Target.Transform.Coordinates;
+                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
@@ -628,47 +628,6 @@ namespace Content.Server.Storage.Components
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
-        }
-
-        [Verb]
-        private sealed class ToggleOpenVerb : Verb<ServerStorageComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ServerStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Get the session for the user
-                var session = user.GetComponentOrNull<ActorComponent>()?.PlayerSession;
-                if (session == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Does this player currently have the storage UI open?
-                if (component.SubscribedSessions.Contains(session))
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-close");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
-                } else
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-open");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-                }
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, ServerStorageComponent component)
-            {
-                // "Open" actually closes the UI if it is already open.
-                component.OpenStorageUI(user);
-            }
         }
     }
 }

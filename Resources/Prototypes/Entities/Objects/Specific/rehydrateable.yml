@@ -11,6 +11,8 @@
         reagents:
         - ReagentId: Nutriment
           Quantity: 10
+  - type: Food
+    solution: cube
   - type: RefillableSolution
     solution: cube
   - type: Sprite
@@ -19,13 +21,14 @@
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction
+        solution: cube
         touch: true
         ingestion: true
         injection: true
         reagents:
           - Water
   - type: Rehydratable
-    target: MonkeyMob_Content
+    target: MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -56,17 +59,18 @@
         - ReagentId: Nutriment
           Quantity: 10
   - type: RefillableSolution
-    solution: cube
+    solution: plushie
   - type: Reactive
     reactions:
     - !type:AddToSolutionReaction
+      solution: plushie
       touch: true
       ingestion: true
       injection: true
       reagents:
       - Water
   - type: Rehydratable
-    target: CarpMob_Content
+    target: MobCarp
   - type: CollisionWake
     enabled: false
   - type: Physics

@@ -6,6 +6,7 @@
   departments:
   - Civilian
   icon: "Janitor"
+  supervisors: "the head of personnel"
   access:
   - Janitor
   - Maintenance

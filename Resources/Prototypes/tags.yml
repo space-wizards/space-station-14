@@ -213,3 +213,7 @@
 
 - type: Tag
   id: EmitterBolt
+  
+- type: Tag
+  id: HideContextMenu
+

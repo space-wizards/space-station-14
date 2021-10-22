@@ -1,10 +1,12 @@
 using Content.Server.MachineLinking.Components;
 using Content.Server.MachineLinking.Events;
 using Content.Shared.Interaction;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.MachineLinking.System
 {
+    [UsedImplicitly]
     public class SignalButtonSystem : EntitySystem
     {
         public override void Initialize()

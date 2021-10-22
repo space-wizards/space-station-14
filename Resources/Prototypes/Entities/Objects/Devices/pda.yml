@@ -21,6 +21,7 @@
     Slots:
     - idcard
     - Belt
+  - type: UnpoweredFlashlight
   - type: PointLight
     enabled: false
     radius: 1.4
@@ -30,6 +31,25 @@
     interfaces:
     - key: enum.PDAUiKey.Key
       type: PDABoundUserInterface
+    - key: enum.UplinkUiKey.Key
+      type: UplinkBoundUserInterface
+  - type: ItemSlots
+    slots:
+      pdaPenSlot:
+        item: "Pen"
+        whitelist:
+          tags:
+            - Write
+      pdaIdSlot:
+        name: ID Card
+        insertSound:
+          path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound:
+          path: /Audio/Machines/id_swipe.ogg
+        whitelist:
+          components:
+            - IdCard
+  - type: PDA
   - type: DoorBumpOpener
 
 - type: entity

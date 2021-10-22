@@ -11,6 +11,17 @@ namespace Content.Shared.Localizations
         // If you want to change your codebase's language, do it here.
         private const string Culture = "en-US";
 
+        /// <summary>
+        /// Custom format strings used for parsing and displaying minutes:seconds timespans.
+        /// </summary>
+        public static readonly string[] TimeSpanMinutesFormats = new[]
+        {
+            @"m\:ss",
+            @"mm\:ss",
+            @"%m",
+            @"mm"
+        };
+
         public static void Init()
         {
             var loc = IoCManager.Resolve<ILocalizationManager>();

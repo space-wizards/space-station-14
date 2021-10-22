@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Content.Client.Atmos.Overlays;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -22,19 +24,19 @@ namespace Content.Client.Atmos.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         // Gas overlays
-        private readonly float[] _timer = new float[Atmospherics.TotalNumberOfGases];
-        private readonly float[][] _frameDelays = new float[Atmospherics.TotalNumberOfGases][];
-        private readonly int[] _frameCounter = new int[Atmospherics.TotalNumberOfGases];
-        private readonly Texture[][] _frames = new Texture[Atmospherics.TotalNumberOfGases][];
+        public readonly float[] Timer = new float[Atmospherics.TotalNumberOfGases];
+        public readonly float[][] FrameDelays = new float[Atmospherics.TotalNumberOfGases][];
+        public readonly int[] FrameCounter = new int[Atmospherics.TotalNumberOfGases];
+        public readonly Texture[][] Frames = new Texture[Atmospherics.TotalNumberOfGases][];
 
         // Fire overlays
-        private const int FireStates = 3;
-        private const string FireRsiPath = "/Textures/Effects/fire.rsi";
+        public const int FireStates = 3;
+        public const string FireRsiPath = "/Textures/Effects/fire.rsi";
 
-        private readonly float[] _fireTimer = new float[FireStates];
-        private readonly float[][] _fireFrameDelays = new float[FireStates][];
-        private readonly int[] _fireFrameCounter = new int[FireStates];
-        private readonly Texture[][] _fireFrames = new Texture[FireStates][];
+        public readonly float[] FireTimer = new float[FireStates];
+        public readonly float[][] FireFrameDelays = new float[FireStates][];
+        public readonly int[] FireFrameCounter = new int[FireStates];
+        public readonly Texture[][] FireFrames = new Texture[FireStates][];
 
         private readonly Dictionary<GridId, Dictionary<Vector2i, GasOverlayChunk>> _tileData =
             new();
@@ -56,17 +58,17 @@ namespace Content.Client.Atmos.EntitySystems
 
                         if(!rsi.TryGetState(stateId, out var state)) continue;
 
-                        _frames[i] = state.GetFrames(RSI.State.Direction.South);
-                        _frameDelays[i] = state.GetDelays();
-                        _frameCounter[i] = 0;
+                        Frames[i] = state.GetFrames(RSI.State.Direction.South);
+                        FrameDelays[i] = state.GetDelays();
+                        FrameCounter[i] = 0;
                         break;
                     case SpriteSpecifier.Texture texture:
-                        _frames[i] = new[] {texture.Frame0()};
-                        _frameDelays[i] = Array.Empty<float>();
+                        Frames[i] = new[] {texture.Frame0()};
+                        FrameDelays[i] = Array.Empty<float>();
                         break;
                     case null:
-                        _frames[i] = Array.Empty<Texture>();
-                        _frameDelays[i] = Array.Empty<float>();
+                        Frames[i] = Array.Empty<Texture>();
+                        FrameDelays[i] = Array.Empty<float>();
                         break;
                 }
             }
@@ -78,9 +80,9 @@ namespace Content.Client.Atmos.EntitySystems
                 if (!fire.TryGetState((i+1).ToString(), out var state))
                     throw new ArgumentOutOfRangeException($"Fire RSI doesn't have state \"{i}\"!");
 
-                _fireFrames[i] = state.GetFrames(RSI.State.Direction.South);
-                _fireFrameDelays[i] = state.GetDelays();
-                _fireFrameCounter[i] = 0;
+                FireFrames[i] = state.GetFrames(RSI.State.Direction.South);
+                FireFrameDelays[i] = state.GetDelays();
+                FireFrameCounter[i] = 0;
             }
 
             var overlayManager = IoCManager.Resolve<IOverlayManager>();
@@ -139,35 +141,18 @@ namespace Content.Client.Atmos.EntitySystems
             return _tileData.ContainsKey(gridId);
         }
 
-        public IEnumerable<(Texture, Color)> GetOverlays(GridId gridIndex, Vector2i indices)
+        public GasOverlayEnumerator GetOverlays(GridId gridIndex, Vector2i indices)
         {
             if (!_tileData.TryGetValue(gridIndex, out var chunks))
-                yield break;
+                return default;
 
             var chunkIndex = GetGasChunkIndices(indices);
             if (!chunks.TryGetValue(chunkIndex, out var chunk))
-                yield break;
+                return default;
 
             var overlays = chunk.GetData(indices);
 
-            if (overlays.Gas == null)
-                yield break;
-
-            var fire = overlays.FireState != 0;
-
-            foreach (var gasData in overlays.Gas)
-            {
-                var frames = _frames[gasData.Index];
-                yield return (frames[_frameCounter[gasData.Index]], Color.White.WithAlpha(gasData.Opacity));
-            }
-
-            if (fire)
-            {
-                var state = overlays.FireState - 1;
-                var frames = _fireFrames[state];
-                // TODO ATMOS Set color depending on temperature
-                yield return (frames[_fireFrameCounter[state]], Color.White);
-            }
+            return new GasOverlayEnumerator(overlays, this);
         }
 
         public override void FrameUpdate(float frameTime)
@@ -176,26 +161,80 @@ namespace Content.Client.Atmos.EntitySystems
 
             for (var i = 0; i < Atmospherics.TotalNumberOfGases; i++)
             {
-                var delays = _frameDelays[i];
+                var delays = FrameDelays[i];
                 if (delays.Length == 0) continue;
 
-                var frameCount = _frameCounter[i];
-                _timer[i] += frameTime;
-                if (!(_timer[i] >= delays[frameCount])) continue;
-                _timer[i] = 0f;
-                _frameCounter[i] = (frameCount + 1) % _frames[i].Length;
+                var frameCount = FrameCounter[i];
+                Timer[i] += frameTime;
+                if (!(Timer[i] >= delays[frameCount])) continue;
+                Timer[i] = 0f;
+                FrameCounter[i] = (frameCount + 1) % Frames[i].Length;
             }
 
             for (var i = 0; i < FireStates; i++)
             {
-                var delays = _fireFrameDelays[i];
+                var delays = FireFrameDelays[i];
                 if (delays.Length == 0) continue;
 
-                var frameCount = _fireFrameCounter[i];
-                _fireTimer[i] += frameTime;
-                if (!(_fireTimer[i] >= delays[frameCount])) continue;
-                _fireTimer[i] = 0f;
-                _fireFrameCounter[i] = (frameCount + 1) % _fireFrames[i].Length;
+                var frameCount = FireFrameCounter[i];
+                FireTimer[i] += frameTime;
+                if (!(FireTimer[i] >= delays[frameCount])) continue;
+                FireTimer[i] = 0f;
+                FireFrameCounter[i] = (frameCount + 1) % FireFrames[i].Length;
+            }
+        }
+
+        public struct GasOverlayEnumerator : IDisposable
+        {
+            private readonly GasTileOverlaySystem _system;
+            private readonly GasData[]? _data;
+            private byte _fireState;
+            // TODO: Take Fire Temperature into account, when we code fire color
+
+            private readonly int _length; // We cache the length so we can avoid a pointer dereference, for speed. Brrr.
+            private int _current;
+
+            public GasOverlayEnumerator(in GasOverlayData data, GasTileOverlaySystem system)
+            {
+                // Gas can't be null, as the caller to this constructor already ensured it wasn't.
+                _data = data.Gas;
+                _fireState = data.FireState;
+
+                _system = system;
+
+                _length = _data?.Length ?? 0;
+                _current = 0;
+            }
+
+            public bool MoveNext(out (Texture Texture, Color Color) overlay)
+            {
+                if (_current < _length)
+                {
+                    // Data can't be null here unless length/current are incorrect
+                    var gas = _data![_current++];
+                    var frames = _system.Frames[gas.Index];
+                    overlay = (frames[_system.FrameCounter[gas.Index]], Color.White.WithAlpha(gas.Opacity));
+                    return true;
+                }
+
+                if (_fireState != 0)
+                {
+                    var state = _fireState - 1;
+                    var frames = _system.FireFrames[state];
+                    // TODO ATMOS Set color depending on temperature
+                    overlay = (frames[_system.FireFrameCounter[state]], Color.White);
+
+                    // Setting this to zero so we don't get stuck in an infinite loop.
+                    _fireState = 0;
+                    return true;
+                }
+
+                overlay = default;
+                return false;
+            }
+
+            public void Dispose()
+            {
             }
         }
     }

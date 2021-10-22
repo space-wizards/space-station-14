@@ -46,6 +46,10 @@
     BoardName: "Vending Machine"
     LayoutId: Vending
   - type: Anchorable
+  - type: PointLight
+    enabled: false
+    castShadows: false
+    radius: 1.5
   - type: LitOnPowered
 
 - type: entity
@@ -263,7 +267,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.3
     color: "#ad7c4b"
 
@@ -297,7 +301,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
 
@@ -331,7 +335,7 @@
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#4b93ad"
 
@@ -363,7 +367,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#6148c7"
 
@@ -396,7 +400,7 @@
   - type: AccessReader
     access: [["Engineering"]]
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b89e2a"
 
@@ -431,7 +435,7 @@
   - type: AccessReader
     access: [["Medical"]]
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
 
@@ -466,7 +470,7 @@
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#326e3f"
 
@@ -494,6 +498,7 @@
     visuals:
     - type: VendingMachineVisualizer
       normalUnshaded: true
+      ejectUnshaded: true
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer
@@ -534,7 +539,7 @@
   - type: AccessReader
     access: [["Service"]]
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#326e3f"
 
@@ -566,7 +571,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
 
@@ -600,7 +605,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#c73434"
 
@@ -634,7 +639,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#389690"
 
@@ -672,7 +677,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#c73434"
 
@@ -707,7 +712,7 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
 
@@ -769,6 +774,6 @@
       broken: true
     - type: WiresVisualizer
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#d4ab33"

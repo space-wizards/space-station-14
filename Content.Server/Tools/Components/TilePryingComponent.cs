@@ -2,11 +2,13 @@
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Maps;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Tools.Components
 {
@@ -17,8 +19,12 @@ namespace Content.Server.Tools.Components
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override string Name => "TilePrying";
+
         [DataField("toolComponentNeeded")]
         private bool _toolComponentNeeded = true;
+
+        [DataField("qualityNeeded", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _qualityNeeded = "Prying";
 
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
@@ -43,9 +49,10 @@ namespace Content.Server.Tools.Components
 
             var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-            if (!tileDef.CanCrowbar) return;
+            if (!tileDef.CanCrowbar)
+                return;
 
-            if (_toolComponentNeeded && !await tool!.UseTool(user, null, 0f,  ToolQuality.Prying))
+            if (_toolComponentNeeded && !await EntitySystem.Get<ToolSystem>().UseTool(Owner.Uid, user.Uid, null, 0f, 0f, _qualityNeeded, toolComponent:tool))
                 return;
 
             coordinates.PryTile(Owner.EntityManager, _mapManager);

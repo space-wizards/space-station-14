@@ -5,14 +5,12 @@ using Content.Server.GameTicking;
 using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
-using Content.Shared.Verbs;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -144,7 +142,7 @@ namespace Content.Server.Morgue.Components
             if (CanInsert(victim))
             {
                 Insert(victim);
-                EntitySystem.Get<StandingStateSystem>().Down(victim, false);
+                EntitySystem.Get<StandingStateSystem>().Down(victim.Uid, false);
             }
             else
             {
@@ -154,27 +152,6 @@ namespace Content.Server.Morgue.Components
             Cremate();
 
             return SuicideKind.Heat;
-        }
-
-        [Verb]
-        private sealed class CremateVerb : Verb<CrematoriumEntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, CrematoriumEntityStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || component.Cooking || component.Open)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("cremate-verb-get-data-text");
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, CrematoriumEntityStorageComponent component)
-            {
-                component.TryCremate();
-            }
         }
     }
 }

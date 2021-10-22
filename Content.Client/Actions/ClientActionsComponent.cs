@@ -27,9 +27,6 @@ namespace Content.Client.Actions
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;
 
-        [ComponentDependency] private readonly HandsComponent? _handsComponent = null;
-        [ComponentDependency] private readonly ClientInventoryComponent? _inventoryComponent = null;
-
         private ActionsUI? _ui;
         private EntityUid _highlightedEntity;
 
