@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
+using Robust.Client.UserInterface.XAML;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
@@ -16,6 +17,7 @@ namespace Content.Client.Cargo.UI
 
         public CargoConsoleOrderMenu()
         {
+            RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
 
             Title = Loc.GetString("cargo-console-order-menu-title");
