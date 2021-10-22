@@ -23,6 +23,8 @@ namespace Content.Shared.Hands.Components
     [NetworkedComponent()]
     public abstract class SharedHandsComponent : Component, ISharedHandsComponent
     {
+        [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
+
         public sealed override string Name => "Hands";
 
         public event Action? OnItemChanged; //TODO: Try to replace C# event
@@ -588,7 +590,7 @@ namespace Content.Shared.Hands.Components
         protected bool CanInsertEntityIntoHand(Hand hand, IEntity entity)
         {
             // I need to put this here even if I shouldn't, until hands system is ported to ECS
-            if (!IoCManager.Resolve<IEntitySystemManager>()
+            if (_entitySystemManager
                 .GetEntitySystem<EffectBlockerSystem>()
                 .CanBePickedUp(entity.Uid))
                 return false;
