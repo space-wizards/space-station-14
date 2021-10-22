@@ -151,13 +151,15 @@ namespace Content.Shared.ActionBlocker
             return CanDrop(EntityManager.GetEntity(uid));
         }
 
-        public bool CanPickup(IEntity entity)
+        public bool CanPickup(IEntity entityUid)
         {
-            var ev = new PickupAttemptEvent(entity);
+            var ev = new PickupAttemptEvent(entityUid.Uid);
 
-            RaiseLocalEvent(entity.Uid, ev);
+            RaiseLocalEvent(entityUid.Uid, ev);
 
-            foreach (var blocker in ev.Entity.GetAllComponents<IActionBlocker>())
+            var entity = EntityManager.GetEntity(ev.Entity);
+
+            foreach (var blocker in entity.GetAllComponents<IActionBlocker>())
             {
                 if (!blocker.CanPickup())
                 {

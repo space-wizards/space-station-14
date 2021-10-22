@@ -590,7 +590,7 @@ namespace Content.Shared.Hands.Components
             // I need to put this here even if I shouldn't, until hands system is ported to ECS
             if (!IoCManager.Resolve<IEntitySystemManager>()
                 .GetEntitySystem<EffectBlockerSystem>()
-                .CanBePickedUp(entity))
+                .CanBePickedUp(entity.Uid))
                 return false;
 
             var handContainer = hand.Container;

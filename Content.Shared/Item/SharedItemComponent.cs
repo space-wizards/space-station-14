@@ -115,7 +115,7 @@ namespace Content.Shared.Item
             if (!EntitySystem.Get<ActionBlockerSystem>().CanPickup(user))
                 return false;
 
-            if (!EntitySystem.Get<EffectBlockerSystem>().CanBePickedUp(this.Owner))
+            if (!EntitySystem.Get<EffectBlockerSystem>().CanBePickedUp(this.Owner.Uid))
                 return false;
 
             if (user.Transform.MapID != Owner.Transform.MapID)

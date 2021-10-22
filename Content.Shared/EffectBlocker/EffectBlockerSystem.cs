@@ -40,11 +40,11 @@ namespace Content.Shared.EffectBlocker
             return canSlip;
         }
 
-        public bool CanBePickedUp(IEntity entity)
+        public bool CanBePickedUp(EntityUid entity)
         {
             var ev = new PickedUpAttemptEvent(entity);
 
-            RaiseLocalEvent(entity.Uid, ev);
+            RaiseLocalEvent(entity, ev);
 
             return !ev.Cancelled;
         }

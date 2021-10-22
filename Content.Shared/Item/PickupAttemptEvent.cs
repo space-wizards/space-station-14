@@ -7,12 +7,12 @@ namespace Content.Shared.Item
     /// </summary>
     public class PickupAttemptEvent : CancellableEntityEventArgs
     {
-        public PickupAttemptEvent(IEntity entity)
+        public PickupAttemptEvent(EntityUid entity)
         {
             Entity = entity;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
     }
 
 
@@ -21,11 +21,11 @@ namespace Content.Shared.Item
     /// </summary>
     public class PickedUpAttemptEvent : CancellableEntityEventArgs
     {
-        public PickedUpAttemptEvent(IEntity entity)
+        public PickedUpAttemptEvent(EntityUid entity)
         {
             Entity = entity;
         }
 
-        public IEntity Entity { get; }
+        public EntityUid Entity { get; }
     }
 }
