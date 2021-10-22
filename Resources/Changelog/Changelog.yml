@@ -2619,3 +2619,11 @@ Entries:
   - {message: Nudge a trash spawner back in-bounds, type: Fix}
   id: 467
   time: '2021-10-21T21:25:21.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'You can now see your held active item next to your mouse cursor, to
+      hopefully aid in remembering which your active hand is.', type: Add}
+  - {message: This feature can be toggled in the options menu if you'd prefer not
+      having it., type: Tweak}
+  id: 468
+  time: '2021-10-22T02:26:02.0000000+00:00'
