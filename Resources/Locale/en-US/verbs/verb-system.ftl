@@ -1,4 +1,4 @@
-verb-system-waiting-on-server-text = Waiting on Server... 
+verb-system-waiting-on-server-text = Waiting on Server...
 verb-system-no-verbs-text = No verbs!
 verb-system-null-server-response = Entity not in view. You should not see this.
 
@@ -21,3 +21,4 @@ verb-categories-close = Close
 verb-categories-open = Open
 verb-categories-rotate = Rotate
 verb-categories-transfer = Set Transfer Amount
+verb-categories-split = Split

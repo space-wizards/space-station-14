@@ -50,5 +50,8 @@ namespace Content.Shared.Verbs
 
         public static readonly VerbCategory SetTransferAmount =
             new("verb-categories-transfer", "/Textures/Interface/VerbIcons/spill.svg.192dpi.png");
+
+        public static readonly VerbCategory Split =
+            new("verb-categories-split", null);
     }
 }
