@@ -2632,3 +2632,8 @@ Entries:
   - {message: Gunpet, type: Add}
   id: 469
   time: '2021-10-22T09:14:09.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Plasma into the cargo console, type: Add}
+  id: 470
+  time: '2021-10-22T09:47:47.0000000+00:00'
