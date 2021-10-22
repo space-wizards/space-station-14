@@ -60,6 +60,7 @@ namespace Content.Client.Entry
             "HumanInventoryController",
             "RandomInsulation",
             "Electrified",
+            "Electrocution",
             "UseDelay",
             "Pourable",
             "Paper",
