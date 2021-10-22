@@ -103,7 +103,7 @@ namespace Content.Server.Electrocution
                     _damageableSystem.TryChangeDamage(finished.Electrocuting, damage);
                 }
 
-                EntityManager.DeleteEntity(finished.Owner.Uid);
+                EntityManager.DeleteEntity(uid);
             }
         }
 
@@ -160,7 +160,7 @@ namespace Content.Server.Electrocution
                 for (var i = targets.Count - 1; i >= 0; i--)
                 {
                     var (entity, depth) = targets[i];
-                    lastRet = TryDoElectrocutionPowerless(
+                    lastRet = TryDoElectrocution(
                         entity,
                         uid,
                         (int) (electrified.ShockDamage * MathF.Pow(RecursiveDamageMultiplier, depth)),
@@ -221,10 +221,67 @@ namespace Content.Server.Electrocution
         }
 
         /// <returns>Whether the entity <see cref="uid"/> was stunned by the shock.</returns>
-        private bool TryDoElectrocutionPowerless(
+        public bool TryDoElectrocution(
             EntityUid uid, EntityUid? sourceUid, int shockDamage, TimeSpan time, float siemensCoefficient = 1f,
             StatusEffectsComponent? statusEffects = null,
             SharedAlertsComponent? alerts = null)
+        {
+            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient)
+                || !DoCommonElectrocution(uid, sourceUid, shockDamage, time, siemensCoefficient, statusEffects, alerts))
+                return false;
+
+            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
+            return true;
+
+        }
+
+        private bool TryDoElectrocutionPowered(
+            EntityUid uid,
+            EntityUid sourceUid,
+            Node node,
+            int shockDamage,
+            TimeSpan time,
+            float siemensCoefficient = 1f,
+            StatusEffectsComponent? statusEffects = null,
+            SharedAlertsComponent? alerts = null,
+            ITransformComponent? sourceTransform = null)
+        {
+            if (!DoCommonElectrocutionAttempt(uid, sourceUid, ref siemensCoefficient))
+                return false;
+
+            // Coefficient needs to be higher than this to do a powered electrocution!
+            if(siemensCoefficient <= 0.5f)
+                return DoCommonElectrocution(uid, sourceUid, shockDamage, time, siemensCoefficient, statusEffects, alerts);
+
+            if (!DoCommonElectrocution(uid, sourceUid, null, time, siemensCoefficient, statusEffects, alerts))
+                return false;
+
+            if (!Resolve(sourceUid, ref sourceTransform)) // This shouldn't really happen, but just in case...
+                return true;
+
+            var electrocutionEntity = EntityManager.SpawnEntity(
+                $"VirtualElectrocutionLoad{node.NodeGroupID}", sourceTransform.Coordinates);
+
+            var electrocutionNode = electrocutionEntity
+                .GetComponent<NodeContainerComponent>()
+                .GetNode<ElectrocutionNode>("electrocution");
+
+            var electrocutionComponent = electrocutionEntity.GetComponent<ElectrocutionComponent>();
+
+            electrocutionNode.CableEntity = sourceUid;
+            electrocutionNode.NodeName = node.Name;
+
+            _nodeGroupSystem.QueueReflood(electrocutionNode);
+
+            electrocutionComponent.TimeLeft = 1f;
+            electrocutionComponent.Electrocuting = uid;
+
+            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
+
+            return true;
+        }
+
+        private bool DoCommonElectrocutionAttempt(EntityUid uid, EntityUid? sourceUid, ref float siemensCoefficient)
         {
             var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient);
             RaiseLocalEvent(uid, attemptEvent);
@@ -234,10 +291,24 @@ namespace Content.Server.Electrocution
                 return false;
 
             siemensCoefficient = attemptEvent.SiemensCoefficient;
-            shockDamage = (int) (shockDamage * siemensCoefficient);
+            return true;
+        }
 
-            if (shockDamage <= 0)
+        private bool DoCommonElectrocution(EntityUid uid, EntityUid? sourceUid,
+            int? shockDamage, TimeSpan time, float siemensCoefficient = 1f,
+            StatusEffectsComponent? statusEffects = null,
+            SharedAlertsComponent? alerts = null)
+        {
+            if (siemensCoefficient <= 0)
                 return false;
+
+            if (shockDamage != null)
+            {
+                shockDamage = (int) (shockDamage * siemensCoefficient);
+
+                if (shockDamage.Value <= 0)
+                    return false;
+            }
 
             // Optional component.
             Resolve(uid, ref alerts, false);
@@ -257,8 +328,10 @@ namespace Content.Server.Electrocution
 
             // TODO: Sparks here.
 
-            _damageableSystem.TryChangeDamage(uid,
-                new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), shockDamage));
+            if(shockDamage is {} dmg)
+                _damageableSystem.TryChangeDamage(uid,
+                    new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>(DamageType), dmg));
+
             _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, statusEffects, alerts);
             _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, JitterAmplitude, JitterFrequency, true,
                 statusEffects, alerts);
@@ -274,90 +347,13 @@ namespace Content.Server.Electrocution
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
                         ("mob", EntityManager.GetEntity(uid)), ("source", EntityManager.GetEntity(sourceUid.Value))),
-                    uid,
-                    filter);
+                    uid, filter);
             }
             else
             {
                 _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-others",
                     ("mob", EntityManager.GetEntity(uid))), uid, filter);
             }
-
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
-
-            return true;
-        }
-
-        private bool TryDoElectrocutionPowered(
-            EntityUid uid,
-            EntityUid sourceUid,
-            Node node,
-            int shockDamage,
-            TimeSpan time,
-            float siemensCoefficient = 1f,
-            StatusEffectsComponent? statusEffects = null,
-            SharedAlertsComponent? alerts = null)
-        {
-            var attemptEvent = new ElectrocutionAttemptEvent(uid, sourceUid, siemensCoefficient);
-            RaiseLocalEvent(uid, attemptEvent);
-
-            // Cancel the electrocution early, so we don't recursively electrocute anything.
-            if (attemptEvent.Cancelled)
-                return false;
-
-            siemensCoefficient = attemptEvent.SiemensCoefficient;
-
-            if (siemensCoefficient <= 0)
-                return false;
-
-            // Optional component.
-            Resolve(uid, ref alerts, false);
-
-            if (!Resolve(uid, ref statusEffects, false) ||
-                !_statusEffectsSystem.CanApplyEffect(uid, StatusEffectKey, statusEffects))
-                return false;
-
-            if (!_statusEffectsSystem.TryAddStatusEffect<ElectrocutedComponent>(uid, StatusEffectKey, time,
-                statusEffects, alerts))
-                return false;
-
-            _stunSystem.TryParalyze(uid, time * ParalyzeTimeMultiplier, statusEffects, alerts);
-            _stutteringSystem.DoStutter(uid, time * StutteringTimeMultiplier, statusEffects, alerts);
-            _jitteringSystem.DoJitter(uid, time * JitterTimeMultiplier, JitterAmplitude, JitterFrequency, true,
-                statusEffects, alerts);
-
-            var electrocutionEntity = EntityManager.SpawnEntity(
-                $"VirtualElectrocutionLoad{node.NodeGroupID}",
-                EntityManager.GetComponent<ITransformComponent>(sourceUid).Coordinates);
-
-            var electrocutionNode = electrocutionEntity
-                .GetComponent<NodeContainerComponent>()
-                .GetNode<ElectrocutionNode>("electrocution");
-
-            var electrocutionComponent = electrocutionEntity.GetComponent<ElectrocutionComponent>();
-
-            electrocutionNode.CableEntity = sourceUid;
-            electrocutionNode.NodeName = node.Name;
-
-            _nodeGroupSystem.QueueReflood(electrocutionNode);
-
-            electrocutionComponent.TimeLeft = 1f;
-            electrocutionComponent.Electrocuting = uid;
-
-            _popupSystem.PopupEntity(Loc.GetString("electrocuted-component-mob-shocked-popup-player"), uid,
-                Filter.Entities(uid).Unpredicted());
-
-            var filter = Filter.Pvs(uid, 2f, EntityManager).RemoveWhereAttachedEntity(puid => puid == uid)
-                .Unpredicted();
-
-            // TODO: Allow being able to pass EntityUid to Loc...
-            _popupSystem.PopupEntity(
-                Loc.GetString("electrocuted-component-mob-shocked-by-source-popup-others",
-                    ("mob", EntityManager.GetEntity(uid)), ("source", EntityManager.GetEntity(sourceUid))),
-                uid,
-                filter);
-
-            RaiseLocalEvent(uid, new ElectrocutedEvent(uid, sourceUid, siemensCoefficient));
 
             return true;
         }
