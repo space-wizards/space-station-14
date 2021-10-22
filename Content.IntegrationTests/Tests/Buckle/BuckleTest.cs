@@ -333,7 +333,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.True(buckle.Buckled);
 
                 // Move the buckled entity away
-                human.Transform.LocalPosition += (100, 0);
+                human.Transform.WorldPosition += (100, 0);
             });
 
             await WaitUntil(server, () => !buckle.Buckled, 10);
@@ -343,7 +343,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await server.WaitAssertion(() =>
             {
                 // Move the now unbuckled entity back onto the chair
-                human.Transform.LocalPosition -= (100, 0);
+                human.Transform.WorldPosition -= (100, 0);
 
                 // Buckle
                 Assert.True(buckle.TryBuckle(human, chair));
