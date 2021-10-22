@@ -1,0 +1,23 @@
+﻿<PanelContainer xmlns="https://spacestation14.io"
+                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+                HorizontalExpand="True">
+    <Button Name="MainButtonProtected"
+            HorizontalExpand="True"
+            VerticalExpand="True" />
+    <BoxContainer Orientation="Horizontal"
+                  HorizontalExpand="True">
+        <TextureRect Name="IconProtected"
+                     MinSize="32 32"
+                     RectClipContent="True" />
+        <Label Name="ProductNameProtected"
+               HorizontalExpand="True" />
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="#25252A" />
+            </PanelContainer.PanelOverride>
+            <Label Name="PointCostProtected"
+                   MinSize="40 32"
+                   Align="Right" />
+        </PanelContainer>
+    </BoxContainer>
+</PanelContainer>
