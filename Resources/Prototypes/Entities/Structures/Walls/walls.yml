@@ -306,7 +306,6 @@
   name: reinforced wall
   components:
   - type: Sprite
-    color: "#889192"
     sprite: Structures/Walls/solid.rsi
   - type: Icon
     sprite: Structures/Walls/solid.rsi
@@ -421,7 +420,6 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    color: "#889192"
     sprite: Structures/Walls/solid.rsi
   - type: Construction
     graph: girder

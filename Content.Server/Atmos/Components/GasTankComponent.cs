@@ -108,10 +108,11 @@ namespace Content.Server.Atmos.Components
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
-            message.AddMarkup(Loc.GetString("gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
+            message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
             if (IsConnected)
             {
-                message.AddMarkup(Loc.GetString("gas-tank-connected"));
+                message.AddText("\n");
+                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
             }
         }
 

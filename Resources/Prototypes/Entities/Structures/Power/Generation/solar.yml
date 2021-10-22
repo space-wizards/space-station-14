@@ -10,7 +10,8 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
       mass: 100
       mask:
       - Impassable

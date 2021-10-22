@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodEggBase
   description: An egg!
   abstract: true
@@ -20,7 +20,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 5
+        maxVol: 6
         reagents:
         - ReagentId: Egg
           Quantity: 5
@@ -92,7 +92,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 1
+        maxVol: 2
         reagents:
         - ReagentId: Egg
           Quantity: 1

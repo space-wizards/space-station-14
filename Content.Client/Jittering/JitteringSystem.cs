@@ -48,7 +48,7 @@ namespace Content.Client.Jittering
 
         private void OnAnimationCompleted(EntityUid uid, JitteringComponent jittering, AnimationCompletedEvent args)
         {
-            if(args.Key != _jitterAnimationKey || jittering.EndTime <= GameTiming.CurTime)
+            if(args.Key != _jitterAnimationKey)
                 return;
 
             if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)

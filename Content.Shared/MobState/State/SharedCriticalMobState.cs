@@ -1,5 +1,4 @@
 ﻿using Content.Shared.Alert;
-using Content.Shared.Hands;
 using Content.Shared.Standing;
 using Robust.Shared.GameObjects;
 
@@ -21,7 +20,7 @@ namespace Content.Shared.MobState.State
                 status.ShowAlert(AlertType.HumanCrit); // TODO: combine humancrit-0 and humancrit-1 into a gif and display it
             }
 
-            EntitySystem.Get<StandingStateSystem>().Down(entity);
+            EntitySystem.Get<StandingStateSystem>().Down(entity.Uid);
 
             if (entity.TryGetComponent(out SharedAppearanceComponent? appearance))
             {
@@ -33,62 +32,7 @@ namespace Content.Shared.MobState.State
         {
             base.ExitState(entity);
 
-            EntitySystem.Get<StandingStateSystem>().Stand(entity);
-        }
-
-        public override bool CanInteract()
-        {
-            return false;
-        }
-
-        public override bool CanUse()
-        {
-            return false;
-        }
-
-        public override bool CanThrow()
-        {
-            return false;
-        }
-
-        public override bool CanSpeak()
-        {
-            return false;
-        }
-
-        public override bool CanDrop()
-        {
-            return false;
-        }
-
-        public override bool CanPickup()
-        {
-            return false;
-        }
-
-        public override bool CanEmote()
-        {
-            return false;
-        }
-
-        public override bool CanAttack()
-        {
-            return false;
-        }
-
-        public override bool CanEquip()
-        {
-            return false;
-        }
-
-        public override bool CanUnequip()
-        {
-            return false;
-        }
-
-        public override bool CanChangeDirection()
-        {
-            return false;
+            EntitySystem.Get<StandingStateSystem>().Stand(entity.Uid);
         }
     }
 }

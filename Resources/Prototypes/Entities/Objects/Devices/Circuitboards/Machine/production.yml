@@ -57,3 +57,25 @@
       materialRequirements:
         Glass: 1
         Cable: 1
+
+- type: entity
+  id: HydroponicsTrayMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: Hydroponics Tray (Machine Board)
+  components:
+    - type: MachineBoard
+      prototype: hydroponicsTray
+      # See: https://github.com/vgstation-coders/vgstation13/blob/e9a806f30b4db0efa2a68b9eb42e3120d2321b6a/code/modules/hydroponics/hydro_tray.dm#L57
+      requirements:
+        MatterBin: 2
+        ScanningModule: 1
+        Capacitor: 1
+      materialRequirements:
+        # replacing the console screen
+        Glass: 1
+      tagRequirements:
+        GlassBeaker:
+          Amount: 2
+          DefaultPrototype: Beaker
+          ExamineName: Glass Beaker
+

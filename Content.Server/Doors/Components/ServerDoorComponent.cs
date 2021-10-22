@@ -177,7 +177,7 @@ namespace Content.Server.Doors.Components
         ///     Should this door automatically close if its been open for too long?
         /// </summary>
         [DataField("autoClose")]
-        public bool AutoClose;
+        public bool AutoClose = true;
 
         /// <summary>
         /// Default time that the door should take to pry open.
@@ -470,10 +470,9 @@ namespace Content.Server.Doors.Components
                 var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
-                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
+                foreach(var _ in broadPhaseSystem.GetCollidingEntities(physicsComponent, -0.015f))
                 {
-                    if (((physicsComponent.CollisionMask & e.CollisionLayer) | (e.CollisionMask & physicsComponent.CollisionLayer)) != 0
-                        && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
+                    return true;
                 }
             }
             return false;
@@ -569,8 +568,7 @@ namespace Content.Server.Doors.Components
                 if (e.Owner.HasComponent<DamageableComponent>())
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
-                if(e.Owner.TryGetComponent(out StunnableComponent? stun))
-                    EntitySystem.Get<StunSystem>().Paralyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime), stun);
+                EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));
             }
 
             // If we hit someone, open up after stun (opens right when stun ends)

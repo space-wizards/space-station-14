@@ -69,6 +69,10 @@
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingEyesBase
