@@ -99,10 +99,9 @@ namespace Content.Server.Administration.Commands.BQL
             var remainingQuery = query;
             var componentFactory = IoCManager.Resolve<IComponentFactory>();
             var entities = entityManager.GetEntities();
-            var x = 32;
-            while (x > 0)
+
+            while (true)
             {
-                x--;
                 Token t;
                 (remainingQuery, t) = Token.ExtractOneToken(remainingQuery);
                 switch (t.kind)
@@ -156,13 +155,13 @@ namespace Content.Server.Administration.Commands.BQL
                     }
                     case TokenKind.Do:
                         return new Tuple<string, IEnumerable<IEntity>>(remainingQuery, entities);
+                    default:
+                        throw new Exception("Unknown token called " + t.text);
                 }
 
                 if (remainingQuery.TrimStart() == "")
                     return new Tuple<string, IEnumerable<IEntity>>(remainingQuery, entities);
             }
-
-            throw new Exception("fuck");
         }
     }
 }
