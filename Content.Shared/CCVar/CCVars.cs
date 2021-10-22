@@ -8,6 +8,28 @@ namespace Content.Shared.CCVar
     public sealed class CCVars : CVars
     {
         /*
+         * Ambience
+         */
+
+        /// <summary>
+        ///     Whether the basic 'hum' ambience will be enabled.
+        /// </summary>
+        public static readonly CVarDef<bool> AmbienceBasicEnabled =
+            CVarDef.Create("ambience.basic_enabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        /// <summary>
+        /// How long we'll wait until re-sampling nearby objects for ambience.
+        /// </summary>
+        public static readonly CVarDef<float> AmbientCooldown =
+            CVarDef.Create("ambience.cooldown", 0.5f, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<float> AmbientRange =
+            CVarDef.Create("ambience.range", 5f, CVar.REPLICATED | CVar.SERVER);
+
+        public static readonly CVarDef<int> MaxAmbientSources =
+            CVarDef.Create("ambience.max_sounds", 6, CVar.REPLICATED | CVar.SERVER);
+
+        /*
          * Status
          */
 
@@ -208,13 +230,6 @@ namespace Content.Shared.CCVar
         /// </remarks>
         public static readonly CVarDef<bool> MobPushing =
             CVarDef.Create("physics.mob_pushing", true, CVar.REPLICATED);
-
-        /*
-         * Ambience
-         */
-
-        public static readonly CVarDef<bool> AmbienceBasicEnabled =
-            CVarDef.Create("ambience.basicenabled", true, CVar.ARCHIVE | CVar.CLIENTONLY);
 
         /*
          * Lobby music
@@ -422,10 +437,10 @@ namespace Content.Shared.CCVar
 
         // This default is basically specifically chosen so fullscreen/maximized 1080p hits a 2x snap and does NN.
         public static readonly CVarDef<int> ViewportSnapToleranceMargin =
-            CVarDef.Create("viewport.snap_tolerance_margin", 64, CVar.CLIENTONLY);
+            CVarDef.Create("viewport.snap_tolerance_margin", 64, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         public static readonly CVarDef<int> ViewportSnapToleranceClip =
-            CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY);
+            CVarDef.Create("viewport.snap_tolerance_clip", 32, CVar.CLIENTONLY | CVar.ARCHIVE);
 
         public static readonly CVarDef<bool> ViewportScaleRender =
             CVarDef.Create("viewport.scale_render", true, CVar.CLIENTONLY | CVar.ARCHIVE);
@@ -446,5 +461,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+
+        /*
+         * IC
+         */
+
+        /// <summary>
+        /// Restricts IC character names to alphanumeric chars.
+        /// </summary>
+        public static readonly CVarDef<bool> RestrictedNames =
+            CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
     }
 }

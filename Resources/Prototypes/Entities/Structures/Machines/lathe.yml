@@ -71,7 +71,8 @@
     interfaces:
     - key: enum.LatheUiKey.Key
       type: LatheBoundUserInterface
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe
 
@@ -173,6 +174,8 @@
       - APCElectronics
       - CloningPodMachineCircuitboard
       - MedicalScannerMachineCircuitboard
+      - HydroponicsTrayMachineCircuitboard
+      - SolarControlComputerCircuitboard
       - Bucket
       - MopItem
       - SprayBottle
@@ -190,6 +193,7 @@
     visuals:
     - type: ProtolatheVisualizer
     - type: WiresVisualizer
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Pullable
   - type: Lathe

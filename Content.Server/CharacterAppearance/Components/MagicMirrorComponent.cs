@@ -1,9 +1,9 @@
+using Content.Server.CharacterAppearance.Systems;
 using Content.Server.UserInterface;
 using Content.Shared.CharacterAppearance;
 using Content.Shared.CharacterAppearance.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -90,6 +90,8 @@ namespace Content.Server.CharacterAppearance.Components
 
                     break;
             }
+
+            EntitySystem.Get<HumanoidAppearanceSystem>().ForceAppearanceUpdate(obj.Session.AttachedEntity.Uid);
         }
 
         void IActivate.Activate(ActivateEventArgs eventArgs)

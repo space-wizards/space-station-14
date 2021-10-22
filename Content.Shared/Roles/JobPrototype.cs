@@ -18,11 +18,20 @@ namespace Content.Shared.Roles
         [DataField("id", required: true)]
         public string ID { get; } = default!;
 
+        [DataField("supervisors")]
+        public string Supervisors { get; } = "nobody";
+
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField("name")]
         public string Name { get; } = string.Empty;
+
+        [DataField("joinNotifyCrew")]
+        public bool JoinNotifyCrew { get; } = false;
+
+        [DataField("requireAdminNotify")]
+        public bool RequireAdminNotify { get; } = false;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -50,8 +59,8 @@ namespace Content.Shared.Roles
 
         [DataField("icon")] public string Icon { get; } = string.Empty;
 
-        [DataField("special")]
-        public JobSpecial? Special { get; private set; }
+        [DataField("special", serverOnly:true)]
+        public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField("departments")]
         public IReadOnlyCollection<string> Departments { get; } = Array.Empty<string>();

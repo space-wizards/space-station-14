@@ -18,9 +18,11 @@
           layer:
             - Underplating
     - type: InteractionOutline
-    - type: SnapGrid
+    - type: Transform
+      anchored: true
     - type: Damageable
-      resistances: metallicResistances
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
     - type: Destructible
       thresholds:
         - trigger:
@@ -30,6 +32,9 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: SubFloorHide
+    - type: Construction
+      graph: cable_terminal
+      node: cable_terminal
     - type: NodeContainer
       nodes:
         # Just define nodes for both MV and HV. One will end up unused in 99% of cases

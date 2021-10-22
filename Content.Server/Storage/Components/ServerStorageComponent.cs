@@ -11,8 +11,8 @@ using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Item;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
 using Content.Shared.Verbs;
@@ -374,7 +374,7 @@ namespace Content.Server.Storage.Components
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "storagebase");
+            _storage = Owner.EnsureContainer<Container>("storagebase");
             _storage.OccludesLight = _occludesLight;
         }
 
@@ -404,20 +404,17 @@ namespace Content.Server.Storage.Components
                     var playerTransform = player.Transform;
 
                     if (!playerTransform.Coordinates.InRange(Owner.EntityManager, ownerTransform.Coordinates, 2) ||
-                        !ownerTransform.IsMapTransform && !playerTransform.ContainsEntity(ownerTransform))
+                        Owner.IsInContainer() && !playerTransform.ContainsEntity(ownerTransform))
                     {
                         break;
                     }
 
-                    var entity = Owner.EntityManager.GetEntity(remove.EntityUid);
-
-                    if (entity == null || _storage?.Contains(entity) == false)
+                    if (!Owner.EntityManager.TryGetEntity(remove.EntityUid, out var entity) || _storage?.Contains(entity) == false)
                     {
                         break;
                     }
 
-                    var item = entity.GetComponent<ItemComponent>();
-                    if (item == null || !player.TryGetComponent(out HandsComponent? hands))
+                    if (!entity.TryGetComponent(out ItemComponent? item) || !player.TryGetComponent(out HandsComponent? hands))
                     {
                         break;
                     }
@@ -515,7 +512,7 @@ namespace Content.Server.Storage.Components
                 var validStorables = new List<IEntity>();
                 foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
                 {
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
@@ -542,15 +539,15 @@ namespace Content.Server.Storage.Components
                 foreach (var entity in validStorables)
                 {
                     // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
-                    if (!entity.Transform.IsMapTransform
+                    if (entity.IsInContainer()
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
-                    var coords = entity.Transform.Coordinates;
+                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
                         successfullyInserted.Add(entity.Uid);
-                        successfullyInsertedPositions.Add(coords);
+                        successfullyInsertedPositions.Add(position);
                     }
                 }
 
@@ -571,11 +568,11 @@ namespace Content.Server.Storage.Components
             else if (_quickInsert)
             {
                 if (eventArgs.Target == null
-                    || !eventArgs.Target.Transform.IsMapTransform
+                    || eventArgs.Target.IsInContainer()
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
-                var position = eventArgs.Target.Transform.Coordinates;
+                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(
@@ -631,47 +628,6 @@ namespace Content.Server.Storage.Components
         private void PlaySoundCollection()
         {
             SoundSystem.Play(Filter.Pvs(Owner), StorageSoundCollection.GetSound(), Owner, AudioParams.Default);
-        }
-
-        [Verb]
-        private sealed class ToggleOpenVerb : Verb<ServerStorageComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ServerStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Get the session for the user
-                var session = user.GetComponentOrNull<ActorComponent>()?.PlayerSession;
-                if (session == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                // Does this player currently have the storage UI open?
-                if (component.SubscribedSessions.Contains(session))
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-close");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
-                } else
-                {
-                    data.Text = Loc.GetString("toggle-open-verb-open");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-                }
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, ServerStorageComponent component)
-            {
-                // "Open" actually closes the UI if it is already open.
-                component.OpenStorageUI(user);
-            }
         }
     }
 }

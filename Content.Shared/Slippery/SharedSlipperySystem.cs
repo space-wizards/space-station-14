@@ -1,9 +1,14 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Shared.EffectBlocker;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 
@@ -12,6 +17,11 @@ namespace Content.Shared.Slippery
     [UsedImplicitly]
     public abstract class SharedSlipperySystem : EntitySystem
     {
+        [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+
+        private List<SlipperyComponent> _slipped = new();
+
         public override void Initialize()
         {
             base.Initialize();
@@ -20,29 +30,45 @@ namespace Content.Shared.Slippery
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
-            component.Colliding.Add(args.OtherFixture.Body.Owner.Uid);
+            var otherUid = args.OtherFixture.Body.Owner.Uid;
+
+            if (!CanSlip(component, otherUid)) return;
+
+            if (!_slipped.Contains(component))
+                _slipped.Add(component);
+
+            component.Colliding.Add(otherUid);
         }
 
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var slipperyComp in ComponentManager.EntityQuery<SlipperyComponent>().ToArray())
+            for (var i = _slipped.Count - 1; i >= 0; i--)
             {
-                Update(slipperyComp);
+                var slipperyComp = _slipped[i];
+                if (!Update(slipperyComp)) continue;
+                _slipped.RemoveAt(i);
             }
         }
 
-        private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
+        public bool CanSlip(SlipperyComponent component, EntityUid uid)
         {
             if (!component.Slippery
                 || component.Owner.IsInContainer()
-                ||  component.Slipped.Contains(otherBody.Owner.Uid)
-                ||  !otherBody.Owner.TryGetComponent(out SharedStunnableComponent? stun))
+                || component.Slipped.Contains(uid)
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
             {
                 return false;
             }
 
-            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed || stun.KnockedDown)
+            return true;
+        }
+
+        private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
+        {
+            if (!CanSlip(component, otherBody.Owner.Uid)) return false;
+
+            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
                 return false;
             }
@@ -61,7 +87,7 @@ namespace Content.Shared.Slippery
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            stun.Paralyze(5);
+            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
             component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 
@@ -73,16 +99,15 @@ namespace Content.Shared.Slippery
         // Until we get predicted slip sounds TM?
         protected abstract void PlaySound(SlipperyComponent component);
 
-        // TODO: Now that we have StartCollide and EndCollide this should just use that to track bodies intersecting.
-        private void Update(SlipperyComponent component)
+        private bool Update(SlipperyComponent component)
         {
-            if (!component.Slippery)
-                return;
+            if (component.Deleted || !component.Slippery || component.Colliding.Count == 0)
+                return true;
 
-            if (!ComponentManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
+            if (!EntityManager.TryGetComponent(component.Owner.Uid, out PhysicsComponent? body))
             {
                 component.Colliding.Clear();
-                return;
+                return true;
             }
 
             foreach (var uid in component.Colliding.ToArray())
@@ -107,6 +132,8 @@ namespace Content.Shared.Slippery
                 if (!component.Slipped.Contains(uid))
                     TrySlip(component, body, otherPhysics);
             }
+
+            return false;
         }
     }
 }

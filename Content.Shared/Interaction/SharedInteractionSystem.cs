@@ -1,15 +1,13 @@
 using System;
 using System.Linq;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Broadphase;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Interaction
@@ -18,9 +16,9 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
-    public class SharedInteractionSystem : EntitySystem
+    public abstract class SharedInteractionSystem : EntitySystem
     {
-        [Dependency] private readonly SharedBroadphaseSystem _sharedBroadphaseSystem = default!;
+        [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
 
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
@@ -131,6 +129,7 @@ namespace Content.Shared.Interaction
 
             if (rayResults.Count == 0) return true;
 
+            // TODO: Wot? This should just be in the predicate.
             if (!ignoreInsideBlocker) return false;
 
             foreach (var result in rayResults)

@@ -16,25 +16,24 @@ namespace Content.Shared.MedicalScanner
         public class MedicalScannerBoundUserInterfaceState : BoundUserInterfaceState
         {
             public readonly EntityUid? Entity;
-            public readonly Dictionary<string, int> DamagePerSupportedGroupID;
-            public readonly Dictionary<string, int> DamagePerTypeID;
+            public readonly IReadOnlyDictionary<string, int> DamagePerGroup;
+            public readonly IReadOnlyDictionary<string, int> DamagePerType;
             public readonly bool IsScanned;
 
             public MedicalScannerBoundUserInterfaceState(
                 EntityUid? entity,
-                Dictionary<string, int> damagePerSupportedGroupID,
-                Dictionary<string, int> damagePerTypeID,
+                DamageableComponent? damageable,
                 bool isScanned)
             {
                 Entity = entity;
-                DamagePerSupportedGroupID = damagePerSupportedGroupID;
-                DamagePerTypeID = damagePerTypeID;
+                DamagePerGroup = damageable?.DamagePerGroup ?? new();
+                DamagePerType = damageable?.Damage?.DamageDict ?? new();
                 IsScanned = isScanned;
             }
 
             public bool HasDamage()
             {
-                return DamagePerSupportedGroupID.Count > 0 || DamagePerTypeID.Count > 0;
+                return DamagePerType.Count > 0;
             }
         }
 
@@ -78,10 +77,14 @@ namespace Content.Shared.MedicalScanner
             }
         }
 
+        public bool CanInsert(IEntity entity)
+        {
+            return entity.HasComponent<SharedBodyComponent>();
+        }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            return eventArgs.Dragged.HasComponent<SharedBodyComponent>();
+            return CanInsert(eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

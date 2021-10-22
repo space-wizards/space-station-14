@@ -68,7 +68,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             if (_exposedTimer >= ExposedUpdateDelay)
             {
-                foreach (var exposed in EntityManager.ComponentManager.EntityQuery<AtmosExposedComponent>())
+                foreach (var exposed in EntityManager.EntityQuery<AtmosExposedComponent>())
                 {
                     // TODO ATMOS: Kill this with fire.
                     var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);

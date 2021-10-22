@@ -1,7 +1,7 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   name: Xeno
-  id: XenoMob_Content
+  id: MobXeno
   parent: SimpleMobBase
   description: They mostly come at night. Mostly.
   components:
@@ -39,11 +39,19 @@
       150: !type:CriticalMobState {}
       200: !type:DeadMobState {}
   - type: Respirator
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
   - type: UnarmedCombat
     range: 1.5
     arcwidth: 0
     arc: claw
-    damage: 10
+    damage:
+      groups:
+        Brute: 10
   - type: Appearance
     visuals:
     - type: DamageStateVisualizer

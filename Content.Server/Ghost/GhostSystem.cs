@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
@@ -7,6 +8,7 @@ using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Examine;
 using Content.Shared.Ghost;
+using Content.Shared.Movement.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -23,6 +25,7 @@ namespace Content.Server.Ghost
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly GameTicker _ticker = default!;
 
         public override void Initialize()
         {
@@ -36,20 +39,30 @@ namespace Content.Server.Ghost
             SubscribeLocalEvent<GhostComponent, MindRemovedMessage>(OnMindRemovedMessage);
             SubscribeLocalEvent<GhostComponent, MindUnvisitedMessage>(OnMindUnvisitedMessage);
 
+            SubscribeLocalEvent<GhostOnMoveComponent, RelayMoveInputEvent>(OnRelayMoveInput);
+
             SubscribeNetworkEvent<GhostWarpsRequestEvent>(OnGhostWarpsRequest);
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToLocationRequestEvent>(OnGhostWarpToLocationRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
         }
 
+        private void OnRelayMoveInput(EntityUid uid, GhostOnMoveComponent component, RelayMoveInputEvent args)
+        {
+            // Let's not ghost if our mind is visiting...
+            if (EntityManager.HasComponent<VisitingMindComponent>(uid)) return;
+            if (!EntityManager.TryGetComponent<MindComponent>(uid, out var mind) || !mind.HasMind || mind.Mind!.IsVisitingEntity) return;
+
+            _ticker.OnGhostAttempt(mind.Mind!, component.CanReturn);
+        }
+
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
         {
             // Allow this entity to be seen by other ghosts.
-            if (component.Owner.TryGetComponent(out VisibilityComponent? visibility))
-            {
-                visibility.Layer |= (int) VisibilityFlags.Ghost;
-                visibility.Layer &= ~(int) VisibilityFlags.Normal;
-            }
+            var visibility = component.Owner.EnsureComponent<VisibilityComponent>();
+
+            visibility.Layer |= (int) VisibilityFlags.Ghost;
+            visibility.Layer &= ~(int) VisibilityFlags.Normal;
 
             if (component.Owner.TryGetComponent(out EyeComponent? eye))
             {
@@ -86,7 +99,7 @@ namespace Content.Server.Ghost
                 ? Loc.GetString("comp-ghost-examine-time-minutes", ("minutes", timeSinceDeath.Minutes))
                 : Loc.GetString("comp-ghost-examine-time-seconds", ("seconds", timeSinceDeath.Seconds));
 
-            args.Message.AddMarkup(deathTimeInfo);
+            args.PushMarkup(deathTimeInfo);
         }
 
         private void OnMindRemovedMessage(EntityUid uid, GhostComponent component, MindRemovedMessage args)
@@ -179,7 +192,7 @@ namespace Content.Server.Ghost
 
         private IEnumerable<string> GetLocationNames()
         {
-            foreach (var warp in ComponentManager.EntityQuery<WarpPointComponent>())
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location != null)
                 {
@@ -190,7 +203,7 @@ namespace Content.Server.Ghost
 
         private WarpPointComponent? FindLocation(string name)
         {
-            foreach (var warp in ComponentManager.EntityQuery<WarpPointComponent>(true))
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location == name)
                 {

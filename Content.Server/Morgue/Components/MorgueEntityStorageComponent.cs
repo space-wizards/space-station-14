@@ -6,8 +6,8 @@ using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Morgue;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Standing;
 using Robust.Server.GameObjects;
@@ -68,7 +68,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity))
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid))
                 return false;
             return base.AddToContents(entity);
         }
@@ -165,7 +165,7 @@ namespace Content.Server.Morgue.Components
             if (DoSoulBeep && Appearance != null && Appearance.TryGetData(MorgueVisuals.HasSoul, out bool hasSoul) && hasSoul)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _occupantHasSoulAlarmSound.GetSound(), Owner);
-            }                
+            }
         }
 
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)

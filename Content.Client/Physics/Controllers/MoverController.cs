@@ -1,8 +1,12 @@
+using Content.Shared.Body.Components;
+using Content.Shared.MobState;
 using Content.Shared.Movement;
 using Content.Shared.Movement.Components;
+using Content.Shared.Pulling.Components;
 using Robust.Client.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 
 namespace Content.Client.Physics.Controllers
 {
@@ -26,10 +30,38 @@ namespace Content.Client.Physics.Controllers
 
             // We set joints to predicted given these can affect how our mob moves.
             // I would only recommend disabling this if you make pulling not use joints anymore (someday maybe?)
-            foreach (var joint in body.Joints)
+
+            if (player.TryGetComponent(out JointComponent? jointComponent))
             {
-                joint.BodyA.Predict = true;
-                joint.BodyB.Predict = true;
+                foreach (var joint in jointComponent.GetJoints)
+                {
+                    joint.BodyA.Predict = true;
+                    joint.BodyB.Predict = true;
+                }
+            }
+
+            // If we're being pulled then we won't predict anything and will receive server lerps so it looks way smoother.
+            if (player.TryGetComponent(out SharedPullableComponent? pullableComp))
+            {
+                var puller = pullableComp.Puller;
+                if (puller != null && puller.TryGetComponent<PhysicsComponent>(out var pullerBody))
+                {
+                    pullerBody.Predict = false;
+                    body.Predict = false;
+                }
+            }
+
+            // If we're pulling a mob then make sure that isn't predicted so it doesn't fuck our velocity up.
+            if (player.TryGetComponent(out SharedPullerComponent? pullerComp))
+            {
+                var pulling = pullerComp.Pulling;
+
+                if (pulling != null &&
+                    pulling.HasComponent<IMobStateComponent>() &&
+                    pulling.TryGetComponent(out PhysicsComponent? pullingBody))
+                {
+                    pullingBody.Predict = false;
+                }
             }
 
             // Server-side should just be handled on its own so we'll just do this shizznit

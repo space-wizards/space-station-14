@@ -10,7 +10,8 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
+        !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
       mass: 100
       mask:
       - Impassable
@@ -36,9 +37,11 @@
     supplyRampRate: 500
   - type: SolarPanel
     supply: 1500
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -75,9 +78,11 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -119,9 +124,11 @@
   - type: Sprite
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_tracker
-  - type: SnapGrid
+  - type: Transform
+    anchored: true
   - type: Damageable
-    resistances: metallicResistances
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:

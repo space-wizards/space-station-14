@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
-using Content.Server.Chemistry.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
+using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -36,14 +37,16 @@ namespace Content.Server.Nutrition.Components
         [ViewVariables(VVAccess.ReadWrite)]
         private ushort _totalCount = 5;
 
-        [ViewVariables(VVAccess.ReadWrite)] public ushort Count;
+        [ViewVariables(VVAccess.ReadWrite)]
+        public ushort Count;
 
         protected override void Initialize()
         {
             base.Initialize();
             Count = _totalCount;
-            Owner.EnsureComponent<FoodComponent>();
-            Owner.EnsureComponent<SolutionContainerComponent>();
+            var foodComp = Owner.EnsureComponent<FoodComponent>();
+            Owner.EnsureComponent<SolutionContainerManagerComponent>();
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, foodComp.SolutionName);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -52,16 +55,34 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
-            if (!Owner.TryGetComponent(out SolutionContainerComponent? solution))
+
+            var scs = EntitySystem.Get<SolutionContainerSystem>();
+
+            if (!Owner.TryGetComponent<FoodComponent>(out var foodComp) || !scs.TryGetSolution(Owner, foodComp.SolutionName, out var solution))
             {
                 return false;
             }
+
             if (!eventArgs.Using.TryGetComponent(out UtensilComponent? utensil) || !utensil.HasType(UtensilType.Knife))
             {
                 return false;
             }
 
             var itemToSpawn = Owner.EntityManager.SpawnEntity(_slice, Owner.Transform.Coordinates);
+            // This is done this way so that... food additives (read: poisons) remain in the system.
+            // Basically, we want to:
+            // 1. Split off a representative chunk
+            var lostSolution = scs.SplitSolution(Owner.Uid, solution,
+                solution.CurrentVolume / ReagentUnit.New(Count));
+            // 2. Delete the Nutriment (it's already in the target) so we just have additives
+            // It might be an idea to remove the removal of Nutriment & clear the food
+            lostSolution.RemoveReagent("Nutriment", lostSolution.GetReagentQuantity("Nutriment"));
+            // 3. Dump whatever we can into the slice
+            if (itemToSpawn.TryGetComponent<FoodComponent>(out var itsFoodComp) && scs.TryGetSolution(itemToSpawn, itsFoodComp.SolutionName, out var itsSolution))
+            {
+                var lostSolutionPart = lostSolution.SplitSolution(itsSolution.AvailableVolume);
+                scs.TryAddSolution(itemToSpawn.Uid, itsSolution, lostSolutionPart);
+            }
             if (eventArgs.User.TryGetComponent(out HandsComponent? handsComponent))
             {
                 if (ContainerHelpers.IsInContainer(Owner))
@@ -77,9 +98,7 @@ namespace Content.Server.Nutrition.Components
             if (Count < 1)
             {
                 Owner.Delete();
-                return true;
             }
-            solution.TryRemoveReagent("Nutriment", solution.CurrentVolume / ReagentUnit.New(Count + 1));
             return true;
         }
 

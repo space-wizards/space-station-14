@@ -1,14 +1,15 @@
 using System;
 using System.Linq;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.DragDrop;
 using Content.Shared.Hands;
 using Content.Shared.Instruments;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
+using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -360,14 +361,8 @@ namespace Content.Server.Instruments
 
                 if (mob != null)
                 {
-                    if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().Down(mob, false);
-
-                    if (mob.TryGetComponent(out StunnableComponent? stun))
-                    {
-                        stun.Stun(1);
-                        Clean();
-                    }
+                    EntitySystem.Get<StunSystem>().TryParalyze(mob.Uid, TimeSpan.FromSeconds(1));
+                    Clean();
 
                     Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }

@@ -51,8 +51,9 @@
     tags:
       - Debug
   - type: Projectile
-    damages:
-      Blunt: 20000
+    damage:
+      types:
+        Blunt: 20000
 
 - type: entity
   id: CartridgeDebug
@@ -80,7 +81,9 @@
     sprite: Objects/Weapons/Melee/debug.rsi
     state: icon
   - type: MeleeWeapon
-    damage: 20000
+    damage:
+      types:
+        Blunt: 20000
   - type: Item
     size: 1
     sprite: Objects/Weapons/Melee/debug.rsi
@@ -95,7 +98,9 @@
     tags:
       - Debug
   - type: MeleeWeapon
-    damage: 100
+    damage:
+      types:
+        Blunt: 100
 
 - type: entity
   name: bang stick 200dmg
@@ -106,4 +111,6 @@
     tags:
       - Debug
   - type: MeleeWeapon
-    damage: 200
+    damage:
+      types:
+        Blunt: 200

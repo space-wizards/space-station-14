@@ -19,7 +19,8 @@ namespace Content.Server.NodeContainer
     {
         public override string Name => "NodeContainer";
 
-        [DataField("nodes")] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
+        //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony
+        [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 
         [DataField("examinable")] private bool _examinable = false;
 

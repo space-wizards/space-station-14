@@ -33,10 +33,9 @@ namespace Content.Client.Light
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Deleted)
-            {
+
+            if (!component.Initialized)
                 return;
-            }
 
             PlayAnimation(component);
         }

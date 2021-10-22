@@ -1,11 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Examine;
 using Content.Shared.Stacks;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Steps
 {
@@ -21,9 +21,9 @@ namespace Content.Shared.Construction.Steps
         public StackPrototype MaterialPrototype =>
             IoCManager.Resolve<IPrototypeManager>().Index<StackPrototype>(MaterialPrototypeId);
 
-        public override void DoExamine(FormattedMessage message, bool inDetailsRange)
+        public override void DoExamine(ExaminedEvent examinedEvent)
         {
-            message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", MaterialPrototype.Name)));
+            examinedEvent.Message.AddMarkup(Loc.GetString("construction-insert-material-entity", ("amount", Amount), ("materialName", MaterialPrototype.Name)));
         }
 
         public override bool EntityValid(IEntity entity)

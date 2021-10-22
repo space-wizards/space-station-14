@@ -10,7 +10,7 @@
     energy: 2.5
     offset: "0, 0.8"
     color: "#FF4020"
-    mask: /Textures/Effects/LightMasks/emergency_mask.png
+    mask: /Textures/Effects/LightMasks/cone.png
   - type: ApcPowerReceiver
   - type: Battery
     maxCharge: 30000

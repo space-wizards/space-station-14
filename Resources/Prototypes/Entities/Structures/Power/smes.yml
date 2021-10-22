@@ -7,13 +7,15 @@
   placement:
     mode: SnapgridCenter
   components:
+    - type: AmbientSound
+      range: 3
+      sound:
+        path: /Audio/Ambience/Objects/periodic_beep.ogg
     - type: Sprite
       netsync: false
       sprite: Structures/Power/smes.rsi
       layers:
         - state: smes
-        - state: smes-display
-          shader: unshaded
     - type: Smes
     - type: Appearance
       visuals:
@@ -42,3 +44,8 @@
       maxChargeRate: 5000
       supplyRampTolerance: 5000
       supplyRampRate: 1000
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#c9c042"
+      castShadows: false

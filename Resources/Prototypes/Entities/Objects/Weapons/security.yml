@@ -9,7 +9,9 @@
     state: stunbaton_off
   - type: Stunbaton
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Blunt: 10
     range: 1.5
     arcwidth: 60
     arc: default
@@ -36,7 +38,9 @@
       state: flash
     - type: Flash
     - type: MeleeWeapon
-      damage: 0
+      damage:
+        types:
+          Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
       range: 1
       arcWidth: 10
       arc: default

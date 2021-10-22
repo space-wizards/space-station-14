@@ -44,7 +44,7 @@ namespace Content.Client.Light.Components
 
             private static readonly StyleBoxFlat StyleBoxLit = new()
             {
-                BackgroundColor = Color.Green
+                BackgroundColor = Color.LimeGreen
             };
 
             private static readonly StyleBoxFlat StyleBoxUnlit = new()

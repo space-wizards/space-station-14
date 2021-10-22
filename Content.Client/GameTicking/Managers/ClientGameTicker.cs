@@ -19,7 +19,6 @@ namespace Content.Client.GameTicking.Managers
     public class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IClientNetManager _netManager = default!;
 
         [ViewVariables] private bool _initialized;
         private readonly List<string> _jobsAvailable = new();

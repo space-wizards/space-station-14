@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Content.Server.Ghost.Components;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.Ghost;
 using Content.Shared.MobState;
 using Content.Shared.Preferences;
@@ -64,18 +64,23 @@ namespace Content.Server.GameTicking.Presets
                 {
                     canReturn = true;
 
-                    if (playerEntity.TryGetComponent(out IDamageableComponent? damageable))
-                    {
-                        //todo: what if they dont breathe lol
-                        //cry deeply
-                        damageable.TrySetDamage(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
-                    }
+                    //todo: what if they dont breathe lol
+                    //cry deeply
+                    DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Asphyxiation"), 200);
+                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(playerEntity.Uid, damage, true);
                 }
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var ghost = entityManager.SpawnEntity("MobObserver", position);
-            ghost.Name = mind.CharacterName ?? string.Empty;
+            var ghost = entityManager.SpawnEntity("MobObserver", position.ToMap(entityManager));
+
+            // Try setting the ghost entity name to either the character name or the player name.
+            // If all else fails, it'll default to the default entity prototype name, "observer".
+            // However, that should rarely happen.
+            if(!string.IsNullOrWhiteSpace(mind.CharacterName))
+                ghost.Name = mind.CharacterName;
+            else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
+                ghost.Name = mind.Session.Name;
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, canReturn);

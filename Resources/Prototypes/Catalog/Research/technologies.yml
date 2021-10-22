@@ -243,11 +243,13 @@
     - APCElectronics
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
+    - HydroponicsTrayMachineCircuitboard
+    - SolarControlComputerCircuitboard
 
 # Basic Parts Technology Tree
 
 - type: technology
-  name: "Basic Parts Technology"
+  name: "basic parts technology"
   id: BasicPartsTechnology
   description: They aren't great, but at least they're something.
   icon:

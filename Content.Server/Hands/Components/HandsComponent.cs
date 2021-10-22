@@ -5,12 +5,12 @@ using System.Linq;
 using Content.Server.Act;
 using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Shared.Audio;
 using Content.Shared.Body.Part;
 using Content.Shared.Hands.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
@@ -129,13 +129,13 @@ namespace Content.Server.Hands.Components
             RemoveHand(args.Slot);
         }
 
-        bool IDisarmedAct.Disarmed(DisarmedActEventArgs eventArgs)
+        bool IDisarmedAct.Disarmed(DisarmedActEvent @event)
         {
             if (BreakPulls())
                 return false;
 
-            var source = eventArgs.Source;
-            var target = eventArgs.Target;
+            var source = @event.Source;
+            var target = @event.Target;
 
             if (source != null)
             {
@@ -163,10 +163,10 @@ namespace Content.Server.Hands.Components
         {
             // What is this API??
             if (!Owner.TryGetComponent(out SharedPullerComponent? puller)
-                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out PullableComponent? pullable))
+                || puller.Pulling == null || !puller.Pulling.TryGetComponent(out SharedPullableComponent? pullable))
                 return false;
 
-            return pullable.TryStopPull();
+            return _entitySystemManager.GetEntitySystem<PullingSystem>().TryStopPull(pullable);
         }
 
         #endregion
