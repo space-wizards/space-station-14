@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: ConstructableGrenadeGraph
+  id: ModularGrenadeGraph
   start: start
   graph:
     - node: start
@@ -11,7 +11,7 @@
               doAfter: 3
 
     - node: emptyCase
-      entity: ConstructableGrenade
+      entity: ModularGrenade
 
       edges:
         - to: caseWithTrigger

@@ -292,7 +292,7 @@ namespace Content.Client.Entry
             "Armor",
             "DeviceNetwork",
             "BombPayload",
-            "ConstructableGrenade"
+            "ModularGrenade"
         };
     }
 }

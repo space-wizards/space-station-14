@@ -14,19 +14,19 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Devices.Systems
 {
-    public class ConstructableGrenadeSystem : EntitySystem
+    public class ModularGrenadeSystem : EntitySystem
     {
 
         [Dependency] private TriggerSystem _triggerSystem = default!;
         public override void Initialize()
         {
-            SubscribeLocalEvent<ConstructableGrenadeComponent, IoDeviceOutputEvent>(OnOutputReceived);
-            SubscribeLocalEvent<ConstructableGrenadeComponent, UseInHandEvent>(OnUse);
+            SubscribeLocalEvent<ModularGrenadeComponent, IoDeviceOutputEvent>(OnOutputReceived);
+            SubscribeLocalEvent<ModularGrenadeComponent, UseInHandEvent>(OnUse);
         }
 
         //if the greande is 'used', we use the IoDevice in the trigger.
         //this may lead to some strange situations, such as a remote signaler being used as the trigger activating
-        private void OnUse(EntityUid uid, ConstructableGrenadeComponent component, UseInHandEvent args)
+        private void OnUse(EntityUid uid, ModularGrenadeComponent component, UseInHandEvent args)
         {
             if (args.Handled)
                 return;
@@ -35,12 +35,12 @@ namespace Content.Server.Devices.Systems
         }
 
         //If the grenade is receiving IoOutput, that means it's ready to explode!
-        private void OnOutputReceived(EntityUid uid, ConstructableGrenadeComponent grenadeComponent, IoDeviceOutputEvent args)
+        private void OnOutputReceived(EntityUid uid, ModularGrenadeComponent grenadeComponent, IoDeviceOutputEvent args)
         {
             ActivateGrenade(uid, grenadeComponent);
         }
 
-        public bool TryUseTrigger(EntityUid uid, UseInHandEvent args, ConstructableGrenadeComponent? grenadeComponent = null)
+        public bool TryUseTrigger(EntityUid uid, UseInHandEvent args, ModularGrenadeComponent? grenadeComponent = null)
         {
             if (!Resolve(uid, ref grenadeComponent))
                 return false;
@@ -53,9 +53,9 @@ namespace Content.Server.Devices.Systems
                 return false;
             }
 
-            if (!containerManager.TryGetContainer(ConstructableGrenadeComponent.TriggerContainer, out var triggerContainer))
+            if (!containerManager.TryGetContainer(ModularGrenadeComponent.TriggerContainer, out var triggerContainer))
             {
-                Logger.Warning($"Constructable Grenade entity {owner} did not have the '{ConstructableGrenadeComponent.TriggerContainer}' container! Aborting trigger!");
+                Logger.Warning($"Constructable Grenade entity {owner} did not have the '{ModularGrenadeComponent.TriggerContainer}' container! Aborting trigger!");
                 return false;
             }
 
@@ -78,7 +78,7 @@ namespace Content.Server.Devices.Systems
             return true;
         }
 
-        public void ActivateGrenade(EntityUid uid, ConstructableGrenadeComponent? grenadeComponent = null,
+        public void ActivateGrenade(EntityUid uid, ModularGrenadeComponent? grenadeComponent = null,
             ContainerManagerComponent? containerManagerComponent = null)
         {
             if (!Resolve(uid, ref grenadeComponent, ref containerManagerComponent))

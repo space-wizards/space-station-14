@@ -1,7 +1,7 @@
 - type: construction
   name: grenade casing
-  id: constructableGrenadeRecipe
-  graph: ConstructableGrenadeGraph
+  id: modularGrenadeRecipe
+  graph: ModularGrenadeGraph
   startNode: start
   targetNode: emptyCase
   category: Weapons
