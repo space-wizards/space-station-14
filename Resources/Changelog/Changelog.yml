@@ -2637,3 +2637,9 @@ Entries:
   - {message: Added Plasma into the cargo console, type: Add}
   id: 470
   time: '2021-10-22T09:47:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pulling items with hand item cursor overlay freezing the game.,
+    type: Fix}
+  id: 471
+  time: '2021-10-22T11:45:45.025249+00:00'
