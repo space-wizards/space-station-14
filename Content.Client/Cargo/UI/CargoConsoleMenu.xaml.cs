@@ -62,10 +62,7 @@ namespace Content.Client.Cargo.UI
 
         private void SetCategoryText(int id)
         {
-            if (id == 0)
-                _category = null;
-            else
-                _category = _categoryStrings[id];
+            _category = id == 0 ? null : _categoryStrings[id];
             Categories.SelectId(id);
         }
 
@@ -87,16 +84,18 @@ namespace Content.Client.Cargo.UI
                 // if no search or category
                 // else if search
                 // else if category and not search
-                if ((search.Length == 0 && _category == null) ||
-                    (search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search)) ||
-                    (search.Length == 0 && _category != null && prototype.Category.Equals(_category)))
+                if (search.Length == 0 && _category == null ||
+                    search.Length != 0 && prototype.Name.ToLowerInvariant().Contains(search) ||
+                    search.Length == 0 && _category != null && prototype.Category.Equals(_category))
                 {
-                    var button = new CargoProductRow();
-                    button.Product = prototype;
-                    button.ProductName.Text = prototype.Name;
-                    button.PointCost.Text = prototype.PointCost.ToString();
-                    button.Icon.Texture = prototype.Icon.Frame0();
-                    button.MainButton.OnPressed += (args) =>
+                    var button = new CargoProductRow
+                    {
+                        Product = prototype,
+                        ProductName = { Text = prototype.Name },
+                        PointCost = { Text = prototype.PointCost.ToString() },
+                        Icon = { Texture = prototype.Icon.Frame0() },
+                    };
+                    button.MainButton.OnPressed += args =>
                     {
                         OnItemSelected?.Invoke(args);
                     };
@@ -120,7 +119,6 @@ namespace Content.Client.Cargo.UI
 
             _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
-            var search = SearchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
             {
                 if (!_categoryStrings.Contains(prototype.Category))
