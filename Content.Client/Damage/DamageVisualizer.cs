@@ -198,8 +198,9 @@ namespace Content.Client.Damage
         {
             base.InitializeEntity(entity);
 
-            var damageData = _entityManager.EnsureComponent<DamageVisualizerDataComponent>(entity);
             IoCManager.InjectDependencies(this);
+
+            var damageData = _entityManager.EnsureComponent<DamageVisualizerDataComponent>(entity);
             VerifyVisualizerSetup(entity, damageData);
             if (damageData.Valid)
                 InitializeVisualizer(entity, damageData);
