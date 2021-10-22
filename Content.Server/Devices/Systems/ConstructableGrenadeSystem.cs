@@ -1,12 +1,14 @@
 using System.Linq;
 using Content.Server.Construction.Components;
 using Content.Server.Devices.Components;
+using Content.Server.Explosion;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Utility;
 
@@ -15,6 +17,7 @@ namespace Content.Server.Devices.Systems
     public class ConstructableGrenadeSystem : EntitySystem
     {
 
+        [Dependency] private TriggerSystem _triggerSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<ConstructableGrenadeComponent, IoDeviceOutputEvent>(OnOutputReceived);
@@ -27,7 +30,7 @@ namespace Content.Server.Devices.Systems
         {
             if (args.Handled)
                 return;
-            
+
             TryUseTrigger(uid, args, component);
         }
 
@@ -75,13 +78,30 @@ namespace Content.Server.Devices.Systems
             return true;
         }
 
-        public void ActivateGrenade(EntityUid uid, ConstructableGrenadeComponent? grenadeComponent = null)
+        public void ActivateGrenade(EntityUid uid, ConstructableGrenadeComponent? grenadeComponent = null,
+            ContainerManagerComponent? containerManagerComponent = null)
         {
-            if (!Resolve(uid, ref grenadeComponent))
+            if (!Resolve(uid, ref grenadeComponent, ref containerManagerComponent))
                 return;
 
+            if (!containerManagerComponent.TryGetContainer(BombPayloadComponent.BombPayloadContainer,
+                out var bombContainer))
+            {
+                return;
+            }
+
             var owner = EntityManager.GetEntity(uid);
-            owner.PopupMessageEveryone("KABOOOOM!!!");
+
+            if (bombContainer.ContainedEntities.Count <= 0)
+            {
+                owner.PopupMessageEveryone("*click*");
+                return;
+            }
+
+            _triggerSystem.Trigger(bombContainer.ContainedEntities[0]);
+
+            //always remove the grenade after the payload is triggered.
+            owner.Delete();
         }
     }
 }

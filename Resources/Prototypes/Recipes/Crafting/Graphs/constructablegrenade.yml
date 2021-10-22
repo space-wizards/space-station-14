@@ -28,3 +28,15 @@
       actions:
         - !type:SpriteStateChange
           state: "chem-grenade-1"
+
+      edges:
+        - to: caseWithPayloadAndTrigger
+          steps:
+            - component: BombPayload
+              store: bombPayload
+              name: "Payload"
+
+    - node: caseWithPayloadAndTrigger
+      actions:
+        - !type:SpriteStateChange
+          state: "chem-grenade-3"

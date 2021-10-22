@@ -7,10 +7,37 @@
       sprite: Objects/Devices/bombpayload.rsi
       state: bombcore-empty
     - type: Construction
-      graph: EmptyBombPayloadGraph
+      graph: BombPayloadGraph
       node: emptyCase
     - type: Destructible
       thresholds:
         - trigger:
             !type:DamageTrigger
             damage: 10
+
+
+- type: entity
+  name: explosive bomb payload
+  parent: BaseItem
+  id: ExplosiveBombPayload
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/bombpayload.rsi
+    state: bombcore-exp-armed
+  - type: Construction
+    graph: BombPayloadGraph
+    node: bombPayload
+  - type: BombPayload
+  - type: Explosive
+    devastationRange: 0
+    heavyImpactRange: 2
+    lightImpactRange: 4
+    flashRange: 7
+  - type: ExplodeOnTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10

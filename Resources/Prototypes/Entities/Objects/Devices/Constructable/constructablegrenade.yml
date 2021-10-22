@@ -17,6 +17,8 @@
   - type: Construction
     graph: ConstructableGrenadeGraph
     node: emptyCase
+  - type: Damageable
+    damageContainer: Inorganic
   - type: Destructible
     thresholds:
       - trigger:

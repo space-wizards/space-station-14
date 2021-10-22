@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: EmptyBombPayloadGraph
+  id: BombPayloadGraph
   start: start
   graph:
     - node: start
@@ -12,3 +12,6 @@
 
     - node: emptyPayload
       entity: EmptyBombPayload
+
+    - node: bombPayload
+      entity: ExplosiveBombPayload

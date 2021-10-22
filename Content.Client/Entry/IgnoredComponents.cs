@@ -290,7 +290,9 @@ namespace Content.Client.Entry
             "Label",
             "GhostRadio",
             "Armor",
-            "DeviceNetwork"
+            "DeviceNetwork",
+            "BombPayload",
+            "ConstructableGrenade"
         };
     }
 }
