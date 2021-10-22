@@ -17,7 +17,7 @@ namespace Content.Shared.Audio
             // Reason I didn't make this eventbus for the callers is because it seemed a bit silly
             // trying to account for damageable + powered + toggle, plus we can't just check if it's powered.
             // So we'll just call it directly for whatever.
-            if (!ComponentManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambience) ||
+            if (!EntityManager.TryGetComponent<AmbientSoundComponent>(uid, out var ambience) ||
                 ambience.Enabled == value) return;
 
             ambience.Enabled = value;

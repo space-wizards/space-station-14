@@ -44,9 +44,11 @@ namespace Content.Client.Lobby
         [ViewVariables] private CharacterSetupGui? _characterSetup;
         [ViewVariables] private LobbyGui? _lobby;
 
+        private ClientGameTicker _gameTicker = default!;
+
         public override void Startup()
         {
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
+            _gameTicker = EntitySystem.Get<ClientGameTicker>();
             _characterSetup = new CharacterSetupGui(_entityManager, _resourceCache, _preferencesManager,
                 _prototypeManager);
             LayoutContainer.SetAnchorPreset(_characterSetup, LayoutContainer.LayoutPreset.Wide);
@@ -84,10 +86,9 @@ namespace Content.Client.Lobby
                 _userInterfaceManager.StateRoot.AddChild(_characterSetup);
             };
 
-            _lobby.ObserveButton.OnPressed += _ => _consoleHost.ExecuteCommand("observe");
             _lobby.ReadyButton.OnPressed += _ =>
             {
-                if (!gameTicker.IsGameStarted)
+                if (!_gameTicker.IsGameStarted)
                 {
                     return;
                 }
@@ -106,20 +107,19 @@ namespace Content.Client.Lobby
             UpdatePlayerList();
 
             _playerManager.PlayerListUpdated += PlayerManagerOnPlayerListUpdated;
-            gameTicker.InfoBlobUpdated += UpdateLobbyUi;
-            gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
-            gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
-            gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
+            _gameTicker.InfoBlobUpdated += UpdateLobbyUi;
+            _gameTicker.LobbyStatusUpdated += LobbyStatusUpdated;
+            _gameTicker.LobbyReadyUpdated += LobbyReadyUpdated;
+            _gameTicker.LobbyLateJoinStatusUpdated += LobbyLateJoinStatusUpdated;
         }
 
         public override void Shutdown()
         {
             _playerManager.PlayerListUpdated -= PlayerManagerOnPlayerListUpdated;
-            var gameTicker = EntitySystem.Get<ClientGameTicker>();
-            gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
-            gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
-            gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
-            gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
+            _gameTicker.InfoBlobUpdated -= UpdateLobbyUi;
+            _gameTicker.LobbyStatusUpdated -= LobbyStatusUpdated;
+            _gameTicker.LobbyReadyUpdated -= LobbyReadyUpdated;
+            _gameTicker.LobbyLateJoinStatusUpdated -= LobbyLateJoinStatusUpdated;
 
             _lobby?.Dispose();
             _characterSetup?.Dispose();

@@ -5,31 +5,19 @@ using Robust.Shared.Map;
 namespace Content.Shared.Throwing
 {
     /// <summary>
-    ///     Raised when an entity that was thrown lands.
+    ///     Raised when an entity that was thrown lands. This occurs before they stop moving and is when their tile-friction is reapplied.
     /// </summary>
     [PublicAPI]
     public sealed class LandEvent : EntityEventArgs
     {
-        /// <summary>
-        ///     Entity that threw the item.
-        /// </summary>
-        public IEntity? User { get; }
+        public EntityUid? User;
+    }
 
-        /// <summary>
-        ///     Item that was thrown.
-        /// </summary>
-        public IEntity Thrown { get; }
-
-        /// <summary>
-        ///     Location where the item landed.
-        /// </summary>
-        public EntityCoordinates LandLocation { get; }
-
-        public LandEvent(IEntity? user, IEntity thrown, EntityCoordinates landLocation)
-        {
-            User = user;
-            Thrown = thrown;
-            LandLocation = landLocation;
-        }
+    /// <summary>
+    /// Raised when a thrown entity is no longer moving.
+    /// </summary>
+    public sealed class StopThrowEvent : EntityEventArgs
+    {
+        public EntityUid? User;
     }
 }

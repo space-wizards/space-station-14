@@ -1,8 +1,8 @@
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
   name: Urist McHands
-  id: BaseHumanMob_Content
+  id: MobHumanBase
   description: A miserable pile of secrets.
   abstract: true
   components:
@@ -41,7 +41,7 @@
     damage:
       types:
         Blunt: 5
-    soundHit: 
+    soundHit:
       path: /Audio/Effects/hit_kick.ogg
   - type: Hunger
     damage:
@@ -62,8 +62,12 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
-  # StatusEffects
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
   # Other
   - type: Inventory
   - type: Clickable
@@ -209,10 +213,10 @@
       CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1 
+        Asphyxiation: 1
     damageRecovery:
       types:
-        Asphyxiation: -1 
+        Asphyxiation: -1
   - type: Internals
   - type: MobState
     thresholds:
@@ -273,11 +277,12 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: DoorBumpOpener
 
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Dummy
+  id: MobHumanDummy
   abstract: true
   description: A dummy human meant to be used in character setup.
   components:

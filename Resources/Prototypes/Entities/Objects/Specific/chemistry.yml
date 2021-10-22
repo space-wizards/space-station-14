@@ -29,6 +29,10 @@
     solution: beaker
   - type: ExaminableSolution
     solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
   - type: SolutionTransfer
     canChangeTransferAmount: true
   - type: UserInterface
@@ -236,5 +240,5 @@
     eatMessage: food-swallow
   - type: SolutionContainerManager
     solutions:
-      pill:
+      food:
         maxVol: 50

@@ -10,7 +10,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -28,7 +28,9 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
-        public static string SolutionName = "food";
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "food";
 
         [ViewVariables]
         [DataField("useSound")]

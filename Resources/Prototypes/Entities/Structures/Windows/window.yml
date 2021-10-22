@@ -10,7 +10,6 @@
   components:
   - type: RCDDeconstructWhitelist
   - type: Sprite
-    color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
@@ -50,8 +49,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
-  - type: Window
+  - type: IconSmooth
+    key: windows
     base: window
+  - type: Window
   - type: Construction
     graph: window
     node: window

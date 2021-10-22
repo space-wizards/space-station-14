@@ -30,6 +30,9 @@ namespace Content.Client.Doors
         [DataField("animatedPanel")]
         private bool _animatedPanel = true;
 
+        [DataField("simpleVisuals")]
+        private bool _simpleVisuals = false;
+
         /// <summary>
         ///     Whether the BaseUnlit layer should still be visible when the airlock
         ///     is opened.
@@ -50,17 +53,20 @@ namespace Content.Client.Doors
                 flick.LayerKey = DoorVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing", 0f));
 
-                var flickUnlit = new AnimationTrackSpriteFlick();
-                CloseAnimation.AnimationTracks.Add(flickUnlit);
-                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
-                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing_unlit", 0f));
-
-                if (_animatedPanel)
+                if (!_simpleVisuals)
                 {
-                    var flickMaintenancePanel = new AnimationTrackSpriteFlick();
-                    CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                    flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
-                    flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
+                    var flickUnlit = new AnimationTrackSpriteFlick();
+                    CloseAnimation.AnimationTracks.Add(flickUnlit);
+                    flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                    flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("closing_unlit", 0f));
+
+                    if (_animatedPanel)
+                    {
+                        var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                        CloseAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_closing", 0f));
+                    }
                 }
             }
 
@@ -71,26 +77,32 @@ namespace Content.Client.Doors
                 flick.LayerKey = DoorVisualLayers.Base;
                 flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening", 0f));
 
-                var flickUnlit = new AnimationTrackSpriteFlick();
-                OpenAnimation.AnimationTracks.Add(flickUnlit);
-                flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
-                flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening_unlit", 0f));
-
-                if (_animatedPanel)
+                if (!_simpleVisuals)
                 {
-                    var flickMaintenancePanel = new AnimationTrackSpriteFlick();
-                    OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
-                    flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
-                    flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
+                    var flickUnlit = new AnimationTrackSpriteFlick();
+                    OpenAnimation.AnimationTracks.Add(flickUnlit);
+                    flickUnlit.LayerKey = DoorVisualLayers.BaseUnlit;
+                    flickUnlit.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("opening_unlit", 0f));
+
+                    if (_animatedPanel)
+                    {
+                        var flickMaintenancePanel = new AnimationTrackSpriteFlick();
+                        OpenAnimation.AnimationTracks.Add(flickMaintenancePanel);
+                        flickMaintenancePanel.LayerKey = WiresVisualizer.WiresVisualLayers.MaintenancePanel;
+                        flickMaintenancePanel.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("panel_opening", 0f));
+                    }
                 }
             }
 
-            DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(_denyDelay)};
+            if (!_simpleVisuals)
             {
-                var flick = new AnimationTrackSpriteFlick();
-                DenyAnimation.AnimationTracks.Add(flick);
-                flick.LayerKey = DoorVisualLayers.BaseUnlit;
-                flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny_unlit", 0f));
+                DenyAnimation = new Animation {Length = TimeSpan.FromSeconds(_denyDelay)};
+                {
+                    var flick = new AnimationTrackSpriteFlick();
+                    DenyAnimation.AnimationTracks.Add(flick);
+                    flick.LayerKey = DoorVisualLayers.BaseUnlit;
+                    flick.KeyFrames.Add(new AnimationTrackSpriteFlick.KeyFrame("deny_unlit", 0f));
+                }
             }
         }
 
@@ -126,15 +138,18 @@ namespace Content.Client.Doors
                 case DoorVisualState.Open:
                     sprite.LayerSetState(DoorVisualLayers.Base, "open");
                     unlitVisible = _openUnlitVisible;
-                    if (_openUnlitVisible)
+                    if (_openUnlitVisible && !_simpleVisuals)
                     {
                         sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "open_unlit");
                     }
                     break;
                 case DoorVisualState.Closed:
                     sprite.LayerSetState(DoorVisualLayers.Base, "closed");
-                    sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
-                    sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
+                    if (!_simpleVisuals)
+                    {
+                        sprite.LayerSetState(DoorVisualLayers.BaseUnlit, "closed_unlit");
+                        sprite.LayerSetState(DoorVisualLayers.BaseBolted, "bolted_unlit");
+                    }
                     break;
                 case DoorVisualState.Opening:
                     animPlayer.Play(OpenAnimation, AnimationKey);
@@ -161,9 +176,12 @@ namespace Content.Client.Doors
                 boltedVisible = true;
             }
 
-            sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
-            sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
-            sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
+            if (!_simpleVisuals)
+            {
+                sprite.LayerSetVisible(DoorVisualLayers.BaseUnlit, unlitVisible);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseWelded, weldedVisible);
+                sprite.LayerSetVisible(DoorVisualLayers.BaseBolted, unlitVisible && boltedVisible);
+            }
         }
     }
 

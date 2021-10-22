@@ -1,13 +1,14 @@
 using System;
+using Content.Server.Popups;
 using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
+using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Stack
@@ -20,6 +21,7 @@ namespace Content.Server.Stack
     public class StackSystem : SharedStackSystem
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {
@@ -48,7 +50,7 @@ namespace Content.Server.Stack
             // Set the output parameter in the event instance to the newly split stack.
             var entity = EntityManager.SpawnEntity(prototype, spawnPosition);
 
-            if (ComponentManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
+            if (EntityManager.TryGetComponent(entity.Uid, out SharedStackComponent? stackComp))
             {
                 // Set the split stack's count.
                 SetCount(entity.Uid, amount, stackComp);
@@ -64,7 +66,7 @@ namespace Content.Server.Stack
         {
             // Set the output result parameter to the new stack entity...
             var entity = EntityManager.SpawnEntity(prototype.Spawn, spawnPosition);
-            var stack = ComponentManager.GetComponent<StackComponent>(entity.Uid);
+            var stack = EntityManager.GetComponent<StackComponent>(entity.Uid);
 
             // And finally, set the correct amount!
             SetCount(entity.Uid, amount, stack);
@@ -73,6 +75,9 @@ namespace Content.Server.Stack
 
         private void OnStackInteractUsing(EntityUid uid, StackComponent stack, InteractUsingEvent args)
         {
+            if (args.Handled)
+                return;
+
             if (!args.Used.TryGetComponent<StackComponent>(out var otherStack))
                 return;
 
@@ -84,34 +89,29 @@ namespace Content.Server.Stack
             SetCount(args.Used.Uid, otherStack.Count + toTransfer, otherStack);
 
             var popupPos = args.ClickLocation;
+
             if (!popupPos.IsValid(EntityManager))
             {
                 popupPos = args.User.Transform.Coordinates;
             }
 
+            var filter = Filter.Entities(args.User.Uid);
+
             switch (toTransfer)
             {
                 case > 0:
-                    popupPos.PopupMessage(args.User, $"+{toTransfer}");
+                    _popupSystem.PopupCoordinates($"+{toTransfer}", popupPos, filter);
 
                     if (otherStack.AvailableSpace == 0)
                     {
-                        args.Used.SpawnTimer(
-                            300,
-                            () => popupPos.PopupMessage(
-                                args.User,
-                                Loc.GetString("comp-stack-becomes-full")
-                            )
-                        );
+                        _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                            popupPos.Offset(new Vector2(0, -0.5f)) , filter);
                     }
 
                     break;
 
                 case 0 when otherStack.AvailableSpace == 0:
-                    popupPos.PopupMessage(
-                        args.User,
-                        Loc.GetString("comp-stack-already-full")
-                    );
+                    _popupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, filter);
                     break;
             }
 

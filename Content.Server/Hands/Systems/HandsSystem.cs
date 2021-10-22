@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Hands.Components;
-using Content.Server.Hands.Systems;
 using Content.Server.Interaction;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
@@ -13,10 +12,11 @@ using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics.Pull;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Server.Player;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.IoC;
@@ -183,6 +183,9 @@ namespace Content.Server.Hands.Systems
         {
             foreach (var inhand in component.GetAllHeldItems())
             {
+                if (inhand.Owner.HasComponent<HandVirtualItemComponent>())
+                    continue;
+
                 args.PushText(Loc.GetString("comp-hands-examine", ("user", component.Owner), ("item", inhand.Owner)));
             }
         }
@@ -227,13 +230,12 @@ namespace Content.Server.Hands.Systems
 
             var playerEnt = playerSession.AttachedEntity;
 
-            if (playerEnt == null || !playerEnt.IsValid() || !playerEnt.TryGetComponent(out SharedHandsComponent? hands))
-                return false;
-
-            if (!hands.TryGetActiveHeldEntity(out var throwEnt))
-                return false;
-
-            if (!_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
+            if (playerEnt == null ||
+                !playerEnt.IsValid() ||
+                playerEnt.IsInContainer() ||
+                !playerEnt.TryGetComponent(out SharedHandsComponent? hands) ||
+                !hands.TryGetActiveHeldEntity(out var throwEnt) ||
+                !_interactionSystem.TryThrowInteraction(hands.Owner, throwEnt))
                 return false;
 
             if (throwEnt.TryGetComponent(out StackComponent? stack) && stack.Count > 1 && stack.ThrowIndividually)

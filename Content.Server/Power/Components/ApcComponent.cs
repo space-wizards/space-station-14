@@ -4,7 +4,7 @@ using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
 using Content.Shared.Interaction;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -48,6 +48,10 @@ namespace Content.Server.Power.Components
         private const float HighPowerThreshold = 0.9f;
 
         private const int VisualsChangeDelay = 1;
+
+        private static readonly Color LackColor = Color.FromHex("#d1332e");
+        private static readonly Color ChargingColor = Color.FromHex("#2e8ad1");
+        private static readonly Color FullColor = Color.FromHex("#3db83b");
 
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(ApcUiKey.Key);
 
@@ -115,6 +119,18 @@ namespace Content.Server.Power.Components
                 {
                     appearance.SetData(ApcVisuals.ChargeState, newState);
                 }
+
+                if (Owner.TryGetComponent(out SharedPointLightComponent? light))
+                {
+                    light.Color = newState switch
+                    {
+                        ApcChargeState.Lack => LackColor,
+                        ApcChargeState.Charging => ChargingColor,
+                        ApcChargeState.Full => FullColor,
+                        _ => LackColor
+                    };
+                    light.Dirty();
+                }
             }
 
             Owner.TryGetComponent(out BatteryComponent? battery);
@@ -175,7 +191,7 @@ namespace Content.Server.Power.Components
             }
 
             var delta = netBat.CurrentReceiving - netBat.LoadingNetworkDemand;
-            if (!MathHelper.CloseTo(delta, 0, 0.1f) && delta < 0)
+            if (!MathHelper.CloseToPercent(delta, 0, 0.1f) && delta < 0)
             {
                 return ApcExternalPowerState.Low;
             }

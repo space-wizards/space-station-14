@@ -35,7 +35,7 @@ namespace Content.Server.Body.Metabolism
         {
             base.Update(frameTime);
 
-            foreach (var metab in ComponentManager.EntityQuery<MetabolizerComponent>(false))
+            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
             {
                 metab.AccumulatedFrametime += frameTime;
 
@@ -106,7 +106,7 @@ namespace Content.Server.Body.Metabolism
                     }
 
                     if (!conditionsMet)
-                        return;
+                        continue;
 
                     // If we're part of a body, pass that entity to Metabolize
                     // Otherwise, just pass our owner entity, maybe we're a plant or something

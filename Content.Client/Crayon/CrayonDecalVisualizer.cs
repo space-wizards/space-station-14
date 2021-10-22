@@ -23,11 +23,6 @@ namespace Content.Client.Crayon
             {
                 sprite.LayerSetColor(0, Color.FromName(color));
             }
-
-            if (component.TryGetData(CrayonVisuals.Rotation, out Angle rotation))
-            {
-                sprite.Rotation = rotation;
-            }
         }
     }
 }

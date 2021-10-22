@@ -438,137 +438,129 @@ entities:
   components:
   - parent: 0
     pos: -0.5,-0.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 2
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: 3.5,-0.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 3
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: -0.5,-4.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 4
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: -0.5,-8.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 5
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: 7.5,-8.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 6
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: 7.5,-4.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 7
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: 3.5,-8.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 8
   type: ContainmentFieldGenerator
   components:
   - parent: 0
     pos: 7.5,-0.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 9
   type: Emitter
   components:
   - parent: 0
     pos: -0.5,3.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 10
   type: Emitter
   components:
   - parent: 0
     pos: 3.5,3.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 11
   type: Emitter
   components:
   - parent: 0
     pos: 7.5,3.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 12
   type: Emitter
   components:
   - parent: 0
     pos: 11.5,-0.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 13
   type: Emitter
   components:
   - parent: 0
     pos: 11.5,-4.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 14
   type: Emitter
   components:
   - parent: 0
     pos: 11.5,-8.5
-    rot: 3.141592653589793 rad
+    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 15
   type: Emitter
   components:
   - parent: 0
     pos: 7.5,-12.5
-    rot: 1.5707963267948966 rad
+    rot: 3.141592653589793 rad
     type: Transform
 - uid: 16
   type: Emitter
   components:
   - parent: 0
     pos: 3.5,-12.5
-    rot: 1.5707963267948966 rad
+    rot: 3.141592653589793 rad
     type: Transform
 - uid: 17
   type: Emitter
   components:
   - parent: 0
     pos: -0.5,-12.5
-    rot: 1.5707963267948966 rad
+    rot: 3.141592653589793 rad
     type: Transform
 - uid: 18
   type: Emitter
   components:
   - parent: 0
     pos: -4.5,-8.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - uid: 19
   type: Emitter
   components:
   - parent: 0
     pos: -4.5,-4.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - uid: 20
   type: Emitter
   components:
   - parent: 0
     pos: -4.5,-0.5
+    rot: 1.5707963267948966 rad
     type: Transform
 - uid: 21
   type: CableMV
@@ -931,7 +923,7 @@ entities:
     pos: 6.5,-14.5
     type: Transform
 - uid: 81
-  type: SinguloGenerator
+  type: SingularityGenerator
   components:
   - parent: 0
     pos: 3.5,-4.5
@@ -1205,42 +1197,36 @@ entities:
   components:
   - parent: 0
     pos: 2.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 127
   type: ParticleAcceleratorEmitterCenter
   components:
   - parent: 0
     pos: 3.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 128
   type: ParticleAcceleratorEmitterRight
   components:
   - parent: 0
     pos: 4.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 129
   type: ParticleAcceleratorFuelChamber
   components:
   - parent: 0
     pos: 3.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 130
   type: ParticleAcceleratorPowerBox
   components:
   - parent: 0
     pos: 3.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 131
   type: ParticleAcceleratorControlBox
   components:
   - parent: 0
     pos: 2.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 250
     type: ApcPowerReceiver
@@ -1249,742 +1235,644 @@ entities:
   components:
   - parent: 0
     pos: 3.5,15.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 133
   type: CableHV
   components:
   - parent: 0
     pos: 2.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 134
   type: CableHV
   components:
   - parent: 0
     pos: 3.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 135
   type: CableHV
   components:
   - parent: 0
     pos: 4.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 136
   type: CableHV
   components:
   - parent: 0
     pos: 3.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 137
   type: CableHV
   components:
   - parent: 0
     pos: 3.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 138
   type: CableHV
   components:
   - parent: 0
     pos: 2.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 139
   type: CableHV
   components:
   - parent: 0
     pos: 3.5,15.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 140
   type: CableHV
   components:
   - parent: 0
     pos: 4.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 141
   type: CableHV
   components:
   - parent: 0
     pos: 3.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 142
   type: CableHV
   components:
   - parent: 0
     pos: 0.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 143
   type: CableHV
   components:
   - parent: 0
     pos: 1.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 144
   type: CableHV
   components:
   - parent: 0
     pos: 2.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 145
   type: CableHV
   components:
   - parent: 0
     pos: 4.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 146
   type: CableHV
   components:
   - parent: 0
     pos: 5.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 147
   type: CableHV
   components:
   - parent: 0
     pos: 6.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 148
   type: SalternSubstation
   components:
   - parent: 0
     pos: 3.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 149
   type: SalternApc
   components:
   - parent: 0
     pos: 3.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 150
   type: CableApcExtension
   components:
   - parent: 0
     pos: 3.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 151
   type: CableApcExtension
   components:
   - parent: 0
     pos: 3.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 152
   type: CableApcExtension
   components:
   - parent: 0
     pos: 2.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 153
   type: CableApcExtension
   components:
   - parent: 0
     pos: 2.5,15.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 154
   type: CableApcExtension
   components:
   - parent: 0
     pos: 2.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 155
   type: SalternGenerator
   components:
   - parent: 0
     pos: 0.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 156
   type: SalternGenerator
   components:
   - parent: 0
     pos: 6.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 157
   type: SalternGenerator
   components:
   - parent: 0
     pos: 5.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 158
   type: SalternGenerator
   components:
   - parent: 0
     pos: 1.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 159
   type: CableHV
   components:
   - parent: 0
     pos: 0.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 160
   type: CableHV
   components:
   - parent: 0
     pos: 0.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 161
   type: CableHV
   components:
   - parent: 0
     pos: 6.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 162
   type: CableHV
   components:
   - parent: 0
     pos: 6.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 163
   type: CableHV
   components:
   - parent: 0
     pos: 6.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 164
   type: CableHV
   components:
   - parent: 0
     pos: 0.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 165
   type: CableHV
   components:
   - parent: 0
     pos: 0.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 166
   type: CableHV
   components:
   - parent: 0
     pos: 1.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 167
   type: CableHV
   components:
   - parent: 0
     pos: 6.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 168
   type: CableHV
   components:
   - parent: 0
     pos: 5.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 169
   type: SalternSubstation
   components:
   - parent: 0
     pos: 1.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 170
   type: SalternSubstation
   components:
   - parent: 0
     pos: 0.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 171
   type: SalternSubstation
   components:
   - parent: 0
     pos: 5.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 172
   type: SalternSubstation
   components:
   - parent: 0
     pos: 6.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 173
   type: SalternGenerator
   components:
   - parent: 0
     pos: 0.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 174
   type: SalternGenerator
   components:
   - parent: 0
     pos: 0.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 175
   type: SalternGenerator
   components:
   - parent: 0
     pos: 0.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 176
   type: SalternGenerator
   components:
   - parent: 0
     pos: 6.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 177
   type: SalternGenerator
   components:
   - parent: 0
     pos: 6.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 178
   type: SalternGenerator
   components:
   - parent: 0
     pos: 6.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 179
   type: CableMV
   components:
   - parent: 0
     pos: 3.5,6.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 180
   type: CableMV
   components:
   - parent: 0
     pos: 3.5,7.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 181
   type: CableMV
   components:
   - parent: 0
     pos: 3.5,8.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 182
   type: CableMV
   components:
   - parent: 0
     pos: 3.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 183
   type: CableMV
   components:
   - parent: 0
     pos: 3.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 184
   type: CableMV
   components:
   - parent: 0
     pos: 2.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 185
   type: CableMV
   components:
   - parent: 0
     pos: 4.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 186
   type: CableMV
   components:
   - parent: 0
     pos: 5.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 187
   type: CableMV
   components:
   - parent: 0
     pos: 6.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 188
   type: CableMV
   components:
   - parent: 0
     pos: 1.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 189
   type: CableMV
   components:
   - parent: 0
     pos: 0.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 190
   type: WallReinforced
   components:
   - parent: 0
     pos: 3.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 191
   type: SpawnPointObserver
   components:
   - parent: 0
     pos: 2.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 192
   type: SpawnPointLatejoin
   components:
   - parent: 0
     pos: 2.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 193
   type: SpawnPointAssistant
   components:
   - parent: 0
     pos: 2.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 194
   type: SpawnPointChiefEngineer
   components:
   - parent: 0
     pos: 2.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 195
   type: SpawnPointStationEngineer
   components:
   - parent: 0
     pos: 2.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 196
   type: WallReinforced
   components:
   - parent: 0
     pos: 4.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 197
   type: WallReinforced
   components:
   - parent: 0
     pos: 5.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 198
   type: WallReinforced
   components:
   - parent: 0
     pos: 6.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 199
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 200
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 201
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,15.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 202
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 203
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 204
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 205
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 206
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 207
   type: WallReinforced
   components:
   - parent: 0
     pos: 7.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 208
   type: WallReinforced
   components:
   - parent: 0
     pos: 1.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 209
   type: WallReinforced
   components:
   - parent: 0
     pos: 2.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 210
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 211
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,10.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 212
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,11.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 213
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,12.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 214
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,13.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 215
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,14.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 216
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,15.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 217
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 218
   type: WallReinforced
   components:
   - parent: 0
     pos: -0.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 219
   type: WallReinforced
   components:
   - parent: 0
     pos: 0.5,17.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 220
   type: LowWall
   components:
   - parent: 0
     pos: 6.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 221
   type: LowWall
   components:
   - parent: 0
     pos: 4.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 222
   type: LowWall
   components:
   - parent: 0
     pos: 5.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 223
   type: LowWall
   components:
   - parent: 0
     pos: 3.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 224
   type: LowWall
   components:
   - parent: 0
     pos: 2.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 225
   type: LowWall
   components:
   - parent: 0
     pos: 1.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 226
   type: LowWall
   components:
   - parent: 0
     pos: 0.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 227
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 0.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 228
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 1.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 229
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 2.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 230
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 3.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 231
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 4.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 232
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 5.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 233
   type: ReinforcedWindow
   components:
   - parent: 0
     pos: 6.5,9.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 234
   type: TableGlass
   components:
   - parent: 0
     pos: 2.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 235
-  type: Paper
+  type: PaperWritten
   components:
   - parent: 0
     pos: 2.3824902,16.604946
-    rot: -1.5707963267948966 rad
     type: Transform
+  - type: Paper
+    content: |
+      Singularity Station Instruction Manual
+      1. ./Content.Server --cvar game.map=Maps/Test/singularity.yml
+      2. Join
+      3. Enter "startsingularityengine" in console
+      4. Wait for bugs
+      User Notes:
 - uid: 236
   type: Pen
   components:
   - parent: 0
     pos: 2.6949902,16.667446
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 237
   type: Poweredlight
   components:
   - parent: 0
     pos: 1.5,17
-    rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -1996,7 +1884,6 @@ entities:
   components:
   - parent: 0
     pos: 5.5,17
-    rot: -1.5707963267948966 rad
     type: Transform
   - powerLoad: 0
     type: ApcPowerReceiver
@@ -2008,20 +1895,29 @@ entities:
   components:
   - parent: 0
     pos: 4.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 240
   type: CableApcExtension
   components:
   - parent: 0
     pos: 5.5,16.5
-    rot: -1.5707963267948966 rad
     type: Transform
 - uid: 241
   type: CableApcExtension
   components:
   - parent: 0
     pos: 1.5,16.5
-    rot: -1.5707963267948966 rad
+    type: Transform
+- uid: 242
+  type: CableMV
+  components:
+  - parent: 0
+    pos: 3.5,17.5
+    type: Transform
+- uid: 243
+  type: CableMV
+  components:
+  - parent: 0
+    pos: 3.5,16.5
     type: Transform
 ...

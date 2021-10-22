@@ -20,9 +20,9 @@ namespace Content.Server.Body
 
         private void OnRelayMoveInput(EntityUid uid, BodyComponent component, RelayMoveInputEvent args)
         {
-            if (ComponentManager.TryGetComponent<IMobStateComponent>(uid, out var mobState) &&
+            if (EntityManager.TryGetComponent<IMobStateComponent>(uid, out var mobState) &&
                 mobState.IsDead() &&
-                ComponentManager.TryGetComponent<MindComponent>(uid, out var mind) &&
+                EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
                 mind.HasMind)
             {
                 _ticker.OnGhostAttempt(mind.Mind!, true);

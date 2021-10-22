@@ -20,7 +20,7 @@ namespace Content.Server.Radiation
         [Dependency] private readonly IRobustRandom _random = default!;
 
         private float _duration;
-        private float _radsPerSecond = 40f;
+        private float _radsPerSecond = 8f;
         private float _range = 5f;
         private TimeSpan _endTime;
         private bool _draw = true;
