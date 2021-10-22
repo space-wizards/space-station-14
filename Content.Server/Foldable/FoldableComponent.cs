@@ -16,7 +16,7 @@ namespace Content.Server.Foldable
         public override string Name => "Foldable";
 
         [ViewVariables]
-        public bool isFolded = false;
+        public bool IsFolded = false;
 
         public bool CanBeFolded => !Owner.IsInContainer();
     }

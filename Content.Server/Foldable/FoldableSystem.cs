@@ -41,7 +41,7 @@ namespace Content.Server.Foldable
 
         private bool TryToggleFold(FoldableComponent comp)
         {
-            return TrySetFolded(comp, !comp.isFolded);
+            return TrySetFolded(comp, !comp.IsFolded);
         }
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Content.Server.Foldable
         /// <returns>True if successful</returns>
         private bool TrySetFolded(FoldableComponent comp, bool state)
         {
-            if (state == comp.isFolded)
+            if (state == comp.IsFolded)
                 return false;
 
             if (comp.Owner.IsInContainer())
@@ -77,15 +77,15 @@ namespace Content.Server.Foldable
         /// <param name="folded">If true, the component will become folded, else unfolded</param>
         private void SetFolded(FoldableComponent component, bool folded)
         {
-            component.isFolded = folded;
+            component.IsFolded = folded;
 
             // You can't buckle an entity to a folded object
             if (component.Owner.TryGetComponent(out StrapComponent? strap))
-                strap.Enabled = !component.isFolded;
+                strap.Enabled = !component.IsFolded;
 
             // A folded object is collision-less
             if (component.Owner.TryGetComponent(out PhysicsComponent? physicsComponent))
-                physicsComponent.CanCollide = !component.isFolded;
+                physicsComponent.CanCollide = !component.IsFolded;
 
             // Update visuals only if the value has changed
             if (component.Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -167,7 +167,7 @@ namespace Content.Server.Foldable
         private void OnPickedUpAttempt(EntityUid uid, FoldableComponent component, PickedUpAttemptEvent args)
         {
             if (args.Cancelled) return;
-            if (!component.isFolded)
+            if (!component.IsFolded)
                 args.Cancel();
         }
 
@@ -183,11 +183,11 @@ namespace Content.Server.Foldable
             Verb verb = new()
             {
                 Act = () => TryToggleFold(component),
-                Text = component.isFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
+                Text = component.IsFolded ? Loc.GetString("unfold-verb") : Loc.GetString("fold-verb"),
                 IconTexture = "/Textures/Interface/VerbIcons/fold.svg.192dpi.png",
 
                 // If the object is unfolded and they click it, they want to fold it, if it's folded, they want to pick it up
-                Priority = component.isFolded ? 0 : 2
+                Priority = component.IsFolded ? 0 : 2
             };
 
             args.Verbs.Add(verb);
