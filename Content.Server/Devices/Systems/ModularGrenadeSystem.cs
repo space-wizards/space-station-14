@@ -49,13 +49,13 @@ namespace Content.Server.Devices.Systems
 
             if (!owner.TryGetComponent(out ContainerManagerComponent? containerManager))
             {
-                Logger.Warning($"Constructable Grenade entity {owner} did not have a container manager! Aborting trigger!");
+                Logger.Warning($"Modular Grenade entity {owner} did not have a container manager! Aborting trigger!");
                 return false;
             }
 
             if (!containerManager.TryGetContainer(ModularGrenadeComponent.TriggerContainer, out var triggerContainer))
             {
-                Logger.Warning($"Constructable Grenade entity {owner} did not have the '{ModularGrenadeComponent.TriggerContainer}' container! Aborting trigger!");
+                Logger.Warning($"Modular Grenade entity {owner} did not have the '{ModularGrenadeComponent.TriggerContainer}' container! Aborting trigger!");
                 return false;
             }
 
@@ -101,7 +101,7 @@ namespace Content.Server.Devices.Systems
             _triggerSystem.Trigger(bombContainer.ContainedEntities[0]);
 
             //always remove the grenade after the payload is triggered.
-            owner.Delete();
+            owner.QueueDelete();
         }
     }
 }
