@@ -219,11 +219,11 @@ namespace Content.Server.Light.Components
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<ApcPowerReceiverComponent>();
+            powerReceiver.Load = (LightBulb != null && _on && LightBulb.State == LightBulbState.Normal) ? LightBulb.PowerUse : 0;
 
             if (LightBulb == null) // No light bulb.
             {
                 SetLight(false);
-                powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
@@ -231,7 +231,6 @@ namespace Content.Server.Light.Components
             switch (LightBulb.State)
             {
                 case LightBulbState.Normal:
-                    powerReceiver.Load = LightBulb.PowerUse;
                     if (powerReceiver.Powered && _on)
                     {
                         SetLight(true, LightBulb.Color);
