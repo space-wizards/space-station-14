@@ -16,7 +16,7 @@
               amount: 2
               doAfter: 2
 
-        - to: reinforcePlasmaWindow
+        - to: reinforcedPlasmaWindow
           steps:
             - material: ReinforcedPlasmaGlass
               amount: 2
