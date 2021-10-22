@@ -34,4 +34,4 @@
     base: rpwindow
   - type: Construction
     graph: window
-    node: reinforcedplasmaWindow
+    node: reinforcedPlasmaWindow
