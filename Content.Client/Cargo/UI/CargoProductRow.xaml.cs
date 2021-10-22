@@ -9,10 +9,6 @@ namespace Content.Client.Cargo.UI
     public partial class CargoProductRow : PanelContainer
     {
         public CargoProductPrototype? Product { get; set; }
-        public TextureRect Icon => IconProtected;
-        public Button MainButton => MainButtonProtected;
-        public Label ProductName => ProductNameProtected;
-        public Label PointCost => PointCostProtected;
 
         public CargoProductRow()
         {

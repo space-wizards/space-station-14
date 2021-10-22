@@ -25,8 +25,6 @@ namespace Content.Client.Cargo.UI
         public event Action<ButtonEventArgs>? OnOrderApproved;
         public event Action<ButtonEventArgs>? OnOrderCanceled;
 
-        public Button CallShuttleButton => CallShuttleButtonProtected;
-
         private readonly List<string> _categoryStrings = new();
         private string? _category;
 

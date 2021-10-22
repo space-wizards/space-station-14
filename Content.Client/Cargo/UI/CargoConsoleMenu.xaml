@@ -2,7 +2,7 @@
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
             SetSize="400 600"
             MinSize="400 600">
-    <BoxContainer Orientation="Vertical" Name="rows"> <!-- TODO: remove name -->
+    <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'cargo-console-menu-account-name-label'}"
                    StyleClasses="LabelKeyText" />
@@ -28,7 +28,8 @@
                    Text="0/20" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
-            <Button Name="CallShuttleButtonProtected"
+            <Button Name="CallShuttleButton"
+                    Access="Public"
                     Text="{Loc 'cargo-console-menu-call-shuttle-button'}"
                     TextAlign="Center"
                     HorizontalExpand="True"/>
