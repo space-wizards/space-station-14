@@ -4,6 +4,7 @@
     <BoxContainer Orientation="Vertical">
         <RichTextLabel Name="Label" />
         <LineEdit Name="Input"
+                  Access="Public"
                   Visible="False" />
     </BoxContainer>
 </SS14Window>

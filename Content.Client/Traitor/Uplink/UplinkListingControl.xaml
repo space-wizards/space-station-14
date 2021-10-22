@@ -5,6 +5,7 @@
             <Label Name="UplinkItemName"
                    HorizontalExpand="True"/>
             <Button Name="UplinkItemBuyButton"
+                    Access="Public"
                     HorizontalAlignment="Right"
                     MinWidth="64"/>
         </BoxContainer>

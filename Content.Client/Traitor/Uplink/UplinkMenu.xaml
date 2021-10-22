@@ -9,6 +9,7 @@
             <BoxContainer Orientation="Horizontal"
                           Margin="4 4 4 4">
                 <RichTextLabel Name="BalanceInfo"
+                               Access="Public"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
             </BoxContainer>

@@ -3,6 +3,7 @@
             SetSize="250 100">
     <BoxContainer Orientation="Vertical">
         <Button Name="ScanButton"
+                Access="Public"
                 Text="{Loc 'medical-scanner-window-save-button-text'}" />
         <Label Name="Diagnostics" />
     </BoxContainer>
