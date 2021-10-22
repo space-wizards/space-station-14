@@ -13,9 +13,9 @@ namespace Content.Server.Electrocution
     {
         public override string Name => "Electrocution";
 
-        [DataField("time_left")] public float TimeLeft { get; set; }
+        [DataField("timeLeft")] public float TimeLeft { get; set; }
         [DataField("electrocuting")] public EntityUid Electrocuting { get; set; }
-        [DataField("accum_damage")] public float AccumulatedDamage { get; set; }
+        [DataField("accumDamage")] public float AccumulatedDamage { get; set; }
 
     }
 }
