@@ -15,16 +15,6 @@ namespace Content.Client.Lobby.UI
     [GenerateTypedNameReferences]
     internal sealed partial class LobbyGui : Control
     {
-        public Label ServerName => CServerName;
-        public Label StartTime => CStartTime;
-        public Button ReadyButton => CReadyButton;
-        public Button ObserveButton => CObserveButton;
-        public Button OptionsButton => COptionsButton;
-        public Button LeaveButton => CLeaveButton;
-        public ChatBox Chat => CChat;
-        public BoxContainer VoteContainer => CVoteContainer;
-        public LobbyPlayerList OnlinePlayerList => COnlinePlayerList;
-        public ServerInfo ServerInfo => CServerInfo;
         public LobbyCharacterPreviewPanel CharacterPreview { get; }
 
         public LobbyGui(IEntityManager entityManager,
@@ -42,7 +32,7 @@ namespace Content.Client.Lobby.UI
                 HorizontalAlignment = HAlignment.Left
             };
 
-            CLeftPanelContainer.AddChild(CharacterPreview);
+            LeftPanelContainer.AddChild(CharacterPreview);
             CharacterPreview.SetPositionFirst();
         }
     }

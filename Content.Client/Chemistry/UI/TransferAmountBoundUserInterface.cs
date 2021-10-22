@@ -16,9 +16,9 @@ namespace Content.Client.Chemistry.UI
             base.Open();
             _window = new TransferAmountWindow();
 
-            _window.applyButton.OnPressed += _ =>
+            _window.ApplyButton.OnPressed += _ =>
             {
-                if (int.TryParse(_window.amountLineEdit.Text, out var i))
+                if (int.TryParse(_window.AmountLineEdit.Text, out var i))
                 {
                     SendMessage(new TransferAmountSetValueMessage(ReagentUnit.New(i)));
                     _window.Close();

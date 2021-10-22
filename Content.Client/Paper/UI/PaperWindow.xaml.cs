@@ -10,8 +10,6 @@ namespace Content.Client.Paper.UI
     [GenerateTypedNameReferences]
     public partial class PaperWindow : SS14Window
     {
-        public LineEdit Input => InputProtected;
-
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);

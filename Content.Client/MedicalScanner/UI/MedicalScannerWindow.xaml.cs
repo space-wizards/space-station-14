@@ -17,8 +17,6 @@ namespace Content.Client.MedicalScanner.UI
     [GenerateTypedNameReferences]
     public partial class MedicalScannerWindow : SS14Window
     {
-        public Button ScanButton => ScanButtonProtected;
-
         public MedicalScannerWindow()
         {
             RobustXamlLoader.Load(this);

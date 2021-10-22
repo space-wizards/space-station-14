@@ -16,7 +16,6 @@ namespace Content.Client.Traitor.Uplink
     {
         private readonly IPrototypeManager _prototypeManager;
 
-        public RichTextLabel BalanceInfo => BalanceInfoProtected;
         public event Action<BaseButton.ButtonEventArgs, UplinkListingData>? OnListingButtonPressed;
         public event Action<BaseButton.ButtonEventArgs, UplinkCategory>? OnCategoryButtonPressed;
 

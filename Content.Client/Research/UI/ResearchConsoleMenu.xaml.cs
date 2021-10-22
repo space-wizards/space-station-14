@@ -21,10 +21,6 @@ namespace Content.Client.Research.UI
         private readonly List<TechnologyPrototype> _unlockableTechnologyPrototypes = new();
         private readonly List<TechnologyPrototype> _futureTechnologyPrototypes = new();
 
-        public Button UnlockButton => UnlockButtonProtected;
-        public Button ServerSelectionButton => ServerSelectionButtonProtected;
-        public Button ServerSyncButton => ServerSyncButtonProtected;
-
         public TechnologyPrototype? TechnologySelected;
 
         public ResearchConsoleMenu(ResearchConsoleBoundUserInterface owner)

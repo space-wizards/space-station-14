@@ -8,7 +8,7 @@
                       VerticalExpand="True">
             <BoxContainer Orientation="Horizontal"
                           Margin="4 4 4 4">
-                <RichTextLabel Name="BalanceInfoProtected"
+                <RichTextLabel Name="BalanceInfo"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
             </BoxContainer>

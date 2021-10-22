@@ -20,7 +20,7 @@ namespace Content.Client.Construction.UI
         // It isn't optimal to expose UI controls like this, but the UI control design is
         // questionable so it can't be helped.
         string[] Categories { get; set; }
-        OptionButton CategoryButton { get; }
+        OptionButton Category { get; }
 
         bool EraseButtonPressed { get; set; }
         bool BuildButtonPressed { get; set; }
@@ -63,18 +63,11 @@ namespace Content.Client.Construction.UI
 
         public string[] Categories { get; set; } = Array.Empty<string>();
 
-        public OptionButton CategoryButton => Category;
-
         public bool EraseButtonPressed
         {
             get => EraseButton.Pressed;
             set => EraseButton.Pressed = value;
         }
-
-        /// <inheritdoc />
-        public ItemList Recipes => RecipesList;
-
-        public ItemList RecipeStepList => StepList;
 
         public ConstructionMenu()
         {
@@ -86,8 +79,8 @@ namespace Content.Client.Construction.UI
             Title = Loc.GetString("construction-menu-title");
 
             BuildButton.Text = Loc.GetString("construction-menu-place-ghost");
-            RecipesList.OnItemSelected += obj => RecipeSelected?.Invoke(this, obj.ItemList[obj.ItemIndex]);
-            RecipesList.OnItemDeselected += _ => RecipeSelected?.Invoke(this, null);
+            Recipes.OnItemSelected += obj => RecipeSelected?.Invoke(this, obj.ItemList[obj.ItemIndex]);
+            Recipes.OnItemDeselected += _ => RecipeSelected?.Invoke(this, null);
 
             SearchBar.OnTextChanged += _ => PopulateRecipes?.Invoke(this, (SearchBar.Text, Categories[Category.SelectedId]));
             Category.OnItemSelected += obj =>
@@ -132,7 +125,7 @@ namespace Content.Client.Construction.UI
             TargetName.SetMessage(string.Empty);
             TargetDesc.SetMessage(string.Empty);
             TargetTexture.Texture = null;
-            StepList.Clear();
+            RecipeStepList.Clear();
         }
     }
 }

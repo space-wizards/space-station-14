@@ -19,10 +19,6 @@ namespace Content.Client.Disposal.UI
     [GenerateTypedNameReferences]
     public partial class DisposalUnitWindow : SS14Window
     {
-        public Button Engage => EngageProtected;
-        public Button Eject => EjectProtected;
-        public Button Power => PowerProtected;
-
         public DisposalUnitWindow()
         {
             IoCManager.InjectDependencies(this);

@@ -7,9 +7,6 @@ namespace Content.Client.Kitchen.UI
     public partial class LabelledContentBox : BoxContainer
     {
         public string? LabelText { get => Label.Text; set => Label.Text = value; }
-        public string? ButtonText { get => Button.Text; set => Button.Text = value; }
-
-        public ItemList BoxContents => ItemList;
-        public Button EjectButton => Button;
+        public string? ButtonText { get => EjectButton.Text; set => EjectButton.Text = value; }
     }
 }

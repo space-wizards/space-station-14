@@ -3,7 +3,7 @@
             SetSize="300 300">
     <BoxContainer Orientation="Vertical">
         <RichTextLabel Name="Label" />
-        <LineEdit Name="InputProtected"
+        <LineEdit Name="Input"
                   Visible="False" />
     </BoxContainer>
 </SS14Window>

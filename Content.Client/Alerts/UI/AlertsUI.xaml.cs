@@ -18,8 +18,6 @@ namespace Content.Client.Alerts.UI
 
         public const float ChatSeparation = 38f;
 
-        public GridContainer Grid => AlertContainer;
-
         public AlertsUI()
         {
             IoCManager.InjectDependencies(this);

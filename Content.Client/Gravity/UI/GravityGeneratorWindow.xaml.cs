@@ -13,8 +13,6 @@ namespace Content.Client.Gravity.UI
     {
         private readonly GravityGeneratorBoundUserInterface _owner;
 
-        public Button Switch => SwitchProtected;
-
         public GravityGeneratorWindow(GravityGeneratorBoundUserInterface ui)
         {
             RobustXamlLoader.Load(this);

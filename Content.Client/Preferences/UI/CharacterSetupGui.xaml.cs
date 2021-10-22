@@ -29,14 +29,8 @@ namespace Content.Client.Preferences.UI
     {
         private readonly IClientPreferencesManager _preferencesManager;
         private readonly IEntityManager _entityManager;
-        private PanelContainer _backgroundPanel => CBackgroundPanel;
-        private BoxContainer _charactersVBox => CCharacters;
-        private Button _createNewCharacterButton;
-        private HumanoidProfileEditor _humanoidProfileEditor;
-        private BoxContainer _humanoidProfileEditorContainer => CCharEditor;
-        public Button CloseButton => CCloseButton;
-        public Button SaveButton => CSaveButton;
-        public Button RulesButton => CRulesButton;
+        private readonly Button _createNewCharacterButton;
+        private readonly HumanoidProfileEditor _humanoidProfileEditor;
 
         public CharacterSetupGui(
             IEntityManager entityManager,
@@ -56,7 +50,7 @@ namespace Content.Client.Preferences.UI
             };
             back.SetPatchMargin(StyleBox.Margin.All, 10);
 
-            _backgroundPanel.PanelOverride = back;
+            BackgroundPanel.PanelOverride = back;
 
             _createNewCharacterButton = new Button
             {
@@ -71,7 +65,7 @@ namespace Content.Client.Preferences.UI
 
             _humanoidProfileEditor = new HumanoidProfileEditor(preferencesManager, prototypeManager, entityManager);
             _humanoidProfileEditor.OnProfileChanged += ProfileChanged;
-            _humanoidProfileEditorContainer.AddChild(_humanoidProfileEditor);
+            CharEditor.AddChild(_humanoidProfileEditor);
 
             UpdateUI();
 
@@ -100,7 +94,7 @@ namespace Content.Client.Preferences.UI
         {
             var numberOfFullSlots = 0;
             var characterButtonsGroup = new ButtonGroup();
-            _charactersVBox.RemoveAllChildren();
+            Characters.RemoveAllChildren();
 
             if (!_preferencesManager.ServerDataLoaded)
             {
@@ -123,7 +117,7 @@ namespace Content.Client.Preferences.UI
                     _preferencesManager,
                     characterButtonsGroup,
                     character);
-                _charactersVBox.AddChild(characterPickerButton);
+                Characters.AddChild(characterPickerButton);
 
                 var characterIndexCopy = slot;
                 characterPickerButton.OnPressed += args =>
@@ -139,7 +133,7 @@ namespace Content.Client.Preferences.UI
 
             _createNewCharacterButton.Disabled =
                 numberOfFullSlots >= _preferencesManager.Settings.MaxCharacterSlots;
-            _charactersVBox.AddChild(_createNewCharacterButton);
+            Characters.AddChild(_createNewCharacterButton);
         }
 
         private class CharacterPickerButton : ContainerButton

@@ -8,9 +8,6 @@ namespace Content.Client.Chemistry.UI
     [GenerateTypedNameReferences]
     public partial class TransferAmountWindow : SS14Window
     {
-        public Button applyButton => ApplyButton;
-        public LineEdit amountLineEdit => AmountLineEdit;
-
         public TransferAmountWindow()
         {
             RobustXamlLoader.Load(this);
