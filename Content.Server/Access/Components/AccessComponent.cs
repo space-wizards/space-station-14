@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Content.Server.Access.Systems;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -9,22 +11,13 @@ namespace Content.Server.Access.Components
     ///     Simple mutable access provider found on ID cards and such.
     /// </summary>
     [RegisterComponent]
-    [ComponentReference(typeof(IAccess))]
-    public class AccessComponent : Component, IAccess
+    [Friend(typeof(AccessSystem))]
+    public class AccessComponent : Component
     {
         public override string Name => "Access";
 
         [DataField("tags")]
         [ViewVariables]
-        private readonly HashSet<string> _tags = new();
-
-        public ISet<string> Tags => _tags;
-        public bool IsReadOnly => false;
-
-        public void SetTags(IEnumerable<string> newTags)
-        {
-            _tags.Clear();
-            _tags.UnionWith(newTags);
-        }
+        public HashSet<string> Tags = new();
     }
 }
