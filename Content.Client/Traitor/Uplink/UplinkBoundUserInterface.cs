@@ -1,23 +1,13 @@
-using Content.Client.Examine;
-using Content.Client.Message;
 using Content.Shared.Traitor.Uplink;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Traitor.Uplink
 {
     [UsedImplicitly]
     public class UplinkBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
         private UplinkMenu? _menu;
 
         public UplinkBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
@@ -26,7 +16,7 @@ namespace Content.Client.Traitor.Uplink
 
         protected override void Open()
         {
-            _menu = new UplinkMenu(_prototypeManager);
+            _menu = new UplinkMenu();
             _menu.OpenCentered();
             _menu.OnClose += Close;
 

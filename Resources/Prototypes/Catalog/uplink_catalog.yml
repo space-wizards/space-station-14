@@ -7,7 +7,6 @@
   listingName: Clarissa
   description: A small, easily concealable, but somewhat underpowered gun. Use pistol magazines (.35 auto).
   price: 6
-  icon: /Textures/Objects/Weapons/Guns/Pistols/clarissa.rsi/icon.png
 
 - type: uplinkListing
   id: UplinkRevolverInspector
@@ -25,7 +24,6 @@
   listingName: Mandella
   description: A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
   price: 8
-  icon: /Textures/Objects/Weapons/Guns/Pistols/mandella.rsi/icon.png
 
 #- type: uplinkListing
 #  id: UplinkCrossbowEnergyMini
