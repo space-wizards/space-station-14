@@ -1,4 +1,5 @@
 ﻿using Content.Shared.CCVar;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -45,7 +46,7 @@ namespace Content.Client.Hands
             var sys = EntitySystem.Get<HandsSystem>();
             var handEntity = sys.GetActiveHandEntity();
 
-            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow))
+            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow) || !handEntity.HasComponent<ISpriteComponent>())
                 return;
 
             var screen = args.ScreenHandle;
