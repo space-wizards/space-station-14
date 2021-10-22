@@ -1,6 +1,7 @@
 ﻿using Content.Shared.CCVar;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -52,7 +53,7 @@ namespace Content.Client.Hands
 
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
-                screen.DrawEntity(handEntity, halfSize, (1f, 1f), Direction.South);
+                screen.DrawEntity(handEntity, halfSize, new Vector2(1f, 1f) * _cfg.GetCVar(CVars.DisplayUIScale), Direction.South);
             }, Color.Transparent);
 
             var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);
