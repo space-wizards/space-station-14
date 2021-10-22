@@ -25,209 +25,24 @@ namespace Content.Client.Cargo.UI
         public event Action<ButtonEventArgs>? OnOrderApproved;
         public event Action<ButtonEventArgs>? OnOrderCanceled;
 
+        public Button CallShuttleButton => CallShuttleButtonProtected;
+
         private readonly List<string> _categoryStrings = new();
-
-        private Label _accountNameLabel { get; set; }
-        private Label _pointsLabel { get; set; }
-        private Label _shuttleStatusLabel { get; set; }
-        private Label _shuttleCapacityLabel { get; set; }
-        private BoxContainer _requests { get; set; }
-        private BoxContainer _orders { get; set; }
-        private OptionButton _categories { get; set; }
-        private LineEdit _searchBar { get; set; }
-
-        public BoxContainer Products { get; set; }
-        public Button CallShuttleButton { get; set; }
-        public Button PermissionsButton { get; set; }
-
-        private string? _category = null;
+        private string? _category;
 
         public CargoConsoleMenu(CargoConsoleBoundUserInterface owner)
         {
             RobustXamlLoader.Load(this);
-
-            SetSize = MinSize = (400, 600);
             IoCManager.InjectDependencies(this);
             Owner = owner;
 
-            if (Owner.RequestOnly)
-                Title = Loc.GetString("cargo-console-menu-request-only-title");
-            else
-                Title = Loc.GetString("cargo-console-menu-title");
-
-            var rows = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
-
-            var accountName = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            var accountNameLabel = new Label {
-                Text = Loc.GetString("cargo-console-menu-account-name-label") + " ",
-                StyleClasses = { StyleNano.StyleClassLabelKeyText }
-            };
-            _accountNameLabel = new Label {
-                Text = Loc.GetString("cargo-console-menu-account-name-none-text") //Owner.Bank.Account.Name
-            };
-            accountName.AddChild(accountNameLabel);
-            accountName.AddChild(_accountNameLabel);
-            rows.AddChild(accountName);
-
-            var points = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            var pointsLabel = new Label
-            {
-                Text = Loc.GetString("cargo-console-menu-points-label") + " ",
-                StyleClasses = { StyleNano.StyleClassLabelKeyText }
-            };
-            _pointsLabel = new Label
-            {
-                Text = "0" //Owner.Bank.Account.Balance.ToString()
-            };
-            points.AddChild(pointsLabel);
-            points.AddChild(_pointsLabel);
-            rows.AddChild(points);
-
-            var shuttleStatus = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            var shuttleStatusLabel = new Label
-            {
-                Text = Loc.GetString("cargo-console-menu-shuttle-status-label") + " ",
-                StyleClasses = { StyleNano.StyleClassLabelKeyText }
-            };
-            _shuttleStatusLabel = new Label
-            {
-                Text = Loc.GetString("cargo-console-menu-shuttle-status-away-text") // Shuttle.Status
-            };
-            shuttleStatus.AddChild(shuttleStatusLabel);
-            shuttleStatus.AddChild(_shuttleStatusLabel);
-            rows.AddChild(shuttleStatus);
-
-            var shuttleCapacity = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            var shuttleCapacityLabel = new Label
-            {
-                Text = Loc.GetString("cargo-console-menu-order-capacity-label") + " ",
-                StyleClasses = { StyleNano.StyleClassLabelKeyText }
-            };
-            _shuttleCapacityLabel = new Label
-            {
-                Text = $"{0}/{20}"
-            };
-            shuttleCapacity.AddChild(shuttleCapacityLabel);
-            shuttleCapacity.AddChild(_shuttleCapacityLabel);
-            rows.AddChild(shuttleCapacity);
-
-            var buttons = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            CallShuttleButton = new Button()
-            {
-                //Text = Loc.GetString("Call Shuttle"),
-                Text = Loc.GetString("cargo-console-menu-call-shuttle-button"), //Shuttle code pending
-                TextAlign = Label.AlignMode.Center,
-                HorizontalExpand = true
-            };
-            PermissionsButton = new Button()
-            {
-                Text = Loc.GetString("cargo-console-menu-permissions-button"),
-                TextAlign = Label.AlignMode.Center
-            };
-            buttons.AddChild(CallShuttleButton);
-            buttons.AddChild(PermissionsButton);
-            rows.AddChild(buttons);
-
-            var category = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal
-            };
-            _categories = new OptionButton
-            {
-                Prefix = Loc.GetString("cargo-console-menu-categories-label") + " ",
-                HorizontalExpand = true,
-                SizeFlagsStretchRatio = 1
-            };
-            _searchBar = new LineEdit
-            {
-                PlaceHolder = Loc.GetString("cargo-console-menu-search-bar-placeholder"),
-                HorizontalExpand = true,
-                SizeFlagsStretchRatio = 1
-            };
-            category.AddChild(_categories);
-            category.AddChild(_searchBar);
-            rows.AddChild(category);
-
-            var products = new ScrollContainer()
-            {
-                HorizontalExpand = true,
-                VerticalExpand = true,
-                SizeFlagsStretchRatio = 6
-            };
-            Products = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                HorizontalExpand = true,
-                VerticalExpand = true
-            };
-            products.AddChild(Products);
-            rows.AddChild(products);
-
-            var requestsAndOrders = new PanelContainer
-            {
-                VerticalExpand = true,
-                SizeFlagsStretchRatio = 6,
-                PanelOverride = new StyleBoxFlat { BackgroundColor = Color.Black }
-            };
-            var orderScrollBox = new ScrollContainer
-            {
-                VerticalExpand = true
-            };
-            var rAndOVBox = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
-            var requestsLabel = new Label { Text = Loc.GetString("cargo-console-menu-requests-label") };
-            _requests = new BoxContainer // replace with scroll box so that approval buttons can be added
-            {
-                Orientation = LayoutOrientation.Vertical,
-                StyleClasses = { "transparentItemList" },
-                VerticalExpand = true,
-                SizeFlagsStretchRatio = 1,
-            };
-            var ordersLabel = new Label { Text = Loc.GetString("cargo-console-menu-orders-label") };
-            _orders = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical,
-                StyleClasses = { "transparentItemList" },
-                VerticalExpand = true,
-                SizeFlagsStretchRatio = 1,
-            };
-            rAndOVBox.AddChild(requestsLabel);
-            rAndOVBox.AddChild(_requests);
-            rAndOVBox.AddChild(ordersLabel);
-            rAndOVBox.AddChild(_orders);
-            orderScrollBox.AddChild(rAndOVBox);
-            requestsAndOrders.AddChild(orderScrollBox);
-            rows.AddChild(requestsAndOrders);
-
-            rows.AddChild(new TextureButton
-            {
-                VerticalExpand = true,
-            });
-            Contents.AddChild(rows);
+            Title = Loc.GetString(Owner.RequestOnly
+                                      ? "cargo-console-menu-request-only-title"
+                                      : "cargo-console-menu-title");
 
             CallShuttleButton.OnPressed += OnCallShuttleButtonPressed;
-            _searchBar.OnTextChanged += OnSearchBarTextChanged;
-            _categories.OnItemSelected += OnCategoryItemSelected;
+            SearchBar.OnTextChanged += OnSearchBarTextChanged;
+            Categories.OnItemSelected += OnCategoryItemSelected;
         }
 
         private void OnCallShuttleButtonPressed(ButtonEventArgs args)
@@ -251,7 +66,7 @@ namespace Content.Client.Cargo.UI
                 _category = null;
             else
                 _category = _categoryStrings[id];
-            _categories.SelectId(id);
+            Categories.SelectId(id);
         }
 
         /// <summary>
@@ -266,7 +81,7 @@ namespace Content.Client.Cargo.UI
                 return;
             }
 
-            var search = _searchBar.Text.Trim().ToLowerInvariant();
+            var search = SearchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
             {
                 // if no search or category
@@ -296,7 +111,7 @@ namespace Content.Client.Cargo.UI
         public void PopulateCategories()
         {
             _categoryStrings.Clear();
-            _categories.Clear();
+            Categories.Clear();
 
             if (Owner.Market == null)
             {
@@ -305,7 +120,7 @@ namespace Content.Client.Cargo.UI
 
             _categoryStrings.Add(Loc.GetString("cargo-console-menu-populate-categories-all-text"));
 
-            var search = _searchBar.Text.Trim().ToLowerInvariant();
+            var search = SearchBar.Text.Trim().ToLowerInvariant();
             foreach (var prototype in Owner.Market.Products)
             {
                 if (!_categoryStrings.Contains(prototype.Category))
@@ -316,7 +131,7 @@ namespace Content.Client.Cargo.UI
             _categoryStrings.Sort();
             foreach (var str in _categoryStrings)
             {
-                _categories.AddItem(str);
+                Categories.AddItem(str);
             }
         }
 
@@ -325,8 +140,8 @@ namespace Content.Client.Cargo.UI
         /// </summary>
         public void PopulateOrders()
         {
-            _orders.RemoveAllChildren();
-            _requests.RemoveAllChildren();
+            Orders.RemoveAllChildren();
+            Requests.RemoveAllChildren();
 
             if (Owner.Orders == null || Owner.Market == null)
             {
@@ -355,7 +170,7 @@ namespace Content.Client.Cargo.UI
                 {
                     row.Approve.Visible = false;
                     row.Cancel.Visible = false;
-                    _orders.AddChild(row);
+                    Orders.AddChild(row);
                 }
                 else
                 {
@@ -363,7 +178,7 @@ namespace Content.Client.Cargo.UI
                         row.Approve.Visible = false;
                     else
                         row.Approve.OnPressed += (args) => { OnOrderApproved?.Invoke(args); };
-                    _requests.AddChild(row);
+                    Requests.AddChild(row);
                 }
             }
         }
@@ -377,13 +192,13 @@ namespace Content.Client.Cargo.UI
 
         public void UpdateCargoCapacity()
         {
-            _shuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
+            ShuttleCapacityLabel.Text = $"{Owner.ShuttleCapacity.CurrentCapacity}/{Owner.ShuttleCapacity.MaxCapacity}";
         }
 
         public void UpdateBankData()
         {
-            _accountNameLabel.Text = Owner.BankName;
-            _pointsLabel.Text = Owner.BankBalance.ToString();
+            AccountNameLabel.Text = Owner.BankName;
+            PointsLabel.Text = Owner.BankBalance.ToString();
         }
 
         /// <summary>
@@ -392,7 +207,7 @@ namespace Content.Client.Cargo.UI
         public void UpdateRequestOnly()
         {
             CallShuttleButton.Visible = !Owner.RequestOnly;
-            foreach (CargoOrderRow row in _requests.Children)
+            foreach (CargoOrderRow row in Requests.Children)
             {
                 row.Approve.Visible = !Owner.RequestOnly;
             }
