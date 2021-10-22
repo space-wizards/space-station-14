@@ -6,8 +6,7 @@ using Content.Server.Power.Components;
 
 namespace Content.Server.Power.NodeGroups
 {
-    public abstract class BaseNetConnectorNodeGroup<TNetConnector, TNetType> : BaseNodeGroup
-        where TNetConnector : BaseNetConnectorComponent<TNetType>
+    public abstract class BaseNetConnectorNodeGroup<TNetType> : BaseNodeGroup
     {
         public override void LoadNodes(List<Node> groupNodes)
         {
@@ -16,7 +15,7 @@ namespace Content.Server.Power.NodeGroups
             foreach (var node in groupNodes)
             {
                 var newNetConnectorComponents = node.Owner
-                    .GetAllComponents<TNetConnector>()
+                    .GetAllComponents<IBaseNetConnectorComponent<TNetType>>()
                     .Where(powerComp => (powerComp.NodeId == null || powerComp.NodeId == node.Name) &&
                                         (NodeGroupID) powerComp.Voltage == node.NodeGroupID)
                     .ToList();
@@ -28,6 +27,6 @@ namespace Content.Server.Power.NodeGroups
             }
         }
 
-        protected abstract void SetNetConnectorNet(TNetConnector netConnectorComponent);
+        protected abstract void SetNetConnectorNet(IBaseNetConnectorComponent<TNetType> netConnectorComponent);
     }
 }
