@@ -135,7 +135,7 @@
     - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite:  Structures/Windows/reinforced_plasma_window.rsi
+    sprite: Structures/Windows/reinforced_plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
