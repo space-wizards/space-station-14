@@ -30,6 +30,7 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: IconSmooth
     base: rpwindow
   - type: Construction
     graph: window
