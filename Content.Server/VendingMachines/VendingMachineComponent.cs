@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Advertise;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -191,7 +192,8 @@ namespace Content.Server.VendingMachines
         {
             if (Owner.TryGetComponent<AccessReader>(out var accessReader))
             {
-                if (sender == null || !accessReader.IsAllowed(sender))
+                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+                if (sender == null || !accessSystem.IsAllowed(accessReader, sender.Uid))
                 {
                     Owner.PopupMessageEveryone(Loc.GetString("vending-machine-component-try-eject-access-denied"));
                     Deny();

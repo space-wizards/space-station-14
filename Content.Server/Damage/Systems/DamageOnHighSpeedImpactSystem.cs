@@ -46,8 +46,8 @@ namespace Content.Server.Damage.Systems
 
             component.LastHit = _gameTiming.CurTime;
 
-            if (EntityManager.TryGetComponent(uid, out StunnableComponent? stun) && _robustRandom.Prob(component.StunChance))
-                _stunSystem.Stun(uid, TimeSpan.FromSeconds(component.StunSeconds), stun);
+            if (_robustRandom.Prob(component.StunChance))
+                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds));
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
             _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);

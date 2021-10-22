@@ -1,23 +1,39 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "booze_dispenser"
+      "name": "booze",
+      "directions": 4
     },
     {
-      "name": "industrial_dispenser"
+      "name": "soda",
+      "directions": 4
     },
     {
-      "name": "soda_dispenser"
+      "name": "industrial"
     },
     {
-      "name": "dispenser"
+      "name": "industrial-off"
+    },
+    {
+      "name": "industrial-panel"
+    },
+    {
+      "name": "industrial-working",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
     }
   ]
 }

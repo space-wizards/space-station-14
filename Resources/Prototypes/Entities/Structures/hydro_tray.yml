@@ -20,3 +20,23 @@
     drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: HydroponicsTrayMachineCircuitboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "HydroponicsTray"
+    LayoutId: HydroponicsTray
+

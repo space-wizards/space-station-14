@@ -58,6 +58,7 @@
     sprite: Clothing/Hands/Gloves/captain.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
+    HeatResistance: 1400
 
 - type: entity
   parent: ClothingHandsBase

@@ -40,7 +40,6 @@ namespace Content.Server.Buckle.Components
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
         [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
-        [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -130,11 +129,11 @@ namespace Content.Server.Buckle.Components
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
-                    EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                    EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
                     ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
-                    EntitySystem.Get<StandingStateSystem>().Down(Owner, false, false);
+                    EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid, false, false);
                     ownTransform.LocalRotation = Angle.Zero;
                     break;
             }
@@ -332,14 +331,14 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable is { KnockedDown: true }
+            if (Owner.HasComponent<KnockedDownComponent>()
                 || (_mobState?.IsIncapacitated() ?? false))
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
             }
             else
             {
-                EntitySystem.Get<StandingStateSystem>().Stand(Owner);
+                EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
             }
 
             _mobState?.CurrentState?.EnterState(Owner);

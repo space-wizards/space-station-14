@@ -52,6 +52,7 @@
   - type: Reactive
     reactions:
       - !type:AddToSolutionReaction
+        solution: soil
   - type: Appearance
     visuals:
       - type: PlantHolderVisualizer

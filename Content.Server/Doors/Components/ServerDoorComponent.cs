@@ -4,6 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction.Components;
@@ -311,12 +312,13 @@ namespace Content.Server.Doors.Components
             var doorSystem = EntitySystem.Get<DoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             return doorSystem.AccessType switch
             {
                 DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessSystem.IsAllowed(access, user.Uid),
                 DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
-                _ => access.IsAllowed(user)
+                _ => accessSystem.IsAllowed(access, user.Uid)
             };
         }
 
@@ -430,7 +432,8 @@ namespace Content.Server.Doors.Components
                 return true;
             }
 
-            return access.IsAllowed(user);
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            return accessSystem.IsAllowed(access, user.Uid);
         }
 
         /// <summary>
@@ -467,10 +470,9 @@ namespace Content.Server.Doors.Components
                 var broadPhaseSystem = EntitySystem.Get<SharedPhysicsSystem>();
 
                 // Use this version so we can ignore the CanCollide being false
-                foreach(var e in broadPhaseSystem.GetCollidingEntities(physicsComponent.Owner.Transform.MapID, physicsComponent.GetWorldAABB()))
+                foreach(var _ in broadPhaseSystem.GetCollidingEntities(physicsComponent, -0.015f))
                 {
-                    if (((physicsComponent.CollisionMask & e.CollisionLayer) | (e.CollisionMask & physicsComponent.CollisionLayer)) != 0
-                        && broadPhaseSystem.IntersectionPercent(physicsComponent, e) > 0.01f) return true;
+                    return true;
                 }
             }
             return false;
@@ -566,8 +568,7 @@ namespace Content.Server.Doors.Components
                 if (e.Owner.HasComponent<DamageableComponent>())
                     EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
-                if(e.Owner.TryGetComponent(out StunnableComponent? stun))
-                    EntitySystem.Get<StunSystem>().Paralyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime), stun);
+                EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));
             }
 
             // If we hit someone, open up after stun (opens right when stun ends)

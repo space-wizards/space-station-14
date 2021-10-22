@@ -1,0 +1,20 @@
+﻿# Status effect prototypes.
+# Holds no actual logic, just some basic data about the effect.
+
+- type: statusEffect
+  id: Stun
+  alert: Stun
+
+- type: statusEffect
+  id: KnockedDown
+  alert: Stun
+
+- type: statusEffect
+  id: SlowedDown
+
+- type: statusEffect
+  id: Jitter
+  alwaysAllowed: true
+
+- type: statusEffect
+  id: Stutter

@@ -4,6 +4,7 @@ using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.AI.Components;
 using Content.Server.AI.Pathfinding;
 using Content.Server.AI.Pathfinding.Pathfinders;
@@ -28,6 +29,7 @@ namespace Content.Server.AI.Steering
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPauseManager _pauseManager = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
         /// <summary>
         /// Whether we try to avoid non-blocking physics objects
@@ -423,7 +425,7 @@ namespace Content.Server.AI.Steering
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = AccessReader.FindAccessTags(entity);
+            var access = _accessReader.FindAccessTags(entity.Uid);
 
             var job = _pathfindingSystem.RequestPath(new PathfindingArgs(
                 entity.Uid,

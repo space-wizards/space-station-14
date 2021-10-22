@@ -17,11 +17,6 @@ namespace Content.Client.Atmos.Visualizers
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
             {
                 return;
