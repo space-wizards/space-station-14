@@ -1,4 +1,3 @@
-using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -8,7 +7,7 @@ namespace Content.Shared.Speech
     ///     Component required for entities to be able to speak.
     /// </summary>
     [RegisterComponent]
-    public class SharedSpeechComponent : Component, IActionBlocker
+    public class SharedSpeechComponent : Component
     {
         public override string Name => "Speech";
 
@@ -25,7 +24,5 @@ namespace Content.Shared.Speech
                 Dirty();
             }
         }
-
-        bool IActionBlocker.CanSpeak() => Enabled;
     }
 }
