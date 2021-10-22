@@ -71,7 +71,7 @@ namespace Content.Server.Administration.Commands.BQL
                                 skipNext = true;
                                 continue;
                             case '"':
-                                return new Tuple<string, Token>(inp[acc.Length..], new Token(TokenKind.String, acc));
+                                return new Tuple<string, Token>(inp[(acc.Length+2)..], new Token(TokenKind.String, acc));
                             default:
                                 acc += rune;
                                 continue;
@@ -80,16 +80,14 @@ namespace Content.Server.Administration.Commands.BQL
 
                     throw new Exception("Missing a \" somewhere.");
                 }
-                else
+
+                if (inp.Contains(" ") == false)
                 {
-                    if (inp.Contains(" ") == false)
-                    {
-                        return new Tuple<string, Token>("", new Token(TokenKind.String, inp));
-                    }
-                    var word = inp[..inp.IndexOf(" ", StringComparison.Ordinal)];
-                    var rem = inp[inp.IndexOf(" ", StringComparison.Ordinal)..];
-                    return new Tuple<string, Token>(rem, new Token(TokenKind.String, word));
+                    return new Tuple<string, Token>("", new Token(TokenKind.String, inp));
                 }
+                var word = inp[..inp.IndexOf(" ", StringComparison.Ordinal)];
+                var rem = inp[inp.IndexOf(" ", StringComparison.Ordinal)..];
+                return new Tuple<string, Token>(rem, new Token(TokenKind.String, word));
             }
         }
 
@@ -104,6 +102,7 @@ namespace Content.Server.Administration.Commands.BQL
             {
                 Token t;
                 (remainingQuery, t) = Token.ExtractOneToken(remainingQuery);
+
                 switch (t.kind)
                 {
                     case TokenKind.With:
@@ -156,7 +155,7 @@ namespace Content.Server.Administration.Commands.BQL
                     case TokenKind.Do:
                         return new Tuple<string, IEnumerable<IEntity>>(remainingQuery, entities);
                     default:
-                        throw new Exception("Unknown token called " + t.text);
+                        throw new Exception("Unknown token called " + t.text + ", which was parsed as a "+ t.kind.ToString());
                 }
 
                 if (remainingQuery.TrimStart() == "")
