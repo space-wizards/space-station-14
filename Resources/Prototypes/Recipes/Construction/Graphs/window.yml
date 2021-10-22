@@ -16,11 +16,11 @@
               amount: 2
               doAfter: 2
 
-        - to: reinforcedplasmaWindow
+        - to: reinforcedPlasmaWindow
           steps:
             - material: ReinforcedPlasmaGlass
               amount: 2
-              doAfter: 2
+              doAfter: 3
 
         - to: window
           steps:
@@ -81,7 +81,7 @@
             - tool: Anchoring
               doAfter: 3
 
-    - node: reinforcedplasmaWindow
+    - node: reinforcedPlasmaWindow
       entity: ReinforcedPlasmaWindow
       edges:
         - to: start
