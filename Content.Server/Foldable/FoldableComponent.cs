@@ -18,6 +18,6 @@ namespace Content.Server.Foldable
         [ViewVariables]
         public bool IsFolded = false;
 
-        public bool CanBeFolded => !Owner.IsInContainer();
+        public bool CanBeFolded = true;
     }
 }

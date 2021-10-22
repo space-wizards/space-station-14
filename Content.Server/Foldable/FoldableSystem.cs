@@ -78,6 +78,7 @@ namespace Content.Server.Foldable
         private void SetFolded(FoldableComponent component, bool folded)
         {
             component.IsFolded = folded;
+            component.CanBeFolded = !component.Owner.IsInContainer();
 
             // You can't buckle an entity to a folded object
             if (component.Owner.TryGetComponent(out StrapComponent? strap))
