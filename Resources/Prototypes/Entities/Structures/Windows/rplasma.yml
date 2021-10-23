@@ -8,7 +8,7 @@
     sprite: Structures/Windows/reinforced_plasma_window.rsi
   - type: Icon
     sprite: Structures/Windows/reinforced_plasma_window.rsi
-  - type: Damageable
+- type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
   - type: Destructible
