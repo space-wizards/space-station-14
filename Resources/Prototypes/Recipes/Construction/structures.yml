@@ -129,7 +129,7 @@
   graph: window
   startNode: start
   targetNode: reinforcedPlasmaWindow
-  category: Structuress
+  category: Structures
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile {}
