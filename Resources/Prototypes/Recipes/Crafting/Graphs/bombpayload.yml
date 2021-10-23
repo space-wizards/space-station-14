@@ -9,35 +9,27 @@
             - material: Plastic
               amount: 1
               doAfter: 3
-
     - node: emptyPayload
       entity: EmptyBombPayload
-
       edges:
         - to: chemPayloadHalfFull
           steps:
             - component: FitsInDispenser
               store: bombPayloadChemContainer1
               doAfter: 0.25
-
-
     - node: bombPayload
       entity: ExplosiveBombPayload
-
     - node: chemPayloadHalfFull
       entity: ChemicalBombPayload
-
       actions:
         - !type:SpriteStateChange
           state: "bombcore-chem-half-filled"
-
       edges:
         - to: chemPayloadFull
           steps:
             - component: FitsInDispenser
               store: bombPayloadChemContainer2
               doAfter: 0.25
-
     - node: chemPayloadFull
       actions:
         - !type:SpriteStateChange

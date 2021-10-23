@@ -28,6 +28,8 @@ namespace Content.Server.Devices.Systems
         //do not have dynamic detonation effects.
         //TODO: Add triggering explosive payloads when they're ready to be implemented.
 
+        //This currently ONLY handles chemical payloads. It will need touching up when explosive crafting
+        //becomes a thing.
         private void OnPayloadTriggered(EntityUid uid, BombPayloadComponent component, TriggerEvent args)
         {
             var owner = EntityManager.GetEntity(uid);

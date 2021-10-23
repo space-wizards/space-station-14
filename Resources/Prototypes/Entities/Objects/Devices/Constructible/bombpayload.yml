@@ -3,17 +3,17 @@
   parent: BaseItem
   id: EmptyBombPayload
   components:
-    - type: Sprite
-      sprite: Objects/Devices/bombpayload.rsi
-      state: bombcore-empty
-    - type: Construction
-      graph: BombPayloadGraph
-      node: emptyPayload
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 10
+  - type: Sprite
+    sprite: Objects/Devices/bombpayload.rsi
+    state: bombcore-empty
+  - type: Construction
+    graph: BombPayloadGraph
+    node: emptyPayload
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10
 
 
 - type: entity
@@ -47,15 +47,15 @@
   parent: BaseItem
   id: ChemicalBombPayload
   components:
-    - type: Sprite
-      sprite: Objects/Devices/bombpayload.rsi
-      state: bombcore-chem-armed
-    - type: BombPayload
-    - type: Construction
-      graph: BombPayloadGraph
-      node: chemPayloadFull
-    - type: Destructible
-      thresholds:
-        - trigger:
-            !type:DamageTrigger
-            damage: 10
+  - type: Sprite
+    sprite: Objects/Devices/bombpayload.rsi
+    state: bombcore-chem-armed
+  - type: BombPayload
+  - type: Construction
+    graph: BombPayloadGraph
+    node: chemPayloadFull
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 10

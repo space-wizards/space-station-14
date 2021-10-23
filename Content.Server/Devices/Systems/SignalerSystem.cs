@@ -124,15 +124,6 @@ namespace Content.Server.Devices.Systems
             }
         }
 
-        private void OnCanisterInteractHand(EntityUid uid, SharedSignalerComponent component, InteractHandEvent args)
-        {
-            if (!EntityManager.TryGetComponent<ActorComponent>(args.User.Uid, out var actorComponent))
-                return;
-
-            _userInterfaceSystem.TryOpen(uid, SignalerUiKey.Key, actorComponent.PlayerSession);
-            args.Handled = true;
-        }
-
         public void SetFrequency(EntityUid uid, int frequency, SharedSignalerComponent? signalerComponent = null,
             DeviceNetworkComponent? networkComponent = null)
         {

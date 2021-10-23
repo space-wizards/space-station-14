@@ -9,10 +9,8 @@
             - material: Steel
               amount: 1
               doAfter: 3
-
     - node: emptyCase
       entity: ModularGrenade
-
       edges:
         - to: caseWithTrigger
           steps:
@@ -23,19 +21,16 @@
 
             - tool: Screwing # As specified in the ToolQuality enum.
               doAfter: 1
-
     - node: caseWithTrigger
       actions:
         - !type:SpriteStateChange
           state: "chem-grenade-1"
-
       edges:
         - to: caseWithPayloadAndTrigger
           steps:
             - component: BombPayload
               store: bombPayload
               name: "Payload"
-
     - node: caseWithPayloadAndTrigger
       actions:
         - !type:SpriteStateChange
