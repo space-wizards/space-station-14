@@ -74,9 +74,11 @@ namespace Content.Server.Atmos.EntitySystems
                 var totalDamage = 0;
                 foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
                 {
-                    totalDamage += damageable.Damage.DamageDict[barotraumaDamageType];
+                    if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
+                        continue;
+                    totalDamage += damage;
                 }
-                if (totalDamage > barotrauma.MaxDamage)
+                if (totalDamage >= barotrauma.MaxDamage)
                     continue;
 
                 var uid = barotrauma.Owner.Uid;
