@@ -26,3 +26,26 @@
   - type: Tag
     tags:
       - IODevice
+
+- type: entity
+  parent: BaseItem
+  id: IoTimerItem
+  name: Timer
+  description: A configurable timer.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/timer.rsi
+    state: timer
+  - type: Clothing
+    QuickEquip: false
+    size: 5
+    Slots:
+      - Belt
+  - type: IoTimer
+  - type: UserInterface
+    interfaces:
+      - key: enum.IoTimerUiKey.Key
+        type: IoTimerBoundUserInterface
+  - type: Tag
+    tags:
+      - IODevice

@@ -1,0 +1,24 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            MinSize="280 100" Title="Timer">
+    <BoxContainer Name="InActiveContainer" Orientation="Vertical" SeparationOverride="10">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Duration" Align="Center" HorizontalExpand="True"/>
+            <SpinBox Name="TimerDuration" Align="Center" HorizontalExpand="True"/>
+        </BoxContainer>
+        <Button Name="SetDurationButton" Text="Set Duration"/>
+        <Button Name="StartTimerButton" Text="Start" HorizontalExpand="True"/>
+    </BoxContainer>
+    <BoxContainer Name="ActiveContainer" Orientation="Vertical" SeparationOverride="10" Visible="False">
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="Time Left:" Align="Center" HorizontalExpand="True"/>
+            <Label Name="TimeLeft" Text="0" Align="Center" HorizontalExpand="True"/>
+        </BoxContainer>
+         <ProgressBar Name="TimeLeftSlider" HorizontalExpand="True"/>
+        <BoxContainer Orientation="Horizontal">
+            <Button Name="PauseTimerButton" Text="Pause" HorizontalExpand="True"/>
+            <Button Name="ResetTimerButton" Text="Reset" HorizontalExpand="True"/>
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>
