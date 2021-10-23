@@ -76,7 +76,7 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
-    deviceNetId: 3
+    deviceNetId: Apc
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:
@@ -165,7 +165,7 @@
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
   - type: DeviceNetworkComponent
-    deviceNetId: 3
+    deviceNetId: Apc
   - type: ApcNetworkConnection
   - type: Appearance
     visuals:

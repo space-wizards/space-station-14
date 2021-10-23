@@ -1,18 +1,10 @@
 namespace Content.Server.DeviceNetwork
 {
     /// <summary>
-    /// A collection of utilities to help with using device networks
+    /// A collection of constants to help with using device networks
     /// </summary>
     public static class DeviceNetworkConstants
     {
-        public enum ConnectionType
-        {
-            Private,
-            Wired,
-            Wireless,
-            Apc
-        }
-
         /// <summary>
         /// Invalid address used for broadcasting
         /// </summary>

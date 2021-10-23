@@ -61,7 +61,7 @@
       node: lightSwitch
     - type: ExtensionCableReceiver
     - type: DeviceNetworkComponent
-      deviceNetId: 3
+      deviceNetId: Apc
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
   placement:
