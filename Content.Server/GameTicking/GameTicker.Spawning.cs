@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
+using Content.Server.CharacterAppearance.Components;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -19,6 +21,7 @@ using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -31,6 +34,8 @@ namespace Content.Server.GameTicking
     {
         private const string PlayerPrototypeName = "MobHuman";
         private const string ObserverPrototypeName = "MobObserver";
+
+        [Dependency] private readonly IdCardSystem _cardSystem = default!;
 
         [ViewVariables(VVAccess.ReadWrite)]
         private EntityCoordinates _spawnPoint;
@@ -228,8 +233,8 @@ namespace Content.Server.GameTicking
                 return;
 
             var card = pdaComponent.ContainedID;
-            card.FullName = characterName;
-            card.JobTitle = jobPrototype.Name;
+            _cardSystem.TryChangeFullName(card.Owner.Uid, characterName, card);
+            _cardSystem.TryChangeJobTitle(card.Owner.Uid, jobPrototype.Name, card);
 
             var access = card.Owner.GetComponent<AccessComponent>();
             var accessTags = access.Tags;
