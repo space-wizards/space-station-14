@@ -49,3 +49,26 @@
   - type: Tag
     tags:
       - IODevice
+
+- type: entity
+  parent: BaseItem
+  id: VoiceAnalyzer
+  name: Voice Analyzer
+  description: A configurable voice analyzer.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/voicerecorder.rsi
+    state: voice
+  - type: Clothing
+    QuickEquip: false
+    size: 5
+    Slots:
+      - Belt
+  - type: VoiceAnalyzer
+  - type: UserInterface
+    interfaces:
+      - key: enum.VoiceAnalyzerUiKey.Key
+        type: VoiceAnalyzerBoundUserInterface
+  - type: Tag
+    tags:
+      - IODevice

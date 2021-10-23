@@ -17,7 +17,7 @@ namespace Content.Server.Devices.Systems
     public class ModularGrenadeSystem : EntitySystem
     {
 
-        [Dependency] private TriggerSystem _triggerSystem = default!;
+        [Dependency] private readonly TriggerSystem _triggerSystem = default!;
         public override void Initialize()
         {
             SubscribeLocalEvent<ModularGrenadeComponent, IoDeviceOutputEvent>(OnOutputReceived);
@@ -84,13 +84,15 @@ namespace Content.Server.Devices.Systems
             if (!Resolve(uid, ref grenadeComponent, ref containerManagerComponent))
                 return;
 
+            var owner = EntityManager.GetEntity(uid);
+
             if (!containerManagerComponent.TryGetContainer(BombPayloadComponent.BombPayloadContainer,
                 out var bombContainer))
             {
+                owner.PopupMessageEveryone("*click*");
                 return;
             }
 
-            var owner = EntityManager.GetEntity(uid);
 
             if (bombContainer.ContainedEntities.Count <= 0)
             {
