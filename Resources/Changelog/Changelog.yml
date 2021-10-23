@@ -2648,3 +2648,9 @@ Entries:
   - {message: Fixed being spaced causing the player to gib, type: Fix}
   id: 472
   time: '2021-10-23T18:45:58.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added light switches that turn lights connected to the same apc on and
+      off., type: Add}
+  id: 473
+  time: '2021-10-23T23:23:19.0000000+00:00'
