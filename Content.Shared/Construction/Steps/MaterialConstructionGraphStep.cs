@@ -28,12 +28,12 @@ namespace Content.Shared.Construction.Steps
 
         public override bool EntityValid(IEntity entity)
         {
-            return entity.TryGetComponent(out SharedStackComponent? stack) && stack.StackTypeId.Equals(MaterialPrototypeId);
+            return entity.TryGetComponent(out SharedStackComponent? stack) && stack.StackTypeId.Equals(MaterialPrototypeId) && stack.Count >= Amount;
         }
 
         public bool EntityValid(IEntity entity, [NotNullWhen(true)] out SharedStackComponent? stack)
         {
-            if (entity.TryGetComponent(out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId))
+            if (entity.TryGetComponent(out SharedStackComponent? otherStack) && otherStack.StackTypeId.Equals(MaterialPrototypeId) && otherStack.Count >= Amount)
                 stack = otherStack;
             else
                 stack = null;

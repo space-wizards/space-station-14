@@ -1,10 +1,13 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Construction.Components;
+using Content.Server.DoAfter;
+using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -72,6 +75,9 @@ namespace Content.Server.Construction
                 return HandleResult.False;
             }
 
+            if (!CheckConditions(uid, edge.Conditions))
+                return HandleResult.False;
+
             if (HandleStep(uid, ev, step, out var user, construction)
                 is var handle and (HandleResult.False or HandleResult.DoAfter))
                 return handle;
@@ -81,6 +87,7 @@ namespace Content.Server.Construction
             if (construction.StepIndex >= edge.Steps.Count)
             {
                 // Edge finished!
+                PerformActions(uid, user, edge.Completed);
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
 
@@ -153,22 +160,51 @@ namespace Content.Server.Construction
 
                     // TODO: Sanity checks.
 
-                    if (doAfterState == DoAfterState.Completed)
-                        return HandleResult.True;
+                    if (doAfterState == DoAfterState.Cancelled)
+                        return HandleResult.False;
 
-                    switch (insertStep)
+                    var insert = interactUsing.Used;
+                    if(!insertStep.EntityValid(insert))
+                        return HandleResult.False;
+
+                    if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        case ArbitraryInsertConstructionGraphStep arbitraryInsertConstructionGraphStep:
-                        {
-                            break;
-                        }
-                        case MaterialConstructionGraphStep materialConstructionGraphStep:
-                        {
-                            break;
-                        }
+                        _doAfterSystem.DoAfter(
+                            new DoAfterEventArgs(interactUsing.User, step.DoAfter, default, interactUsing.Target)
+                            {
+                                BreakOnDamage = false,
+                                BreakOnStun = true,
+                                BreakOnTargetMove = true,
+                                BreakOnUserMove = true,
+                                NeedHand = true,
+                                BroadcastFinishedEvent = new ConstructionDoAfterComplete(ev),
+                                BroadcastCancelledEvent = new ConstructionDoAfterCancelled(ev)
+                            });
+
+                        return HandleResult.DoAfter;
                     }
 
-                    break;
+                    if (insertStep is MaterialConstructionGraphStep materialInsertStep)
+                    {
+                        if (_stackSystem.Split(insert.Uid, materialInsertStep.Amount, interactUsing.User.Transform.Coordinates) is not { } stack)
+                            return HandleResult.False;
+
+                        insert = stack;
+                    }
+
+                    if (string.IsNullOrEmpty(insertStep.Store))
+                    {
+                        insert.Delete();
+                    }
+                    else
+                    {
+                        var store = insertStep.Store;
+                        construction.Containers.Add(store);
+                        _containerSystem.EnsureContainer<Container>(uid, store)
+                            .Insert(insert);
+                    }
+
+                    return HandleResult.True;
                 }
 
                 case ToolConstructionGraphStep toolInsertStep:
@@ -204,6 +240,19 @@ namespace Content.Server.Construction
             return HandleResult.False;
         }
 
+        private bool CheckConditions(EntityUid uid, IEnumerable<IGraphCondition> conditions)
+        {
+            var entity = EntityManager.GetEntity(uid);
+
+            foreach (var condition in conditions)
+            {
+                if (!condition.Condition(entity))
+                    return false;
+            }
+
+            return true;
+        }
+
         private void PerformActions(EntityUid uid, EntityUid? userUid, IEnumerable<IGraphAction> actions)
         {
             var entity = EntityManager.GetEntity(uid);
@@ -236,6 +285,14 @@ namespace Content.Server.Construction
 
         private void EnqueueEvent(EntityUid uid, ConstructionComponent construction, object args)
         {
+            if (args is HandledEntityEventArgs handled)
+            {
+                if (handled.Handled)
+                    return;
+
+                handled.Handled = true;
+            }
+
             construction.InteractionQueue.Enqueue(args);
         }
 
