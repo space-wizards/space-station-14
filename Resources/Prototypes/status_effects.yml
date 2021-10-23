@@ -15,3 +15,6 @@
 - type: statusEffect
   id: Jitter
   alwaysAllowed: true
+
+- type: statusEffect
+  id: Stutter

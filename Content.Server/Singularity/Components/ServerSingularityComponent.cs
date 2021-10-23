@@ -93,10 +93,10 @@ namespace Content.Server.Singularity.Components
             _singularitySystem.ChangeSingularityLevel(this, 1);
         }
 
-        protected override void OnRemove()
+        protected override void Shutdown()
         {
+            base.Shutdown();
             SoundSystem.Play(Filter.Pvs(Owner), _singularityCollapsingSound.GetSound(), Owner.Transform.Coordinates);
-            base.OnRemove();
         }
     }
 }

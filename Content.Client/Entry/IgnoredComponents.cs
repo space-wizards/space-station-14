@@ -49,6 +49,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "AtmosFixMarker",
             "CablePlacer",
             "Drink",
             "Food",
@@ -291,7 +292,8 @@ namespace Content.Client.Entry
             "ApcNetSwitch",
             "HandLabeler",
             "Label",
-            "GhostRadio"
+            "GhostRadio",
+            "Armor"
         };
     }
 }

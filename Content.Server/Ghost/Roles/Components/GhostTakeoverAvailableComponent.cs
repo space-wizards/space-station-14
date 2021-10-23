@@ -25,7 +25,7 @@ namespace Content.Server.Ghost.Roles.Components
             var mind = Owner.EnsureComponent<MindComponent>();
 
             if (mind.HasMind)
-                throw new Exception("MindComponent already has a mind!");
+                return false;
 
             var sessionMind = session.ContentData()?.Mind;
 

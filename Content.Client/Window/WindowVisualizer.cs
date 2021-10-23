@@ -43,11 +43,8 @@ namespace Content.Client.Window
                     return;
                 }
 
-                Logger.Info($"LEVEL: {level} DMG: {fraction}");
-
                 sprite.LayerSetVisible(WindowDamageLayers.Layer, true);
                 sprite.LayerSetState(WindowDamageLayers.Layer, $"{level}");
-
             }
         }
 
