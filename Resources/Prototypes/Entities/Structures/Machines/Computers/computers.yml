@@ -29,7 +29,7 @@
   parent: ComputerShuttleBase
   id: ComputerShuttle
   name: shuttle navigation console
-  description: Used to pilot a shuttle by changing it's rotation and speed. Whatever you're doing, do NOT press Z or R twice!
+  description: Used to pilot a shuttle by changing it's rotation and speed.
   components:
   - type: Appearance
     visuals:
@@ -41,7 +41,7 @@
   parent: ComputerShuttleBase
   id: ComputerShuttleSyndie
   name: syndicate shuttle navigation console
-  description: Used to pilot a syndicate shuttle by changing it's rotation and speed. No, ramming into the station isn't a viable option.
+  description: Used to pilot a syndicate shuttle by changing it's rotation and speed.
   components:
   - type: Appearance
     visuals:
@@ -213,7 +213,7 @@
   id: ComputerSupplyOrdering
   parent: ComputerBase
   name: Cargo ordering computer
-  description: Used to order supplies, approve requests, and control the shuttle. Wizard federation ain't got shit on this summoning contract.
+  description: Used to order supplies, approve requests, and control the shuttle.
   components:
   - type: Appearance
     visuals:
