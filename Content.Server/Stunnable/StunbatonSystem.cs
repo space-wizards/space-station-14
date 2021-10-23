@@ -3,6 +3,7 @@ using System.Linq;
 using Content.Server.Items;
 using Content.Server.Jittering;
 using Content.Server.PowerCell.Components;
+using Content.Server.Speech.EntitySystems;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.ActionBlocker;
@@ -27,6 +28,7 @@ namespace Content.Server.Stunnable
     public class StunbatonSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly StutteringSystem _stutteringSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitterSystem = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -139,7 +141,9 @@ namespace Content.Server.Stunnable
                     _stunSystem.TrySlowdown(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime), 0.5f, 0.5f, status);
             }
 
-            _jitterSystem.DoJitter(entity.Uid, TimeSpan.FromSeconds(comp.SlowdownTime));
+            var slowdownTime = TimeSpan.FromSeconds(comp.SlowdownTime);
+            _jitterSystem.DoJitter(entity.Uid, slowdownTime, status:status);
+            _stutteringSystem.DoStutter(entity.Uid, slowdownTime, status);
 
             if (!comp.Owner.TryGetComponent<PowerCellSlotComponent>(out var slot) || slot.Cell == null || !(slot.Cell.CurrentCharge < comp.EnergyPerUse))
                 return;

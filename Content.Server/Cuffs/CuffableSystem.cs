@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Cuffs
 {
     [UsedImplicitly]
-    internal sealed class CuffableSystem : SharedCuffableSystem
+    public sealed class CuffableSystem : SharedCuffableSystem
     {
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;

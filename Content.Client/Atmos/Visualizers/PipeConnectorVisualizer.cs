@@ -77,11 +77,8 @@ namespace Content.Client.Atmos.Visualizers
 
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
             {
-                var dir = ((PipeDirection) layerKey).RotatePipeDirection(xform.WorldRotation);
-                var layerVisible = state.ConnectedDirections.HasDirection(dir);
-
                 var layer = sprite.LayerMapGet(layerKey);
-                sprite.LayerSetVisible(layer, layerVisible && subfloor);
+                sprite.LayerSetVisible(layer, state.ConnectedDirections.HasDirection(((PipeDirection)layerKey)) && subfloor);
                 sprite.LayerSetColor(layer, color);
             }
         }

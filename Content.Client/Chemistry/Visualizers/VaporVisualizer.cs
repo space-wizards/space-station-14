@@ -37,11 +37,6 @@ namespace Content.Client.Chemistry.Visualizers
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (component.TryGetData<Angle>(VaporVisuals.Rotation, out var radians))
             {
                 SetRotation(component, radians);

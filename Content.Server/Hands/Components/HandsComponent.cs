@@ -92,7 +92,7 @@ namespace Content.Server.Hands.Components
         {
             var initialPosition = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
 
-            var finalPosition = Owner.Transform.Coordinates.Position;
+            var finalPosition = Owner.Transform.LocalPosition;
 
             if (finalPosition.EqualsApprox(initialPosition.Position))
                 return;

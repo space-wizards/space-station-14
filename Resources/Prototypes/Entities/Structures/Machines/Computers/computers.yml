@@ -257,6 +257,7 @@
       - MaterialGlass
       - MaterialPlastic
       - MaterialPlasteel
+      - MaterialPlasma
       - EngineSingularityEmitter
       - EngineSingularityCollector
       - EngineSingularityGenerator

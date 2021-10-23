@@ -213,9 +213,11 @@ namespace Content.Shared.StatusEffect
             Resolve(uid, ref alerts, false);
 
             var state = status.ActiveEffects[key];
-            if (state.RelevantComponent != null)
+
+            // There are cases where a status effect component might be server-only, so TryGetRegistration...
+            if (state.RelevantComponent != null && _componentFactory.TryGetRegistration(state.RelevantComponent, out var registration))
             {
-                var type = _componentFactory.GetRegistration(state.RelevantComponent).Type;
+                var type = registration.Type;
 
                 // Make sure the component is actually there first.
                 // Maybe a badmin badminned the component away,

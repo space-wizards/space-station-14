@@ -12,7 +12,7 @@
   objectType: Structure
   placementMode: AlignWallProper
   canBuildInImpassable: true
-  
+
 - type: construction
   name: Solar Assembly
   id: SolarPanel
@@ -29,3 +29,18 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: Cable Terminal
+  id: cableTerminal
+  graph: cable_terminal
+  startNode: start
+  targetNode: cable_terminal
+  category: Utility
+  description: "Input of devices such as the SMES. The red cables needs to face the device."
+  icon:
+    sprite: Structures/Power/cable_terminal.rsi
+    state: term
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
