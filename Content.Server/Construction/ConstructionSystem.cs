@@ -38,16 +38,22 @@ namespace Content.Server.Construction
     [UsedImplicitly]
     public partial class ConstructionSystem : SharedConstructionSystem
     {
+        [Dependency] private readonly ILogManager _logManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+
+        private const string SawmillName = "Construction";
+        private ISawmill _sawmill = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _sawmill = _logManager.GetSawmill(SawmillName);
 
             InitializeGraphs();
             InitializeSteps();
@@ -56,6 +62,13 @@ namespace Content.Server.Construction
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
             SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            UpdateSteps();
         }
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
@@ -99,7 +112,7 @@ namespace Content.Server.Construction
                     ("targetName", component.Target.Name)) + "\n");
             }
 
-            if (component.Edge == null && component.TargetNextEdge != null)
+            if (component.EdgeIndex == null && component.TargetNextEdge != null)
             {
                 var preventStepExamine = false;
 
@@ -113,11 +126,11 @@ namespace Content.Server.Construction
                 return;
             }
 
-            if (component.Edge != null)
+            if (component.EdgeIndex != null)
             {
                 var preventStepExamine = false;
 
-                foreach (var condition in component.Edge.Conditions)
+                foreach (var condition in component.EdgeIndex.Conditions)
                 {
                     preventStepExamine |= condition.DoExamine(args);
                 }
@@ -127,8 +140,8 @@ namespace Content.Server.Construction
 
             if (component.EdgeNestedStepProgress == null)
             {
-                if (component.EdgeStepIndex < component.Edge?.Steps.Count)
-                    component.Edge.Steps[component.EdgeStepIndex].DoExamine(args);
+                if (component.StepIndex < component.EdgeIndex?.Steps.Count)
+                    component.EdgeIndex.Steps[component.StepIndex].DoExamine(args);
                 return;
             }
 
