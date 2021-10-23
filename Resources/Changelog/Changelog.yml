@@ -2643,3 +2643,8 @@ Entries:
     type: Fix}
   id: 471
   time: '2021-10-22T11:45:45.025249+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed being spaced causing the player to gib, type: Fix}
+  id: 472
+  time: '2021-10-23T18:45:58.0000000+00:00'
