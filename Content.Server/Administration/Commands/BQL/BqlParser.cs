@@ -9,7 +9,7 @@ using Robust.Shared.IoC;
 // this is all really shit but it works and only runs once a command.
 namespace Content.Server.Administration.Commands.BQL
 {
-    public static class EntityQueryUtils
+    public static class BqlParser
     {
         private enum TokenKind
         {

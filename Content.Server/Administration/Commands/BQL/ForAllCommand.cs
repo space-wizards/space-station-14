@@ -23,7 +23,7 @@ namespace Content.Server.Administration.Commands.BQL
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
-            var (command, entities) = EntityQueryUtils.DoEntityQuery(argStr[6..], entityManager);
+            var (command, entities) = BqlParser.DoEntityQuery(argStr[6..], entityManager);
 
             foreach (var ent in entities.ToList())
             {
