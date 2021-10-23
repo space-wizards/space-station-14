@@ -2,7 +2,7 @@
   parent: ComputerBase
   id: ComputerAlert
   name: alerts computer
-  description: Used to access the station's automated alert system. When plasma hits the distro this won't be much use.
+  description: Used to access the station's automated alert system.
   components:
   - type: Appearance
     visuals:
@@ -57,7 +57,7 @@
   parent: ComputerBase
   id: ComputerPowerMonitoring
   name: power monitoring computer
-  description: It monitors power levels across the station. Simply put- supply must meet demand.
+  description: It monitors power levels across the station.
   components:
   - type: Appearance
     visuals:
@@ -119,7 +119,7 @@
   parent: ComputerBase
   id: ComputerId
   name: ID card computer
-  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station. Goofing up with this terminal might get your job TERMINAted.
+  description: Terminal for programming Nanotrasen employee ID cards to access parts of the station.
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
@@ -284,7 +284,7 @@
   id: ComputerSupplyRequest
   parent: ComputerSupplyOrdering
   name: cargo request computer
-  description: Used to request supplies from cargo. Remember the magic words "I will cover the cost". 
+  description: Used to request supplies from cargo.
   components:
   - type: Appearance
     visuals:
