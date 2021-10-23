@@ -19,7 +19,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
     {
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IClydeAudio _clydeAudio = default!;
-        [Dependency] private readonly IMidiManager _midiManager = default!;
 
         public AudioTab()
         {
@@ -88,7 +87,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         private void Reset()
         {
             MasterVolumeSlider.Value = _cfg.GetCVar(CVars.AudioMasterVolume) * 100;
-            MidiVolumeSlider.Value = DBToLV100(_midiManager.Volume);
+            MidiVolumeSlider.Value = DBToLV100(_cfg.GetCVar(CVars.MidiVolume));
             AmbienceCheckBox.Pressed = _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
             LobbyMusicCheckBox.Pressed = _cfg.GetCVar(CCVars.LobbyMusicEnabled);
             UpdateChanges();
@@ -112,7 +111,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isMasterVolumeSame =
                 System.Math.Abs(MasterVolumeSlider.Value - _cfg.GetCVar(CVars.AudioMasterVolume) * 100) < 0.01f;
             var isMidiVolumeSame =
-                System.Math.Abs(MidiVolumeSlider.Value - DBToLV100(_midiManager.Volume)) < 0.01f;
+                System.Math.Abs(MidiVolumeSlider.Value - DBToLV100(_cfg.GetCVar(CVars.MidiVolume))) < 0.01f;
             var isAmbienceSame = AmbienceCheckBox.Pressed == _cfg.GetCVar(CCVars.AmbienceBasicEnabled);
             var isLobbySame = LobbyMusicCheckBox.Pressed == _cfg.GetCVar(CCVars.LobbyMusicEnabled);
             var isEverythingSame = isMasterVolumeSame && isMidiVolumeSame && isAmbienceSame && isLobbySame;
