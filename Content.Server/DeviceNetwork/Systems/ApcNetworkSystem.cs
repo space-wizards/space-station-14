@@ -33,7 +33,7 @@ namespace Content.Server.DeviceNetwork.Systems
             }
         }
 
-        private static void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
+        private void OnProviderConnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderConnectedEvent args)
         {
             if (!args.Provider.Owner.TryGetComponent(out NodeContainerComponent? nodeContainer)) return;
 
@@ -48,7 +48,7 @@ namespace Content.Server.DeviceNetwork.Systems
 
         }
 
-        private static void OnProviderDisconnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderDisconnectedEvent args)
+        private void OnProviderDisconnected(EntityUid uid, ApcNetworkComponent component, ExtensionCableSystem.ProviderDisconnectedEvent args)
         {
             component.ConnectedNode = null;
         }

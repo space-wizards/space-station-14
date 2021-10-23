@@ -318,6 +318,10 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-
+        public void SetState(bool state)
+        {
+            _on = state;
+            UpdateLight();
+        }
     }
 }

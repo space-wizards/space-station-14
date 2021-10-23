@@ -18,6 +18,10 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             SubscribeLocalEvent<ApcNetSwitchComponent, PacketSentEvent>(OnPackedReceived);
         }
 
+        /// <summary>
+        /// Toggles the state of the switch and sents a <see cref="DeviceNetworkConstants.CmdSetState"/> command with the
+        /// <see cref="DeviceNetworkConstants.StateEnabled"/> value set to state.
+        /// </summary>
         private void OnInteracted(EntityUid uid, ApcNetSwitchComponent component, InteractHandEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent)) return;
@@ -35,6 +39,9 @@ namespace Content.Server.DeviceNetwork.Systems.Devices
             args.Handled = true;
         }
 
+        /// <summary>
+        /// Listens to the <see cref="DeviceNetworkConstants.CmdSetState"/> command of other switches to sync state
+        /// </summary>
         private void OnPackedReceived(EntityUid uid, ApcNetSwitchComponent component, PacketSentEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? networkComponent) || args.SenderAddress == networkComponent.Address) return;

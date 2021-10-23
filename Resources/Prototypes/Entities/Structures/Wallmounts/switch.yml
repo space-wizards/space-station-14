@@ -46,8 +46,8 @@
 
 - type: entity
   id: ApcNetSwitch
-  name: "apc net switch"
-  description: "Its a switch for toggling lights that are connected to the same apc."
+  name: apc net switch
+  description: Its a switch for toggling lights that are connected to the same apc.
   components:
     - type: Clickable
     - type: InteractionOutline

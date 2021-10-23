@@ -12,7 +12,6 @@ namespace Content.Server.DeviceNetwork.Components
     {
         public override string Name => "ApcNetworkConnection";
 
-
         /// <summary>
         /// The node Group the ApcNetworkConnection is connected to
         /// </summary>

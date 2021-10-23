@@ -1,5 +1,4 @@
-﻿
-using Content.Server.DeviceNetwork.Systems.Devices;
+﻿using Content.Server.DeviceNetwork.Systems.Devices;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;

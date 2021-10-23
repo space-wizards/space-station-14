@@ -103,10 +103,7 @@ namespace Content.Server.Light.EntitySystems
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? command) || command != DeviceNetworkConstants.CmdSetState) return;
             if (!args.Data.TryGetValue(DeviceNetworkConstants.StateEnabled, out bool enabled)) return;
 
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
-            {
-                light.Enabled = enabled;
-            }
+            component.SetState(enabled);
         }
 
         private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, PowerChangedEvent args)
