@@ -28,13 +28,12 @@ namespace Content.Client.Kitchen.UI
 
             CookTimeButtonGroup = new ButtonGroup();
 
-            var index = 0;
-            for (var i = 0; i <= 6; i++)
+            for (var i = 0; i <= 30; i += 5)
             {
                 var newButton = new MicrowaveCookTimeButton
                 {
-                    Text = index <= 0 ? Loc.GetString("microwave-menu-instant-button") : index.ToString(),
-                    CookTime = (uint)index,
+                    Text = i == 0 ? Loc.GetString("microwave-menu-instant-button") : i.ToString(),
+                    CookTime = (uint) i,
                     TextAlign = Label.AlignMode.Center,
                     ToggleMode = true,
                     Group = CookTimeButtonGroup,
@@ -43,9 +42,7 @@ namespace Content.Client.Kitchen.UI
                 newButton.OnToggled += args =>
                 {
                     OnCookTimeSelected?.Invoke(args, newButton.GetPositionInParent());
-
                 };
-                index += 5;
             }
 
             var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
