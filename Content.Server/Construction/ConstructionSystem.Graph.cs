@@ -92,18 +92,6 @@ namespace Content.Server.Construction
             return edge.Steps.Count > index ? edge.Steps[index] : null;
         }
 
-        public void AdvanceStep(EntityUid uid, ConstructionGraphStep step, ConstructionComponent? construction = null)
-        {
-            if (!Resolve(uid, ref construction))
-                return;
-        }
-
-        public void ChangeEdge(EntityUid uid, string edge, ConstructionComponent? construction = null)
-        {
-            if (!Resolve(uid, ref construction))
-                return;
-        }
-
         public bool ChangeNode(EntityUid uid, EntityUid? userUid, string id, bool performActions = true, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))

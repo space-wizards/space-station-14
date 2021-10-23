@@ -115,6 +115,9 @@ namespace Content.Server.Construction
             // Whether this event is being re-handled after a DoAfter or not. Check DoAfterState for more info.
             var doAfterState = DoAfterState.None;
 
+            // Custom data from a prior HandleInteraction where a DoAfter was called...
+            object? doAfterData = null;
+
             // Some events are handled specially... Such as doAfter.
             switch (ev)
             {
@@ -143,42 +146,27 @@ namespace Content.Server.Construction
 
             switch (step)
             {
-                case ComponentConstructionGraphStep componentInsertStep:
+                case EntityInsertConstructionGraphStep insertStep:
                 {
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
 
-                    break;
-                }
+                    // TODO: Sanity checks.
 
-                case MultipleTagsConstructionGraphStep multipleTagsInsertStep:
-                {
-                    if (ev is not InteractUsingEvent interactUsing)
-                        break;
+                    if (doAfterState == DoAfterState.Completed)
+                        return HandleResult.True;
 
-                    break;
-                }
-
-                case PrototypeConstructionGraphStep prototypeInsertStep:
-                {
-                    if (ev is not InteractUsingEvent interactUsing)
-                        break;
-
-                    break;
-                }
-
-                case TagConstructionGraphStep tagInsertStep:
-                {
-                    if (ev is not InteractUsingEvent interactUsing)
-                        break;
-
-                    break;
-                }
-
-                case MaterialConstructionGraphStep materialInsertStep:
-                {
-                    if (ev is not InteractUsingEvent interactUsing)
-                        break;
+                    switch (insertStep)
+                    {
+                        case ArbitraryInsertConstructionGraphStep arbitraryInsertConstructionGraphStep:
+                        {
+                            break;
+                        }
+                        case MaterialConstructionGraphStep materialConstructionGraphStep:
+                        {
+                            break;
+                        }
+                    }
 
                     break;
                 }
@@ -187,6 +175,8 @@ namespace Content.Server.Construction
                 {
                     if (ev is not InteractUsingEvent interactUsing)
                         break;
+
+                    // TODO: Sanity checks.
 
                     user = interactUsing.User.Uid;
 
@@ -254,20 +244,24 @@ namespace Content.Server.Construction
         private class ConstructionDoAfterComplete : EntityEventArgs
         {
             public readonly object WrappedEvent;
+            public readonly object? CustomData;
 
-            public ConstructionDoAfterComplete(object wrappedEvent)
+            public ConstructionDoAfterComplete(object wrappedEvent, object? customData = null)
             {
                 WrappedEvent = wrappedEvent;
+                CustomData = customData;
             }
         }
 
         private class ConstructionDoAfterCancelled : EntityEventArgs
         {
             public readonly object WrappedEvent;
+            public readonly object? CustomData;
 
-            public ConstructionDoAfterCancelled(object wrappedEvent)
+            public ConstructionDoAfterCancelled(object wrappedEvent, object? customData = null)
             {
                 WrappedEvent = wrappedEvent;
+                CustomData = customData;
             }
         }
 

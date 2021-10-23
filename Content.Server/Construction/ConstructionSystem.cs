@@ -430,7 +430,6 @@ namespace Content.Server.Construction
                 switch (step)
                 {
                     case ToolConstructionGraphStep _:
-                    case NestedConstructionGraphStep _:
                         throw new InvalidDataException("Invalid first step for construction recipe!");
                 }
             }
@@ -542,7 +541,6 @@ namespace Content.Server.Construction
                             valid = true;
                         break;
                     case ToolConstructionGraphStep _:
-                    case NestedConstructionGraphStep _:
                         throw new InvalidDataException("Invalid first step for item recipe!");
                 }
 
