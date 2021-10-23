@@ -8,3 +8,5 @@
     sprite: Objects/Consumable/Food/plates.rsi
     state: plate-small-trash
     netsync: false
+  - type: GuardianCreator
+    GuardianID: MobHoloparasite

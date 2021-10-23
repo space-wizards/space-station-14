@@ -1,7 +1,11 @@
+using Content.Server.Actions.Actions;
 using Content.Server.Lathe.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using System;
 
 namespace Content.Server.Guardian
@@ -12,7 +16,7 @@ namespace Content.Server.Guardian
         {
             base.Initialize();
             SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnGuardianCreated);
-           // SubscribeLocalEvent<SpecimenDietComponent, ComponentInit>(Initialize);
+            // SubscribeLocalEvent<SpecimenDietComponent, ComponentInit>(Initialize);
         }
 
         /// <summary>
@@ -23,9 +27,22 @@ namespace Content.Server.Guardian
         /// <param name="args"></param>
         private void OnGuardianCreated(EntityUid uid, GuardianCreatorComponent component, UseInHandEvent args)
         {
-            var host = args.User.AddComponent<GuardianHostComponent>();
-            var guardian = EntityManager.SpawnEntity(component.GuardianType, host.Owner.Transform.Coordinates);
-            host.GuardianContainer.Insert(guardian);
+            if (!args.User.TryGetComponent<GuardianHostComponent>(out var guardianComponent))
+            {
+                var host = args.User.AddComponent<GuardianHostComponent>();
+                var guardian = EntityManager.SpawnEntity(component.GuardianType, host.Owner.Transform.Coordinates);
+                host.GuardianContainer.Insert(guardian);
+                args.User.PopupMessage(Loc.GetString("guardian-created"));
+            }
+            else
+            {
+                args.User.PopupMessage(Loc.GetString("guardian-already-present-invalid-creation"));
+            }
+        }
+
+        public void OnGuardianManifestAction(IEntity guardian)
+        {
+            
         }
     }
 }
