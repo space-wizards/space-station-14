@@ -22,15 +22,15 @@ namespace Content.Server.Administration.Commands.BQL
             String,
         }
 
-        private struct Token
+        private readonly struct Token
         {
-            public TokenKind kind;
-            public string text;
+            public readonly TokenKind Kind;
+            public readonly string Text;
 
-            private Token(TokenKind _kind, string _text)
+            private Token(TokenKind kind, string text)
             {
-                kind = _kind;
-                text = _text;
+                Kind = kind;
+                Text = text;
             }
 
             //I didn't want to write a proper parser. --moony
@@ -103,13 +103,13 @@ namespace Content.Server.Administration.Commands.BQL
                 Token t;
                 (remainingQuery, t) = Token.ExtractOneToken(remainingQuery);
 
-                switch (t.kind)
+                switch (t.Kind)
                 {
                     case TokenKind.With:
                     {
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
-                        var comp = componentFactory.GetRegistration(nt.text).Type;
+                        var comp = componentFactory.GetRegistration(nt.Text).Type;
                         entities = entities.Where(e => e.HasComponent(comp));
                         break;
                     }
@@ -117,7 +117,7 @@ namespace Content.Server.Administration.Commands.BQL
                     {
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
-                        var r = new Regex("^" + nt.text + "$");
+                        var r = new Regex("^" + nt.Text + "$");
                         entities = entities.Where(e => r.IsMatch(e.Name));
                         break;
                     }
@@ -125,7 +125,7 @@ namespace Content.Server.Administration.Commands.BQL
                     {
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
-                        var text = nt.text;
+                        var text = nt.Text;
                         entities = entities.Where(e =>
                         {
                             if (e.TryGetComponent<TagComponent>(out var tagComponent))
@@ -141,7 +141,7 @@ namespace Content.Server.Administration.Commands.BQL
                     {
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
-                        var uid = EntityUid.Parse(nt.text);
+                        var uid = EntityUid.Parse(nt.Text);
                         entities = entities.Where(e => e.Transform.Parent?.Owner.Uid == uid);
                         break;
                     }
@@ -149,13 +149,13 @@ namespace Content.Server.Administration.Commands.BQL
                     {
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
-                        entities = entities.Where(e => e.Prototype?.ID == nt.text);
+                        entities = entities.Where(e => e.Prototype?.ID == nt.Text);
                         break;
                     }
                     case TokenKind.Do:
                         return new Tuple<string, IEnumerable<IEntity>>(remainingQuery, entities);
                     default:
-                        throw new Exception("Unknown token called " + t.text + ", which was parsed as a "+ t.kind.ToString());
+                        throw new Exception("Unknown token called " + t.Text + ", which was parsed as a "+ t.Kind.ToString());
                 }
 
                 if (remainingQuery.TrimStart() == "")
