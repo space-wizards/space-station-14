@@ -181,7 +181,7 @@ namespace Content.Server.Nutrition.Components
 
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
-            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage));
+            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage, ("food", Owner)));
 
             // If utensils were used
             if (utensils != null)
