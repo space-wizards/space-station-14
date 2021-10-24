@@ -1,9 +1,13 @@
-﻿# TODO: Add description (1)
+# TODO: Add description (1)
 - type: entity
   parent: BaseItem
   id: BaseLightbulb
   abstract: true
   components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Power/light_bulb.rsi
+    state: normal
   - type: LightBulb
   - type: Damageable
     damageContainer: Inorganic
@@ -40,6 +44,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: LightBulbVisualizer
 
 # Lighting color values gathered from
 # https://andi-siess.de/rgb-to-color-temperature/

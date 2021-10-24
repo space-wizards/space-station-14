@@ -33,6 +33,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
+        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
 
         private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
 
@@ -203,11 +204,11 @@ namespace Content.Server.Light.EntitySystems
         public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
             var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+            if (bulbUid == null)
                 return;
 
-            lightBulb.State = LightBulbState.Broken;
-            lightBulb.PlayBreakSound();
+            _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken);
+            _bulbSystem.PlayBreakSound(bulbUid.Value);
             UpdateLight(uid, light);
         }
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Storage.Components;
+using Content.Shared.Light;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
