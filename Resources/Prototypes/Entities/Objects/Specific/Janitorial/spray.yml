@@ -23,8 +23,6 @@
   - type: DrainableSolution
     solution: spray
   - type: SolutionTransfer
-  - type: Spillable
-    solution: spray
   - type: ItemCooldown
   - type: Spray
     transferAmount: 10
@@ -88,6 +86,7 @@
         bounds: "-0.25,-0.25,0.25,0.25"
       hard: false
       mask:
+      - Opaque
       - Impassable
       - MobImpassable
       - SmallImpassable
