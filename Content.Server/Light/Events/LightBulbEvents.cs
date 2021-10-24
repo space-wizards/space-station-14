@@ -4,6 +4,9 @@ using Robust.Shared.Maths;
 
 namespace Content.Server.Light.Events
 {
+    /// <summary>
+    ///     Invokes when light bulb changed its state
+    /// </summary>
     public class BulbStateChangedEvent : EntityEventArgs
     {
         public EntityUid BulbUid;
@@ -16,6 +19,9 @@ namespace Content.Server.Light.Events
         }
     }
 
+    /// <summary>
+    ///     Invokes when light bulb changed its color
+    /// </summary>
     public class BulbColorChangedEvent : EntityEventArgs
     {
         public EntityUid BulbUid;

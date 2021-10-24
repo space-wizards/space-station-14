@@ -17,4 +17,11 @@ namespace Content.Shared.Light
         State,
         Color
     }
+
+    [Serializable, NetSerializable]
+    public enum LightBulbType : byte
+    {
+        Bulb,
+        Tube,
+    }
 }

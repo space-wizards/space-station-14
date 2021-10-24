@@ -7,7 +7,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using System;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -31,9 +30,12 @@ namespace Content.Server.Light.EntitySystems
         private void HandleLand(EntityUid uid, LightBulbComponent bulb, LandEvent args)
         {
             PlayBreakSound(uid, bulb);
-            bulb.State = LightBulbState.Broken;
+            SetState(uid, LightBulbState.Broken, bulb);
         }
 
+        /// <summary>
+        ///     Set a new color for a light bulb and raise event about change
+        /// </summary>
         public void SetColor(EntityUid uid, Color color, LightBulbComponent? bulb = null)
         {
             if (!Resolve(uid, ref bulb))
@@ -45,6 +47,9 @@ namespace Content.Server.Light.EntitySystems
             RaiseLocalEvent(uid, new BulbColorChangedEvent(uid, color));
         }
 
+        /// <summary>
+        ///     Set a new state for a light bulb (broken, burned) and raise event about change
+        /// </summary>
         public void SetState(EntityUid uid, LightBulbState state, LightBulbComponent? bulb = null)
         {
             if (!Resolve(uid, ref bulb))

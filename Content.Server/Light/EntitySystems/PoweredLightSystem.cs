@@ -26,7 +26,7 @@ using Content.Shared.Audio;
 namespace Content.Server.Light.EntitySystems
 {
     /// <summary>
-    ///     System for the PoweredLightComponent. Currently bare-bones, to handle events from the DamageableSystem
+    ///     System for the PoweredLightComponens
     /// </summary>
     public class PoweredLightSystem : EntitySystem
     {
@@ -35,7 +35,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
 
-        private static readonly TimeSpan _thunkDelay = TimeSpan.FromSeconds(2);
+        private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
 
         public override void Initialize()
         {
@@ -123,6 +123,7 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = EjectBulb(uid, userUid, light) != null;
         }
 
+        #region Bulb Logic API
         /// <summary>
         ///     Inserts the bulb if possible.
         /// </summary>
@@ -190,6 +191,16 @@ namespace Content.Server.Light.EntitySystems
         }
 
         /// <summary>
+        ///     Try to replace current bulb with a new one
+        ///     If succeed old bulb just drops on floor
+        /// </summary>
+        public bool ReplaceBulb(EntityUid uid, EntityUid bulb, PoweredLightComponent? light = null)
+        {
+            EjectBulb(uid, null, light);
+            return InsertBulb(uid, bulb, light);
+        }
+
+        /// <summary>
         ///     Try to get light bulb inserted in powered light
         /// </summary>
         /// <returns>Bulb uid if it exist, null otherwise</returns>
@@ -201,6 +212,9 @@ namespace Content.Server.Light.EntitySystems
             return light.LightBulbContainer.ContainedEntity?.Uid;
         }
 
+        /// <summary>
+        ///     Try to break bulb inside light fixture
+        /// </summary>
         public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
             var bulbUid = GetBulb(uid, light);
@@ -211,6 +225,7 @@ namespace Content.Server.Light.EntitySystems
             _bulbSystem.PlayBreakSound(bulbUid.Value);
             UpdateLight(uid, light);
         }
+        #endregion
 
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
@@ -241,7 +256,7 @@ namespace Content.Server.Light.EntitySystems
                             SetLight(uid, true, lightBulb.Color, light);
                             appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                             var time = _gameTiming.CurTime;
-                            if (time > light.LastThunk + _thunkDelay)
+                            if (time > light.LastThunk + ThunkDelay)
                             {
                                 light.LastThunk = time;
                                 SoundSystem.Play(Filter.Pvs(uid), light.TurnOnSound.GetSound(), uid, AudioParams.Default.WithVolume(-10f));

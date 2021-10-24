@@ -9,12 +9,6 @@ using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Light.Components
 {
-    public enum LightBulbType
-    {
-        Bulb,
-        Tube,
-    }
-
     /// <summary>
     ///     Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
     /// </summary>

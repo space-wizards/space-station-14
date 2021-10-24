@@ -30,15 +30,7 @@ namespace Content.Server.Light.Components
     [RegisterComponent]
     public class PoweredLightComponent : Component
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-
         public override string Name => "PoweredLight";
-
-        [ComponentDependency]
-        private readonly AppearanceComponent? _appearance;
-
-        public TimeSpan LastThunk;
-        public TimeSpan? LastGhostBlink;
 
         [DataField("burnHandSound")]
         public SoundSpecifier BurnHandSound = new SoundPathSpecifier("/Audio/Effects/lightburn.ogg");
@@ -71,8 +63,7 @@ namespace Content.Server.Light.Components
         [DataField("ghostBlinkingCooldown")]
         public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
-
-        [DataField("bulb")] private LightBulbType _bulbType = LightBulbType.Tube;
+        [DataField("bulb")]
         public LightBulbType BulbType;
 
         [ViewVariables] public ContainerSlot LightBulbContainer = default!;
@@ -81,28 +72,7 @@ namespace Content.Server.Light.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
 
-        [ViewVariables]
-        public LightBulbComponent? LightBulb
-        {
-            get
-            {
-                if (LightBulbContainer.ContainedEntity == null) return null;
-
-                LightBulbContainer.ContainedEntity.TryGetComponent(out LightBulbComponent? bulb);
-
-                return bulb;
-            }
-        }
-
-        /// <summary>
-        /// Try to replace current bulb with a new one
-        /// </summary>
-        public bool ReplaceBulb(IEntity bulb)
-        {
-            //EjectBulb();
-            //return InsertBulb(bulb);
-            return false;
-        }
-
+        public TimeSpan LastThunk;
+        public TimeSpan? LastGhostBlink;
     }
 }
