@@ -159,8 +159,7 @@ namespace Content.Server.Construction
             if (!Resolve(uid, ref construction, ref metaData, ref transform))
                 return null;
 
-            if (metaData.EntityPrototype == null || newEntity == metaData.EntityPrototype.ID
-            || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
+            if (newEntity == metaData.EntityPrototype?.ID || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
 
             // Optional resolves.
