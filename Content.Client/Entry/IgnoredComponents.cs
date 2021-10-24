@@ -295,7 +295,8 @@ namespace Content.Client.Entry
             "GhostRadio",
             "Armor",
             "AtmosMonitor",
-            "AtmosAlarmable"
+            "AtmosAlarmable",
+            "FireAlarm"
         };
     }
 }
