@@ -5,6 +5,7 @@ using Content.Server.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
+using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -79,9 +80,17 @@ namespace Content.Server.Construction
                 var edge = node.Edges[i];
                 if (HandleEdge(uid, ev, edge, validation, construction) is var result and not HandleResult.False)
                 {
-                    if (result is HandleResult.Validated)
-                        return result; // Validation is pure, therefore return early before modifying data.
+                    // Only a True result may modify the state.
+                    // In the case of DoAfter, we don't want it modifying the state yet, other than the waiting flag.
+                    // In the case of validated, it should NEVER modify the state at all.
+                    if (result is not HandleResult.True)
+                        return result;
 
+                    // If we're not on the same edge as we were before, that means handling that edge changed the node.
+                    if (construction.Node != node.Name)
+                        return result;
+
+                    // If we're still in the same node, that means we entered the edge and it's still not done.
                     construction.EdgeIndex = i;
                     UpdatePathfinding(uid, construction);
 

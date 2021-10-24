@@ -14,7 +14,7 @@ namespace Content.Shared.Construction.Prototypes
     public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
-        private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]?> _paths = new();
+        private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
@@ -77,7 +77,7 @@ namespace Content.Shared.Construction.Prototypes
 
         public ConstructionGraphNode[]? Path(string startNode, string finishNode)
         {
-            var tuple = new ValueTuple<string, string>(startNode, finishNode);
+            var tuple = (startNode, finishNode);
 
             if (_paths.ContainsKey(tuple))
                 return _paths[tuple];

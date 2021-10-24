@@ -142,12 +142,9 @@ namespace Content.Server.Construction
             if(performActions)
                 PerformActions(uid, userUid, node.Actions);
 
-            if (node.Entity is {} newEntity)
-            {
-                // ChangeEntity will handle the pathfinding update.
-                ChangeEntity(uid, userUid, newEntity, construction);
+            // ChangeEntity will handle the pathfinding update.
+            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;
-            }
 
             UpdatePathfinding(uid, construction);
             return true;

@@ -47,8 +47,10 @@ namespace Content.Server.Construction.Components
         [DataField("defaultTarget")]
         public string? TargetNode { get; set; } = null;
 
+        [ViewVariables]
         public int? TargetEdgeIndex { get; set; } = null;
 
+        [ViewVariables]
         public Queue<string>? NodePathfinding { get; set; } = null;
 
         [DataField("deconstructionTarget")]

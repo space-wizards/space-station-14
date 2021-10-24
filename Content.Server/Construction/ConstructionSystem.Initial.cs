@@ -241,7 +241,7 @@ namespace Content.Server.Construction
             var construction = newEntity.GetComponent<ConstructionComponent>();
 
             // We attempt to set the pathfinding target.
-            construction.TargetNode = targetNode.Name;
+            SetPathfindingTarget(newEntity.Uid, targetNode.Name, construction);
 
             // We preserve the containers...
             foreach (var (name, cont) in containers)

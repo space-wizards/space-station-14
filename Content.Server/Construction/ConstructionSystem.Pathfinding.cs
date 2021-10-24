@@ -68,7 +68,7 @@ namespace Content.Server.Construction
             // If we don't have a path, generate it.
             if (construction.NodePathfinding == null)
             {
-                var path = graph.PathId(currentNode.Name, currentNode.Name);
+                var path = graph.PathId(currentNode.Name, targetNode.Name);
 
                 if (path == null || path.Length == 0)
                 {
@@ -102,7 +102,7 @@ namespace Content.Server.Construction
             }
 
             if (construction.EdgeIndex == null
-                && construction.TargetEdgeIndex != null
+                && construction.TargetEdgeIndex == null
                 && construction.NodePathfinding != null)
                 construction.TargetEdgeIndex = (currentNode.GetEdgeIndex(construction.NodePathfinding.Peek()));
 
