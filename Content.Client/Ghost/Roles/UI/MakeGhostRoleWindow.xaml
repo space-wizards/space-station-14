@@ -15,6 +15,10 @@
             <LineEdit Name="RoleDescription" HorizontalExpand="True" />
         </BoxContainer>
         <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleRulesLabel" Text="Role Rules" />
+            <LineEdit Name="RoleRules" HorizontalExpand="True" Text="{Loc ghost-role-component-default-rules}" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
             <Label Name="MakeSentientLabel" Text="Make Sentient" />
             <CheckBox Name="MakeSentientCheckbox" />
         </BoxContainer>
