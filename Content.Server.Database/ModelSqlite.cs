@@ -76,7 +76,7 @@ namespace Content.Server.Database
         public int Id { get; set; }
 
         public Guid? UserId { get; set; }
-        public (IPAddress, int)? Address { get; set; }
+        public (IPAddress address, int mask)? Address { get; set; }
         public byte[]? HWId { get; set; }
 
         public DateTime BanTime { get; set; }

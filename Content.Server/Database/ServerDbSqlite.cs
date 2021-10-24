@@ -104,7 +104,7 @@ namespace Content.Server.Database
             NetUserId? userId,
             ImmutableArray<byte>? hwId)
         {
-            if (address != null && ban.Address != null && IPAddressExt.IsInSubnet(address, ban.Address))
+            if (address != null && ban.Address is not null && IPAddressExt.IsInSubnet(address, ban.Address.Value))
             {
                 return true;
             }
@@ -126,15 +126,9 @@ namespace Content.Server.Database
         {
             await using var db = await GetDbImpl();
 
-            string? addrStr = null;
-            if (serverBan.Address is { } addr)
-            {
-                addrStr = $"{addr.address}/{addr.cidrMask}";
-            }
-
             db.SqliteDbContext.Ban.Add(new SqliteServerBan
             {
-                Address = addrStr,
+                Address = serverBan.Address,
                 Reason = serverBan.Reason,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 HWId = serverBan.HWId?.ToArray(),
@@ -245,20 +239,12 @@ namespace Content.Server.Database
                 aUid = new NetUserId(aGuid);
             }
 
-            (IPAddress, int)? addrTuple = null;
-            if (ban.Address != null)
-            {
-                var idx = ban.Address.IndexOf('/', StringComparison.Ordinal);
-                addrTuple = (IPAddress.Parse(ban.Address.AsSpan(0, idx)),
-                    int.Parse(ban.Address.AsSpan(idx + 1), provider: CultureInfo.InvariantCulture));
-            }
-
             var unban = ConvertUnban(ban.Unban);
 
             return new ServerBanDef(
                 ban.Id,
                 uid,
-                addrTuple,
+                ban.Address,
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,

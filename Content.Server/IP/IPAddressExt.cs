@@ -18,7 +18,7 @@ namespace Content.Server.IP
             }
 
             // First parse the address of the netmask before the prefix length.
-            var maskAddress = System.Net.IPAddress.Parse(subnetMask.Substring(0, slashIdx));
+            var maskAddress = System.Net.IPAddress.Parse(subnetMask[..slashIdx]);
 
             if (maskAddress.AddressFamily != address.AddressFamily)
             {
@@ -27,8 +27,18 @@ namespace Content.Server.IP
             }
 
             // Now find out how long the prefix is.
-            int maskLength = int.Parse(subnetMask.Substring(slashIdx + 1));
+            int maskLength = int.Parse(subnetMask[(slashIdx + 1)..]);
 
+            return address.IsInSubnet(maskAddress, maskLength);
+        }
+
+        public static bool IsInSubnet(this System.Net.IPAddress address, (System.Net.IPAddress maskAddress, int maskLength) tuple)
+        {
+            return address.IsInSubnet(tuple.maskAddress, tuple.maskLength);
+        }
+
+        public static bool IsInSubnet(this System.Net.IPAddress address, System.Net.IPAddress maskAddress, int maskLength)
+        {
             if (maskAddress.AddressFamily == AddressFamily.InterNetwork)
             {
                 // Convert the mask address to an unsigned integer.
