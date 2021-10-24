@@ -1,4 +1,5 @@
 using Content.Server.Access.Components;
+using Content.Shared.Access;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
@@ -23,6 +24,10 @@ namespace Content.Server.Access.Systems
             if (!Resolve(uid, ref id))
                 return false;
 
+            // TODO: Whenever we get admin logging these should be logged
+            if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
+                jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+
             id.JobTitle = jobTitle;
             UpdateEntityName(uid, id);
             return true;
@@ -32,6 +37,9 @@ namespace Content.Server.Access.Systems
         {
             if (!Resolve(uid, ref id))
                 return false;
+
+            if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
+                fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
 
             id.FullName = fullName;
             UpdateEntityName(uid, id);
