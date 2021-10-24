@@ -2654,3 +2654,8 @@ Entries:
       off., type: Add}
   id: 473
   time: '2021-10-23T23:23:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Placing cables on lattices works again, type: Fix}
+  id: 474
+  time: '2021-10-24T00:32:33.0000000+00:00'
