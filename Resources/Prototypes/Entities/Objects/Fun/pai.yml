@@ -11,7 +11,7 @@
     sprite: Objects/Devices/pda.rsi
     layers:
     - state: pda-lawyer # nobody's using this one
-    - state: pai_overlay
+    - state: pai_off_overlay
       shader: unshaded
   - type: PAI
   - type: Examiner
@@ -20,4 +20,19 @@
   - type: Actions
     innateActions:
     - GhostBoo
+    # This has to be installed because otherwise they're not "alive",
+    #  so they can ghost and come back.
+    # Note that the personal AI never "dies".
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+  - type: Appearance
+    visuals:
+      - type: GenericEnumVisualizer
+        key: enum.PAIVisuals.Status
+        layer: 1
+        states:
+          enum.PAIStatus.Off: pai_off_overlay
+          enum.PAIStatus.Searching: pda-r
+          enum.PAIStatus.On: pai_overlay
 
