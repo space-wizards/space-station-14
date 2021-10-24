@@ -5,7 +5,6 @@ using Content.Server.DoAfter;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
-using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 
@@ -379,8 +378,7 @@ namespace Content.Server.Construction
                 // If an action deletes the entity, we stop performing actions.
                 if (!EntityManager.EntityExists(uid))
                     break;
-
-                // TODO: Change this signature, make it not use IEntity...
+                
                 action.PerformAction(uid, userUid, EntityManager);
             }
         }
