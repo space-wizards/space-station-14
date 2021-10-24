@@ -35,7 +35,7 @@ namespace Content.Server.Construction
         ///     possible construction interactions, depending on the construction's state.
         /// </summary>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleEvent(EntityUid uid, object ev, ConstructionComponent? construction = null)
+        private HandleResult HandleEvent(EntityUid uid, object ev, bool validation, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -46,14 +46,14 @@ namespace Content.Server.Construction
                 return HandleResult.False;
             }
 
-            // If we're currently in an edge, we'll let the edge handle the interaction.
+            // If we're currently in an edge, we'll let the edge handle or validate the interaction.
             if (GetCurrentEdge(uid, construction) is {} edge)
             {
-                return HandleEdge(uid, ev, edge, construction);
+                return HandleEdge(uid, ev, edge, validation, construction);
             }
 
-            // If we're not on an edge, let the node handle the interaction.
-            return HandleNode(uid, ev, node, construction);
+            // If we're not on an edge, let the node handle or validate the interaction.
+            return HandleNode(uid, ev, node, validation, construction);
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Content.Server.Construction
         ///     and if any of the edges accepts the interaction, we will enter it.
         /// </summary>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleNode(EntityUid uid, object ev, ConstructionGraphNode node, ConstructionComponent? construction = null)
+        private HandleResult HandleNode(EntityUid uid, object ev, ConstructionGraphNode node, bool validation, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -73,7 +73,7 @@ namespace Content.Server.Construction
             for (var i = 0; i < node.Edges.Count; i++)
             {
                 var edge = node.Edges[i];
-                if (HandleEdge(uid, ev, edge, construction) is var result and (HandleResult.True or HandleResult.DoAfter))
+                if (HandleEdge(uid, ev, edge, validation, construction) is var result and (HandleResult.True or HandleResult.DoAfter))
                 {
                     construction.EdgeIndex = i;
                     UpdatePathfinding(uid, construction);
@@ -90,7 +90,7 @@ namespace Content.Server.Construction
         ///     depending on the construction's <see cref="ConstructionComponent.StepIndex"/>.
         /// </summary>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleEdge(EntityUid uid, object ev, ConstructionGraphEdge edge, ConstructionComponent? construction = null)
+        private HandleResult HandleEdge(EntityUid uid, object ev, ConstructionGraphEdge edge, bool validation, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
@@ -106,7 +106,7 @@ namespace Content.Server.Construction
             if (!CheckConditions(uid, edge.Conditions))
                 return HandleResult.False;
 
-            if (HandleStep(uid, ev, step, out var user, construction)
+            if (HandleStep(uid, ev, step, validation, out var user, construction)
                 is var handle and not HandleResult.True)
                 return handle;
 
@@ -135,14 +135,14 @@ namespace Content.Server.Construction
         ///     step's completion actions. Also sets the out parameter to the user's EntityUid.
         /// </summary>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleStep(EntityUid uid, object ev, ConstructionGraphStep step, out EntityUid? user, ConstructionComponent? construction = null)
+        private HandleResult HandleStep(EntityUid uid, object ev, ConstructionGraphStep step, bool validation, out EntityUid? user, ConstructionComponent? construction = null)
         {
             user = null;
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
 
-            if (HandleInteraction(uid, ev, step, out user, construction)
-                is var handle and (HandleResult.False or HandleResult.DoAfter))
+            if (HandleInteraction(uid, ev, step, validation, out user, construction)
+                is var handle and not HandleResult.True)
                 return handle;
 
             PerformActions(uid, user, step.Completed);
@@ -158,43 +158,47 @@ namespace Content.Server.Construction
         ///     and doesn't perform any step completion actions. Also sets the out parameter to the user's EntityUid.
         /// </summary>
         /// <returns>The result of this interaction with the entity.</returns>
-        private HandleResult HandleInteraction(EntityUid uid, object ev, ConstructionGraphStep step, out EntityUid? user, ConstructionComponent? construction = null)
+        private HandleResult HandleInteraction(EntityUid uid, object ev, ConstructionGraphStep step, bool validation, out EntityUid? user, ConstructionComponent? construction = null)
         {
             user = null;
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
 
             // Whether this event is being re-handled after a DoAfter or not. Check DoAfterState for more info.
-            var doAfterState = DoAfterState.None;
+            var doAfterState = validation ? DoAfterState.Validation : DoAfterState.None;
 
             // Custom data from a prior HandleInteraction where a DoAfter was called...
             object? doAfterData = null;
 
-            // Some events are handled specially... Such as doAfter.
-            switch (ev)
+            if (!validation)
             {
-                case ConstructionDoAfterComplete complete:
+                // Some events are handled specially... Such as doAfter.
+                switch (ev)
                 {
-                    // DoAfter completed!
-                    ev = complete.WrappedEvent;
-                    doAfterState = DoAfterState.Completed;
-                    doAfterData = complete.CustomData;
-                    construction.WaitingDoAfter = false;
-                    break;
-                }
+                    case ConstructionDoAfterComplete complete:
+                    {
+                        // DoAfter completed!
+                        ev = complete.WrappedEvent;
+                        doAfterState = DoAfterState.Completed;
+                        doAfterData = complete.CustomData;
+                        construction.WaitingDoAfter = false;
+                        break;
+                    }
 
-                case ConstructionDoAfterCancelled cancelled:
-                {
-                    // DoAfter failed!
-                    ev = cancelled.WrappedEvent;
-                    doAfterState = DoAfterState.Cancelled;
-                    doAfterData = cancelled.CustomData;
-                    construction.WaitingDoAfter = false;
-                    break;
+                    case ConstructionDoAfterCancelled cancelled:
+                    {
+                        // DoAfter failed!
+                        ev = cancelled.WrappedEvent;
+                        doAfterState = DoAfterState.Cancelled;
+                        doAfterData = cancelled.CustomData;
+                        construction.WaitingDoAfter = false;
+                        break;
+                    }
                 }
             }
 
             // Can't perform any interactions while we're waiting for a DoAfter...
+            // This also makes any event validation fail.
             if (construction.WaitingDoAfter)
                 return HandleResult.False;
 
@@ -226,6 +230,10 @@ namespace Content.Server.Construction
                     // While this is very OOP and I find it icky, I must admit that it simplifies the code here a lot.
                     if(!insertStep.EntityValid(insert))
                         return HandleResult.False;
+
+                    // If we're only testing whether this step would be handled by the given event, then we're done.
+                    if (doAfterState == DoAfterState.Validation)
+                        return HandleResult.Validated;
 
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
@@ -293,6 +301,14 @@ namespace Content.Server.Construction
                     // TODO: Sanity checks.
 
                     user = interactUsing.User.Uid;
+
+                    // If we're validating whether this event handles the step...
+                    if (doAfterState == DoAfterState.Validation)
+                    {
+                        // Then we only really need to check whether the tool entity has that quality or not.
+                        return _toolSystem.HasQuality(interactUsing.Used.Uid, toolInsertStep.Tool)
+                            ? HandleResult.Validated : HandleResult.False;
+                    }
 
                     // If we're handling an event after its DoAfter finished...
                     if (doAfterState != DoAfterState.None)
@@ -371,7 +387,8 @@ namespace Content.Server.Construction
                 // Handle all queued interactions!
                 while (construction.InteractionQueue.TryDequeue(out var interaction))
                 {
-                    HandleEvent(uid, interaction, construction);
+                    // We set validation to false because we actually want to perform the interaction here.
+                    HandleEvent(uid, interaction, false, construction);
                 }
             }
 
@@ -389,7 +406,10 @@ namespace Content.Server.Construction
                 if (handled.Handled)
                     return;
 
-                // Otherwise, let's handle them! ...Despite the fact that we could fail the interaction later but.
+                // Otherwise, let's check if this event could be handled by the construction's current state.
+                if (HandleEvent(uid, args, true, construction) != HandleResult.Validated)
+                    return; // Not validated, so we don't even enqueue this event.
+
                 handled.Handled = true;
             }
 
@@ -471,6 +491,12 @@ namespace Content.Server.Construction
             None,
 
             /// <summary>
+            ///     If Validation, we want to validate whether the specified event would handle the step or not.
+            ///     Will NOT modify the construction state at all.
+            /// </summary>
+            Validation,
+
+            /// <summary>
             ///     If Completed, this is the second (and last) time we're seeing this event, and
             ///     the doAfter that was called the first time successfully completed. Handle completion logic now.
             /// </summary>
@@ -489,9 +515,14 @@ namespace Content.Server.Construction
         private enum HandleResult : byte
         {
             /// <summary>
-            ///     The interaction wasn't handled.
+            ///     The interaction wasn't handled or validated.
             /// </summary>
             False,
+
+            /// <summary>
+            ///     The interaction would be handled successfully. Nothing was modified.
+            /// </summary>
+            Validated,
 
             /// <summary>
             ///     The interaction was handled successfully.

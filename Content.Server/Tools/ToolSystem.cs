@@ -36,6 +36,22 @@ namespace Content.Server.Tools
         }
 
         /// <summary>
+        ///     Whether a tool entity has the specified quality or not.
+        /// </summary>
+        public bool HasQuality(EntityUid uid, string quality, ToolComponent? tool = null)
+        {
+            return Resolve(uid, ref tool, false) && tool.Qualities.Contains(quality);
+        }
+
+        /// <summary>
+        ///     Whether a tool entity has all specified qualities or not.
+        /// </summary>
+        public bool HasAllQualities(EntityUid uid, IEnumerable<string> qualities, ToolComponent? tool = null)
+        {
+            return Resolve(uid, ref tool, false) && tool.Qualities.ContainsAll(qualities);
+        }
+
+        /// <summary>
         ///     Sync version of UseTool.
         /// </summary>
         /// <param name="tool">The tool entity.</param>
