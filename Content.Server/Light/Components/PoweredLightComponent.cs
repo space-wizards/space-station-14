@@ -1,25 +1,12 @@
 using System;
-using System.Threading.Tasks;
-using Content.Server.Hands.Components;
-using Content.Server.Items;
-using Content.Server.Power.Components;
-using Content.Server.Temperature.Components;
-using Content.Shared.Audio;
+using Content.Server.Light.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
+using Robust.Shared.Analyzers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Localization;
-using Robust.Shared.Maths;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Light.Components
@@ -27,7 +14,7 @@ namespace Content.Server.Light.Components
     /// <summary>
     ///     Component that represents a wall light. It has a light bulb that can be replaced when broken.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, Friend(typeof(PoweredLightSystem))]
     public class PoweredLightComponent : Component
     {
         public override string Name => "PoweredLight";
@@ -41,15 +28,16 @@ namespace Content.Server.Light.Components
         [DataField("hasLampOnSpawn")]
         public bool HasLampOnSpawn = true;
 
+        [DataField("bulb")]
+        public LightBulbType BulbType;
+
         [ViewVariables]
         [DataField("on")]
         public bool On = true;
 
-        [ViewVariables]
-        public bool CurrentLit;
-
-        [ViewVariables]
-        public bool IsBlinking;
+        [DataField("damage", required: true)]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public DamageSpecifier Damage = default!;
 
         [ViewVariables]
         [DataField("ignoreGhostsBoo")]
@@ -63,16 +51,15 @@ namespace Content.Server.Light.Components
         [DataField("ghostBlinkingCooldown")]
         public TimeSpan GhostBlinkingCooldown = TimeSpan.FromSeconds(60);
 
-        [DataField("bulb")]
-        public LightBulbType BulbType;
-
-        [ViewVariables] public ContainerSlot LightBulbContainer = default!;
-
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
-
+        [ViewVariables]
+        public ContainerSlot LightBulbContainer = default!;
+        [ViewVariables]
+        public bool CurrentLit;
+        [ViewVariables]
+        public bool IsBlinking;
+        [ViewVariables]
         public TimeSpan LastThunk;
+        [ViewVariables]
         public TimeSpan? LastGhostBlink;
     }
 }
