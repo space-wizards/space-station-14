@@ -2670,3 +2670,10 @@ Entries:
     type: Tweak}
   id: 476
   time: '2021-10-24T02:34:31.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'The context menu, examining, and activating now works on items inside
+      storage entities. (The last one means boxes can now be opened while still inside
+      a backpack.)', type: Add}
+  id: 477
+  time: '2021-10-24T05:42:47.0000000+00:00'
