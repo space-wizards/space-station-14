@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
