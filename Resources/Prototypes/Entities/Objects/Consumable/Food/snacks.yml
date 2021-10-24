@@ -19,6 +19,9 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.5
 
 # Snacks
 
