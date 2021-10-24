@@ -230,19 +230,13 @@ namespace Content.Server.Administration
             eui.StateDirty();
         }
 
-        public void CloseEditSolutionsEui(IPlayerSession session)
+        public void OnEditSolutionsEuiClosed(IPlayerSession session)
         {
-            if (_openSolutionUis.Remove(session, out var eui))
-                eui?.Close();
+            _openSolutionUis.Remove(session, out var eui);
         }
 
         private void Reset(RoundRestartCleanupEvent ev)
         {
-            foreach (var session in _openSolutionUis.Keys)
-            {
-                CloseEditSolutionsEui(session);
-            }
-
             _openSolutionUis.Clear();
         }
         #endregion
