@@ -2664,3 +2664,9 @@ Entries:
   - {message: Fixed ghosts being able interact with objects., type: Fix}
   id: 475
   time: '2021-10-24T02:29:38.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: It is no longer advised to anger the magically-inclined janitorial staff.,
+    type: Tweak}
+  id: 476
+  time: '2021-10-24T02:34:31.0000000+00:00'
