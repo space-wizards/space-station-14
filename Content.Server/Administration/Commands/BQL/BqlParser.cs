@@ -18,6 +18,7 @@ namespace Content.Server.Administration.Commands.BQL
             ParentedTo,
             Prototyped,
             Tagged,
+            Select,
             Do,
             String,
         }
@@ -44,6 +45,7 @@ namespace Content.Server.Administration.Commands.BQL
                     _ when inp.StartsWith("parented_to ") => new Tuple<string, Token>(inp[11..], new Token(TokenKind.ParentedTo, "parented_to")),
                     _ when inp.StartsWith("prototyped ") => new Tuple<string, Token>(inp[10..], new Token(TokenKind.Prototyped, "prototyped")),
                     _ when inp.StartsWith("tagged ") => new Tuple<string, Token>(inp[6..], new Token(TokenKind.Tagged, "tagged")),
+                    _ when inp.StartsWith("select ") => new Tuple<string, Token>(inp[6..], new Token(TokenKind.Select, "select")),
                     _ when inp.StartsWith("do ") => new Tuple<string, Token>(inp[2..], new Token(TokenKind.Do, "do")),
                     _ => ExtractStringToken(inp)
                 };
@@ -150,6 +152,27 @@ namespace Content.Server.Administration.Commands.BQL
                         Token nt;
                         (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
                         entities = entities.Where(e => e.Prototype?.ID == nt.Text);
+                        break;
+                    }
+                    case TokenKind.Select:
+                    {
+                        Token nt;
+                        (remainingQuery, nt) = Token.ExtractOneToken(remainingQuery);
+                        entities = entities.OrderBy(a => Guid.NewGuid()); //Cheeky way of randomizing.
+                        if (int.TryParse(nt.Text, out var x))
+                        {
+                            entities = entities.Take(x);
+                        }
+                        else if (nt.Text.Last() == '%' && int.TryParse(nt.Text[..^1], out x))
+                        {
+                            var enumerable = entities.ToArray();
+                            var amount = (int)Math.Floor(enumerable.Length * (x * 0.01));
+                            entities = enumerable.Take(amount);
+                        }
+                        else
+                        {
+                            throw new Exception("The value " + nt.Text + " is not a valid number nor a valid percentage.");
+                        }
                         break;
                     }
                     case TokenKind.Do:
