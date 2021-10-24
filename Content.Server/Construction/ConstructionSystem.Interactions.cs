@@ -107,7 +107,7 @@ namespace Content.Server.Construction
                 return HandleResult.False;
 
             if (HandleStep(uid, ev, step, out var user, construction)
-                is var handle and (HandleResult.False or HandleResult.DoAfter))
+                is var handle and not HandleResult.True)
                 return handle;
 
             // We increase the step index, meaning we move to the next step!
@@ -357,7 +357,7 @@ namespace Content.Server.Construction
             UpdatePathfinding(uid, construction);
         }
 
-        private void UpdateSteps()
+        private void UpdateInteractions()
         {
             // We iterate all entities waiting for their interactions to be handled.
             // This is much more performant than making an EntityQuery for ConstructionComponent,
