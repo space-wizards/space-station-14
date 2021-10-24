@@ -2659,3 +2659,8 @@ Entries:
   - {message: Placing cables on lattices works again, type: Fix}
   id: 474
   time: '2021-10-24T00:32:33.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed ghosts being able interact with objects., type: Fix}
+  id: 475
+  time: '2021-10-24T02:29:38.0000000+00:00'
