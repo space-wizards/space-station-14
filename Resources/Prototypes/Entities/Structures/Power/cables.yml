@@ -153,3 +153,48 @@
     visuals:
     - type: CableVisualizer
       base: lvcable_
+
+- type: entity
+  parent: CableBase
+  id: CableApcExtensionLocal
+  name: LV extension cable
+  description: A cable used to directly connect machines to an APC.
+  components:
+  - type: Sprite
+    color: Green
+    sprite: Structures/Power/Cables/lv_cable.rsi
+    state: lvcable_0
+  - type: Icon
+    color: Green
+    sprite: Structures/Power/Cables/lv_cable.rsi
+    state: lvcable_4
+  - type: NodeContainer
+    nodes:
+      power:
+        !type:CableNode
+        nodeGroupID: Apc
+  - type: Cable
+    cableDroppedOnCutPrototype: CableApcStack1
+    cableType: Apc
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableApcStack1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Appearance
+    visuals:
+    - type: CableVisualizer
+      base: lvcable_
+  - type: ExtensionCableProvider
+    transferRange: 1
+  - type: PowerProvider
+    voltage: Apc
+    powerTransferRange: 1
