@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Conditions
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out ToiletComponent? toilet))
-                return true;
+                return false;
 
             return !toilet.LidOpen;
         }
