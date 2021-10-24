@@ -1,0 +1,38 @@
+- type: entity
+  id: supermatter
+  name: Supermatter
+  description: A Yellow Crystal of Death
+  components:
+    - type: Supermatter
+    - type: Physics
+      bodyType: Dynamic
+      fixtures:
+      - shape:
+          !type:PhysShapeAabb
+            bounds: "-0.25,-0.5,0.25,0.5"
+        mass: 100
+        layer:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+          - Opaque
+        mask:
+          - Impassable
+          - MobImpassable
+          - VaultImpassable
+    - type: CollisionWake
+      enabled: false
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Anchorable
+    - type: Pullable
+    - type: Sprite
+      drawdepth: 2
+      layers:
+      - texture: "Structures/Power/Generation/supermatter/supermatter.png"
+    - type: PointLight
+      enabled: true
+      radius: 10
+      energy: 5
+      color: "#d9ce00"
+    #- type: RgbLightController
