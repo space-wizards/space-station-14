@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Smoke
   name: smoke
   abstract: true
@@ -102,7 +102,9 @@
     snap:
       - Wall
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
