@@ -153,10 +153,9 @@ namespace Content.Server.Atmos.EntitySystems
 
         public void Resist(EntityUid uid,
             FlammableComponent? flammable = null,
-            StunnableComponent? stunnable = null,
             ServerAlertsComponent? alerts = null)
         {
-            if (!Resolve(uid, ref flammable, ref stunnable))
+            if (!Resolve(uid, ref flammable, ref alerts))
                 return;
 
             if (!flammable.OnFire || !_actionBlockerSystem.CanInteract(flammable.Owner) || flammable.Resisting)
@@ -165,7 +164,7 @@ namespace Content.Server.Atmos.EntitySystems
             flammable.Resisting = true;
 
             flammable.Owner.PopupMessage(Loc.GetString("flammable-component-resist-message"));
-            _stunSystem.Paralyze(uid, TimeSpan.FromSeconds(2f), stunnable, alerts);
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f), alerts: alerts);
 
             // TODO FLAMMABLE: Make this not use TimerComponent...
             flammable.Owner.SpawnTimer(2000, () =>
@@ -186,7 +185,7 @@ namespace Content.Server.Atmos.EntitySystems
             _timer -= UpdateTime;
 
             // TODO: This needs cleanup to take off the crust from TemperatureComponent and shit.
-            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, PhysicsComponent, ITransformComponent>())
+            foreach (var (flammable, physics, transform) in EntityManager.EntityQuery<FlammableComponent, IPhysBody, ITransformComponent>())
             {
                 var uid = flammable.Owner.Uid;
 
@@ -201,7 +200,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (!flammable.OnFire)
                 {
                     status?.ClearAlert(AlertType.Fire);
-                    return;
+                    continue;
                 }
 
                 status?.ShowAlert(AlertType.Fire);
@@ -222,7 +221,7 @@ namespace Content.Server.Atmos.EntitySystems
                 else
                 {
                     Extinguish(uid, flammable);
-                    return;
+                    continue;
                 }
 
                 var air = _atmosphereSystem.GetTileMixture(transform.Coordinates);
@@ -231,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
                 if (air == null || air.GetMoles(Gas.Oxygen) < 1f)
                 {
                     Extinguish(uid, flammable);
-                    return;
+                    continue;
                 }
 
                 _atmosphereSystem.HotspotExpose(transform.Coordinates, 700f, 50f, true);

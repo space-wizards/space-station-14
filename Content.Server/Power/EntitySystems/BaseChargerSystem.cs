@@ -26,7 +26,7 @@ namespace Content.Server.Power.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<BaseCharger>(true))
+            foreach (var comp in EntityManager.EntityQuery<BaseCharger>())
             {
                 comp.OnUpdate(frameTime);
             }

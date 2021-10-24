@@ -177,15 +177,13 @@ namespace Content.Server.Chemistry.Components
         private ChemMasterBoundUserInterfaceState GetUserInterfaceState()
         {
             var beaker = BeakerContainer.ContainedEntity;
-            EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution);
-            // TODO this is just a guess
-            if (beaker == null || beakerSolution == null)
+            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
                     BufferSolution.TotalVolume);
             }
-
 
             return new ChemMasterBoundUserInterfaceState(Powered, true, beakerSolution.CurrentVolume,
                 beakerSolution.MaxVolume,
@@ -228,10 +226,8 @@ namespace Content.Server.Chemistry.Components
             if (!HasBeaker && _bufferModeTransfer) return;
             var beaker = BeakerContainer.ContainedEntity;
 
-            if (beaker is null)
-                return;
-
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, SolutionName, out var beakerSolution))
+            if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
                 return;
 
             if (isBuffer)
@@ -342,7 +338,7 @@ namespace Content.Server.Chemistry.Components
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
-                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "pill");
+                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "food");
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
 
                     //Try to give them the bottle

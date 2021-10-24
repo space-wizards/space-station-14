@@ -37,6 +37,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -85,6 +86,11 @@
         animatedPanel: false
         openUnlitVisible: true
       - type: WiresVisualizer
+  - type: Airtight
+    fixVacuum: true
+    noAirWhenFullyAirBlocked: false
+    airBlockedDirection:
+      - South
   - type: Construction
     graph: windoor
     node: windoor
@@ -94,11 +100,6 @@
   parent: BaseWindoor
   abstract: true
   components:
-  - type: Airtight
-    fixVacuum: true
-    noAirWhenFullyAirBlocked: false
-    airBlockedDirection:
-    - South
   - type: Sprite
     netsync: false
     drawdepth: FloorObjects

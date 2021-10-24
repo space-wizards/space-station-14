@@ -1,68 +1,56 @@
 using System;
-using Content.Client.Wall.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
+using Robust.Shared.Log;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Window
 {
     [UsedImplicitly]
     public sealed class WindowVisualizer : AppearanceVisualizer
     {
+        [DataField("crackRsi")]
+        public ResourcePath CrackRsi { get; } = new ("/Textures/Structures/Windows/cracks.rsi");
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            if (!entity.TryGetComponent(out ISpriteComponent? sprite))
+                return;
+
+            sprite.LayerMapReserveBlank(WindowDamageLayers.Layer);
+            sprite.LayerSetVisible(WindowDamageLayers.Layer, false);
+            sprite.LayerSetRSI(WindowDamageLayers.Layer, CrackRsi);
+        }
+
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
 
-            var sprite = component.Owner.GetComponent<ISpriteComponent>();
-            if (!component.Owner.Transform.Anchored)
-                return;
-
-            var lowWall = FindLowWall(IoCManager.Resolve<IMapManager>(), component.Owner.Transform);
-            if (lowWall == null)
+            if (!component.Owner.TryGetComponent(out ISpriteComponent? sprite))
                 return;
 
             if (component.TryGetData(WindowVisuals.Damage, out float fraction))
             {
-                var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 7), 5);
+                var level = Math.Min(ContentHelpers.RoundToLevels(fraction, 1, 5), 3);
+
                 if (level == 0)
                 {
-                    foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
-                    {
-                        if (val == null) continue;
-                        sprite.LayerSetVisible((WindowDamageLayers) val, false);
-                    }
+                    sprite.LayerSetVisible(WindowDamageLayers.Layer, false);
                     return;
                 }
-                foreach (var val in Enum.GetValues(typeof(WindowDamageLayers)))
-                {
-                    if (val == null) continue;
-                    sprite.LayerSetVisible((WindowDamageLayers) val, true);
-                }
 
-                sprite.LayerSetState(WindowDamageLayers.DamageNE, $"{(int) lowWall.LastCornerNE}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageSE, $"{(int) lowWall.LastCornerSE}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageSW, $"{(int) lowWall.LastCornerSW}_{level}");
-                sprite.LayerSetState(WindowDamageLayers.DamageNW, $"{(int) lowWall.LastCornerNW}_{level}");
-
+                sprite.LayerSetVisible(WindowDamageLayers.Layer, true);
+                sprite.LayerSetState(WindowDamageLayers.Layer, $"{level}");
             }
         }
 
-        private static LowWallComponent? FindLowWall(IMapManager mapManager, ITransformComponent transform)
+        public enum WindowDamageLayers : byte
         {
-            var grid = mapManager.GetGrid(transform.GridID);
-            var coords = transform.Coordinates;
-            foreach (var entity in grid.GetLocal(coords))
-            {
-                if (transform.Owner.EntityManager.TryGetComponent(entity, out LowWallComponent? lowWall))
-                {
-                    return lowWall;
-                }
-            }
-            return null;
+            Layer,
         }
     }
 }

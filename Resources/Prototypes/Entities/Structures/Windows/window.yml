@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Window
   parent: BaseStructure
   name: window
@@ -8,9 +8,10 @@
     snap:
     - Window
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: Sprite
-    color: "#DDDDDD"
     netsync: false
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
@@ -37,7 +38,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
@@ -50,8 +51,10 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Airtight
-  - type: Window
+  - type: IconSmooth
+    key: windows
     base: window
+  - type: Window
   - type: Construction
     graph: window
     node: window

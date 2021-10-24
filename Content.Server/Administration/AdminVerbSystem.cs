@@ -38,7 +38,6 @@ namespace Content.Server.Administration
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly EuiManager _euiManager = default!;
         [Dependency] private readonly GhostRoleSystem _ghostRoleSystem = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
 
         public override void Initialize()
         {
