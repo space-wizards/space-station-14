@@ -123,7 +123,7 @@ namespace Content.Server.MachineLinking.System
                         !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
@@ -163,7 +163,7 @@ namespace Content.Server.MachineLinking.System
                         !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner))
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
                         return;
                     LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
                         portSelected.Port);
