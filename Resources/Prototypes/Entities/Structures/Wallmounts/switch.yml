@@ -43,3 +43,27 @@
   placement:
     snap:
     - Wallmount
+
+- type: entity
+  id: ApcNetSwitch
+  name: apc net switch
+  description: Its a switch for toggling lights that are connected to the same apc.
+  components:
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+    - type: Sprite
+      sprite: Structures/Wallmounts/switch.rsi
+      state: on
+    - type: Rotatable
+    - type: Construction
+      graph: lightSwitch
+      node: lightSwitch
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+    - type: ApcNetworkConnection
+    - type: ApcNetSwitch
+  placement:
+    snap:
+      - Wallmount

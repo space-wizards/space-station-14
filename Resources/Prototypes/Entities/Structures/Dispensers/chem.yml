@@ -10,3 +10,4 @@
   - type: ReagentDispenser
     pack: ChemDispenserStandardInventory
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver

@@ -50,9 +50,6 @@
       power:
         !type:CableNode
         nodeGroupID: HVPower
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: Cable
     cableDroppedOnCutPrototype: CableHVStack1
     cableType: HighVoltage
@@ -93,9 +90,6 @@
       power:
         !type:CableNode
         nodeGroupID: MVPower
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: Cable
     cableDroppedOnCutPrototype: CableMVStack1
     cableType: MediumVoltage
@@ -136,11 +130,9 @@
       power:
         !type:CableNode
         nodeGroupID: Apc
-      wire:
-        !type:AdjacentNode
-        nodeGroupID: WireNet
   - type: PowerProvider
     voltage: Apc
+  - type: ExtensionCableProvider
   - type: Cable
     cableDroppedOnCutPrototype: CableApcStack1
     cableType: Apc
