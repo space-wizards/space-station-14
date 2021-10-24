@@ -17,9 +17,10 @@ namespace Content.Server.Construction.Conditions
         [DataField("value")]
         public bool Value { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out AirlockComponent? airlock)) return true;
+            if (!entityManager.TryGetComponent(uid, out AirlockComponent? airlock))
+                return true;
 
             return airlock.BoltsDown == Value;
         }

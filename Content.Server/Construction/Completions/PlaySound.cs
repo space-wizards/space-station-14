@@ -16,9 +16,9 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            SoundSystem.Play(Filter.Pvs(entity), Sound.GetSound(), entity, AudioHelpers.WithVariation(0.125f));
+            SoundSystem.Play(Filter.Pvs(uid), Sound.GetSound(), uid, AudioHelpers.WithVariation(0.125f));
         }
     }
 }

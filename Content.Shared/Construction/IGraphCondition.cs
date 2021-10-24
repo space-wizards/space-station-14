@@ -1,12 +1,13 @@
-﻿using System.Threading.Tasks;
-using Content.Shared.Examine;
+﻿using Content.Shared.Examine;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.Construction
 {
+    [ImplicitDataDefinitionForInheritors]
     public interface IGraphCondition
     {
-        Task<bool> Condition(IEntity entity);
+        bool Condition(EntityUid uid, IEntityManager entityManager);
         bool DoExamine(ExaminedEvent args) { return false; }
     }
 }

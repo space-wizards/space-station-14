@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Server.DoAfter;
-using Content.Server.Tools;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Steps;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Server.Construction
 {
@@ -78,6 +76,7 @@ namespace Content.Server.Construction
                 if (HandleEdge(uid, ev, edge, construction) is var result and (HandleResult.True or HandleResult.DoAfter))
                 {
                     construction.EdgeIndex = i;
+                    UpdatePathfinding(uid, construction);
                     return result;
                 }
             }
@@ -119,6 +118,7 @@ namespace Content.Server.Construction
             {
                 // Edge finished!
                 PerformActions(uid, user, edge.Completed);
+                construction.TargetEdgeIndex = null;
                 construction.EdgeIndex = null;
                 construction.StepIndex = 0;
 
@@ -146,6 +146,8 @@ namespace Content.Server.Construction
                 return handle;
 
             PerformActions(uid, user, step.Completed);
+
+            UpdatePathfinding(uid, construction);
 
             return HandleResult.True;
         }
@@ -319,32 +321,40 @@ namespace Content.Server.Construction
             return HandleResult.False;
         }
 
-        private bool CheckConditions(EntityUid uid, IEnumerable<IGraphCondition> conditions)
+        public bool CheckConditions(EntityUid uid, IEnumerable<IGraphCondition> conditions)
         {
-            var entity = EntityManager.GetEntity(uid);
-
             foreach (var condition in conditions)
             {
-                if (!condition.Condition(entity))
+                if (!condition.Condition(uid, EntityManager))
                     return false;
             }
 
             return true;
         }
 
-        private void PerformActions(EntityUid uid, EntityUid? userUid, IEnumerable<IGraphAction> actions)
+        public void PerformActions(EntityUid uid, EntityUid? userUid, IEnumerable<IGraphAction> actions)
         {
-            var entity = EntityManager.GetEntity(uid);
-            var userEntity = userUid is {} user ? EntityManager.GetEntity(user) : null;
-
             foreach (var action in actions)
             {
-                if (entity.Deleted)
+                // If an action deletes the entity, we stop performing actions.
+                if (!EntityManager.EntityExists(uid))
                     break;
 
                 // TODO: Change this signature, make it not use IEntity...
-                action.PerformAction(entity, userEntity);
+                action.PerformAction(uid, userUid, EntityManager);
             }
+        }
+
+        public void ResetEdge(EntityUid uid, ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction))
+                return;
+
+            construction.TargetEdgeIndex = null;
+            construction.EdgeIndex = null;
+            construction.StepIndex = 0;
+
+            UpdatePathfinding(uid, construction);
         }
 
         private void UpdateSteps()

@@ -20,12 +20,20 @@ namespace Content.Server.Construction
         {
         }
 
+        public bool AddContainer(EntityUid uid, string container, ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction))
+                return false;
+
+            return construction.Containers.Add(container);
+        }
+
         public ConstructionGraphPrototype? GetCurrentGraph(EntityUid uid, ConstructionComponent? construction = null)
         {
             if (!Resolve(uid, ref construction, false))
                 return null;
 
-            return _prototypeManager.TryIndex(construction.GraphIdentifier, out ConstructionGraphPrototype? graph) ? graph : null;
+            return _prototypeManager.TryIndex(construction.Graph, out ConstructionGraphPrototype? graph) ? graph : null;
         }
 
         public ConstructionGraphNode? GetCurrentNode(EntityUid uid, ConstructionComponent? construction = null)
@@ -59,6 +67,34 @@ namespace Content.Server.Construction
                 return null;
 
             return GetStepFromEdge(edge, construction.StepIndex);
+        }
+
+        public ConstructionGraphNode? GetTargetNode(EntityUid uid, ConstructionComponent? construction)
+        {
+            if (!Resolve(uid, ref construction))
+                return null;
+
+            if (construction.TargetNode is not {} targetNodeId)
+                return null;
+
+            if (GetCurrentGraph(uid, construction) is not {} graph)
+                return null;
+
+            return GetNodeFromGraph(graph, targetNodeId);
+        }
+
+        public ConstructionGraphEdge? GetTargetEdge(EntityUid uid, ConstructionComponent? construction)
+        {
+            if (!Resolve(uid, ref construction))
+                return null;
+
+            if (construction.TargetEdgeIndex is not {} targetEdgeIndex)
+                return null;
+
+            if (GetCurrentNode(uid, construction) is not {} node)
+                return null;
+
+            return GetEdgeFromNode(node, targetEdgeIndex);
         }
 
         public (ConstructionGraphEdge? edge, ConstructionGraphStep? step) GetCurrentEdgeAndStep(EntityUid uid,
@@ -106,9 +142,14 @@ namespace Content.Server.Construction
             if(performActions)
                 PerformActions(uid, userUid, node.Actions);
 
-            if(node.Entity is {} newEntity)
+            if (node.Entity is {} newEntity)
+            {
+                // ChangeEntity will handle the pathfinding update.
                 ChangeEntity(uid, userUid, newEntity, construction);
+                return true;
+            }
 
+            UpdatePathfinding(uid, construction);
             return true;
         }
 
@@ -122,11 +163,11 @@ namespace Content.Server.Construction
                 return null;
 
             if (metaData.EntityPrototype == null || newEntity == metaData.EntityPrototype.ID
-            || _prototypeManager.HasIndex<EntityPrototype>(newEntity))
+            || !_prototypeManager.HasIndex<EntityPrototype>(newEntity))
                 return null;
 
             // Optional resolves.
-            Resolve(uid, ref containerManager);
+            Resolve(uid, ref containerManager, false);
 
             // We create the new entity.
             var newUid = EntityManager.SpawnEntity(newEntity, transform.Coordinates).Uid;
@@ -135,7 +176,10 @@ namespace Content.Server.Construction
             var newConstruction = EntityManager.EnsureComponent<ConstructionComponent>(newUid);
 
             // We set the graph and node accordingly... Then we append our containers to theirs.
-            ChangeGraph(newUid, userUid, construction.GraphIdentifier, construction.Node, false, newConstruction);
+            ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
+
+            if (construction.TargetNode is {} targetNode)
+                SetPathfindingTarget(newUid, targetNode, newConstruction);
 
             // Transfer all construction-owned containers.
             newConstruction.Containers.UnionWith(construction.Containers);
@@ -193,7 +237,7 @@ namespace Content.Server.Construction
             if(GetNodeFromGraph(graph, nodeId) is not {} node)
                 return false;
 
-            construction.GraphIdentifier = graphId;
+            construction.Graph = graphId;
             return ChangeNode(uid, userUid, nodeId, performActions, construction);
         }
     }

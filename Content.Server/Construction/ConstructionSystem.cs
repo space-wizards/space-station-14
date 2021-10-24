@@ -62,8 +62,57 @@ namespace Content.Server.Construction
 
             SubscribeNetworkEvent<TryStartStructureConstructionMessage>(HandleStartStructureConstruction);
             SubscribeNetworkEvent<TryStartItemConstructionMessage>(HandleStartItemConstruction);
+
+            SubscribeLocalEvent<ConstructionComponent, ComponentInit>(OnConstructionInit);
+            SubscribeLocalEvent<ConstructionComponent, ComponentStartup>(OnConstructionStartup);
             SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        private void OnConstructionInit(EntityUid uid, ConstructionComponent construction, ComponentInit args)
+        {
+            if (GetCurrentGraph(uid, construction) is not {} graph)
+            {
+                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid graph specified.");
+                return;
+            }
+
+            if (GetNodeFromGraph(graph, construction.Node) is not {} node)
+            {
+                _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid node specified.");
+                return;
+            }
+
+            ConstructionGraphEdge? edge = null;
+            if (construction.EdgeIndex is {} edgeIndex)
+            {
+                if (GetEdgeFromNode(node, edgeIndex) is not {} currentEdge)
+                {
+                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid edge index specified.");
+                    return;
+                }
+
+                edge = currentEdge;
+            }
+
+            if (construction.TargetNode is {} targetNodeId)
+            {
+                if (GetNodeFromGraph(graph, targetNodeId) is not { } targetNode)
+                {
+                    _sawmill.Warning($"Prototype {construction.Owner.Prototype?.ID}'s construction component has an invalid target node specified.");
+                    return;
+                }
+
+                UpdatePathfinding(uid, graph, node, targetNode, edge, construction);
+            }
+        }
+
+        private void OnConstructionStartup(EntityUid uid, ConstructionComponent construction, ComponentStartup args)
+        {
+            if (GetCurrentNode(uid, construction) is not {} node)
+                return;
+
+            PerformActions(uid, null, node.Actions);
         }
 
         public override void Update(float frameTime)
@@ -78,8 +127,8 @@ namespace Content.Server.Construction
             if (!args.CanAccess)
                 return;
 
-            if (component.Target?.Name == component.DeconstructionNodeIdentifier ||
-                component.Node?.Name == component.DeconstructionNodeIdentifier)
+            if (component.TargetNode == component.DeconstructionNode ||
+                component.Node == component.DeconstructionNode)
                 return;
 
             Verb verb = new();
@@ -90,8 +139,8 @@ namespace Content.Server.Construction
 
             verb.Act = () =>
             {
-                component.SetNewTarget(component.DeconstructionNodeIdentifier);
-                if (component.Target == null)
+                SetPathfindingTarget(uid, component.DeconstructionNode, component);
+                if (component.TargetNode == null)
                 {
                     // Maybe check, but on the flip-side a better solution might be to not make it undeconstructible in the first place, no?
                     component.Owner.PopupMessage(args.User, Loc.GetString("deconstructible-verb-activate-no-target-text"));
@@ -107,51 +156,37 @@ namespace Content.Server.Construction
 
         private void HandleConstructionExamined(EntityUid uid, ConstructionComponent component, ExaminedEvent args)
         {
-            if (component.Target != null)
+            if (GetTargetNode(uid, component) is {} target)
             {
                 args.PushMarkup(Loc.GetString(
                     "construction-component-to-create-header",
-                    ("targetName", component.Target.Name)) + "\n");
+                    ("targetName", target.Name)) + "\n");
             }
 
-            if (component.EdgeIndex == null && component.TargetNextEdge != null)
+            if (component.EdgeIndex == null && GetTargetEdge(uid, component) is {} targetEdge)
             {
                 var preventStepExamine = false;
 
-                foreach (var condition in component.TargetNextEdge.Conditions)
+                foreach (var condition in targetEdge.Conditions)
                 {
                     preventStepExamine |= condition.DoExamine(args);
                 }
 
                 if (!preventStepExamine)
-                    component.TargetNextEdge.Steps[0].DoExamine(args);
+                    targetEdge.Steps[0].DoExamine(args);
                 return;
             }
 
-            if (component.EdgeIndex != null)
+            if (GetCurrentEdge(uid, component) is {} edge)
             {
                 var preventStepExamine = false;
 
-                foreach (var condition in component.EdgeIndex.Conditions)
+                foreach (var condition in edge.Conditions)
                 {
                     preventStepExamine |= condition.DoExamine(args);
                 }
 
                 if (preventStepExamine) return;
-            }
-
-            if (component.EdgeNestedStepProgress == null)
-            {
-                if (component.StepIndex < component.EdgeIndex?.Steps.Count)
-                    component.EdgeIndex.Steps[component.StepIndex].DoExamine(args);
-                return;
-            }
-
-            foreach (var list in component.EdgeNestedStepProgress)
-            {
-                if(list.Count == 0) continue;
-
-                list[0].DoExamine(args);
             }
         }
 
@@ -352,7 +387,7 @@ namespace Content.Server.Construction
             var construction = newEntity.GetComponent<ConstructionComponent>();
 
             // We attempt to set the pathfinding target.
-            construction.Target = targetNode;
+            construction.TargetNode = targetNode.Name;
 
             // We preserve the containers...
             foreach (var (name, cont) in containers)
@@ -374,14 +409,14 @@ namespace Content.Server.Construction
             {
                 foreach (var completed in step.Completed)
                 {
-                    await completed.PerformAction(newEntity, user);
+                    completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
                 }
             }
 
             // And we also have edge completed effects!
             foreach (var completed in edge.Completed)
             {
-                await completed.PerformAction(newEntity, user);
+                completed.PerformAction(newEntity.Uid, user.Uid, EntityManager);
             }
 
             return newEntity;

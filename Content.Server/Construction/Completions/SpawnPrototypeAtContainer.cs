@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,16 +16,18 @@ namespace Content.Server.Construction.Completions
         [DataField("container")] public string Container { get; } = string.Empty;
         [DataField("amount")] public int Amount { get; } = 1;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted || string.IsNullOrEmpty(Container) || string.IsNullOrEmpty(Prototype))
+            if (string.IsNullOrEmpty(Container) || string.IsNullOrEmpty(Prototype))
                 return;
 
-            var container = entity.EnsureContainer<Container>(Container);
+            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+            var container = containerSystem.EnsureContainer<Container>(uid, Container);
 
+            var coordinates = entityManager.GetComponent<ITransformComponent>(uid).Coordinates;
             for (var i = 0; i < Amount; i++)
             {
-                container.Insert(entity.EntityManager.SpawnEntity(Prototype, entity.Transform.Coordinates));
+                container.Insert(entityManager.SpawnEntity(Prototype, coordinates));
             }
         }
     }

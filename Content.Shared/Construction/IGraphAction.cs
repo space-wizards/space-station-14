@@ -5,6 +5,6 @@ namespace Content.Shared.Construction
 {
     public interface IGraphAction
     {
-        Task PerformAction(IEntity entity, IEntity? user);
+        void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager);
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection.Metadata;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -57,6 +58,21 @@ namespace Content.Shared.Construction.Prototypes
         public bool TryPath(string startNode, string finishNode, [NotNullWhen(true)] out ConstructionGraphNode[]? path)
         {
             return (path = Path(startNode, finishNode)) != null;
+        }
+
+        public string[]? PathId(string startNode, string finishNode)
+        {
+            if (Path(startNode, finishNode) is not {} path)
+                return null;
+
+            var nodes = new string[path.Length];
+
+            for (var i = 0; i < path.Length; i++)
+            {
+                nodes[i] = path[i].Name;
+            }
+
+            return nodes;
         }
 
         public ConstructionGraphNode[]? Path(string startNode, string finishNode)

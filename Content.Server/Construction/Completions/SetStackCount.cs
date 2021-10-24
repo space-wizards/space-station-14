@@ -13,11 +13,9 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("amount")] public int Amount { get; } = 1;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted) return;
-
-            EntitySystem.Get<StackSystem>().SetCount(entity.Uid, Amount);
+            EntitySystem.Get<StackSystem>().SetCount(uid, Amount);
         }
     }
 }

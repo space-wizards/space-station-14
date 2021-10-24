@@ -41,6 +41,18 @@ namespace Content.Shared.Construction
             return null;
         }
 
+        public int? GetEdgeIndex(string target)
+        {
+            for (var i = 0; i < _edges.Length; i++)
+            {
+                var edge = _edges[i];
+                if (edge.Target == target)
+                    return i;
+            }
+
+            return null;
+        }
+
         public bool TryGetEdge(string target, [NotNullWhen(true)] out ConstructionGraphEdge? edge)
         {
             return (edge = GetEdge(target)) != null;
