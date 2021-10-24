@@ -28,6 +28,7 @@ namespace Content.Server.Actions.Actions
            if (args.Performer.TryGetComponent<GuardianSharedComponent>(out GuardianSharedComponent? comp))
            {
                 EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(comp.Guardian, comp.Host, comp.Guardianloose);
+                comp.Guardianloose = !comp.Guardianloose;
                 args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
            }
            else

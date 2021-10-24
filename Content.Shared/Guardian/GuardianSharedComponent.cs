@@ -21,6 +21,6 @@ namespace Content.Shared.Guardian
 
         public float CurrentDistance;
 
-        public bool Guardianloose;
+        public bool Guardianloose = false;
     }
 }

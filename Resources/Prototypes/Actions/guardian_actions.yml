@@ -7,5 +7,5 @@
     - guardian
   behaviorType: Instant
   behavior: !type:ToggleGuarduanAction
-  cooldown: 5
+    cooldown: 2.5
   

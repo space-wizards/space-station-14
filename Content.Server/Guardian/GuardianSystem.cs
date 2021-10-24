@@ -1,5 +1,6 @@
 using Content.Server.Actions.Actions;
 using Content.Server.Lathe.Components;
+using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Guardian;
@@ -45,6 +46,10 @@ namespace Content.Server.Guardian
                         shared.Guardian = guardian.Uid;
                         shared.Host = args.User.Uid;
                         shared.AllowedDistance = component.GuardianTetherDistance;
+                        var guardianshared = guardian.AddComponent<GuardianSharedComponent>();
+                        guardianshared.Guardian = guardian.Uid;
+                        guardianshared.Host = args.User.Uid;
+                        guardianshared.AllowedDistance = component.GuardianTetherDistance;
                         args.User.PopupMessage(Loc.GetString("guardian-created"));
                         action.Grant(ActionType.ManifestGuardian);
                     }
@@ -66,17 +71,18 @@ namespace Content.Server.Guardian
 
         public void OnGuardianManifestAction(EntityUid guardian, EntityUid host, bool guardianloose)
         {
+            //the loose parameter toggling is inside the action
             if (guardianloose == false)
             {
                 //Ejects the guardian if it isn't inside
-                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().EjectBody();
-                guardianloose = true;
+                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().EjectBody();  
             }
             else if (guardianloose == true)
             {
                 //Recalls guardian if it's outside
-                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().InsertBody(EntityManager.GetEntity(guardian));
-                guardianloose = false;
+                //Message first otherwise it's a dead giveaway
+                EntityManager.GetEntity(guardian).PopupMessageEveryone(Loc.GetString("guardian-entity-recall"));
+                EntityManager.GetEntity(host).GetComponent<GuardianHostComponent>().GuardianContainer.Insert(EntityManager.GetEntity(guardian));         
             }
         }
     }
