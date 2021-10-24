@@ -2677,3 +2677,8 @@ Entries:
       a backpack.)', type: Add}
   id: 477
   time: '2021-10-24T05:42:47.0000000+00:00'
+- author: moony
+  changes:
+  - {message: pipes can once again be picked up, type: Add}
+  id: 478
+  time: '2021-10-24T06:28:20.0000000+00:00'
