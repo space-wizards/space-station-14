@@ -1,0 +1,42 @@
+- type: entity
+  id: AirAlarm
+  placement:
+    snap:
+    - Wallmount
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+    frequency: 1621
+  - type: ApcNetworkConnection
+  - type: AtmosMonitor
+    temperatureThreshold: stationTemperature
+    pressureThreshold: stationPressure
+    gasThresholds:
+      Oxygen: stationOxygen
+      Nitrogen: ignore
+      CarbonDioxide: stationCO2
+      Plasma: danger # everything below is usually bad
+      Tritium: danger
+      WaterVapor: danger
+  - type: AtmosAlarmable
+    alarmedBy: ["AirAlarm"]
+  - type: AtmosDevice
+  - type: Appearance
+    visuals:
+    - type: AtmosMonitorVisualizer
+      layerMap: "airAlarmBase"
+      alarmStates:
+        Normal: alarm0
+        Warning: alarm2
+        Danger: alarm1
+      setOnDepowered:
+        airAlarmBase: alarmp
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: alarm0
+      map: ["airAlarmBase"] # TODO: fire alarm enum
+  - type: Transform
+    anchored: true

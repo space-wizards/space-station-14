@@ -1,8 +1,11 @@
-﻿using Content.Server.Doors.Components;
+﻿using Content.Server.Atmos.Monitor.Systems;
+using Content.Server.Doors.Components;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 
 namespace Content.Server.Doors.Systems
 {
@@ -18,6 +21,7 @@ namespace Content.Server.Doors.Systems
             SubscribeLocalEvent<FirelockComponent, DoorClickShouldActivateEvent>(OnDoorClickShouldActivate);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorPryEvent>(OnBeforeDoorPry);
             SubscribeLocalEvent<FirelockComponent, BeforeDoorAutoCloseEvent>(OnBeforeDoorAutoclose);
+            SubscribeLocalEvent<FirelockComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
         }
 
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
@@ -62,8 +66,22 @@ namespace Content.Server.Doors.Systems
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)
         {
-            // Firelocks can't autoclose, they must be manually closed
-            args.Cancel();
+            // Make firelocks autoclose, but only if the last alarm type it
+            // remembers was a danger. This is to prevent people from
+            // flooding hallways with endless bad air/fire.
+            if (component.LastAlarmState != AtmosMonitorAlarmType.Danger)
+                args.Cancel();
+        }
+
+        private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
+        {
+            if (component.DoorComponent == null) return;
+            component.LastAlarmState = args.HighestNetworkType;
+
+            if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+                component.DoorComponent.Open();
+            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+                component.EmergencyPressureStop();
         }
     }
 }

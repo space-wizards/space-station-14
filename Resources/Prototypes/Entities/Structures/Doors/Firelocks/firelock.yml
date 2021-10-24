@@ -4,6 +4,16 @@
   name: firelock
   description: Apply crowbar.
   components:
+    - type: AtmosAlarmable
+      alarmedBy:
+      - FireAlarm
+      - AirAlarm
+    - type: ApcPowerReceiver
+    - type: ExtensionCableReceiver
+    - type: DeviceNetworkComponent
+      deviceNetId: Apc
+      frequency: 1621
+    - type: ApcNetworkConnection
     - type: InteractionOutline
     - type: Damageable
       damageContainer: Inorganic

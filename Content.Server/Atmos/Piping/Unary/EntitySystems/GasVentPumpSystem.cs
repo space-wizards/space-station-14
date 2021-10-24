@@ -1,10 +1,13 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Visuals;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -24,6 +27,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceUpdateEvent>(OnGasVentPumpUpdated);
             SubscribeLocalEvent<GasVentPumpComponent, AtmosDeviceDisabledEvent>(OnGasVentPumpLeaveAtmosphere);
+            SubscribeLocalEvent<GasVentPumpComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<GasVentPumpComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -99,6 +104,23 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 appearance.SetData(VentPumpVisuals.State, VentPumpState.Off);
             }
+        }
+
+        private void OnAtmosAlarm(EntityUid uid, GasVentPumpComponent component, AtmosMonitorAlarmEvent args)
+        {
+            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            {
+                component.Enabled = false;
+            }
+            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            {
+                component.Enabled = true;
+            }
+        }
+
+        private void OnPowerChanged(EntityUid uid, GasVentPumpComponent component, PowerChangedEvent args)
+        {
+            component.Enabled = args.Powered;
         }
     }
 }

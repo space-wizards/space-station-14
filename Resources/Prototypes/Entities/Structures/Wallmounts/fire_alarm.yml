@@ -1,0 +1,39 @@
+- type: entity
+  id: FireAlarm
+  placement:
+    snap:
+    - Wallmount
+  components:
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+    frequency: 1621
+  - type: ApcNetworkConnection
+  - type: AtmosMonitor
+    monitorFire: true
+    displayMaxAlarmInNet: true
+  - type: AtmosDevice
+  - type: AtmosAlarmable
+    alarmedBy: ["FireAlarm"] # alarm itself, network effect
+  - type: Clickable
+  - type: InteractionOutline
+  - type: FireAlarm
+  - type: Appearance
+    visuals:
+    - type: AtmosMonitorVisualizer
+      layerMap: "fireAlarmState"
+      alarmStates:
+        Normal: fire_off
+        Warning: fire_off # shouldn't be alarming at a warning
+        Danger: fire_on
+      hideOnDepowered: ["fireAlarmState"]
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    layers:
+    - state: fire0
+      map: ["fireAlarmBase"]
+    - state: fire_off
+      map: ["fireAlarmState"]
+  - type: Transform
+    anchored: true
