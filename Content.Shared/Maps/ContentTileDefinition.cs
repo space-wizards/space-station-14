@@ -42,6 +42,7 @@ namespace Content.Shared.Maps
         public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
 
         [DataField("is_space")] public bool IsSpace { get; private set; }
+        [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
         public void AssignTileId(ushort id)
         {

@@ -426,7 +426,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner);
+            return entityLookup.GetEntitiesIntersecting(Owner, LookupFlags.None);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

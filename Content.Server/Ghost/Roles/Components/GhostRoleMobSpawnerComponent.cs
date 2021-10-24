@@ -57,7 +57,8 @@ namespace Content.Server.Ghost.Roles.Components
 
             mind!.TransferTo(mob);
 
-            if (++_currentTakeovers < _availableTakeovers) return true;
+            if (++_currentTakeovers < _availableTakeovers)
+                return true;
 
             Taken = true;
 
