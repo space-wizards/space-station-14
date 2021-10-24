@@ -94,8 +94,8 @@ namespace Content.Server.Construction.Completions
             if (machine.TryGetComponent(out ConstructionComponent? construction))
             {
                 // We only add these two container. If some construction needs to take other containers into account, fix this.
-                constructionSystem.AddContainer(uid, MachineFrameComponent.BoardContainer, construction);
-                constructionSystem.AddContainer(uid, MachineFrameComponent.PartContainer, construction);
+                constructionSystem.AddContainer(machine.Uid, MachineFrameComponent.BoardContainer, construction);
+                constructionSystem.AddContainer(machine.Uid, MachineFrameComponent.PartContainer, construction);
             }
 
             if (machine.TryGetComponent(out MachineComponent? machineComp))
