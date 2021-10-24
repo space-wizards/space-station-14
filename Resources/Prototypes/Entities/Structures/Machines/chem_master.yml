@@ -17,6 +17,7 @@
     state: mixer_loaded
   - type: ChemMaster
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: InteractionOutline
   - type: Anchorable
   - type: Physics

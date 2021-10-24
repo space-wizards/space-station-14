@@ -49,6 +49,7 @@ namespace Content.Client.Entry
             "AccessReader",
             "IdCardConsole",
             "Airlock",
+            "AtmosFixMarker",
             "CablePlacer",
             "Drink",
             "Food",
@@ -282,12 +283,17 @@ namespace Content.Client.Entry
             "LitOnPowered",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
-            "DeviceNetworkConnection",
+            "DeviceNetworkComponent",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
+            "ExtensionCableReceiver",
+            "ExtensionCableProvider",
+            "ApcNetworkConnection",
+            "ApcNetSwitch",
             "HandLabeler",
             "Label",
             "GhostRadio",
+            "Armor"
         };
     }
 }

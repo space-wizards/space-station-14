@@ -9,8 +9,8 @@ namespace Content.Client.Cargo.UI
     {
         private readonly ItemList _accounts;
         private int _accountCount;
-        private string[] _accountNames = new string[] { };
-        private int[] _accountIds = new int[] { };
+        private string[] _accountNames = System.Array.Empty<string>();
+        private int[] _accountIds = System.Array.Empty<int>();
         private int _selectedAccountId = -1;
 
         public GalacticBankSelectionMenu(CargoConsoleBoundUserInterface owner)
@@ -20,7 +20,7 @@ namespace Content.Client.Cargo.UI
 
             Title = Loc.GetString("galactic-bank-selection-menu-title");
 
-            _accounts = new ItemList() { SelectMode = ItemList.ItemListSelectMode.Single };
+            _accounts = new ItemList { SelectMode = ItemList.ItemListSelectMode.Single };
 
             Contents.AddChild(_accounts);
         }

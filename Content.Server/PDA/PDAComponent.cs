@@ -11,8 +11,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.PDA
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IAccess))]
-    public class PDAComponent : Component, IAccess
+    public class PDAComponent : Component
     {
         public override string Name => "PDA";
 
@@ -32,29 +31,5 @@ namespace Content.Server.PDA
         [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables] public string? OwnerName;
-
-        // TODO: Move me to ECS after Access refactoring
-        #region Access Logic
-        [ViewVariables] private readonly PDAAccessSet _accessSet;
-
-        public PDAComponent()
-        {
-            _accessSet = new PDAAccessSet(this);
-        }
-
-        public ISet<string>? GetContainedAccess()
-        {
-            return IdSlot.Item?.GetComponent<AccessComponent>()?.Tags;
-        }
-
-        ISet<string> IAccess.Tags => _accessSet;
-
-        bool IAccess.IsReadOnly => true;
-
-        void IAccess.SetTags(IEnumerable<string> newTags)
-        {
-            throw new NotSupportedException("PDA access list is read-only.");
-        }
-        #endregion
     }
 }
