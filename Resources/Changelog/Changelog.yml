@@ -2682,3 +2682,9 @@ Entries:
   - {message: pipes can once again be picked up, type: Add}
   id: 478
   time: '2021-10-24T06:28:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: You can no longer paste the contents of Moby Dick into someone's ID.,
+    type: Fix}
+  id: 479
+  time: '2021-10-24T08:28:25.0000000+00:00'
