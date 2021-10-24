@@ -18,6 +18,9 @@ namespace Content.Server.Guardian
         //The injected guardian prototype entity
         [ViewVariables] [DataField("GuardianID")] public string GuardianType { get; set; } = default!;
 
+        //How far can the guardian leave the player
+        [ViewVariables] [DataField("DistanceAllowed")] public float GuardianTetherDistance { get; set; } = default!;
+
 
     }
 }

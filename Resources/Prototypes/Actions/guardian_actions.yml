@@ -1,0 +1,11 @@
+﻿- type: action
+  actionType: ManifestGuardian
+  icon: Interface/Actions/manifest.png
+  name: "[color=blue]Toggle guardian manifestation[/color]"
+  description: "Either manifests the guardian or recalls it back into your body"
+  filters:
+    - guardian
+  behaviorType: Instant
+  behavior: !type:ToggleGuarduanAction
+  cooldown: 5
+  

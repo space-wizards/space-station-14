@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Cooldown;
+using Content.Shared.Guardian;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -18,24 +19,21 @@ namespace Content.Server.Actions.Actions
     /// </summary>
    [UsedImplicitly]
    [DataDefinition]
-    public class ToggleGuarduanAction : IToggleAction
+    public class ToggleGuarduanAction : IInstantAction
     {
        [DataField("cooldown")] public float Cooldown { get; [UsedImplicitly] private set; }
 
-       public IEntity? Guardian;
-       public bool DoToggleAction(ToggleActionEventArgs args)
-       {
-          if (Guardian == null)
-             return false;
-
-          this.Toggle(args.Performer);
-          return true;
-            
-       }
-
-        private void Toggle(IEntity performer)
+        public void DoInstantAction(InstantActionEventArgs args)
         {
-       
+           if (args.Performer.TryGetComponent<GuardianSharedComponent>(out GuardianSharedComponent? comp))
+           {
+                EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(comp.Guardian, comp.Host, comp.Guardianloose);
+                args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
+           }
+           else
+           {
+                args.Performer.PopupMessage(Loc.GetString("guardian-missing-invalid-action"));
+           }
         }
     }
 }
