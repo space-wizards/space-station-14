@@ -9,6 +9,7 @@ using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Server.Stack;
 using Content.Server.Storage.Components;
+using Content.Server.Tools;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
@@ -43,6 +44,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly ToolSystem _toolSystem = default!;
 
         private const string SawmillName = "Construction";
         private ISawmill _sawmill = default!;

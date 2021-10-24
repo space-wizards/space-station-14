@@ -31,23 +31,8 @@ namespace Content.Server.Tools
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ToolDoAfterCompleteEvent>(OnToolDoAfterComplete);
-            SubscribeLocalEvent<ToolDoAfterCancelledEvent>(OnToolDoAfterCancelled);
-
             InitializeWelders();
             InitializeMultipleTools();
-        }
-
-        private void OnToolDoAfterComplete(ToolDoAfterCompleteEvent args)
-        {
-            if(EntityManager.EntityExists(args.Target))
-                RaiseLocalEvent(args.Target, args.WrappedEvent, false);
-        }
-
-        private void OnToolDoAfterCancelled(ToolDoAfterCancelledEvent args)
-        {
-            if(EntityManager.EntityExists(args.Target))
-                RaiseLocalEvent(args.Target, args.WrappedEvent, false);
         }
 
         /// <summary>
@@ -59,17 +44,16 @@ namespace Content.Server.Tools
         /// <param name="fuel">An optional amount of fuel or energy to consume-</param>
         /// <param name="doAfterDelay">A doAfter delay in seconds.</param>
         /// <param name="toolQualitiesNeeded">The tool qualities needed to use the tool.</param>
-        /// <param name="eventTarget">The entity where the completed/cancelled events will be raised.</param>
-        /// <param name="doAfterCompleteEvent">An event to raise once the doAfter is completed successfully.</param>
-        /// <param name="doAfterCancelledEvent">An event to raise once the doAfter is cancelled.</param>
+        /// <param name="doAfterCompleteEvent">An event to broadcast once the doAfter is completed successfully.</param>
+        /// <param name="doAfterCancelledEvent">An event to broadcast once the doAfter is cancelled.</param>
         /// <param name="doAfterCheck">An optional check to perform for the doAfter.</param>
         /// <param name="toolComponent">The tool component.</param>
         /// <returns>Whether initially, using the tool succeeded. If there's a doAfter delay, you'll need to listen to
-        ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being raised directed
-        ///          on the <see cref="eventTarget"/> entity to see whether using the tool succeeded or not.
-        ///          If the <see cref="doAfterDelay"/> is zero, this simply returns whether using the tool succeeded or not.</returns>
+        ///          the <see cref="doAfterCompleteEvent"/> and <see cref="doAfterCancelledEvent"/> being broadcast
+        ///          to see whether using the tool succeeded or not. If the <see cref="doAfterDelay"/> is zero,
+        ///          this simply returns whether using the tool succeeded or not.</returns>
         public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, EntityUid eventTarget, object doAfterCompleteEvent, object doAfterCancelledEvent,
+            float doAfterDelay, IEnumerable<string> toolQualitiesNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent,
             Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
         {
             // No logging here, after all that'd mean the caller would need to check if the component is there or not.
@@ -89,8 +73,8 @@ namespace Content.Server.Tools
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
                     NeedHand = true,
-                    BroadcastFinishedEvent = new ToolDoAfterCompleteEvent(eventTarget, doAfterCompleteEvent),
-                    BroadcastCancelledEvent = new ToolDoAfterCancelledEvent(eventTarget, doAfterCancelledEvent),
+                    BroadcastFinishedEvent = doAfterCompleteEvent,
+                    BroadcastCancelledEvent = doAfterCancelledEvent,
                 };
 
                 _doAfterSystem.DoAfter(doAfterArgs);
@@ -103,10 +87,10 @@ namespace Content.Server.Tools
         // This is hilariously long.
         /// <inheritdoc cref="UseTool(Robust.Shared.GameObjects.EntityUid,Robust.Shared.GameObjects.EntityUid,System.Nullable{Robust.Shared.GameObjects.EntityUid},float,float,System.Collections.Generic.IEnumerable{string},Robust.Shared.GameObjects.EntityUid,object,object,System.Func{bool}?,Content.Server.Tools.Components.ToolComponent?)"/>
         public bool UseTool(EntityUid tool, EntityUid user, EntityUid? target, float fuel,
-            float doAfterDelay, string toolQualityNeeded, EntityUid eventTarget, object doAfterCompleteEvent, object doAfterCancelledEvent,
+            float doAfterDelay, string toolQualityNeeded, object doAfterCompleteEvent, object doAfterCancelledEvent,
             Func<bool>? doAfterCheck = null, ToolComponent? toolComponent = null)
         {
-            return UseTool(tool, user, target, fuel, doAfterDelay, new[] { toolQualityNeeded }, eventTarget,
+            return UseTool(tool, user, target, fuel, doAfterDelay, new[] { toolQualityNeeded },
                 doAfterCompleteEvent, doAfterCancelledEvent, doAfterCheck, toolComponent);
         }
 
@@ -212,30 +196,6 @@ namespace Content.Server.Tools
             base.Update(frameTime);
 
             UpdateWelders(frameTime);
-        }
-
-        private class ToolDoAfterCompleteEvent : EntityEventArgs
-        {
-            public readonly EntityUid Target;
-            public readonly object WrappedEvent;
-
-            public ToolDoAfterCompleteEvent(EntityUid target, object ev)
-            {
-                Target = target;
-                WrappedEvent = ev;
-            }
-        }
-
-        private class ToolDoAfterCancelledEvent : EntityEventArgs
-        {
-            public readonly EntityUid Target;
-            public readonly object WrappedEvent;
-
-            public ToolDoAfterCancelledEvent(EntityUid target, object ev)
-            {
-                Target = target;
-                WrappedEvent = ev;
-            }
         }
     }
 
