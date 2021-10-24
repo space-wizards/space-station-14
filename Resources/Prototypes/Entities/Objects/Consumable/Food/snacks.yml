@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodBase
   id: FoodSnackBase
   abstract: true
   components:
@@ -19,9 +19,6 @@
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.5
 
 # Snacks
 
