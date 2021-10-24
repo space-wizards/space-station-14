@@ -50,15 +50,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<PoweredLightComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<PoweredLightComponent, PacketSentEvent>(OnPacketReceived);
 
-            SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged1);
-
-            SubscribeLocalEvent<LitOnPoweredComponent, PowerChangedEvent>(OnPowerChanged);
-            SubscribeLocalEvent<LitOnPoweredComponent, PowerNetBatterySupplyEvent>(OnPowerSupply);
-        }
-
-        private void OnPowerChanged1(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
-        {
-            UpdateLight(uid, component);
+            SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
@@ -309,6 +301,11 @@ namespace Content.Server.Light.EntitySystems
             args.Handled = true;
         }
 
+        private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, PowerChangedEvent args)
+        {
+            UpdateLight(uid, component);
+        }
+
         public void ToggleBlinkingLight(PoweredLightComponent light, bool isNowBlinking)
         {
             if (light.IsBlinking == isNowBlinking)
@@ -342,23 +339,6 @@ namespace Content.Server.Light.EntitySystems
 
             SetState(uid, enabled, component);
         }
-
-        private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, PowerChangedEvent args)
-        {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
-            {
-                light.Enabled = args.Powered;
-            }
-        }
-
-        private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, PowerNetBatterySupplyEvent args)
-        {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
-            {
-                light.Enabled = args.Supply;
-            }
-        }
-
 
         private void SetLight(EntityUid uid, bool value, Color? color = null, PoweredLightComponent? light = null)
         {
