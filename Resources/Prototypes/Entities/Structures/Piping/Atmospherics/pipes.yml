@@ -133,6 +133,8 @@
   id: GasPipeFourway
   suffix: Fourway
   components:
+  - type: Transform
+    noRot: true
   - type: NodeContainer
     nodes:
       pipe:
