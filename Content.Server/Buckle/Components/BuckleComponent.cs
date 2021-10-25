@@ -136,8 +136,7 @@ namespace Content.Server.Buckle.Components
                     break;
             }
 
-            // Assign BuckleOffset first, before causing a MoveEvent to fire
-            ownTransform.LocalPosition = Vector2.Zero;
+            ownTransform.LocalPosition = Vector2.Zero + BuckleOffset;
         }
 
         public bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
