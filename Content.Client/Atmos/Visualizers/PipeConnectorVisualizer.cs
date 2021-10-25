@@ -63,6 +63,7 @@ namespace Content.Client.Atmos.Visualizers
 
             if (!component.Owner.TryGetComponent<ITransformComponent>(out var xform))
                 return;
+
             if (!component.Owner.TryGetComponent<ISpriteComponent>(out var sprite))
                 return;
 
@@ -75,10 +76,18 @@ namespace Content.Client.Atmos.Visualizers
             if(!component.TryGetData(SubFloorVisuals.SubFloor, out bool subfloor))
                 subfloor = true;
 
+            var rotation = xform.LocalRotation;
+
             foreach (Layer layerKey in Enum.GetValues(typeof(Layer)))
             {
                 var layer = sprite.LayerMapGet(layerKey);
-                sprite.LayerSetVisible(layer, state.ConnectedDirections.HasDirection(((PipeDirection)layerKey)) && subfloor);
+                var dir = (PipeDirection) layerKey;
+                var visible = subfloor && state.ConnectedDirections.HasDirection(dir);
+                sprite.LayerSetVisible(layer, visible);
+
+                if (!visible) continue;
+
+                sprite.LayerSetRotation(layer, -rotation);
                 sprite.LayerSetColor(layer, color);
             }
         }

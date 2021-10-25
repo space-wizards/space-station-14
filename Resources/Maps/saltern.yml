@@ -16913,6 +16913,14 @@ entities:
     pos: -7.5,2.5
     parent: 853
     type: Transform
+- uid: 1000
+  type: CableApcExtension
+  components:
+  - pos: 6.5,18.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 1001
   type: CableApcExtension
   components:
@@ -19932,6 +19940,16 @@ entities:
     pos: -31.5,0.5
     parent: 853
     type: Transform
+- uid: 1351
+  type: CableApcExtension
+  components:
+  - pos: -12.5,8.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 1352
   type: WallSolid
   components:
@@ -25253,6 +25271,16 @@ entities:
     pos: 0.5,-23.5
     parent: 853
     type: Transform
+- uid: 2085
+  type: CableApcExtension
+  components:
+  - pos: -10.5,7.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
 - uid: 2086
   type: WallSolid
   components:
@@ -27459,11 +27487,13 @@ entities:
     parent: 853
     type: Transform
 - uid: 2395
-  type: Crowbar
+  type: CableApcExtension
   components:
-  - pos: -15.459177,-11.244378
+  - pos: -10.5,8.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2396
@@ -28442,6 +28472,14 @@ entities:
     type: Transform
   - startingCharge: 11999.75
     type: Battery
+- uid: 2523
+  type: ParchisBoard
+  components:
+  - pos: -23.526257,-2.4008582
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2524
   type: WallSolid
   components:
@@ -28571,6 +28609,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2537
+  type: ClothingHandsGlovesColorYellow
+  components:
+  - pos: 49.76104,4.706455
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2538
   type: CableApcExtension
   components:
@@ -28646,6 +28692,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2545
+  type: ClothingHandsGlovesColorYellowBudget
+  components:
+  - pos: -29.511574,7.569112
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2546
@@ -29005,25 +29059,19 @@ entities:
   - canCollide: False
     type: Physics
 - uid: 2581
-  type: CableApcExtension
+  type: ClothingHandsGlovesColorYellowBudget
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -12.5,8.5
+  - pos: -15.522014,-11.394222
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2582
   type: CableApcExtension
   components:
-  - rot: 1.5707963267948966 rad
-    pos: -11.5,8.5
+  - pos: 6.5,19.5
     parent: 853
     type: Transform
-  - visible: False
-    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2583
@@ -29252,10 +29300,11 @@ entities:
 - uid: 2603
   type: CableApcExtension
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: 0.5,6.5
+  - pos: -1.5,13.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2604
@@ -29269,10 +29318,11 @@ entities:
 - uid: 2605
   type: CableApcExtension
   components:
-  - rot: 4.371139006309477E-08 rad
-    pos: -0.5,6.5
+  - pos: -1.5,12.5
     parent: 853
     type: Transform
+  - visible: False
+    type: Sprite
   - canCollide: False
     type: Physics
 - uid: 2606
@@ -29348,6 +29398,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2613
+  type: CableApcExtension
+  components:
+  - pos: -0.5,9.5
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2614
@@ -29665,6 +29723,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2643
+  type: CableApcExtension
+  components:
+  - pos: -1.5,9.5
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2644
@@ -30357,6 +30423,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2708
+  type: CableApcExtension
+  components:
+  - pos: 0.5,6.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2709
   type: CableApcExtension
   components:
@@ -30479,6 +30553,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2721
+  type: CableApcExtension
+  components:
+  - pos: -0.5,6.5
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2722
@@ -30607,6 +30689,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2734
+  type: CableApcExtension
+  components:
+  - pos: -10.5,6.5
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2735
   type: CableApcExtension
   components:
@@ -30667,6 +30757,16 @@ entities:
   components:
   - rot: 4.371139006309477E-08 rad
     pos: -14.5,-9.5
+    parent: 853
+    type: Transform
+  - visible: False
+    type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2741
+  type: CableApcExtension
+  components:
+  - pos: -11.5,8.5
     parent: 853
     type: Transform
   - visible: False
@@ -44451,6 +44551,8 @@ entities:
   - pos: -11.5,5.5
     parent: 853
     type: Transform
+  - powerLoad: 0
+    type: ApcPowerReceiver
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
@@ -51975,15 +52077,6 @@ entities:
   - containers:
       light_bulb: !type:ContainerSlot {}
     type: ContainerContainer
-- uid: 5032
-  type: ChessBoard
-  components:
-  - rot: 1.5707963267948966 rad
-    pos: -23.505022,-2.3849773
-    parent: 853
-    type: Transform
-  - canCollide: False
-    type: Physics
 - uid: 5033
   type: CigaretteFilter
   components:
@@ -54401,8 +54494,7 @@ entities:
 - uid: 5355
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-1.5
+  - pos: 4.5,-1.5
     parent: 853
     type: Transform
   - visible: False
@@ -54836,8 +54928,7 @@ entities:
 - uid: 5391
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,0.5
+  - pos: 2.5,0.5
     parent: 853
     type: Transform
   - visible: False
@@ -58975,8 +59066,7 @@ entities:
 - uid: 5722
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-20.5
+  - pos: 4.5,-20.5
     parent: 853
     type: Transform
   - visible: False
@@ -59590,8 +59680,7 @@ entities:
 - uid: 5770
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -3.5,-20.5
+  - pos: -3.5,-20.5
     parent: 853
     type: Transform
   - visible: False
@@ -59603,8 +59692,7 @@ entities:
 - uid: 5771
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -4.5,-19.5
+  - pos: -4.5,-19.5
     parent: 853
     type: Transform
   - visible: False
@@ -60470,8 +60558,7 @@ entities:
 - uid: 5843
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,24.5
+  - pos: 2.5,24.5
     parent: 853
     type: Transform
   - visible: False
@@ -60600,8 +60687,7 @@ entities:
 - uid: 5853
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 4.5,25.5
+  - pos: 4.5,25.5
     parent: 853
     type: Transform
   - visible: False
@@ -60665,8 +60751,7 @@ entities:
 - uid: 5858
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 4.5,20.5
+  - pos: 4.5,20.5
     parent: 853
     type: Transform
   - visible: False
@@ -63852,8 +63937,7 @@ entities:
 - uid: 6112
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: -23.5,3.5
+  - pos: -23.5,3.5
     parent: 853
     type: Transform
   - visible: False
@@ -63865,8 +63949,7 @@ entities:
 - uid: 6113
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: -24.5,5.5
+  - pos: -24.5,5.5
     parent: 853
     type: Transform
   - visible: False
@@ -66531,8 +66614,7 @@ entities:
 - uid: 6329
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 47.5,-9.5
+  - pos: 47.5,-9.5
     parent: 853
     type: Transform
   - canCollide: False

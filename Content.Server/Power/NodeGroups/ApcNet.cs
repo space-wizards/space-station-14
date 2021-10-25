@@ -13,7 +13,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.NodeGroups
 {
-    public interface IApcNet
+    public interface IApcNet : IBasePowerNet
     {
         void AddApc(ApcComponent apc);
 
@@ -25,20 +25,18 @@ namespace Content.Server.Power.NodeGroups
 
         void QueueNetworkReconnect();
 
-        PowerState.Network NetworkNode { get; }
-
         GridId? GridId { get; }
     }
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
-    public class ApcNet : BaseNetConnectorNodeGroup<BaseApcNetComponent, IApcNet>, IApcNet
+    public class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
     {
         private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
 
         [ViewVariables] public readonly List<ApcComponent> Apcs = new();
-
         [ViewVariables] public readonly List<ApcPowerProviderComponent> Providers = new();
+        [ViewVariables] public readonly List<PowerConsumerComponent> Consumers = new();
 
         //Debug property
         [ViewVariables] private int TotalReceivers => Providers.Sum(provider => provider.LinkedReceivers.Count);
@@ -71,7 +69,7 @@ namespace Content.Server.Power.NodeGroups
             if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
-            _powerNetSystem.QueueReconnectApcNet(this);
+            QueueNetworkReconnect();
             Apcs.Add(apc);
         }
 
@@ -80,7 +78,7 @@ namespace Content.Server.Power.NodeGroups
             if (apc.Owner.TryGetComponent(out PowerNetworkBatteryComponent? netBattery))
                 netBattery.NetworkBattery.LinkedNetworkDischarging = default;
 
-            _powerNetSystem.QueueReconnectApcNet(this);
+            QueueNetworkReconnect();
             Apcs.Remove(apc);
         }
 
@@ -88,14 +86,28 @@ namespace Content.Server.Power.NodeGroups
         {
             Providers.Add(provider);
 
-            _powerNetSystem.QueueReconnectApcNet(this);
+            QueueNetworkReconnect();
         }
 
         public void RemovePowerProvider(ApcPowerProviderComponent provider)
         {
             Providers.Remove(provider);
 
-            _powerNetSystem.QueueReconnectApcNet(this);
+            QueueNetworkReconnect();
+        }
+
+        public void AddConsumer(PowerConsumerComponent consumer)
+        {
+            consumer.NetworkLoad.LinkedNetwork = default;
+            Consumers.Add(consumer);
+            QueueNetworkReconnect();
+        }
+
+        public void RemoveConsumer(PowerConsumerComponent consumer)
+        {
+            consumer.NetworkLoad.LinkedNetwork = default;
+            Consumers.Remove(consumer);
+            QueueNetworkReconnect();
         }
 
         public void QueueNetworkReconnect()
@@ -103,7 +115,7 @@ namespace Content.Server.Power.NodeGroups
             _powerNetSystem.QueueReconnectApcNet(this);
         }
 
-        protected override void SetNetConnectorNet(BaseApcNetComponent netConnectorComponent)
+        protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IApcNet> netConnectorComponent)
         {
             netConnectorComponent.Net = this;
         }

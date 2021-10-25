@@ -1,7 +1,12 @@
 using System;
+using System.Collections.Generic;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Content.Server.Popups;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -23,11 +28,14 @@ namespace Content.Server.Stack
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
 
+        public static readonly List<int> DefaultSplitAmounts = new() { 1, 5, 10, 20, 30, 50 };
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<StackComponent, InteractUsingEvent>(OnStackInteractUsing);
+            SubscribeLocalEvent<StackComponent, GetAlternativeVerbsEvent>(OnStackAlternativeInteract);
         }
 
         /// <summary>
@@ -116,6 +124,65 @@ namespace Content.Server.Stack
             }
 
             args.Handled = true;
+        }
+
+        private void OnStackAlternativeInteract(EntityUid uid, StackComponent stack, GetAlternativeVerbsEvent args)
+        {
+            if (!args.CanAccess || !args.CanInteract)
+                return;
+
+            Verb halve = new();
+            halve.Text = Loc.GetString("comp-stack-split-halve");
+            halve.Category = VerbCategory.Split;
+            halve.Act = () => UserSplit(args.User, stack, stack.Count / 2);
+            halve.Priority = 1;
+            args.Verbs.Add(halve);
+
+            var priority = 0;
+            foreach (var amount in DefaultSplitAmounts)
+            {
+                if (amount >= stack.Count)
+                    continue;
+
+                Verb verb = new();
+                verb.Text = amount.ToString();
+                verb.Category = VerbCategory.Split;
+                verb.Act = () => UserSplit(args.User, stack, amount);
+
+                // we want to sort by size, not alphabetically by the verb text.
+                verb.Priority = priority;
+                priority--;
+
+                args.Verbs.Add(verb);
+            }
+        }
+
+        private void UserSplit(IEntity user, StackComponent stack, int amount)
+        {
+            if (amount <= 0)
+            {
+                user.PopupMessage(Loc.GetString("comp-stack-split-too-small"));
+                return;
+            }
+
+            if (user.TryGetComponent<HandsComponent>(out var hands))
+            {
+                if (hands.TryGetActiveHeldEntity(out var heldItem) && heldItem != stack.Owner)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                return;
+            }
+
+            var secondStack = Split(stack.Owner.Uid, amount, user.Transform.Coordinates, stack);
+            user.PopupMessage(Loc.GetString("comp-stack-split"));
+            if (secondStack is not null && secondStack.TryGetComponent<ItemComponent>(out var itemComponent))
+            {
+                hands.PutInHandOrDrop(itemComponent);
+            }
         }
     }
 }
