@@ -39,14 +39,14 @@ namespace Content.Shared.Medical.Components
 
     [NetSerializable]
     [Serializable]
-    public enum GasAnalyzerVisuals
+    public enum HealthAnalyzerVisuals
     {
         VisualState,
     }
 
     [NetSerializable]
     [Serializable]
-    public enum GasAnalyzerVisualState
+    public enum HealthAnalyzerVisualState
     {
         Off,
         Working,

@@ -77,8 +77,8 @@ namespace Content.Server.Medical.Components
 
         private void UpdateAppearance(bool open)
         {
-            _appearance?.SetData(GasAnalyzerVisuals.VisualState,
-                open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
+            _appearance?.SetData(HealthAnalyzerVisuals.VisualState,
+                open ? HealthAnalyzerVisualState.Working : HealthAnalyzerVisualState.Off);
         }
 
         private void Resync()
