@@ -67,7 +67,11 @@
     Piercing: 0.75
     Radiation: 0 # someday lockers may become radioactive and irradiate their contents. For now, Indiana Jones is safe.
     Shock: 0 # if the locker is metallic I guess the current would flow through the locker body and not the contents?
+    Heat: 0.8 # a laser wont just go straight through a locker, but enough heat will still boil you alive.
+    Cold: 0.8
   flatReductions:
     Piercing: 20
     Blunt: 40
     Slash: 60
+    Heat: 5
+    Cold: 5
