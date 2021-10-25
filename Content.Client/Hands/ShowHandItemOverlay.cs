@@ -1,7 +1,8 @@
 ﻿using Content.Shared.CCVar;
+using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
-using Robust.Shared;
+using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
@@ -45,15 +46,17 @@ namespace Content.Client.Hands
             var sys = EntitySystem.Get<HandsSystem>();
             var handEntity = sys.GetActiveHandEntity();
 
-            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow))
+            if (handEntity == null || !_cfg.GetCVar(CCVars.HudHeldItemShow) || !handEntity.HasComponent<ISpriteComponent>())
                 return;
 
             var screen = args.ScreenHandle;
             var halfSize = _renderBackbuffer.Size / 2;
 
+            var uiScale = (args.ViewportControl as Control)?.UIScale ?? 1f;
+
             screen.RenderInRenderTarget(_renderBackbuffer, () =>
             {
-                screen.DrawEntity(handEntity, halfSize, new Vector2(1f, 1f) * _cfg.GetCVar(CVars.DisplayUIScale), Direction.South);
+                screen.DrawEntity(handEntity, halfSize, new Vector2(1f, 1f) * uiScale, Direction.South);
             }, Color.Transparent);
 
             var offset = _cfg.GetCVar(CCVars.HudHeldItemOffset);

@@ -219,11 +219,11 @@ namespace Content.Server.Light.Components
         public void UpdateLight()
         {
             var powerReceiver = Owner.GetComponent<ApcPowerReceiverComponent>();
+            powerReceiver.Load = (LightBulb != null && _on && LightBulb.State == LightBulbState.Normal) ? LightBulb.PowerUse : 0;
 
             if (LightBulb == null) // No light bulb.
             {
                 SetLight(false);
-                powerReceiver.Load = 0;
                 _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.Empty);
                 return;
             }
@@ -234,7 +234,6 @@ namespace Content.Server.Light.Components
                     if (powerReceiver.Powered && _on)
                     {
                         SetLight(true, LightBulb.Color);
-                        powerReceiver.Load = LightBulb.PowerUse;
                         _appearance?.SetData(PoweredLightVisuals.BulbState, PoweredLightState.On);
                         var time = _gameTiming.CurTime;
                         if (time > _lastThunk + _thunkDelay)
@@ -318,6 +317,10 @@ namespace Content.Server.Light.Components
             UpdateLight();
         }
 
-
+        public void SetState(bool state)
+        {
+            _on = state;
+            UpdateLight();
+        }
     }
 }
