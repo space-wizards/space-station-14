@@ -46,7 +46,7 @@ namespace Content.Server.Power.Components
             var snapPos = grid.TileIndicesFor(eventArgs.ClickLocation);
             var tileDef = grid.GetTileRef(snapPos).Tile.GetContentTileDefinition();
 
-            if(!tileDef.IsSubFloor || tileDef.IsSpace)
+            if(!tileDef.IsSubFloor || !tileDef.Sturdy)
                 return false;
 
             foreach (var anchored in grid.GetAnchoredEntities(snapPos))

@@ -9,15 +9,43 @@ namespace Content.Server.Power.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<ApcPowerReceiverComponent, PhysicsBodyTypeChangedEvent>(BodyTypeChanged);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
+            SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
+
+            SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
+            SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
         }
 
-        private static void BodyTypeChanged(
-            EntityUid uid,
-            ApcPowerReceiverComponent component,
-            PhysicsBodyTypeChangedEvent args)
+        private void OnProviderConnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderConnectedEvent args)
         {
-            component.AnchorUpdate();
+            ProviderChanged(receiver);
+        }
+
+        private void OnProviderDisconnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderDisconnectedEvent args)
+        {
+            ProviderChanged(receiver);
+        }
+
+        private void OnReceiverConnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverConnectedEvent args)
+        {
+            if (EntityManager.TryGetComponent(args.Receiver.Owner.Uid, out ApcPowerReceiverComponent receiver))
+            {
+                provider.AddReceiver(receiver);
+            }
+        }
+
+        private void OnReceiverDisconnected(EntityUid uid, ApcPowerProviderComponent provider, ExtensionCableSystem.ReceiverDisconnectedEvent args)
+        {
+            if (EntityManager.TryGetComponent(args.Receiver.Owner.Uid, out ApcPowerReceiverComponent receiver))
+            {
+                provider.RemoveReceiver(receiver);
+            }
+        }
+
+        private static void ProviderChanged(ApcPowerReceiverComponent receiver)
+        {
+            receiver.NetworkLoad.LinkedNetwork = default;
+            receiver.ApcPowerChanged();
         }
     }
 }

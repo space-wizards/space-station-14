@@ -2643,3 +2643,75 @@ Entries:
     type: Fix}
   id: 471
   time: '2021-10-22T11:45:45.025249+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed being spaced causing the player to gib, type: Fix}
+  id: 472
+  time: '2021-10-23T18:45:58.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added light switches that turn lights connected to the same apc on and
+      off., type: Add}
+  id: 473
+  time: '2021-10-23T23:23:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Placing cables on lattices works again, type: Fix}
+  id: 474
+  time: '2021-10-24T00:32:33.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed ghosts being able interact with objects., type: Fix}
+  id: 475
+  time: '2021-10-24T02:29:38.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: It is no longer advised to anger the magically-inclined janitorial staff.,
+    type: Tweak}
+  id: 476
+  time: '2021-10-24T02:34:31.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'The context menu, examining, and activating now works on items inside
+      storage entities. (The last one means boxes can now be opened while still inside
+      a backpack.)', type: Add}
+  id: 477
+  time: '2021-10-24T05:42:47.0000000+00:00'
+- author: moony
+  changes:
+  - {message: pipes can once again be picked up, type: Add}
+  id: 478
+  time: '2021-10-24T06:28:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: You can no longer paste the contents of Moby Dick into someone's ID.,
+    type: Fix}
+  id: 479
+  time: '2021-10-24T08:28:25.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Reinforced Plasma Windows, type: Add}
+  id: 480
+  time: '2021-10-24T12:46:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
+  id: 481
+  time: '2021-10-25T03:24:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'RCDs work on space again, if close to an existing non-space tile',
+    type: Fix}
+  id: 482
+  time: '2021-10-25T03:33:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station will now start with a random rotation., type: Tweak}
+  id: 483
+  time: '2021-10-25T04:22:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
+  - {message: Turned-on magboots now stop you from slipping., type: Add}
+  id: 484
+  time: '2021-10-25T06:43:49.0000000+00:00'
