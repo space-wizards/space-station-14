@@ -1,5 +1,8 @@
 using Content.Server.Atmos;
 using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Shared.Inventory;
+using Content.Shared.Slippery;
 using Content.Shared.Damage;
 using Content.Shared.Electrocution;
 using Robust.Shared.Containers;
@@ -19,6 +22,15 @@ namespace Content.Server.Inventory
             SubscribeLocalEvent<InventoryComponent, LowPressureEvent>(OnLowPressureEvent);
             SubscribeLocalEvent<InventoryComponent, DamageModifyEvent>(OnDamageModify);
             SubscribeLocalEvent<InventoryComponent, ElectrocutionAttemptEvent>(OnElectrocutionAttempt);
+            SubscribeLocalEvent<InventoryComponent, SlipAttemptEvent>(OnSlipAttemptEvent);
+        }
+
+        private void OnSlipAttemptEvent(EntityUid uid, InventoryComponent component, SlipAttemptEvent args)
+        {
+            if (component.TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes))
+            {
+                RaiseLocalEvent(shoes.Owner.Uid, args, false);
+            }
         }
 
         private static void HandleInvRemovedFromContainer(EntityUid uid, InventoryComponent component, EntRemovedFromContainerMessage args)

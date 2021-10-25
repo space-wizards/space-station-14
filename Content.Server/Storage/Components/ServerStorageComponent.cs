@@ -56,6 +56,8 @@ namespace Content.Server.Storage.Components
 
         [DataField("areaInsert")]
         private bool _areaInsert = false;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+        [DataField("areaInsertRadius")]
+        private int _areaInsertRadius = 1;
 
         [DataField("whitelist")]
         private EntityWhitelist? _whitelist = null;
@@ -510,7 +512,7 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, 1))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
@@ -543,11 +545,11 @@ namespace Content.Server.Storage.Components
                         || entity == eventArgs.User
                         || !entity.HasComponent<SharedItemComponent>())
                         continue;
-                    var coords = entity.Transform.Coordinates;
+                    var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, entity.Transform.MapPosition);
                     if (PlayerInsertEntityInWorld(eventArgs.User, entity))
                     {
                         successfullyInserted.Add(entity.Uid);
-                        successfullyInsertedPositions.Add(coords);
+                        successfullyInsertedPositions.Add(position);
                     }
                 }
 
@@ -572,7 +574,7 @@ namespace Content.Server.Storage.Components
                     || eventArgs.Target == eventArgs.User
                     || !eventArgs.Target.HasComponent<SharedItemComponent>())
                     return false;
-                var position = eventArgs.Target.Transform.Coordinates;
+                var position = EntityCoordinates.FromMap(Owner.Transform.Parent?.Owner ?? Owner, eventArgs.Target.Transform.MapPosition);
                 if (PlayerInsertEntityInWorld(eventArgs.User, eventArgs.Target))
                 {
                     SendNetworkMessage(new AnimateInsertingEntitiesMessage(

@@ -8,6 +8,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Prometheus;
 using Robust.Server.Player;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
@@ -63,12 +64,19 @@ namespace Content.Server.GameTicking
                 throw new InvalidOperationException($"No grid found for map {map}");
             }
 
+            var stationXform = EntityManager.GetComponent<ITransformComponent>(grid.GridEntityId);
+
             if (StationOffset)
             {
                 // Apply a random offset to the station grid entity.
                 var x = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
                 var y = _robustRandom.NextFloat() * MaxStationOffset * 2 - MaxStationOffset;
-                EntityManager.GetEntity(grid.GridEntityId).Transform.LocalPosition = new Vector2(x, y);
+                stationXform.LocalPosition = new Vector2(x, y);
+            }
+
+            if (StationRotation)
+            {
+                stationXform.LocalRotation = _robustRandom.NextFloat(MathF.Tau);
             }
 
             DefaultGridId = grid.Index;

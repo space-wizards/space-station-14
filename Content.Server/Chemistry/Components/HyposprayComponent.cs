@@ -1,6 +1,7 @@
 using Content.Server.Interaction.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.MobState.Components;
@@ -113,7 +114,7 @@ namespace Content.Server.Chemistry.Components
                 // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
                 // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
 
-                return entity.HasComponent<SharedChemMasterComponent>()
+                return entity.HasComponent<SolutionContainerManagerComponent>()
                        && entity.HasComponent<MobStateComponent>();
             }
 
