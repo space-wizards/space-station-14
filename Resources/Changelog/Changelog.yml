@@ -2715,3 +2715,8 @@ Entries:
   - {message: Turned-on magboots now stop you from slipping., type: Add}
   id: 484
   time: '2021-10-25T06:43:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Construction works on rotated grids, type: Fix}
+  id: 485
+  time: '2021-10-25T14:14:21.0000000+00:00'
