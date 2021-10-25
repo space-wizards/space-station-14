@@ -159,7 +159,7 @@ namespace Content.Server.Stack
 
         private void UserSplit(IEntity user, StackComponent stack, int amount)
         {
-            if (amount == 0)
+            if (amount <= 0)
             {
                 user.PopupMessage(Loc.GetString("comp-stack-split-too-small"));
                 return;
@@ -177,7 +177,7 @@ namespace Content.Server.Stack
                 return;
             }
 
-            var secondStack = Split(stack.Owner.Uid, amount, user.Transform.Coordinates);
+            var secondStack = Split(stack.Owner.Uid, amount, user.Transform.Coordinates, stack);
             user.PopupMessage(Loc.GetString("comp-stack-split"));
             if (secondStack is not null && secondStack.TryGetComponent<ItemComponent>(out var itemComponent))
             {
