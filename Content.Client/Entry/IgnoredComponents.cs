@@ -119,7 +119,6 @@ namespace Content.Client.Entry
             "Telecrystal",
             "TrashSpawner",
             "RCD",
-            "RCDDeconstructWhitelist",
             "RCDAmmo",
             "CursedEntityStorage",
             "Listening",

@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: Window
   parent: BaseStructure
   name: window
@@ -8,7 +8,9 @@
     snap:
     - Window
   components:
-  - type: RCDDeconstructWhitelist
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
   - type: Sprite
     netsync: false
     drawdepth: WallTops
@@ -36,7 +38,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 15
+        damage: 50
       behaviors:
       - !type:PlaySoundBehavior
         sound:
