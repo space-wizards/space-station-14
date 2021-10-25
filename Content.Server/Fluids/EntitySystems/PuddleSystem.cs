@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Construction.Components;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -34,8 +35,8 @@ namespace Content.Server.Fluids.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            _mapManager.TileChanged += HandleTileChanged;
 
+            SubscribeLocalEvent<PuddleComponent, UnanchoredEvent>(OnUnanchored);
             SubscribeLocalEvent<SpillableComponent, GetOtherVerbsEvent>(AddSpillVerb);
             SubscribeLocalEvent<PuddleComponent, ExaminedEvent>(HandlePuddleExamined);
             SubscribeLocalEvent<PuddleComponent, SolutionChangedEvent>(OnUpdate);
@@ -52,12 +53,6 @@ namespace Content.Server.Fluids.EntitySystems
         {
             UpdateSlip(uid, component);
             UpdateVisuals(uid, component);
-        }
-
-        public override void Shutdown()
-        {
-            base.Shutdown();
-            _mapManager.TileChanged -= HandleTileChanged;
         }
 
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
@@ -120,26 +115,12 @@ namespace Content.Server.Fluids.EntitySystems
             }
         }
 
-        //TODO: Replace all this with an Unanchored event that deletes the puddle
-        private void HandleTileChanged(object? sender, TileChangedEventArgs eventArgs)
+        private void OnUnanchored(EntityUid uid, PuddleComponent puddle, UnanchoredEvent unanchoredEvent)
         {
-            // If this gets hammered you could probably queue up all the tile changes every tick but I doubt that would ever happen.
-            foreach (var puddle in EntityManager.EntityQuery<PuddleComponent>(true))
-            {
-                // If the tile becomes space then delete it (potentially change by design)
-                var puddleTransform = puddle.Owner.Transform;
-                if (!puddleTransform.Anchored)
-                    continue;
+            if (!puddle.Owner.Transform.Anchored)
+                return;
 
-                var grid = _mapManager.GetGrid(puddleTransform.GridID);
-                if (eventArgs.NewTile.GridIndex == puddle.Owner.Transform.GridID &&
-                    grid.TileIndicesFor(puddleTransform.Coordinates) == eventArgs.NewTile.GridIndices &&
-                    eventArgs.NewTile.Tile.IsEmpty)
-                {
-                    puddle.Owner.QueueDelete();
-                    break; // Currently it's one puddle per tile, if that changes remove this
-                }
-            }
+            puddle.Owner.QueueDelete();
         }
 
         /// <summary>
