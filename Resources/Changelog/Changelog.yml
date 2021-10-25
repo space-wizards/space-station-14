@@ -2720,3 +2720,10 @@ Entries:
   - {message: Construction works on rotated grids, type: Fix}
   id: 485
   time: '2021-10-25T14:14:21.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added electrocution., type: Add}
+  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
+  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
+  id: 486
+  time: '2021-10-25T14:21:56.0000000+00:00'
