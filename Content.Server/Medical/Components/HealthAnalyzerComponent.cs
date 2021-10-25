@@ -24,9 +24,6 @@ namespace Content.Server.Medical.Components
     [RegisterComponent]
     public class HealthAnalyzerComponent : SharedHealthAnalyzerComponent, IAfterInteract, IDropped, IUse
     {
-
-        private float _timeSinceSync;
-        private const float TimeBetweenSyncs = 2f;
         private IEntity? _target; // Scan target
         private AppearanceComponent? _appearance;
 
@@ -84,21 +81,9 @@ namespace Content.Server.Medical.Components
                 open ? GasAnalyzerVisualState.Working : GasAnalyzerVisualState.Off);
         }
 
-        public void Update(float frameTime)
-        {
-            _timeSinceSync += frameTime;
-            if (_timeSinceSync > TimeBetweenSyncs)
-            {
-                Resync();
-                UpdateUserInterface();
-            }
-        }
-
         private void Resync()
         {
-            // Already get the pressure before Dirty(), because we can't get the EntitySystem in that thread or smth
             Dirty();
-            _timeSinceSync = 0f;
         }
 
         private void UpdateUserInterface()
