@@ -119,6 +119,7 @@ namespace Content.Shared.Inventory
             {Slots.IDCARD, SlotFlags.IDCARD},
             {Slots.POCKET1, SlotFlags.POCKET},
             {Slots.POCKET2, SlotFlags.POCKET},
+            {Slots.NONE, SlotFlags.NONE},
         };
 
         // for shared string dict, since we don't define these anywhere in content

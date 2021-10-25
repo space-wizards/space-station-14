@@ -42,6 +42,7 @@ namespace Content.Server.Inventory.Components
         [ViewVariables] private readonly Dictionary<Slots, ContainerSlot> _slotContainers = new();
 
         private KeyValuePair<Slots, (EntityUid entity, bool fits)>? _hoverEntity;
+        private Slots _lastHoveredSlot = EquipmentSlotDefines.Slots.NONE;
 
         public IEnumerable<Slots> Slots => _slotContainers.Keys;
 
@@ -275,7 +276,7 @@ namespace Content.Server.Inventory.Components
                 reason = Loc.GetString("inventory-component-can-equip-cannot");
             }
 
-            var canEquip = pass && _slotContainers[slot].CanInsert(item.Owner);
+            var canEquip = pass && _slotContainers.ContainsKey(slot) && _slotContainers[slot].CanInsert(item.Owner);
 
             if (!canEquip)
             {
@@ -510,26 +511,7 @@ namespace Content.Server.Inventory.Components
                 }
                 case ClientInventoryUpdate.Hover:
                 {
-                    var hands = Owner.GetComponent<HandsComponent>();
-                    var activeHand = hands.GetActiveHand;
-                    if (activeHand != null && GetSlotItem(msg.Inventoryslot) == null)
-                    {
-                        var canEquip = CanEquip(msg.Inventoryslot, activeHand, true, out var reason);
-                        _hoverEntity =
-                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
-                                (activeHand.Owner.Uid, canEquip));
-
-                        Dirty();
-                    }
-                    else
-                    {
-                        _hoverEntity =
-                            new KeyValuePair<Slots, (EntityUid entity, bool fits)>(msg.Inventoryslot,
-                                (EntityUid.Invalid, false));
-
-                        Dirty();
-                    }
-
+                    RaiseHoverMessage(msg.Inventoryslot);
                     break;
                 }
             }
@@ -615,6 +597,35 @@ namespace Content.Server.Inventory.Components
             }
 
             return false;
+        }
+
+        public void RaiseHoverMessage(Slots slot = EquipmentSlotDefines.Slots.NONE)
+        {
+            if (slot == EquipmentSlotDefines.Slots.NONE)
+            {
+                slot = _lastHoveredSlot;
+            }
+
+            var hands = Owner.GetComponent<HandsComponent>();
+            var activeHand = hands.GetActiveHand;
+            _lastHoveredSlot = slot;
+            if (activeHand != null && GetSlotItem(slot) == null)
+            {
+                var canEquip = CanEquip(slot, activeHand, true, out var reason);
+                _hoverEntity =
+                    new KeyValuePair<Slots, (EntityUid entity, bool fits)>(slot,
+                        (activeHand.Owner.Uid, canEquip));
+
+                Dirty();
+            }
+            else
+            {
+                _hoverEntity =
+                    new KeyValuePair<Slots, (EntityUid entity, bool fits)>(slot,
+                        (EntityUid.Invalid, false));
+
+                Dirty();
+            }
         }
     }
 }

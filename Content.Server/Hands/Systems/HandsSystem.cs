@@ -106,6 +106,8 @@ namespace Content.Server.Hands.Systems
                 return;
 
             hands.ActiveHand = nextHand;
+
+            UpdateHover(hands);
         }
 
         private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -124,7 +126,18 @@ namespace Content.Server.Hands.Systems
                 return false;
 
             hands.TryDropHand(activeHand, coords);
+
+            UpdateHover(hands);
+
             return false;
+        }
+
+        private static void UpdateHover(SharedHandsComponent hands)
+        {
+            if (hands.Owner.TryGetComponent(out InventoryComponent? component))
+            {
+                component.RaiseHoverMessage();
+            }
         }
 
         private void HandleMoveItemFromHand(MoveItemFromHandMsg msg, EntitySessionEventArgs args)
