@@ -2733,3 +2733,9 @@ Entries:
       with the new Split verb., type: Add}
   id: 487
   time: '2021-10-25T14:36:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
+    type: Add}
+  id: 488
+  time: '2021-10-25T14:58:04.292881+00:00'
