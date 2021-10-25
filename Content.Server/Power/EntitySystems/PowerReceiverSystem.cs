@@ -12,17 +12,37 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderConnectedEvent>(OnProviderConnected);
             SubscribeLocalEvent<ApcPowerReceiverComponent, ExtensionCableSystem.ProviderDisconnectedEvent>(OnProviderDisconnected);
 
+            SubscribeLocalEvent<ApcPowerProviderComponent, ComponentShutdown>(OnProviderShutdown);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverConnectedEvent>(OnReceiverConnected);
             SubscribeLocalEvent<ApcPowerProviderComponent, ExtensionCableSystem.ReceiverDisconnectedEvent>(OnReceiverDisconnected);
         }
 
+        private void OnProviderShutdown(EntityUid uid, ApcPowerProviderComponent component, ComponentShutdown args)
+        {
+            foreach (var receiver in component.LinkedReceivers)
+            {
+                receiver.NetworkLoad.LinkedNetwork = default;
+                component.Net?.QueueNetworkReconnect();
+            }
+
+            component.LinkedReceivers.Clear();
+        }
+
         private void OnProviderConnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderConnectedEvent args)
         {
+            var providerUid = args.Provider.Owner.Uid;
+            if (!EntityManager.TryGetComponent<ApcPowerProviderComponent>(providerUid, out var provider))
+                return;
+
+            receiver.Provider = provider;
+
             ProviderChanged(receiver);
         }
 
         private void OnProviderDisconnected(EntityUid uid, ApcPowerReceiverComponent receiver, ExtensionCableSystem.ProviderDisconnectedEvent args)
         {
+            receiver.Provider = null;
+
             ProviderChanged(receiver);
         }
 
