@@ -16,6 +16,8 @@ namespace Content.Server.Construction
 
         private void InitializeSteps()
         {
+            #region DoAfter Subscriptions
+
             // DoAfter handling.
             // The ConstructionDoAfter events are meant to be raised either directed or broadcast.
             // If they're raised broadcast, we will re-raise them as directed on the target.
@@ -25,9 +27,10 @@ namespace Content.Server.Construction
             SubscribeLocalEvent<ConstructionComponent, ConstructionDoAfterComplete>(EnqueueEvent);
             SubscribeLocalEvent<ConstructionComponent, ConstructionDoAfterCancelled>(EnqueueEvent);
 
-            // Event handling. Add your subscriptions here! Just make sure they're handled by EnqueueEvent.
+            #endregion
+
+            // Event handling. Add your subscriptions here! Just make sure they're all handled by EnqueueEvent.
             SubscribeLocalEvent<ConstructionComponent, InteractUsingEvent>(EnqueueEvent);
-            SubscribeLocalEvent<ConstructionComponent, InteractHandEvent>(EnqueueEvent);
         }
 
         /// <summary>
@@ -74,6 +77,8 @@ namespace Content.Server.Construction
             // Let's make extra sure this is zero...
             construction.StepIndex = 0;
 
+            // When we handle a node, we're essentially testing the current event interaction against all of this node's
+            // edges' first steps. If any of them accepts the interaction, we stop iterating and enter that edge.
             for (var i = 0; i < node.Edges.Count; i++)
             {
                 var edge = node.Edges[i];
@@ -121,9 +126,11 @@ namespace Content.Server.Construction
                 return HandleResult.False;
             }
 
+            // We need to ensure we currently satisfy any and all edge conditions.
             if (!CheckConditions(uid, edge.Conditions))
                 return HandleResult.False;
 
+            // We can only perform the "step completed" logic if this returns true.
             if (HandleStep(uid, ev, step, validation, out var user, construction)
                 is var handle and not HandleResult.True)
                 return handle;
@@ -161,10 +168,13 @@ namespace Content.Server.Construction
             if (!Resolve(uid, ref construction))
                 return HandleResult.False;
 
+            // Let HandleInteraction actually handle the event for this step.
+            // We can only perform the rest of our logic if it returns true.
             if (HandleInteraction(uid, ev, step, validation, out user, construction)
                 is var handle and not HandleResult.True)
                 return handle;
 
+            // Actually perform the step completion actions, since the step was handled correctly.
             PerformActions(uid, user, step.Completed);
 
             UpdatePathfinding(uid, construction);
@@ -192,6 +202,7 @@ namespace Content.Server.Construction
             // Custom data from a prior HandleInteraction where a DoAfter was called...
             object? doAfterData = null;
 
+            // The DoAfter events can only perform special logic when we're not validating events.
             if (!validation)
             {
                 // Some events are handled specially... Such as doAfter.
@@ -224,10 +235,12 @@ namespace Content.Server.Construction
             if (construction.WaitingDoAfter)
                 return HandleResult.False;
 
+            // The cases in this switch will handle the interaction and return
             switch (step)
             {
 
                 // --- CONSTRUCTION STEP EVENT HANDLING START ---
+                #region Construction Step Event Handling
                 // So you want to create your own custom step for construction?
                 // You're looking at the right place, then! You should create
                 // a new case for your step here, and handle it as you see fit.
@@ -350,6 +363,7 @@ namespace Content.Server.Construction
                     return HandleResult.DoAfter;
                 }
 
+                #endregion
                 // --- CONSTRUCTION STEP EVENT HANDLING FINISH ---
 
                 default:
@@ -357,6 +371,7 @@ namespace Content.Server.Construction
                         "You need to code your ConstructionGraphStep behavior by adding a case to the switch.");
             }
 
+            // If the handlers were not able to handle this event, return...
             return HandleResult.False;
         }
 
@@ -378,7 +393,7 @@ namespace Content.Server.Construction
                 // If an action deletes the entity, we stop performing actions.
                 if (!EntityManager.EntityExists(uid))
                     break;
-                
+
                 action.PerformAction(uid, userUid, EntityManager);
             }
         }
@@ -465,6 +480,8 @@ namespace Content.Server.Construction
 
         #endregion
 
+        #region Event Definitions
+
         /// <summary>
         ///     This event signals that a construction interaction's DoAfter has completed successfully.
         ///     This wraps the original event and also keeps some custom data that event handlers might need.
@@ -500,6 +517,10 @@ namespace Content.Server.Construction
                 CustomData = customData;
             }
         }
+
+        #endregion
+
+        #region Internal Enum Definitions
 
         /// <summary>
         ///     Specifies the DoAfter status for a construction step event handler.
@@ -557,5 +578,7 @@ namespace Content.Server.Construction
             /// </summary>
             DoAfter,
         }
+
+        #endregion
     }
 }
