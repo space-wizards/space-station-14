@@ -24,6 +24,7 @@
             <!-- Ingredients are added here by code -->
         </ItemList>
         <BoxContainer Orientation="Vertical"
+                      MinWidth="176"
                       VerticalExpand="True"
                       HorizontalExpand="True">
             <BoxContainer Orientation="Vertical"
@@ -55,6 +56,7 @@
                             </PanelContainer.PanelOverride>
                             <Label Name="CookTimeInfoLabel"
                                    Access="Public"
+                                   Text="{Loc 'microwave-bound-user-interface-cook-time-label'}"
                                    Align="Center"
                                    Modulate="#FFFFFF"
                                    VAlign="Center" />

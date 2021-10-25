@@ -44,9 +44,6 @@ namespace Content.Client.Kitchen.UI
 
             var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
             cookTimeOneSecondButton.Pressed = true;
-
-            // TODO: Hardcoded value
-            CookTimeInfoLabel.Text = Loc.GetString("microwave-menu-cook-time-label", ("time", 1));
         }
 
         public void ToggleBusyDisableOverlayPanel(bool shouldDisable)

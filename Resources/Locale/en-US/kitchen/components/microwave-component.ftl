@@ -15,7 +15,7 @@ microwave-component-suicide-message = You cook your head!
 
 microwave-bound-user-interface-instant-button = INSTANT
 microwave-bound-user-interface-cook-time-label = COOK TIME
- 
+
 ## UI
 
 microwave-menu-title = Microwave
@@ -23,4 +23,3 @@ microwave-menu-start-button = Start
 microwave-menu-eject-all-text = Eject All Contents
 microwave-menu-eject-all-tooltip = This vaporizes all reagents, but ejects any solids.
 microwave-menu-instant-button = INSTANT
-microwave-menu-cook-time-label = COOK TIME: {$time}
