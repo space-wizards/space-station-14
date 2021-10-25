@@ -217,12 +217,16 @@ namespace Content.Server.Light.EntitySystems
         /// </summary>
         public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
+            // check bulb state
             var bulbUid = GetBulb(uid, light);
-            if (bulbUid == null)
+            if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
+                return;
+            if (lightBulb.State == LightBulbState.Broken)
                 return;
 
-            _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken);
-            _bulbSystem.PlayBreakSound(bulbUid.Value);
+            // break it
+            _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
+            _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
             UpdateLight(uid, light);
         }
         #endregion

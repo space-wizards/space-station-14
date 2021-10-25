@@ -43,8 +43,6 @@ namespace Content.Server.Light.EntitySystems
 
             bulb.Color = color;
             UpdateAppearance(uid, bulb);
-
-            RaiseLocalEvent(uid, new BulbColorChangedEvent(uid, color));
         }
 
         /// <summary>
@@ -57,8 +55,6 @@ namespace Content.Server.Light.EntitySystems
 
             bulb.State = state;
             UpdateAppearance(uid, bulb);
-
-            RaiseLocalEvent(uid, new BulbStateChangedEvent(uid, state));
         }
 
         public void PlayBreakSound(EntityUid uid, LightBulbComponent? bulb = null)
