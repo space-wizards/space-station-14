@@ -1,0 +1,4 @@
+author: Zumorica
+changes:
+  - type: Add # One of the following: Add, Remove, Tweak, Fix
+    message: Added insulated gloves (and their cheap knockoffs) to the station.
