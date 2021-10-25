@@ -2704,3 +2704,8 @@ Entries:
     type: Fix}
   id: 482
   time: '2021-10-25T03:33:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station will now start with a random rotation., type: Tweak}
+  id: 483
+  time: '2021-10-25T04:22:57.0000000+00:00'
