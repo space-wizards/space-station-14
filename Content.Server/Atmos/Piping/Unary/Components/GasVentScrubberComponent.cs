@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -38,11 +40,29 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool WideNet { get; set; } = false;
-    }
 
-    public enum ScrubberPumpDirection : sbyte
-    {
-        Siphoning = 0,
-        Scrubbing = 1,
+        public GasVentScrubberData ToAirAlarmData() => new GasVentScrubberData
+        {
+            Enabled = Enabled,
+            FilterGases = FilterGases,
+            PumpDirection = PumpDirection,
+            VolumeRate = VolumeRate,
+            WideNet = WideNet
+        };
+
+        public void FromAirAlarmData(GasVentScrubberData data)
+        {
+            Enabled = data.Enabled;
+            PumpDirection = data.PumpDirection;
+            VolumeRate = data.VolumeRate;
+            WideNet = data.WideNet;
+
+            if (!data.FilterGases.SequenceEqual(FilterGases))
+            {
+                FilterGases.Clear();
+                foreach (var gas in data.FilterGases)
+                    FilterGases.Add(gas);
+            }
+        }
     }
 }

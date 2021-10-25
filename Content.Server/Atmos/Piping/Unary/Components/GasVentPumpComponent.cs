@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Monitor.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -33,19 +34,23 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public float InternalPressureBound { get; set; } = 0f;
-    }
 
-    public enum VentPumpDirection : sbyte
-    {
-        Siphoning = 0,
-        Releasing = 1,
-    }
+        public GasVentPumpData ToAirAlarmData() => new GasVentPumpData
+        {
+            Enabled = Enabled,
+            PumpDirection = PumpDirection,
+            PressureChecks = PressureChecks,
+            ExternalPressureBound = ExternalPressureBound,
+            InternalPressureBound = InternalPressureBound
+        };
 
-    [Flags]
-    public enum VentPressureBound : sbyte
-    {
-        NoBound       = 0,
-        InternalBound = 1,
-        ExternalBound = 2,
+        public void FromAirAlarmData(GasVentPumpData data)
+        {
+            Enabled = data.Enabled;
+            PumpDirection = data.PumpDirection;
+            PressureChecks = data.PressureChecks;
+            ExternalPressureBound = data.ExternalPressureBound;
+            InternalPressureBound = data.InternalPressureBound;
+        }
     }
 }

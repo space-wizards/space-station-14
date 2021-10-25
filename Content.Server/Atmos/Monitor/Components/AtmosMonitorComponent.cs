@@ -58,6 +58,10 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
 
+        // Stores a reference to the gas on the tile this is on.
+        [ViewVariables]
+        public GasMixture? TileGas;
+
         // Stores the last alarm state of this alarm.
         [ViewVariables]
         public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;

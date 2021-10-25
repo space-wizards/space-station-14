@@ -69,7 +69,14 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (component.PowerRecvComponent == null
                 && component.AtmosDeviceComponent != null)
+            {
                 _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
+                return;
+            }
+
+            var coords = component.Owner.Transform.Coordinates;
+            var air = _atmosphereSystem.GetTileMixture(coords);
+            component.TileGas = air;
         }
 
         private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, PacketSentEvent args)
@@ -121,7 +128,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 if (component.AtmosDeviceComponent != null
                     && component.AtmosDeviceComponent.JoinedGrid != null)
+                {
                     _atmosDeviceSystem.LeaveAtmosphere(component.AtmosDeviceComponent);
+                    component.TileGas = null;
+                }
 
                 // clear memory when power cycled
                 component.LastAlarmState = AtmosMonitorAlarmType.Normal;
@@ -131,7 +141,12 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 if (component.AtmosDeviceComponent != null
                     && component.AtmosDeviceComponent.JoinedGrid == null)
+                {
                     _atmosDeviceSystem.JoinAtmosphere(component.AtmosDeviceComponent);
+                    var coords = component.Owner.Transform.Coordinates;
+                    var air = _atmosphereSystem.GetTileMixture(coords);
+                    component.TileGas = air;
+                }
             }
 
             if (EntityManager.TryGetComponent(component.Owner.Uid, out SharedAppearanceComponent? appearanceComponent))
@@ -183,11 +198,12 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && component.GasThresholds == null)
                 return;
 
+            /*
             var coords = component.Owner.Transform.Coordinates;
             var air = _atmosphereSystem.GetTileMixture(coords);
+            */
 
-            if (air != null)
-                UpdateState(component, air);
+            UpdateState(component, component.TileGas);
         }
 
         // Update checks the current air if it exceeds thresholds of
@@ -198,8 +214,10 @@ namespace Content.Server.Atmos.Monitor.Systems
         //
         // If the threshold does not match the current state
         // of the monitor, it is set in the Alert call.
-        private void UpdateState(AtmosMonitorComponent monitor, GasMixture air)
+        private void UpdateState(AtmosMonitorComponent monitor, GasMixture? air)
         {
+            if (air == null) return;
+
             AtmosMonitorAlarmType state = AtmosMonitorAlarmType.Normal;
             List<AtmosMonitorThresholdType> alarmTypes = new();
 
