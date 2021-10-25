@@ -2727,3 +2727,9 @@ Entries:
   - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
   id: 486
   time: '2021-10-25T14:21:56.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Stacks can now be split in half by alt-clicking or into different amounts
+      with the new Split verb., type: Add}
+  id: 487
+  time: '2021-10-25T14:36:04.0000000+00:00'
