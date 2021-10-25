@@ -164,9 +164,6 @@ namespace Content.Server.Fluids.Components
 
                 if (vapor.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    // entity & collision box is already rotated to face in the correct direction.
-                    // but sprite needs to be rotated 90 degrees.
-                    appearance.SetData(VaporVisuals.Rotation, Angle.FromDegrees(90));
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }

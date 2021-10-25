@@ -75,6 +75,7 @@
   - type: Sprite
     netsync: false
     sprite: Effects/chempuff.rsi
+    rotation: 90
     layers:
     - state: chempuff
       map: ["enum.VaporVisualLayers.Base"]
