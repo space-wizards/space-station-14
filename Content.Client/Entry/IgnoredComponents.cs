@@ -61,7 +61,6 @@ namespace Content.Client.Entry
             "RandomInsulation",
             "Electrified",
             "Electrocution",
-            "UseDelay",
             "Pourable",
             "Paper",
             "Write",
