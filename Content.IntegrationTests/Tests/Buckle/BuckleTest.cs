@@ -103,7 +103,7 @@ namespace Content.IntegrationTests.Tests.Buckle
                 Assert.False(actionBlocker.CanMove(human));
                 Assert.False(actionBlocker.CanChangeDirection(human));
                 Assert.False(EffectBlockerSystem.CanFall(human));
-                Assert.That(human.Transform.WorldPosition, Is.EqualTo(chair.Transform.WorldPosition));
+                Assert.That((human.Transform.WorldPosition - chair.Transform.WorldPosition).Length, Is.LessThanOrEqualTo(buckle.BuckleOffset.Length));
 
                 // Side effects of buckling for the strap
                 Assert.That(strap.BuckledEntities, Does.Contain(human));
