@@ -62,7 +62,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void UpdateVisuals(EntityUid uid, PuddleComponent puddleComponent)
         {
-            if (puddleComponent.Owner.Deleted || EmptyHolder(puddleComponent) ||
+            if (puddleComponent.Owner.Deleted || EmptyHolder(uid, puddleComponent) ||
                 !EntityManager.TryGetComponent<SharedAppearanceComponent>(uid, out var appearanceComponent))
             {
                 return;
@@ -145,33 +145,47 @@ namespace Content.Server.Fluids.EntitySystems
         /// <summary>
         ///     Whether adding this solution to this puddle would overflow.
         /// </summary>
+        /// <param name="uid">Uid of owning entity</param>
         /// <param name="puddle">Puddle to which we are adding solution</param>
         /// <param name="solution">Solution we intend to add</param>
         /// <returns></returns>
-        public bool WouldOverflow(PuddleComponent puddle, Solution solution)
+        public bool WouldOverflow(EntityUid uid, Solution solution, PuddleComponent? puddle = null)
         {
+            if (!Resolve(uid, ref puddle))
+                return false;
+
             return puddle.CurrentVolume + solution.TotalVolume > puddle.OverflowVolume;
         }
 
-        public bool EmptyHolder(PuddleComponent puddleComponent)
+        public bool EmptyHolder(EntityUid uid, PuddleComponent? puddleComponent = null)
         {
+            if (!Resolve(uid, ref puddleComponent))
+                return true;
+
             return !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
                        out var solution)
                    || solution.Contents.Count == 0;
         }
 
-        public ReagentUnit CurrentVolume(PuddleComponent puddleComponent)
+        public ReagentUnit CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
         {
+            if (!Resolve(uid, ref puddleComponent))
+                return ReagentUnit.Zero;
+
             return _solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
                 out var solution)
                 ? solution.CurrentVolume
                 : ReagentUnit.Zero;
         }
 
-        public bool TryAddSolution(PuddleComponent puddleComponent, Solution solution,
+        public bool TryAddSolution(EntityUid uid, Solution solution,
             bool sound = true,
-            bool checkForOverflow = true)
+            bool checkForOverflow = true,
+            PuddleComponent? puddleComponent = null)
         {
+            if (!Resolve(uid, ref puddleComponent))
+                return false;
+
             if (solution.TotalVolume == 0 ||
                 !_solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
                     out var puddleSolution))
@@ -247,7 +261,7 @@ namespace Content.Server.Fluids.EntitySystems
                         var spillAmount = _solutionContainerSystem.SplitSolution(puddleComponent.Owner.Uid,
                             puddleSolution, quantity);
 
-                        TryAddSolution(adjacentPuddle, spillAmount, false, false);
+                        TryAddSolution(adjacentPuddle.Owner.Uid, spillAmount, false, false);
                         nextPuddles.Add(adjacentPuddle);
                     }
                 }

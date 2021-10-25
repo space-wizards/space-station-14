@@ -46,7 +46,7 @@ namespace Content.Server.Fluids.Components
         public bool Overflown;
 
         [ViewVariables(VVAccess.ReadOnly)]
-        public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(this);
+        public ReagentUnit CurrentVolume => EntitySystem.Get<PuddleSystem>().CurrentVolume(Owner.Uid);
 
         [ViewVariables] [DataField("overflowVolume")]
         public ReagentUnit OverflowVolume = DefaultOverflowVolume;

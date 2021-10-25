@@ -143,7 +143,7 @@ namespace Content.Server.Fluids.Components
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (transferAmount == 0)
             {
-                if (puddleSystem.EmptyHolder(puddleComponent)) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleSystem.EmptyHolder(puddleComponent.Owner.Uid, puddleComponent)) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);

@@ -145,9 +145,9 @@ namespace Content.Server.Fluids.Components
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
 
-                if (!overflow && puddleSystem.WouldOverflow(puddleComponent, solution)) return null;
+                if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
 
-                if (!puddleSystem.TryAddSolution(puddleComponent, solution, sound)) continue;
+                if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
 
                 puddle = puddleComponent;
                 spilt = true;
@@ -160,7 +160,7 @@ namespace Content.Server.Fluids.Components
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
 
-            puddleSystem.TryAddSolution(newPuddleComponent, solution, sound);
+            puddleSystem.TryAddSolution(newPuddleComponent.Owner.Uid, solution, sound);
 
             return newPuddleComponent;
         }

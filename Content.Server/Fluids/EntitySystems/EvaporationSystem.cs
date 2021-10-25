@@ -19,45 +19,39 @@ namespace Content.Server.Fluids.EntitySystems
             var queueDelete = new RemQueue<EvaporationComponent>();
             foreach (var evaporationComponent in EntityManager.EntityQuery<EvaporationComponent>())
             {
-                UpdateEvaporation(evaporationComponent, frameTime, ref queueDelete);
+                var uid = evaporationComponent.Owner.Uid;
+                evaporationComponent.Accumulator += frameTime;
+
+                if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
+                {
+                    // If no solution, delete the entity
+                    queueDelete.Add(evaporationComponent);
+                    return;
+                }
+
+                if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
+                    return;
+
+                evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
+
+
+                _solutionContainerSystem.SplitSolution(uid, solution,
+                    ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
+
+                if (solution.CurrentVolume == 0)
+                {
+                    EntityManager.QueueDeleteEntity(uid);
+                }
+                else if (solution.CurrentVolume <= evaporationComponent.LowerLimit
+                         || solution.CurrentVolume >= evaporationComponent.UpperLimit)
+                {
+                    queueDelete.Add(evaporationComponent);
+                }
             }
 
             foreach (var evaporationComponent in queueDelete)
             {
                 EntityManager.RemoveComponent(evaporationComponent.Owner.Uid, evaporationComponent);
-            }
-        }
-
-        private void UpdateEvaporation(EvaporationComponent evaporationComponent, float frameTime,
-            ref RemQueue<EvaporationComponent> queueDelete)
-        {
-            var uid = evaporationComponent.Owner.Uid;
-            evaporationComponent.Accumulator += frameTime;
-
-            if (!_solutionContainerSystem.TryGetSolution(uid, evaporationComponent.SolutionName, out var solution))
-            {
-                // If no solution, delete the entity
-                queueDelete.Add(evaporationComponent);
-                return;
-            }
-
-            if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
-                return;
-
-            evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
-
-
-            _solutionContainerSystem.SplitSolution(uid, solution,
-                ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
-
-            if (solution.CurrentVolume == 0)
-            {
-                EntityManager.QueueDeleteEntity(uid);
-            }
-            else if (solution.CurrentVolume <= evaporationComponent.LowerLimit
-                     || solution.CurrentVolume >= evaporationComponent.UpperLimit)
-            {
-                queueDelete.Add(evaporationComponent);
             }
         }
     }
