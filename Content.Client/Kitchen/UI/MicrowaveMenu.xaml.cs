@@ -41,9 +41,6 @@ namespace Content.Client.Kitchen.UI
                     OnCookTimeSelected?.Invoke(args, newButton.GetPositionInParent());
                 };
             }
-
-            var cookTimeOneSecondButton = (Button) CookTimeButtonVbox.GetChild(0);
-            cookTimeOneSecondButton.Pressed = true;
         }
 
         public void ToggleBusyDisableOverlayPanel(bool shouldDisable)

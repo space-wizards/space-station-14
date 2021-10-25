@@ -14,7 +14,7 @@ microwave-component-suicide-message = You cook your head!
 ## Bound UI
 
 microwave-bound-user-interface-instant-button = INSTANT
-microwave-bound-user-interface-cook-time-label = COOK TIME
+microwave-bound-user-interface-cook-time-label = COOK TIME: {$time}
 
 ## UI
 

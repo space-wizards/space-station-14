@@ -56,7 +56,6 @@
                             </PanelContainer.PanelOverride>
                             <Label Name="CookTimeInfoLabel"
                                    Access="Public"
-                                   Text="{Loc 'microwave-bound-user-interface-cook-time-label'}"
                                    Align="Center"
                                    Modulate="#FFFFFF"
                                    VAlign="Center" />

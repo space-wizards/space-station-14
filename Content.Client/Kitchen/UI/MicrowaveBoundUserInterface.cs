@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -6,16 +5,12 @@ using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
-using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
-using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
-using static Robust.Client.UserInterface.Controls.BaseButton;
-using static Robust.Client.UserInterface.Controls.BoxContainer;
+using static Content.Shared.Kitchen.Components.SharedMicrowaveComponent;
 
 namespace Content.Client.Kitchen.UI
 {
@@ -32,7 +27,6 @@ namespace Content.Client.Kitchen.UI
 
         public MicrowaveBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner,uiKey)
         {
-
         }
 
         protected override void Open()
@@ -41,24 +35,22 @@ namespace Content.Client.Kitchen.UI
             _menu = new MicrowaveMenu(this);
             _menu.OpenCentered();
             _menu.OnClose += Close;
-            _menu.StartButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveStartCookMessage());
-            _menu.EjectButton.OnPressed += _ => SendMessage(new SharedMicrowaveComponent.MicrowaveEjectMessage());
+            _menu.StartButton.OnPressed += _ => SendMessage(new MicrowaveStartCookMessage());
+            _menu.EjectButton.OnPressed += _ => SendMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new SharedMicrowaveComponent.MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
-
+                SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
             };
 
             _menu.IngredientsListReagents.OnItemSelected += args =>
             {
-                SendMessage(
-                    new SharedMicrowaveComponent.MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
+                SendMessage(new MicrowaveVaporizeReagentIndexedMessage(_reagents[args.ItemIndex]));
             };
 
             _menu.OnCookTimeSelected += (args,buttonIndex) =>
             {
                 var actualButton = (MicrowaveMenu.MicrowaveCookTimeButton) args.Button ;
-                SendMessage(new SharedMicrowaveComponent.MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
+                SendMessage(new MicrowaveSelectCookTimeMessage(buttonIndex,actualButton.CookTime));
             };
         }
 
@@ -87,13 +79,15 @@ namespace Content.Client.Kitchen.UI
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
             RefreshContentsDisplay(cState.ReagentQuantities, cState.ContainedSolids);
 
-            if (_menu != null)
-            {
-                var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
-                currentlySelectedTimeButton.Pressed = true;
-                var label = cState.ActiveButtonIndex <= 0 ? Loc.GetString("microwave-bound-user-interface-instant-button") : cState.CurrentCookTime.ToString();
-                _menu.CookTimeInfoLabel.Text = $"{Loc.GetString("microwave-bound-user-interface-cook-time-label")}: {label}";
-            }
+            if (_menu == null) return;
+
+            var currentlySelectedTimeButton = (Button) _menu.CookTimeButtonVbox.GetChild(cState.ActiveButtonIndex);
+            currentlySelectedTimeButton.Pressed = true;
+            var cookTime = cState.ActiveButtonIndex == 0
+                ? Loc.GetString("microwave-menu-instant-button")
+                : cState.CurrentCookTime.ToString();
+            _menu.CookTimeInfoLabel.Text = Loc.GetString("microwave-bound-user-interface-cook-time-label",
+                                                         ("time", cookTime));
         }
 
         private void RefreshContentsDisplay(Solution.ReagentQuantity[] reagents, EntityUid[] containedSolids)
@@ -105,19 +99,18 @@ namespace Content.Client.Kitchen.UI
             _menu.IngredientsListReagents.Clear();
             for (var i = 0; i < reagents.Length; i++)
             {
-                if (_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto))
-                {
-                    var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
-                    var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
-                    _reagents.Add(reagentIndex, reagents[i]);
-                }
+                if (!_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto)) continue;
+
+                var reagentAdded= _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
+                _reagents.Add(reagentIndex, reagents[i]);
             }
 
             _solids.Clear();
             _menu.IngredientsList.Clear();
-            for (var j = 0; j < containedSolids.Length; j++)
+            foreach (var t in containedSolids)
             {
-                if (!_entityManager.TryGetEntity(containedSolids[j], out var entity))
+                if (!_entityManager.TryGetEntity(t, out var entity))
                 {
                     return;
                 }
@@ -143,7 +136,7 @@ namespace Content.Client.Kitchen.UI
 
                 var solidItem = _menu.IngredientsList.AddItem(entity.Name, texture);
                 var solidIndex = _menu.IngredientsList.IndexOf(solidItem);
-                _solids.Add(solidIndex, containedSolids[j]);
+                _solids.Add(solidIndex, t);
             }
         }
     }
