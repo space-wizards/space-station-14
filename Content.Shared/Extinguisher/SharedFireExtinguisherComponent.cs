@@ -4,14 +4,14 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Extinguisher
 {
-    public class SharedFireExtinguisherComponent : Component
+    public abstract class SharedFireExtinguisherComponent : Component
     {
         public override string Name => "FireExtinguisher";
     }
 
     [Serializable, NetSerializable]
-    public enum FireExtinguisherVisuals
+    public enum FireExtinguisherVisuals : byte
     {
-        Safety,
+        Safety
     }
 }

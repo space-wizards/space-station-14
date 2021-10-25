@@ -52,7 +52,7 @@ namespace Content.Server.Extinguisher
             {
                 if (_hasSafety && _safety)
                 {
-                    Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
+                    Owner.PopupMessage(eventArgs.User, Loc.GetString("fire-extinguisher-component-safety-on-message"));
                     return true;
                 }
                 return false;
