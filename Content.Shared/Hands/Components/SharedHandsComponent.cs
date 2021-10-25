@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -331,7 +332,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to move a held item from a hand into a container that is not another hand, without dropping it on the floor inbetween.
         /// </summary>
-        public bool TryPutEntityIntoContainer(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
+        public bool Drop(IEntity entity, BaseContainer targetContainer, bool checkActionBlocker = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -346,7 +347,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop the contents of a hand directly under the player.
         /// </summary>
-        public bool TryDropHandToFloor(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(string handName, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHand(handName, out var hand))
                 return false;
@@ -357,7 +358,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Tries to drop a held entity directly under the player.
         /// </summary>
-        public bool TryDropEntityToFloor(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
+        public bool Drop(IEntity entity, bool checkActionBlocker = true, bool intentionalDrop = true)
         {
             if (!TryGetHandHoldingEntity(entity, out var hand))
                 return false;
@@ -452,7 +453,7 @@ namespace Content.Shared.Hands.Components
 
             RemoveHeldEntityFromHand(hand);
 
-            DoDroppedInteraction(heldEntity, intentionalDrop);
+            EntitySystem.Get<SharedInteractionSystem>().DroppedInteraction(Owner, heldEntity, intentionalDrop);
 
             heldEntity.Transform.WorldPosition = GetFinalDropCoordinates(targetDropLocation);
 
@@ -622,7 +623,7 @@ namespace Content.Shared.Hands.Components
                 return;
             }
 
-            DoEquippedHandInteraction(entity, hand.ToHandState());
+            EntitySystem.Get<SharedInteractionSystem>().EquippedHandInteraction(Owner, entity, hand.ToHandState());
 
             if (hand.Name == ActiveHand)
                 SelectActiveHeldEntity();
@@ -673,7 +674,7 @@ namespace Content.Shared.Hands.Components
         /// <summary>
         ///     Attempts to interact with the item in a hand using the active held item.
         /// </summary>
-        public void InteractHandWithActiveHand(string handName)
+        public async void InteractHandWithActiveHand(string handName)
         {
             if (!TryGetActiveHeldEntity(out var activeHeldEntity))
                 return;
@@ -684,15 +685,17 @@ namespace Content.Shared.Hands.Components
             if (activeHeldEntity == heldEntity)
                 return;
 
-            DoInteraction(activeHeldEntity, heldEntity);
+            await EntitySystem.Get<SharedInteractionSystem>()
+                .InteractUsing(Owner, activeHeldEntity, heldEntity, EntityCoordinates.Invalid);
         }
 
-        public void UseActiveHeldEntity(bool altInteract = false)
+        public void ActivateItem(bool altInteract = false)
         {
             if (!TryGetActiveHeldEntity(out var heldEntity))
                 return;
 
-            DoUse(heldEntity, altInteract);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryUseInteraction(Owner, heldEntity, altInteract);
         }
 
         public void ActivateHeldEntity(string handName)
@@ -700,7 +703,8 @@ namespace Content.Shared.Hands.Components
             if (!TryGetHeldEntity(handName, out var heldEntity))
                 return;
 
-            DoActivate(heldEntity);
+            EntitySystem.Get<SharedInteractionSystem>()
+                .TryInteractionActivate(Owner, heldEntity);
         }
 
         /// <summary>
@@ -730,18 +734,37 @@ namespace Content.Shared.Hands.Components
         private void DeselectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandDeselectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandDeselectedInteraction(Owner, entity);
         }
 
         private void SelectActiveHeldEntity()
         {
             if (TryGetActiveHeldEntity(out var entity))
-                DoHandSelectedInteraction(entity);
+                EntitySystem.Get<SharedInteractionSystem>().HandSelectedInteraction(Owner, entity);
         }
 
         private void HandCountChanged()
         {
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandCountChangedEvent(Owner));
+        }
+
+        /// <summary>
+        ///     Tries to pick up an entity into the active hand. If it cannot, tries to pick up the entity into each other hand.
+        /// </summary>
+        public bool PutInHand(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            return TryPutInActiveHandOrAny(item.Owner, checkActionBlocker);
+        }
+
+        /// <summary>
+        ///     Puts an item any hand, prefering the active hand, or puts it on the floor under the player.
+        /// </summary>
+        public void PutInHandOrDrop(SharedItemComponent item, bool checkActionBlocker = true)
+        {
+            var entity = item.Owner;
+
+            if (!TryPutInActiveHandOrAny(entity, checkActionBlocker))
+                entity.Transform.Coordinates = Owner.Transform.Coordinates;
         }
 
         /// <summary>
@@ -785,20 +808,6 @@ namespace Content.Shared.Hands.Components
         }
 
         protected virtual void OnHeldEntityRemovedFromHand(IEntity heldEntity, HandState handState) { }
-
-        protected virtual void DoDroppedInteraction(IEntity heldEntity, bool intentionalDrop) { }
-
-        protected virtual void DoEquippedHandInteraction(IEntity entity, HandState handState) { }
-
-        protected virtual void DoHandSelectedInteraction(IEntity entity) { }
-
-        protected virtual void DoHandDeselectedInteraction(IEntity entity) { }
-
-        protected virtual void DoInteraction(IEntity activeHeldEntity, IEntity heldEntity) { }
-
-        protected virtual void DoUse(IEntity heldEntity, bool altInteract = false) { }
-
-        protected virtual void DoActivate(IEntity heldEntity) { }
 
         protected virtual void HandlePickupAnimation(IEntity entity) { }
     }

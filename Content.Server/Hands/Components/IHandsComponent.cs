@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Items;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Hands.Components;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -58,7 +59,7 @@ namespace Content.Server.Hands.Components
         /// <param name="item">The item to put in a hand.</param>
         /// <param name="mobCheck">Whether to perform an ActionBlocker check to the entity.</param>
         /// <returns>True if the item was inserted, false otherwise.</returns>
-        bool PutInHand(ItemComponent item, bool mobCheck = true);
+        bool PutInHand(SharedItemComponent item, bool mobCheck = true);
 
         /// <summary>
         ///     Checks to see if an item can be put in any hand.

@@ -248,7 +248,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!args.User.InRangeUnobstructed(canister, SharedInteractionSystem.InteractionRange, popup: true))
                 return;
 
-            if (!hands.TryPutEntityIntoContainer(args.Used, container))
+            if (!hands.Drop(args.Used, container))
                 return;
 
             args.Handled = true;
