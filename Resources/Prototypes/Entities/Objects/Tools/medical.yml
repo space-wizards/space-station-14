@@ -1,0 +1,19 @@
+- type: entity
+  name: health analyzer
+  parent: BaseItem
+  id: HealthAnalyzer
+  description: Scan humans or monkeys to get a report of their health, damage taken, any viruses and other ailments.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Atmos/gasanalyzer.rsi
+    state: icon
+  - type: HealthAnalyzer
+  - type: UserInterface
+    interfaces:
+    - key: enum.HealthAnalyzerUiKey.Key
+      type: HealthAnalyzerBoundUserInterface
+  - type: Appearance
+    visuals:
+    - type: GasAnalyzerVisualizer
+      state_off: icon
+      state_working: working

@@ -1,4 +1,4 @@
-﻿using Content.Client.Resources;
+using Content.Client.Resources;
 using Content.Client.Stylesheets;
 using Content.Shared.Temperature;
 using Robust.Client.Graphics;
@@ -9,14 +9,14 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
-using static Content.Shared.Atmos.Components.SharedGasAnalyzerComponent;
+using static Content.Shared.Medical.Components.SharedHealthAnalyzerComponent;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 
-namespace Content.Client.Atmos.UI
+namespace Content.Client.Medical.UI
 {
-    public class GasAnalyzerWindow : BaseWindow
+    public class HealthAnalyzerWindow : BaseWindow
     {
-        public GasAnalyzerBoundUserInterface Owner { get; }
+        public HealthAnalyzerBoundUserInterface Owner { get; }
 
         private readonly Control _topContainer;
         private readonly Control _statusContainer;
@@ -25,7 +25,7 @@ namespace Content.Client.Atmos.UI
 
         public TextureButton CloseButton { get; set; }
 
-        public GasAnalyzerWindow(GasAnalyzerBoundUserInterface owner)
+        public HealthAnalyzerWindow(HealthAnalyzerBoundUserInterface owner)
         {
             var resourceCache = IoCManager.Resolve<IResourceCache>();
 
@@ -91,7 +91,7 @@ namespace Content.Client.Atmos.UI
                 {
                     (_nameLabel = new Label
                     {
-                        Text = Loc.GetString("gas-analyzer-window-name"),
+                        Text = Loc.GetString("health-analyzer-window-name"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center
@@ -101,7 +101,7 @@ namespace Content.Client.Atmos.UI
                         MinSize = (20, 0),
                         HorizontalExpand = true,
                     },
-                    (refreshButton = new Button {Text = Loc.GetString("gas-analyzer-window-refresh-button")}), //TODO: refresh icon?
+                    (refreshButton = new Button {Text = Loc.GetString("health-analyzer-window-refresh-button")}), //TODO: refresh icon?
                     new Control
                     {
                         MinSize = (2, 0),
@@ -149,14 +149,14 @@ namespace Content.Client.Atmos.UI
         }
 
 
-        public void Populate(GasAnalyzerBoundUserInterfaceState state)
+        public void Populate(HealthAnalyzerBoundUserInterfaceState state)
         {
             _statusContainer.RemoveAllChildren();
             if (state.Error != null)
             {
                 _statusContainer.AddChild(new Label
                 {
-                    Text = Loc.GetString("gas-analyzer-window-error-text", ("errorText", state.Error)),
+                    Text = Loc.GetString("health-analyzer-window-error-text", ("errorText", state.Error)),
                     FontColorOverride = Color.Red
                 });
                 return;
@@ -164,19 +164,8 @@ namespace Content.Client.Atmos.UI
 
             _statusContainer.AddChild(new Label
             {
-                Text = Loc.GetString("gas-analyzer-window-pressure-text", ("pressure", $"{state.Pressure:0.##}"))
+                Text = Loc.GetString("health-analyzer-overall-status", ("health", $"{state.Health:0.##}"))
             });
-            _statusContainer.AddChild(new Label
-            {
-                Text = Loc.GetString("gas-analyzer-window-temperature-text",
-                                     ("tempK", $"{state.Temperature:0.#}"),
-                                     ("tempC", $"{TemperatureHelpers.KelvinToCelsius(state.Temperature):0.#}"))
-            });
-            // Return here cause all that stuff down there is gas stuff (so we don't get the seperators)
-            if (state.Gases == null || state.Gases.Length == 0)
-            {
-                return;
-            }
 
             // Seperator
             _statusContainer.AddChild(new Control
@@ -184,86 +173,9 @@ namespace Content.Client.Atmos.UI
                 MinSize = new Vector2(0, 10)
             });
 
-            // Add a table with all the gases
-            var tableKey = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
-            var tableVal = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Vertical
-            };
-            _statusContainer.AddChild(new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
-                {
-                    tableKey,
-                    new Control
-                    {
-                        MinSize = new Vector2(20, 0)
-                    },
-                    tableVal
-                }
-            });
-            // This is the gas bar thingy
-            var height = 30;
-            var minSize = 24; // This basically allows gases which are too small, to be shown properly
-            var gasBar = new BoxContainer
-            {
-                Orientation = LayoutOrientation.Horizontal,
-                HorizontalExpand = true,
-                MinSize = new Vector2(0, height)
-            };
-            // Seperator
-            _statusContainer.AddChild(new Control
-            {
-                MinSize = new Vector2(0, 10)
-            });
-
-            var totalGasAmount = 0f;
-            foreach (var gas in state.Gases)
-            {
-                totalGasAmount += gas.Amount;
-            }
-
-            for (int i = 0; i < state.Gases.Length; i++)
-            {
-                var gas = state.Gases[i];
-                var color = Color.FromHex($"#{gas.Color}", Color.White);
-                // Add to the table
-                tableKey.AddChild(new Label
-                {
-                    Text = Loc.GetString(gas.Name)
-                });
-                tableVal.AddChild(new Label
-                {
-                    Text = Loc.GetString("gas-analyzer-window-molality-text", ("mol", $"{gas.Amount:0.##}"))
-                });
-
-                // Add to the gas bar //TODO: highlight the currently hover one
-                var left = (i == 0) ? 0f : 2f;
-                var right = (i == state.Gases.Length - 1) ? 0f : 2f;
-                gasBar.AddChild(new PanelContainer
-                {
-                    ToolTip = Loc.GetString("gas-analyzer-window-molality-percentage-text",
-                                            ("gasName", gas.Name),
-                                            ("amount", $"{gas.Amount:0.##}"),
-                                            ("percentage", $"{(gas.Amount / totalGasAmount * 100):0.#}")),
-                    HorizontalExpand = true,
-                    SizeFlagsStretchRatio = gas.Amount,
-                    MouseFilter = MouseFilterMode.Pass,
-                    PanelOverride = new StyleBoxFlat
-                    {
-                        BackgroundColor = color,
-                        PaddingLeft = left,
-                        PaddingRight = right
-                    },
-                    MinSize = new Vector2(minSize, 0)
-                });
-            }
-
-            _statusContainer.AddChild(gasBar);
+            //TODO: add some crude organ visualisation with tooltip info overlay
+            //See gas analyzer#gases, use proper collection of body parts
+            //Blood level, etc, etc
         }
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
