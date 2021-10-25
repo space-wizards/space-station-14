@@ -51,7 +51,7 @@ namespace Content.Server.Chat.Commands
                         _ => prototypeManager.Index<DamageTypePrototype>("Blunt")
                     },
                 200);
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(target.Uid, damage, true);
+                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(target.Uid, damage, true);
             }
         }
 
@@ -120,7 +120,7 @@ namespace Content.Server.Chat.Commands
             owner.PopupMessage(selfMessage);
 
             DamageSpecifier damage = new(IoCManager.Resolve<IPrototypeManager>().Index<DamageTypePrototype>("Bloodloss"), 200);
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(owner.Uid, damage, true);
+            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(owner.Uid, damage, true);
 
             // Prevent the player from returning to the body.
             // Note that mind cannot be null because otherwise owner would be null.

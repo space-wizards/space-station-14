@@ -172,7 +172,7 @@ namespace Content.Server.Weapon.Ranged
             if (ClumsyCheck && ClumsyDamage != null && ClumsyComponent.TryRollClumsy(user, ClumsyExplodeChance))
             {
                 //Wound them
-                EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
+                EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
                 EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
 
                 // Apply salt to the wound ("Honk!")

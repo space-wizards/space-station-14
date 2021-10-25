@@ -14,6 +14,7 @@
     - back
     sprite: Clothing/Back/Satchels/satchel.rsi
   - type: Storage
+    damagePassthroughModifier: clothingContainer
     capacity: 100
     storageSoundCollection:
       collection: storageRustle

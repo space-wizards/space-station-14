@@ -71,6 +71,7 @@
     - Electrocution
   # Other
   - type: Inventory
+    damagePassthroughModifier: clothingContainer
   - type: Clickable
   - type: InteractionOutline
   - type: Icon

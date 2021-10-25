@@ -35,7 +35,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct
+    public class InventoryComponent : SharedInventoryComponent
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -572,26 +572,6 @@ namespace Content.Server.Inventory.Components
             _hoverEntity = null;
 
             return new InventoryComponentState(list, hover);
-        }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            foreach (var slot in _slotContainers.Values.ToList())
-            {
-                foreach (var entity in slot.ContainedEntities)
-                {
-                    var exActs = entity.GetAllComponents<IExAct>().ToList();
-                    foreach (var exAct in exActs)
-                    {
-                        exAct.OnExplosion(eventArgs);
-                    }
-                }
-            }
         }
 
         public override bool IsEquipped(IEntity item)

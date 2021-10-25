@@ -40,6 +40,7 @@
       - MobImpassable
       - SmallImpassable
   - type: EntityStorage
+    damagePassthroughModifier: metallicContainer
   - type: PlaceableSurface
     placeCentered: true
   - type: Damageable

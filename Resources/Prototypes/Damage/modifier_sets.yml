@@ -47,3 +47,27 @@
     Heat: 2.0
   flatReductions:
     Blunt: 5
+
+# used when passing damage onto entities contained in backpacks and the like.
+- type: damageModifierSet
+  id: clothingContainer 
+  flatReductions:
+    Blunt: 3
+    Slash: 4
+    Heat: 5
+    Cold: 5
+    Radiation: 1
+
+# used when passing damage onto entities contained in lockers and the like.
+- type: damageModifierSet
+  id: metallicContainer 
+  coefficients:
+    Blunt: 0.75
+    Slash: 0.75
+    Piercing: 0.75
+    Radiation: 0 # someday lockers may become radioactive and irradiate their contents. For now, Indiana Jones is safe.
+    Shock: 0 # if the locker is metallic I guess the current would flow through the locker body and not the contents?
+  flatReductions:
+    Piercing: 20
+    Blunt: 40
+    Slash: 60

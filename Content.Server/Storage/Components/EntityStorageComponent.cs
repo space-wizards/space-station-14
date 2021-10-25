@@ -30,13 +30,14 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
+using Content.Shared.Damage.Prototypes;
 
 namespace Content.Server.Storage.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct
     {
         public override string Name => "EntityStorage";
 
@@ -84,6 +85,19 @@ namespace Content.Server.Storage.Components
 
         [ViewVariables]
         public Container Contents = default!;
+
+        /// <summary>
+        ///     When the entity with this component is damaged, should it pass damage onto the contained entities?
+        /// </summary>
+        [DataField("damagePassthrough")]
+        public bool DamagePassthrough = true;
+
+        /// <summary>
+        ///     Modifier that is applied to the damage that is passed onto contained entities. Does nothing if <see
+        ///     cref="DamagePassthrough"/> is false.
+        /// </summary>
+        [DataField("damagePassthroughModifier", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
+        public string? DamagePassthroughModifier;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -427,24 +441,6 @@ namespace Content.Server.Storage.Components
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
             return entityLookup.GetEntitiesIntersecting(Owner, LookupFlags.None);
-        }
-
-        void IExAct.OnExplosion(ExplosionEventArgs eventArgs)
-        {
-            if (eventArgs.Severity < ExplosionSeverity.Heavy)
-            {
-                return;
-            }
-
-            var containedEntities = Contents.ContainedEntities.ToList();
-            foreach (var entity in containedEntities)
-            {
-                var exActs = entity.GetAllComponents<IExAct>().ToArray();
-                foreach (var exAct in exActs)
-                {
-                    exAct.OnExplosion(eventArgs);
-                }
-            }
         }
     }
 }

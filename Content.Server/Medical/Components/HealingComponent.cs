@@ -48,7 +48,7 @@ namespace Content.Server.Medical.Components
                 return true;
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
+            EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(eventArgs.Target.Uid, Damage, true);
 
             return true;
         }

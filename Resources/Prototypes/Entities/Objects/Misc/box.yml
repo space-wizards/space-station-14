@@ -10,5 +10,6 @@
     sprite: Objects/Storage/boxes.rsi
     size: 9999
   - type: Storage
+    damagePassthroughModifier: metallicContainer
     capacity: 60
     size: 9999

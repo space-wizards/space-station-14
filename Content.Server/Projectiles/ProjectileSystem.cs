@@ -14,7 +14,7 @@ namespace Content.Server.Projectiles
     [UsedImplicitly]
     internal sealed class ProjectileSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly SharedDamageableSystem _damageableSystem = default!;
 
         public override void Initialize()
         {

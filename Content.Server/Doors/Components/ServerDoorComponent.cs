@@ -566,7 +566,7 @@ namespace Content.Server.Doors.Components
                 CurrentlyCrushing.Add(e.Owner.Uid);
 
                 if (e.Owner.HasComponent<DamageableComponent>())
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
+                    EntitySystem.Get<SharedDamageableSystem>().TryChangeDamage(e.Owner.Uid, CrushDamage);
 
                 EntitySystem.Get<StunSystem>().TryParalyze(e.Owner.Uid, TimeSpan.FromSeconds(DoorStunTime));
             }

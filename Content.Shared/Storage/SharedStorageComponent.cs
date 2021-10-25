@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Damage.Prototypes;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Placeable;
@@ -9,6 +10,8 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Storage
 {
@@ -16,6 +19,19 @@ namespace Content.Shared.Storage
     public abstract class SharedStorageComponent : Component, IDraggable
     {
         public override string Name => "Storage";
+
+        /// <summary>
+        ///     When the entity with this component is damaged, should it pass damage onto the contained entities?
+        /// </summary>
+        [DataField("damagePassthrough")]
+        public bool DamagePassthrough = true;
+
+        /// <summary>
+        ///     Modifier that is applied to the damage that is passed onto contained entities. Does nothing if <see
+        ///     cref="DamagePassthrough"/> is false.
+        /// </summary>
+        [DataField("damagePassthroughModifier", customTypeSerializer: typeof(PrototypeIdSerializer<DamageModifierSetPrototype>))]
+        public string? DamagePassthroughModifier;
 
         public abstract IReadOnlyList<IEntity>? StoredEntities { get; }
 

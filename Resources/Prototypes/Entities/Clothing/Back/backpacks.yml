@@ -14,6 +14,7 @@
     - back
     sprite: Clothing/Back/Backpacks/backpack.rsi
   - type: Storage
+    damagePassthroughModifier: clothingContainer
     capacity: 100
     storageSoundCollection:
       collection: storageRustle

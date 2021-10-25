@@ -34,6 +34,7 @@
       - MobImpassable
       - SmallImpassable
   - type: EntityStorage
+    damagePassthroughModifier: metallicContainer
     Capacity: 500
     CanWeldShut: true
   - type: PlaceableSurface

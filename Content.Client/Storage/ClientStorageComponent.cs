@@ -31,6 +31,7 @@ namespace Content.Client.Storage
     /// Client version of item storage containers, contains a UI which displays stored entities and their size
     /// </summary>
     [RegisterComponent]
+    [ComponentReference(typeof(SharedStorageComponent))]
     public class ClientStorageComponent : SharedStorageComponent, IDraggable
     {
         [Dependency] private readonly IItemSlotManager _itemSlotManager = default!;

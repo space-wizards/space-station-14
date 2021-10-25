@@ -69,7 +69,7 @@ namespace Content.Server.Administration.Commands
 
             if (target.TryGetComponent(out DamageableComponent? damageable))
             {
-                EntitySystem.Get<DamageableSystem>().SetAllDamage(damageable, 0);
+                EntitySystem.Get<SharedDamageableSystem>().SetAllDamage(damageable, 0);
             }
 
             if (target.TryGetComponent(out CreamPiedComponent? creamPied))

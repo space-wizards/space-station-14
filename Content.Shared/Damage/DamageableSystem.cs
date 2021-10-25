@@ -9,9 +9,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Damage
 {
-    public class DamageableSystem : EntitySystem
+    public abstract class SharedDamageableSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -98,7 +98,7 @@ namespace Content.Shared.Damage
         ///     Returns a <see cref="DamageSpecifier"/> with information about the actual damage changes. This will be
         ///     null if the user had no applicable components that can take damage.
         /// </returns>
-        public DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false)
+        public virtual DamageSpecifier? TryChangeDamage(EntityUid uid, DamageSpecifier damage, bool ignoreResistances = false)
         {
             if (!EntityManager.TryGetComponent<DamageableComponent>(uid, out var damageable))
             {
