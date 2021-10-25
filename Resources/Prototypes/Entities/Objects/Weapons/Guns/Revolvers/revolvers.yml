@@ -95,3 +95,27 @@
     soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
     soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+
+- type: entity
+  name: Predator
+  parent: RevolverBase
+  id: RevolverPredator
+  description: A high caliber revolver usually seen in the hands of a Syndicate agent.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Revolvers/predator.rsi
+  - type: RangedWeapon
+  - type: RevolverBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fillPrototype: CartridgeMagnum
+    caliber: Magnum
+    capacity: 7
+    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEject: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
