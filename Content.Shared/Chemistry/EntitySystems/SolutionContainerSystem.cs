@@ -254,7 +254,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         public Solution EnsureSolution(EntityUid uid, string name,
             SolutionContainerManagerComponent? solutionsMgr = null)
         {
-            if (!Resolve(uid, ref solutionsMgr))
+            if (!Resolve(uid, ref solutionsMgr, false))
             {
                 solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
             }
