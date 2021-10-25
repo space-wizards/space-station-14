@@ -49,6 +49,9 @@ namespace Content.Server.Electrocution
         protected const string StatusEffectKey = "Electrocution";
         protected const string DamageType = "Shock";
 
+        // Yes, this is absurdly small for a reason.
+        private const float ElectrifiedDamagePerWatt = 0.0015f;
+
         private const float RecursiveDamageMultiplier = 0.75f;
         private const float RecursiveTimeMultiplier = 0.8f;
 
@@ -83,7 +86,7 @@ namespace Content.Server.Electrocution
                 var ftAdjusted = Math.Min(frameTime, electrocution.TimeLeft);
 
                 electrocution.TimeLeft -= ftAdjusted;
-                electrocution.AccumulatedDamage += consumer.ReceivedPower * ftAdjusted;
+                electrocution.AccumulatedDamage += consumer.ReceivedPower * ElectrifiedDamagePerWatt * ftAdjusted;
 
                 if (MathHelper.CloseTo(electrocution.TimeLeft, 0))
                     finishedElectrocutionsQueue.Add(electrocution);
