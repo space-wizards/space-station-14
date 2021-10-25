@@ -2698,3 +2698,9 @@ Entries:
   - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
   id: 481
   time: '2021-10-25T03:24:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'RCDs work on space again, if close to an existing non-space tile',
+    type: Fix}
+  id: 482
+  time: '2021-10-25T03:33:50.0000000+00:00'
