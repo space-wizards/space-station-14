@@ -147,10 +147,6 @@ namespace Content.Server.Light.EntitySystems
             if (!light.LightBulbContainer.Insert(EntityManager.GetEntity(bulbUid)))
                 return false;
 
-            // TODO: subscribe to events
-            //lightBulb.OnLightBulbStateChange += UpdateLight;
-            //lightBulb.OnLightColorChange += UpdateLight;
-
             UpdateLight(uid, light);
 
             return true;
@@ -169,10 +165,6 @@ namespace Content.Server.Light.EntitySystems
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null)
                 return null;
-
-            // TODO: unsubscribe from events
-            //lightBulb.OnLightBulbStateChange -= UpdateLight;
-            //lightBulb.OnLightColorChange -= UpdateLight;
 
             // try to remove bulb from container
             var bulbEnt = EntityManager.GetEntity(bulbUid.Value);
