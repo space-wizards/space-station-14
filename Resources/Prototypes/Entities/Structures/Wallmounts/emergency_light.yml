@@ -12,6 +12,7 @@
     color: "#FF4020"
     mask: /Textures/Effects/LightMasks/cone.png
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Battery
     maxCharge: 30000
     startingCharge: 0

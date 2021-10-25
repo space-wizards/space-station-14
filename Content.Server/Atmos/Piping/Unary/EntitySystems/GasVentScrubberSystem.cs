@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
                 appearance?.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
-                var transferMoles = MathF.Min(1f, (scrubber.VolumeRate / tile.Volume) * tile.TotalMoles);
+                var transferMoles = MathF.Min(1f, scrubber.VolumeRate / tile.Volume) * tile.TotalMoles;
 
                 // Take a gas sample.
                 var removed = tile.Remove(transferMoles);

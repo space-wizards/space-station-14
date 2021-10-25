@@ -1,4 +1,5 @@
 using Content.Server.Clothing.Components;
+using Content.Shared.Slippery;
 using Content.Shared.Verbs;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -12,6 +13,7 @@ namespace Content.Server.Clothing
             base.Initialize();
 
             SubscribeLocalEvent<MagbootsComponent, GetActivationVerbsEvent>(AddToggleVerb);
+            SubscribeLocalEvent<MagbootsComponent, SlipAttemptEvent>(OnSlipAttempt);
         }
 
         private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetActivationVerbsEvent args)
@@ -24,6 +26,14 @@ namespace Content.Server.Clothing
             verb.Act = () => component.On = !component.On;
             // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?
             args.Verbs.Add(verb);
+        }
+
+        private void OnSlipAttempt(EntityUid uid, MagbootsComponent component, SlipAttemptEvent args)
+        {
+            if (component.On)
+            {
+                args.Cancel();
+            }
         }
     }
 }

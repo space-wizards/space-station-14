@@ -1,5 +1,4 @@
 using System;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Sound;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
@@ -13,7 +12,7 @@ namespace Content.Shared.Standing
 {
     [Friend(typeof(StandingStateSystem))]
     [RegisterComponent, NetworkedComponent]
-    public sealed class StandingStateComponent : Component, IEffectBlocker
+    public sealed class StandingStateComponent : Component
     {
         public override string Name => "StandingState";
 
@@ -24,8 +23,6 @@ namespace Content.Shared.Standing
         [ViewVariables]
         [DataField("standing")]
         public bool Standing { get; set; } = true;
-
-        public bool CanFall() => Standing;
 
         public override ComponentState GetComponentState(ICommonSession player)
         {

@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Client.Clothing;
 using Content.Shared.CharacterAppearance;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Robust.Client.GameObjects;
@@ -21,7 +20,7 @@ namespace Content.Client.Inventory
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class ClientInventoryComponent : SharedInventoryComponent, IEffectBlocker
+    public class ClientInventoryComponent : SharedInventoryComponent
     {
         private readonly Dictionary<Slots, IEntity> _slots = new();
 
@@ -283,11 +282,6 @@ namespace Content.Client.Inventory
             }
 
             return false;
-        }
-
-        bool IEffectBlocker.CanSlip()
-        {
-            return !TryGetSlot(Slots.SHOES, out var shoes) || shoes == null || EffectBlockerSystem.CanSlip(shoes);
         }
     }
 }

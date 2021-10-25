@@ -31,6 +31,7 @@
         type: Content.Shared.MachineLinking.TwoWayLeverSignal
         maxConnections: 1
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Conveyor
   - type: Appearance
     visuals:

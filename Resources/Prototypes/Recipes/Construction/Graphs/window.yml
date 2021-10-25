@@ -1,4 +1,4 @@
-﻿- type: constructionGraph
+- type: constructionGraph
   id: window
   start: start
   graph:
@@ -6,20 +6,21 @@
       edges:
         - to: plasmaWindow
           steps:
-            - material: Steel
+            - material: PlasmaGlass
               amount: 2
               doAfter: 2
-            - material: Glass
-              amount: 2
-            - material: Plasma
-              amount: 2
-              doAfter: 3
 
         - to: reinforcedWindow
           steps:
             - material: ReinforcedGlass
               amount: 2
               doAfter: 2
+
+        - to: reinforcedPlasmaWindow
+          steps:
+            - material: ReinforcedPlasmaGlass
+              amount: 2
+              doAfter: 3
 
         - to: window
           steps:
@@ -67,13 +68,26 @@
         - to: start
           completed:
             - !type:SpawnPrototype
-              prototype: SheetGlass1
+              prototype: SheetPGlass1
               amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+            - tool: Prying
+              doAfter: 3
+            - tool: Screwing
+              doAfter: 2
+            - tool: Anchoring
+              doAfter: 3
+
+    - node: reinforcedPlasmaWindow
+      entity: ReinforcedPlasmaWindow
+      edges:
+        - to: start
+          completed:
             - !type:SpawnPrototype
-              prototype: SheetSteel1
-              amount: 2
-            - !type:SpawnPrototype
-              prototype: SheetPlasma1
+              prototype: SheetRPGlass1
               amount: 2
             - !type:DeleteEntity {}
           steps:
