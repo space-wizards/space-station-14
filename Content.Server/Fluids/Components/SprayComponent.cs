@@ -162,9 +162,8 @@ namespace Content.Server.Fluids.Components
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
                 vapor.Transform.LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent? appearance)) // Vapor sprite should face down.
+                if (vapor.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(VaporVisuals.Rotation, -Angle.Zero + rotation);
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
@@ -174,11 +173,13 @@ namespace Content.Server.Fluids.Components
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
-                vaporSystem.Start(vaporComponent, rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
+                // impulse direction is defined in world-coordinates, not local coordinates
+                var impulseDirection = vapor.Transform.WorldRotation.ToVec();
+                vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
                 if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
                 {
-                    body.ApplyLinearImpulse(-direction * _impulse);
+                    body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
             }
 

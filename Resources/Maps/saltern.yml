@@ -54401,8 +54401,7 @@ entities:
 - uid: 5355
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-1.5
+  - pos: 4.5,-1.5
     parent: 853
     type: Transform
   - visible: False
@@ -54836,8 +54835,7 @@ entities:
 - uid: 5391
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 2.5,0.5
+  - pos: 2.5,0.5
     parent: 853
     type: Transform
   - visible: False
@@ -58975,8 +58973,7 @@ entities:
 - uid: 5722
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 4.5,-20.5
+  - pos: 4.5,-20.5
     parent: 853
     type: Transform
   - visible: False
@@ -59590,8 +59587,7 @@ entities:
 - uid: 5770
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -3.5,-20.5
+  - pos: -3.5,-20.5
     parent: 853
     type: Transform
   - visible: False
@@ -59603,8 +59599,7 @@ entities:
 - uid: 5771
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: -4.5,-19.5
+  - pos: -4.5,-19.5
     parent: 853
     type: Transform
   - visible: False
@@ -60470,8 +60465,7 @@ entities:
 - uid: 5843
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 2.5,24.5
+  - pos: 2.5,24.5
     parent: 853
     type: Transform
   - visible: False
@@ -60600,8 +60594,7 @@ entities:
 - uid: 5853
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 4.5,25.5
+  - pos: 4.5,25.5
     parent: 853
     type: Transform
   - visible: False
@@ -60665,8 +60658,7 @@ entities:
 - uid: 5858
   type: GasPipeFourway
   components:
-  - rot: -1.5707963267948966 rad
-    pos: 4.5,20.5
+  - pos: 4.5,20.5
     parent: 853
     type: Transform
   - visible: False
@@ -63852,8 +63844,7 @@ entities:
 - uid: 6112
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: -23.5,3.5
+  - pos: -23.5,3.5
     parent: 853
     type: Transform
   - visible: False
@@ -63865,8 +63856,7 @@ entities:
 - uid: 6113
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: -24.5,5.5
+  - pos: -24.5,5.5
     parent: 853
     type: Transform
   - visible: False
@@ -66531,8 +66521,7 @@ entities:
 - uid: 6329
   type: GasPipeFourway
   components:
-  - rot: 3.141592653589793 rad
-    pos: 47.5,-9.5
+  - pos: 47.5,-9.5
     parent: 853
     type: Transform
   - canCollide: False

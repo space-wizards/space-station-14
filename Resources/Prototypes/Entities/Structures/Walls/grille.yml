@@ -4,6 +4,9 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: Tag
+      tags:
+        - RCDDeconstructWhitelist
     - type: CanBuildWindowOnTop
     - type: Sprite
       netsync: false
@@ -13,7 +16,6 @@
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille
-    - type: RCDDeconstructWhitelist
     - type: Construction
       graph: grille
       node: grille
@@ -46,7 +48,9 @@
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille_broken
-    - type: RCDDeconstructWhitelist
+    - type: Tag
+      tags:
+        - RCDDeconstructWhitelist
     - type: Construction
       graph: grille
       node: grilleBroken

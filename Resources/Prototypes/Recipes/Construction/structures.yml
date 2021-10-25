@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: girder
   id: girder
   graph: girder
@@ -118,6 +118,24 @@
     - !type:NoWindowsInTile {}
   icon:
     sprite: Structures/Windows/plasma_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: reinforced plasma window
+  id: ReinforcedPlasmaWindow
+  graph: window
+  startNode: start
+  targetNode: reinforcedPlasmaWindow
+  category: Structures
+  description: Fire resistant and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/reinforced_plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
