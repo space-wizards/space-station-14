@@ -155,12 +155,7 @@ namespace Content.Shared.Maps
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<IEntity>();
 
-            // NOTE: If you are dealing with rotation-related bugs with this function,
-            //  such as it having variable levels of excess area based on grid rotation,
-            //  you are PROBABLY LOOKING FOR THIS BIT!
-            // Unfortunately lookupSystem doesn't handle Box2Rotated.
-            var worldBoxUnrotated = worldBox.CalcBoundingBox();
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBoxUnrotated, flags);
+            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
 
         /// <summary>
