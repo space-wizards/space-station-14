@@ -2693,3 +2693,8 @@ Entries:
   - {message: Added Reinforced Plasma Windows, type: Add}
   id: 480
   time: '2021-10-24T12:46:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
+  id: 481
+  time: '2021-10-25T03:24:55.0000000+00:00'
