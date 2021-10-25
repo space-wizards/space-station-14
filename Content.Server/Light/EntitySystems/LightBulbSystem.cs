@@ -68,7 +68,7 @@ namespace Content.Server.Light.EntitySystems
         private void UpdateAppearance(EntityUid uid, LightBulbComponent? bulb = null,
             AppearanceComponent? appearance = null)
         {
-            if (!Resolve(uid, ref bulb, ref appearance))
+            if (!Resolve(uid, ref bulb, ref appearance, logMissing: false))
                 return;
 
             // try to update appearance and color
