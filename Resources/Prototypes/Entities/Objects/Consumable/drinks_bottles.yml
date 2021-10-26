@@ -147,7 +147,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
-
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Goldschlager
+          Quantity: 100
+        maxVol: 100
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -155,15 +161,15 @@
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
-        - ReagentId: Water
-          Quantity: 80
-        maxVol: 80
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
+        - ReagentId: Kahlua
+          Quantity: 100
+        maxVol: 100
 
 
 - type: entity
@@ -175,6 +181,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Patron
+          Quantity: 100
+        maxVol: 100
 
 
 - type: entity
@@ -197,6 +210,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Rum
+          Quantity: 100
+        maxVol: 100
 
 
 - type: entity
@@ -208,6 +228,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Tequila
+          Quantity: 100
+        maxVol: 100
 
 
 - type: entity
@@ -219,7 +246,13 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
-
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Vermouth
+          Quantity: 100
+        maxVol: 100
 
 - type: entity
   parent: DrinkBottleBaseFull

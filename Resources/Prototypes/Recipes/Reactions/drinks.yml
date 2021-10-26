@@ -81,6 +81,16 @@
     GargleBlaster: 5
 
 - type: reaction
+  id: Goldschlager
+  reactants:
+    Gold:
+      amount: 1
+    Vodka:
+      amount: 10
+  products:
+    Goldschlager: 10
+
+- type: reaction
   id: IrishCarBomb
   reactants:
     Ale:
@@ -141,6 +151,16 @@
       amount: 1
   products:
     Moonshine: 3
+
+- type: reaction
+  id: Patron
+  reactants:
+    Tequila:
+      amount: 10
+    Silver:
+      amount: 1
+  products:
+    Patron: 10
 
 - type: reaction
   id: SyndicateBomb

@@ -215,6 +215,14 @@
   spritePath: gargleblasterglass.rsi
 
 - type: reagent
+  id: Goldschlager
+  name: Goldschlager
+  desc: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
+  physicalDesc: strong-smelling
+  color: "#FFFF91"
+  spritePath: goldschlagerglass.rsi
+
+- type: reagent
   id: IrishCarBomb
   name: irish car bomb
   desc: A troubling mixture of irish cream and ale.
@@ -266,6 +274,14 @@
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
+
+- type: reagent
+  id: Patron
+  name: patron
+  desc: Tequila with silver in it, a favorite of alcoholic women in the club scene.
+  physicalDesc: metallic
+  color: "#585840"
+  spritePath: patronglass.rsi
 
 - type: reagent
   id: SyndicateBomb
