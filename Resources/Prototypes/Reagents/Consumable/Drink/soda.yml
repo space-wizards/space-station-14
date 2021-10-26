@@ -13,6 +13,62 @@
       amount: 0.1
 
 - type: reagent
+  id: DrGibb
+  name: Dr. Gibb
+  desc: A delicious blend of 42 different flavours.
+  physicalDesc: fizzy
+  color: "#102000"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
+  id: PwrGame
+  name: Pwr Game
+  desc: The only drink with the PWR that true gamers crave.
+  physicalDesc: fizzy
+  color: "#9385bf"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
+  id: SpaceMountainWind
+  name: Space Mountain Wind
+  desc: Blows right through you like a space wind.
+  physicalDesc: fizzy
+  color: "#102000"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
+  id: SpaceUp
+  name: Space-Up
+  desc: Tastes like a hull breach in your mouth.
+  physicalDesc: fizzy
+  color: "#00FF00"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
   id: ThirteenLoko
   name: Thirteen Loko
   desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.

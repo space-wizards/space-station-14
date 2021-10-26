@@ -6,18 +6,25 @@
   color: "#664300"
 
 - type: reagent
-  id: Tea
-  name: tea
-  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
-  physicalDesc: aromatic
-  color: "#8a5a3a"
-
-- type: reagent
   id: Cream
   name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
+
+- type: reagent
+  id: Grenadine
+  name: grenadine
+  desc: Not cherry flavored!
+  physicalDesc: dark-red
+  color: "#EA1D26"
+
+- type: reagent
+  id: Menthol
+  name: menthol
+  desc: Alleviates coughing symptoms one might have.
+  physicalDesc: minty
+  color: "#80AF9C"
 
 - type: reagent
   id: Milk
@@ -32,11 +39,11 @@
       amount: 0.9
 
 - type: reagent
-  id: SpoiledMilk
-  name: spoiled milk
-  desc: This milk has gone rancid.
-  physicalDesc: putrid
-  color: "#faffba"
+  id: MilkOat
+  name: oat milk
+  desc: Surprisingly tasty.
+  physicalDesc: refreshing
+  color: "#302000"
 
 - type: reagent
   id: MilkSoy
@@ -46,8 +53,36 @@
   color: "#302000"
 
 - type: reagent
-  id: MilkOat
-  name: oat milk
-  desc: Surprisingly tasty.
-  physicalDesc: refreshing
-  color: "#302000"
+  id: MilkSpoiled
+  name: spoiled milk
+  desc: This milk has gone rancid.
+  physicalDesc: putrid
+  color: "#faffba"
+
+- type: reagent
+  id: Tea
+  name: tea
+  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
+  physicalDesc: aromatic
+  color: "#8a5a3a"
+
+- type: reagent
+  id: TeaIced
+  name: iced tea
+  desc: No relation to a certain rap artist/actor.
+  physicalDesc: aromatic
+  color: "#104038"
+
+- type: reagent
+  id: WaterSoda
+  name: soda water
+  desc: A container of club soda. Why not make a scotch and soda?
+  physicalDesc: fizzy
+  color: "#619494"
+
+- type: reagent
+  id: WaterTonic
+  name: tonic water
+  desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
+  physicalDesc: fizzy
+  color: "#0064C8"

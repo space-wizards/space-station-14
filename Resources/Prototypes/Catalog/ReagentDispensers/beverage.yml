@@ -4,20 +4,45 @@
   - Coffee
   - Cola
   - Cream
+  - DrGibb
+  - Grenadine
   - Ice
+  - Menthol
+  - JuiceLemon
+  - JuiceLime
+  - JuiceOrange
+  - JuicePineapple
+  - JuiceTomato
+  - PwrGame
+  - SpaceMountainWind
+  - SpaceUp
+  - Sugar
   - Tea
+  - TeaIced
+  - WaterSoda
+  - WaterTonic
   - Water
-  - ThirteenLoko
 
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
+  - Absinthe
   - Ale
+  - Applejack
   - Beer
   - Cognac
-  - Ice
+  - CremeDeCacao
+  - CremeDeCoconut
+  - CremeDeMenthe
+  - Gin
+  - HardCider
   - Kahlua
+  - MaltLiquor
   - Rum
+  - Sake
+  - Tequila
+  - TripleSec
+  - Vermouth
   - Vodka
   - Whiskey
   - Wine
