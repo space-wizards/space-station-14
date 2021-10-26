@@ -42,6 +42,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private readonly ActionBlockerSystem _blockerSystem = default!;
 
         private readonly Dictionary<ICommonSession, HashSet<int>> _beingBuilt = new();
 
@@ -389,7 +390,7 @@ namespace Content.Server.Construction
 
             var user = args.SenderSession.AttachedEntity;
 
-            if (user == null || !Get<ActionBlockerSystem>().CanInteract(user)) return;
+            if (user == null || !_blockerSystem.CanInteract(user)) return;
 
             if (!user.TryGetComponent(out HandsComponent? hands)) return;
 
@@ -490,7 +491,7 @@ namespace Content.Server.Construction
             }
 
             if (user == null
-                || !Get<ActionBlockerSystem>().CanInteract(user)
+                || !_blockerSystem.CanInteract(user)
                 || !user.TryGetComponent(out HandsComponent? hands) || hands.GetActiveHand == null
                 || !user.InRangeUnobstructed(ev.Location, ignoreInsideBlocker:constructionPrototype.CanBuildInImpassable))
             {
