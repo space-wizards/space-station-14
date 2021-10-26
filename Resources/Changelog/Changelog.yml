@@ -2744,3 +2744,8 @@ Entries:
   - {message: ChemMaster bottles are no longer 'empty', type: Fix}
   id: 489
   time: '2021-10-25T14:58:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
+  id: 490
+  time: '2021-10-26T14:15:02.0000000+00:00'
