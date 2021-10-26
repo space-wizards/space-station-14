@@ -206,6 +206,13 @@
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
 
+- type: reagent
+  id: GargleBlaster
+  name: Pan-Galactic Gargle Blaster
+  desc: Whoah, this stuff looks volatile!
+  physicalDesc: volatile
+  color: "#9cc8b4"
+  spritePath: gargleblasterglass.rsi
 
 - type: reagent
   id: IrishCarBomb

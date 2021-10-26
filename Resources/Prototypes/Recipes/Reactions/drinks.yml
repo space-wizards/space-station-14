@@ -65,6 +65,22 @@
     CubaLibre: 3
 
 - type: reaction
+  id: GargleBlaster
+  reactants:
+    Cognac:
+      amount: 1
+    Gin:
+      amount: 1
+    JuiceLemon:
+      amount: 1
+    Vodka:
+      amount: 1
+    Whiskey:
+      amount: 1
+  products:
+    GargleBlaster: 5
+
+- type: reaction
   id: IrishCarBomb
   reactants:
     Ale:
