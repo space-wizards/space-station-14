@@ -1,9 +1,17 @@
 - type: entity
   id: supermatter
   name: Supermatter
-  description: A Yellow Crystal of Death
+  description: A strangely translucent and iridescent crystal.
   components:
     - type: Supermatter
+    - type: Destructible
+      thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 100
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Glass
     - type: Physics
       bodyType: Dynamic
       fixtures:
@@ -20,6 +28,7 @@
           - Impassable
           - MobImpassable
           - VaultImpassable
+          - SmallImpassable
     - type: CollisionWake
       enabled: false
     - type: Clickable
