@@ -17,7 +17,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;
 
+#pragma warning disable 618
         public override void HandleMessage(ComponentMessage message, IComponent? component)
+#pragma warning restore 618
         {
             base.HandleMessage(message, component);
             switch (message)

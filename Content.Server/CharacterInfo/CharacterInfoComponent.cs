@@ -12,7 +12,9 @@ namespace Content.Server.CharacterInfo
     [RegisterComponent]
     public class CharacterInfoComponent : SharedCharacterInfoComponent
     {
+#pragma warning disable 618
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
+#pragma warning restore 618
         {
             if(session?.AttachedEntity != Owner) return;
 

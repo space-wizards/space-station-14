@@ -62,7 +62,9 @@ namespace Content.Server.AME.Components
             _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
+#pragma warning disable 618
         public override void HandleMessage(ComponentMessage message, IComponent? component)
+#pragma warning restore 618
         {
             base.HandleMessage(message, component);
             switch (message)

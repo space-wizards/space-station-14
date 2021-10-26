@@ -101,7 +101,9 @@ namespace Content.Server.Arcade.Components
             }
         }
 
+#pragma warning disable 618
         public override void HandleMessage(ComponentMessage message, IComponent? component)
+#pragma warning restore 618
         {
             base.HandleMessage(message, component);
             switch (message)

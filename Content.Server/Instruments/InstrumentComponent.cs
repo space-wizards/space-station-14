@@ -178,7 +178,9 @@ namespace Content.Server.Instruments
             return new InstrumentState(Playing, InstrumentProgram, InstrumentBank, AllowPercussion, AllowProgramChange, RespectMidiLimits, _lastSequencerTick);
         }
 
+#pragma warning disable 618
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+#pragma warning restore 618
         {
             base.HandleNetworkMessage(message, channel, session);
 

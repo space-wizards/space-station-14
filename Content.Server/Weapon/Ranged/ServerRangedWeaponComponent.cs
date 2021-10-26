@@ -93,7 +93,9 @@ namespace Content.Server.Weapon.Ranged
         }
 
         /// <inheritdoc />
+#pragma warning disable 618
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
+#pragma warning restore 618
         {
             base.HandleNetworkMessage(message, channel, session);
 

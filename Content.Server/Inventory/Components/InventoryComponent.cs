@@ -528,7 +528,9 @@ namespace Content.Server.Inventory.Components
         }
 
         /// <inheritdoc />
+#pragma warning disable 618
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
+#pragma warning restore 618
             ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);
