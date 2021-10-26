@@ -9,7 +9,7 @@ namespace Content.IntegrationTests.Tests.Construction
     public sealed class ConstructionPrototypeTest : ContentIntegrationTest
     {
         [Test]
-        public async Task TestStartValid()
+        public async Task TestStartIsValid()
         {
             var server = StartServerDummyTicker();
 
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Construction
         }
 
         [Test]
-        public async Task TestTargetsValid()
+        public async Task TestTargetIsValid()
         {
             var server = StartServerDummyTicker();
 
