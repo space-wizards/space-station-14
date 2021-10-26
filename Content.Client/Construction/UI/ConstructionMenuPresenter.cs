@@ -155,6 +155,7 @@ namespace Content.Client.Construction.UI
             var recipesList = _constructionView.Recipes;
 
             recipesList.Clear();
+            var recipes = new List<ConstructionPrototype>();
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -170,6 +171,13 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
+                recipes.Add(recipe);
+            }
+
+            recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+
+            foreach (var recipe in recipes)
+            {
                 recipesList.Add(GetItem(recipe, recipesList));
             }
 
