@@ -66,6 +66,12 @@ namespace Content.Server.Storage.Components
         private int _storageUsed;
         [DataField("capacity")]
         private int _storageCapacityMax = 10000;
+
+        [DataField("maxItemSize")]
+        private int _storageMaxItemSize = 10000;
+
+        [DataField("maxItemSizeWhitelistBypass")]
+        private bool _storageMaxItemSizeWhitelistBypass = false;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
@@ -136,6 +142,13 @@ namespace Content.Server.Storage.Components
 
             if (_whitelist != null && !_whitelist.IsValid(entity))
             {
+                // Item is not whitelisted, but passes the maximum item size check.
+                if (store?.Size <= _storageMaxItemSize)
+                {
+                    // Succeed if allowed to bypass the whitelist.
+                    return _storageMaxItemSizeWhitelistBypass ? true : false;
+                }
+
                 return false;
             }
 
