@@ -22,7 +22,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 var start = proto.StartNode;
                 var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
-                Assert.That(graph.Nodes.ContainsKey(start), $"Found no startNode {start} on graph {graph.ID} for construction prototype {proto.ID}!");
+                Assert.That(graph.Nodes.ContainsKey(start), $"Found no startNode \"{start}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
         }
 
@@ -40,7 +40,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 var target = proto.TargetNode;
                 var graph = protoMan.Index<ConstructionGraphPrototype>(proto.Graph);
 
-                Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode {target} on graph {graph.ID} for construction prototype {proto.ID}!");
+                Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
         }
     }
