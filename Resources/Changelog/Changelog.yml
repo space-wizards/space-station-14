@@ -2759,3 +2759,8 @@ Entries:
   - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
   id: 492
   time: '2021-10-26T14:38:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix computer dupe bug., type: Fix}
+  id: 493
+  time: '2021-10-26T23:30:17.397968+00:00'
