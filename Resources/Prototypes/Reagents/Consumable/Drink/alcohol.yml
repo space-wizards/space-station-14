@@ -5,9 +5,9 @@
   id: Absinthe
   name: absinthe
   desc: One sip of this and you just know you're gonna have a good time.
-  spritePath: absintheglass.rsi
   color: "#33EE00"
   physicalDesc: strong-smelling
+  spritePath: absintheglass.rsi
 
 - type: reagent
   id: Ale
@@ -23,7 +23,6 @@
   desc: The perfect beverage for when you feel the need to horse around.
   physicalDesc: strong-smelling
   color: "#FFEAC4"
-  spritePath:
 
 - type: reagent
   id: Beer
@@ -52,7 +51,6 @@
   desc: A chocolatey liqueur excellent for adding dessert notes to beverages and bribing sororities.
   physicalDesc: sweet-smelling
   color: "#996633"
-  spritePath:
 
 - type: reagent
   id: CremeDeCoconut
@@ -60,7 +58,6 @@
   desc: A coconut liqueur for smooth, creamy, tropical drinks.
   physicalDesc: sweet-smelling
   color: "#F7F0D0"
-  spritePath:
 
 - type: reagent
   id: CremeDeMenthe
@@ -68,7 +65,6 @@
   desc: A minty liqueur excellent for refreshing, cool drinks.
   physicalDesc: minty
   color: "#00cc00"
-  spritePath:
 
 - type: reagent
   id: Gin
@@ -84,7 +80,6 @@
   desc: Apple juice, for adults.
   physicalDesc: sweet-smelling
   color: "#CD6839"
-  spritePath:
 
 - type: reagent
   id: Kahlua
@@ -100,7 +95,6 @@
   desc: An alcoholic beverage brewed since ancient times on Old Earth. This variety is stronger than usual, super cheap, and super terrible.
   physicalDesc: strong-smelling
   color: "#664300"
-  spritePath:
 
 - type: reagent
   id: Rum
@@ -116,7 +110,6 @@
   desc: A sweet rice wine of questionable legality and extreme potency.
   physicalDesc: strong-smelling
   color: "#DDDDDD"
-  spritePath:
 
 - type: reagent
   id: Tequila
@@ -131,7 +124,6 @@
   desc: A sweet and vibrant orange liqueur.
   physicalDesc: strong-smelling
   color: "#ffcc66"
-  spritePath:
 
 - type: reagent
   id: Vermouth
@@ -139,7 +131,7 @@
   desc: You suddenly feel a craving for a martini...
   physicalDesc: strong-smelling
   color: "#91FF91"
-  spritePath:
+  spritePath: vermouthglass.rsi
 
 - type: reagent
   id: Vodka
@@ -190,6 +182,14 @@
   physicalDesc: bubbly
   color: "#664300"
   spritePath: b52glass.rsi
+
+- type: reagent
+  id: Bilk
+  name: bilk
+  desc: This appears to be beer mixed with milk. Disgusting.
+  physicalDesc: bilky...
+  color: "#895C4C"
+  spritePath: glass_brown.rsi
 
 - type: reagent
   id: CreamyDelight

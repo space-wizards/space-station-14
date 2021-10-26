@@ -18,6 +18,7 @@
   desc: Not cherry flavored!
   physicalDesc: dark-red
   color: "#EA1D26"
+  spritePath: grenadineglass.rsi
 
 - type: reagent
   id: Menthol

@@ -1,64 +1,14 @@
 - type: reaction
-  id: ManlyDorf
-  reactants:
-    Beer:
-      amount: 1
-    Ale:
-      amount: 2
-  products:
-    ManlyDorf: 3
-
-- type: reaction
-  id: CubaLibre
-  reactants:
-    Cola:
-      amount: 1
-    Rum:
-      amount: 2
-  products:
-    CubaLibre: 3
-
-- type: reaction
-  id: IrishCream
+  id: Antifreeze
   reactants:
     Cream:
       amount: 1
-    Whiskey:
+    Ice:
+      amount: 1
+    Vodka:
       amount: 2
   products:
-    IrishCream: 3
-
-- type: reaction
-  id: IrishCoffee
-  reactants:
-    IrishCream:
-      amount: 2
-    Coffee:
-      amount: 2
-  products:
-    IrishCoffee: 4
-
-- type: reaction
-  id: IrishCarBomb
-  reactants:
-    IrishCream:
-      amount: 1
-    Ale:
-      amount: 1
-  products:
-    IrishCarBomb: 2
-
-- type: reaction
-  id: B52
-  reactants:
-    IrishCarBomb:
-      amount: 1
-    Kahlua:
-      amount: 1
-    Cognac:
-      amount: 1
-  products:
-    B52: 3
+    Antifreeze: 4
 
 - type: reaction
   id: AtomicBomb
@@ -71,60 +21,78 @@
     AtomicBomb: 11
 
 - type: reaction
-  id: WhiskeyCola
+  id: B52
   reactants:
-    Whiskey:
-      amount: 2
-    Cola:
+    Cognac:
+      amount: 1
+    IrishCarBomb:
+      amount: 1
+    Kahlua:
       amount: 1
   products:
-    WhiskeyCola: 3
+    B52: 3
 
 - type: reaction
-  id: SyndicateBomb
+  id: Bilk
   reactants:
-    WhiskeyCola:
-      amount: 1
     Beer:
       amount: 1
-  products:
-    SyndicateBomb: 2
-
-- type: reaction
-  id: Antifreeze
-  reactants:
-    Vodka:
-      amount: 2
-    Cream:
-      amount: 1
-    Ice:
+    Milk:
       amount: 1
   products:
-    Antifreeze: 4
-
-- type: reaction
-  id: Moonshine
-  reactants:
-    Vodka:
-      amount: 1
-    Tequila:
-      amount: 1
-    Whiskey:
-      amount: 1
-  products:
-    Moonshine: 3
+    Bilk: 2
 
 - type: reaction
   id: CreamyDelight
   reactants:
-    Moonshine:
-      amount: 1
     Cream:
+      amount: 1
+    Moonshine:
       amount: 1
     Wine:
       amount: 1
   products:
     CreamyDelight: 3
+
+- type: reaction
+  id: CubaLibre
+  reactants:
+    Cola:
+      amount: 1
+    Rum:
+      amount: 2
+  products:
+    CubaLibre: 3
+
+- type: reaction
+  id: IrishCarBomb
+  reactants:
+    Ale:
+      amount: 1
+    IrishCream:
+      amount: 1
+  products:
+    IrishCarBomb: 2
+
+- type: reaction
+  id: IrishCoffee
+  reactants:
+    Coffee:
+      amount: 2
+    IrishCream:
+      amount: 2
+  products:
+    IrishCoffee: 4
+
+- type: reaction
+  id: IrishCream
+  reactants:
+    Cream:
+      amount: 1
+    Whiskey:
+      amount: 2
+  products:
+    IrishCream: 3
 
 - type: reaction
   id: LeanShine
@@ -135,3 +103,45 @@
       amount: 1
   products:
     LeanShine: 2
+
+- type: reaction
+  id: ManlyDorf
+  reactants:
+    Ale:
+      amount: 2
+    Beer:
+      amount: 1
+  products:
+    ManlyDorf: 3
+
+- type: reaction
+  id: Moonshine
+  reactants:
+    Tequila:
+      amount: 1
+    Vodka:
+      amount: 1
+    Whiskey:
+      amount: 1
+  products:
+    Moonshine: 3
+
+- type: reaction
+  id: SyndicateBomb
+  reactants:
+    Beer:
+      amount: 1
+    WhiskeyCola:
+      amount: 1
+  products:
+    SyndicateBomb: 2
+
+- type: reaction
+  id: WhiskeyCola
+  reactants:
+    Cola:
+      amount: 1
+    Whiskey:
+      amount: 2
+  products:
+    WhiskeyCola: 3
