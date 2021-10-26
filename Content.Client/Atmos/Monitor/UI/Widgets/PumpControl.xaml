@@ -1,0 +1,15 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Orientation="Vertical">
+    <!-- Upper row: toggle, direction, checks -->
+    <BoxContainer Orientation="Horizontal">
+        <CheckBox Name="CEnableDevice" Text="{Loc 'Enabled'}" />
+        <OptionButton Name="CPumpDirection" />
+        <OptionButton Name="CPressureCheck" />
+    </BoxContainer>
+    <!-- Lower row: pressure bounds -->
+    <BoxContainer Orientation="Horizontal">
+        <FloatSpinBox Name="CExternalBound" HorizontalExpand="True" />
+        <FloatSpinBox Name="CInternalBound" HorizontalExpand="True" />
+    </BoxContainer>
+</BoxContainer>

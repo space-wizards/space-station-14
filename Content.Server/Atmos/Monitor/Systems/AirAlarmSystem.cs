@@ -1,7 +1,12 @@
+using System;
+using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
+using Content.Server.Power.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -19,6 +24,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     public class AirAlarmSystem : EntitySystem
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
+
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
@@ -120,11 +126,50 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public override void Initialize()
         {
+            SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AtmosMonitorComponent, AirAlarmSetThresholdEvent>(OnSetThreshold);
+            SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetModeEvent>(OnSetMode);
+            SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmDeviceDataUpdateEvent>(OnDeviceDataUpdate);
+        }
 
+        private void OnComponentStartup(EntityUid uid, AirAlarmComponent component, ComponentStartup args)
+        {
+            SyncAllDevices(uid);
+        }
+
+        private void OnSetThreshold(EntityUid uid, AtmosMonitorComponent data, AirAlarmSetThresholdEvent args)
+        {
+            switch (args.Type)
+            {
+                case AtmosMonitorThresholdType.Pressure:
+                    data.PressureThreshold = args.Threshold;
+                    break;
+                case AtmosMonitorThresholdType.Temperature:
+                    data.TemperatureThreshold = args.Threshold;
+                    break;
+                case AtmosMonitorThresholdType.Gas:
+                    if (args.Gas == null || data.GasThresholds == null) return;
+                    data.GasThresholds[(Gas) args.Gas] = args.Threshold;
+                    break;
+            }
+        }
+
+        private void OnSetMode(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetModeEvent args)
+        {
+            // TODO: Mode setting/programs.
+        }
+
+        private void OnDeviceDataUpdate(EntityUid uid, AirAlarmDataComponent data, AirAlarmDeviceDataUpdateEvent args)
+        {
+            SetData(uid, args.Address, data.DeviceData[args.Address]);
         }
 
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, PacketSentEvent args)
         {
+            if (!EntityManager.TryGetComponent<AirAlarmDataComponent>(uid, out var alarmData))
+                return;
+
             if (!args.Data.TryGetValue(DeviceNetworkConstants.Command, out string? cmd))
                 return;
 
@@ -136,15 +181,17 @@ namespace Content.Server.Atmos.Monitor.Systems
 
                     // Save into component.
                     // Sync data to interface.
-                    if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
-                        controller.DeviceData[args.SenderAddress] = data;
+                    if (!alarmData.DeviceData.TryAdd(args.SenderAddress, data))
+                        alarmData.DeviceData[args.SenderAddress] = data;
+
+                    alarmData.Dirty();
 
                     controller.UpdateUI();
 
                     return;
                 case AirAlarmToggleData:
                     if (!args.Data.TryGetValue(AirAlarmToggleData, out bool toggleStatus)
-                        || !controller.DeviceData.TryGetValue(args.SenderAddress, out IAtmosDeviceData? devData)) break;
+                        || !alarmData.DeviceData.TryGetValue(args.SenderAddress, out IAtmosDeviceData? devData)) break;
 
                     // Save into component.
                     // Sync data to interface.
@@ -159,9 +206,65 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // This should say if the result
                     // failed, or succeeded. Don't save it.l
 
+
                     controller.UpdateUI();
 
                     return;
+            }
+        }
+
+        // <-- UI stuff -->
+
+        // List of active user interfaces.
+        private HashSet<EntityUid> _activeUserInterfaces = new();
+
+        // Add an active interface for updating.
+        public void AddActiveInterface(EntityUid uid)
+        {
+            _activeUserInterfaces.Add(uid);
+        }
+
+        // Remove an active interface from updating.
+        public void RemoveActiveInterface(EntityUid uid)
+        {
+            _activeUserInterfaces.Remove(uid);
+        }
+
+        // Update an interface's data. This is all the 'hot' data
+        // that an air alarm contains server-side. Updated with a whopping 16
+        // delay automatically once a UI is in the loop.
+        public void UpdateInterfaceData(EntityUid uid, AirAlarmComponent? alarm = null, AirAlarmDataComponent? data = null, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
+        {
+            if (!Resolve(uid, ref alarm, ref data, ref monitor, ref power)) return;
+
+            if (!power.Powered) return;
+
+            if (monitor.TileGas != null)
+            {
+                data.Pressure = monitor.TileGas.Pressure;
+                data.Temperature = monitor.TileGas.Pressure;
+                data.TotalMoles = monitor.TileGas.TotalMoles;
+
+                foreach (var gas in Enum.GetValues<Gas>())
+                    if (!data.Gases.TryAdd(gas, monitor.TileGas.GetMoles(gas)))
+                        data.Gases[gas] = monitor.TileGas.GetMoles(gas);
+            }
+
+            data.Dirty();
+            alarm.UpdateUI();
+        }
+
+        private const float _delay = 16f;
+        private float _timer = 0f;
+
+        public override void Update(float frameTime)
+        {
+            _timer += frameTime;
+            if (_timer >= _delay)
+            {
+                _timer = 0f;
+                foreach (var uid in _activeUserInterfaces)
+                    UpdateInterfaceData(uid);
             }
         }
     }

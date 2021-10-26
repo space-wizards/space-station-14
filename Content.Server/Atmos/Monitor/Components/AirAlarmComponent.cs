@@ -6,8 +6,10 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor.Components;
 using Robust.Server.GameObjects;
+using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Network;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Atmos.Monitor.Components
@@ -17,6 +19,7 @@ namespace Content.Server.Atmos.Monitor.Components
     {
         [ComponentDependency] public readonly ApcPowerReceiverComponent? DeviceRecvComponent = default!;
         [ComponentDependency] public readonly AtmosMonitorComponent? AtmosMonitorComponent = default!;
+        [ComponentDependency] public readonly AirAlarmDataComponent? AirAlarmDataComponent = default!;
         [Dependency] private readonly AirAlarmSystem? _airAlarmSystem = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
@@ -34,43 +37,51 @@ namespace Content.Server.Atmos.Monitor.Components
             IoCManager.InjectDependencies(this);
             _userInterface = Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key);
             if (_userInterface != null)
+            {
                 _userInterface.OnReceiveMessage += OnMessageReceived;
+                _userInterface.OnClosed += OnCloseUI;
+            }
+        }
+
+        private HashSet<NetUserId> _activePlayers = new();
+
+        public void OpenUI(IPlayerSession player)
+        {
+            _userInterface?.Open(player);
+            _activePlayers.Add(player.UserId);
+            if (_airAlarmSystem != null) // if this is null you got a lot of other shit to deal with
+            {
+                _airAlarmSystem.AddActiveInterface(Owner.Uid);
+                _airAlarmSystem.UpdateInterfaceData(Owner.Uid);
+            }
+
+        }
+
+        private void OnCloseUI(IPlayerSession player)
+        {
+            _activePlayers.Remove(player.UserId);
+            if (_airAlarmSystem != null && _activePlayers.Count == 0)
+                _airAlarmSystem.RemoveActiveInterface(Owner.Uid);
         }
 
         public void UpdateUI()
         {
+            /*
             var gas = AtmosMonitorComponent != null ? AtmosMonitorComponent.TileGas : null;
             Dictionary<Gas, float> gasInTile = new();
 
             if (gas != null)
                 foreach (var gasType in Enum.GetValues<Gas>())
                     gasInTile.Add(gasType, gas.GetMoles(gasType));
+                    */
 
-            _userInterface?.SetState(new AirAlarmBoundUserInterfaceState
-            {
-                Pressure = gas != null ? gas.Pressure : null,
-                Temperature = gas != null ? gas.Temperature : null,
-                Gases = gasInTile,
-                TotalMoles = gas != null ? gas.TotalMoles : null,
-                DeviceData = DeviceData,
-                CurrentMode = CurrentMode
-            });
+            // send it literally nothing, similar to an event
+            // UI side will look at the component and set state from there
+            _userInterface?.SetState(new AirAlarmBoundUserInterfaceState());
         }
 
         public void OnMessageReceived(ServerBoundUserInterfaceMessage message)
-        {
-            if (_airAlarmSystem != null)
-                switch (message.Message)
-                {
-                    case AirAlarmChangeDeviceDataMessage deviceData:
-                        _airAlarmSystem.SetData(Owner.Uid, deviceData.Address, deviceData.Data);
-                        break;
-                    case AirAlarmChangeModeMessage modeData:
-                        CurrentMode = modeData.Mode;
-                        // TODO: send update to air alarm system so it does something
-                        break;
-                }
-        }
+        {}
     }
 
     public class AirAlarmModeProgram

@@ -3,7 +3,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Server.Atmos.Monitor
+namespace Content.Shared.Atmos.Monitor
 {
     // mostly based around floats and percentages, no literals
     // except for the range boundaries

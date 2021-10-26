@@ -1,0 +1,14 @@
+<BoxContainer xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         Orientation="Vertical">
+    <!-- Upper row: Danger bounds -->
+    <BoxContainer Orientation="Horizontal">
+        <FloatSpinBox Name="CUpperBound" HorizontalExpand="True" />
+        <FloatSpinBox Name="CLowerBound" HorizontalExpand="True" />
+    </BoxContainer>
+    <!-- Lower row: Warning bounds -->
+    <BoxContainer Orientation="Horizontal">
+        <FloatSpinBox Name="CUpperWarningBound" HorizontalExpand="True" />
+        <FloatSpinBox Name="CLowerWarningBound" HorizontalExpand="True" />
+    </BoxContainer>
+</BoxContainer>

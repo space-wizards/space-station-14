@@ -1,0 +1,60 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            MinSize="500 500" Title="Air Alarm">
+    <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
+        <!-- Status (pressure, temperature, alarm state, device total, address, etc) -->
+        <BoxContainer Orientation="Horizontal">
+            <!-- Left column (address, device total) -->
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'Address'}" />
+                    <Label Name="CDeviceAddress" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'Total devices'}" />
+                    <Label Name="CDeviceTotal" />
+                </BoxContainer>
+            </BoxContainer>
+            <!-- Right column (pressure, temperature, alarm state) -->
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'Pressure'}" HorizontalAlignment="Right" />
+                    <RichTextLabel Name="CPressureLabel" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'Temperature'}" HorizontalAlignment="Right" />
+                    <RichTextLabel Name="CTemperatureLabel" />
+                </BoxContainer>
+                <BoxContainer Orientation="Horizontal">
+                    <Label Text="{Loc 'Status'}" HorizontalAlignment="Right" />
+                    <RichTextLabel Name="CStatusLabel" />
+                </BoxContainer>
+            </BoxContainer>
+        </BoxContainer>
+        <!-- Gas/Device Data -->
+        <BoxContainer Orientation="Vertical" VerticalExpand="True">
+            <TabContainer>
+                <!-- Gas readout -->
+                <ScrollContainer>
+                    <BoxContainer Name="CGasContainer" />
+                </ScrollContainer>
+                <!-- Vent devices -->
+                <ScrollContainer>
+                    <BoxContainer Name="CVentContainer" />
+                </ScrollContainer>
+                <!-- Scrubber devices -->
+                <ScrollContainer>
+                    <BoxContainer Name="CScrubberContainer" />
+                </ScrollContainer>
+                <!-- Alarm thresholds -->
+                <ScrollContainer>
+                    <BoxContainer Name="CThresholdContainer" />
+                </ScrollContainer>
+            </TabContainer>
+        </BoxContainer>
+        <!-- Mode buttons -->
+        <BoxContainer Orientation="Horizontal">
+            <OptionButton Name="CModeButton" HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+</SS14Window>

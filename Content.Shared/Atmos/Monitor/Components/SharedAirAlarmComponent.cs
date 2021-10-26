@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -29,38 +30,7 @@ namespace Content.Shared.Atmos.Monitor.Components
 
     [Serializable, NetSerializable]
     public class AirAlarmBoundUserInterfaceState : BoundUserInterfaceState
-    {
-        public float? Pressure { get; set; }
-        public float? Temperature { get; set; }
-        public Dictionary<Gas, float> Gases { get; set; } = new();
-        public float? TotalMoles { get; set; }
-        public Dictionary<string, IAtmosDeviceData> DeviceData { get; set; } = new();
-        public AirAlarmMode CurrentMode { get; set; }
-    }
-
-    [Serializable, NetSerializable]
-    public class AirAlarmChangeModeMessage : BoundUserInterfaceMessage
-    {
-        public AirAlarmMode Mode { get; }
-
-        public AirAlarmChangeModeMessage(AirAlarmMode mode)
-        {
-            Mode = mode;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public class AirAlarmChangeDeviceDataMessage : BoundUserInterfaceMessage
-    {
-        public string Address { get; }
-        public IAtmosDeviceData Data { get; }
-
-        public AirAlarmChangeDeviceDataMessage(string address, IAtmosDeviceData data)
-        {
-            Address = address;
-            Data = data;
-        }
-    }
+    {}
 
     [Serializable, NetSerializable]
     public class GasVentPumpData : IAtmosDeviceData
