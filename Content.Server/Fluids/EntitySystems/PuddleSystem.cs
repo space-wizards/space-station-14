@@ -82,8 +82,7 @@ namespace Content.Server.Fluids.EntitySystems
             }
             else if (puddleComponent.CurrentVolume >= puddleComponent.SlipThreshold)
             {
-                var newSlippery =
-                    EntityManager.EnsureComponent<SlipperyComponent>(EntityManager.GetEntity(entityUid));
+                var newSlippery = EntityManager.EnsureComponent<SlipperyComponent>(entityUid);
                 newSlippery.Slippery = true;
             }
         }

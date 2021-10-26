@@ -39,7 +39,7 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit UpperLimit = PuddleComponent.DefaultOverflowVolume;
 
         /// <summary>
-        ///     The time accumulated since the start. Shouldn't be modified outside of EvaporationSystem.
+        ///     The time accumulated since the start.
         /// </summary>
         public float Accumulator = 0f;
     }
