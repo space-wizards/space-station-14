@@ -101,7 +101,7 @@ namespace Content.Client.Kitchen.UI
             {
                 if (!_prototypeManager.TryIndex(reagents[i].ReagentId, out ReagentPrototype? proto)) continue;
 
-                var reagentAdded= _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
+                var reagentAdded = _menu.IngredientsListReagents.AddItem($"{reagents[i].Quantity} {proto.Name}");
                 var reagentIndex = _menu.IngredientsListReagents.IndexOf(reagentAdded);
                 _reagents.Add(reagentIndex, reagents[i]);
             }
