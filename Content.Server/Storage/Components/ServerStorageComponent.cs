@@ -139,6 +139,11 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            if (entity.Transform.Anchored)
+            {
+                return false;
+            }
+
             return true;
         }
 
@@ -512,7 +517,7 @@ namespace Content.Server.Storage.Components
             if (_areaInsert && (eventArgs.Target == null || !eventArgs.Target.HasComponent<SharedItemComponent>()))
             {
                 var validStorables = new List<IEntity>();
-                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius))
+                foreach (var entity in IoCManager.Resolve<IEntityLookup>().GetEntitiesInRange(eventArgs.ClickLocation, _areaInsertRadius, LookupFlags.None))
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
