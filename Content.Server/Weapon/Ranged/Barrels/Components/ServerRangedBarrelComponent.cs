@@ -415,7 +415,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
     }
 
+#pragma warning disable 618
     public class BarrelFiredMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly List<IEntity> FiredProjectiles;
 

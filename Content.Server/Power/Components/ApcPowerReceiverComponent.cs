@@ -95,7 +95,9 @@ namespace Content.Server.Power.Components
         }
     }
 
+#pragma warning disable 618
     public class PowerChangedMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly bool Powered;
 
