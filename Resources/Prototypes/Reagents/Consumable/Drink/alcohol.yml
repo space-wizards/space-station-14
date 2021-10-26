@@ -5,8 +5,8 @@
   id: Absinthe
   name: absinthe
   desc: One sip of this and you just know you're gonna have a good time.
-  color: "#33EE00"
   physicalDesc: strong-smelling
+  color: "#33EE00"
   spritePath: absintheglass.rsi
 
 - type: reagent
