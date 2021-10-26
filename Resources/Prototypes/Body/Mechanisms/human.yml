@@ -299,7 +299,7 @@
       Milk:
         effects:
         - !type:SatiateThirst
-      SpoiledMilk:
+      MilkSpoiled:
         effects:
         - !type:SatiateThirst
           hydrationFactor: -2
