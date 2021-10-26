@@ -23,46 +23,10 @@ namespace Content.Server.Power.Components
     [RegisterComponent]
     public class ApcPowerReceiverComponent : Component, IExamine
     {
-        [ViewVariables] [ComponentDependency] private readonly IPhysBody? _physicsComponent = null;
-
         public override string Name => "ApcPowerReceiver";
 
         [ViewVariables]
         public bool Powered => (MathHelper.CloseToPercent(NetworkLoad.ReceivingPower, Load) || !NeedsPower) && !PowerDisabled;
-
-        /// <summary>
-        ///     The max distance from a <see cref="ApcPowerProviderComponent"/> that this can receive power from.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int PowerReceptionRange { get => _powerReceptionRange; set => SetPowerReceptionRange(value); }
-        [DataField("powerReceptionRange")]
-        private int _powerReceptionRange = 3;
-
-        [ViewVariables]
-        public ApcPowerProviderComponent? Provider
-        {
-            get => _provider;
-            set
-            {
-                // Will get updated before power networks process.
-                NetworkLoad.LinkedNetwork = default;
-                _provider?.RemoveReceiver(this);
-                _provider = value;
-                value?.AddReceiver(this);
-                ApcPowerChanged();
-            }
-        }
-
-        private ApcPowerProviderComponent? _provider;
-
-        /// <summary>
-        ///     If this should be considered for connection by <see cref="ApcPowerProviderComponent"/>s.
-        /// </summary>
-        public bool Connectable => Anchored;
-
-        private bool Anchored => _physicsComponent == null || _physicsComponent.BodyType == BodyType.Static;
-
-        [ViewVariables] public bool NeedsProvider => Provider == null;
 
         /// <summary>
         ///     Amount of charge this needs from an APC per second to function.
@@ -70,6 +34,8 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
         public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+
+        public ApcPowerProviderComponent? Provider = null;
 
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
@@ -104,71 +70,16 @@ namespace Content.Server.Power.Components
             DesiredPower = 5
         };
 
-        protected override void Startup()
-        {
-            base.Startup();
-            if (NeedsProvider)
-            {
-                TryFindAndSetProvider();
-            }
-            if (_physicsComponent != null)
-            {
-                AnchorUpdate();
-            }
-        }
-
         protected override void OnRemove()
         {
-            _provider?.RemoveReceiver(this);
+            Provider?.RemoveReceiver(this);
 
             base.OnRemove();
-        }
-
-        public void TryFindAndSetProvider()
-        {
-            if (TryFindAvailableProvider(out var provider))
-            {
-                Provider = provider;
-            }
         }
 
         public void ApcPowerChanged()
         {
             OnNewPowerState();
-        }
-
-        private bool TryFindAvailableProvider([NotNullWhen(true)] out ApcPowerProviderComponent? foundProvider)
-        {
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
-                .GetEntitiesInRange(Owner, PowerReceptionRange);
-
-            foreach (var entity in nearbyEntities)
-            {
-                if (entity.TryGetComponent<ApcPowerProviderComponent>(out var provider))
-                {
-                    if (provider.Connectable)
-                    {
-                        if (provider.Owner.Transform.Coordinates.TryDistance(Owner.EntityManager, Owner.Transform.Coordinates, out var distance))
-                        {
-                            if (distance < Math.Min(PowerReceptionRange, provider.PowerTransferRange))
-                            {
-                                foundProvider = provider;
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-
-            foundProvider = default;
-            return false;
-        }
-
-        private void SetPowerReceptionRange(int newPowerReceptionRange)
-        {
-            Provider = null;
-            _powerReceptionRange = newPowerReceptionRange;
-            TryFindAndSetProvider();
         }
 
         private void OnNewPowerState()
@@ -179,21 +90,6 @@ namespace Content.Server.Power.Components
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
             {
                 appearance.SetData(PowerDeviceVisuals.Powered, Powered);
-            }
-        }
-
-        public void AnchorUpdate()
-        {
-            if (Anchored)
-            {
-                if (NeedsProvider)
-                {
-                    TryFindAndSetProvider();
-                }
-            }
-            else
-            {
-                Provider = null;
             }
         }
 

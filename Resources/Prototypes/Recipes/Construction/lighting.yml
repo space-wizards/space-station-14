@@ -34,3 +34,22 @@
   conditions:
   - !type:WallmountCondition {}
 
+- type: construction
+  name: light switch
+  id: LightSwitchRecipe
+  graph: lightSwitch
+  startNode: start
+  targetNode: lightSwitch
+  category: Structures
+  description: A switch for toggling lights that are connected to the same apc.
+  icon:
+    sprite: Structures/Wallmounts/switch.rsi
+    state: on
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+    - !type:WallmountCondition {}
+
+

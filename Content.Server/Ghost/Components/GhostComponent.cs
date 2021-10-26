@@ -5,7 +5,8 @@ using Robust.Shared.GameObjects;
 namespace Content.Server.Ghost.Components
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent
+    [ComponentReference(typeof(SharedGhostComponent))]
+    public sealed class GhostComponent : SharedGhostComponent
     {
         public TimeSpan TimeOfDeath { get; set; } = TimeSpan.Zero;
     }

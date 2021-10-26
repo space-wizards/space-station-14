@@ -27,8 +27,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   name: DummyWiredNetworkDevice
   id: DummyWiredNetworkDevice
   components:
-    - type: DeviceNetwork
-      deviceNetId: 1
+    - type: DeviceNetworkComponent
+      deviceNetId: Wired
     - type: WiredNetworkConnection
     - type: ApcPowerReceiver
 
@@ -38,7 +38,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   components:
     - type: DeviceNetwork
       frequency: 100
-      deviceNetId: 1
+      deviceNetId: Wireless
     - type: WirelessNetworkConnection
       range: 100
         ";

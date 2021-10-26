@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.EffectBlocker;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
@@ -26,6 +25,7 @@ namespace Content.Shared.Slippery
         {
             base.Initialize();
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
@@ -38,6 +38,11 @@ namespace Content.Shared.Slippery
                 _slipped.Add(component);
 
             component.Colliding.Add(otherUid);
+        }
+
+        private void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         /// <inheritdoc />
@@ -80,10 +85,10 @@ namespace Content.Shared.Slippery
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
-            {
+            var ev = new SlipAttemptEvent();
+            RaiseLocalEvent(otherBody.Owner.Uid, ev, false);
+            if (ev.Cancelled)
                 return false;
-            }
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
@@ -135,5 +140,12 @@ namespace Content.Shared.Slippery
 
             return false;
         }
+    }
+
+    /// <summary>
+    ///     Raised on an entity to determine if it can slip or not.
+    /// </summary>
+    public class SlipAttemptEvent : CancellableEntityEventArgs
+    {
     }
 }
