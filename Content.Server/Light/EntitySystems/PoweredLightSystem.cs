@@ -34,6 +34,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
         [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
 
@@ -108,8 +109,9 @@ namespace Content.Server.Light.EntitySystems
                 var burnedHand = light.CurrentLit && res < lightBulb.BurningTemperature;
                 if (burnedHand)
                 {
-                    // apply damage to users hands
-                    light.Owner.PopupMessage(args.User, Loc.GetString("powered-light-component-burn-hand"));
+                    // apply damage to users hands and show message with sound
+                    var burnMsg = Loc.GetString("powered-light-component-burn-hand");
+                    _popupSystem.PopupEntity(burnMsg, uid, Filter.Entities(userUid));
                     _damageableSystem.TryChangeDamage(userUid, light.Damage);
                     SoundSystem.Play(Filter.Pvs(uid), light.BurnHandSound.GetSound(), uid);
 
