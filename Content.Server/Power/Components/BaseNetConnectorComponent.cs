@@ -8,7 +8,14 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.Components
 {
-    public abstract class BaseNetConnectorComponent<TNetType> : Component
+    public interface IBaseNetConnectorComponent<in TNetType>
+    {
+        public TNetType? Net { set; }
+        public Voltage Voltage { get; }
+        public string? NodeId { get; }
+    }
+
+    public abstract class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public Voltage Voltage { get => _voltage; set => SetVoltage(value); }
@@ -22,7 +29,7 @@ namespace Content.Server.Power.Components
         [ViewVariables]
         private bool _needsNet => _net != null;
 
-        [DataField("node")] [ViewVariables] public string? NodeId;
+        [DataField("node")] [ViewVariables] public string? NodeId { get; set; }
 
         protected override void Initialize()
         {
