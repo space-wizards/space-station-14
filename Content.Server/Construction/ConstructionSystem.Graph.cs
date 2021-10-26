@@ -206,8 +206,9 @@ namespace Content.Server.Construction
                     // NOTE: Only Container is supported by Construction!
                     var otherContainer = _containerSystem.EnsureContainer<Container>(newUid, container, newContainerManager);
 
-                    foreach (var entity in ourContainer.ContainedEntities)
+                    for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {
+                        var entity = ourContainer.ContainedEntities[i];
                         ourContainer.ForceRemove(entity);
                         otherContainer.Insert(entity);
                     }
