@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -16,60 +17,57 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager))
+            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager))
             {
-                Logger.Warning($"Computer entity {entity} did not have a container manager! Aborting build computer action.");
+                Logger.Warning($"Computer entity {uid} did not have a container manager! Aborting build computer action.");
                 return;
             }
 
-            if (!containerManager.TryGetContainer(Container, out var container))
+            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+
+            if (!containerSystem.TryGetContainer(uid, Container, out var container, containerManager))
             {
-                Logger.Warning($"Computer entity {entity} did not have the specified '{Container}' container! Aborting build computer action.");
+                Logger.Warning($"Computer entity {uid} did not have the specified '{Container}' container! Aborting build computer action.");
                 return;
             }
 
             if (container.ContainedEntities.Count != 1)
             {
-                Logger.Warning($"Computer entity {entity} did not have exactly one item in the specified '{Container}' container! Aborting build computer action.");
+                Logger.Warning($"Computer entity {uid} did not have exactly one item in the specified '{Container}' container! Aborting build computer action.");
             }
 
             var board = container.ContainedEntities[0];
 
             if (!board.TryGetComponent(out ComputerBoardComponent? boardComponent))
             {
-                Logger.Warning($"Computer entity {entity} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
+                Logger.Warning($"Computer entity {uid} had an invalid entity in container \"{Container}\"! Aborting build computer action.");
                 return;
             }
 
-            var entityManager = entity.EntityManager;
             container.Remove(board);
 
-            var computer = entityManager.SpawnEntity(boardComponent.Prototype, entity.Transform.Coordinates);
-            computer.Transform.LocalRotation = entity.Transform.LocalRotation;
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var computer = entityManager.SpawnEntity(boardComponent.Prototype, transform.Coordinates);
+            computer.Transform.LocalRotation = transform.LocalRotation;
 
-            var computerContainer = ContainerHelpers.EnsureContainer<Container>(computer, Container, out var existed);
+            var computerContainer = containerSystem.EnsureContainer<Container>(computer.Uid, Container);
 
-            if (existed)
+            // In case it already existed and there are any entities inside the container, delete them.
+            foreach (var ent in computerContainer.ContainedEntities.ToArray())
             {
-                // In case there are any entities inside this, delete them.
-                foreach (var ent in computerContainer.ContainedEntities.ToArray())
-                {
-                    computerContainer.ForceRemove(ent);
-                    ent.Delete();
-                }
+                computerContainer.ForceRemove(ent);
+                ent.Delete();
             }
 
             computerContainer.Insert(board);
 
-            if (computer.TryGetComponent(out ConstructionComponent? construction))
-            {
-                // We only add this container. If some construction needs to take other containers into account, fix this.
-                construction.AddContainer(Container);
-            }
+            // We only add this container. If some construction needs to take other containers into account, fix this.
+            entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(computer.Uid, Container);
 
-            entity.Delete();
+            // Delete the original entity.
+            entityManager.DeleteEntity(uid);
         }
     }
 }
