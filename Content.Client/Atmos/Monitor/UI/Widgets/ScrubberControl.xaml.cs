@@ -10,7 +10,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Atmos.Monitor.UI.Widgets
 {
     [GenerateTypedNameReferences]
-    public class ScrubberControl : BoxContainer
+    public partial class ScrubberControl : BoxContainer
     {
         private GasVentScrubberData _data;
         private string _address;

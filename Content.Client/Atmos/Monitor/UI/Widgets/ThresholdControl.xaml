@@ -11,4 +11,8 @@
         <FloatSpinBox Name="CUpperWarningBound" HorizontalExpand="True" />
         <FloatSpinBox Name="CLowerWarningBound" HorizontalExpand="True" />
     </BoxContainer>
+    <!-- Lowest row: Enabled box -->
+    <BoxContainer Orientation="Horizontal">
+        <CheckBox Name="CEnableDevice" Text="{Loc 'Enabled'}" />
+    </BoxContainer>
 </BoxContainer>

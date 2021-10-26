@@ -10,12 +10,12 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Atmos.Monitor.UI
 {
     [GenerateTypedNameReferences]
-    public class AirAlarmWindow : SS14Window
+    public partial class AirAlarmWindow : SS14Window
     {
         public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
         public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
         public event Action<AirAlarmMode>? AirAlarmModeChanged;
-        public event Action<string> ResyncDeviceRequested;
+        public event Action<string>? ResyncDeviceRequested;
         public event Action? ResyncAllRequested;
 
         private Label _address => CDeviceAddress;

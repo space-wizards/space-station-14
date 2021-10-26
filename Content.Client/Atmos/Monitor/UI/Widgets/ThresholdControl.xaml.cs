@@ -11,7 +11,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Atmos.Monitor.UI.Widgets
 {
     [GenerateTypedNameReferences]
-    public class ThresholdControl : BoxContainer
+    public partial class ThresholdControl : BoxContainer
     {
         private AtmosAlarmThreshold _threshold;
         private AtmosMonitorThresholdType _type;
