@@ -11,9 +11,35 @@ namespace Content.Client.Devices.UI
     [GenerateTypedNameReferences]
     public partial class VoiceAnalyzerWindow : SS14Window
     {
+        public event Action<int>? OnVAOptionSelectedEvent;
+        public event Action<string>? OnVATextButtonPressed;
         public VoiceAnalyzerWindow()
         {
             RobustXamlLoader.Load(this);
+
+            CreateOptionButtons();
+            VAOptions.OnItemSelected += OnVAOptionSelected;
+            VASubmitTextButton.OnPressed += _ => OnVATextButtonPressed?.Invoke(VAText.Text);
         }
+
+        private void OnVAOptionSelected(OptionButton.ItemSelectedEventArgs args)
+        {
+            VAOptions.SelectId(args.Id);
+            OnVAOptionSelectedEvent?.Invoke(args.Id);
+        }
+
+        private void CreateOptionButtons()
+        {
+            //I could loop through the enum names to add the buttons but that means formatting
+            //the enum name and all sorts of weird calls. I'm just gonna do it manually.
+
+            //we use the enum value as the ID, that way we can just send the ID to the server when it changes
+            //and it'll know which value to set the VA to.
+            VAOptions.AddItem("Inclusive", (int)SharedVoiceAnalyzerComponent.AnalyzeMode.Inclusive);
+            VAOptions.AddItem("Exclusive", (int)SharedVoiceAnalyzerComponent.AnalyzeMode.Exclusive);
+            VAOptions.AddItem("Recognizer", (int)SharedVoiceAnalyzerComponent.AnalyzeMode.Recognizer);
+            VAOptions.AddItem("Sensor", (int)SharedVoiceAnalyzerComponent.AnalyzeMode.VoiceSensor);
+        }
+
     }
 }

@@ -10,6 +10,15 @@ namespace Content.Shared.Devices
     {
         public override string Name => "VoiceAnalyzer";
 
+        public AnalyzeMode Mode = AnalyzeMode.Inclusive;
+        public enum AnalyzeMode
+        {
+            Inclusive,
+            Exclusive,
+            Recognizer,
+            VoiceSensor
+        }
+
     }
 
     /// <summary>
@@ -33,6 +42,28 @@ namespace Content.Shared.Devices
         {
         }
 
+    }
+
+    [Serializable, NetSerializable]
+    public class VoiceAnalyzerUpdateModeMessage : BoundUserInterfaceMessage
+    {
+        public int ModeEnum { get; }
+
+        public VoiceAnalyzerUpdateModeMessage( int modeEnum )
+        {
+            ModeEnum = modeEnum;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class VoiceAnalyzerUpdateTextMessage : BoundUserInterfaceMessage
+    {
+        public string VoiceText { get; }
+
+        public VoiceAnalyzerUpdateTextMessage( string voiceText )
+        {
+            VoiceText = voiceText;
+        }
     }
 
 }

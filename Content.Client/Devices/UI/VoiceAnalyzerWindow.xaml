@@ -1,13 +1,13 @@
 <SS14Window xmlns="https://spacestation14.io"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:s="clr-namespace:Content.Client.Stylesheets"
-            MinSize="250 100" Title="Voice Analyzer">
+            MinSize="350 100" Title="Voice Analyzer">
     <BoxContainer Orientation="Vertical" SeparationOverride="10">
         <BoxContainer Orientation="Horizontal">
-            <Label Text="Frequency" Align="Center" HorizontalExpand="True"/>
-            <SpinBox Name="SignalFrequency" Align="Center" HorizontalExpand="True"/>
+            <Label Text="Voice Query" Align="Center" HorizontalExpand="True"/>
+            <LineEdit Name="VAText" HorizontalExpand="True"/>
         </BoxContainer>
-        <Button Name="SetFrequencyButton" Text="Set Frequency"/>
-        <Button Name="SendSignalButton" Text="Send Signal"/>
+        <Button Name="VASubmitTextButton" Text="Set Voice Query" HorizontalExpand="True"/>
+        <OptionButton Name="VAOptions" MinSize="100 0" HorizontalExpand="True" />
     </BoxContainer>
 </SS14Window>

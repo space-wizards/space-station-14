@@ -15,7 +15,7 @@
   - type: Signaler
     frequency: 200
   - type: DeviceNetwork
-    deviceNetId: 2 #Wireless network.
+    deviceNetId: Wireless #Wireless network.
     frequency: 200
   - type: WirelessNetworkConnection
     range: 3000

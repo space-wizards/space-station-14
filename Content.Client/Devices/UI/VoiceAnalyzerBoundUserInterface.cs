@@ -21,6 +21,9 @@ namespace Content.Client.Devices.UI
             _window.OpenCentered();
 
             _window.OnClose += Close;
+
+            _window.OnVAOptionSelectedEvent += SendVAModeSelection;
+            _window.OnVATextButtonPressed += SendVATextUpdate;
         }
 
         protected override void Dispose(bool disposing)
@@ -40,6 +43,16 @@ namespace Content.Client.Devices.UI
             if (_window == null || state is not VoiceAnalyzerBoundUserInterfaceState cast)
                 return;
 
+        }
+
+        private void SendVAModeSelection(int id)
+        {
+            SendMessage(new VoiceAnalyzerUpdateModeMessage(id));
+        }
+
+        private void SendVATextUpdate(string text)
+        {
+            SendMessage(new VoiceAnalyzerUpdateTextMessage(text));
         }
     }
 }
