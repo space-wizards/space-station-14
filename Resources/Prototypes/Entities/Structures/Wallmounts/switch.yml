@@ -21,6 +21,7 @@
       - key: enum.SignalTransmitterUiKey.Key
         type: SignalPortSelectorBoundUserInterface
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -41,6 +42,7 @@
     outputs:
       - name: pressed
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -65,5 +67,6 @@
     - type: ApcNetworkConnection
     - type: ApcNetSwitch
   placement:
+    mode: SnapgridCenter
     snap:
       - Wallmount
