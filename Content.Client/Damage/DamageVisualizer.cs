@@ -319,9 +319,9 @@ namespace Content.Client.Damage
                     {
                         if (!damageContainer.SupportedGroups.Contains(damageType))
                         {
-                            Logger.WarningS(_name, $"Damage key {damageType} was invalid for entity {entity}.");
-                            _damageOverlayGroups.Remove(damageType);
-                            continue;
+                            Logger.ErrorS(_name, $"Damage key {damageType} was invalid for entity {entity}.");
+                            damageData.Valid = false;
+                            return;
                         }
 
                         damageData.LastThresholdPerGroup.Add(damageType, 0);
@@ -352,8 +352,9 @@ namespace Content.Client.Damage
                     {
                         if (!damagePrototypeIdList.Contains(damageType))
                         {
-                            _damageOverlayGroups.Remove(damageType);
-                            continue;
+                            Logger.ErrorS(_name, $"Damage keys were invalid for entity {entity}.");
+                            damageData.Valid = false;
+                            return;
                         }
                         damageData.LastThresholdPerGroup.Add(damageType, 0);
                     }
@@ -368,17 +369,6 @@ namespace Content.Client.Damage
 
                     damageData.LastThresholdPerGroup.Add(_damageGroup, 0);
                 }
-            }
-
-            // If we were checking through damage overlay group sprites,
-            // and there were no valid keys (all of them were removed),
-            // we exit with an error
-            if (_damageOverlayGroups != null
-                && _damageOverlayGroups.Keys.Count == 0)
-            {
-                Logger.ErrorS(_name, $"Damage keys were invalid for entity {entity}.");
-                damageData.Valid = false;
-                return;
             }
 
             // If we're targetting any layers, and the amount of
