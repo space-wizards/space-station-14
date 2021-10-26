@@ -13,6 +13,8 @@
     - state: pda-lawyer # nobody's using this one
     - state: pai_off_overlay
       shader: unshaded
+  - type: Input
+    context: "human"
   - type: PAI
   - type: Examiner
   - type: GhostRadio
