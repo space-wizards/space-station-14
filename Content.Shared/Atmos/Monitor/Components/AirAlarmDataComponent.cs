@@ -37,6 +37,9 @@ namespace Content.Shared.Atmos.Monitor.Components
         public AtmosAlarmThreshold TemperatureThreshold { get; set; } = new();
 
         public Dictionary<string, IAtmosDeviceData> DeviceData { get; } = new();
+        // might be needed, might not
+        // sync errors need to be implemented first
+        public Dictionary<string, bool> DeviceDataErrors { get; } = new();
         public Dictionary<Gas, float> Gases { get; } = new();
         public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; } = new();
     }

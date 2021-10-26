@@ -26,11 +26,6 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public override string Name => "AirAlarm";
 
-        // cache of device data
-        public Dictionary<string, IAtmosDeviceData> DeviceData = new();
-
-        public AirAlarmMode CurrentMode = AirAlarmMode.Filtering;
-
         protected override void Initialize()
         {
             base.Initialize();

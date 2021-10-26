@@ -5,6 +5,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Shared.GameObjects;
@@ -24,14 +25,16 @@ namespace Content.Server.Atmos.Monitor.Systems
     public class AirAlarmSystem : EntitySystem
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
-
+        [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
         // -- Atmos Device Commands --
 
         // Toggles the device on or off.
-        public const string AirAlarmToggleCmd = "air_alarm_toggle_device";
+        //
+        // Disabled. Sync/set device data should do this already.
+        // public const string AirAlarmToggleCmd = "air_alarm_toggle_device";
 
         // Gets the type of atmos device.
         //
@@ -54,7 +57,9 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         // ToggleData. This should just echo what the device's
         // enabled/disabled state is.
-        public const string AirAlarmToggleData = "air_alarm_toggle_device_data";
+        //
+        // Disabled. This should also be in set_device_data.
+        // public const string AirAlarmToggleData = "air_alarm_toggle_device_data";
 
         // TypeData. This should hold the type of device that it is,
         // so that the UI knows what kind of widget to draw, or
@@ -111,6 +116,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             _deviceNet.QueuePacket(uid, address, Freq, payload);
         }
 
+        /*
         public void ToggleDevice(EntityUid uid, string address, bool toggle)
         {
             var payload = new NetworkPayload
@@ -121,6 +127,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             _deviceNet.QueuePacket(uid, address, Freq, payload);
         }
+        */
 
         // -- Internal --
 
@@ -140,19 +147,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnSetThreshold(EntityUid uid, AtmosMonitorComponent data, AirAlarmSetThresholdEvent args)
         {
-            switch (args.Type)
-            {
-                case AtmosMonitorThresholdType.Pressure:
-                    data.PressureThreshold = args.Threshold;
-                    break;
-                case AtmosMonitorThresholdType.Temperature:
-                    data.TemperatureThreshold = args.Threshold;
-                    break;
-                case AtmosMonitorThresholdType.Gas:
-                    if (args.Gas == null || data.GasThresholds == null) return;
-                    data.GasThresholds[(Gas) args.Gas] = args.Threshold;
-                    break;
-            }
+            // Justification: This data is already in the shared component. The event
+            // just lets us transmit the data without having to call for the component,
+            // since this is specific data.
+            _atmosMonitorSystem.SetThreshold(uid, args.Type, args.Threshold, args.Gas);
         }
 
         private void OnSetMode(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetModeEvent args)
@@ -187,16 +185,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     alarmData.Dirty();
 
                     controller.UpdateUI();
-
-                    return;
-                case AirAlarmToggleData:
-                    if (!args.Data.TryGetValue(AirAlarmToggleData, out bool toggleStatus)
-                        || !alarmData.DeviceData.TryGetValue(args.SenderAddress, out IAtmosDeviceData? devData)) break;
-
-                    // Save into component.
-                    // Sync data to interface.
-                    devData.Enabled = toggleStatus;
-                    // controller.DeviceData[args.SenderAddress] = devData; out vars are refs?
 
                     return;
                 case AirAlarmSetDataStatus:

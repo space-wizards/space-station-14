@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -349,6 +350,26 @@ namespace Content.Server.Atmos.Monitor.Systems
             };
 
             _deviceNetSystem.QueuePacket(monitor.Owner.Uid, string.Empty, AtmosMonitorApcFreq, payload, true);
+        }
+
+        public void SetThreshold(EntityUid uid, AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null, AtmosMonitorComponent? monitor = null)
+        {
+            if (!Resolve(uid, ref monitor)) return;
+
+            switch (type)
+            {
+                case AtmosMonitorThresholdType.Pressure:
+                    monitor.PressureThreshold = threshold;
+                    break;
+                case AtmosMonitorThresholdType.Temperature:
+                    monitor.TemperatureThreshold = threshold;
+                    break;
+                case AtmosMonitorThresholdType.Gas:
+                    if (gas == null || monitor.GasThresholds == null) return;
+                    monitor.GasThresholds[(Gas) gas] = threshold;
+                    break;
+            }
+
         }
     }
 
