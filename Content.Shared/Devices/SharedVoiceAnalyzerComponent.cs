@@ -10,6 +10,8 @@ namespace Content.Shared.Devices
     {
         public override string Name => "VoiceAnalyzer";
 
+        public string VoiceQueryText = "";
+
         public AnalyzeMode Mode = AnalyzeMode.Inclusive;
         public enum AnalyzeMode
         {

@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
   name: DummyWiredNetworkDevice
   id: DummyWiredNetworkDevice
   components:
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Wired
     - type: WiredNetworkConnection
     - type: ApcPowerReceiver
