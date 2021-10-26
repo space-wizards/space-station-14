@@ -1,6 +1,5 @@
 using System;
 using Content.Shared.DragDrop;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -11,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Buckle.Components
 {
     [NetworkedComponent()]
-    public abstract class SharedBuckleComponent : Component, IEffectBlocker, IDraggable
+    public abstract class SharedBuckleComponent : Component, IDraggable
     {
         public sealed override string Name => "Buckle";
 
@@ -34,8 +33,6 @@ namespace Content.Shared.Buckle.Components
         public bool DontCollide { get; set; }
 
         public abstract bool TryBuckle(IEntity? user, IEntity to);
-
-        bool IEffectBlocker.CanFall() => !Buckled;
 
         bool IDraggable.CanDrop(CanDropEvent args)
         {

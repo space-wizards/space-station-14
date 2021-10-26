@@ -10,8 +10,8 @@ namespace Content.Shared.Fluids
     }
 
     [Serializable, NetSerializable]
-    public enum SprayVisuals
+    public enum SprayVisuals : byte
     {
-        Safety,
+        Safety
     }
 }

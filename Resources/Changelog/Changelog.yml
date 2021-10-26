@@ -2693,3 +2693,69 @@ Entries:
   - {message: Added Reinforced Plasma Windows, type: Add}
   id: 480
   time: '2021-10-24T12:46:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
+  id: 481
+  time: '2021-10-25T03:24:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'RCDs work on space again, if close to an existing non-space tile',
+    type: Fix}
+  id: 482
+  time: '2021-10-25T03:33:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station will now start with a random rotation., type: Tweak}
+  id: 483
+  time: '2021-10-25T04:22:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
+  - {message: Turned-on magboots now stop you from slipping., type: Add}
+  id: 484
+  time: '2021-10-25T06:43:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Construction works on rotated grids, type: Fix}
+  id: 485
+  time: '2021-10-25T14:14:21.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added electrocution., type: Add}
+  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
+  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
+  id: 486
+  time: '2021-10-25T14:21:56.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Stacks can now be split in half by alt-clicking or into different amounts
+      with the new Split verb., type: Add}
+  id: 487
+  time: '2021-10-25T14:36:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
+    type: Add}
+  id: 488
+  time: '2021-10-25T14:58:04.292881+00:00'
+- author: 20kdc
+  changes:
+  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
+  id: 489
+  time: '2021-10-25T14:58:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
+  id: 490
+  time: '2021-10-26T14:15:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
+  id: 491
+  time: '2021-10-26T14:18:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
+  id: 492
+  time: '2021-10-26T14:38:03.0000000+00:00'

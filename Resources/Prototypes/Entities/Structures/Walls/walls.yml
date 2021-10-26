@@ -5,6 +5,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/brick.rsi
@@ -34,6 +35,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clock.rsi
@@ -63,6 +65,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/clown.rsi
@@ -93,6 +96,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/cult.rsi
@@ -123,6 +127,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - Debug
       - RCDDeconstructWhitelist
   - type: Sprite
@@ -153,6 +158,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/diamond.rsi
@@ -182,6 +188,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/gold.rsi
@@ -211,6 +218,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/ice.rsi
@@ -240,6 +248,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/metal.rsi
@@ -269,6 +278,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plasma.rsi
@@ -298,6 +308,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/plastic.rsi
@@ -359,6 +370,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/riveted.rsi
@@ -388,6 +400,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/sandstone.rsi
@@ -417,6 +430,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/silver.rsi
@@ -446,6 +460,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
@@ -506,6 +521,7 @@
   components:
   - type: Tag
     tags:
+      - Wall
       - RCDDeconstructWhitelist
   - type: Sprite
     sprite: Structures/Walls/wood.rsi

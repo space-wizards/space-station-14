@@ -1,5 +1,4 @@
 ﻿using Content.Shared.DragDrop;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
@@ -15,7 +14,6 @@ namespace Content.Shared.ActionBlocker
 {
     /// <summary>
     /// Utility methods to check if a specific entity is allowed to perform an action.
-    /// For effects see <see cref="EffectBlockerSystem"/>
     /// </summary>
     [UsedImplicitly]
     public class ActionBlockerSystem : EntitySystem

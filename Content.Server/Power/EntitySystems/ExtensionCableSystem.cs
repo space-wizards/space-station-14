@@ -79,7 +79,7 @@ namespace Content.Server.Power.EntitySystems
 
             foreach (var entity in nearbyEntities)
             {
-                if (entity.TryGetComponent<ExtensionCableReceiverComponent>(out var receiver) &&
+                if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity.Uid, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
                     entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance) &&
