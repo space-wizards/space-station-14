@@ -1,15 +1,18 @@
 using System.Threading.Tasks;
 using Content.Server.Electrocution;
+using Content.Server.NodeContainer;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
+using static Content.Server.Power.PowerStats;
 
 namespace Content.Server.Power.Components
 {
@@ -28,6 +31,9 @@ namespace Content.Server.Power.Components
         [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         private string _cuttingQuality = "Cutting";
 
+        [DataField("measuringQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _measuringQuality = "PowerMeasuring";
+
         /// <summary>
         ///     Checked by <see cref="CablePlacerComponent"/> to determine if there is
         ///     already a cable of a type on a tile.
@@ -42,18 +48,27 @@ namespace Content.Server.Power.Components
             if (_cableDroppedOnCutPrototype == null)
                 return false;
 
-            if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
+            if (Owner.TryGetComponent<NodeContainerComponent>(out var ncc) &&
+                    await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0f, _measuringQuality))
+            {
+                eventArgs.Using.PopupMessage(eventArgs.User, PowerStats.FormatPowerStats(ncc));
+                return true;
+            }
+            else if (await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality))
+            {
+                Owner.Delete();
+                var droppedEnt = Owner.EntityManager.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
+
+                // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
+                if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
+                    EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, 1, stack);
+
+                return true;
+            }
 
             if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner.Uid, eventArgs.User.Uid)) return false;
 
-            Owner.Delete();
-            var droppedEnt = Owner.EntityManager.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);
-
-            // TODO: Literally just use a prototype that has a single thing in the stack, it's not that complicated...
-            if (droppedEnt.TryGetComponent<StackComponent>(out var stack))
-                EntitySystem.Get<StackSystem>().SetCount(droppedEnt.Uid, 1, stack);
-
-            return true;
+            return false;
         }
     }
 

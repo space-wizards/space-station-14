@@ -178,6 +178,7 @@
   - type: Tool
     qualities:
       - Pulsing
+      - PowerMeasuring
   - type: SignalLinker
 
 - type: entity

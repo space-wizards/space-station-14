@@ -39,3 +39,10 @@
   toolName: tool-quality-pulsing-tool-name
   spawn: Multitool
   icon: Objects/Tools/multitool.rsi/icon.png
+
+- type: tool
+  id: PowerMeasuring
+  name: tool-quality-power-measuring-name
+  toolName: tool-quality-power-measuring-tool-name
+  spawn: Multitool
+  icon: Objects/Tools/multitool.rsi/icon.png
