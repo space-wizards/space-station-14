@@ -14,6 +14,15 @@ using Robust.Shared.Player;
 
 namespace Content.Server.PAI
 {
+    /// <summary>
+    /// pAIs, or Personal AIs, are essentially portable ghost role generators.
+    /// In their current implementation, they create a ghost role anyone can access,
+    /// and that a player can also "wipe" (reset/kick out player).
+    /// Theoretically speaking pAIs are supposed to use a dedicated "offer and select" system,
+    ///  with the player holding the pAI being able to choose one of the ghosts in the round.
+    /// This seems too complicated for an initial implementation, though,
+    ///  and there's not always enough players and ghost roles to justify it.
+    /// </summary>
     public class PAISystem : EntitySystem
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
@@ -33,11 +42,11 @@ namespace Content.Server.PAI
         {
             if (args.IsInDetailsRange)
             {
-                if (component.Owner.TryGetComponent<MindComponent>(out var mind) && mind.HasMind)
+                if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
                 {
                     args.PushMarkup(Loc.GetString("pai-system-pai-installed"));
                 }
-                else if (component.Owner.HasComponent<GhostTakeoverAvailableComponent>())
+                else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                 {
                     args.PushMarkup(Loc.GetString("pai-system-still-searching"));
                 }
@@ -58,43 +67,43 @@ namespace Content.Server.PAI
             args.Handled = true;
 
             // Check for pAI activation
-            if (component.Owner.TryGetComponent<MindComponent>(out var mind) && mind.HasMind)
+            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
             {
                 _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, Filter.Entities(args.User.Uid));
                 return;
             }
-            else if (component.Owner.HasComponent<GhostTakeoverAvailableComponent>())
+            else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
             {
                 _popupSystem.PopupEntity(Loc.GetString("pai-system-still-searching"), uid, Filter.Entities(args.User.Uid));
                 return;
             }
 
-            var ghostFinder = component.Owner.EnsureComponent<GhostTakeoverAvailableComponent>();
+            var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
             ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
             ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
 
             _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, Filter.Entities(args.User.Uid));
-            UpdatePAIAppearance(component, PAIStatus.Searching);
+            UpdatePAIAppearance(uid, PAIStatus.Searching);
         }
 
         private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
         {
             // Mind was removed, shutdown the PAI.
-            UpdatePAIAppearance(component, PAIStatus.Off);
+            UpdatePAIAppearance(uid, PAIStatus.Off);
         }
 
         private void OnMindAdded(EntityUid uid, PAIComponent pai, MindAddedMessage args)
         {
             // Mind was added, shutdown the ghost role stuff so it won't get in the way
-            if (pai.Owner.HasComponent<GhostTakeoverAvailableComponent>())
-                pai.Owner.RemoveComponent<GhostTakeoverAvailableComponent>();
-            UpdatePAIAppearance(pai, PAIStatus.On);
+            if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
+                EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+            UpdatePAIAppearance(uid, PAIStatus.On);
         }
 
-        private void UpdatePAIAppearance(PAIComponent pai, PAIStatus status)
+        private void UpdatePAIAppearance(EntityUid uid, PAIStatus status)
         {
-            if (pai.Owner.TryGetComponent<AppearanceComponent>(out var appearance))
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
                 appearance.SetData(PAIVisuals.Status, status);
             }
@@ -105,20 +114,22 @@ namespace Content.Server.PAI
             if (args.User == null || !args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!(pai.Owner.TryGetComponent<MindComponent>(out var mind) && mind.HasMind))
+            if (!(EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind))
                 return;
 
             Verb verb = new();
             verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
             verb.Act = () => {
+                if (pai.Deleted)
+                    return;
                 // Wiping device :(
                 // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
                 // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                if (pai.Owner.HasComponent<MindComponent>())
+                if (EntityManager.HasComponent<MindComponent>(uid))
                 {
-                    pai.Owner.RemoveComponent<MindComponent>();
+                    EntityManager.RemoveComponent<MindComponent>(uid);
                     _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User.Uid));
-                    UpdatePAIAppearance(pai, PAIStatus.Off);
+                    UpdatePAIAppearance(uid, PAIStatus.Off);
                 }
             };
             args.Verbs.Add(verb);
