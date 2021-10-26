@@ -2749,3 +2749,8 @@ Entries:
   - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
   id: 490
   time: '2021-10-26T14:15:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
+  id: 491
+  time: '2021-10-26T14:18:43.0000000+00:00'
