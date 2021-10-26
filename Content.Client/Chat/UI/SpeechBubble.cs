@@ -124,7 +124,7 @@ namespace Content.Client.Chat.UI
             screenPos = (screenPos * 2).Rounded() / 2;
             LayoutContainer.SetPosition(this, screenPos);
 
-            var height = MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight);
+            var height = MathF.Ceiling(MathHelper.Clamp(lowerCenter.Y - screenPos.Y, 0, ContentHeight));
             SetHeight = height;
         }
 
