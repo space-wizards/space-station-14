@@ -2754,3 +2754,8 @@ Entries:
   - {message: Construction recipes are now sorted alphabetically., type: Tweak}
   id: 491
   time: '2021-10-26T14:18:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
+  id: 492
+  time: '2021-10-26T14:38:03.0000000+00:00'
