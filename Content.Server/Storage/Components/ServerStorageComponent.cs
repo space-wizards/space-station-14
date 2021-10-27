@@ -140,19 +140,17 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            // Is this item below the max item size for this container?
+            bool maxItemSizeCheck = (store?.Size <= _storageMaxItemSize);
+
             if (_whitelist != null && !_whitelist.IsValid(entity))
             {
-                // Item is not whitelisted, but passes the maximum item size check.
-                if (store?.Size <= _storageMaxItemSize)
-                {
-                    // Succeed if allowed to bypass the whitelist.
-                    return _storageMaxItemSizeWhitelistBypass ? true : false;
-                }
-
-                return false;
+                // If item is not whitelisted, but passes the maximum item size check,
+                // it succeeds - if it's allowed to bypass the whitelist.
+                return (maxItemSizeCheck && _storageMaxItemSizeWhitelistBypass) ? true : false;
             }
 
-            return true;
+            return maxItemSizeCheck;
         }
 
         /// <summary>
