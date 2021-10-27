@@ -24,6 +24,7 @@ namespace Content.Server.Cargo.Components
         private CargoTelepadState _currentState = CargoTelepadState.Unpowered;
         [DataField("teleportSound")] private SoundSpecifier _teleportSound = new SoundPathSpecifier("/Audio/Machines/phasein.ogg");
 
+        public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
             base.HandleMessage(message, component);
             switch (message)
