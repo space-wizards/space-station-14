@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Access.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.Access;
@@ -91,7 +92,8 @@ namespace Content.Server.Access.Components
             }
 
             var privilegedIdEntity = PrivilegedIdContainer.ContainedEntity;
-            return privilegedIdEntity != null && reader.IsAllowed(privilegedIdEntity);
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            return privilegedIdEntity != null && accessSystem.IsAllowed(reader, privilegedIdEntity.Uid);
         }
 
         /// <summary>
@@ -107,17 +109,18 @@ namespace Content.Server.Access.Components
 
             var targetIdEntity = TargetIdContainer.ContainedEntity;
 
-            var targetIdComponent = targetIdEntity.GetComponent<IdCardComponent>();
-            targetIdComponent.FullName = newFullName;
-            targetIdComponent.JobTitle = newJobTitle;
+            var cardSystem = EntitySystem.Get<IdCardSystem>();
+            cardSystem.TryChangeFullName(targetIdEntity.Uid, newFullName);
+            cardSystem.TryChangeJobTitle(targetIdEntity.Uid, newJobTitle);
 
             if (!newAccessList.TrueForAll(x => _prototypeManager.HasIndex<AccessLevelPrototype>(x)))
             {
                 Logger.Warning("Tried to write unknown access tag.");
                 return;
             }
-            var targetIdAccess = targetIdEntity.GetComponent<AccessComponent>();
-            targetIdAccess.SetTags(newAccessList);
+
+            var accessSystem = EntitySystem.Get<AccessSystem>();
+            accessSystem.TrySetTags(targetIdEntity.Uid, newAccessList);
         }
 
         /// <summary>

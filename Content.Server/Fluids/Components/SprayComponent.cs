@@ -27,7 +27,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract, IUse, IActivate, IDropped
+    internal sealed class SprayComponent : SharedSprayComponent, IAfterInteract
     {
         public const float SprayDistance = 3f;
         public const string SolutionName = "spray";
@@ -50,10 +50,6 @@ namespace Content.Server.Fluids.Components
         private int _vaporAmount = 1;
         [DataField("vaporSpread")]
         private float _vaporSpread = 90f;
-        [DataField("hasSafety")]
-        private bool _hasSafety;
-        [DataField("safety")]
-        private bool _safety = true;
         [DataField("impulse")]
         private float _impulse = 0f;
 
@@ -80,10 +76,6 @@ namespace Content.Server.Fluids.Components
         [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
 
-        [DataField("safetySound")]
-        public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-
-
         public ReagentUnit CurrentVolume {
             get
             {
@@ -92,26 +84,10 @@ namespace Content.Server.Fluids.Components
             }
         }
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (_hasSafety)
-            {
-                SetSafety(Owner, _safety);
-            }
-        }
-
         async Task<bool> IAfterInteract.AfterInteract(AfterInteractEventArgs eventArgs)
         {
             if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(eventArgs.User))
                 return false;
-
-            if (_hasSafety && _safety)
-            {
-                Owner.PopupMessage(eventArgs.User, Loc.GetString("spray-component-safety-on-message"));
-                return true;
-            }
 
             if (CurrentVolume <= 0)
             {
@@ -162,9 +138,8 @@ namespace Content.Server.Fluids.Components
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));
                 vapor.Transform.LocalRotation = rotation;
 
-                if (vapor.TryGetComponent(out AppearanceComponent? appearance)) // Vapor sprite should face down.
+                if (vapor.TryGetComponent(out AppearanceComponent? appearance))
                 {
-                    appearance.SetData(VaporVisuals.Rotation, -Angle.Zero + rotation);
                     appearance.SetData(VaporVisuals.Color, contents.Color.WithAlpha(1f));
                     appearance.SetData(VaporVisuals.State, true);
                 }
@@ -174,11 +149,13 @@ namespace Content.Server.Fluids.Components
                 var vaporSystem = EntitySystem.Get<VaporSystem>();
                 vaporSystem.TryAddSolution(vaporComponent, solution);
 
-                vaporSystem.Start(vaporComponent, rotation.ToVec(), _sprayVelocity, target, _sprayAliveTime);
+                // impulse direction is defined in world-coordinates, not local coordinates
+                var impulseDirection = vapor.Transform.WorldRotation.ToVec();
+                vaporSystem.Start(vaporComponent, impulseDirection, _sprayVelocity, target, _sprayAliveTime);
 
                 if (_impulse > 0f && eventArgs.User.TryGetComponent(out IPhysBody? body))
                 {
-                    body.ApplyLinearImpulse(-direction * _impulse);
+                    body.ApplyLinearImpulse(-impulseDirection * _impulse);
                 }
             }
 
@@ -194,40 +171,6 @@ namespace Content.Server.Fluids.Components
             }
 
             return true;
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-            return true;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            ToggleSafety(eventArgs.User);
-        }
-
-        private void ToggleSafety(IEntity user)
-        {
-            SoundSystem.Play(Filter.Pvs(Owner), SafetySound.GetSound(), Owner, AudioHelpers.WithVariation(0.125f).WithVolume(-4f));
-            SetSafety(user, !_safety);
-        }
-
-        private void SetSafety(IEntity user, bool state)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !_hasSafety)
-                return;
-
-            _safety = state;
-
-            if(Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(SprayVisuals.Safety, _safety);
-        }
-
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
-        {
-            if(_hasSafety && Owner.TryGetComponent(out AppearanceComponent? appearance))
-                appearance.SetData(SprayVisuals.Safety, _safety);
         }
     }
 }

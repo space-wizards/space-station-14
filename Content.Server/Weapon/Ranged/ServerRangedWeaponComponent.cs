@@ -93,6 +93,7 @@ namespace Content.Server.Weapon.Ranged
         }
 
         /// <inheritdoc />
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);

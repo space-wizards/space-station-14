@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
 using Content.Shared.Coordinates;
 using NUnit.Framework;
@@ -152,6 +153,7 @@ namespace Content.IntegrationTests.Tests.Power
   id: ApcPowerReceiverDummy
   components:
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Transform
     anchored: true
 ";
@@ -160,6 +162,7 @@ namespace Content.IntegrationTests.Tests.Power
         private IMapManager _mapManager = default!;
         private IEntityManager _entityManager = default!;
         private IGameTiming _gameTiming = default!;
+        private ExtensionCableSystem _extensionCableSystem = default!;
 
         [OneTimeSetUp]
         public async Task Setup()
@@ -171,6 +174,7 @@ namespace Content.IntegrationTests.Tests.Power
             _mapManager = _server.ResolveDependency<IMapManager>();
             _entityManager = _server.ResolveDependency<IEntityManager>();
             _gameTiming = _server.ResolveDependency<IGameTiming>();
+            _extensionCableSystem = _entityManager.EntitySysManager.GetEntitySystem<ExtensionCableSystem>();
         }
 
         /// <summary>
@@ -968,13 +972,12 @@ namespace Content.IntegrationTests.Tests.Power
                 var apcExtensionEnt = _entityManager.SpawnEntity("CableApcExtension", grid.ToCoordinates(0, 0));
                 var powerReceiverEnt = _entityManager.SpawnEntity("ApcPowerReceiverDummy", grid.ToCoordinates(0, 2));
 
-                var provider = apcExtensionEnt.GetComponent<ApcPowerProviderComponent>();
                 receiver = powerReceiverEnt.GetComponent<ApcPowerReceiverComponent>();
                 var battery = apcEnt.GetComponent<BatteryComponent>();
                 apcNetBattery = apcEnt.GetComponent<PowerNetworkBatteryComponent>();
 
-                provider.PowerTransferRange = 5; //arbitrary range to reach receiver
-                receiver.PowerReceptionRange = 5; //arbitrary range to reach provider
+                _extensionCableSystem.SetProviderTransferRange(apcExtensionEnt.Uid, 5);
+                _extensionCableSystem.SetReceiverReceptionRange(powerReceiverEnt.Uid, 5);
 
                 battery.MaxCharge = 10000; //arbitrary nonzero amount of charge
                 battery.CurrentCharge = battery.MaxCharge; //fill battery

@@ -45,3 +45,16 @@
   cost: 6000
   category: Materials
   group: market
+
+- type: cargoProduct
+  name: "crate of solid plasma"
+  id: MaterialPlasma
+  description: "90 sheets of plasma."
+  icon:
+    sprite: Objects/Materials/Sheets/other.rsi
+    state: plasma_3
+  product: CrateMaterialPlasma
+  cost: 4500
+  category: Materials
+  group: market
+

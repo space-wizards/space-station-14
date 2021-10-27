@@ -14,11 +14,10 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("anchored")] public bool Anchored { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out IPhysBody? physics)) return false;
-
-            return (physics.BodyType == BodyType.Static && Anchored) || (physics.BodyType != BodyType.Static && !Anchored);
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            return transform.Anchored && Anchored || !transform.Anchored && !Anchored;
         }
 
         public bool DoExamine(ExaminedEvent args)

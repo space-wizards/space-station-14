@@ -7,7 +7,8 @@ using Robust.Shared.IoC;
 namespace Content.Client.Ghost
 {
     [RegisterComponent]
-    public class GhostComponent : SharedGhostComponent
+    [ComponentReference(typeof(SharedGhostComponent))]
+    public sealed class GhostComponent : SharedGhostComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 
