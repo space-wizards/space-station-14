@@ -2797,3 +2797,9 @@ Entries:
   - {message: Construction states for various disposal machines., type: Add}
   id: 499
   time: '2021-10-27T10:54:13.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Engi-Vend has insulated gloves so engineering don't run out with latejoins
+      or just a lot of roundstart engineers, type: Add}
+  id: 500
+  time: '2021-10-27T15:44:31.0000000+00:00'
