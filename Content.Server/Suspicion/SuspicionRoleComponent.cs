@@ -167,7 +167,9 @@ namespace Content.Server.Suspicion
         public override void HandleMessage(ComponentMessage message, IComponent? component)
 #pragma warning restore 618
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
 
             switch (message)
             {

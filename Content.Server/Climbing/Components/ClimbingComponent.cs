@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
@@ -56,7 +56,9 @@ namespace Content.Server.Climbing.Components
         public override void HandleMessage(ComponentMessage message, IComponent? component)
 #pragma warning restore 618
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case BuckleMessage msg:
