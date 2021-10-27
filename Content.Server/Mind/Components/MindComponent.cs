@@ -18,7 +18,9 @@ namespace Content.Server.Mind.Components
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class MindComponent : Component, IExamine
+#pragma warning restore 618
     {
         /// <inheritdoc />
         public override string Name => "Mind";

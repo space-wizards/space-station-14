@@ -18,7 +18,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Suspicion
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
+#pragma warning restore 618
     {
         private Role? _role;
         [ViewVariables]

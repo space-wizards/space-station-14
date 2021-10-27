@@ -27,7 +27,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
+#pragma warning disable 618
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
+#pragma warning restore 618
     {
         public override string Name => "MagazineBarrel";
 

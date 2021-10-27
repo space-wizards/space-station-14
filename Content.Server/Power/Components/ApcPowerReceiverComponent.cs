@@ -21,7 +21,9 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class ApcPowerReceiverComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "ApcPowerReceiver";
 

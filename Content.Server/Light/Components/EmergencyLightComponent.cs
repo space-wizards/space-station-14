@@ -16,7 +16,9 @@ namespace Content.Server.Light.Components
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
+#pragma warning restore 618
     {
         [ViewVariables]
         private EmergencyLightState State
