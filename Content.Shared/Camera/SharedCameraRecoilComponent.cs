@@ -14,7 +14,9 @@ namespace Content.Shared.Camera
         public abstract void Kick(Vector2 recoil);
 
         [Serializable, NetSerializable]
+#pragma warning disable 618
         protected class RecoilKickMessage : ComponentMessage
+#pragma warning restore 618
         {
             public readonly Vector2 Recoil;
 

@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -14,11 +13,11 @@ namespace Content.Server.Construction.Conditions
         [DataField("conditions")]
         public IGraphCondition[] Conditions { get; } = Array.Empty<IGraphCondition>();
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             foreach (var condition in Conditions)
             {
-                if (await condition.Condition(entity))
+                if (condition.Condition(uid, entityManager))
                     return true;
             }
 

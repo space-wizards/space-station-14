@@ -1,5 +1,6 @@
 using Content.Shared.Damage;
 using Content.Shared.DragDrop;
+using Content.Shared.Emoting;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
@@ -26,6 +27,7 @@ namespace Content.Shared.MobState.EntitySystems
             SubscribeLocalEvent<MobStateComponent, ThrowAttemptEvent>(OnThrowAttempt);
             SubscribeLocalEvent<MobStateComponent, SpeakAttemptEvent>(OnSpeakAttempt);
             SubscribeLocalEvent<MobStateComponent, EquipAttemptEvent>(OnEquipAttempt);
+            SubscribeLocalEvent<MobStateComponent, EmoteAttemptEvent>(OnEmoteAttempt);
             SubscribeLocalEvent<MobStateComponent, UnequipAttemptEvent>(OnUnequipAttempt);
             SubscribeLocalEvent<MobStateComponent, AttackAttemptEvent>(OnAttackAttempt);
             SubscribeLocalEvent<MobStateComponent, DropAttemptEvent>(OnDropAttempt);
@@ -76,6 +78,11 @@ namespace Content.Shared.MobState.EntitySystems
         }
 
         private void OnEquipAttempt(EntityUid uid, MobStateComponent component, EquipAttemptEvent args)
+        {
+            CheckAct(uid, component, args);
+        }
+
+        private void OnEmoteAttempt(EntityUid uid, MobStateComponent component, EmoteAttemptEvent args)
         {
             CheckAct(uid, component, args);
         }

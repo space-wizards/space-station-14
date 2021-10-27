@@ -113,7 +113,9 @@ namespace Content.Client.Actions
             {
                 case BehaviorType.Instant:
                     // for instant actions, we immediately tell the server we're doing it
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformInstantActionMessage());
+#pragma warning restore 618
                     break;
                 case BehaviorType.Toggle:
                     // for toggle actions, we immediately tell the server we're toggling it.
@@ -123,7 +125,9 @@ namespace Content.Client.Actions
                         // even if it sometimes may not (it will be reset by the server if wrong).
                         attempt.ToggleAction(this, !actionState.ToggledOn);
                         slot.ToggledOn = !actionState.ToggledOn;
+#pragma warning disable 618
                         SendNetworkMessage(attempt.PerformToggleActionMessage(!actionState.ToggledOn));
+#pragma warning restore 618
                     }
                     else
                     {
@@ -178,7 +182,9 @@ namespace Content.Client.Actions
                 case BehaviorType.TargetPoint:
                 {
                     // send our action to the server, we chose our target
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformTargetPointActionMessage(args));
+#pragma warning restore 618
                     if (!attempt.Action.Repeat)
                     {
                         _ui.StopTargeting();
@@ -189,7 +195,9 @@ namespace Content.Client.Actions
                 case BehaviorType.TargetEntity when args.EntityUid != EntityUid.Invalid:
                 {
                     // send our action to the server, we chose our target
+#pragma warning disable 618
                     SendNetworkMessage(attempt.PerformTargetEntityActionMessage(args));
+#pragma warning restore 618
                     if (!attempt.Action.Repeat)
                     {
                         _ui.StopTargeting();

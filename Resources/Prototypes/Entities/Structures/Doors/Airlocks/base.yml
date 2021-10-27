@@ -53,6 +53,7 @@
     - type: AirlockVisualizer
     - type: WiresVisualizer
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock

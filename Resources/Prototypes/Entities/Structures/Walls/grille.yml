@@ -4,6 +4,9 @@
   name: grille
   description: A flimsy framework of iron rods.
   components:
+    - type: Tag
+      tags:
+        - RCDDeconstructWhitelist
     - type: CanBuildWindowOnTop
     - type: Sprite
       netsync: false
@@ -13,7 +16,6 @@
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille
-    - type: RCDDeconstructWhitelist
     - type: Construction
       graph: grille
       node: grille
@@ -21,6 +23,36 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: FlimsyMetallic
+    - type: PowerConsumer
+    - type: Electrified
+      requirePower: true
+      noWindowInTile: true
+      highVoltageNode: high
+      mediumVoltageNode: medium
+      lowVoltageNode: low
+    - type: NodeContainer
+      nodes:
+        high:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        medium:
+          !type:CableDeviceNode
+          nodeGroupID: MVPower
+        low:
+          !type:CableDeviceNode
+          nodeGroupID: Apc
+    - type: Physics
+      bodyType: Static
+      fixtures:
+        - shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - Opaque
+            - Impassable
+            - MobImpassable
+            - VaultImpassable
+            - SmallImpassable
     - type: Destructible
       thresholds:
         - trigger:
@@ -34,7 +66,7 @@
 
 - type: entity
   id: GrilleBroken
-  parent: Grille
+  parent: BaseStructure
   name: grille
   description: A flimsy framework of iron rods. It has seen better days.
   components:
@@ -46,7 +78,9 @@
     - type: Icon
       sprite: Structures/Walls/grille.rsi
       state: grille_broken
-    - type: RCDDeconstructWhitelist
+    - type: Tag
+      tags:
+        - RCDDeconstructWhitelist
     - type: Construction
       graph: grille
       node: grilleBroken
@@ -55,12 +89,15 @@
       fixtures:
         - shape:
             !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
+            bounds: "-0.5,-0.5,0.5,0.5"
           mass: 50
           layer:
             - Passable
           mask:
             - Passable
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: FlimsyMetallic
     - type: Destructible
       thresholds:
         - trigger:
