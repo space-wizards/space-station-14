@@ -1,5 +1,7 @@
+using System;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -8,6 +10,7 @@ namespace Content.Shared.Atmos.Monitor
     // mostly based around floats and percentages, no literals
     // except for the range boundaries
     [Prototype("alarmThreshold")]
+    [Serializable, NetSerializable]
     public class AtmosAlarmThreshold : IPrototype
     {
         [DataField("id", required: true)]

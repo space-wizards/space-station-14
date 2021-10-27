@@ -30,7 +30,14 @@ namespace Content.Shared.Atmos.Monitor.Components
 
     [Serializable, NetSerializable]
     public class AirAlarmBoundUserInterfaceState : BoundUserInterfaceState
-    {}
+    {
+        public EntityUid Uid { get; }
+
+        public AirAlarmBoundUserInterfaceState(EntityUid uid)
+        {
+            Uid = uid;
+        }
+    }
 
     [Serializable, NetSerializable]
     public class GasVentPumpData : IAtmosDeviceData

@@ -10,6 +10,7 @@ using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Server.Atmos.Monitor.Systems
 {
@@ -26,6 +27,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
+        [Dependency] private readonly AirAlarmDataSystem _airAlarmDataSystem = default!;
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
@@ -218,27 +220,33 @@ namespace Content.Server.Atmos.Monitor.Systems
             _activeUserInterfaces.Remove(uid);
         }
 
-        // Update an interface's data. This is all the 'hot' data
+        // Update an interface's air data. This is all the 'hot' data
         // that an air alarm contains server-side. Updated with a whopping 16
         // delay automatically once a UI is in the loop.
-        public void UpdateInterfaceData(EntityUid uid, AirAlarmComponent? alarm = null, AirAlarmDataComponent? data = null, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
+        public void UpdateAirData(EntityUid uid, AirAlarmComponent? alarm = null, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
         {
-            if (!Resolve(uid, ref alarm, ref data, ref monitor, ref power)) return;
+            if (!Resolve(uid, ref alarm, ref monitor, ref power)) return;
 
             if (!power.Powered) return;
+
+            var data = new AirAlarmData();
 
             if (monitor.TileGas != null)
             {
                 data.Pressure = monitor.TileGas.Pressure;
-                data.Temperature = monitor.TileGas.Pressure;
+                data.Temperature = monitor.TileGas.Temperature;
                 data.TotalMoles = monitor.TileGas.TotalMoles;
 
                 foreach (var gas in Enum.GetValues<Gas>())
                     if (!data.Gases.TryAdd(gas, monitor.TileGas.GetMoles(gas)))
                         data.Gases[gas] = monitor.TileGas.GetMoles(gas);
+
+                Logger.DebugS("AirAlarmSystem", "Attempting to update data now.");
+
+                _airAlarmDataSystem.UpdateAirData(uid, data);
             }
 
-            data.Dirty();
+
             alarm.UpdateUI();
         }
 
@@ -252,7 +260,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 _timer = 0f;
                 foreach (var uid in _activeUserInterfaces)
-                    UpdateInterfaceData(uid);
+                    UpdateAirData(uid);
             }
         }
     }

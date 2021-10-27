@@ -36,15 +36,18 @@ namespace Content.Client.Atmos.Monitor.UI
 
         private OptionButton _modes => CModeButton;
 
-        public AirAlarmWindow(AirAlarmDataComponent initialState)
+        public AirAlarmWindow()
         {
             RobustXamlLoader.Load(this);
+        }
 
-            _pressure.SetMarkup($"{initialState.Pressure}");
-            _temperature.SetMarkup($"{initialState.Temperature}");
-            _alarmState.SetMarkup($"{initialState.AlarmState}");
+        public void UpdateState(AirAlarmDataComponent state)
+        {
+            _pressure.SetMarkup($"{state.Pressure}");
+            _temperature.SetMarkup($"{state.Temperature}");
+            _alarmState.SetMarkup($"{state.AlarmState}");
 
-            foreach (var (addr, device) in initialState.DeviceData)
+            foreach (var (addr, device) in state.DeviceData)
             {
                 switch (device)
                 {
@@ -63,15 +66,15 @@ namespace Content.Client.Atmos.Monitor.UI
                 }
             }
 
-            var pressureThreshold = new ThresholdControl(initialState.PressureThreshold, AtmosMonitorThresholdType.Pressure);
+            var pressureThreshold = new ThresholdControl(state.PressureThreshold, AtmosMonitorThresholdType.Pressure);
             pressureThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
             _pressureThreshold.AddChild(pressureThreshold);
 
-            var temperatureThreshold = new ThresholdControl(initialState.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
+            var temperatureThreshold = new ThresholdControl(state.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
             temperatureThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
             _temperatureThreshold.AddChild(temperatureThreshold);
 
-            foreach (var (gas, threshold) in initialState.GasThresholds)
+            foreach (var (gas, threshold) in state.GasThresholds)
             {
                 var gasThreshold = new ThresholdControl(threshold, AtmosMonitorThresholdType.Gas, gas);
                 gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;

@@ -23,6 +23,14 @@
   - type: AtmosAlarmable
     alarmedBy: ["AirAlarm"]
   - type: AtmosDevice
+  - type: AirAlarm
+  - type: AirAlarmData
+  - type: Clickable
+  - type: InteractionOutline
+  - type: UserInterface
+    interfaces:
+    - key: enum.SharedAirAlarmInterfaceKey.Key
+      type: AirAlarmBoundUserInterface
   - type: Appearance
     visuals:
     - type: AtmosMonitorVisualizer

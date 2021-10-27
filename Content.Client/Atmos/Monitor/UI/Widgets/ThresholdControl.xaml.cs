@@ -19,19 +19,9 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
         public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? ThresholdDataChanged;
 
-        private CheckBox _enabled => CEnableDevice;
-        private FloatSpinBox _upperBound => CUpperBound;
-        private CheckBox _upperBoundEnabled => CEnableUpperBound;
-        private FloatSpinBox _lowerBound => CLowerBound;
-        private FloatSpinBox _upperWarningBound => CUpperWarningBound;
-        private CheckBox _upperWarningBoundEnabled => CEnableUpperWarningBound;
-        private FloatSpinBox _lowerWarningBound => CLowerWarningBound;
-        private CheckBox _lowerWarningBoundEnabled => CEnableLowerWarningBound;
-
-        private float _lastUpperBound = 0;
-        private float _lastLowerBound = 0;
-        private float _lastUpperWarningBound = 0;
-        private float _lastLowerWarningBound = 0;
+        private CheckBox _ignore => CIgnore;
+        private BoxContainer _dangerBounds => CDangerBounds;
+        private BoxContainer _warningBounds => CWarningBounds;
 
         // i have played myself by making threshold values nullable to
         // indicate validity/disabled status, with several layers of side effect
@@ -67,6 +57,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
             };
+            _dangerBounds.AddChild(upperBoundControl);
 
             var lowerBoundControl = new ThresholdBoundControl(_threshold.LowerBound);
             lowerBoundControl.OnBoundChanged += value =>
@@ -87,6 +78,56 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
             };
+            _dangerBounds.AddChild(lowerBoundControl);
+
+            var upperWarningBoundControl = new ThresholdBoundControl(_threshold.UpperWarningBound);
+            upperWarningBoundControl.OnBoundChanged += value =>
+            {
+                _threshold.UpperWarningBound = value;
+                return _threshold.UpperWarningBound;
+            };
+            upperWarningBoundControl.OnBoundEnabled += () =>
+            {
+                var value = 0f;
+
+                if (_threshold.LowerWarningBound != null) value = (float) _threshold.LowerWarningBound + 0.1f;
+                else if (_threshold.LowerBound != null)   value = (float) _threshold.LowerBound + 0.1f;
+
+                return value;
+            };
+            upperWarningBoundControl.OnValidBoundChanged += () =>
+            {
+                ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
+            };
+            _warningBounds.AddChild(upperWarningBoundControl);
+
+            var lowerWarningBoundControl = new ThresholdBoundControl(_threshold.LowerWarningBound);
+            lowerWarningBoundControl.OnBoundChanged += value =>
+            {
+                _threshold.LowerWarningBound = value;
+                return _threshold.LowerWarningBound;
+            };
+            lowerWarningBoundControl.OnBoundEnabled += () =>
+            {
+                var value = 0f;
+
+                if (_threshold.UpperWarningBound != null) value = (float) _threshold.UpperWarningBound - 0.1f;
+                else if (_threshold.UpperBound != null)   value = (float) _threshold.UpperBound - 0.1f;
+
+                return value;
+            };
+            lowerWarningBoundControl.OnValidBoundChanged += () =>
+            {
+                ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
+            };
+            _warningBounds.AddChild(lowerWarningBoundControl);
+
+            _ignore.OnToggled += args =>
+            {
+                _threshold.Ignore = args.Pressed;
+                ThresholdDataChanged!.Invoke(_type, _threshold, _gas);
+            };
+
        }
 
 

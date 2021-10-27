@@ -2,17 +2,11 @@
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
          Orientation="Vertical">
     <!-- Upper row: Danger bounds -->
-    <BoxContainer Orientation="Horizontal">
-        <FloatSpinBox Name="CUpperBound" HorizontalExpand="True" />
-        <FloatSpinBox Name="CLowerBound" HorizontalExpand="True" />
-    </BoxContainer>
+    <BoxContainer Name="CDangerBounds" Orientation="Horizontal" />
     <!-- Lower row: Warning bounds -->
+    <BoxContainer Name="CWarningBounds" Orientation="Horizontal" />
+    <!-- Lowest row: Enabled/Ignore box -->
     <BoxContainer Orientation="Horizontal">
-        <FloatSpinBox Name="CUpperWarningBound" HorizontalExpand="True" />
-        <FloatSpinBox Name="CLowerWarningBound" HorizontalExpand="True" />
-    </BoxContainer>
-    <!-- Lowest row: Enabled box -->
-    <BoxContainer Orientation="Horizontal">
-        <CheckBox Name="CEnableDevice" Text="{Loc 'Enabled'}" />
+        <CheckBox Name="CIgnore" Text="{Loc 'Ignore'}" />
     </BoxContainer>
 </BoxContainer>
