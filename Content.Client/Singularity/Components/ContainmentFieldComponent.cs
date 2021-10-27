@@ -23,7 +23,9 @@ namespace Content.Client.Singularity.Components
             }
             else
             {
+#pragma warning disable 618
                 _spriteComponent.Directional = false;
+#pragma warning restore 618
             }
         }
     }
