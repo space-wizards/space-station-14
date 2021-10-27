@@ -2,11 +2,11 @@
 
 namespace Content.Server.Roles
 {
-    public class RoleMessage : ComponentMessage
+    public class RoleEvent : EntityEventArgs
     {
         public readonly Role Role;
 
-        public RoleMessage(Role role)
+        public RoleEvent(Role role)
         {
             Role = role;
         }
