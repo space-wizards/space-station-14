@@ -15,16 +15,8 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public class ComponentInTile : IGraphCondition, ISerializationHooks
+    public class ComponentInTile : IGraphCondition
     {
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-
-        void ISerializationHooks.AfterDeserialization()
-        {
-            IoCManager.InjectDependencies(this);
-        }
-
         /// <summary>
         ///     If true, any entity on the tile must have the component.
         ///     If false, no entity on the tile must have the component.
@@ -38,14 +30,15 @@ namespace Content.Server.Construction.Conditions
         [DataField("component")]
         public string Component { get; private set; } = string.Empty;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (string.IsNullOrEmpty(Component)) return false;
 
-            var type = _componentFactory.GetRegistration(Component).Type;
+            var type = IoCManager.Resolve<IComponentFactory>().GetRegistration(Component).Type;
 
-            var indices = entity.Transform.Coordinates.ToVector2i(entity.EntityManager, _mapManager);
-            var entities = indices.GetEntitiesInTile(entity.Transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            var indices = transform.Coordinates.ToVector2i(entityManager, IoCManager.Resolve<IMapManager>());
+            var entities = indices.GetEntitiesInTile(transform.GridID, LookupFlags.Approximate | LookupFlags.IncludeAnchored, IoCManager.Resolve<IEntityLookup>());
 
             foreach (var ent in entities)
             {

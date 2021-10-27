@@ -2733,3 +2733,44 @@ Entries:
       with the new Split verb., type: Add}
   id: 487
   time: '2021-10-25T14:36:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
+    type: Add}
+  id: 488
+  time: '2021-10-25T14:58:04.292881+00:00'
+- author: 20kdc
+  changes:
+  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
+  id: 489
+  time: '2021-10-25T14:58:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
+  id: 490
+  time: '2021-10-26T14:15:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
+  id: 491
+  time: '2021-10-26T14:18:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
+  id: 492
+  time: '2021-10-26T14:38:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix computer dupe bug., type: Fix}
+  id: 493
+  time: '2021-10-26T23:30:17.397968+00:00'
+- author: 20kdc
+  changes:
+  - {message: Morgue trays now extend to the proper position., type: Fix}
+  id: 494
+  time: '2021-10-27T01:23:44.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed speech bubble position on rotated grids., type: Fix}
+  id: 495
+  time: '2021-10-27T01:31:22.0000000+00:00'

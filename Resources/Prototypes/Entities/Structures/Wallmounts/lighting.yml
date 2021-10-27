@@ -53,6 +53,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 

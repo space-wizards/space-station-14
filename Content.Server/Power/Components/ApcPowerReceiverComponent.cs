@@ -35,6 +35,8 @@ namespace Content.Server.Power.Components
         [DataField("powerLoad")]
         public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
 
+        public ApcPowerProviderComponent? Provider = null;
+
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
         /// </summary>
@@ -67,6 +69,13 @@ namespace Content.Server.Power.Components
         {
             DesiredPower = 5
         };
+
+        protected override void OnRemove()
+        {
+            Provider?.RemoveReceiver(this);
+
+            base.OnRemove();
+        }
 
         public void ApcPowerChanged()
         {
