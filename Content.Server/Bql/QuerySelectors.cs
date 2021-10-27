@@ -6,7 +6,6 @@ using Content.Shared.Tag;
 using Robust.Server.Bql;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using YamlDotNet.Core.Tokens;
 
 namespace Content.Server.Bql
 {
@@ -57,7 +56,7 @@ namespace Content.Server.Bql
             {
                 return input.Where(x =>
                     x.HasComponent<TagComponent>() &&
-                    x.GetComponent<TagComponent>().Tags.Contains((string) arguments[0]));
+                    (x.GetComponent<TagComponent>().Tags.Contains((string) arguments[0]) ^ isInverted));
             }
 
             public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
@@ -67,5 +66,27 @@ namespace Content.Server.Bql
                     .Select(x => x.Owner);
             }
         }
-}
+
+        [RegisterBqlQuerySelector]
+        public class AliveQuerySelector : BqlQuerySelector
+        {
+            public override string Token => "alive";
+
+            public override QuerySelectorArgument[] Arguments => Array.Empty<QuerySelectorArgument>();
+
+            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            {
+                return input.Where(x =>
+                    x.HasComponent<MindComponent>() &&
+                    ((x.GetComponent<MindComponent>().Mind?.CharacterDeadPhysically ?? false) ^ isInverted));
+            }
+
+            public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
+            {
+                return IoCManager.Resolve<IEntityManager>().EntityQuery<MindComponent>()
+                    .Where(mind => (mind.Mind?.CharacterDeadPhysically ?? false) ^ isInverted)
+                    .Select(x => x.Owner);
+            }
+        }
+    }
 }
