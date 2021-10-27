@@ -39,7 +39,7 @@ namespace Content.Server.Nutrition.Components
         int IAfterInteract.Priority => 10;
 
         [DataField("forcefeedDelay")]
-        public float ForcefeedDelay { get; set; } = 3.0f;
+        public float ForcefeedDelay { get; set; } = 1.5f;
 
         [ViewVariables]
         private bool _opened;
@@ -119,6 +119,9 @@ namespace Content.Server.Nutrition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs args)
         {
+            if (ForcefeedBusy)
+                return false;
+
             if (!Opened)
             {
                 //Do the opening stuff like playing the sounds.
@@ -146,10 +149,16 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            if (ForcefeedBusy)
+            // Checks to repeat before the DoAfter
+            if (!Opened)
             {
+                eventArgs.Target.PopupMessage(eventArgs.User, Loc.GetString("drink-component-try-use-drink-not-open", ("owner", Owner)));
                 return false;
             }
+
+            // Busy guard
+            if (ForcefeedBusy)
+                return false;
             ForcefeedBusy = true;
 
             // Run the DoAfter first.
@@ -191,7 +200,7 @@ namespace Content.Server.Nutrition.Components
         {
             if (!Opened)
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", Owner)));
+                target.PopupMessage(user, Loc.GetString("drink-component-try-use-drink-not-open", ("owner", Owner)));
                 return false;
             }
 
@@ -200,7 +209,7 @@ namespace Content.Server.Nutrition.Components
             {
                 if (!forced)
                 {
-                    target.PopupMessage(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", Owner)));
+                    target.PopupMessage(user, Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", Owner)));
                 }
 
                 return false;
@@ -209,7 +218,7 @@ namespace Content.Server.Nutrition.Components
             if (!target.TryGetComponent(out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
-                target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
+                target.PopupMessage(user, Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", Owner)));
                 return false;
             }
 
@@ -243,7 +252,7 @@ namespace Content.Server.Nutrition.Components
 
             SoundSystem.Play(Filter.Pvs(target), _useSound.GetSound(), target, AudioParams.Default.WithVolume(-2f));
 
-            target.PopupMessage(Loc.GetString("drink-component-try-use-drink-success-slurp"));
+            target.PopupMessage(user, Loc.GetString("drink-component-try-use-drink-success-slurp"));
 
             // TODO: Account for partial transfer.
 

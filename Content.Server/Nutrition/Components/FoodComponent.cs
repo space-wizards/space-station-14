@@ -84,6 +84,9 @@ namespace Content.Server.Nutrition.Components
 
         bool IUse.UseEntity(UseEntityEventArgs eventArgs)
         {
+            if (ForcefeedBusy)
+                return false;
+
             if (_utensilsNeeded != UtensilType.None)
             {
                 eventArgs.User.PopupMessage(Loc.GetString("food-you-need-utensil", ("utensil", _utensilsNeeded)));
@@ -101,10 +104,9 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
+            // Busy guard
             if (ForcefeedBusy)
-            {
                 return false;
-            }
             ForcefeedBusy = true;
 
             // Run the DoAfter first.
