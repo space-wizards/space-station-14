@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Entry;
@@ -110,7 +111,7 @@ namespace Content.IntegrationTests
                 IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             };
 
-            SetServerTestCvars(options);
+            SetServerTestCvars(options.CVarOverrides);
 
             return base.StartServer(options);
         }
@@ -158,22 +159,47 @@ namespace Content.IntegrationTests
             return (client, server);
         }
 
-        private void SetServerTestCvars(IntegrationOptions options)
+        private void SetServerTestCvars(Dictionary<string, string> cvars)
         {
+            // ShouldPool checks below need to match up with this
+
             // Avoid funny race conditions with the database.
-            options.CVarOverrides[CCVars.DatabaseSynchronous.Name] = "true";
+            cvars[CCVars.DatabaseSynchronous.Name] = "true";
 
             // Disable holidays as some of them might mess with the map at round start.
-            options.CVarOverrides[CCVars.HolidaysEnabled.Name] = "false";
+            cvars[CCVars.HolidaysEnabled.Name] = "false";
 
             // Avoid loading a large map by default for integration tests if none has been specified.
-            if (!options.CVarOverrides.ContainsKey(CCVars.GameMap.Name))
-                options.CVarOverrides[CCVars.GameMap.Name] = "Maps/Test/empty.yml";
+            cvars.TryAdd(CCVars.GameMap.Name, "Maps/Test/empty.yml");
         }
 
         private bool ShouldPool(IntegrationOptions options)
         {
             if (!options.Pool)
+            {
+                return false;
+            }
+
+            if (options.CVarOverrides.Count != 3)
+            {
+                return false;
+            }
+
+            // Please save me from this method
+            if (!options.CVarOverrides.TryGetValue(CCVars.DatabaseSynchronous.Name, out var syncDb) ||
+                syncDb == "false")
+            {
+                return false;
+            }
+
+            if (!options.CVarOverrides.TryGetValue(CCVars.HolidaysEnabled.Name, out var holidaysEnabled) ||
+                holidaysEnabled == "true")
+            {
+                return false;
+            }
+
+            if (!options.CVarOverrides.TryGetValue(CCVars.GameMap.Name, out var map) ||
+                map != "Maps/Test/empty.yml")
             {
                 return false;
             }
@@ -234,7 +260,11 @@ namespace Content.IntegrationTests
             await base.OnServerReturn(server);
 
             await server.WaitIdleAsync();
-            SetServerTestCvars(server.Options);
+
+            if (server.Options != null)
+            {
+                SetServerTestCvars(server.Options.CVarOverrides);
+            }
 
             var systems = server.ResolveDependency<IEntitySystemManager>();
             var prototypes = server.ResolveDependency<IPrototypeManager>();
