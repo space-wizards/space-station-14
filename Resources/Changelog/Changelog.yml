@@ -2764,3 +2764,8 @@ Entries:
   - {message: Fix computer dupe bug., type: Fix}
   id: 493
   time: '2021-10-26T23:30:17.397968+00:00'
+- author: 20kdc
+  changes:
+  - {message: Morgue trays now extend to the proper position., type: Fix}
+  id: 494
+  time: '2021-10-27T01:23:44.0000000+00:00'
