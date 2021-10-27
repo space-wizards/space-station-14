@@ -229,7 +229,9 @@ namespace Content.Server.Instruments
 
                     if (send || !_respectMidiLimits)
                     {
+#pragma warning disable 618
                         SendNetworkMessage(midiEventMsg);
+#pragma warning restore 618
                     }
 
                     var maxTick = midiEventMsg.MidiEvent.Max(x => x.Tick);
@@ -260,7 +262,9 @@ namespace Content.Server.Instruments
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             Clean();
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
             InstrumentPlayer = null;
             UserInterface?.CloseAll();
         }
@@ -268,7 +272,9 @@ namespace Content.Server.Instruments
         void IThrown.Thrown(ThrownEventArgs eventArgs)
         {
             Clean();
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
             InstrumentPlayer = null;
             UserInterface?.CloseAll();
         }
@@ -288,7 +294,9 @@ namespace Content.Server.Instruments
         void IHandDeselected.HandDeselected(HandDeselectedEventArgs eventArgs)
         {
             Clean();
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
             UserInterface?.CloseAll();
         }
 
@@ -326,7 +334,9 @@ namespace Content.Server.Instruments
 
             Clean();
             InstrumentPlayer = null;
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
         }
 
         private void OpenUserInterface(IPlayerSession session)
@@ -356,7 +366,9 @@ namespace Content.Server.Instruments
             {
                 var mob = InstrumentPlayer.AttachedEntity;
 
+#pragma warning disable 618
                 SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
                 Playing = false;
 
                 UserInterface?.CloseAll();

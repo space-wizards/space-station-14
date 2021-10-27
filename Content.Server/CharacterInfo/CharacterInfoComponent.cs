@@ -52,7 +52,9 @@ namespace Content.Server.CharacterInfo
                             }
                         }
                     }
+#pragma warning disable 618
                     SendNetworkMessage(new CharacterInfoMessage(jobTitle, conditions));
+#pragma warning restore 618
                     break;
             }
         }

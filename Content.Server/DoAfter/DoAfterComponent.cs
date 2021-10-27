@@ -52,7 +52,9 @@ namespace Content.Server.DoAfter
                 return;
 
             _doAfters.Remove(doAfter);
+#pragma warning disable 618
             SendNetworkMessage(new CancelledDoAfterMessage(index));
+#pragma warning restore 618
         }
 
         /// <summary>

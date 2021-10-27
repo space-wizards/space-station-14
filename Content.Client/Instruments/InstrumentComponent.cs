@@ -229,7 +229,9 @@ namespace Content.Client.Instruments
 
             if (!fromStateChange)
             {
+#pragma warning disable 618
                 SendNetworkMessage(new InstrumentStartMidiMessage());
+#pragma warning restore 618
             }
         }
 
@@ -258,7 +260,9 @@ namespace Content.Client.Instruments
 
             if (!fromStateChange && IoCManager.Resolve<INetManager>().IsConnected)
             {
+#pragma warning disable 618
                 SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
             }
         }
 
@@ -474,7 +478,9 @@ namespace Content.Client.Instruments
 
             if (eventCount == 0) return;
 
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentMidiEventMessage(events));
+#pragma warning restore 618
 
             _sentWithinASec += eventCount;
 

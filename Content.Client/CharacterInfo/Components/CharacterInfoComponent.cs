@@ -35,7 +35,9 @@ namespace Content.Client.CharacterInfo.Components
 
         public void Opened()
         {
+#pragma warning disable 618
             SendNetworkMessage(new RequestCharacterInfoMessage());
+#pragma warning restore 618
         }
 
 #pragma warning disable 618

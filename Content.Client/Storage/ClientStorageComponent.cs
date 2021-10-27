@@ -182,7 +182,9 @@ namespace Content.Client.Storage
         {
             if (buttonEventArgs.Event.Function == EngineKeyFunctions.UIClick)
             {
+#pragma warning disable 618
                 SendNetworkMessage(new RemoveEntityMessage(entityUid));
+#pragma warning restore 618
                 buttonEventArgs.Event.Handle();
             }
             else if (Owner.EntityManager.TryGetEntity(entityUid, out var entity))
@@ -283,7 +285,9 @@ namespace Content.Client.Storage
 
                     if (controlledEntity?.TryGetComponent(out HandsComponent? hands) ?? false)
                     {
+#pragma warning disable 618
                         StorageEntity.SendNetworkMessage(new InsertEntityMessage());
+#pragma warning restore 618
                     }
                 };
 
@@ -318,7 +322,9 @@ namespace Content.Client.Storage
 
             public override void Close()
             {
+#pragma warning disable 618
                 StorageEntity.SendNetworkMessage(new CloseStorageUIMessage());
+#pragma warning restore 618
                 base.Close();
             }
 
