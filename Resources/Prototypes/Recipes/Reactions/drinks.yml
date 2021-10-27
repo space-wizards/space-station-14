@@ -173,6 +173,16 @@
     SyndicateBomb: 2
 
 - type: reaction
+  id: ThirteenLoko
+  reactants:
+    Coffee:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    Vodka:
+      amount: 1
+
+- type: reaction
   id: WhiskeyCola
   reactants:
     Cola:
