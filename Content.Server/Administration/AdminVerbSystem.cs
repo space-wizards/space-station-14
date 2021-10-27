@@ -112,7 +112,7 @@ namespace Content.Server.Administration
                 verb.Act = () =>
                 {
                     var coords = args.Target.Transform.Coordinates;
-                    Timer.Spawn(_gameTiming.TickPeriod, () => ExplosionHelper.SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
+                    Timer.Spawn(_gameTiming.TickPeriod, () => Get<ExplosionSystem>().SpawnExplosion(coords, 0, 1, 2, 1), CancellationToken.None);
                     if (args.Target.TryGetComponent(out SharedBodyComponent? body))
                     {
                         body.Gib();

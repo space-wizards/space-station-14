@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -13,21 +12,21 @@ namespace Content.Server.Coordinates.Helpers
         ///     Helper that returns all entities in a turf very fast.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this TileRef turf, QuerySystem? query = null)
         {
-            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
+            query ??= EntitySystem.Get<QuerySystem>();
 
-            return gridTileLookup.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
+            return query.GetEntitiesIntersecting(turf.GridIndex, turf.GridIndices);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, GridTileLookupSystem? gridTileLookup = null)
+        public static IEnumerable<IEntity> GetEntitiesInTileFast(this Vector2i indices, GridId gridId, QuerySystem? query = null)
         {
-            gridTileLookup ??= EntitySystem.Get<GridTileLookupSystem>();
-            return gridTileLookup.GetEntitiesIntersecting(gridId, indices);
+            query ??= EntitySystem.Get<QuerySystem>();
+            return query.GetEntitiesIntersecting(gridId, indices);
         }
     }
 }

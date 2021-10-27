@@ -76,7 +76,7 @@ namespace Content.Client.DoAfter
                     !ExamineSystemShared.InRangeUnOccluded(
                         _attachedEntity.Transform.MapPosition,
                         comp.Owner.Transform.MapPosition, range,
-                        entity => entity == comp.Owner || entity == _attachedEntity))
+                        entity => entity == comp.Owner.Uid || entity == _attachedEntity.Uid))
                 {
                     comp.Disable();
                     continue;

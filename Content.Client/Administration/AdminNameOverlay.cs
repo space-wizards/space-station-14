@@ -13,19 +13,15 @@ namespace Content.Client.Administration
 {
     internal class AdminNameOverlay : Overlay
     {
-        private readonly AdminMenuManager _manager;
         private readonly IEntityManager _entityManager;
         private readonly IEyeManager _eyeManager;
-        private readonly IEntityLookup _entityLookup;
         private IReadOnlyList<AdminMenuPlayerListMessage.PlayerInfo>? _playerInfos;
         private readonly Font _font;
 
-        public AdminNameOverlay(AdminMenuManager manager, IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache, IEntityLookup entityLookup)
+        public AdminNameOverlay(IEntityManager entityManager, IEyeManager eyeManager, IResourceCache resourceCache)
         {
-            _manager = manager;
             _entityManager = entityManager;
             _eyeManager = eyeManager;
-            _entityLookup = entityLookup;
             ZIndex = 200;
             _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
@@ -44,6 +40,7 @@ namespace Content.Client.Administration
                 return;
             }
 
+            var query = EntitySystem.Get<QuerySystem>();
             var viewport = _eyeManager.GetWorldViewport();
 
             foreach (var playerInfo in _playerInfos)
@@ -60,7 +57,7 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var aabb = _entityLookup.GetWorldAabbFromEntity(entity);
+                var aabb = query.GetWorldAABB(entity.Uid);
 
                 // if not on screen, continue
                 if (!aabb.Intersects(in viewport))

@@ -160,7 +160,7 @@ namespace Content.Server.Buckle.Components
             }
 
             var component = strap;
-            bool Ignored(IEntity entity) => entity == Owner || entity == user || entity == component.Owner;
+            bool Ignored(EntityUid entity) => entity == Owner.Uid || entity == user.Uid || entity == component.Owner.Uid;
 
             if (!Owner.InRangeUnobstructed(strap, Range, predicate: Ignored, popup: true))
             {

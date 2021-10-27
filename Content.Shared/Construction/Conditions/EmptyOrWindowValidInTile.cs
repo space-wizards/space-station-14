@@ -19,7 +19,7 @@ namespace Content.Shared.Construction.Conditions
         {
             var result = false;
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in location.GetEntitiesInTile())
             {
                 if (entity.HasComponent<SharedCanBuildWindowOnTopComponent>())
                     result = true;

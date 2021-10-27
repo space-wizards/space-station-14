@@ -60,7 +60,7 @@ namespace Content.Client.Suspicion
                 }
 
                 if (!ExamineSystemShared.InRangeUnOccluded(ent.Transform.MapPosition, ally.Transform.MapPosition, 15,
-                    entity => entity == ent || entity == ally))
+                    entity => entity == ent.Uid || entity == ally.Uid))
                 {
                     continue;
                 }

@@ -138,8 +138,7 @@ namespace Content.Client.Viewport
         public IList<IEntity> GetEntitiesUnderPosition(MapCoordinates coordinates)
         {
             // Find all the entities intersecting our click
-            var entities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(coordinates.MapId,
-                Box2.CenteredAround(coordinates.Position, (1, 1)));
+            var entities = EntitySystem.Get<QuerySystem>().GetEntitiesInRange(coordinates, 1f);
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(IEntity clicked, int drawDepth, uint renderOrder)>();

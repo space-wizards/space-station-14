@@ -37,7 +37,7 @@ namespace Content.Shared.Construction.Conditions
             var rUserToObj = new CollisionRay(userWorldPosition, userToObject.Normalized, (int) CollisionGroup.Impassable);
             var length = userToObject.Length;
             var userToObjRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rUserToObj, maxLength: length,
-                predicate: (e) => !e.HasTag("Wall"));
+                predicate: (e) => !entManager.GetEntity(e).HasTag("Wall"));
             if (!userToObjRaycastResults.Any())
                 return false;
 
@@ -47,7 +47,7 @@ namespace Content.Shared.Construction.Conditions
             // check that we didn't try to build wallmount that facing another adjacent wall
             var rAdjWall = new CollisionRay(objWorldPosition, direction.ToVec(), (int) CollisionGroup.Impassable);
             var adjWallRaycastResults = physics.IntersectRayWithPredicate(user.Transform.MapID, rAdjWall, maxLength: 0.5f,
-               predicate: (e) => e == targetWall || !e.HasTag("Wall"));
+               predicate: (e) => e == targetWall.Uid || !entManager.GetEntity(e).HasTag("Wall"));
             return !adjWallRaycastResults.Any();
         }
     }

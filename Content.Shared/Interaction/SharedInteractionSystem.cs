@@ -36,7 +36,7 @@ namespace Content.Shared.Interaction
         public const float InteractionRange = 2;
         public const float InteractionRangeSquared = InteractionRange * InteractionRange;
 
-        public delegate bool Ignored(IEntity entity);
+        public delegate bool Ignored(EntityUid entity);
 
         /// <summary>
         ///     Traces a ray from coords to otherCoords and returns the length
@@ -87,7 +87,7 @@ namespace Content.Shared.Interaction
         {
             var predicate = ignoredEnt == null
                 ? null
-                : (Ignored) (e => e == ignoredEnt);
+                : (Ignored) (e => e == ignoredEnt.Uid);
 
             return UnobstructedDistance(origin, other, collisionMask, predicate);
         }
@@ -205,7 +205,7 @@ namespace Content.Shared.Interaction
             bool ignoreInsideBlocker = false,
             bool popup = false)
         {
-            predicate ??= e => e == origin || e == other;
+            predicate ??= e => e == origin.Uid || e == other.Uid;
             return InRangeUnobstructed(origin, other.Transform.MapPosition, range, collisionMask, predicate, ignoreInsideBlocker, popup);
         }
 
@@ -339,7 +339,7 @@ namespace Content.Shared.Interaction
             bool popup = false)
         {
             var originPosition = origin.Transform.MapPosition;
-            predicate ??= e => e == origin;
+            predicate ??= e => e == origin.Uid;
 
             var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, predicate, ignoreInsideBlocker);
 

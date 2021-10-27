@@ -26,7 +26,6 @@ namespace Content.Client.Administration.Managers
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
 
         private AdminMenuWindow? _window;
         private List<SS14Window> _commandWindows = new();
@@ -38,7 +37,7 @@ namespace Content.Client.Administration.Managers
             _netManager.RegisterNetMessage<AdminMenuPlayerListMessage>(HandlePlayerListMessage);
 
             _commandWindows = new List<SS14Window>();
-            _adminNameOverlay = new AdminNameOverlay(this, _entityManager, _eyeManager, _resourceCache, _entityLookup);
+            _adminNameOverlay = new AdminNameOverlay(_entityManager, _eyeManager, _resourceCache);
             // Reset the AdminMenu Window on disconnect
             _netManager.Disconnect += (_, _) => ResetWindow();
 

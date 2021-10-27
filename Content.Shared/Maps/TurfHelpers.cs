@@ -148,35 +148,35 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, QueryFlags flags = QuerySystem.DefaultFlags, QuerySystem? query = null)
         {
-            lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
+            query ??= IoCManager.Resolve<QuerySystem>();
 
             if (!GetWorldTileBox(turf, out var worldBox))
                 return Enumerable.Empty<IEntity>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
+            return query.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, QueryFlags flags = QuerySystem.DefaultFlags, QuerySystem? query = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
                 return Enumerable.Empty<IEntity>();
 
-            return GetEntitiesInTile(turf.Value, flags, lookupSystem);
+            return GetEntitiesInTile(turf.Value, flags, query);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, QueryFlags flags = QuerySystem.DefaultFlags, QuerySystem? query = null)
         {
-            return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
+            return GetEntitiesInTile(indices.GetTileRef(gridId), flags, query);
         }
 
         /// <summary>

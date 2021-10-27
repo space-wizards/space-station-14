@@ -13,7 +13,7 @@ namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
 
         /// <summary>
         ///     Get all of the entities in an area for displaying on the context menu.
@@ -25,12 +25,12 @@ namespace Content.Shared.Verbs
             contextEntities = null;
 
             // Check if we have LOS to the clicked-location.
-            if (!ignoreVisibility && !player.InRangeUnOccluded(targetPos, range: ExamineSystemShared.ExamineRange))
+            if (!ignoreVisibility && !player.InRangeUnOccluded(targetPos, ExamineSystemShared.ExamineRange))
                 return false;
 
             // Get entities
             var length = buffer ? 1.0f : 0.5f;
-            var entities = _lookup.GetEntitiesIntersecting(
+            var entities = _query.GetEntitiesIntersecting(
                     targetPos.MapId,
                     Box2.CenteredAround(targetPos.Position, (length, length)))
                 .ToList();
@@ -124,7 +124,7 @@ namespace Content.Shared.Verbs
                 executed = true;
                 verb.Act.Invoke();
             }
-            
+
             // Maybe raise a local event
             if (verb.LocalVerbEventArgs != null)
             {
@@ -141,7 +141,7 @@ namespace Content.Shared.Verbs
                 executed = true;
                 RaiseNetworkEvent(verb.NetworkVerbEventArgs);
             }
-                
+
             // return false if all of these were null
             return executed;
         }

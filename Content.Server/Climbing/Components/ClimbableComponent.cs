@@ -119,7 +119,7 @@ namespace Content.Server.Climbing.Components
                 return false;
             }
 
-            bool Ignored(IEntity entity) => entity == target || entity == user || entity == dragged;
+            bool Ignored(EntityUid entity) => entity == target.Uid || entity == user.Uid || entity == dragged.Uid;
 
             if (!user.InRangeUnobstructed(target, Range, predicate: Ignored) ||
                 !user.InRangeUnobstructed(dragged, Range, predicate: Ignored))

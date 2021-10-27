@@ -81,7 +81,7 @@ namespace Content.Server.Buckle.Systems
                 _interactionSystem.InRangeUnobstructed(args.Using, args.Target, range: usingBuckle.Range))
             {
                 // Check that the entity is unobstructed from the target (ignoring the user).
-                bool Ignored(IEntity entity) => entity == args.User || entity == args.Target || entity == args.Using;
+                bool Ignored(EntityUid entity) => entity == args.User.Uid || entity == args.Target.Uid || entity == args.Using.Uid;
                 if (!_interactionSystem.InRangeUnobstructed(args.Using, args.Target, usingBuckle.Range, predicate: Ignored))
                     return;
 

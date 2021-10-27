@@ -2,14 +2,13 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.Reactions;
 using Content.Shared.Atmos;
 using Robust.Server.GameObjects;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
 namespace Content.Server.Atmos.EntitySystems
 {
     public partial class AtmosphereSystem
     {
-        [Dependency] private readonly GridTileLookupSystem _gridtileLookupSystem = default!;
-
         private void ProcessHotspot(GridAtmosphereComponent gridAtmosphere, TileAtmosphere tile)
         {
             if (!tile.Hotspot.Valid)
@@ -141,7 +140,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             var fireEvent = new TileFireEvent(tile.Hotspot.Temperature, tile.Hotspot.Volume);
 
-            foreach (var entity in _gridtileLookupSystem.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
+            foreach (var entity in _query.GetEntitiesIntersecting(tile.GridIndex, tile.GridIndices))
             {
                 RaiseLocalEvent(entity.Uid, fireEvent, false);
             }

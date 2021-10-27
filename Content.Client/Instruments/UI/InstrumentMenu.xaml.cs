@@ -143,7 +143,7 @@ namespace Content.Client.Instruments.UI
 
             // We check that we're in range unobstructed just in case.
             return localPlayer.InRangeUnobstructed(instrumentEnt,
-                predicate: (e) => e == instrumentEnt || e == localPlayer.ControlledEntity);
+                predicate: (e) => e == instrumentEnt.Uid || e == localPlayer.ControlledEntity.Uid);
         }
 
         private void MidiStopButtonOnPressed(ButtonEventArgs? obj)

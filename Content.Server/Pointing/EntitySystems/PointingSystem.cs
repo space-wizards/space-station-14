@@ -83,7 +83,7 @@ namespace Content.Server.Pointing.EntitySystems
             }
             else
             {
-                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer);
+                return pointer.InRangeUnOccluded(coordinates, 15, e => e == pointer.Uid);
             }
         }
 

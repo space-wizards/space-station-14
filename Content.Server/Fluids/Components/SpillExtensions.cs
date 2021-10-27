@@ -86,10 +86,10 @@ namespace Content.Server.Fluids.Components
             return puddle != null;
         }
 
-        public static bool TryGetPuddle(this TileRef tileRef, GridTileLookupSystem? gridTileLookupSystem,
+        public static bool TryGetPuddle(this TileRef tileRef, QuerySystem? query,
             [NotNullWhen(true)] out PuddleComponent? puddle)
         {
-            foreach (var entity in tileRef.GetEntitiesInTileFast(gridTileLookupSystem))
+            foreach (var entity in tileRef.GetEntitiesInTileFast(query))
             {
                 if (entity.TryGetComponent(out PuddleComponent? p))
                 {

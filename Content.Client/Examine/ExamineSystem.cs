@@ -52,11 +52,11 @@ namespace Content.Client.Examine
             if (_examineTooltipOpen == null || !_examineTooltipOpen.Visible) return;
             if (_examinedEntity == null || _playerEntity == null) return;
 
-            Ignored predicate = entity => entity == _playerEntity || entity == _examinedEntity;
+            Ignored predicate = entity => entity == _playerEntity.Uid || entity == _examinedEntity.Uid;
 
             if (_playerEntity.TryGetContainer(out var container))
             {
-                predicate += entity => entity == container.Owner;
+                predicate += entity => entity == container.Owner.Uid;
             }
 
             if (!InRangeUnOccluded(_playerEntity, _examinedEntity, ExamineRange, predicate))

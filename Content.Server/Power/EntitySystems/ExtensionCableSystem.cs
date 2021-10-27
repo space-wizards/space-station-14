@@ -10,6 +10,8 @@ namespace Content.Server.Power.EntitySystems
 {
     public sealed class ExtensionCableSystem : EntitySystem
     {
+        [Dependency] private readonly QuerySystem _query = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -74,15 +76,14 @@ namespace Content.Server.Power.EntitySystems
         {
             var owner = EntityManager.GetEntity(uid);
 
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
-                .GetEntitiesInRange(owner, range);
+            var nearbyEntities = _query.GetEntitiesInRange(uid, range);
 
             foreach (var entity in nearbyEntities)
             {
                 if (EntityManager.TryGetComponent<ExtensionCableReceiverComponent>(entity.Uid, out var receiver) &&
                     receiver.Connectable &&
                     receiver.Provider == null &&
-                    entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance) &&
+                    entity.Transform.Coordinates.TryDistance(EntityManager, owner.Transform.Coordinates, out var distance) &&
                     distance < Math.Min(range, receiver.ReceptionRange))
                 {
                     yield return receiver;
@@ -169,10 +170,9 @@ namespace Content.Server.Power.EntitySystems
             RaiseLocalEvent(provider.Owner.Uid, new ReceiverConnectedEvent(receiver), broadcast: false);
         }
 
-        private static bool TryFindAvailableProvider(IEntity owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
+        private bool TryFindAvailableProvider(IEntity owner, float range, [NotNullWhen(true)] out ExtensionCableProviderComponent? foundProvider)
         {
-            var nearbyEntities = IoCManager.Resolve<IEntityLookup>()
-                .GetEntitiesInRange(owner, range);
+            var nearbyEntities = _query.GetEntitiesInRange(owner.Uid, range);
 
             foreach (var entity in nearbyEntities)
             {
@@ -180,7 +180,7 @@ namespace Content.Server.Power.EntitySystems
 
                 if (!provider.Connectable) continue;
 
-                if (!entity.Transform.Coordinates.TryDistance(owner.EntityManager, owner.Transform.Coordinates, out var distance)) continue;
+                if (!entity.Transform.Coordinates.TryDistance(EntityManager, owner.Transform.Coordinates, out var distance)) continue;
 
                 if (!(distance < Math.Min(range, provider.TransferRange))) continue;
 

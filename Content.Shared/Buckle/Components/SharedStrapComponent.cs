@@ -33,7 +33,7 @@ namespace Content.Shared.Buckle.Components
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
             if (!eventArgs.Dragged.TryGetComponent(out SharedBuckleComponent? buckleComponent)) return false;
-            bool Ignored(IEntity entity) => entity == eventArgs.User || entity == eventArgs.Dragged || entity == eventArgs.Target;
+            bool Ignored(EntityUid entity) => entity == eventArgs.User.Uid || entity == eventArgs.Dragged.Uid || entity == eventArgs.Target.Uid;
 
             return eventArgs.Target.InRangeUnobstructed(eventArgs.Dragged, buckleComponent.Range, predicate: Ignored);
         }

@@ -14,7 +14,7 @@ namespace Content.Shared.Construction.Conditions
     {
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in location.GetEntitiesInTile())
             {
                 if (entity.HasComponent<SharedWindowComponent>())
                     return false;

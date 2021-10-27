@@ -15,11 +15,11 @@ namespace Content.Client.NodeContainer
     public sealed class NodeGroupSystem : EntitySystem
     {
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
 
         public bool VisEnabled { get; private set; }
 
@@ -80,7 +80,7 @@ namespace Content.Client.NodeContainer
             {
                 var overlay = new NodeVisualizationOverlay(
                     this,
-                    _entityLookup,
+                    _query,
                     _mapManager,
                     _inputManager,
                     _eyeManager,

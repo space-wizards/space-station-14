@@ -16,7 +16,7 @@ namespace Content.Server.Singularity.EntitySystems
     [UsedImplicitly]
     public class SingularitySystem : SharedSingularitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace Content.Server.Singularity.EntitySystems
             // The reason we don't /just/ use collision is because we'll be deleting stuff that may not necessarily have physics (e.g. carpets).
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, destroyRange))
+            foreach (var entity in _query.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, destroyRange))
             {
                 HandleDestroy(component, entity);
             }
@@ -162,7 +162,7 @@ namespace Content.Server.Singularity.EntitySystems
             var pullRange = PullRange(component);
             var destroyRange = DestroyTileRange(component);
 
-            foreach (var entity in _lookup.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, pullRange))
+            foreach (var entity in _query.GetEntitiesInRange(component.Owner.Transform.MapID, worldPos, pullRange))
             {
                 // I tried having it so level 6 can de-anchor. BAD IDEA, MASSIVE LAG.
                 if (entity == component.Owner ||

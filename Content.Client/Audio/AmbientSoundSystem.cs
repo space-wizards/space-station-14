@@ -18,7 +18,7 @@ namespace Content.Client.Audio
     /// </summary>
     public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     {
-        [Dependency] private IEntityLookup _lookup = default!;
+        [Dependency] private QuerySystem _query = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
 
@@ -129,8 +129,7 @@ namespace Content.Client.Audio
         {
             var compsInRange = new List<AmbientSoundComponent>();
 
-            foreach (var entity in _lookup.GetEntitiesInRange(coordinates, _maxAmbientRange,
-                LookupFlags.Approximate | LookupFlags.IncludeAnchored))
+            foreach (var entity in _query.GetEntitiesInRange(coordinates, _maxAmbientRange))
             {
                 if (!entity.TryGetComponent(out AmbientSoundComponent? ambientComp) ||
                     _playingSounds.ContainsKey(ambientComp) ||

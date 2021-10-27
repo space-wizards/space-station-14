@@ -58,11 +58,11 @@ namespace Content.Shared.Examine
                 return false;
             }
 
-            Ignored predicate = entity => entity == examiner || entity == examined;
+            Ignored predicate = entity => entity == examiner.Uid || entity == examined.Uid;
 
             if (examiner.TryGetContainer(out var container))
             {
-                predicate += entity => entity == container.Owner;
+                predicate += entity => entity == container.Owner.Uid;
             }
 
             return InRangeUnOccluded(

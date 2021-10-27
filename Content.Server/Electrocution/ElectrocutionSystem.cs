@@ -35,9 +35,9 @@ namespace Content.Server.Electrocution
 {
     public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
         [Dependency] private readonly SharedJitteringSystem _jitteringSystem = default!;
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
@@ -147,8 +147,7 @@ namespace Content.Server.Electrocution
 
             if (electrified.NoWindowInTile)
             {
-                foreach (var entity in transform.Coordinates.GetEntitiesInTile(
-                    LookupFlags.Approximate | LookupFlags.IncludeAnchored, _entityLookup))
+                foreach (var entity in transform.Coordinates.GetEntitiesInTile(query: _query))
                 {
                     if (entity.HasComponent<WindowComponent>())
                         return false;

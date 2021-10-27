@@ -28,6 +28,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly StackSystem _stackSystem = default!;
         [Dependency] private readonly ToolSystem _toolSystem = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
 
         private const string SawmillName = "Construction";
         private ISawmill _sawmill = default!;

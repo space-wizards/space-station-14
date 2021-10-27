@@ -385,7 +385,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
             var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
-            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
+            var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter.Uid, false).ToList();
 
             if (rayCastResults.Count >= 1)
             {

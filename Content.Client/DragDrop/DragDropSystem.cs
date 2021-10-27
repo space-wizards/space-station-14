@@ -37,6 +37,7 @@ namespace Content.Client.DragDrop
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
         [Dependency] private readonly InputSystem _inputSystem = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
 
         // how often to recheck possible targets (prevents calling expensive
         // check logic each update)
@@ -369,7 +370,7 @@ namespace Content.Client.DragDrop
             // TODO: Duplicated in SpriteSystem
             var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition).Position;
             var bounds = new Box2(mousePos - 1.5f, mousePos + 1.5f);
-            var pvsEntities = IoCManager.Resolve<IEntityLookup>().GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds, LookupFlags.Approximate | LookupFlags.IncludeAnchored);
+            var pvsEntities = _query.GetEntitiesIntersecting(_eyeManager.CurrentMap, bounds);
             foreach (var pvsEntity in pvsEntities)
             {
                 if (!pvsEntity.TryGetComponent(out ISpriteComponent? inRangeSprite) ||
