@@ -1,5 +1,6 @@
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
+using Content.Server.DoAfter;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
@@ -36,6 +37,9 @@ namespace Content.Server.Nutrition.Components
         public override string Name => "Drink";
 
         int IAfterInteract.Priority => 10;
+
+        [DataField("forcefeedDelay")]
+        public float ForcefeedDelay { get; set; } = 3.0f;
 
         [ViewVariables]
         private bool _opened;
@@ -82,6 +86,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("pressurized")] public bool Pressurized;
 
         [DataField("burstSound")] public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
+
+        [ViewVariables]
+        public bool ForcefeedBusy { get; set; }
 
         private void OnOpenedChanged()
         {
@@ -138,6 +145,31 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
+
+            if (ForcefeedBusy)
+            {
+                return false;
+            }
+            ForcefeedBusy = true;
+
+            // Run the DoAfter first.
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, ForcefeedDelay, default, eventArgs.Target)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                NeedHand = true,
+            };
+
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
+
+            ForcefeedBusy = false;
+
+            if (result == DoAfterStatus.Cancelled)
+                return true;
 
             return TryUseDrink(eventArgs.User, eventArgs.Target, true);
         }

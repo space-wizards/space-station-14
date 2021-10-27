@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
 using Content.Server.Hands.Components;
+using Content.Server.DoAfter;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.EntitySystems;
@@ -31,6 +32,9 @@ namespace Content.Server.Nutrition.Components
 
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
+
+        [DataField("forcefeedDelay")]
+        public float ForcefeedDelay { get; set; } = 3.0f;
 
         [ViewVariables]
         [DataField("useSound")]
@@ -69,6 +73,9 @@ namespace Content.Server.Nutrition.Components
             }
         }
 
+        [ViewVariables]
+        public bool ForcefeedBusy { get; set; }
+
         protected override void Initialize()
         {
             base.Initialize();
@@ -93,6 +100,31 @@ namespace Content.Server.Nutrition.Components
             {
                 return false;
             }
+
+            if (ForcefeedBusy)
+            {
+                return false;
+            }
+            ForcefeedBusy = true;
+
+            // Run the DoAfter first.
+            var doAfterSystem = EntitySystem.Get<DoAfterSystem>();
+
+            var doAfterArgs = new DoAfterEventArgs(eventArgs.User, ForcefeedDelay, default, eventArgs.Target)
+            {
+                BreakOnTargetMove = true,
+                BreakOnUserMove = true,
+                BreakOnDamage = true,
+                BreakOnStun = true,
+                NeedHand = true,
+            };
+
+            var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
+
+            ForcefeedBusy = false;
+
+            if (result == DoAfterStatus.Cancelled)
+                return true;
 
             TryUseFood(eventArgs.User, eventArgs.Target);
             return true;
