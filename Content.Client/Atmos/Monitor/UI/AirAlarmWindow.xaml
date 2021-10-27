@@ -48,7 +48,14 @@
                 </ScrollContainer>
                 <!-- Alarm thresholds -->
                 <ScrollContainer>
-                    <BoxContainer Name="CThresholdContainer" />
+                    <BoxContainer Name="CPressureThreshold">
+                        <Label Text="{Loc 'Pressure'}" />
+                    </BoxContainer>
+                    <BoxContainer Name="CTemperatureThreshold">
+                        <Label Text="{Loc 'Temperature'}" />
+                    </BoxContainer>
+                    <BoxContainer Name="CGasThresholdContainer">
+                    </BoxContainer>
                 </ScrollContainer>
             </TabContainer>
         </BoxContainer>

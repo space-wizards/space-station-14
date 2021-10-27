@@ -9,6 +9,6 @@
         <CheckBox Name="CWideNet" Text="{Loc 'WideNet'}" />
     </BoxContainer>
     <!-- Lower row: every single gas -->
-    <BoxContainer Orientation="Horizontal">
+    <BoxContainer Name="CGasContainer" Orientation="Horizontal">
     </BoxContainer>
 </BoxContainer>
