@@ -171,7 +171,7 @@
   desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
   physicalDesc: strong-smelling
   color: "#000000"
-  spritePath: pwinebottle.rsi
+  spritePath: pwineglass.rsi
 
 # Mixed Alcohol
 
