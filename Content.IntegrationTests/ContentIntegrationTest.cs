@@ -77,6 +77,7 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning,
             };
 
+            SetServerTestCvars(options.CVarOverrides);
             options.Pool = ShouldPool(options);
 
             // Load content resources, but not config and user data.
@@ -110,8 +111,6 @@ namespace Content.IntegrationTests
 
                 IoCManager.Resolve<ILogManager>().GetSawmill("loc").Level = LogLevel.Error;
             };
-
-            SetServerTestCvars(options.CVarOverrides);
 
             return base.StartServer(options);
         }
