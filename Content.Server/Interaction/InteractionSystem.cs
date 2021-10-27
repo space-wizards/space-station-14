@@ -42,9 +42,7 @@ namespace Content.Server.Interaction
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
 
         public override void Initialize()
