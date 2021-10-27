@@ -55,8 +55,6 @@
   description: One sip of this and you just know you're gonna have a good time.
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -64,6 +62,8 @@
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/absinthebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -128,8 +128,6 @@
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/ginbottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -137,6 +135,8 @@
         - ReagentId: Gin
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -145,8 +145,6 @@
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -154,6 +152,8 @@
         - ReagentId: Goldschlager
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -161,8 +161,6 @@
   name: kahlua bottle
   description: A widely known, Mexican coffee-flavoured liqueur. In production since 1936, HONK.
   components:
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -170,7 +168,8 @@
         - ReagentId: Kahlua
           Quantity: 100
         maxVol: 100
-
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/kahluabottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -179,8 +178,6 @@
   description: Silver laced tequilla, served in space night clubs across the galaxy.
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/patronbottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -188,6 +185,8 @@
         - ReagentId: Patron
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
 
 - type: entity
@@ -208,8 +207,6 @@
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/rumbottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -217,6 +214,8 @@
         - ReagentId: Rum
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
 
 - type: entity
@@ -226,8 +225,6 @@
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -235,6 +232,8 @@
         - ReagentId: Tequila
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
 
 - type: entity
@@ -244,8 +243,6 @@
   description: Sweet, sweet dryness!
   components:
   - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -253,6 +250,8 @@
         - ReagentId: Vermouth
           Quantity: 100
         maxVol: 100
+  - type: Sprite
+  sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
