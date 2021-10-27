@@ -374,7 +374,7 @@ namespace Content.IntegrationTests
         protected EntityCoordinates GetMainEntityCoordinates(IMapManager manager)
         {
             var gridId = GetMainGrid(manager).GridEntityId;
-            return new EntityCoordinates(gridId, -1, -1);
+            return new EntityCoordinates(gridId, -0.5f, -0.5f);
         }
 
         protected sealed class ClientContentIntegrationOption : ClientIntegrationOptions
