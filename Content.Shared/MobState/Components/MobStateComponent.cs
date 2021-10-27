@@ -312,7 +312,9 @@ namespace Content.Shared.MobState.Components
             state.UpdateState(Owner, threshold);
 
             var message = new MobStateChangedMessage(this, old, state);
+#pragma warning disable 618
             SendMessage(message);
+#pragma warning restore 618
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
             Dirty();

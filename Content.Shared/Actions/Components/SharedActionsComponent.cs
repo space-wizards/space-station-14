@@ -465,7 +465,9 @@ namespace Content.Shared.Actions.Components
     }
 
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public abstract class BasePerformActionMessage : ComponentMessage
+#pragma warning restore 618
     {
         public abstract BehaviorType BehaviorType { get; }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Climbing;
 using Robust.Shared.GameObjects;
@@ -52,9 +52,12 @@ namespace Content.Server.Climbing.Components
             }
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case BuckleMessage msg:

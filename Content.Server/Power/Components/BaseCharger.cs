@@ -47,9 +47,12 @@ namespace Content.Server.Power.Components
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
