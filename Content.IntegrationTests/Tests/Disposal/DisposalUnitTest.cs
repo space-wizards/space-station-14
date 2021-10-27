@@ -141,9 +141,6 @@ namespace Content.IntegrationTests.Tests.Disposal
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy", disposalUnit.Transform.MapPosition);
 
-                // Check that we have a grid, so that we can anchor our unit
-                Assert.That(mapManager.TryFindGridAt(disposalUnit.Transform.MapPosition, out var _));
-
                 // Test for components existing
                 Assert.True(disposalUnit.TryGetComponent(out unit!));
                 Assert.True(disposalTrunk.HasComponent<DisposalEntryComponent>());
