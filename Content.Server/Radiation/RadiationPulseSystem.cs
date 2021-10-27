@@ -11,7 +11,7 @@ namespace Content.Server.Radiation
     [UsedImplicitly]
     public sealed class RadiationPulseSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
 
         private const float RadiationCooldown = 0.5f;
         private float _accumulator;
@@ -34,7 +34,7 @@ namespace Content.Server.Radiation
 
                     if (ent.Deleted) continue;
 
-                    foreach (var entity in _lookup.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
+                    foreach (var entity in _query.GetEntitiesInRange(ent.Transform.Coordinates, comp.Range))
                     {
                         // For now at least still need this because it uses a list internally then returns and this may be deleted before we get to it.
                         if (entity.Deleted) continue;

@@ -19,7 +19,7 @@ namespace Content.Client.NodeContainer
     public sealed class NodeVisualizationOverlay : Overlay
     {
         private readonly NodeGroupSystem _system;
-        private readonly IEntityLookup _lookup;
+        private readonly QuerySystem _query;
         private readonly IMapManager _mapManager;
         private readonly IInputManager _inputManager;
         private readonly IEyeManager _eyeManager;
@@ -37,7 +37,7 @@ namespace Content.Client.NodeContainer
 
         public NodeVisualizationOverlay(
             NodeGroupSystem system,
-            IEntityLookup lookup,
+            QuerySystem query,
             IMapManager mapManager,
             IInputManager inputManager,
             IEyeManager eyeManager,
@@ -45,7 +45,7 @@ namespace Content.Client.NodeContainer
             IEntityManager entityManager)
         {
             _system = system;
-            _lookup = lookup;
+            _query = query;
             _mapManager = mapManager;
             _inputManager = inputManager;
             _eyeManager = eyeManager;
@@ -114,10 +114,11 @@ namespace Content.Client.NodeContainer
 
             // Group visible nodes by grid tiles.
             var worldBounds = overlayDrawArgs.WorldBounds;
-            _lookup.FastEntitiesIntersecting(map, ref worldBounds, entity =>
+
+            foreach (var entity in _query.GetEntitiesIntersecting(map, worldBounds))
             {
                 if (!_system.Entities.TryGetValue(entity.Uid, out var nodeData))
-                    return;
+                    continue;
 
                 var gridId = entity.Transform.GridID;
                 var grid = _mapManager.GetGrid(gridId);
@@ -126,7 +127,7 @@ namespace Content.Client.NodeContainer
 
                 // TODO: This probably shouldn't be capable of returning NaN...
                 if (float.IsNaN(coords.Position.X) || float.IsNaN(coords.Position.Y))
-                    return;
+                    continue;
 
                 var tile = gridDict.GetOrNew(grid.TileIndicesFor(coords));
 
@@ -137,7 +138,7 @@ namespace Content.Client.NodeContainer
                         tile.Add((group, nodeDatum));
                     }
                 }
-            });
+            }
 
             foreach (var (gridId, gridDict) in _gridIndex)
             {

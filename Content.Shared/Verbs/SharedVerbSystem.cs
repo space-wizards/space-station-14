@@ -11,10 +11,8 @@ using Robust.Shared.Maths;
 
 namespace Content.Shared.Verbs
 {
-    public class SharedVerbSystem : EntitySystem
+    public abstract class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly QuerySystem _query = default!;
-
         /// <summary>
         ///     Get all of the entities in an area for displaying on the context menu.
         /// </summary>
@@ -30,7 +28,7 @@ namespace Content.Shared.Verbs
 
             // Get entities
             var length = buffer ? 1.0f : 0.5f;
-            var entities = _query.GetEntitiesIntersecting(
+            var entities = Get<QuerySystem>().GetEntitiesIntersecting(
                     targetPos.MapId,
                     Box2.CenteredAround(targetPos.Position, (length, length)))
                 .ToList();

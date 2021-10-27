@@ -26,8 +26,8 @@ namespace Content.Server.Flash
 {
     internal sealed class FlashSystem : SharedFlashSystem
     {
-        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly QuerySystem _query = default!;
         [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()
@@ -77,7 +77,7 @@ namespace Content.Server.Flash
                 return;
             }
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
+            foreach (var entity in _query.GetEntitiesInRange(comp.Owner.Transform.Coordinates, comp.Range))
             {
                 Flash(entity.Uid, args.User.Uid, uid, comp.AoeFlashDuration, comp.SlowTo);
             }
@@ -153,7 +153,7 @@ namespace Content.Server.Flash
         {
             var transform = EntityManager.GetComponent<ITransformComponent>(source);
 
-            foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
+            foreach (var entity in _query.GetEntitiesInRange(transform.Coordinates, range))
             {
                 if (!entity.HasComponent<FlashableComponent>() ||
                     !transform.InRangeUnobstructed(entity, range, CollisionGroup.Opaque)) continue;
