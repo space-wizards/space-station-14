@@ -181,6 +181,8 @@
       amount: 1
     Vodka:
       amount: 1
+  products:
+    ThirteenLoko: 3
 
 - type: reaction
   id: WhiskeyCola
