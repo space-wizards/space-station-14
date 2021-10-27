@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Utility
                 var grid = GetMainGrid(sMapManager);
                 var gridEnt = sEntityManager.GetEntity(grid.GridEntityId);
                 var gridPos = gridEnt.Transform.WorldPosition;
-                var entityCoordinates = new EntityCoordinates(grid.GridEntityId, 0, 0);
+                var entityCoordinates = GetMainEntityCoordinates(sMapManager);
 
                 // Nothing blocking it, only entity is the grid
                 Assert.NotNull(sEntityManager.SpawnIfUnobstructed(null, entityCoordinates, CollisionGroup.Impassable));
