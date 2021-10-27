@@ -97,6 +97,14 @@
   color: "#664300"
 
 - type: reagent
+  id: MelonLiquor
+  name: melon liquor
+  desc: A relatively sweet and fruity 46 proof liquor.
+  physicalDesc: strong-smelling
+  color: "#138808"
+  spritePath: emeraldglass.rsi
+
+- type: reagent
   id: Rum
   name: rum
   desc: Popular with the sailors. Not very popular with anyone else.
@@ -156,6 +164,14 @@
   physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
+
+- type: reagent
+  id: WinePoison
+  name: poison wine
+  desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
+  physicalDesc: strong-smelling
+  color: "#000000"
+  spritePath: pwinebottle.rsi
 
 # Mixed Alcohol
 

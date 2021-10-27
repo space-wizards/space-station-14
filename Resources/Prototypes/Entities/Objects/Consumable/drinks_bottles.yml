@@ -54,7 +54,6 @@
   name: Jailbreaker Verte
   description: One sip of this and you just know you're gonna have a good time.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -71,10 +70,15 @@
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
   components:
-  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: MelonLiquor
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alco-green.rsi
-
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -92,17 +96,21 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/alebottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkBottleOfNothingFull
   name: bottle of nothing
   description: A bottle filled with nothing.
   components:
-  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Nothing
+          Quantity: 100
+        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
-
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -120,14 +128,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
   name: Griffeater Gin
   description: A bottle of high quality gin, produced in the New London Space Station.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -144,7 +150,6 @@
   name: goldschlager bottle
   description: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -177,7 +182,6 @@
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -188,17 +192,21 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkPoisonWinebottleFull
   name: warlock's velvet bottle
   description: What a delightful packaging for a surely high quality wine! The vintage must be amazing!
   components:
-  - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: WinePoison
+          Quantity: 100
+        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
-
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -206,7 +214,6 @@
   name: captain pete's cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -217,14 +224,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkTequilabottleFull
   name: caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -235,14 +240,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkVermouthBottleFull
   name: goldeneye vermouth bottle
   description: Sweet, sweet dryness!
   components:
-  - type: Drink
   - type: SolutionContainerManager
     solutions:
       drink:
@@ -269,7 +272,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
-
 - type: entity
   parent: DrinkBottleBaseFull
   id: DrinkWhiskeyBottleFull
@@ -285,7 +287,6 @@
           Quantity: 80
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
-
 
 - type: entity
   parent: DrinkBottleBaseFull

@@ -61,6 +61,13 @@
   color: "#faffba"
 
 - type: reagent
+  id: Nothing
+  name: nothing
+  desc: Absolutely nothing.
+  physicalDesc: nothing
+  spritePath: nothing.rsi
+
+- type: reagent
   id: Tea
   name: tea
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
