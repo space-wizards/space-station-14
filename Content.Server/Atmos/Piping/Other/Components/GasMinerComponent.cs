@@ -20,7 +20,7 @@ namespace Content.Server.Atmos.Piping.Other.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("maxExternalPressure")]
-        public float MaxExternalPressure { get; set; } = 6500f;
+        public float MaxExternalPressure { get; set; } = Atmospherics.GasMinerDefaultMaxExternalPressure;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("spawnGas")]

@@ -62,6 +62,7 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: PowerSupplier
     supplyRate: 0
 

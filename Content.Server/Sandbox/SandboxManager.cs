@@ -19,6 +19,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
+using Content.Server.Access.Systems;
 
 namespace Content.Server.Sandbox
 {
@@ -158,8 +159,8 @@ namespace Content.Server.Sandbox
 
             void UpgradeId(IEntity id)
             {
-                var access = id.GetComponent<AccessComponent>();
-                access.SetTags(allAccess);
+                var accessSystem = EntitySystem.Get<AccessSystem>();
+                accessSystem.TrySetTags(id.Uid, allAccess);
 
                 if (id.TryGetComponent(out SpriteComponent? sprite))
                 {

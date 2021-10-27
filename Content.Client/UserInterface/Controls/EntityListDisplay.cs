@@ -15,8 +15,8 @@ namespace Content.Client.UserInterface.Controls
         public const string StylePropertySeparation = "separation";
 
         public int? SeparationOverride { get; set; }
-        public Action<EntityUid, Control>? GenerateItem;
-        public Action<EntityUid>? ItemPressed;
+        public Action<EntityUid, EntityContainerButton>? GenerateItem;
+        public Action<BaseButton.ButtonEventArgs, EntityUid>? ItemPressed;
 
         private const int DefaultSeparation = 3;
 
@@ -82,7 +82,7 @@ namespace Content.Client.UserInterface.Controls
         {
             if (args.Button is not EntityContainerButton button)
                 return;
-            ItemPressed?.Invoke(button.EntityUid);
+            ItemPressed?.Invoke(args, button.EntityUid);
         }
 
         [Pure]
@@ -136,7 +136,7 @@ namespace Content.Client.UserInterface.Controls
             #region Rebuild Children
             /*
              * Example:
-             * 
+             *
              * var _itemHeight = 32;
              * var separation = 3;
              *  32 | 32 | Control.Size.Y 0
@@ -146,13 +146,13 @@ namespace Content.Client.UserInterface.Controls
              * 102 | 32 | Control.Size.Y 2
              * 105 |  3 | Padding
              * 137 | 32 | Control.Size.Y 3
-             * 
+             *
              * If viewport height is 60
              * visible should be 2 items (start = 0, end = 1)
-             * 
+             *
              * scroll.Y = 11
              * visible should be 3 items (start = 0, end = 2)
-             * 
+             *
              * start expected: 11 (item: 0)
              * var start = (int) (scroll.Y
              *

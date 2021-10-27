@@ -1,0 +1,18 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'cargo-console-order-menu-title'}">
+    <BoxContainer Orientation="Vertical">
+        <GridContainer Columns="2">
+            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
+            <LineEdit Name="RequesterProtected" />
+            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}" />
+            <LineEdit Name="ReasonProtected" />
+            <Label Text="{Loc 'cargo-console-order-menu-amount-label'}" />
+            <SpinBox Name="AmountProtected"
+                     HorizontalExpand="True"
+                     Value="1" />
+        </GridContainer>
+        <Button Name="SubmitButtonProtected"
+                Text="{Loc 'cargo-console-order-menu-submit-button'}"
+                TextAlign="Center" />
+    </BoxContainer>
+</SS14Window>

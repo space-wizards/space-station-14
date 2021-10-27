@@ -32,3 +32,22 @@
     areaInsert: true
     storageSoundCollection:
       collection: trashBagRustle
+
+- type: entity
+  name: spell of all-consuming cleanliness
+  id: BagOfSummoningGarbage
+  parent: BaseItem
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    state: blue-icon-3
+  - type: Item
+    sprite: Objects/Specific/Janitorial/trashbag.rsi
+    HeldPrefix: blue
+  - type: Storage
+    capacity: 125000
+    quickInsert: true
+    areaInsert: true
+    areaInsertRadius: 1000
+    storageSoundCollection:
+      collection: trashBagRustle

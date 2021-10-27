@@ -45,15 +45,15 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
-        - !type:MachineFrameRegenerateProgress {}
+        - !type:MachineFrameRegenerateProgress
       edges:
         - to: machine
           conditions:
-            - !type:EntityAnchored {}
-            - !type:MachineFrameComplete {}
+            - !type:EntityAnchored
+            - !type:MachineFrameComplete
           completed:
             # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
-            - !type:BuildMachine {}
+            - !type:BuildMachine
           steps:
             - tool: Screwing
               doAfter: 0.5
