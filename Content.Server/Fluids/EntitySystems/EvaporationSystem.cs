@@ -26,11 +26,11 @@ namespace Content.Server.Fluids.EntitySystems
                 {
                     // If no solution, delete the entity
                     queueDelete.Add(evaporationComponent);
-                    return;
+                    continue;
                 }
 
                 if (evaporationComponent.Accumulator < evaporationComponent.EvaporateTime)
-                    return;
+                    continue;
 
                 evaporationComponent.Accumulator -= evaporationComponent.EvaporateTime;
 
