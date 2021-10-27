@@ -236,8 +236,7 @@ namespace Content.Server.Nutrition.EntitySystems
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-had-enough", ("owner", owner)));
 
-                if (owner.EntityManager.TryGetEntity(owner.Uid, out var interactionEntity)
-                    && !interactionEntity.HasComponent<RefillableSolutionComponent>())
+                if (EntityManager.HasComponent<RefillableSolutionComponent>(uid))
                 {
                     drain.SpillAt(target, "PuddleSmear");
                     return false;
