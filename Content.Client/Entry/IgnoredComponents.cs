@@ -284,7 +284,6 @@ namespace Content.Client.Entry
             "LitOnPowered",
             "TriggerOnSignalReceived",
             "ToggleDoorOnTrigger",
-            "DeviceNetworkComponent",
             "WiredNetworkConnection",
             "WirelessNetworkConnection",
             "ExtensionCableReceiver",

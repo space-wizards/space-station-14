@@ -1,7 +1,7 @@
 - type: entity
   parent: BaseItem
   id: RemoteSignaler
-  name: Remote Signaler
+  name: remote signaler
   description: Broadcasts a signal over the specified frequency.
   components:
   - type: Sprite
@@ -25,12 +25,12 @@
       type: SignalerBoundUserInterface
   - type: Tag
     tags:
-      - IODevice
+    - IODevice
 
 - type: entity
   parent: BaseItem
   id: IoTimerItem
-  name: Timer
+  name: timer
   description: A configurable timer.
   components:
   - type: Sprite
@@ -44,16 +44,16 @@
   - type: IoTimer
   - type: UserInterface
     interfaces:
-      - key: enum.IoTimerUiKey.Key
-        type: IoTimerBoundUserInterface
+    - key: enum.IoTimerUiKey.Key
+      type: IoTimerBoundUserInterface
   - type: Tag
     tags:
-      - IODevice
+    - IODevice
 
 - type: entity
   parent: BaseItem
   id: VoiceAnalyzer
-  name: Voice Analyzer
+  name: voice analyzer
   description: A configurable voice analyzer.
   components:
   - type: Sprite
@@ -63,12 +63,53 @@
     QuickEquip: false
     size: 5
     Slots:
-      - Belt
+    - Belt
   - type: VoiceAnalyzer
   - type: UserInterface
     interfaces:
-      - key: enum.VoiceAnalyzerUiKey.Key
-        type: VoiceAnalyzerBoundUserInterface
+    - key: enum.VoiceAnalyzerUiKey.Key
+      type: VoiceAnalyzerBoundUserInterface
   - type: Tag
     tags:
-      - IODevice
+    - IODevice
+
+- type: entity
+  parent: BaseItem
+  id: ProximitySensor
+  name: proximity sensor
+  description: Senses living things near it. Has a configurable range.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/proximitysensor.rsi
+    state: prox
+  - type: Clothing
+    QuickEquip: false
+    size: 5
+    Slots:
+    - Belt
+  - type: ProximitySensor
+  - type: UserInterface
+    interfaces:
+    - key: enum.ProximitySensorUiKey.Key
+      type: ProximitySensorBoundUserInterface
+  - type: Tag
+    tags:
+    - IODevice
+  - type: Physics
+    bodyType: Dynamic
+    sleepingAllowed: false
+    retainBodyInContainer: true
+    fixtures:
+    - shape: #we will use this for our proximity detection
+        !type:PhysShapeCircle
+        radius: 1
+      hard: false
+      mass: 5
+      layer:
+        - MobImpassable #only detect collision with mobs here
+    - shape: #this is the actual physical object
+        !type:PhysShapeAabb
+        bounds: "-0.2,-0.2,0.2,0.2"
+      mass: 5
+      mask:
+        - SmallImpassable

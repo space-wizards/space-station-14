@@ -33,7 +33,7 @@ namespace Content.Server.Devices.Systems
             // Bound UI subscriptions
             SubscribeLocalEvent<SharedIoTimerComponent, IoTimerSendToggleMessage>(OnToggleRequested);
             SubscribeLocalEvent<SharedIoTimerComponent, IoTimerUpdateDurationMessage>(UpdateDuration);
-            SubscribeLocalEvent<SharedIoTimerComponent, IoTimerSendResetMessage>(OnResetRequested);
+            SubscribeLocalEvent<SharedIoTimerComponent, IoTimerSendResetMessage>(OnStopRequested);
             SubscribeLocalEvent<SharedIoTimerComponent, IoTimerSendTogglePauseMessage>(OnPauseRequested);
         }
 
@@ -56,12 +56,9 @@ namespace Content.Server.Devices.Systems
             SyncUi(uid, component);
         }
 
-        private void OnResetRequested(EntityUid uid, SharedIoTimerComponent component, IoTimerSendResetMessage args)
+        private void OnStopRequested(EntityUid uid, SharedIoTimerComponent component, IoTimerSendResetMessage args)
         {
-            component.Duration = SharedIoTimerComponent.DefaultDuration;
             component.IsPaused = false;
-            component.ShouldPlaySound = SharedIoTimerComponent.DefaultShouldPlaySound;
-
             SetActive(uid, false, component);
         }
 

@@ -1,0 +1,17 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            MinSize="350 100" Title="Proximity Sensor">
+    <BoxContainer Orientation="Vertical" SeparationOverride="10">
+        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+            <Label Text="Range" Align="Right"/>
+            <SliderIntInput Name="ProximityRange" HorizontalExpand="True"/>
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+            <Label Text="Arming Time" Align="Right"/>
+            <SliderIntInput Name="ProximityArmingTime" HorizontalExpand="True"/>
+        </BoxContainer>
+        <Button Name="UpdateSensor" Text="Update Settings"/>
+        <CheckBox Text="Active" ToggleMode="True" HorizontalAlignment="Center" Name="ProximityActive"/>
+    </BoxContainer>
+</SS14Window>

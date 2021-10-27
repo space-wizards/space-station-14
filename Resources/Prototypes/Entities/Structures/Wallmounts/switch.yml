@@ -60,7 +60,7 @@
       graph: lightSwitch
       node: lightSwitch
     - type: ExtensionCableReceiver
-    - type: DeviceNetworkComponent
+    - type: DeviceNetwork
       deviceNetId: Apc
     - type: ApcNetworkConnection
     - type: ApcNetSwitch

@@ -18,7 +18,7 @@
          <ProgressBar Name="TimeLeftSlider" HorizontalExpand="True"/>
         <BoxContainer Orientation="Horizontal">
             <Button Name="PauseTimerButton" Text="Pause" HorizontalExpand="True"/>
-            <Button Name="ResetTimerButton" Text="Reset" HorizontalExpand="True"/>
+            <Button Name="ResetTimerButton" Text="Stop" HorizontalExpand="True"/>
         </BoxContainer>
     </BoxContainer>
 </SS14Window>
