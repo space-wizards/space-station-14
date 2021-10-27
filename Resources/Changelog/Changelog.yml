@@ -2774,3 +2774,9 @@ Entries:
   - {message: Fixed speech bubble position on rotated grids., type: Fix}
   id: 495
   time: '2021-10-27T01:31:22.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Fix trashbags picking up anchored items, e.g. atmos pipes and vents',
+    type: Fix}
+  id: 496
+  time: '2021-10-27T07:12:37.0000000+00:00'
