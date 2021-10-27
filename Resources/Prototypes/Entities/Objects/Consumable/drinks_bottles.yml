@@ -254,7 +254,7 @@
           Quantity: 100
         maxVol: 100
   - type: Sprite
-  sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
+    sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
