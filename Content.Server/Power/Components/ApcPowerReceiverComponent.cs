@@ -75,7 +75,9 @@ namespace Content.Server.Power.Components
 
         private void OnNewPowerState()
         {
+#pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
+#pragma warning restore 618
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
 
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
