@@ -1,5 +1,6 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 
 namespace Content.Shared.Popups
 {
@@ -16,7 +17,7 @@ namespace Content.Shared.Popups
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
 
-            popupSystem.PopupEntity(message, source.Uid, popupSystem.GetFilterFromEntity(viewer));
+            popupSystem.PopupEntity(message, source.Uid, Filter.Entities(viewer.Uid));
         }
 
         /// <summary>
@@ -38,7 +39,7 @@ namespace Content.Shared.Popups
         public static void PopupMessage(this EntityCoordinates coordinates, IEntity viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCoordinates(message, coordinates, popupSystem.GetFilterFromEntity(viewer));
+            popupSystem.PopupCoordinates(message, coordinates, Filter.Entities(viewer.Uid));
         }
 
         /// <summary>
@@ -51,7 +52,7 @@ namespace Content.Shared.Popups
         public static void PopupMessageCursor(this IEntity viewer, string message)
         {
             var popupSystem = EntitySystem.Get<SharedPopupSystem>();
-            popupSystem.PopupCursor(message, popupSystem.GetFilterFromEntity(viewer));
+            popupSystem.PopupCursor(message, Filter.Entities(viewer.Uid));
         }
     }
 }

@@ -13,7 +13,3 @@ server-magazine-barrel-component-interact-using-ammo-success = Ammo inserted
 server-magazine-barrel-component-interact-using-ammo-full = Chamber full
 server-magazine-barrel-component-on-examine = It uses [color=white]{$caliber}[/color] ammo.
 server-magazine-barrel-component-on-examine-magazine-type = It accepts [color=white]{$magazineType}[/color] magazines.
-
-## EjectMagazineVerb
-
-eject-magazine-verb-get-data-text = Eject magazine

@@ -33,13 +33,6 @@ namespace Content.Shared.Popups
         /// <param name="uid">The UID of the entity.</param>
         /// <param name="filter">Filter for the players that will see the popup.</param>
         public abstract void PopupEntity(string message, EntityUid uid, Filter filter);
-
-        /// <summary>
-        ///     Given an <see cref="IEntity"/>, returns a <see cref="Filter"/> that is either empty or contains the
-        ///     player attached to the entity.
-        /// </summary>
-        /// <remarks>Using this method is NOT recommended, please use one of the other methods instead.</remarks>
-        public abstract Filter GetFilterFromEntity(IEntity entity);
     }
 
     /// <summary>

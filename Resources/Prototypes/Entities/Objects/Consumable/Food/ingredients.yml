@@ -30,7 +30,14 @@
       food:
         maxVol: 50
   - type: SolutionTransfer
+    # This is potentially badly-handled due to 'drink opening',
+    #  but it lets the flour be tampered with, refilled, etc.
+  - type: RefillableSolution
+    solution: food
+  - type: DrainableSolution
+    solution: food
   - type: Drink
+    solution: food
     openSounds:
       collection: packetOpenSounds
     useSound:

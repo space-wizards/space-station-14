@@ -101,7 +101,6 @@ namespace Content.Client.ContextMenu.UI
     public sealed class StackContextElement : ContextMenuElement
      {
          public event Action? OnExitedTree;
-         public readonly TimeSpan HoverDelay = TimeSpan.FromSeconds(0.2);
 
          public HashSet<IEntity> ContextEntities { get; }
          public readonly StackContextElement? Pre;
@@ -176,40 +175,44 @@ namespace Content.Client.ContextMenu.UI
          }
      }
 
-    public sealed class ContextMenuPopup : Robust.Client.UserInterface.Controls.Popup
+    public class ContextMenuPopup : Popup
     {
-        private static readonly Color DefaultColor = Color.FromHex("#1116");
-        private static readonly Color MarginColor = Color.FromHex("#222E");
-        private const int MaxItemsBeforeScroll = 10;
-        private const int MarginSizeBetweenElements = 2;
+        public static readonly Color ButtonColor = Color.FromHex("#1119");
+        public static readonly Color BackgroundColor = Color.FromHex("#333E");
+
+        public const int MaxItemsBeforeScroll = 10;
+        public const int MarginSize = 2;
+        public const int ButtonHeight = 32;
 
         public BoxContainer List { get; }
+        public ScrollContainer Scroll { get; }
         public int Depth { get; }
 
         public ContextMenuPopup(int depth = 0)
         {
+            MaxHeight = MaxItemsBeforeScroll * (ButtonHeight + 2*MarginSize);
+
             Depth = depth;
-            AddChild(new ScrollContainer
+            List = new() { Orientation = LayoutOrientation.Vertical };
+            Scroll = new()
             {
                 HScrollEnabled = false,
-                Children = { new PanelContainer
-                {
-                    Children = { (List = new BoxContainer
-                    {
-                        Orientation = LayoutOrientation.Vertical
-                    }) },
-                    PanelOverride = new StyleBoxFlat {  BackgroundColor = MarginColor }
-                }}
+                Children = { List }
+            };
+            AddChild(new PanelContainer
+            {
+                Children = { Scroll },
+                PanelOverride = new StyleBoxFlat { BackgroundColor = BackgroundColor }
             });
         }
 
-        public void AddToMenu(ContextMenuElement element)
+        public void AddToMenu(Control element)
         {
             List.AddChild(new PanelContainer
             {
                 Children = { element },
-                Margin = new Thickness(0,0,0, MarginSizeBetweenElements),
-                PanelOverride = new StyleBoxFlat {BackgroundColor = DefaultColor}
+                Margin = new Thickness(MarginSize, MarginSize, MarginSize, MarginSize),
+                PanelOverride = new StyleBoxFlat { BackgroundColor = ButtonColor }
             });
         }
 
@@ -229,15 +232,18 @@ namespace Content.Client.ContextMenu.UI
                 return Vector2.Zero;
             }
 
-            List.Measure(availableSize);
-            var listSize = List.DesiredSize;
+            Scroll.Measure(availableSize);
+            var size = List.DesiredSize;
 
-            if (List.ChildCount < MaxItemsBeforeScroll)
+            // account for scroll bar width
+            if (size.Y > MaxHeight)
             {
-                return listSize;
+                // Scroll._vScrollBar is private and ScrollContainer gives no size information :/
+                // 10 = Scroll._vScrollBar.DesiredSize
+                size.X += 10;
             }
-            listSize.Y = MaxItemsBeforeScroll * 32 + MaxItemsBeforeScroll * MarginSizeBetweenElements;
-            return listSize;
+
+            return size;
         }
     }
 }

@@ -1,7 +1,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodCakeBase
   abstract: true
   components:
@@ -13,7 +13,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 20
+        maxVol: 26
         reagents:
         - ReagentId: Nutriment
           Quantity: 20
@@ -29,7 +29,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 7
+        maxVol: 8
         reagents:
         - ReagentId: Nutriment
           Quantity: 7

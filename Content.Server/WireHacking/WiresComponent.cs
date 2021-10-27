@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
+using Content.Server.Tools;
 using Content.Server.Tools.Components;
 using Content.Server.UserInterface;
 using Content.Server.VendingMachines;
@@ -11,7 +12,8 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -23,6 +25,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
@@ -36,6 +39,15 @@ namespace Content.Server.WireHacking
         private AudioSystem _audioSystem = default!;
 
         private bool _isPanelOpen;
+
+        [DataField("screwingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _screwingQuality = "Screwing";
+
+        [DataField("cuttingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _cuttingQuality = "Cutting";
+
+        [DataField("pulsingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _pulsingQuality = "Pulsing";
 
         /// <summary>
         /// Opening the maintenance panel (typically with a screwdriver) changes this.
@@ -418,33 +430,36 @@ namespace Content.Server.WireHacking
                     var activeHandEntity = handsComponent.GetActiveHand?.Owner;
                     ToolComponent? tool = null;
                     activeHandEntity?.TryGetComponent(out tool);
+                    var toolSystem = EntitySystem.Get<ToolSystem>();
 
                     switch (msg.Action)
                     {
                         case WiresAction.Cut:
-                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
+                            if (tool == null || !tool.Qualities.Contains(_cuttingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
-                            tool.PlayUseSound();
+                            // activeHandEntity cannot be null because tool is not null.
+                            toolSystem.PlayToolSound(activeHandEntity!.Uid, tool);
                             wire.IsCut = true;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Mend:
-                            if (tool == null || !tool.HasQuality(ToolQuality.Cutting))
+                            if (tool == null || !tool.Qualities.Contains(_cuttingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
                             }
 
-                            tool.PlayUseSound();
+                            // activeHandEntity cannot be null because tool is not null.
+                            toolSystem.PlayToolSound(activeHandEntity!.Uid, tool);
                             wire.IsCut = false;
                             UpdateUserInterface();
                             break;
                         case WiresAction.Pulse:
-                            if (tool == null || !tool.HasQuality(ToolQuality.Multitool))
+                            if (tool == null || !tool.Qualities.Contains(_pulsingQuality))
                             {
                                 player.PopupMessageCursor(Loc.GetString("wires-component-ui-on-receive-message-need-wirecutters"));
                                 return;
@@ -490,10 +505,12 @@ namespace Content.Server.WireHacking
                 return false;
             }
 
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
             // opens the wires ui if using a tool with cutting or multitool quality on it
             if (IsPanelOpen &&
-               (tool.HasQuality(ToolQuality.Cutting) ||
-                tool.HasQuality(ToolQuality.Multitool)))
+               (tool.Qualities.Contains(_cuttingQuality) ||
+                tool.Qualities.Contains(_pulsingQuality)))
             {
                 if (eventArgs.User.TryGetComponent(out ActorComponent? actor))
                 {
@@ -503,7 +520,8 @@ namespace Content.Server.WireHacking
             }
 
             // screws the panel open if the tool can do so
-            else if (await tool.UseTool(eventArgs.User, Owner, 0.5f, ToolQuality.Screwing))
+            else if (await toolSystem.UseTool(tool.Owner.Uid, eventArgs.User.Uid, Owner.Uid,
+                0f, 0.5f, _screwingQuality, toolComponent:tool))
             {
                 IsPanelOpen = !IsPanelOpen;
                 if (IsPanelOpen)

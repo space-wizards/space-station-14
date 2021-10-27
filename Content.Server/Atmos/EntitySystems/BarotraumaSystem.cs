@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Content.Server.Alert;
 using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
@@ -68,8 +69,18 @@ namespace Content.Server.Atmos.EntitySystems
 
             _timer -= UpdateTimer;
 
-            foreach (var (barotrauma, transform) in EntityManager.EntityQuery<BarotraumaComponent, ITransformComponent>())
+            foreach (var (barotrauma, damageable, transform) in EntityManager.EntityQuery<BarotraumaComponent, DamageableComponent, ITransformComponent>())
             {
+                var totalDamage = 0;
+                foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
+                {
+                    if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))
+                        continue;
+                    totalDamage += damage;
+                }
+                if (totalDamage >= barotrauma.MaxDamage)
+                    continue;
+
                 var uid = barotrauma.Owner.Uid;
 
                 var status = barotrauma.Owner.GetComponentOrNull<ServerAlertsComponent>();

@@ -3,8 +3,22 @@ name: Build & Test
 on:
   push:
     branches: [ master ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+      - '**.sln'
+      - '**.git**'
+      - '**.yml'
+      - 'RobustToolbox/'
   pull_request:
     branches: [ master ]
+    paths:
+      - '**.cs'
+      - '**.csproj'
+      - '**.sln'
+      - '**.git**'
+      - '**.yml'
+      - 'RobustToolbox/'
 
 jobs:
   build:

@@ -1,9 +1,11 @@
-﻿using Content.Server.Fluids.Components;
+using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.EntitySystems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -35,6 +37,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _solutionContainerSystem.TryGetDrainableSolution(uid, out var interactions))
             {
                 component.Opened = true;
+                UpdateAppearance(component);
 
                 var entity = EntityManager.GetEntity(uid);
 
@@ -60,13 +63,25 @@ namespace Content.Server.Nutrition.EntitySystems
                 _solutionContainerSystem.EnsureSolution(owner, component.SolutionName);
             }
 
-            component.UpdateAppearance();
+            UpdateAppearance(component);
         }
-
 
         private void OnSolutionChange(EntityUid uid, DrinkComponent component, SolutionChangedEvent args)
         {
-            component.UpdateAppearance();
+            UpdateAppearance(component);
+        }
+
+        public void UpdateAppearance(DrinkComponent component)
+        {
+            if (!component.Owner.TryGetComponent(out AppearanceComponent? appearance) ||
+                !component.Owner.HasComponent<SolutionContainerManagerComponent>())
+            {
+                return;
+            }
+
+            var drainAvailable = Get<SolutionContainerSystem>().DrainAvailable(component.Owner);
+            appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
+            appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
     }
 }

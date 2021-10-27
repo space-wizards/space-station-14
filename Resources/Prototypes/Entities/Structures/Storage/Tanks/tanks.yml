@@ -14,7 +14,7 @@
     tankType: Fuel
   - type: DamageOnToolInteract
     tools:
-    - 16 # welding
+    - Welding
     weldingDamage:
       types:
         Heat: 10

@@ -72,9 +72,9 @@ namespace Content.Server.Paper
 
             Content += msg.Text + '\n';
 
-            if (Owner.TryGetComponent(out SpriteComponent? sprite))
+            if (Owner.TryGetComponent(out AppearanceComponent? appearance))
             {
-                sprite.LayerSetState(0, "paper_words");
+                appearance.SetData(PaperVisuals.Status, PaperStatus.Written);
             }
 
             Owner.Description = "";

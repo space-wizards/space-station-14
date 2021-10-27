@@ -5,10 +5,10 @@
     xmlns:abt="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
     Margin="4"
     MinSize="50 50">
-    <GridContainer
-        Columns="4">
-        <cc:CommandButton Name="SpawnEntitiesButton" Text="{Loc Spawn Entities}" />
-        <cc:CommandButton Name="SpawnTilesButton" Text="{Loc Spawn Tiles} " />
-        <cc:UICommandButton Command="events" Text="{Loc Station Events}" WindowType="{x:Type abt:StationEventsWindow}" />
+    <GridContainer Columns="3">
+        <Button Name="SpawnEntitiesButton" Text="{Loc 'sandbox-window-spawn-entities-button'}" />
+        <Button Name="SpawnTilesButton" Text="{Loc 'sandbox-window-spawn-tiles-button'} " />
+        <cc:CommandButton Command="deleteewc Singularity" Name="DeleteSingulos" Text="{Loc 'delete-singularities'}"/>
+        <cc:UICommandButton Command="events" Text="{Loc 'open-station-events'}" WindowType="{x:Type abt:StationEventsWindow}" />
     </GridContainer>
 </Control>

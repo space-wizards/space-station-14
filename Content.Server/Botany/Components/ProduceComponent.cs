@@ -16,7 +16,7 @@ namespace Content.Server.Botany.Components
     public class ProduceComponent : Component, ISerializationHooks
     {
         public override string Name => "Produce";
-        public const string SolutionName = "produce";
+        [DataField("targetSolution")] public string SolutionName { get; set; } = "food";
 
         [DataField("seed")] private string? _seedName;
 
@@ -40,7 +40,6 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid);
             var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
             if (solutionContainer == null)
             {
@@ -48,6 +47,7 @@ namespace Content.Server.Botany.Components
                 return;
             }
 
+            solutionContainer.RemoveAllSolution();
             foreach (var (chem, quantity) in Seed.Chemicals)
             {
                 var amount = ReagentUnit.New(quantity.Min);

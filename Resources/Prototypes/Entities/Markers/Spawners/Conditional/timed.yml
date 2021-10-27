@@ -10,8 +10,8 @@
         - state: ai
     - type: TimedSpawner
       prototypes:
-        - HumanMob_Spirate
-        - HumanMob_Civilian
+        - MobSpirate
+        - MobCivilian
       chance: 0.75
       intervalSeconds: 60
       minimumEntitiesSpawned: 1
@@ -29,7 +29,7 @@
         - state: ai
     - type: TimedSpawner
       prototypes:
-        - XenoMob_Content
+        - MobXeno
       chance: 0.85
       intervalSeconds: 30
       minimumEntitiesSpawned: 2

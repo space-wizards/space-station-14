@@ -12,9 +12,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - MouseMob_Content
-      - MouseMob1_Content
-      - MouseMob2_Content
+      - MobMouse
+      - MobMouse1
+      - MobMouse2
 
 - type: entity
   name: Cat Spawner
@@ -27,9 +27,9 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - CatMob_Content
-      - CatCalicoMob_Content
-      - CatCaracalMob_Content
+      - MobCat
+      - MobCatCalico
+      - MobCatCaracal
 
 - type: entity
   name: Corgi Spawner
@@ -42,5 +42,5 @@
       - state: ai
   - type: ConditionalSpawner
     prototypes:
-      - CorgiMob_Content
-      - IanMob_Content
+      - MobCorgi
+      - MobCorgiOld

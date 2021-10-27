@@ -36,6 +36,7 @@ namespace Content.Server.AME.Components
         {
             _isCore = false;
             _appearance?.SetData(AMEShieldVisuals.Core, "isNotCore");
+            UpdateCoreVisuals(0, false);
         }
 
         public void UpdateCoreVisuals(int injectionStrength, bool injecting)

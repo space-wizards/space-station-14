@@ -150,34 +150,7 @@ namespace Content.Server.Disposal.Tube.Components
             base.OnRemove();
             UserInterface?.CloseAll();
         }
-
-        [Verb]
-        public sealed class ConfigureVerb : Verb<DisposalTaggerComponent>
-        {
-            protected override void GetData(IEntity user, DisposalTaggerComponent component, VerbData data)
-            {
-
-                var groupController = IoCManager.Resolve<IConGroupController>();
-                if (!user.TryGetComponent(out ActorComponent? actor) || !groupController.CanAdminMenu(actor.PlayerSession))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("configure-verb-get-data-text");
-                data.IconTexture = "/Textures/Interface/VerbIcons/settings.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, DisposalTaggerComponent component)
-            {
-                if (user.TryGetComponent(out ActorComponent? actor))
-                {
-                    component.OpenUserInterface(actor);
-                }
-            }
-        }
-
-        private void OpenUserInterface(ActorComponent actor)
+        public void OpenUserInterface(ActorComponent actor)
         {
             UpdateUserInterface();
             UserInterface?.Open(actor.PlayerSession);

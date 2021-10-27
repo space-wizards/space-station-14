@@ -8,7 +8,7 @@ namespace Content.Shared.MobState.State
     ///     (i.e. Normal, Critical, Dead) and what effects to apply upon entering or
     ///     exiting the state.
     /// </summary>
-    public interface IMobState : IActionBlocker
+    public interface IMobState
     {
         bool IsAlive();
 

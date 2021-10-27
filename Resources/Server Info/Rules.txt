@@ -18,3 +18,7 @@
 [color=#a4885c]7.[/color] Multi-keying/Alts on the same server is [color=#ff0000]not allowed[/color].
 	- Admins may ask players in possession of multiple alt accounts to choose one to play on and ban the other accounts.
 	- If you are caught knowingly using alt accounts you may have your main account banned as well.
+
+[color=#a4885c]8.[/color] Using information gained outside the game to your advantage is [color=#ff0000]not allowed[/color]. IC and OOC are to be kept separate at all times.
+	- Metacommunication, or communicating with other players via out of game methods (such as Discord) to gain an unfair advantage is also strictly [color=#ff0000]prohibited[/color].
+	- Random PDA checks are also [color=#ff0000]prohibited[/color] under this rule.

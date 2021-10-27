@@ -20,8 +20,9 @@
   - type: ShuttleConsole
   - type: ApcPowerReceiver
     powerLoad: 200
+  - type: ExtensionCableReceiver
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#43ccb5"
 
@@ -49,7 +50,7 @@
       key: syndie_key
       screen: syndishuttle
   - type: PointLight
-    radius: 1.6
+    radius: 1.5
     energy: 1.6
     color: "#c94242"
 
@@ -65,7 +66,7 @@
       key: power_key
       screen: power_monitor
   - type: PointLight
-    radius: 1.6
+    radius: 1.5
     energy: 1.6
     color: "#c9c042"
 
@@ -81,7 +82,7 @@
       key: med_key
       screen: medcomp
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#1f8c28"
 
@@ -108,10 +109,11 @@
   - type: ApcPowerReceiver
     powerLoad: 200
     priority: Low
+  - type: ExtensionCableReceiver
   - type: Computer
     board: ResearchComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b53ca1"
 
@@ -136,7 +138,7 @@
   - type: Computer
     board: IDComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
 
@@ -159,7 +161,7 @@
   - type: Computer
     board: BodyScannerComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#1f8c28"
 
@@ -182,7 +184,7 @@
   - type: Computer
     board: CommsComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#3c5eb5"
 
@@ -205,7 +207,7 @@
   - type: Computer
     board: SolarControlComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#e6e227"
 
@@ -239,6 +241,7 @@
       - HydroponicsTools
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
+      - LivestockMonkeyCube
       - ServiceJanitorial
       - ServiceLightsReplacement
       - EngineeringCableLv
@@ -256,6 +259,7 @@
       - MaterialGlass
       - MaterialPlastic
       - MaterialPlasteel
+      - MaterialPlasma
       - EngineSingularityEmitter
       - EngineSingularityCollector
       - EngineSingularityGenerator
@@ -275,7 +279,7 @@
   - type: Computer
     board: SupplyComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b89f25"
 
@@ -295,6 +299,6 @@
   - type: Computer
     board: SupplyRequestComputerCircuitboard
   - type: PointLight
-    radius: 2
+    radius: 1.5
     energy: 1.6
     color: "#b89f25"

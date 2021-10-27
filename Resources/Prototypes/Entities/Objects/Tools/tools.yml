@@ -177,7 +177,7 @@
     - Belt
   - type: Tool
     qualities:
-      - Multitool
+      - Pulsing
   - type: SignalLinker
 
 - type: entity
@@ -198,17 +198,21 @@
   - type: Tool
     qualities:
       - Screwing
+  - type: MultipleTool
     statusShowBehavior: true
-  - type: MultiTool
-    tools:
+    entries:
       - behavior: Screwing
-        state: drill_screw
+        sprite:
+          sprite: Objects/Tools/drill.rsi
+          state: drill_screw
         useSound:
           path: /Audio/Items/drill_use.ogg
         changeSound:
           path: /Audio/Items/change_drill.ogg
       - behavior: Anchoring
-        state: drill_bolt
+        sprite:
+          sprite: Objects/Tools/drill.rsi
+          state: drill_bolt
         useSound:
           path: /Audio/Items/drill_use.ogg
         changeSound:

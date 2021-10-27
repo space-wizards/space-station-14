@@ -6,6 +6,7 @@
   departments:
   - Civilian
   icon: "Mime"
+  supervisors: "the head of personnel"
   access:
   - Theatre
   - Maintenance

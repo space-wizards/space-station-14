@@ -77,10 +77,14 @@ namespace Content.Shared.MedicalScanner
             }
         }
 
+        public bool CanInsert(IEntity entity)
+        {
+            return entity.HasComponent<SharedBodyComponent>();
+        }
 
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {
-            return eventArgs.Dragged.HasComponent<SharedBodyComponent>();
+            return CanInsert(eventArgs.Dragged);
         }
 
         public abstract bool DragDropOn(DragDropEvent eventArgs);

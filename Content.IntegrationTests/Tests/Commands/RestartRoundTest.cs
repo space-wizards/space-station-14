@@ -12,8 +12,8 @@ using Robust.Shared.Timing;
 namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
-    [TestOf(typeof(NewRoundCommand))]
-    public class RestartRoundTest : ContentIntegrationTest
+    [TestOf(typeof(RestartRoundNowCommand))]
+    public class RestartRoundNowTest : ContentIntegrationTest
     {
         [Test]
         [TestCase(true)]
@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Commands
 
                 tickBeforeRestart = entityManager.CurrentTick;
 
-                var command = new NewRoundCommand();
+                var command = new RestartRoundNowCommand();
                 command.Execute(null, string.Empty, Array.Empty<string>());
 
                 if (lobbyEnabled)

@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Weapon.Ranged.Ammunition.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -332,48 +330,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             base.Examine(message, inDetailsRange);
 
             message.AddMarkup("\n" + Loc.GetString("bolt-action-barrel-component-on-examine", ("caliber", _caliber)));
-        }
-
-        [Verb]
-        private sealed class OpenBoltVerb : Verb<BoltActionBarrelComponent>
-        {
-            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("open-bolt-verb-get-data-text");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Invisible : VerbVisibility.Visible;
-            }
-
-            protected override void Activate(IEntity user, BoltActionBarrelComponent component)
-            {
-                component.BoltOpen = true;
-            }
-        }
-
-        [Verb]
-        private sealed class CloseBoltVerb : Verb<BoltActionBarrelComponent>
-        {
-            protected override void GetData(IEntity user, BoltActionBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("close-bolt-verb-get-data-text");
-                data.Visibility = component.BoltOpen ? VerbVisibility.Visible : VerbVisibility.Invisible;
-            }
-
-            protected override void Activate(IEntity user, BoltActionBarrelComponent component)
-            {
-                component.BoltOpen = false;
-            }
         }
     }
 }

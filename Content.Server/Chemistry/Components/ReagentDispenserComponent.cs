@@ -15,7 +15,6 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -46,13 +45,13 @@ namespace Content.Server.Chemistry.Components
 
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        [ViewVariables] private ContainerSlot _beakerContainer = default!;
+        [ViewVariables] public ContainerSlot BeakerContainer = default!;
         [ViewVariables] [DataField("pack")] private string _packPrototypeId = "";
 
         [DataField("clickSound")]
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
-        [ViewVariables] private bool HasBeaker => _beakerContainer.ContainedEntity != null;
+        [ViewVariables] public bool HasBeaker => BeakerContainer.ContainedEntity != null;
         [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
 
         [UsedImplicitly]
@@ -84,7 +83,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
-            _beakerContainer =
+            BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
             InitializeFromPrototype();
@@ -228,7 +227,7 @@ namespace Content.Server.Chemistry.Components
         /// <returns>Returns a <see cref="SharedReagentDispenserComponent.ReagentDispenserBoundUserInterfaceState"/></returns>
         private ReagentDispenserBoundUserInterfaceState GetUserInterfaceState()
         {
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
             if (beaker == null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
             {
@@ -252,16 +251,16 @@ namespace Content.Server.Chemistry.Components
         /// If this component contains an entity with a <see cref="SolutionHolder"/>, eject it.
         /// Tries to eject into user's hands first, then ejects onto dispenser if both hands are full.
         /// </summary>
-        private void TryEject(IEntity user)
+        public void TryEject(IEntity user)
         {
             if (!HasBeaker)
                 return;
 
-            var beaker = _beakerContainer.ContainedEntity;
+            var beaker = BeakerContainer.ContainedEntity;
             if (beaker is null)
                 return;
 
-            _beakerContainer.Remove(beaker);
+            BeakerContainer.Remove(beaker);
             UpdateUserInterface();
 
             if (!user.TryGetComponent<HandsComponent>(out var hands) ||
@@ -276,12 +275,12 @@ namespace Content.Server.Chemistry.Components
         /// </summary>
         private void TryClear()
         {
-            if (!HasBeaker || !_beakerContainer.ContainedEntity!.TryGetComponent(out FitsInDispenserComponent? fits) ||
+            if (!HasBeaker || !BeakerContainer.ContainedEntity!.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(_beakerContainer.ContainedEntity, fits.Solution, out var solution))
+                    .TryGetSolution(BeakerContainer.ContainedEntity, fits.Solution, out var solution))
                 return;
 
-            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(_beakerContainer.ContainedEntity!.Uid, solution);
+            EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(BeakerContainer.ContainedEntity!.Uid, solution);
 
             UpdateUserInterface();
         }
@@ -294,12 +293,12 @@ namespace Content.Server.Chemistry.Components
         {
             if (!HasBeaker) return;
 
-            if (_beakerContainer.ContainedEntity is not {} contained || !contained.TryGetComponent(out FitsInDispenserComponent? fits)
+            if (BeakerContainer.ContainedEntity is not {} contained || !contained.TryGetComponent(out FitsInDispenserComponent? fits)
                 || !EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(_beakerContainer.ContainedEntity, fits.Solution, out var solution)) return;
+                .TryGetSolution(BeakerContainer.ContainedEntity, fits.Solution, out var solution)) return;
 
             EntitySystem.Get<SolutionContainerSystem>()
-                .TryAddReagent(_beakerContainer.ContainedEntity.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
+                .TryAddReagent(BeakerContainer.ContainedEntity.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);
 
             UpdateUserInterface();
         }
@@ -360,7 +359,7 @@ namespace Content.Server.Chemistry.Components
                     return false;
                 }
 
-                _beakerContainer.Insert(activeHandEntity);
+                BeakerContainer.Insert(activeHandEntity);
                 UpdateUserInterface();
 
                 return true;
@@ -376,30 +375,6 @@ namespace Content.Server.Chemistry.Components
         private void ClickSound()
         {
             SoundSystem.Play(Filter.Pvs(Owner), _clickSound.GetSound(), Owner, AudioParams.Default.WithVolume(-2f));
-        }
-
-        [Verb]
-        public sealed class EjectBeakerVerb : Verb<ReagentDispenserComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ReagentDispenserComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("eject-beaker-verb-get-data-text");
-                data.Visibility = component.HasBeaker ? VerbVisibility.Visible : VerbVisibility.Invisible;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, ReagentDispenserComponent component)
-            {
-                component.TryEject(user);
-            }
         }
 
         private class ReagentInventoryComparer : Comparer<ReagentDispenserInventoryEntry>

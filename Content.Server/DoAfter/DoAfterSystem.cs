@@ -41,7 +41,7 @@ namespace Content.Server.DoAfter
         {
             base.Update(frameTime);
 
-            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<DoAfterComponent>())
             {
                 foreach (var doAfter in comp.DoAfters.ToArray())
                 {

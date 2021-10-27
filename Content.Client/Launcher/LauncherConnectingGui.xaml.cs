@@ -51,6 +51,9 @@ namespace Content.Client.Launcher
             ConnectingStatus.Visible = page == LauncherConnecting.Page.Connecting;
             ConnectFail.Visible = page == LauncherConnecting.Page.ConnectFailed;
             Disconnected.Visible = page == LauncherConnecting.Page.Disconnected;
+
+            if (page == LauncherConnecting.Page.Disconnected)
+                DisconnectReason.Text = _state.LastDisconnectReason;
         }
 
         private void ConnectionStateChanged(ClientConnectionState state)

@@ -19,7 +19,6 @@ namespace Content.Client.Popups
     public class PopupSystem : SharedPopupSystem
     {
         [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
         private readonly List<PopupLabel> _aliveLabels = new();
@@ -79,24 +78,24 @@ namespace Content.Client.Popups
         {
             if (!filter.CheckPrediction)
                 return;
+
+            PopupCursor(message);
         }
 
         public override void PopupCoordinates(string message, EntityCoordinates coordinates, Filter filter)
         {
             if (!filter.CheckPrediction)
                 return;
+
+            PopupCoordinates(message, coordinates);
         }
 
         public override void PopupEntity(string message, EntityUid uid, Filter filter)
         {
             if (!filter.CheckPrediction)
                 return;
-        }
 
-        public override Filter GetFilterFromEntity(IEntity entity)
-        {
-            return _playerManager.LocalPlayer?.ControlledEntity == entity
-                ? Filter.Local() : Filter.Empty().Unpredicted();
+            PopupEntity(message, uid);
         }
 
         #endregion

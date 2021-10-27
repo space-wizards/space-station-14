@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Shared.AI;
 using Content.Shared.GameTicking;
@@ -38,6 +39,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly PathfindingSystem _pathfindingSystem = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
         /// <summary>
         /// Queued region updates
@@ -171,6 +173,10 @@ namespace Content.Server.AI.Pathfinding.Accessible
         /// <returns></returns>
         public bool CanAccess(IEntity entity, IEntity target, float range = 0.0f)
         {
+            // TODO: Handle this gracefully instead of just failing.
+            if (!target.Transform.GridID.IsValid())
+                return false;
+
             var targetTile = _mapManager.GetGrid(target.Transform.GridID).GetTileRef(target.Transform.Coordinates);
             var targetNode = _pathfindingSystem.GetNode(targetTile);
 
@@ -180,7 +186,7 @@ namespace Content.Server.AI.Pathfinding.Accessible
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = AccessReader.FindAccessTags(entity);
+            var access = _accessReader.FindAccessTags(entity.Uid);
 
             // We'll do a quick traversable check before going through regions
             // If we can't access it we'll try to get a valid node in range (this is essentially an early-out)

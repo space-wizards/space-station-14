@@ -16,7 +16,7 @@ namespace Content.Server.Weapon
     {
         public override string Name => "WeaponCapacitorCharger";
 
-        protected override bool IsEntityCompatible(IEntity entity)
+        public override bool IsEntityCompatible(IEntity entity)
         {
             return entity.TryGetComponent(out ServerBatteryBarrelComponent? battery) && battery.PowerCell != null ||
                    entity.TryGetComponent(out PowerCellSlotComponent? slot) && slot.HasCell;

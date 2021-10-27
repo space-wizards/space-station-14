@@ -73,12 +73,17 @@ namespace Content.Shared.SubFloor
         private void OnSubFloorStarted(EntityUid uid, SubFloorHideComponent component, ComponentStartup _)
         {
             UpdateEntity(uid);
+            EntityManager.EnsureComponent<CollideOnAnchorComponent>(uid);
         }
 
         private void OnSubFloorTerminating(EntityUid uid, SubFloorHideComponent component, ComponentShutdown _)
         {
+            // If component is being deleted don't need to worry about updating any component stuff because it won't matter very shortly.
+            if (EntityManager.GetEntity(uid).LifeStage >= EntityLifeStage.Terminating) return;
+
             // Regardless of whether we're on a subfloor or not, unhide.
             UpdateEntity(uid, true);
+            EntityManager.RemoveComponent<CollideOnAnchorComponent>(uid);
         }
 
         private void HandleAnchorChanged(EntityUid uid, SubFloorHideComponent component, ref AnchorStateChangedEvent args)
@@ -190,12 +195,6 @@ namespace Content.Shared.SubFloor
             if (EntityManager.TryGetComponent(uid, out SharedAppearanceComponent? appearanceComponent))
             {
                 appearanceComponent.SetData(SubFloorVisuals.SubFloor, subFloorVisible);
-            }
-
-            // So for collision all we care about is that the component is running.
-            if (EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
-            {
-                physicsComponent.CanCollide = subFloor;
             }
         }
     }

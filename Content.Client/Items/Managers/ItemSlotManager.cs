@@ -78,7 +78,7 @@ namespace Content.Client.Items.Managers
             else if (args.Function == ContentKeyFunctions.OpenContextMenu)
             {
                 _entitySystemManager.GetEntitySystem<VerbSystem>()
-                                    .OpenContextMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
+                                    .OpenVerbMenu(item, _uiMgr.ScreenToUIPosition(args.PointerLocation));
             }
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {

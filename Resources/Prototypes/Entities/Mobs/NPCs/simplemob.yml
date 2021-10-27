@@ -105,10 +105,10 @@
       CarbonDioxide: 0.00015190972
     damage:
       types:
-        Asphyxiation: 1 
+        Asphyxiation: 1
     damageRecovery:
       types:
-        Asphyxiation: -1 
+        Asphyxiation: -1
   - type: MobState
     thresholds:
       0: !type:NormalMobState {}
@@ -117,7 +117,11 @@
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
   - type: Examiner
   - type: UnarmedCombat
     range: 1.5

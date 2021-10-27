@@ -252,39 +252,5 @@ namespace Content.Server.Disposal.Tube.Components
             Disconnect();
             UpdateVisualState();
         }
-
-        [Verb]
-        private sealed class TubeDirectionsVerb : Verb<IDisposalTubeComponent>
-        {
-            protected override void GetData(IEntity user, IDisposalTubeComponent component, VerbData data)
-            {
-                data.Text = Loc.GetString("tube-direction-verb-get-data-text");
-                data.CategoryData = VerbCategories.Debug;
-                data.Visibility = VerbVisibility.Invisible;
-
-                var groupController = IoCManager.Resolve<IConGroupController>();
-
-                if (user.TryGetComponent<ActorComponent>(out var player))
-                {
-                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
-                    {
-                        data.Visibility = VerbVisibility.Visible;
-                    }
-                }
-            }
-
-            protected override void Activate(IEntity user, IDisposalTubeComponent component)
-            {
-                var groupController = IoCManager.Resolve<IConGroupController>();
-
-                if (user.TryGetComponent<ActorComponent>(out var player))
-                {
-                    if (groupController.CanCommand(player.PlayerSession, "tubeconnections"))
-                    {
-                        component.PopupDirections(user);
-                    }
-                }
-            }
-        }
     }
 }

@@ -34,6 +34,7 @@ namespace Content.Server.Shuttles
             foreach (var fixture in args.NewFixtures)
             {
                 fixture.Mass = fixture.Area * TileMassMultiplier;
+                fixture.Restitution = 0.1f;
             }
 
             if (body.Owner.TryGetComponent(out ShuttleComponent? shuttleComponent))
@@ -123,7 +124,7 @@ namespace Content.Server.Shuttles
             component.BodyType = BodyType.Dynamic;
             component.BodyStatus = BodyStatus.InAir;
             //component.FixedRotation = false; TODO WHEN ROTATING SHUTTLES FIXED.
-            component.FixedRotation = true;
+            component.FixedRotation = false;
             component.LinearDamping = 0.2f;
             component.AngularDamping = 0.1f;
         }

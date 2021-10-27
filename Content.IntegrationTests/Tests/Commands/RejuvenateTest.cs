@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Content.Server.Damage;
+using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.MobState;
@@ -12,7 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
-    [TestOf(typeof(RejuvenateVerb))]
+    [TestOf(typeof(RejuvenateCommand))]
     public class RejuvenateTest : ContentIntegrationTest
     {
         private const string Prototypes = @"
@@ -66,7 +66,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.True);
 
                 // Rejuvenate them
-                RejuvenateVerb.PerformRejuvenate(human);
+                RejuvenateCommand.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
                 Assert.That(mobState.IsAlive, Is.True);

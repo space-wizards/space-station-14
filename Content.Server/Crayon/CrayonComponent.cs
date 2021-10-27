@@ -133,7 +133,6 @@ namespace Content.Server.Crayon
             {
                 appearance.SetData(CrayonVisuals.State, SelectedState);
                 appearance.SetData(CrayonVisuals.Color, _color);
-                appearance.SetData(CrayonVisuals.Rotation, eventArgs.User.Transform.LocalRotation);
             }
 
             if (_useSound != null)

@@ -7,6 +7,7 @@ using Content.Shared.Physics.Pull;
 using Robust.Shared.Configuration;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
@@ -32,7 +33,23 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, StartCollideEvent>(HandleCollision);
             SubscribeLocalEvent<ThrownItemComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<ThrownItemComponent, ThrownEvent>(ThrowItem);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
+        }
+
+        private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
+        {
+            args.State = new ThrownItemComponentState(component.Thrower?.Uid);
+        }
+
+        private void OnHandleState(EntityUid uid, ThrownItemComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not ThrownItemComponentState state || state.Thrower == null)
+                return;
+
+            if(EntityManager.TryGetEntity(state.Thrower.Value, out var entity))
+                component.Thrower = entity;
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)

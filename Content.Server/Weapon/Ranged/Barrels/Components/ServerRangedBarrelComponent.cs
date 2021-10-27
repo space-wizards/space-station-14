@@ -384,7 +384,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         private void FireHitscan(IEntity shooter, HitscanComponent hitscan, Angle angle)
         {
             var ray = new CollisionRay(Owner.Transform.Coordinates.ToMapPos(Owner.EntityManager), angle.ToVec(), (int) hitscan.CollisionMask);
-            var physicsManager = EntitySystem.Get<SharedBroadphaseSystem>();
+            var physicsManager = EntitySystem.Get<SharedPhysicsSystem>();
             var rayCastResults = physicsManager.IntersectRay(Owner.Transform.MapID, ray, hitscan.MaxLength, shooter, false).ToList();
 
             if (rayCastResults.Count >= 1)

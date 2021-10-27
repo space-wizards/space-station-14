@@ -10,6 +10,8 @@
   - Command
   - Medical
   icon: "ChiefMedicalOfficer"
+  requireAdminNotify: true
+  supervisors: "the captain"
   access:
   - Medical
   - Command

@@ -16,7 +16,11 @@ namespace Content.Server.Power.Nodes
         public override IEnumerable<Node> GetReachableNodes()
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var grid = IoCManager.Resolve<IMapManager>().GetGrid(Owner.Transform.GridID);
+
+            // If we're in an invalid grid, such as grid 0, we cannot connect to anything.
+            if(!IoCManager.Resolve<IMapManager>().TryGetGrid(Owner.Transform.GridID, out var grid))
+                yield break;
+
             var gridIndex = grid.TileIndicesFor(Owner.Transform.Coordinates);
 
             foreach (var node in NodeHelpers.GetNodesInTile(entMan, grid, gridIndex))

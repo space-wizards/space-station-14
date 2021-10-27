@@ -12,6 +12,9 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
     [UsedImplicitly]
     public class AddToSolutionReaction : ReagentEntityReaction
     {
+        [DataField("solution")]
+        private string _solution = "reagents";
+
         [DataField("reagents", true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly HashSet<string> _reagents = new();
@@ -20,7 +23,7 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         {
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(entity, "reagents", out var solutionContainer)
+                    .TryGetSolution(entity, _solution, out var solutionContainer)
                 || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
             if (EntitySystem.Get<SolutionContainerSystem>()

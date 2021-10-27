@@ -214,8 +214,14 @@ namespace Content.IntegrationTests.Tests.Fluids
                 // Check that the puddle is unpaused
                 Assert.False(sPuddle.Owner.Paused);
 
-                // By now, the puddle should have evaporated and deleted.
-                Assert.True(sPuddle.Deleted);
+                // Check that the puddle has evaporated some of its volume
+                Assert.That(sPuddle.CurrentVolume, Is.LessThan(sPuddleStartingVolume));
+
+                // If its new volume is zero it should have been deleted
+                if (sPuddle.CurrentVolume == ReagentUnit.Zero)
+                {
+                    Assert.True(sPuddle.Deleted);
+                }
             });
         }
     }

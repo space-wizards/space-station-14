@@ -217,11 +217,33 @@
   itemId: lanternextrabright
   price: 2
 
-#- type: uplinkListing
-#  id: UplinkTelecrystal
-#  category: Misc
-#  itemId: Telecrystal
-#  price: 1
+- type: uplinkListing
+  id: UplinkTelecrystal
+  category: Misc
+  itemId: Telecrystal1
+  price: 1
+  listingName: telecrystal [1]
+
+- type: uplinkListing
+  id: UplinkTelecrystal5
+  category: Misc
+  itemId: Telecrystal5
+  price: 5
+  listingName: telecrystal [5]
+
+- type: uplinkListing
+  id: UplinkTelecrystal10
+  category: Misc
+  itemId: Telecrystal10
+  price: 10
+  listingName: telecrystal [10]
+
+- type: uplinkListing
+  id: UplinkTelecrystal20
+  category: Misc
+  itemId: Telecrystal
+  price: 20
+  listingName: telecrystal [20]
 
 # Pointless
 

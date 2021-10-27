@@ -4,11 +4,9 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -92,6 +90,10 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             if (_unspawnedCount > 0)
             {
                 ammo = Owner.EntityManager.SpawnEntity(_fillPrototype, Owner.Transform.Coordinates);
+
+                // when dumping from held ammo box, this detaches the spawned ammo from the player.
+                ammo.Transform.AttachParentToContainerOrGrid();
+
                 _unspawnedCount--;
             }
 
@@ -183,7 +185,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             return true;
         }
 
-        private void EjectContents(int count)
+        public void EjectContents(int count)
         {
             var ejectCount = Math.Min(count, Capacity);
             var ejectAmmo = new List<IEntity>(ejectCount);
@@ -211,31 +213,6 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)
         {
             return TryUse(eventArgs.User);
-        }
-
-
-
-        // So if you have 200 rounds in a box and that suddenly creates 200 entities you're not having a fun time
-        [Verb]
-        private sealed class DumpVerb : Verb<AmmoBoxComponent>
-        {
-            protected override void GetData(IEntity user, AmmoBoxComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                data.Text = Loc.GetString("dump-vert-get-data-text");
-                data.Visibility = component.AmmoLeft > 0 ? VerbVisibility.Visible : VerbVisibility.Disabled;
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, AmmoBoxComponent component)
-            {
-                component.EjectContents(10);
-            }
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)

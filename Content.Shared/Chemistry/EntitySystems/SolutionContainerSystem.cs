@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Chemistry.Components;
@@ -50,9 +50,12 @@ namespace Content.Shared.Chemistry.EntitySystems
             foreach (var keyValue in component.Solutions)
             {
                 var solutionHolder = keyValue.Value;
-                solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
-                    ? solutionHolder.TotalVolume
-                    : solutionHolder.InitialMaxVolume;
+                if (solutionHolder.MaxVolume == ReagentUnit.Zero)
+                {
+                    solutionHolder.MaxVolume = solutionHolder.TotalVolume > solutionHolder.InitialMaxVolume
+                        ? solutionHolder.TotalVolume
+                        : solutionHolder.InitialMaxVolume;
+                }
 
                 UpdateAppearance(uid, solutionHolder);
             }
@@ -208,7 +211,7 @@ namespace Content.Shared.Chemistry.EntitySystems
         }
 
         public bool TryGetSolution(IEntity? target, string name,
-            [NotNullWhen(true)] out Solution? solution)
+            [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
         {
             if (target == null || target.Deleted)
             {
@@ -216,13 +219,12 @@ namespace Content.Shared.Chemistry.EntitySystems
                 return false;
             }
 
-            return TryGetSolution(target.Uid, name, out solution);
+            return TryGetSolution(target.Uid, name, out solution, solutionsMgr);
         }
 
-        public bool TryGetSolution(EntityUid uid, string name,
-            [NotNullWhen(true)] out Solution? solution)
+        public bool TryGetSolution(EntityUid uid, string name, [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
         {
-            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionsMgr))
+            if (!Resolve(uid, ref solutionsMgr))
             {
                 solution = null;
                 return false;

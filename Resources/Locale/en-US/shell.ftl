@@ -6,7 +6,7 @@ shell-server-cannot = Server cannot do this.
 shell-command-success = Command successful
 shell-invalid-command = Invalid command.
 shell-invalid-command-specific = Invalid {$commandName} command.
-shell-cannot-run-command-from-server = You cannot run this command from the server. 
+shell-cannot-run-command-from-server = You cannot run this command from the server.
 shell-only-players-can-run-this-command = Only players can run this command.
 
 ## Arguments
@@ -29,5 +29,4 @@ shell-entity-with-uid-lacks-component = Entity with uid {$uid} doesn't have a {$
 shell-invalid-color-hex = Invalid color hex!
 shell-target-player-does-not-exist = Target player does not exist!
 shell-target-entity-does-not-have-message = Target entity does not have a(n) {$missing}!
-
-
+shell-timespan-minutes-must-be-correct = {$span} is not a valid minutes timespan.

@@ -2207,3 +2207,576 @@ Entries:
     type: Fix}
   id: 394
   time: '2021-10-02T17:53:10.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: 'Anchored Atmos devices (Gas miners, etc.) refusing to work', type: Fix}
+  id: 395
+  time: '2021-10-02T21:03:43.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Meat actually appears on the meat spike again, type: Fix}
+  id: 396
+  time: '2021-10-02T23:43:47.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Ghosts should no longer go in weird directions and lose the ability
+      to see when the body was inside something or buckled to something when the ghost
+      was made., type: Fix}
+  id: 397
+  time: '2021-10-03T04:51:23.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Updates AME core count indicator as the layout changes., type: Fix}
+  - {message: AME connection issues shouldn't occur anymore., type: Fix}
+  id: 398
+  time: '2021-10-03T11:33:28.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a rules button to the lobby and character creation screen. Be
+      sure to read them!, type: Add}
+  id: 399
+  time: '2021-10-03T21:48:29.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Singularity should be much easier to see now, type: Tweak}
+  id: 400
+  time: '2021-10-03T22:53:44.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Cuffs can no longer be put in your belt slot, type: Fix}
+  id: 401
+  time: '2021-10-03T22:53:52.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: AME is no longer capable of producing negative energy., type: Fix}
+  id: 402
+  time: '2021-10-04T00:58:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Radiation storms actually hit the station again as opposed to 0,0',
+    type: Fix}
+  id: 403
+  time: '2021-10-04T01:26:45.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pull-to-location works again., type: Fix}
+  id: 404
+  time: '2021-10-04T15:10:55.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added a new rule against metagaming and metacomms. Be sure to read it!,
+    type: Add}
+  id: 405
+  time: '2021-10-04T15:16:06.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Added several new verbs for inserting objects and (un)buckling entities.,
+    type: Add}
+  - {message: 'Some verbs can now be triggerd by alt clicking (e.g., spin revolver).
+      Others have had alt-click removed (e.g., open storage UI), because that functionality
+      is already provided by the ''E'' keybind.', type: Tweak}
+  - {message: Moving entities remain in the context menu until out of view (you can
+      now interact with yourself while moving)., type: Fix}
+  id: 406
+  time: '2021-10-05T03:29:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: unbreak pulling prediction, type: Fix}
+  id: 407
+  time: '2021-10-05T21:51:34.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix being able to trap admin ghosts on lockers., type: Fix}
+  id: 408
+  time: '2021-10-06T09:58:02.819938+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix ghosts having empty names under certain conditions., type: Fix}
+  id: 409
+  time: '2021-10-06T09:58:02.820744+00:00'
+- author: Zumorica
+  changes:
+  - {message: Improved the join greeting text. Now you can easily know who your supervisors
+      are!, type: Tweak}
+  - {message: A station announcement will be sent when there's a captain on deck.,
+    type: Tweak}
+  id: 410
+  time: '2021-10-06T11:51:11.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix bike horn sound not having pitch variation anymore., type: Fix}
+  id: 411
+  time: '2021-10-06T13:13:56.224775+00:00'
+- author: 20kdc
+  changes:
+  - {message: '''AHelp'' next to the options menu.', type: Add}
+  id: 412
+  time: '2021-10-06T15:25:28.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Fixes a bunch of weirdly rotated stuff on Saltern., type: Fix}
+  id: 413
+  time: '2021-10-07T04:55:39.708225+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fixed puddles blocking bullets or other puddles., type: Fix}
+  id: 414
+  time: '2021-10-07T06:59:12.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Fixed doors having murderous intent on unrotated stations., type: Fix}
+  id: 415
+  time: '2021-10-08T07:37:18.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added Telecrystals (TC) in traitors uplinks, type: Add}
+  id: 416
+  time: '2021-10-08T10:26:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: 'Added a warning dialog to the observe button, no more misclicks.',
+    type: Add}
+  id: 417
+  time: '2021-10-08T14:22:58.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Shuttle rotation is now enabled., type: Add}
+  id: 418
+  time: '2021-10-08T23:55:11.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added grilles., type: Add}
+  id: 419
+  time: '2021-10-09T08:54:56.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Expand out saltern's north-eastern maintenance just a bit, type: Tweak}
+  id: 420
+  time: '2021-10-09T11:06:34.0000000+00:00'
+- author: 20kdc
+  changes: []
+  id: 421
+  time: '2021-10-09T13:48:53.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pulling an abnormally close object shouldn't cause errors, type: Fix}
+  id: 422
+  time: '2021-10-09T13:49:08.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Added a verb to rotatable entities to reset rotation back to 0., type: Add}
+  id: 423
+  time: '2021-10-09T16:23:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: small light sources like computers no longer cast shadows to improve
+      performance., type: Tweak}
+  id: 424
+  time: '2021-10-09T16:26:45.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Fixed puddles not spilling into neighboring tiles., type: Fix}
+  id: 425
+  time: '2021-10-09T16:33:24.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Fixed certain vending machines having very large ambient light radius
+      and shining through walls., type: Fix}
+  id: 426
+  time: '2021-10-09T18:15:06.131590+00:00'
+- author: moony
+  changes:
+  - {and allows you to see the round end screen.: null, message: The Restart Round
+      vote no longer instantly ends the round, type: tweak}
+  id: 427
+  time: '2021-10-09T18:18:20.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Blast doors and shutters have been added, though they aren''t mapped
+      in yet.', type: Add}
+  id: 428
+  time: '2021-10-10T10:43:50.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix airlocks not auto-closing anymore., type: Fix}
+  id: 429
+  time: '2021-10-10T13:59:27.943854+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed mobs that die or go into crit not being downed., type: Fix}
+  id: 430
+  time: '2021-10-11T23:44:30.123871+00:00'
+- author: moony
+  changes:
+  - {message: Central Command has installed a bluespace railgun. Pray they do not
+      use it., type: Add}
+  id: 431
+  time: '2021-10-12T05:11:09.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Grown food isn't empty anymore - "Long monkey" no longer the only long-term
+      option, type: Fix}
+  id: 432
+  time: '2021-10-12T08:01:23.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes thrown slippery items causing the thrower to become horizontal
+      when they shouldn't., type: Fix}
+  id: 433
+  time: '2021-10-12T19:59:18.230928+00:00'
+- author: Jazpixel
+  changes:
+  - {message: Removed single line that broke crayons., type: Remove}
+  id: 434
+  time: '2021-10-13T06:56:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Condiments, baked goods, bowls, some produce have solution properties
+      somewhat fixed', type: Fix}
+  - {message: remaining references to Salt have been migrated to TableSalt, type: Fix}
+  id: 435
+  time: '2021-10-13T08:03:12.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes are available to Cargo, type: Add}
+  id: 436
+  time: '2021-10-13T17:14:34.0000000+00:00'
+- author: PJB3005
+  changes: []
+  id: 437
+  time: '2021-10-13T21:04:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Reduced radiation pulse damage to be around 20 for a direct sustained
+      hit., type: Tweak}
+  id: 438
+  time: '2021-10-14T18:02:08.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Add solar control computer board to the lathe, so solar panels can
+      actually be controlled in theory', type: Add}
+  id: 439
+  time: '2021-10-15T00:05:05.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Doors now shut properly on a rotated shuttle., type: Fix}
+  id: 440
+  time: '2021-10-15T03:04:23.0000000+00:00'
+- author: Swept
+  changes:
+  - {message: Converted most of the codebase to Supernorn sprites, type: Tweak}
+  - {message: Removes most of the cev-eris sprites, type: Remove}
+  - {message: Removed low walls, type: Remove}
+  - {message: Removed shelves, type: Remove}
+  id: 441
+  time: '2021-10-15T09:58:40.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Adapts window construction to the new sprites and grilles., type: Tweak}
+  id: 442
+  time: '2021-10-15T10:21:58.640854+00:00'
+- author: Macoron
+  changes:
+  - {message: Uplinks UI now have description of items., type: Add}
+  - {message: Admins can spawn ready to use uplinks., type: Add}
+  id: 443
+  time: '2021-10-15T10:49:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Black gloves and the captain's gloves now protect you against burn damage
+      from replacing lightbulbs., type: Tweak}
+  id: 444
+  time: '2021-10-15T11:07:27.972020+00:00'
+- author: Zumorica
+  changes:
+  - {message: Balanced SSS weapon spawns to be more fair., type: Tweak}
+  id: 445
+  time: '2021-10-15T12:46:50.053991+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fixes slips not working. GO FORTH AND SLIP, MY CHILDREN!', type: Fix}
+  id: 446
+  time: '2021-10-15T22:21:14.743072+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: ChemMaster UI has been repaired., type: Fix}
+  - {message: Pills are now edible again., type: Fix}
+  id: 447
+  time: '2021-10-16T12:56:21.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Ghost have now attuned themselves to radio waves allowing them to listen
+      in on the station chatter., type: Add}
+  id: 448
+  time: '2021-10-16T19:04:35.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Saltern''s security substation''s protective APC is now inside the
+      security substation chamber, which has been made a little bigger accordingly.',
+    type: Tweak}
+  - {message: 'Saltern now has solars - north set in north-west maintenance, south
+      set a bit east of library.', type: Add}
+  id: 449
+  time: '2021-10-16T20:02:40.0000000+00:00'
+- author: Watermelon914
+  changes:
+  - {message: Adds hand labelers which allow you to append and remove labels from
+      structures and objects., type: Add}
+  id: 450
+  time: '2021-10-16T20:34:05.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Nanotrasen has found the budget to install proper atmospherics., type: Add}
+  id: 451
+  time: '2021-10-16T23:11:06.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Ad-dd-ded st-tutt-ter-ring-g-g, type: Add}
+  id: 452
+  time: '2021-10-16T23:23:31.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Added Hydroponics tray machine board, type: Add}
+  id: 453
+  time: '2021-10-18T06:12:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pipe rotation is less chaotic evil., type: Fix}
+  id: 454
+  time: '2021-10-18T11:42:30.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: '"Prefer integer scaling" setting will now properly save', type: Fix}
+  id: 455
+  time: '2021-10-18T22:47:27.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Security gear will now actually protect you against attacks., type: Add}
+  - {message: Mesons and hardsuits now actually protect against radiation., type: Add}
+  id: 456
+  time: '2021-10-18T23:24:37.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Monkey cubes and rehydratable space carp work properly and don't rely
+      on the RefillableSolution workaround., type: Fix}
+  - {message: Poisoning something that can be sliced now poisons the slices., type: Tweak}
+  id: 457
+  time: '2021-10-19T07:13:44.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: freezers are rotatable now., type: Fix}
+  id: 458
+  time: '2021-10-19T07:22:41.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Singularity field generators should be easier to move around., type: Tweak}
+  id: 459
+  time: '2021-10-19T07:24:07.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: Show set pressure when examining gas pumps., type: Add}
+  - {message: Show set rate when examining volumetric gas pumps., type: Add}
+  - {message: Show valve status (open/closed) when examining manual valves., type: Add}
+  id: 460
+  time: '2021-10-19T21:46:31.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: NT took the tele-trashbags back. At least they left some normal ones
+      for us..., type: Fix}
+  id: 461
+  time: '2021-10-20T13:25:22.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Anti-matter engine actually generates power again., type: Fix}
+  id: 462
+  time: '2021-10-20T18:31:53.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Cable terminals can be built now., type: Add}
+  id: 463
+  time: '2021-10-20T20:25:02.0000000+00:00'
+- author: Fortune
+  changes:
+  - {message: Overdosing on meth will result in you dying about twice as fast., type: Add}
+  id: 464
+  time: '2021-10-20T20:30:55.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Character names are now restricted to alphanumerics by default., type: Tweak}
+  - {message: Completely invalid names are now randomized instead of defaulting to
+      "Urist McHands", type: Tweak}
+  id: 465
+  time: '2021-10-21T10:52:26.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes mobs being on fire permanently, type: Fix}
+  id: 466
+  time: '2021-10-21T21:09:28.187458+00:00'
+- author: 20kdc
+  changes:
+  - {message: Saltern now uses SMES terminals, type: Add}
+  - {message: SMESes in solars, type: Add}
+  - {message: Nudge a trash spawner back in-bounds, type: Fix}
+  id: 467
+  time: '2021-10-21T21:25:21.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: 'You can now see your held active item next to your mouse cursor, to
+      hopefully aid in remembering which your active hand is.', type: Add}
+  - {message: This feature can be toggled in the options menu if you'd prefer not
+      having it., type: Tweak}
+  id: 468
+  time: '2021-10-22T02:26:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Gunpet, type: Add}
+  id: 469
+  time: '2021-10-22T09:14:09.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Plasma into the cargo console, type: Add}
+  id: 470
+  time: '2021-10-22T09:47:47.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixes pulling items with hand item cursor overlay freezing the game.,
+    type: Fix}
+  id: 471
+  time: '2021-10-22T11:45:45.025249+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed being spaced causing the player to gib, type: Fix}
+  id: 472
+  time: '2021-10-23T18:45:58.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Added light switches that turn lights connected to the same apc on and
+      off., type: Add}
+  id: 473
+  time: '2021-10-23T23:23:19.0000000+00:00'
+- author: moony
+  changes:
+  - {message: Placing cables on lattices works again, type: Fix}
+  id: 474
+  time: '2021-10-24T00:32:33.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed ghosts being able interact with objects., type: Fix}
+  id: 475
+  time: '2021-10-24T02:29:38.0000000+00:00'
+- author: Efruit
+  changes:
+  - {message: It is no longer advised to anger the magically-inclined janitorial staff.,
+    type: Tweak}
+  id: 476
+  time: '2021-10-24T02:34:31.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: 'The context menu, examining, and activating now works on items inside
+      storage entities. (The last one means boxes can now be opened while still inside
+      a backpack.)', type: Add}
+  id: 477
+  time: '2021-10-24T05:42:47.0000000+00:00'
+- author: moony
+  changes:
+  - {message: pipes can once again be picked up, type: Add}
+  id: 478
+  time: '2021-10-24T06:28:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: You can no longer paste the contents of Moby Dick into someone's ID.,
+    type: Fix}
+  id: 479
+  time: '2021-10-24T08:28:25.0000000+00:00'
+- author: Seth
+  changes:
+  - {message: Added Reinforced Plasma Windows, type: Add}
+  id: 480
+  time: '2021-10-24T12:46:38.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Pipes look 90% less jank on rotated shuttles., type: Fix}
+  id: 481
+  time: '2021-10-25T03:24:55.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'RCDs work on space again, if close to an existing non-space tile',
+    type: Fix}
+  id: 482
+  time: '2021-10-25T03:33:50.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Station will now start with a random rotation., type: Tweak}
+  id: 483
+  time: '2021-10-25T04:22:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Walking over slippery items (usually) won't slip you anymore., type: Tweak}
+  - {message: Turned-on magboots now stop you from slipping., type: Add}
+  id: 484
+  time: '2021-10-25T06:43:49.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Construction works on rotated grids, type: Fix}
+  id: 485
+  time: '2021-10-25T14:14:21.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added electrocution., type: Add}
+  - {message: Cutting cables without insulated gloves shocks you., type: Tweak}
+  - {message: Grilles can now be electrified by placing a cable below them., type: Tweak}
+  id: 486
+  time: '2021-10-25T14:21:56.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Stacks can now be split in half by alt-clicking or into different amounts
+      with the new Split verb., type: Add}
+  id: 487
+  time: '2021-10-25T14:36:04.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Added insulated gloves (and their cheap knockoffs) to the station.,
+    type: Add}
+  id: 488
+  time: '2021-10-25T14:58:04.292881+00:00'
+- author: 20kdc
+  changes:
+  - {message: ChemMaster bottles are no longer 'empty', type: Fix}
+  id: 489
+  time: '2021-10-25T14:58:16.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Wall lights can be placed again, APCs place where they should', type: Fix}
+  id: 490
+  time: '2021-10-26T14:15:02.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Construction recipes are now sorted alphabetically., type: Tweak}
+  id: 491
+  time: '2021-10-26T14:18:43.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
+  id: 492
+  time: '2021-10-26T14:38:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix computer dupe bug., type: Fix}
+  id: 493
+  time: '2021-10-26T23:30:17.397968+00:00'
+- author: 20kdc
+  changes:
+  - {message: Morgue trays now extend to the proper position., type: Fix}
+  id: 494
+  time: '2021-10-27T01:23:44.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed speech bubble position on rotated grids., type: Fix}
+  id: 495
+  time: '2021-10-27T01:31:22.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Fix trashbags picking up anchored items, e.g. atmos pipes and vents',
+    type: Fix}
+  id: 496
+  time: '2021-10-27T07:12:37.0000000+00:00'

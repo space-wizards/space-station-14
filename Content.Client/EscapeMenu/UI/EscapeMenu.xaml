@@ -8,6 +8,7 @@
         <changelog:ChangelogButton />
         <ui:VoteCallMenuButton />
         <Button Name="OptionsButton" Text="{Loc 'ui-escape-options'}" />
+        <Button Name="AHelpButton" Text="{Loc 'ui-escape-ahelp'}" />
         <Button Name="DisconnectButton" Text="{Loc 'ui-escape-disconnect'}" />
         <Button Name="QuitButton" Text="{Loc 'ui-escape-quit'}" />
     </BoxContainer>

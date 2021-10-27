@@ -3,11 +3,9 @@ using System.Threading.Tasks;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Weapon.Ranged.Barrels.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Power;
-using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -25,7 +23,9 @@ namespace Content.Server.Power.Components
         private BatteryComponent? _heldBattery;
 
         [ViewVariables]
-        private ContainerSlot _container = default!;
+        public ContainerSlot Container = default!;
+
+        public bool HasCell => Container.ContainedEntity != null;
 
         [ViewVariables]
         private CellChargerStatus _status;
@@ -43,7 +43,7 @@ namespace Content.Server.Power.Components
             base.Initialize();
 
             Owner.EnsureComponent<ApcPowerReceiverComponent>();
-            _container = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powerCellContainer");
+            Container = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-powerCellContainer");
             // Default state in the visualizer is OFF, so when this gets powered on during initialization it will generally show empty
         }
 
@@ -85,15 +85,15 @@ namespace Content.Server.Power.Components
         /// This will remove the item directly into the user's hand / floor
         /// </summary>
         /// <param name="user"></param>
-        private void RemoveItem(IEntity user)
+        public void RemoveItem(IEntity user)
         {
-            var heldItem = _container.ContainedEntity;
+            var heldItem = Container.ContainedEntity;
             if (heldItem == null)
             {
                 return;
             }
 
-            _container.Remove(heldItem);
+            Container.Remove(heldItem);
             _heldBattery = null;
             if (user.TryGetComponent(out HandsComponent? handsComponent))
             {
@@ -113,81 +113,6 @@ namespace Content.Server.Power.Components
             UpdateStatus();
         }
 
-        [Verb]
-        private sealed class InsertVerb : Verb<BaseCharger>
-        {
-            protected override void GetData(IEntity user, BaseCharger component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-                if (!user.TryGetComponent(out HandsComponent? handsComponent))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component._container.ContainedEntity != null || handsComponent.GetActiveHand == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                var heldItemName = Loc.GetString(handsComponent.GetActiveHand.Owner.Name);
-
-                data.Text = Loc.GetString("insert-verb-get-data-text", ("itemName", heldItemName));
-                data.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, BaseCharger component)
-            {
-                if (!user.TryGetComponent(out HandsComponent? handsComponent))
-                {
-                    return;
-                }
-
-                if (handsComponent.GetActiveHand == null)
-                {
-                    return;
-                }
-                var userItem = handsComponent.GetActiveHand.Owner;
-                handsComponent.Drop(userItem);
-                component.TryInsertItem(userItem);
-            }
-        }
-
-        [Verb]
-        private sealed class EjectVerb : Verb<BaseCharger>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, BaseCharger component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-                if (component._container.ContainedEntity == null)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                var containerItemName = Loc.GetString(component._container.ContainedEntity.Name);
-
-                data.Text = Loc.GetString("eject-verb-get-data-text",("containerName", containerItemName));
-                data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-            }
-
-            protected override void Activate(IEntity user, BaseCharger component)
-            {
-                component.RemoveItem(user);
-            }
-        }
-
         private CellChargerStatus GetStatus()
         {
             if (Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) &&
@@ -195,7 +120,7 @@ namespace Content.Server.Power.Components
             {
                 return CellChargerStatus.Off;
             }
-            if (_container.ContainedEntity == null)
+            if (!HasCell)
             {
                 return CellChargerStatus.Empty;
             }
@@ -206,13 +131,13 @@ namespace Content.Server.Power.Components
             return CellChargerStatus.Charging;
         }
 
-        private bool TryInsertItem(IEntity entity)
+        public bool TryInsertItem(IEntity entity)
         {
-            if (!IsEntityCompatible(entity) || _container.ContainedEntity != null)
+            if (!IsEntityCompatible(entity) || HasCell)
             {
                 return false;
             }
-            if (!_container.Insert(entity))
+            if (!Container.Insert(entity))
             {
                 return false;
             }
@@ -224,7 +149,7 @@ namespace Content.Server.Power.Components
         /// <summary>
         ///     If the supplied entity should fit into the charger.
         /// </summary>
-        protected abstract bool IsEntityCompatible(IEntity entity);
+        public abstract bool IsEntityCompatible(IEntity entity);
 
         protected abstract BatteryComponent? GetBatteryFrom(IEntity entity);
 
@@ -264,12 +189,12 @@ namespace Content.Server.Power.Components
                     throw new ArgumentOutOfRangeException();
             }
 
-            appearance?.SetData(CellVisual.Occupied, _container.ContainedEntity != null);
+            appearance?.SetData(CellVisual.Occupied, HasCell);
         }
 
         public void OnUpdate(float frameTime) //todo: make single system for this
         {
-            if (_status == CellChargerStatus.Empty || _status == CellChargerStatus.Charged || _container.ContainedEntity == null)
+            if (_status == CellChargerStatus.Empty || _status == CellChargerStatus.Charged || !HasCell)
             {
                 return;
             }

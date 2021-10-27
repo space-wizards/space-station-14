@@ -8,6 +8,15 @@
   flatReductions:
     Blunt: 5
 
+# Like metallic, but without flat reduction so it can be damaged with fists.
+- type: damageModifierSet
+  id: FlimsyMetallic
+  coefficients:
+    Blunt: 0.7
+    Slash: 0.5
+    Piercing: 0.7
+    Shock: 1.2
+
 - type: damageModifierSet
   id: Inflatable
   coefficients:

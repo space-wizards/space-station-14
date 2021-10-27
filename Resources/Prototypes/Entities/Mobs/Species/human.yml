@@ -1,8 +1,8 @@
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
   name: Urist McHands
-  id: BaseHumanMob_Content
+  id: MobHumanBase
   description: A miserable pile of secrets.
   abstract: true
   components:
@@ -62,8 +62,13 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
-  # StatusEffects
-  - type: Stunnable
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
   # Other
   - type: Inventory
   - type: Clickable
@@ -278,7 +283,7 @@
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Dummy
+  id: MobHumanDummy
   abstract: true
   description: A dummy human meant to be used in character setup.
   components:

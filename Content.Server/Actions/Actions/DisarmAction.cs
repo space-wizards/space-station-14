@@ -91,11 +91,18 @@ namespace Content.Server.Actions.Actions
 
             system.SendAnimation("disarm", angle, args.Performer, args.Performer, new[] { args.Target });
 
-            var eventArgs = new DisarmedActEventArgs() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
+            var eventArgs = new DisarmedActEvent() { Target = args.Target, Source = args.Performer, PushProbability = _pushProb };
+
+            IoCManager.Resolve<IEntityManager>().EventBus.RaiseLocalEvent(args.Target.Uid, eventArgs);
+
+            // Check if the event has been handled, and if so, do nothing else!
+            if (eventArgs.Handled)
+                return;
 
             // Sort by priority.
             Array.Sort(disarmedActs, (a, b) => a.Priority.CompareTo(b.Priority));
 
+            // TODO: Remove this shit.
             foreach (var disarmedAct in disarmedActs)
             {
                 if (disarmedAct.Disarmed(eventArgs))

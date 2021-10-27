@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Tools;
+using Content.Server.Ghost.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
@@ -13,7 +15,8 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -25,6 +28,7 @@ using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Storage.Components
@@ -32,7 +36,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
     {
         public override string Name => "EntityStorage";
 
@@ -63,6 +67,9 @@ namespace Content.Server.Storage.Components
         [DataField("open")]
         private bool _open;
 
+        [DataField("weldingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        private string _weldingQuality = "Welding";
+
         [DataField("CanWeldShut")]
         private bool _canWeldShut = true;
 
@@ -76,7 +83,7 @@ namespace Content.Server.Storage.Components
         private SoundSpecifier _openSound = new SoundPathSpecifier("/Audio/Effects/closetopen.ogg");
 
         [ViewVariables]
-        protected Container Contents = default!;
+        public Container Contents = default!;
 
         /// <summary>
         /// Determines if the container contents should be drawn when the container is closed.
@@ -148,7 +155,7 @@ namespace Content.Server.Storage.Components
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
 
             UpdateAppearance();
@@ -156,13 +163,6 @@ namespace Content.Server.Storage.Components
 
         public virtual void Activate(ActivateEventArgs eventArgs)
         {
-            // HACK until EntityStorageComponent gets refactored to the new ECS system
-            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
-            {
-                // Do nothing, LockSystem is responsible for handling this case
-                return;
-            }
-
             ToggleOpen(eventArgs.User);
         }
 
@@ -173,6 +173,13 @@ namespace Content.Server.Storage.Components
                 if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-welded-shut-message"));
                 return false;
             }
+
+            if (Owner.TryGetComponent<LockComponent>(out var @lock) && @lock.Locked)
+            {
+                if (!silent) Owner.PopupMessage(user, Loc.GetString("entity-storage-component-locked-message"));
+                return false;
+            }
+
             return true;
         }
 
@@ -181,7 +188,7 @@ namespace Content.Server.Storage.Components
             return true;
         }
 
-        private void ToggleOpen(IEntity user)
+        public void ToggleOpen(IEntity user)
         {
             if (Open)
             {
@@ -207,6 +214,10 @@ namespace Content.Server.Storage.Components
                 // only items that can be stored in an inventory, or a mob, can be eaten by a locker
                 if (!entity.HasComponent<SharedItemComponent>() &&
                     !entity.HasComponent<SharedBodyComponent>())
+                    continue;
+
+                // Let's not insert admin ghosts, yeah? This is really a a hack and should be replaced by attempt events
+                if (entity.HasComponent<GhostComponent>())
                     continue;
 
                 if (!AddToContents(entity))
@@ -264,7 +275,7 @@ namespace Content.Server.Storage.Components
 
             if (Owner.TryGetComponent<PlaceableSurfaceComponent>(out var surface))
             {
-                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(surface, Open);
+                EntitySystem.Get<PlaceableSurfaceSystem>().SetPlaceable(Owner.Uid, Open, surface);
             }
 
             if (Owner.TryGetComponent(out AppearanceComponent? appearance))
@@ -388,18 +399,14 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            if (!eventArgs.Using.TryGetComponent(out WelderComponent? tool) || !tool.WelderLit)
-            {
-                _beingWelded = false;
-                return false;
-            }
-
             if (_beingWelded)
                 return false;
 
             _beingWelded = true;
 
-            if (!await tool.UseTool(eventArgs.User, Owner, 1f, ToolQuality.Welding, 1f))
+            var toolSystem = EntitySystem.Get<ToolSystem>();
+
+            if (!await toolSystem.UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 1f, 1f, _weldingQuality))
             {
                 _beingWelded = false;
                 return false;
@@ -419,49 +426,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner);
-        }
-
-        [Verb]
-        private sealed class OpenToggleVerb : Verb<EntityStorageComponent>
-        {
-            protected override void GetData(IEntity user, EntityStorageComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                component.OpenVerbGetData(user, component, data);
-            }
-
-            /// <inheritdoc />
-            protected override void Activate(IEntity user, EntityStorageComponent component)
-            {
-                component.ToggleOpen(user);
-            }
-        }
-
-        protected virtual void OpenVerbGetData(IEntity user, EntityStorageComponent component, VerbData data)
-        {
-            if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) ||
-                component.Owner.TryGetComponent(out LockComponent? lockComponent) && lockComponent.Locked) // HACK extra check, until EntityStorage gets refactored
-            {
-                data.Visibility = VerbVisibility.Invisible;
-                return;
-            }
-
-            if (IsWeldedShut)
-            {
-                data.Visibility = VerbVisibility.Disabled;
-                var verb = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-                data.Text = Loc.GetString("open-toggle-verb-welded-shut-message", ("verb", verb));
-                return;
-            }
-
-            data.Text = Loc.GetString(component.Open ? "open-toggle-verb-close" : "open-toggle-verb-open");
-            data.IconTexture = component.Open ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
+            return entityLookup.GetEntitiesIntersecting(Owner, LookupFlags.None);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

@@ -18,13 +18,20 @@ namespace Content.Client.Administration.UI.Tabs
     {
         public delegate void PlayerListRefresh();
 
+        public delegate void AdminNameOverlayToggle();
+
         public event PlayerListRefresh? OnPlayerListRefresh;
+        public event AdminNameOverlayToggle? OnAdminNameOverlayOn;
+        public event AdminNameOverlayToggle? OnAdminNameOverlayOff;
+
 
         public PlayerTab()
         {
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             RefreshButton.OnPressed += (_) => OnPlayerListRefresh?.Invoke();
+            OverlayButtonOn.OnPressed += (_) => OnAdminNameOverlayOn?.Invoke();
+            OverlayButtonOff.OnPressed += (_) => OnAdminNameOverlayOff?.Invoke();
         }
 
         protected override void EnteredTree()
