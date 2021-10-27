@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections.Generic;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
@@ -145,6 +146,60 @@ namespace Content.Server.Power.EntitySystems
                 CountLoads = _powerState.Loads.Count,
                 CountNetworks = _powerState.Networks.Count,
                 CountSupplies = _powerState.Supplies.Count
+            };
+        }
+
+        public NetworkPowerStatistics GetNetworkStatistics(PowerState.Network network)
+        {
+            // Right, consumption. Now this is a big mess.
+            // Start by summing up consumer draw rates.
+            // Then deal with batteries.
+            // While for consumers we want to use their max draw rates,
+            //  for batteries we ought to use their current draw rates,
+            //  because there's all sorts of weirdness with them.
+            // A full battery will still have the same max draw rate,
+            //  but will likely have deliberately limited current draw rate.
+            float consumptionW = network.Loads.Sum(s => _powerState.Loads[s].DesiredPower);
+            consumptionW += network.BatteriesCharging.Sum(s => _powerState.Batteries[s].CurrentReceiving);
+
+            // This is interesting because LastMaxSupplySum seems to match LastAvailableSupplySum for some reason.
+            // I suspect it's accounting for current supply rather than theoretical supply.
+            float maxSupplyW = network.Supplies.Sum(s => _powerState.Supplies[s].MaxSupply);
+
+            // Battery stuff is more complex.
+            // Without stealing PowerState, the most efficient way
+            //  to grab the necessary discharge data is from
+            //  PowerNetworkBatteryComponent (has Pow3r reference).
+            float supplyBatteriesW = 0.0f;
+            float storageCurrentJ = 0.0f;
+            float storageMaxJ = 0.0f;
+            foreach (var discharger in network.BatteriesDischarging)
+            {
+                var nb = _powerState.Batteries[discharger];
+                supplyBatteriesW += nb.CurrentSupply;
+                storageCurrentJ += nb.CurrentStorage;
+                storageMaxJ += nb.Capacity;
+                maxSupplyW += nb.MaxSupply;
+            }
+            // And charging
+            float outStorageCurrentJ = 0.0f;
+            float outStorageMaxJ = 0.0f;
+            foreach (var charger in network.BatteriesCharging)
+            {
+                var nb = _powerState.Batteries[charger];
+                outStorageCurrentJ += nb.CurrentStorage;
+                outStorageMaxJ += nb.Capacity;
+            }
+            return new()
+            {
+                SupplyCurrent = network.LastMaxSupplySum,
+                SupplyBatteries = supplyBatteriesW,
+                SupplyTheoretical = maxSupplyW,
+                Consumption = consumptionW,
+                InStorageCurrent = storageCurrentJ,
+                InStorageMax = storageMaxJ,
+                OutStorageCurrent = outStorageCurrentJ,
+                OutStorageMax = outStorageMaxJ
             };
         }
 
@@ -376,4 +431,17 @@ namespace Content.Server.Power.EntitySystems
         public int CountSupplies;
         public int CountBatteries;
     }
+
+    public struct NetworkPowerStatistics
+    {
+        public float SupplyCurrent;
+        public float SupplyBatteries;
+        public float SupplyTheoretical;
+        public float Consumption;
+        public float InStorageCurrent;
+        public float InStorageMax;
+        public float OutStorageCurrent;
+        public float OutStorageMax;
+    }
+
 }
