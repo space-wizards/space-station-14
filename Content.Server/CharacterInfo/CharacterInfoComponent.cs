@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Mind.Components;
 using Content.Server.Roles;
 using Content.Shared.CharacterInfo;
@@ -12,7 +13,8 @@ namespace Content.Server.CharacterInfo
     [RegisterComponent]
     public class CharacterInfoComponent : SharedCharacterInfoComponent
     {
-#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
+        public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel, ICommonSession? session = null)
         {
             if(session?.AttachedEntity != Owner) return;
 
