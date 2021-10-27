@@ -2769,3 +2769,8 @@ Entries:
   - {message: Morgue trays now extend to the proper position., type: Fix}
   id: 494
   time: '2021-10-27T01:23:44.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed speech bubble position on rotated grids., type: Fix}
+  id: 495
+  time: '2021-10-27T01:31:22.0000000+00:00'
