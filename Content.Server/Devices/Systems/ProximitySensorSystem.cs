@@ -2,8 +2,10 @@ using System;
 using Content.Server.Popups;
 using Content.Shared.Devices;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
+using Content.Shared.Throwing;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
@@ -14,6 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Devices.Systems
 {
+    //TODO: Make the light on the sensor yellow while arming, and red when on.
     public class ProximitySensorSystem : EntitySystem
     {
         [Dependency]
@@ -28,10 +31,22 @@ namespace Content.Server.Devices.Systems
             SubscribeLocalEvent<SharedProximitySensorComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<SharedProximitySensorComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<SharedProximitySensorComponent, ComponentStartup>(SyncInitialValues);
+            SubscribeLocalEvent<SharedProximitySensorComponent, PreventCollideEvent>(ValidateCollision);
+            SubscribeLocalEvent<SharedProximitySensorComponent, ThrownEvent>(OnThrown);
 
             // Bound UI subscriptions
             SubscribeLocalEvent<SharedProximitySensorComponent, ProximitySensorUpdateSensorMessage>(OnSensorUpdated);
             SubscribeLocalEvent<SharedProximitySensorComponent, ProximitySensorUpdateActiveMessage>(OnActiveUpdated);
+        }
+
+        private void OnThrown(EntityUid uid, SharedProximitySensorComponent component, ThrownEvent args)
+        {
+            if (EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physComp))
+            {
+                physComp.Awake = true;
+                physComp.CanCollide = true;
+                physComp.DestroyContacts();
+            }
         }
 
         private void OnSensorUpdated(EntityUid uid, SharedProximitySensorComponent proxComponent, ProximitySensorUpdateSensorMessage args)
@@ -45,6 +60,14 @@ namespace Content.Server.Devices.Systems
 
             proxComponent.Range = range;
             proxComponent.ArmingTime = armingTime;
+
+            if (EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physComp))
+            {
+                if (physComp.Fixtures.Count > 0)
+                {
+                    physComp.Fixtures[0].Shape.Radius = proxComponent.Range;
+                }
+            }
 
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetContainer(out var container))
@@ -99,14 +122,35 @@ namespace Content.Server.Devices.Systems
             UpdateUI(uid, proxComponent);
         }
 
-        private void OnCollide(EntityUid uid, SharedProximitySensorComponent component, StartCollideEvent args)
+        private void ValidateCollision(EntityUid uid, SharedProximitySensorComponent component, PreventCollideEvent args)
         {
-            if (!component.IsActive
-                || _gameTiming.CurTime < component.TimeActivated + TimeSpan.FromSeconds(component.ArmingTime) )
+            //we only worry about or lil trigger box. Which I assume is body A?
+            if (args.BodyA.Fixtures.Count <= 0)
                 return;
 
-            //only activate if the collision is a mob
-            if (args.OurFixture.CollisionLayer != (int)CollisionGroup.MobImpassable)
+            if (args.BodyA.Fixtures[0].CollisionLayer != (int)CollisionGroup.MobImpassable)
+                return;
+
+            if (!component.IsActive
+                || _gameTiming.CurTime < component.TimeActivated + TimeSpan.FromSeconds(component.ArmingTime))
+            {
+                args.Cancel();
+                return;
+            }
+
+            var owner = EntityManager.GetEntity(uid);
+            if (!owner.InRangeUnobstructed(args.BodyB.Owner))
+            {
+                args.Cancel();
+                return;
+            }
+        }
+
+        private void OnCollide(EntityUid uid, SharedProximitySensorComponent component, StartCollideEvent args)
+        {
+
+            //we only care about the trigger box.
+            if (args.OurFixture.CollisionLayer != (int) CollisionGroup.MobImpassable)
                 return;
 
             var owner = EntityManager.GetEntity(uid);
