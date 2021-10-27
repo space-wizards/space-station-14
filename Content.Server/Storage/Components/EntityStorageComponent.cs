@@ -36,7 +36,7 @@ namespace Content.Server.Storage.Components
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
-    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IActionBlocker, IExAct
+    public class EntityStorageComponent : Component, IActivate, IStorageComponent, IInteractUsing, IDestroyAct, IExAct
     {
         public override string Name => "EntityStorage";
 
@@ -426,7 +426,7 @@ namespace Content.Server.Storage.Components
         protected virtual IEnumerable<IEntity> DetermineCollidingEntities()
         {
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            return entityLookup.GetEntitiesIntersecting(Owner);
+            return entityLookup.GetEntitiesIntersecting(Owner, LookupFlags.None);
         }
 
         void IExAct.OnExplosion(ExplosionEventArgs eventArgs)

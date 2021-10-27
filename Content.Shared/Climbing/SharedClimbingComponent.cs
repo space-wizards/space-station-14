@@ -10,7 +10,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Climbing
 {
     [NetworkedComponent()]
-    public abstract class SharedClimbingComponent : Component, IActionBlocker
+    public abstract class SharedClimbingComponent : Component
     {
         public sealed override string Name => "Climbing";
 

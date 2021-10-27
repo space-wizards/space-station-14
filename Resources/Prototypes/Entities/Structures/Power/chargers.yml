@@ -12,6 +12,7 @@
   - type: PowerCellCharger
     transfer_efficiency: 0.85
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
@@ -33,6 +34,7 @@
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.85
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer
@@ -54,6 +56,7 @@
   - type: WeaponCapacitorCharger
     transfer_efficiency: 0.95
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Appearance
     visuals:
     - type: PowerChargerVisualizer

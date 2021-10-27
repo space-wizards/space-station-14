@@ -16,6 +16,7 @@ verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
 verb-categories-rotate = Rotate
 verb-categories-transfer = Set Transfer Amount
+verb-categories-split = Split
 
 verb-common-toggle-light = Toggle light
 verb-common-close = Close
