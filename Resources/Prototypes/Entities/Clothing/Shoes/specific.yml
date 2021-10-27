@@ -37,7 +37,7 @@
 - type: entity
   parent: ClothingShoesBase
   id: ClothingShoesGaloshes
-  name: galoshes shoes
+  name: galoshes
   description: Rubber boots.
   components:
   - type: Sprite

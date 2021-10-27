@@ -10,7 +10,6 @@ using Content.Server.Items;
 using Content.Server.Storage.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
-using Content.Shared.EffectBlocker;
 using Content.Shared.Inventory;
 using Content.Shared.Movement.Components;
 using Content.Shared.Popups;
@@ -36,7 +35,7 @@ namespace Content.Server.Inventory.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedInventoryComponent))]
-    public class InventoryComponent : SharedInventoryComponent, IExAct, IEffectBlocker
+    public class InventoryComponent : SharedInventoryComponent, IExAct
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 
@@ -99,11 +98,6 @@ namespace Content.Server.Inventory.Components
 
                 return mod;
             }
-        }
-
-        bool IEffectBlocker.CanSlip()
-        {
-            return !TryGetSlotItem(EquipmentSlotDefines.Slots.SHOES, out ItemComponent? shoes) || EffectBlockerSystem.CanSlip(shoes.Owner);
         }
 
         protected override void OnRemove()

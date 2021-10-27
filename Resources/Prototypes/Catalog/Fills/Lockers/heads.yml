@@ -105,6 +105,7 @@
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingShoesBootsMag
+      - id: ClothingHandsGlovesColorYellow
       - id: CigarCase
         prob: 0.15
 
