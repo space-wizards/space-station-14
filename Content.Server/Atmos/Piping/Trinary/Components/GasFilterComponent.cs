@@ -1,3 +1,5 @@
+using System;
+using Content.Server.Atmos.Piping.Trinary.EntitySystems;
 using Content.Shared.Atmos;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -10,9 +12,17 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     {
         public override string Name => "GasFilter";
 
+        private bool _enabled = true;
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled { get; set; } = true;
-
+        public bool Enabled
+        {
+            get => _enabled;
+            set
+            {
+                _enabled = value;
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
+            }
+        }
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
         public string InletName { get; set; } = "inlet";
@@ -25,10 +35,27 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [DataField("outlet")]
         public string OutletName { get; set; } = "outlet";
 
+        private float _transferRate = Atmospherics.MaxTransferRate;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
-
+        public float TransferRate
+        {
+            get => _transferRate;
+            set
+            {
+                _transferRate = value;
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
+            }
+        }
+        private Gas? _filteredGas;
         [ViewVariables(VVAccess.ReadWrite)]
-        public Gas? FilteredGas { get; set; }
+        public Gas? FilteredGas
+        {
+            get => _filteredGas;
+            set
+            {
+                _filteredGas = value;
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
+            }
+        }
     }
 }
