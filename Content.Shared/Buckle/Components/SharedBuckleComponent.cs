@@ -69,7 +69,9 @@ namespace Content.Shared.Buckle.Components
     }
 
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public abstract class BuckleChangeMessage : ComponentMessage
+#pragma warning restore 618
     {
         /// <summary>
         ///     Constructs a new instance of <see cref="BuckleChangeMessage"/>

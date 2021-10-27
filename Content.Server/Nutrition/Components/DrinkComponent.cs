@@ -25,7 +25,9 @@ using System.Threading.Tasks;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class DrinkComponent : Component, IUse, IAfterInteract, IExamine
+#pragma warning restore 618
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;

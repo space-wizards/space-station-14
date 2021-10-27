@@ -15,7 +15,9 @@ namespace Content.Server.NodeContainer
     ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class NodeContainerComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "NodeContainer";
 

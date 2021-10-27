@@ -254,6 +254,7 @@ namespace Content.Client.Entry
             "Repairable",
             "GasGenerator",
             "SolutionTransfer",
+            "Evaporation",
             "Shovel",
             "ReagentTank",
             "UtilityAI",

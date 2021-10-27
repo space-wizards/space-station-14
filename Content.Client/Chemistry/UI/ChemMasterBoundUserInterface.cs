@@ -41,8 +41,8 @@ namespace Content.Client.Chemistry.UI
             _window.EjectButton.OnPressed += _ => PrepareData(UiAction.Eject, null, null, null);
             _window.BufferTransferButton.OnPressed += _ => PrepareData(UiAction.Transfer, null, null, null);
             _window.BufferDiscardButton.OnPressed += _ => PrepareData(UiAction.Discard, null, null, null);
-            _window.CreatePills.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.PillAmount.Value, null);
-            _window.CreateBottles.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, null, _window.BottleAmount.Value);
+            _window.CreatePillButton.OnPressed += _ => PrepareData(UiAction.CreatePills, null, _window.PillAmount.Value, null);
+            _window.CreateBottleButton.OnPressed += _ => PrepareData(UiAction.CreateBottles, null, null, _window.BottleAmount.Value);
 
             _window.OnChemButtonPressed += (args, button) => PrepareData(UiAction.ChemButton, button, null, null);
         }

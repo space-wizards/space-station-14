@@ -2759,3 +2759,47 @@ Entries:
   - {message: Fixed not being able to construct or deconstruct tables., type: Fix}
   id: 492
   time: '2021-10-26T14:38:03.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix computer dupe bug., type: Fix}
+  id: 493
+  time: '2021-10-26T23:30:17.397968+00:00'
+- author: 20kdc
+  changes:
+  - {message: Morgue trays now extend to the proper position., type: Fix}
+  id: 494
+  time: '2021-10-27T01:23:44.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Fixed speech bubble position on rotated grids., type: Fix}
+  id: 495
+  time: '2021-10-27T01:31:22.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Fix trashbags picking up anchored items, e.g. atmos pipes and vents',
+    type: Fix}
+  id: 496
+  time: '2021-10-27T07:12:37.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Storage closing boundary no longer encompasses 3 city blocks., type: Fix}
+  id: 497
+  time: '2021-10-27T08:27:25.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Saltern default generators no longer act as effectively an infinite
+      source of power., type: Fix}
+  id: 498
+  time: '2021-10-27T08:32:06.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Disposal units are constructable now!, type: Add}
+  - {message: Construction states for various disposal machines., type: Add}
+  id: 499
+  time: '2021-10-27T10:54:13.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Engi-Vend has insulated gloves so engineering don't run out with latejoins
+      or just a lot of roundstart engineers, type: Add}
+  id: 500
+  time: '2021-10-27T15:44:31.0000000+00:00'

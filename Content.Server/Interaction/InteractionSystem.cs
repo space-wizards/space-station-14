@@ -42,9 +42,7 @@ namespace Content.Server.Interaction
     public sealed class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly VerbSystem _verbSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
 
         public override void Initialize()
@@ -413,7 +411,9 @@ namespace Content.Server.Interaction
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
                 if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
                     return;
             }
 
@@ -444,7 +444,9 @@ namespace Content.Server.Interaction
                 foreach (var t in rangedInteractions)
                 {
                     // If an InteractUsingRanged returns a status completion we finish our interaction
+#pragma warning disable 618
                     if (t.RangedInteract(rangedInteractionEventArgs))
+#pragma warning restore 618
                         return true;
                 }
             }
