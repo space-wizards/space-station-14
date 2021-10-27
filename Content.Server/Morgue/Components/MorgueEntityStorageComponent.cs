@@ -16,6 +16,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -108,8 +109,7 @@ namespace Content.Server.Morgue.Components
                 TrayContainer?.Remove(_tray);
             }
 
-            _tray.Transform.WorldPosition = Owner.Transform.WorldPosition + Owner.Transform.LocalRotation.GetCardinalDir().ToVec();
-            _tray.Transform.AttachParent(Owner);
+            _tray.Transform.Coordinates = new EntityCoordinates(Owner.Uid, 0, -1);
 
             base.OpenStorage();
         }

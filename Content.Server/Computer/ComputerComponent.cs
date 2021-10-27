@@ -1,4 +1,5 @@
 using System;
+using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Power.Components;
 using Content.Shared.Computer;
@@ -63,7 +64,7 @@ namespace Content.Server.Computer
         {
             // Ensure that the construction component is aware of the board container.
             if (Owner.TryGetComponent(out ConstructionComponent? construction))
-                construction.AddContainer("board");
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
 
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))

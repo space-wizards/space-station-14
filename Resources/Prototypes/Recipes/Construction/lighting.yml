@@ -10,11 +10,13 @@
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
     state: off
   objectType: Structure
-  placementMode: WallmountLight
+  placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: true
+  canBuildInImpassable: false
   conditions:
-  - !type:WallmountCondition {}
+  # Need an *additional* condition here that forces there to be a wall in the opposite direction to the one used for placement.
+  # Also see below. Didn't add it b/c construction ECS work going on. Cheers, - 20kdc
+  - !type:TileNotBlocked {}
 
 - type: construction
   name: small wall light
@@ -28,11 +30,12 @@
     sprite: Structures/Wallmounts/Lighting/light_small.rsi
     state: off
   objectType: Structure
-  placementMode: WallmountLight
+  placementMode: SnapgridCenter
   canRotate: true
-  canBuildInImpassable: true
+  canBuildInImpassable: false
   conditions:
-  - !type:WallmountCondition {}
+  # Same here. - 20kdc
+  - !type:TileNotBlocked {}
 
 - type: construction
   name: light switch

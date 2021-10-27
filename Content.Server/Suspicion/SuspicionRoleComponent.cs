@@ -164,23 +164,5 @@ namespace Content.Server.Suspicion
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
         }
-
-        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-#pragma warning disable 618
-            base.HandleMessage(message, component);
-#pragma warning restore 618
-
-            switch (message)
-            {
-                case RoleAddedMessage {Role: SuspicionRole role}:
-                    Role = role;
-                    break;
-                case RoleRemovedMessage {Role: SuspicionRole}:
-                    Role = null;
-                    break;
-            }
-        }
     }
 }

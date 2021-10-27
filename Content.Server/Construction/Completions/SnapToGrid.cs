@@ -14,14 +14,14 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("southRotation")] public bool SouthRotation { get; private set; } = false;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted) return;
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
 
-            entity.SnapToGrid();
             if (SouthRotation)
             {
-                entity.Transform.LocalRotation = Angle.Zero;
+                transform.LocalRotation = Angle.Zero;
             }
         }
     }

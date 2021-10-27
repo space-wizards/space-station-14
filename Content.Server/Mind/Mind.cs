@@ -166,10 +166,8 @@ namespace Content.Server.Mind
             _roles.Add(role);
             role.Greet();
 
-            var message = new RoleAddedMessage(role);
-#pragma warning disable 618
-            OwnedEntity?.SendMessage(OwnedComponent, message);
-#pragma warning restore 618
+            var message = new RoleAddedEvent(role);
+            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
 
             return role;
         }
@@ -190,10 +188,8 @@ namespace Content.Server.Mind
 
             _roles.Remove(role);
 
-            var message = new RoleRemovedMessage(role);
-#pragma warning disable 618
-            OwnedEntity?.SendMessage(OwnedComponent, message);
-#pragma warning restore 618
+            var message = new RoleRemovedEvent(role);
+            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
         }
 
         public bool HasRole<T>() where T : Role
