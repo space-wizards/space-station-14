@@ -2791,3 +2791,9 @@ Entries:
       source of power., type: Fix}
   id: 498
   time: '2021-10-27T08:32:06.0000000+00:00'
+- author: juliangiebel
+  changes:
+  - {message: Disposal units are constructable now!, type: Add}
+  - {message: Construction states for various disposal machines., type: Add}
+  id: 499
+  time: '2021-10-27T10:54:13.0000000+00:00'
