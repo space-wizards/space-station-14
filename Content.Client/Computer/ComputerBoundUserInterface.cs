@@ -57,6 +57,11 @@ namespace Content.Client.Computer
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
         public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
+
+        public new void SendMessage(BoundUserInterfaceMessage msg)
+        {
+            base.SendMessage(msg);
+        }
     }
 
     public interface IComputerWindow<S>
