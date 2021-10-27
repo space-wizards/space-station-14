@@ -4,6 +4,7 @@ using Content.Server.Stunnable.Components;
 using Content.Shared.Alert;
 using Content.Shared.Movement.Components;
 using Content.Shared.Standing;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -17,6 +18,7 @@ namespace Content.Server.Stunnable
     internal sealed class StunOnCollideSystem : EntitySystem
     {
         [Dependency] private readonly StunSystem _stunSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         public override void Initialize()
         {
@@ -28,7 +30,7 @@ namespace Content.Server.Stunnable
         {
             var otherUid = args.OtherFixture.Body.Owner.Uid;
 
-            if (EntityManager.TryGetComponent(otherUid, out StunnableComponent? stunnableComponent))
+            if (EntityManager.TryGetComponent<StatusEffectsComponent>(otherUid, out var status))
             {
                 ServerAlertsComponent? alerts = null;
                 StandingStateComponent? standingState = null;
@@ -38,13 +40,13 @@ namespace Content.Server.Stunnable
                 // Let the actual methods log errors for these.
                 Resolve(otherUid, ref alerts, ref standingState, ref appearance, ref speedModifier, false);
 
-                _stunSystem.Stun(otherUid, TimeSpan.FromSeconds(component.StunAmount), stunnableComponent, alerts);
+                _stunSystem.TryStun(otherUid, TimeSpan.FromSeconds(component.StunAmount), status, alerts);
 
-                _stunSystem.Knockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount), stunnableComponent,
-                    alerts, standingState, appearance);
+                _stunSystem.TryKnockdown(otherUid, TimeSpan.FromSeconds(component.KnockdownAmount),
+                    status, alerts);
 
-                _stunSystem.Slowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
-                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, stunnableComponent, speedModifier, alerts);
+                _stunSystem.TrySlowdown(otherUid, TimeSpan.FromSeconds(component.SlowdownAmount),
+                    component.WalkSpeedMultiplier, component.RunSpeedMultiplier, status, speedModifier, alerts);
             }
         }
     }

@@ -4,6 +4,7 @@ using Content.Server.EUI;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Cloning;
 using Content.Shared.MobState;
 using Content.Shared.Popups;
@@ -136,7 +137,8 @@ namespace Content.Server.Cloning.Components
 
                     var mob = Owner.EntityManager.SpawnEntity("MobHuman", Owner.Transform.MapPosition);
 
-                    mob.GetComponent<HumanoidAppearanceComponent>().UpdateFromProfile(dna.Profile);
+
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(mob.Uid, dna.Profile);
                     mob.Name = dna.Profile.Name;
 
                     var cloneMindReturn = mob.AddComponent<BeingClonedComponent>();

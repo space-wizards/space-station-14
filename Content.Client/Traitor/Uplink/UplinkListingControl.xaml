@@ -1,0 +1,14 @@
+<Control xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical"
+                  Margin="8 8 8 8">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="UplinkItemName"
+                   HorizontalExpand="True"/>
+            <Button Name="UplinkItemBuyButtonProtected"
+                    HorizontalAlignment="Right"
+                    MinWidth="64"/>
+        </BoxContainer>
+        <PanelContainer StyleClasses="HighDivider" />
+        <RichTextLabel Name="UplinkItemDescription" />
+    </BoxContainer>
+</Control>

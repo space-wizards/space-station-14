@@ -1,10 +1,12 @@
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Mind.Components;
 using Content.Server.PDA;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Interaction;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -31,6 +33,7 @@ namespace Content.Server.Traitor.Uplink
 
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
+            SubscribeLocalEvent<UplinkComponent, UseInHandEvent>(OnUseHand);
             SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
             SubscribeLocalEvent<UplinkComponent, UplinkRequestUpdateInterfaceMessage>(OnRequestUpdateUI);
 
@@ -51,11 +54,38 @@ namespace Content.Server.Traitor.Uplink
         private void OnInit(EntityUid uid, UplinkComponent component, ComponentInit args)
         {
             RaiseLocalEvent(uid, new UplinkInitEvent(component));
+
+            // if component has a preset info (probably spawn by admin)
+            // create a new account and register it for this uplink
+            if (component.PresetInfo != null)
+            {
+                var account = new UplinkAccount(component.PresetInfo.StartingBalance);
+                _accounts.AddNewAccount(account);
+                SetAccount(component, account);
+            }
         }
 
         private void OnRemove(EntityUid uid, UplinkComponent component, ComponentRemove args)
         {
             RaiseLocalEvent(uid, new UplinkRemovedEvent());
+        }
+
+        private void OnUseHand(EntityUid uid, UplinkComponent component, UseInHandEvent args)
+        {
+            if (args.Handled)
+                return;
+
+            // check if uplinks activates directly or use some proxy, like a PDA
+            if (!component.ActivatesInHands)
+                return;
+            if (component.UplinkAccount == null)
+                return;
+
+            if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
+                return;
+
+            ToggleUplinkUI(component, actor.PlayerSession);
+            args.Handled = true;
         }
 
         private void OnBalanceChangedBroadcast(UplinkAccountBalanceChanged ev)

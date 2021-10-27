@@ -1,50 +1,41 @@
 {
   "version": 1,
-  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/e107a20eb3e8def075a7d967dbf91426accabcbe",
   "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/1516a728931b4985c1e86f0c5995a5aa1554a1ad and modified by Swept",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "normal-unshaded"
+      "name": "normal-unshaded",
+      "delays": [
+        [
+          2.5,
+          0.05,
+          3.4,
+          0.05
+        ]
+      ]
+    },
+    {
+      "name": "eject-unshaded",
+      "delays": [
+        [
+          0.1,
+          0.4,
+          0.2,
+          0.4,
+          0.1
+        ]
+      ]
     },
     {
       "name": "deny-unshaded",
       "delays": [
         [
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.3,
           0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.1,
-          0.3,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05,
-          0.05
+          0.1
         ]
       ]
     },

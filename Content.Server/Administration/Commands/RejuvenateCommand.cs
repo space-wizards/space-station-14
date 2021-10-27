@@ -9,6 +9,7 @@ using Content.Shared.Damage;
 using Content.Shared.Jittering;
 using Content.Shared.MobState;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -59,10 +60,7 @@ namespace Content.Server.Administration.Commands
             target.GetComponentOrNull<HungerComponent>()?.ResetFood();
             target.GetComponentOrNull<ThirstComponent>()?.ResetThirst();
 
-            if (target.TryGetComponent(out StunnableComponent? stunnable))
-            {
-                EntitySystem.Get<StunSystem>().Reset(target.Uid, stunnable);
-            }
+            EntitySystem.Get<StatusEffectsSystem>().TryRemoveAllStatusEffects(target.Uid);
 
             if (target.TryGetComponent(out FlammableComponent? flammable))
             {

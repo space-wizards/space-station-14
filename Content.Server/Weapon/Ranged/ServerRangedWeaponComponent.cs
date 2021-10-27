@@ -173,12 +173,7 @@ namespace Content.Server.Weapon.Ranged
             {
                 //Wound them
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
-
-                // Knock them down
-                if (user.TryGetComponent(out StunnableComponent? stun))
-                {
-                    EntitySystem.Get<StunSystem>().Paralyze(user.Uid, TimeSpan.FromSeconds(3f), stun);
-                }
+                EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
 
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(

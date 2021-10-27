@@ -225,7 +225,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<PointingArrowComponent>())
             {
                 component.Update(frameTime);
             }

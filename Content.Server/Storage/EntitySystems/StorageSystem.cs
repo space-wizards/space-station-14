@@ -53,7 +53,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <inheritdoc />
         public override void Update(float frameTime)
         {
-            foreach (var component in EntityManager.EntityQuery<ServerStorageComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<ServerStorageComponent>())
             {
                 CheckSubscribedEntities(component);
             }

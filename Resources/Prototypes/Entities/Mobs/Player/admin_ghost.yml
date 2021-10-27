@@ -9,9 +9,10 @@
     context: "aghost"
   - type: Ghost
     canInteract: true
+  - type: GhostRadio
   - type: Hands
   - type: DoAfter
-  - type: CombatMode  
+  - type: CombatMode
   - type: Actions
     innateActions:
     - CombatMode

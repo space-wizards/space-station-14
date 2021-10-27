@@ -23,6 +23,7 @@
   - type: Transform
     anchored: true
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Physics
     bodyType: Static
     fixtures:

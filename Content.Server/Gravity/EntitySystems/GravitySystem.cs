@@ -41,7 +41,7 @@ namespace Content.Server.Gravity.EntitySystems
             var gridId = component.Owner.Transform.GridID;
             GravityChangedMessage message;
 
-            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>(true))
+            foreach (var generator in EntityManager.EntityQuery<GravityGeneratorComponent>())
             {
                 if (generator.Owner.Transform.GridID == gridId && generator.GravityActive)
                 {

@@ -498,6 +498,7 @@
     visuals:
     - type: VendingMachineVisualizer
       normalUnshaded: true
+      ejectUnshaded: true
       denyUnshaded: true
       broken: true
     - type: WiresVisualizer

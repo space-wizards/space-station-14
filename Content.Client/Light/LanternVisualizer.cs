@@ -34,6 +34,9 @@ namespace Content.Client.Light
         {
             base.OnChangeData(component);
 
+            if (!component.Initialized)
+                return;
+
             PlayAnimation(component);
         }
 

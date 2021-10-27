@@ -1,18 +1,22 @@
-﻿<SS14Window xmlns="https://spacestation14.io"
+<SS14Window xmlns="https://spacestation14.io"
             xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
-            Title="{Loc 'pda-bound-user-interface-uplink-tab-title'}"
+            Title="{Loc 'uplink-user-interface-title'}"
             MinSize="512 512"
             SetSize="512 512">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Vertical"
                       VerticalExpand="True">
-            <RichTextLabel Name="BalanceInfoProtected"
-                           HorizontalAlignment="Center" />
+            <BoxContainer Orientation="Horizontal"
+                          Margin="4 4 4 4">
+                <RichTextLabel Name="BalanceInfoProtected"
+                               HorizontalExpand="True"
+                               HorizontalAlignment="Left" />
+            </BoxContainer>
             <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>
                     <gfx:StyleBoxFlat BackgroundColor="#000000FF" />
                 </PanelContainer.PanelOverride>
-                <SplitContainer Orientation="Horizontal"
+                <BoxContainer Orientation="Horizontal"
                                 VerticalExpand="True">
                     <PanelContainer VerticalExpand="True">
                         <PanelContainer.PanelOverride>
@@ -23,20 +27,21 @@
                             <!-- Category buttons are added here by code -->
                         </BoxContainer>
                     </PanelContainer>
-                    <ScrollContainer HorizontalExpand="True"
+                    <ScrollContainer Name="UplinkListingsScroll"
+                                     HorizontalExpand="True"
                                      VerticalExpand="True"
                                      SizeFlagsStretchRatio="2"
+                                     HScrollEnabled="False"
                                      MinSize="100 256">
                         <BoxContainer Name="UplinkListingsContainer"
                                       Orientation="Vertical"
-                                      HorizontalExpand="True"
                                       VerticalExpand="True"
                                       SizeFlagsStretchRatio="2"
                                       MinSize="100 256">
                             <!-- Listings are added here by code -->
                         </BoxContainer>
                     </ScrollContainer>
-                </SplitContainer>
+                </BoxContainer>
             </PanelContainer>
         </BoxContainer>
     </BoxContainer>

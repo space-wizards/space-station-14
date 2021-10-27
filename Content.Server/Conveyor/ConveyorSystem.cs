@@ -62,11 +62,8 @@ namespace Content.Server.Conveyor
                 signal != TwoWayLeverSignal.Middle)
             {
                 args.Cancel();
-                if (args.Attemptee.TryGetComponent<StunnableComponent>(out var stunnableComponent))
-                {
-                    _stunSystem.Paralyze(uid, TimeSpan.FromSeconds(2f), stunnableComponent);
-                    component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
-                }
+                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f));
+                component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
             }
         }
 
@@ -136,7 +133,7 @@ namespace Content.Server.Conveyor
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
             //todo uuuhhh cache this
-            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate))
+            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
             {
                 if (entity.Deleted)
                 {

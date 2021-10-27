@@ -40,7 +40,6 @@ namespace Content.Server.Buckle.Components
 
         [ComponentDependency] public readonly AppearanceComponent? Appearance = null;
         [ComponentDependency] private readonly ServerAlertsComponent? _serverAlerts = null;
-        [ComponentDependency] private readonly StunnableComponent? _stunnable = null;
         [ComponentDependency] private readonly MobStateComponent? _mobState = null;
 
         [DataField("size")]
@@ -123,33 +122,21 @@ namespace Content.Server.Buckle.Components
             var strapTransform = strap.Owner.Transform;
 
             ownTransform.AttachParent(strapTransform);
+            ownTransform.LocalRotation = Angle.Zero;
 
             switch (strap.Position)
             {
                 case StrapPosition.None:
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Stand:
                     EntitySystem.Get<StandingStateSystem>().Stand(Owner.Uid);
-                    ownTransform.WorldRotation = strapTransform.WorldRotation;
                     break;
                 case StrapPosition.Down:
                     EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid, false, false);
-                    ownTransform.LocalRotation = Angle.Zero;
                     break;
             }
 
-            // Assign BuckleOffset first, before causing a MoveEvent to fire
-            if (strapTransform.WorldRotation.GetCardinalDir() == Direction.North)
-            {
-                BuckleOffset = (0, 0.15f);
-                ownTransform.WorldPosition = strapTransform.WorldPosition + BuckleOffset;
-            }
-            else
-            {
-                BuckleOffset = Vector2.Zero;
-                ownTransform.WorldPosition = strapTransform.WorldPosition;
-            }
+            ownTransform.LocalPosition = Vector2.Zero + BuckleOffset;
         }
 
         public bool CanBuckle(IEntity? user, IEntity to, [NotNullWhen(true)] out StrapComponent? strap)
@@ -336,7 +323,7 @@ namespace Content.Server.Buckle.Components
 
             Appearance?.SetData(BuckleVisuals.Buckled, false);
 
-            if (_stunnable is { KnockedDown: true }
+            if (Owner.HasComponent<KnockedDownComponent>()
                 || (_mobState?.IsIncapacitated() ?? false))
             {
                 EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
@@ -404,7 +391,7 @@ namespace Content.Server.Buckle.Components
             int? drawDepth = null;
 
             if (BuckledTo != null &&
-                Owner.Transform.WorldRotation.GetCardinalDir() == Direction.North &&
+                BuckledTo.Owner.Transform.LocalRotation.GetCardinalDir() == Direction.North &&
                 BuckledTo.SpriteComponent != null)
             {
                 drawDepth = BuckledTo.SpriteComponent.DrawDepth - 1;

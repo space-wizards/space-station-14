@@ -13,7 +13,7 @@ namespace Content.Server.Stunnable.Components
         // TODO: Can probably predict this.
         public override string Name => "StunOnCollide";
 
-        // See stunnable for what these do
+        // See stunsystem for what these do
         [DataField("stunAmount")]
         public int StunAmount;
 

@@ -361,14 +361,8 @@ namespace Content.Server.Instruments
 
                 if (mob != null)
                 {
-                    if (Handheld)
-                        EntitySystem.Get<StandingStateSystem>().Down(mob.Uid, false);
-
-                    if (mob.TryGetComponent(out StunnableComponent? stun))
-                    {
-                        EntitySystem.Get<StunSystem>().Stun(mob.Uid, TimeSpan.FromSeconds(1), stun);
-                        Clean();
-                    }
+                    EntitySystem.Get<StunSystem>().TryParalyze(mob.Uid, TimeSpan.FromSeconds(1));
+                    Clean();
 
                     Owner.PopupMessage(mob, "instrument-component-finger-cramps-max-message");
                 }

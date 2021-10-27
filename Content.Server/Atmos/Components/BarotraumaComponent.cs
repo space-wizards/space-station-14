@@ -16,5 +16,9 @@ namespace Content.Server.Atmos.Components
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]
         public DamageSpecifier Damage = default!;
+
+        [DataField("maxDamage")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public int MaxDamage = 200;
     }
 }

@@ -118,12 +118,17 @@ namespace Content.Shared.Damage
             }
 
             // Apply resistances
-            if (!ignoreResistances && damageable.DamageModifierSetId != null)
+            if (!ignoreResistances)
             {
-                if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
+                if (damageable.DamageModifierSetId != null &&
+                    _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
+
+                var ev = new DamageModifyEvent(damage);
+                RaiseLocalEvent(uid, ev, false);
+                damage = ev.Damage;
 
                 if (damage.Empty)
                 {
@@ -196,6 +201,23 @@ namespace Content.Shared.Damage
                 component.Damage = newDamage;
                 DamageChanged(component, delta);
             }
+        }
+    }
+
+    /// <summary>
+    ///     Raised on an entity when damage is about to be dealt,
+    ///     in case anything else needs to modify it other than the base
+    ///     damageable component.
+    ///
+    ///     For example, armor.
+    /// </summary>
+    public class DamageModifyEvent : EntityEventArgs
+    {
+        public DamageSpecifier Damage;
+
+        public DamageModifyEvent(DamageSpecifier damage)
+        {
+            Damage = damage;
         }
     }
 

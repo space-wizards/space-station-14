@@ -62,7 +62,7 @@
 - type: entity
   parent: BaseComputerCircuitboard
   id: SolarControlComputerCircuitboard
-  name: solar control board
+  name: solar control computer board
   components:
     - type: ComputerBoard
       prototype: ComputerSolarControl

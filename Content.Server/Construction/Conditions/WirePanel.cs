@@ -17,9 +17,10 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
+            if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
+                return false;
 
             return wires.IsPanelOpen == Open;
         }
