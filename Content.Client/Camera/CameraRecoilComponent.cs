@@ -56,9 +56,8 @@ namespace Content.Client.Camera
             _updateEye();
         }
 
-#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
-#pragma warning restore 618
         {
             base.HandleNetworkMessage(message, channel, session);
 

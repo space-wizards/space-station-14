@@ -528,9 +528,8 @@ namespace Content.Server.Inventory.Components
         }
 
         /// <inheritdoc />
-#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel netChannel,
-#pragma warning restore 618
             ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, netChannel, session);

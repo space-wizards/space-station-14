@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Weapon.Ranged.Barrels.Components;
@@ -17,9 +18,8 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;
 
-#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
-#pragma warning restore 618
         {
 #pragma warning disable 618
             base.HandleMessage(message, component);

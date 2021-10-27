@@ -163,9 +163,8 @@ namespace Content.Server.Suspicion
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
         }
 
-#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
-#pragma warning restore 618
         {
 #pragma warning disable 618
             base.HandleMessage(message, component);
