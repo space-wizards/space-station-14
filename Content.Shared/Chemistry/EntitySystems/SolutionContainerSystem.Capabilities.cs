@@ -109,6 +109,14 @@ namespace Content.Shared.Chemistry.EntitySystems
             return solution.CurrentVolume;
         }
 
+        public ReagentUnit DrainAvailable(EntityUid uid)
+        {
+            if (!TryGetDrainableSolution(uid, out var solution))
+                return ReagentUnit.Zero;
+
+            return solution.CurrentVolume;
+        }
+
         public bool HasFitsInDispenser(IEntity owner)
         {
             return !owner.Deleted && owner.HasComponent<FitsInDispenserComponent>();
