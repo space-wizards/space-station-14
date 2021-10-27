@@ -501,7 +501,9 @@ namespace Content.Server.Storage.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
+#pragma warning disable 618
             ((IUse) this).UseEntity(new UseEntityEventArgs(eventArgs.User));
+#pragma warning restore 618
         }
 
         /// <summary>

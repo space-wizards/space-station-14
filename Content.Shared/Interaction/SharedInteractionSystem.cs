@@ -20,6 +20,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
+#pragma warning disable 618
+
 namespace Content.Shared.Interaction
 {
     /// <summary>
