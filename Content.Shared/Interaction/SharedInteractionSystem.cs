@@ -528,7 +528,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.TryExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb);
                 break;
             }
         }
