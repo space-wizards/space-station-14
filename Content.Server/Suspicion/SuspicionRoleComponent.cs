@@ -162,20 +162,5 @@ namespace Content.Server.Suspicion
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
         }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RoleAddedMessage {Role: SuspicionRole role}:
-                    Role = role;
-                    break;
-                case RoleRemovedMessage {Role: SuspicionRole}:
-                    Role = null;
-                    break;
-            }
-        }
     }
 }
