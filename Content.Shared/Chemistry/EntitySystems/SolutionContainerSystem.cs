@@ -104,7 +104,6 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
             appearance.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
-            solutionEntity.Dirty();
         }
 
         /// <summary>
