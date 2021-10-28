@@ -25,7 +25,7 @@
     state: icon
     layers:
       - state: icon
-        map: ["enum.DrinkCanVisualLayers.Icon"]    
+        map: ["enum.DrinkCanVisualLayers.Icon"]
     netsync: false
   - type: DrainableSolution
     solution: drink
@@ -117,21 +117,21 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkThirteenLokoCan
-  name: thirteen loko can
-  description: The MBO has advised crew members that consumption of Thirteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
+  id: DrinkFourteenLokoCan
+  name: fourteen loko can
+  description: The MBO has advised crew members that consumption of Fourteen Loko may result in seizures, blindness, drunkeness, or even death. Please Drink Responsibly.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 20
         reagents:
-        - ReagentId: ThirteenLoko
+        - ReagentId: FourteenLoko
           Quantity: 20
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
+    sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
-    sprite: Objects/Consumable/Drinks/thirteen_loko.rsi
+    sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
 
 - type: entity
   parent: DrinkCanBaseFull

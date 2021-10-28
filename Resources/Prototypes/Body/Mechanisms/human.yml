@@ -315,7 +315,7 @@
         effects:
         - !type:SatiateThirst
           hydrationFactor: 0.5 # sodaboys stay losing
-      ThirteenLoko:
+      FourteenLoko:
         effects:
         - !type:SatiateThirst
           hydrationFactor: 2

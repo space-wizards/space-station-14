@@ -1627,13 +1627,13 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkThirteenLokoGlass
-  name: thirteen loko glass
+  id: DrinkFourteenLokoGlass
+  name: Fourteen loko glass
   description: A potent mixture of caffeine and alcohol.
   components:
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/thirteen_loko_glass.rsi
+    sprite: Objects/Consumable/Drinks/Fourteen_loko_glass.rsi
 
 
 - type: entity

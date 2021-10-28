@@ -11,6 +11,16 @@
     Antifreeze: 4
 
 - type: reaction
+  id:
+  reactants:
+    A:
+      amount:
+    B:
+      amount:
+  products:
+    C:
+
+- type: reaction
   id: AtomicBomb
   reactants:
     B52:
@@ -173,7 +183,7 @@
     SyndicateBomb: 2
 
 - type: reaction
-  id: ThirteenLoko
+  id: FourteenLoko
   reactants:
     Coffee:
       amount: 1
@@ -182,7 +192,7 @@
     Vodka:
       amount: 1
   products:
-    ThirteenLoko: 3
+    FourteenLoko: 3
 
 - type: reaction
   id: WhiskeyCola

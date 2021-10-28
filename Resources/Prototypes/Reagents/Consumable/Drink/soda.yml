@@ -69,8 +69,8 @@
       amount: 0.1
 
 - type: reagent
-  id: ThirteenLoko
-  name: Thirteen Loko
+  id: FourteenLoko
+  name: Fourteen Loko
   desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.
   physicalDesc: fizzy
   color: "#deb928"
