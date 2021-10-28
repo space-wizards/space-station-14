@@ -18,13 +18,6 @@
   spritePath: aleglass.rsi
 
 - type: reagent
-  id: Applejack
-  name: Applejack
-  desc: The perfect beverage for when you feel the need to horse around.
-  physicalDesc: strong-smelling
-  color: "#FFEAC4"
-
-- type: reagent
   id: Beer
   name: beer
   desc: A cold pint of pale lager.
@@ -46,27 +39,6 @@
   spritePath: cognacglass.rsi
 
 - type: reagent
-  id: CremeDeCacao
-  name: Creme de Cacao
-  desc: A chocolatey liqueur excellent for adding dessert notes to beverages and bribing sororities.
-  physicalDesc: sweet-smelling
-  color: "#996633"
-
-- type: reagent
-  id: CremeDeCoconut
-  name: Creme de Coconut
-  desc: A coconut liqueur for smooth, creamy, tropical drinks.
-  physicalDesc: sweet-smelling
-  color: "#F7F0D0"
-
-- type: reagent
-  id: CremeDeMenthe
-  name: Creme de Menthe
-  desc: A minty liqueur excellent for refreshing, cool drinks.
-  physicalDesc: minty
-  color: "#00cc00"
-
-- type: reagent
   id: Gin
   name: gin
   desc: A crystal clear glass of Griffeater gin.
@@ -75,26 +47,12 @@
   spritePath: ginvodkaglass.rsi
 
 - type: reagent
-  id: HardCider
-  name: hard cider
-  desc: Apple juice, for adults.
-  physicalDesc: sweet-smelling
-  color: "#CD6839"
-
-- type: reagent
   id: Kahlua
   name: kahlua
   desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
   physicalDesc: cloudy
   color: "#664300"
   spritePath: kahluaglass.rsi
-
-- type: reagent
-  id: MaltLiquor
-  name: malt liquor
-  desc: An alcoholic beverage brewed since ancient times on Old Earth. This variety is stronger than usual, super cheap, and super terrible.
-  physicalDesc: strong-smelling
-  color: "#664300"
 
 - type: reagent
   id: MelonLiquor
@@ -133,13 +91,6 @@
   desc: This stuff will get you fucked up.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
-
-- type: reagent
-  id: TripleSec
-  name: Triple Sec
-  desc: A sweet and vibrant orange liqueur.
-  physicalDesc: strong-smelling
-  color: "#ffcc66"
 
 - type: reagent
   id: Vermouth
