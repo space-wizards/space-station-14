@@ -159,7 +159,7 @@ namespace Content.Server.Disposal.Unit.Components
                 TimeLeft -= time;
                 frameTime -= time;
 
-                if (CurrentTube == null)
+                if (CurrentTube == null || CurrentTube.Deleted)
                 {
                     ExitDisposals();
                     break;
@@ -168,16 +168,16 @@ namespace Content.Server.Disposal.Unit.Components
                 if (TimeLeft > 0)
                 {
                     var progress = 1 - TimeLeft / StartingTime;
-                    var origin = CurrentTube.Owner.Transform.WorldPosition;
+                    var origin = CurrentTube.Owner.Transform.Coordinates;
                     var destination = CurrentTube.NextDirection(this).ToVec();
                     var newPosition = destination * progress;
 
-                    Owner.Transform.WorldPosition = origin + newPosition;
+                    Owner.Transform.Coordinates = origin.Offset(newPosition);
 
                     continue;
                 }
 
-                if (NextTube == null || !CurrentTube.TransferTo(this, NextTube))
+                if (NextTube == null || NextTube.Deleted || !CurrentTube.TransferTo(this, NextTube))
                 {
                     CurrentTube.Remove(this);
                     break;
