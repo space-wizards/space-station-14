@@ -71,6 +71,7 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_broken
   - type: InteractionOutline
+  - type: Anchorable
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -85,19 +86,25 @@
         - MobImpassable
   - type: Damageable
     damageContainer: Inorganic
+  - type: Construction
+    graph: machine
+    node: machine
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 25
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
-        acts: [ "Destruction" ]
+        acts: ["Destruction"]
+  - type: Machine
+    board: ChemMasterMachineCircuitboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "chem_master"
+    LayoutId: chem_master
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
