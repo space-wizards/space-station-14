@@ -1,4 +1,3 @@
-
 # Base Alcohol
 
 - type: reagent
@@ -105,6 +104,14 @@
   spritePath: emeraldglass.rsi
 
 - type: reagent
+  id: PoisonWine
+  name: poison wine
+  desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
+  physicalDesc: strong-smelling
+  color: "#000000"
+  spritePath: pwineglass.rsi
+
+- type: reagent
   id: Rum
   name: rum
   desc: Popular with the sailors. Not very popular with anyone else.
@@ -164,14 +171,6 @@
   physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
-
-- type: reagent
-  id: WinePoison
-  name: poison wine
-  desc: Is this even wine? Toxic! Hallucinogenic! Probably consumed in boatloads by your superiors!
-  physicalDesc: strong-smelling
-  color: "#000000"
-  spritePath: pwineglass.rsi
 
 # Mixed Alcohol
 

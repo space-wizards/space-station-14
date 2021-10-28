@@ -57,7 +57,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: Absinthe
           Quantity: 100
@@ -73,7 +72,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: MelonLiquor
           Quantity: 100
@@ -89,7 +87,6 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 100
         reagents:
         - ReagentId: Ale
           Quantity: 100
@@ -108,7 +105,6 @@
         reagents:
         - ReagentId: Nothing
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/bottleofnothing.rsi
 
@@ -124,7 +120,6 @@
         reagents:
         - ReagentId: Cognac
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
 
@@ -140,7 +135,6 @@
         reagents:
         - ReagentId: Gin
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginbottle.rsi
 
@@ -156,7 +150,6 @@
         reagents:
         - ReagentId: Goldschlager
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/goldschlagerbottle.rsi
 
@@ -172,7 +165,6 @@
         reagents:
         - ReagentId: Kahlua
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluabottle.rsi
 
@@ -188,7 +180,6 @@
         reagents:
         - ReagentId: Patron
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronbottle.rsi
 
@@ -204,7 +195,6 @@
         reagents:
         - ReagentId: WinePoison
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi
 
@@ -220,7 +210,6 @@
         reagents:
         - ReagentId: Rum
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
 
@@ -236,7 +225,6 @@
         reagents:
         - ReagentId: Tequila
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillabottle.rsi
 
@@ -252,7 +240,6 @@
         reagents:
         - ReagentId: Vermouth
           Quantity: 100
-        maxVol: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthbottle.rsi
 
@@ -265,10 +252,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 80
         reagents:
         - ReagentId: Vodka
-          Quantity: 80
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkabottle.rsi
 
@@ -281,10 +267,9 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 80
         reagents:
         - ReagentId: Whiskey
-          Quantity: 80
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeybottle.rsi
 
@@ -297,9 +282,8 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 80
         reagents:
         - ReagentId: Wine
-          Quantity: 80
+          Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
