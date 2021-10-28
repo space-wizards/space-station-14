@@ -24,7 +24,7 @@ using Robust.Shared.Localization;
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class CableSystem : EntitySystem
+    public sealed class CableMultitoolSystem : EntitySystem
     {
         [Dependency] private readonly ToolSystem _toolSystem = default!;
         [Dependency] private readonly PowerNetSystem _pnSystem = default!;
@@ -49,7 +49,7 @@ namespace Content.Server.Power.EntitySystems
                     var held = hand.HeldEntity;
                     // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
                     // Update if I'm wrong.
-                    if ((held != null) && EntitySystem.Get<ToolSystem>().HasQuality(held.Uid, "Pulsing"))
+                    if ((held != null) && _toolSystem.HasQuality(held.Uid, "Pulsing"))
                     {
                         args.PushMarkup(GenerateCableMarkup(uid));
                         // args.PushFancyUpdatingPowerGraphs(uid);
