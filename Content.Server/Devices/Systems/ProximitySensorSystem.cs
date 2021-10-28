@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using Content.Server.Popups;
 using Content.Shared.Devices;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
+using Content.Shared.Item;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Throwing;
@@ -11,6 +13,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Timing;
 
@@ -25,28 +28,27 @@ namespace Content.Server.Devices.Systems
         [Dependency]
         private readonly IGameTiming _gameTiming = default!;
 
+        [Dependency]
+        private readonly SharedBroadphaseSystem _sharedBroadphaseSystem = default!;
+
+        private readonly HashSet<SharedProximitySensorComponent> ActiveComponents = new();
+
         public override void Initialize()
         {
             SubscribeLocalEvent<SharedProximitySensorComponent, GetOtherVerbsEvent>(AddConfigureVerb);
             SubscribeLocalEvent<SharedProximitySensorComponent, StartCollideEvent>(OnCollide);
             SubscribeLocalEvent<SharedProximitySensorComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<SharedProximitySensorComponent, ComponentStartup>(SyncInitialValues);
-            SubscribeLocalEvent<SharedProximitySensorComponent, PreventCollideEvent>(ValidateCollision);
-            SubscribeLocalEvent<SharedProximitySensorComponent, ThrownEvent>(OnThrown);
+            SubscribeLocalEvent<SharedProximitySensorComponent, ComponentShutdown>(OnShutdown);
 
             // Bound UI subscriptions
             SubscribeLocalEvent<SharedProximitySensorComponent, ProximitySensorUpdateSensorMessage>(OnSensorUpdated);
             SubscribeLocalEvent<SharedProximitySensorComponent, ProximitySensorUpdateActiveMessage>(OnActiveUpdated);
         }
 
-        private void OnThrown(EntityUid uid, SharedProximitySensorComponent component, ThrownEvent args)
+        private void OnShutdown(EntityUid uid, SharedProximitySensorComponent component, ComponentShutdown args)
         {
-            if (EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physComp))
-            {
-                physComp.Awake = true;
-                physComp.CanCollide = true;
-                physComp.DestroyContacts();
-            }
+            ActiveComponents.Remove(component);
         }
 
         private void OnSensorUpdated(EntityUid uid, SharedProximitySensorComponent proxComponent, ProximitySensorUpdateSensorMessage args)
@@ -63,9 +65,11 @@ namespace Content.Server.Devices.Systems
 
             if (EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physComp))
             {
-                if (physComp.Fixtures.Count > 0)
+                var fix = physComp.GetFixture(SharedProximitySensorComponent.ProximityTriggerFixture);
+                if (fix != null)
                 {
-                    physComp.Fixtures[0].Shape.Radius = proxComponent.Range;
+                    fix.Shape.Radius = proxComponent.Range;
+                    physComp.FixtureChanged(fix);
                 }
             }
 
@@ -110,7 +114,16 @@ namespace Content.Server.Devices.Systems
             proxComponent.IsActive = active;
 
             if (active)
+            {
                 proxComponent.TimeActivated = _gameTiming.CurTime;
+                proxComponent.TimeArmed = proxComponent.TimeActivated + TimeSpan.FromSeconds(proxComponent.ArmingTime);
+                ActiveComponents.Add(proxComponent);
+            }
+            else
+            {
+                proxComponent.IsArmed = false;
+                ActiveComponents.Remove(proxComponent);
+            }
 
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetContainer(out var container))
@@ -122,45 +135,37 @@ namespace Content.Server.Devices.Systems
             UpdateUI(uid, proxComponent);
         }
 
-        private void ValidateCollision(EntityUid uid, SharedProximitySensorComponent component, PreventCollideEvent args)
-        {
-            //we only worry about or lil trigger box. Which I assume is body A?
-            if (args.BodyA.Fixtures.Count <= 0)
-                return;
-
-            if (args.BodyA.Fixtures[0].CollisionLayer != (int)CollisionGroup.MobImpassable)
-                return;
-
-            if (!component.IsActive
-                || _gameTiming.CurTime < component.TimeActivated + TimeSpan.FromSeconds(component.ArmingTime))
-            {
-                args.Cancel();
-                return;
-            }
-
-            var owner = EntityManager.GetEntity(uid);
-            if (!owner.InRangeUnobstructed(args.BodyB.Owner))
-            {
-                args.Cancel();
-                return;
-            }
-        }
-
         private void OnCollide(EntityUid uid, SharedProximitySensorComponent component, StartCollideEvent args)
         {
-
             //we only care about the trigger box.
             if (args.OurFixture.CollisionLayer != (int) CollisionGroup.MobImpassable)
                 return;
 
+            if (!component.IsActive || !component.IsArmed)
+                return;
+
+            var owner = EntityManager.GetEntity(uid);
+            if (!owner.InRangeUnobstructed(args.OtherFixture.Body.Owner, component.Range))
+            {
+                //return;
+            }
+
+            TriggerSensor(uid);
+        }
+
+        public void TriggerSensor(EntityUid uid)
+        {
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetContainer(out var container))
             {
                 RaiseLocalEvent(container.Owner.Uid, new IoDeviceOutputEvent());
+
+                var viewer = container.Owner;
+                viewer.PopupMessage(viewer, "The proximity sensor vibrates.");
             }
             else
             {
-                owner.PopupMessageEveryone("Bzzzzz...", null, 5);
+                owner.PopupMessageEveryone("Bzzzzz...", null, 15);
             }
         }
 
@@ -188,6 +193,33 @@ namespace Content.Server.Devices.Systems
             _userInterfaceSystem.TrySetUiState(uid, ProximitySensorUiKey.Key,
                 new ProximitySensorBoundUserInterfaceState(proxComponent.Range, proxComponent.IsActive,
                     proxComponent.ArmingTime));
+        }
+
+        private void Arm(EntityUid uid, SharedProximitySensorComponent? proxComponent)
+        {
+            if (!Resolve(uid, ref proxComponent))
+                return;
+
+            proxComponent.IsArmed = true;
+
+            if (EntityManager.TryGetComponent<PhysicsComponent>(uid, out var physComp))
+            {
+                physComp.Awake = true;
+                physComp.CanCollide = true;
+                _sharedBroadphaseSystem.RegenerateContacts(physComp);
+            }
+        }
+
+        public override void Update(float frameTime)
+        {
+            var curTime = _gameTiming.CurTime;
+            foreach (var proxComponent in ActiveComponents)
+            {
+                if (!proxComponent.IsArmed && curTime >= proxComponent.TimeArmed)
+                {
+                    Arm(proxComponent.Owner.Uid, proxComponent);
+                }
+            }
         }
     }
 }

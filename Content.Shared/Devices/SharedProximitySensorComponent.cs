@@ -15,11 +15,15 @@ namespace Content.Shared.Devices
         public const int MaxArmingTime = 5;
         public const int MinArmingTime = 0;
 
+        public const string ProximityTriggerFixture = "prox_trigger";
+
         public int Range = 1;
         public bool IsActive = false;
+        public bool IsArmed = false;
         public int ArmingTime = 3;
 
         public TimeSpan TimeActivated = TimeSpan.Zero;
+        public TimeSpan TimeArmed = TimeSpan.Zero;
     }
 
     [Serializable, NetSerializable]

@@ -95,14 +95,17 @@
   - type: Tag
     tags:
     - IODevice
+  - type: CollisionWake
+    enabled: false
   - type: Physics
     bodyType: Dynamic
-    sleepingAllowed: false
+    sleepingAllowed: true
     retainBodyInContainer: true
     fixtures:
     - shape: #we will use this for our proximity detection
         !type:PhysShapeCircle
-        radius: 1
+        radius: 2
+      id: prox_trigger
       hard: false
       mass: 5
       layer:
