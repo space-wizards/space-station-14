@@ -32,7 +32,9 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(IActivate))]
+#pragma warning disable 618
     public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+#pragma warning restore 618
     {
         public override string Name => "GasTank";
 

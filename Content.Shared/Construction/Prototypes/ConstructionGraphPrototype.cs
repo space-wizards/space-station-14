@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Reflection.Metadata;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,7 +14,7 @@ namespace Content.Shared.Construction.Prototypes
     public class ConstructionGraphPrototype : IPrototype, ISerializationHooks
     {
         private readonly Dictionary<string, ConstructionGraphNode> _nodes = new();
-        private readonly Dictionary<ValueTuple<string, string>, ConstructionGraphNode[]?> _paths = new();
+        private readonly Dictionary<(string, string), ConstructionGraphNode[]?> _paths = new();
         private readonly Dictionary<string, Dictionary<ConstructionGraphNode, ConstructionGraphNode?>> _pathfinding = new();
 
         [ViewVariables]
@@ -59,9 +60,24 @@ namespace Content.Shared.Construction.Prototypes
             return (path = Path(startNode, finishNode)) != null;
         }
 
+        public string[]? PathId(string startNode, string finishNode)
+        {
+            if (Path(startNode, finishNode) is not {} path)
+                return null;
+
+            var nodes = new string[path.Length];
+
+            for (var i = 0; i < path.Length; i++)
+            {
+                nodes[i] = path[i].Name;
+            }
+
+            return nodes;
+        }
+
         public ConstructionGraphNode[]? Path(string startNode, string finishNode)
         {
-            var tuple = new ValueTuple<string, string>(startNode, finishNode);
+            var tuple = (startNode, finishNode);
 
             if (_paths.ContainsKey(tuple))
                 return _paths[tuple];

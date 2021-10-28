@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Light.EntitySystems;
 using Content.Server.Storage.Components;
+using Content.Shared.Light;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
@@ -41,7 +43,14 @@ namespace Content.Server.Light.Components
         public bool TryReplaceBulb(PoweredLightComponent fixture, IEntity? user = null)
         {
             // check if light bulb is broken or missing
-            if (fixture.LightBulb != null && fixture.LightBulb.State == LightBulbState.Normal) return false;
+            var lightSystem = EntitySystem.Get<PoweredLightSystem>();
+            var fixtureBulbUid = lightSystem.GetBulb(fixture.Owner.Uid, fixture);
+            if (fixtureBulbUid == null)
+                return false;
+            if (!Owner.EntityManager.TryGetComponent(fixtureBulbUid.Value, out LightBulbComponent? fixtureBulb))
+                 return false;
+
+            if (fixtureBulb.State == LightBulbState.Normal) return false;
 
             // try get first inserted bulb of the same type as targeted light fixtutre
             var bulb = _insertedBulbs.ContainedEntities.FirstOrDefault(
@@ -79,7 +88,7 @@ namespace Content.Server.Light.Components
             }
 
             // insert it into fixture
-            var wasReplaced = fixture.ReplaceBulb(bulb);
+            var wasReplaced = lightSystem.ReplaceBulb(fixture.Owner.Uid, bulb.Uid, fixture);
             if (wasReplaced)
             {
                 SoundSystem.Play(Filter.Pvs(Owner), _sound.GetSound(), Owner,

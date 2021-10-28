@@ -1,5 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.AI.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics;
@@ -32,7 +33,8 @@ namespace Content.Server.AI.Pathfinding.Accessible
                 collisionMask = physics.CollisionMask;
             }
 
-            var access = AccessReader.FindAccessTags(entity);
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            var access = accessSystem.FindAccessTags(entity.Uid);
             var visionRadius = entity.GetComponent<AiControllerComponent>().VisionRadius;
 
             return new ReachableArgs(visionRadius, access, collisionMask);

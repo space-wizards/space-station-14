@@ -67,9 +67,7 @@ namespace Content.Client.Hands
 
         public HandsGuiState GetGuiState()
         {
-            var player = _playerManager.LocalPlayer?.ControlledEntity;
-
-            if (player == null || !player.TryGetComponent(out HandsComponent? hands))
+            if (GetPlayerHandsComponent() is not { } hands)
                 return new HandsGuiState(Array.Empty<GuiHand>());
 
             var states = hands.Hands
@@ -77,6 +75,24 @@ namespace Content.Client.Hands
                 .ToArray();
 
             return new HandsGuiState(states, hands.ActiveHand);
+        }
+
+        public IEntity? GetActiveHandEntity()
+        {
+            if (GetPlayerHandsComponent() is not { ActiveHand: { } active } hands)
+                return null;
+
+            return hands.GetHand(active).HeldEntity;
+        }
+
+        private HandsComponent? GetPlayerHandsComponent()
+        {
+            var player = _playerManager.LocalPlayer?.ControlledEntity;
+
+            if (player == null || !player.TryGetComponent(out HandsComponent? hands))
+                return null;
+
+            return hands;
         }
 
         public void UIHandClick(HandsComponent hands, string handName)

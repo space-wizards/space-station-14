@@ -3,7 +3,7 @@
   id: SalternGenerator
   components:
   - type: PowerSupplier
-    supplyRate: 30000
+    supplyRate: 3000
 
 - type: entity
   parent: BaseSmes

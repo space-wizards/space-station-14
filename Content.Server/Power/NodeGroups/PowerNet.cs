@@ -12,15 +12,11 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Power.NodeGroups
 {
-    public interface IPowerNet
+    public interface IPowerNet : IBasePowerNet
     {
         void AddSupplier(PowerSupplierComponent supplier);
 
         void RemoveSupplier(PowerSupplierComponent supplier);
-
-        void AddConsumer(PowerConsumerComponent consumer);
-
-        void RemoveConsumer(PowerConsumerComponent consumer);
 
         void AddDischarger(BatteryDischargerComponent discharger);
 
@@ -33,7 +29,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     [UsedImplicitly]
-    public class PowerNet : BaseNetConnectorNodeGroup<BasePowerNetComponent, IPowerNet>, IPowerNet
+    public class PowerNet : BaseNetConnectorNodeGroup<IPowerNet>, IPowerNet
     {
         private readonly PowerNetSystem _powerNetSystem = EntitySystem.Get<PowerNetSystem>();
 
@@ -59,7 +55,7 @@ namespace Content.Server.Power.NodeGroups
             _powerNetSystem.DestroyPowerNet(this);
         }
 
-        protected override void SetNetConnectorNet(BasePowerNetComponent netConnectorComponent)
+        protected override void SetNetConnectorNet(IBaseNetConnectorComponent<IPowerNet> netConnectorComponent)
         {
             netConnectorComponent.Net = this;
         }

@@ -14,7 +14,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Paper
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PaperComponent : SharedPaperComponent, IExamine, IInteractUsing, IUse
+#pragma warning restore 618
     {
         private PaperAction _mode;
         [DataField("content")]
