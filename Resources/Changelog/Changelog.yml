@@ -1,9 +1,4 @@
 Entries:
-- author: Macoron
-  changes:
-  - {message: Ghosts can flick lights and spook living, type: Add}
-  id: 6
-  time: '2021-02-26T01:31:06.0000000+00:00'
 - author: daniel-cr
   changes:
   - {message: Adjusted a margin in the new context menu., type: Tweak}
@@ -2805,3 +2800,8 @@ Entries:
   - {message: Fixed not being angle to anchor emitters., type: Fix}
   id: 505
   time: '2021-10-28T11:29:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes in-hand sprites not properly updating., type: Fix}
+  id: 506
+  time: '2021-10-28T12:34:59.0000000+00:00'
