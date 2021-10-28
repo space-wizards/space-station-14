@@ -4,11 +4,13 @@ using System.Linq;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Disposal.Tube.Components;
+using Content.Server.Disposal.Tube;
 using Content.Server.Items;
 using Content.Shared.Atmos;
 using Content.Shared.Body.Components;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -41,10 +43,14 @@ namespace Content.Server.Disposal.Unit.Components
         public IDisposalTubeComponent? PreviousTube { get; set; }
 
         [ViewVariables]
-        public IDisposalTubeComponent? CurrentTube { get; private set; }
+        public Direction PreviousDirection { get; private set; } = Direction.Invalid;
 
         [ViewVariables]
-        public IDisposalTubeComponent? NextTube { get; set; }
+        public IDisposalTubeComponent? CurrentTube { get; private set; }
+
+        // CurrentDirection is not null when CurrentTube isn't null.
+        [ViewVariables]
+        public Direction CurrentDirection { get; private set; } = Direction.Invalid;
 
         /// <summary>
         ///     A list of tags attached to the content, used for sorting
@@ -100,11 +106,12 @@ namespace Content.Server.Disposal.Unit.Components
             if (CurrentTube != null)
             {
                 PreviousTube = CurrentTube;
+                PreviousDirection = CurrentDirection;
             }
 
             Owner.Transform.Coordinates = tube.Owner.Transform.Coordinates;
             CurrentTube = tube;
-            NextTube = tube.NextTube(this);
+            CurrentDirection = tube.NextDirection(this);
             StartingTime = 0.1f;
             TimeLeft = 0.1f;
         }
@@ -115,8 +122,9 @@ namespace Content.Server.Disposal.Unit.Components
                 return;
 
             PreviousTube = null;
+            PreviousDirection = Direction.Invalid;
             CurrentTube = null;
-            NextTube = null;
+            CurrentDirection = Direction.Invalid;
             StartingTime = 0;
             TimeLeft = 0;
 
@@ -169,7 +177,7 @@ namespace Content.Server.Disposal.Unit.Components
                 {
                     var progress = 1 - TimeLeft / StartingTime;
                     var origin = CurrentTube.Owner.Transform.Coordinates;
-                    var destination = CurrentTube.NextDirection(this).ToVec();
+                    var destination = CurrentDirection.ToVec();
                     var newPosition = destination * progress;
 
                     Owner.Transform.Coordinates = origin.Offset(newPosition);
@@ -177,7 +185,8 @@ namespace Content.Server.Disposal.Unit.Components
                     continue;
                 }
 
-                if (NextTube == null || NextTube.Deleted || !CurrentTube.TransferTo(this, NextTube))
+                var nextTube = EntitySystem.Get<DisposalTubeSystem>().NextTubeFor(CurrentTube.Owner.Uid, CurrentDirection);
+                if (nextTube == null || nextTube.Deleted || !CurrentTube.TransferTo(this, nextTube))
                 {
                     CurrentTube.Remove(this);
                     break;
