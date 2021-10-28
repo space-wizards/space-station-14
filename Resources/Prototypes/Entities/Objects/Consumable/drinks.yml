@@ -1987,7 +1987,7 @@
   name: tonic water
   description: A carbonated soft drink in which quinine is dissolved.
   components:
-  =  - type: SolutionContainerManager
+  - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
