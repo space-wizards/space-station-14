@@ -13,6 +13,20 @@
       amount: 0.1
 
 - type: reagent
+  id: ChangelingSting
+  name: changeling sting
+  desc: You take a tiny sip and feel a burning sensation...
+  physicalDesc: fizzy
+  color: "#2E6671"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
   id: DrGibb
   name: Dr. Gibb
   desc: A delicious blend of 42 different flavours.

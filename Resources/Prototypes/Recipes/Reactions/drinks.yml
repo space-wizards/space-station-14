@@ -133,18 +133,6 @@
     CafeLatte: 2
 
 - type: reaction
-  id: CreamyDelight
-  reactants:
-    Cream:
-      amount: 1
-    Moonshine:
-      amount: 1
-    Wine:
-      amount: 1
-  products:
-    CreamyDelight: 3
-
-- type: reaction
   id: CubaLibre
   reactants:
     Cola:
@@ -429,14 +417,14 @@
     Patron: 10
 
 - type: reaction
-  id: Screwdriver
+  id: ScrewdriverCocktail
   reactants:
     JuiceOrange:
       amount: 1
     Vodka:
       amount: 2
   products:
-    Screwdriver: 3
+    ScrewdriverCocktail: 3
 
 - type: reaction
   id: SoyLatte

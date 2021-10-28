@@ -359,7 +359,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/chocolateglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkCafeLatte
@@ -377,8 +376,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cafe_latte.rsi
 
-
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkCoffee
@@ -394,7 +391,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/coffee.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -412,7 +408,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkColaBottle
@@ -428,7 +423,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/colabottle.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -446,7 +440,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cream.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkCubaLibreGlass
@@ -463,17 +456,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cubalibreglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkCuracaoGlass
+  id: DrinkBlueCuracaoGlass
   name: blue curacao
   description: Exotically blue, fruity drink, distilled from oranges.
   components:
   - type: Drink
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: BlueCuracao
+          Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/curacaoglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -481,10 +479,16 @@
   name: demons blood
   description: AHHHH!!!!  # AAHHHHHH
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DemonsBlood
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/demonsblood.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -496,17 +500,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/detflask.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkDevilsKiss
   name: devil's kiss
   description: Creepy time!
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: DevilsKiss
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/devilskiss.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -525,7 +534,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/doctorsdelightglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkDriestMartiniGlass
@@ -542,7 +550,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/driestmartiniglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -561,7 +568,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb_glass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkEmeraldGlass
@@ -578,7 +584,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/emeraldglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -597,7 +602,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/erikasurprise.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkFlask
@@ -608,7 +612,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkFlaskOld
@@ -618,7 +621,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/flask_old.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -637,7 +639,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gargleblasterglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGinFizzGlass
@@ -654,7 +655,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginfizzglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -673,7 +673,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gintonicglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGinVodkaGlass
@@ -691,10 +690,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ginvodkaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGlassBrown
+  id: DrinkBilkGlass
   name: bilk
   description: This appears to be beer mixed with milk. Disgusting.
   components:
@@ -709,21 +707,26 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_brown.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGlassBrown2
+  id: DrinkHoochGlass
   name: hooch
   description: Either someone's failure at cocktail making or attempt in alchohol production. In any case, do you really want to drink that?
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId:
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_brown2.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkGlassClear
+  id: DrinkMoonshineGlass
   name: moonshine
   description: You've really hit rock bottom now... your liver packed its bags and left last night.
   components:
@@ -737,7 +740,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_clear.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -755,7 +757,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_green.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -791,7 +792,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_yellow.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGlassRed
@@ -808,7 +808,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/glass_red.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -843,7 +842,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/goldschlagerglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGrapeJuice
@@ -860,7 +858,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grapejuice.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -879,7 +876,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadineglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGrogGlass
@@ -897,7 +893,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grogglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkGrapeSodaGlass
@@ -907,7 +902,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/gsodaglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -919,17 +913,15 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hell.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkHippiesdelightglass
+  id: DrinkHippiesDelightGlass
   name: hippies' delight glass
   description: You just don't get it maaaan.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/hippiesdelightglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -948,10 +940,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkIcedTeaglass
+  id: DrinkIcedTeaGlass
   name: iced tea
   description: A form of cold tea. Though usually served in a glass with ice
   components:
@@ -966,17 +957,15 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icedteaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkIcedBeerglass
+  id: DrinkIcedBeerGlass
   name: iced beer glass
   description: A beer which is so cold the air around it freezes.
   components:
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iced_beerglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -994,10 +983,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/iceglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkIrishcarbomb
+  id: DrinkIrishCarBomb
   name: irish car bomb
   description: Mmm, tastes like chocolate cake...
   components:
@@ -1010,7 +998,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcarbomb.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1028,7 +1015,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcoffeeglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkIrishCreamGlass
@@ -1045,7 +1031,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/irishcreamglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkJar
@@ -1055,7 +1040,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1067,7 +1051,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_metroid.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkJarWhat
@@ -1077,7 +1060,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/jar_what.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1094,7 +1076,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kahluaglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1113,7 +1094,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/kiraspecial.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkLemonade
@@ -1130,7 +1110,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonade.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1149,7 +1128,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkLemonGlass
@@ -1159,7 +1137,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1178,7 +1155,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonjuice.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkLemonLime
@@ -1195,7 +1171,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemonlime.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1214,7 +1189,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/limejuice.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkLithiumFlask
@@ -1224,7 +1198,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lithiumflask.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1243,17 +1216,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/longislandicedteaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkManhattanGlass
   name: manhattan glass
   description: The Detective's undercover drink of choice. He never could stomach gin...
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Manhattan
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manhattanglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1271,17 +1249,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/manlydorfglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkMargaritaGlass
   name: margarita glass
   description: On the rocks with salt on the rim. Arriba~!
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Margarita
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/margaritaglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1300,17 +1283,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/martiniglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkMeadGlass
   name: mead glass
   description: A Viking's drink, though a cheap one.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Mead
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/meadglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1328,7 +1316,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milk.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkMilkshake
@@ -1338,7 +1325,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milkshake.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1350,17 +1336,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/mojito.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkNeurotoxinGlass
   name: neurotoxin glass
   description: A strong neurotoxin that puts the subject into a death-like state.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Neurotoxin
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/neurotoxinglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1379,17 +1370,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nothing.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkNtcahors
+  id: DrinkNTCahors
   name: neotheology cahors whine
   description: Fortified dessert wine made from cabernet sauvignon, saperavi and other grapes.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: NTCahors
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ntcahors.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1408,7 +1404,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/nuka_colaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkOrangeJuice
@@ -1425,7 +1420,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/orangejuice.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1444,7 +1438,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/patronglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkPoisonBerryJuice
@@ -1462,17 +1455,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/poisonberryjuice.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkProjectManhattanGlass
   name: manhattan project glass
   description: A scientist's drink of choice, for pondering ways to blow up the station.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: ManhattanProject
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/proj_manhattanglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1491,7 +1489,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwineglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkRamen
@@ -1502,17 +1499,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ramen.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkRedMeadGlass
   name: red mead glass
   description: The true Viking's drink! Even though it has a strange red color.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: RedMead
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/red_meadglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1523,7 +1525,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rewriter.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1542,17 +1543,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSbitenGlass
   name: sbiten glass
   description: A spicy Vodka! Might be a little hot for the little guys!
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Sbiten
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sbitenglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1571,17 +1577,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/screwdriverglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSuiDreamGlass
   name: sui dream glass
   description: 'Comprised of: White soda, blue curacao, melon liquor.'
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SuiDream
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sdreamglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1593,8 +1604,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-blue.rsi
 
-
 # TODO: MOVE
+
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeEmpty
@@ -1604,7 +1615,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-empty.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1616,7 +1626,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-meat.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShakeRobo
@@ -1626,7 +1635,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-robo.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1638,8 +1646,8 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shake-white.rsi
 
-
 # TODO: Move to containers
+
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShaker
@@ -1649,7 +1657,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shaker.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1661,7 +1668,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shinyflask.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkShotGlass
@@ -1672,17 +1678,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/shotglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSilencerGlass
   name: silencer glass
   description: A drink from Mime Heaven.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Silencer
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/silencerglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1690,10 +1701,16 @@
   name: singulo
   description: A blue-space beverage!
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Singulo
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/singulo.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1701,10 +1718,16 @@
   name: snow white
   description: A cold refreshment
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SnowWhite
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/snowwhite.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1723,7 +1746,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSoyMilk
@@ -1740,7 +1762,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soymilk.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1759,7 +1780,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/soy_latte.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSpaceUpBottle
@@ -1776,7 +1796,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1795,7 +1814,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up_glass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSpaceMountainWindBottle
@@ -1812,7 +1830,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1831,7 +1848,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind_glass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkSyndicatebomb
@@ -1847,7 +1863,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/syndicatebomb.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1865,7 +1880,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkTeapot
@@ -1881,7 +1895,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/teapot.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1900,7 +1913,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkTequilaSunriseGlass
@@ -1917,7 +1929,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tequillasunriseglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1936,7 +1947,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/Fourteen_loko_glass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkThreeMileIslandGlass
@@ -1953,7 +1963,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/threemileislandglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1972,17 +1981,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkTonicWater
   name: tonic water
   description: A carbonated soft drink in which quinine is dissolved.
   components:
+  =  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -1990,10 +2004,16 @@
   name: toxins special glass
   description: This thing is ON FIRE! CALL THE DAMN SHUTTLE!"
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: ToxinsSpecial
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/toxinsspecialglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -2004,7 +2024,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vacuumflask.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -2023,17 +2042,22 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vermouthglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkVodkaTonicGlass
   name: vodka tonic glass
   description: For when a gin and tonic isn't russian enough.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: VodkaTonic
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/vodkatonicglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -2052,7 +2076,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/water.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWaterBottle
@@ -2070,7 +2093,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWatermelonJuice
@@ -2087,7 +2109,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/watermelon.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -2123,7 +2144,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeycolaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWhiskeyGlass
@@ -2139,7 +2159,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeyglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
@@ -2158,7 +2177,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeysodaglass.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWhiskeySodaGlass2
@@ -2176,7 +2194,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiskeysodaglass2.rsi
 
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkWhiteRussianGlass
@@ -2193,7 +2210,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/whiterussianglass.rsi
-
 
 - type: entity
   parent: DrinkGlassBase
