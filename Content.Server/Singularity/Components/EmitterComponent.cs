@@ -26,7 +26,6 @@ namespace Content.Server.Singularity.Components
         [ViewVariables] public bool IsOn;
         // Whether the power switch is on AND the machine has enough power (so is actively firing)
         [ViewVariables] public bool IsPowered;
-        [ViewVariables] public bool IsLocked;
 
         // For the "emitter fired" sound
         public const float Variation = 0.25f;
