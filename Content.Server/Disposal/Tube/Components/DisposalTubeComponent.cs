@@ -56,12 +56,6 @@ namespace Content.Server.Disposal.Tube.Components
             return NextDirection(holder).ToVec();
         }
 
-        protected Direction DirectionTo(IDisposalTubeComponent other)
-        {
-            // SEVERE HAX: REMOVE ENTIRE METHOD BEFORE PR
-            return (other.Owner.Transform.LocalPosition - Owner.Transform.LocalPosition).GetDir();
-        }
-
         public bool Remove(DisposalHolderComponent holder)
         {
             var removed = Contents.Remove(holder.Owner);

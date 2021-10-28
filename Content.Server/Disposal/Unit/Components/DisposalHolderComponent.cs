@@ -46,6 +46,9 @@ namespace Content.Server.Disposal.Unit.Components
         public Direction PreviousDirection { get; private set; } = Direction.Invalid;
 
         [ViewVariables]
+        public Direction PreviousDirectionFrom => (PreviousDirection == Direction.Invalid) ? Direction.Invalid : PreviousDirection.GetOpposite();
+
+        [ViewVariables]
         public IDisposalTubeComponent? CurrentTube { get; private set; }
 
         // CurrentDirection is not null when CurrentTube isn't null.
