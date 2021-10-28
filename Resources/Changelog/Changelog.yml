@@ -1,9 +1,4 @@
 Entries:
-- author: daniel-cr
-  changes:
-  - {message: Adjusted a margin in the new context menu., type: Tweak}
-  id: 7
-  time: '2021-02-26T04:59:10.0000000+00:00'
 - author: AJCM
   changes:
   - {message: Makes gravity generator and windows repairable with a lit welding tool,
@@ -2805,3 +2800,8 @@ Entries:
   - {message: Fixes in-hand sprites not properly updating., type: Fix}
   id: 506
   time: '2021-10-28T12:34:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix not being able to build windows on top of grilles., type: Fix}
+  id: 507
+  time: '2021-10-28T17:03:11.646371+00:00'
