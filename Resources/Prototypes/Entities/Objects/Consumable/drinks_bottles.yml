@@ -125,6 +125,23 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
+  id: DrinkGrenadineBottle
+  name: briar rose grenadine syrup bottle
+  description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Grenadine
+          Quantity: 100
+  - type: Drink
+    isOpen: true
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkGinBottleFull
   name: Griffeater Gin
   description: A bottle of high quality gin, produced in the New London Space Station.
