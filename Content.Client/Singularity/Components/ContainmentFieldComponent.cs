@@ -1,4 +1,4 @@
-using Content.Shared.Singularity.Components;
+﻿using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
@@ -23,9 +23,7 @@ namespace Content.Client.Singularity.Components
             }
             else
             {
-#pragma warning disable 618
-                _spriteComponent.Directional = false;
-#pragma warning restore 618
+                _spriteComponent.NoRotation = true;
             }
         }
     }

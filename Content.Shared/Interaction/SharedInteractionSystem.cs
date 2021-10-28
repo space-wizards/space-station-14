@@ -354,7 +354,7 @@ namespace Content.Shared.Interaction
             return inRange;
         }
 
-        public async Task<bool> InteractDoBefore(
+        public bool InteractDoBefore(
             IEntity user,
             IEntity used,
             IEntity? target,
@@ -376,7 +376,7 @@ namespace Content.Shared.Interaction
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
-            if (await InteractDoBefore(user, used, target, clickLocation, true))
+            if (InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
