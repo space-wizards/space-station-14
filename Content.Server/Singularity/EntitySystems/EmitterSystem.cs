@@ -88,6 +88,7 @@ namespace Content.Server.Singularity.EntitySystems
             component.IsOn = false;
             if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = 0;
             PowerOff(component);
+            UpdateAppearance(component);
         }
 
         public void SwitchOn(EmitterComponent component)
@@ -96,6 +97,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (component.PowerConsumer != null) component.PowerConsumer.DrawRate = component.PowerUseActive;
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
+            UpdateAppearance(component);
         }
 
         public void PowerOff(EmitterComponent component)
