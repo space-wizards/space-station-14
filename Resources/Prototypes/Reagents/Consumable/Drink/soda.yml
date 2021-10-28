@@ -27,6 +27,21 @@
       amount: 0.1
 
 - type: reagent
+  id: LemonLime
+  name: lemon-lime
+  desc: tangy lime and lemon soda
+  physicalDesc: fizzy
+  color: "#878F00"
+  spritePath: lemonlime.rsi
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
   id: PwrGame
   name: Pwr Game
   desc: The only drink with the PWR that true gamers crave.

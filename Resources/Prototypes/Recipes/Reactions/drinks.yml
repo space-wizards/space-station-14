@@ -339,6 +339,18 @@
     Lemonade: 3
 
 - type: reaction
+  id: LemonLime
+  reactants:
+    JuiceLemon:
+      amount: 1
+    JuiceLime:
+      amount: 1
+    SodaWater:
+      amount: 1
+  products:
+    LemonLime: 3
+
+- type: reaction
   id: LongIslandIcedTea
   reactants:
     CubaLibre:
