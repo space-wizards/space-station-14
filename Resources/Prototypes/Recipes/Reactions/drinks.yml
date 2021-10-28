@@ -362,7 +362,7 @@
     SodaWater:
       amount: 1
   products:
-    KiraSpecial:
+    KiraSpecial: 3
 
 - type: reaction
   id: ManlyDorf

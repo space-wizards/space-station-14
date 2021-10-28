@@ -367,6 +367,14 @@
   spritePath: irishcoffeeglass.rsi
 
 - type: reagent
+  id: KiraSpecial
+  name: kira special
+  desc: Long live the guy who everyone had mistaken for a girl. Baka!
+  physicalDesc: strong-smelling
+  color: "#CCCC99"
+  spritePath: kiraspecial.rsi
+
+- type: reagent
   id: Lean
   name: lean
   desc: Turn up for days.
@@ -397,6 +405,14 @@
   spritePath: manlydorfglass.rsi
 
 - type: reagent
+  id: Martini
+  name: classic martini
+  desc: Vermouth with Gin. Not quite how 007 enjoyed it, but still delicious.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: martiniglass.rsi
+
+- type: reagent
   id: Moonshine
   name: moonshine
   desc: Artisanal homemade liquor. What could go wrong?
@@ -412,6 +428,14 @@
   spritePath: patronglass.rsi
 
 - type: reagent
+  id: Screwdriver
+  name: screwdriver
+  desc: Vodka, mixed with plain ol' orange juice. The result is surprisingly delicious.
+  physicalDesc: strong-smelling
+  color: "#A68310"
+  spritePath: screwdriverglass.rsi
+
+- type: reagent
   id: SyndicateBomb
   name: syndicate bomb
   desc: Somebody set us up the bomb!
@@ -420,9 +444,41 @@
   spritePath: syndicatebomb.rsi
 
 - type: reagent
+  id: TequilaSunrise
+  name: tequila sunrise
+  desc: Tequila and orange juice. Much like a Screwdriver, only Mexican~
+  physicalDesc: strong-smelling
+  color: "#FFE48C"
+  spritePath: tequillasunriseglass.rsi
+
+- type: reagent
+  id: ThreeMileIsland
+  name: three mile island iced tea
+  desc: "Made for a woman, strong enough for a man."
+  physicalDesc: strong-smelling
+  color: "#666340"
+  spritePath: threemileislandglass.rsi
+
+- type: reagent
+  id: VodkaMartini
+  name: vodka martini
+  desc: Vodka with Gin. Not quite how 007 enjoyed it, but still delicious.
+  physicalDesc: strong-smelling
+  color: "#004666"
+  spritePath: martiniglass.rsi
+
+- type: reagent
   id: WhiskeyCola
   name: whiskey cola
   desc: An innocent-looking mixture of cola and whiskey. Delicious.
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
+
+- type: reagent
+  id: WhiteRussian
+  name: white russian
+  desc: That's just, like, your opinion, man...
+  physicalDesc: strong-smelling
+  color: "#A68340"
+  spritePath: whiterussianglass.rsi

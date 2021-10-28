@@ -100,11 +100,27 @@
   spritePath: nothing.rsi
 
 - type: reagent
+  id: NukaCola
+  name: nuka cola
+  desc: Cola, cola never changes.
+  physicalDesc: fizzy
+  color: "#100800"
+  spritePath: nuka_colaglass.rsi
+
+- type: reagent
   id: SodaWater
   name: soda water
   desc: A container of club soda. Why not make a scotch and soda?
   physicalDesc: fizzy
   color: "#619494"
+
+- type: reagent
+  id: SoyLatte
+  name: soy latte
+  desc: A coffee drink made with espresso and steamed soy milk.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: soy_latte.rsi
 
 - type: reagent
   id: Tea
