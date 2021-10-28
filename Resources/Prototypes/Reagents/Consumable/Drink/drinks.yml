@@ -53,13 +53,6 @@
   spritePath: lemonadeglass.rsi
 
 - type: reagent
-  id: Menthol
-  name: menthol
-  desc: Alleviates coughing symptoms one might have.
-  physicalDesc: minty
-  color: "#80AF9C"
-
-- type: reagent
   id: Milk
   name: milk
   desc: An opaque white liquid produced by the mammary glands of mammals.

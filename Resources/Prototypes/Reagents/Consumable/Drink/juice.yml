@@ -94,12 +94,12 @@
   physicalDesc: tropical
   color: yellow
 
-# - type: reagent
-#   id: PotatoJuice
-#   name: potato juice
-#   desc: Juice of the potato. Bleh.
-#   physicalDesc: starchy
-#   color: "#302000"
+ - type: reagent
+   id: JuicePotato
+   name: potato juice
+   desc: Juice of the potato. Bleh.
+   physicalDesc: starchy
+   color: "#302000"
 
 - type: reagent
   id: JuiceTomato
