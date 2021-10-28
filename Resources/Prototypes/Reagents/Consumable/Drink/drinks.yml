@@ -13,6 +13,14 @@
   color: "#DFD7AF"
 
 - type: reagent
+  id: CafeLatte
+  name: cafe latte
+  desc: A nice, strong and tasty beverage while you are reading.
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: cafe_latte.rsi
+
+- type: reagent
   id: Grenadine
   name: grenadine
   desc: Not cherry flavored!
@@ -21,11 +29,28 @@
   spritePath: grenadineglass.rsi
 
 - type: reagent
+  id: IcedCoffee
+  name: iced coffee
+  desc: Coffee and ice, refreshing and cool.
+  physicalDesc: aromatic
+  color: "#102838"
+  spritePath: icedcoffeeglass.rsi
+
+- type: reagent
   id: IcedTea
   name: iced tea
   desc: No relation to a certain rap artist/actor.
   physicalDesc: aromatic
   color: "#104038"
+  spritePath: icedteaglass.rsi
+
+- type: reagent
+  id: Lemonade
+  name: lemonade
+  desc: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
+  physicalDesc: tart
+  color: "#FFFF00"
+  spritePath: lemonadeglass.rsi
 
 - type: reagent
   id: Menthol

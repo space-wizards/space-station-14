@@ -1,3 +1,4 @@
+
 # Base Alcohol
 
 - type: reagent
@@ -199,12 +200,68 @@
   spritePath: b52glass.rsi
 
 - type: reagent
+  id: BananaHonk
+  name: banana honk
+  desc: A drink from Clown Heaven.
+  physicalDesc: strong-smelling
+  color: "#ffff91"
+  spritePath: bananahonkglass.rsi
+
+- type: reagent
+  id: BeepskySmash
+  name: beepsky smash
+  desc: Deny drinking this and prepare for THE LAW.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: beepskysmashglass.rsi
+
+- type: reagent
   id: Bilk
   name: bilk
   desc: This appears to be beer mixed with milk. Disgusting.
   physicalDesc: bilky...
   color: "#895C4C"
   spritePath: glass_brown.rsi
+
+- type: reagent
+  id: BlackRussian
+  name: black russian
+  desc: For the lactose-intolerant. Still as classy as a White Russian.
+  physicalDesc: strong-smelling
+  color: "#360000"
+  spritePath: blackrussianglass.rsi
+
+- type: reagent
+  id: BloodyMary
+  name: bloody mary
+  desc: A strange yet pleasurable mixture made of vodka, tomato and lime juice. Tastes like liquid murder
+  physicalDesc: strong-smelling
+  color: "#660000"
+  spritePath: bloodymaryglass.rsi
+
+- type: reagent
+  id:  Booger
+  name: booger
+  desc: Ewww...
+  physicalDesc: strong-smelling
+  color: "#8CFF8C"
+  spritePath: booger.rsi
+
+- type: reagent
+  id: BraveBull
+  name: brave bull
+  desc: It's just as effective as Dutch-Courage!
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: bravebullglass.rsi
+
+- type: reagent
+  id: BrownStar
+  name: brown star
+  desc: It's not what it sounds like...
+  physicalDesc: strong-smelling
+  color: "#9F3400"
+  spritePath: brownstar.rsi
 
 - type: reagent
   id: CreamyDelight
@@ -222,6 +279,30 @@
   spritePath: cubalibreglass.rsi
 
 - type: reagent
+  id: DoctorsDelight
+  name: the doctor's delight
+  desc: A gulp a day keeps the MediBot away. That's probably for the best.
+  physicalDesc: strong-smelling
+  color: "#FF8CFF"
+  spritePath: doctorsdelightglass.rsi
+
+- type: reagent
+  id: DriestMartini
+  name: driest martini
+  desc: Only for the experienced. You think you see sand floating in the glass.
+  physicalDesc: strong-smelling
+  color: "#2E6671"
+  spritePath: driestmartiniglass.rsi
+
+- type: reagent
+  id: ErikaSuprise
+  name: erika suprise
+  desc: The surprise is, it's green!
+  physicalDesc: strong-smelling
+  color: "#2E6671"
+  spritePath: erikasurprise.rsi
+
+- type: reagent
   id: GargleBlaster
   name: Pan-Galactic Gargle Blaster
   desc: Whoah, this stuff looks volatile!
@@ -230,12 +311,36 @@
   spritePath: gargleblasterglass.rsi
 
 - type: reagent
+  id: GinFizz
+  name: gin fizz
+  desc: Refreshingly lemony, deliciously dry.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: ginfizzglass.rsi
+
+- type: reagent
+  id: GinTonic
+  name: gin and tonic
+  desc: An all time classic, mild cocktail.
+  physicalDesc: strong-smelling
+  color: "#004166"
+  spritePath: gintonicglass.rsi
+
+- type: reagent
   id: Goldschlager
   name: Goldschlager
   desc: 100 proof cinnamon schnapps, made for alcoholic teen girls on spring break.
   physicalDesc: strong-smelling
   color: "#FFFF91"
   spritePath: goldschlagerglass.rsi
+
+- type: reagent
+  id: Grog
+  name: grog
+  desc: Watered-down rum, pirate approved!
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: grogglass.rsi
 
 - type: reagent
   id: IrishCarBomb
@@ -274,6 +379,14 @@
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
+
+- type: reagent
+  id: LongIslandIcedTea
+  name: long island iced tea
+  desc: The liquor cabinet, brought together in a delicious mix. Intended for middle-aged alcoholic women only.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: longislandicedteaglass.rsi
 
 - type: reagent
   id: ManlyDorf

@@ -35,9 +35,9 @@
 - type: reaction
   id: BananaHonk
   reactants:
-    Banana:
-      amount: 1
     Cream:
+      amount: 1
+    JuiceBanana:
       amount: 1
     Sugar:
       amount: 1
@@ -91,10 +91,10 @@
 - type: reaction
   id: Booger
   reactants:
-    Banana:
-      amount: 1
     Cream:
       amount: 2
+    JuiceBanana:
+      amount: 1
     JuiceWatermelon:
       amount: 1
     Rum:
@@ -185,9 +185,9 @@
   reactants:
     Ale:
       amount: 2
-    Banana:
-      amount: 1
     Ice:
+      amount: 1
+    JuiceBanana:
       amount: 1
     JuiceLime:
       amount: 1
