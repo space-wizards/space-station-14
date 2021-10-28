@@ -304,3 +304,72 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/winebottle.rsi
+
+# Small Bottles
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkColaBottle
+  name: space cola bottle
+  description: Cola. in space
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Cola
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSpaceUpBottle
+  name: space-up bottle
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSpaceMountainWindBottle
+  name: space mountain wind bottle
+  description: Blows right through you like a space wind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkWaterBottle
+  name: water bottle
+  description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Water
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/waterbottle.rsi
