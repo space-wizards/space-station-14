@@ -14,7 +14,7 @@ namespace Content.Server.Construction
     {
         private readonly HashSet<EntityUid> _constructionUpdateQueue = new();
 
-        private void InitializeSteps()
+        private void InitializeInteractions()
         {
             #region DoAfter Subscriptions
 
