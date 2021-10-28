@@ -166,8 +166,8 @@ namespace Content.Server.Mind
             _roles.Add(role);
             role.Greet();
 
-            var message = new RoleAddedMessage(role);
-            OwnedEntity?.SendMessage(OwnedComponent, message);
+            var message = new RoleAddedEvent(role);
+            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
 
             return role;
         }
@@ -188,8 +188,8 @@ namespace Content.Server.Mind
 
             _roles.Remove(role);
 
-            var message = new RoleRemovedMessage(role);
-            OwnedEntity?.SendMessage(OwnedComponent, message);
+            var message = new RoleRemovedEvent(role);
+            OwnedEntity?.EntityManager.EventBus.RaiseLocalEvent(OwnedEntity.Uid, message);
         }
 
         public bool HasRole<T>() where T : Role
@@ -278,7 +278,7 @@ namespace Content.Server.Mind
             if (IsVisitingEntity
                 && (ghostCheckOverride // to force mind transfer, for example from ControlMobVerb
                 || !VisitingEntity!.TryGetComponent(out GhostComponent? ghostComponent) // visiting entity is not a Ghost
-                || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay                
+                || !ghostComponent.CanReturnToBody))  // it is a ghost, but cannot return to body anyway, so it's okay
             {
                 VisitingEntity = null;
             }

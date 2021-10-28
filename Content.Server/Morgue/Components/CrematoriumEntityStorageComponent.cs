@@ -27,7 +27,9 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class CrematoriumEntityStorageComponent : MorgueEntityStorageComponent, IExamine, ISuicideAct
+#pragma warning restore 618
     {
         public override string Name => "CrematoriumEntityStorage";
 

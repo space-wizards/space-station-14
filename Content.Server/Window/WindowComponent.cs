@@ -24,7 +24,9 @@ namespace Content.Server.Window
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedWindowComponent))]
+#pragma warning disable 618
     public class WindowComponent : SharedWindowComponent, IExamine, IInteractHand
+#pragma warning restore 618
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

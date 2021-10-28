@@ -73,4 +73,32 @@ namespace Content.Shared.Weapons.Melee
             ClickLocation = clickLocation;
         }
     }
+
+    /// <summary>
+    ///     Event raised on entities that have been attacked.
+    /// </summary>
+    public class AttackedEvent : EntityEventArgs
+    {
+        /// <summary>
+        ///     Entity used to attack, for broadcast purposes.
+        /// </summary>
+        public IEntity Used { get; }
+
+        /// <summary>
+        ///     Entity that triggered the attack.
+        /// </summary>
+        public IEntity User { get; }
+
+        /// <summary>
+        ///     The original location that was clicked by the user.
+        /// </summary>
+        public EntityCoordinates ClickLocation { get; }
+
+        public AttackedEvent(IEntity used, IEntity user, EntityCoordinates clickLocation)
+        {
+            Used = used;
+            User = user;
+            ClickLocation = clickLocation;
+        }
+    }
 }

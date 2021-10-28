@@ -1,4 +1,5 @@
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -9,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -20,6 +22,8 @@ namespace Content.Server.Lock
     [UsedImplicitly]
     public class LockSystem : EntitySystem
     {
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -144,7 +148,7 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!reader.IsAllowed(user))
+            if (!_accessReader.IsAllowed(reader, user.Uid))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));

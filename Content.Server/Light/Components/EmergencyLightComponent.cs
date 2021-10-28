@@ -16,7 +16,9 @@ namespace Content.Server.Light.Components
     ///     Component that represents an emergency light, it has an internal battery that charges when the power is on.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class EmergencyLightComponent : SharedEmergencyLightComponent, IExamine
+#pragma warning restore 618
     {
         [ViewVariables]
         private EmergencyLightState State
@@ -127,9 +129,14 @@ namespace Content.Server.Light.Components
                 appearance.SetData(EmergencyLightVisuals.On, true);
         }
 
+#pragma warning disable 618
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
+#pragma warning restore 618
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:

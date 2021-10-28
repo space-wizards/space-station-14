@@ -91,6 +91,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.maxstationoffset", 1000.0f);
 
         /// <summary>
+        ///     Whether a random rotation will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationRotation =
+            CVarDef.Create("game.station_rotation", true);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool>
@@ -244,6 +250,13 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> HudTheme =
             CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<bool> HudHeldItemShow =
+            CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<float> HudHeldItemOffset =
+            CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
 
         /*
          * AI

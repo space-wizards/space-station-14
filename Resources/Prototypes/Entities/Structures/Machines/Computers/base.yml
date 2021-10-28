@@ -11,6 +11,7 @@
     node: computer
   - type: Computer
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
     layers:

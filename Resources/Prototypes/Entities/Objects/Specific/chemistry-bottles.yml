@@ -16,7 +16,7 @@
     isOpen: true
   - type: SolutionContainerManager
     solutions:
-      drink:
+      drink: # This solution name and target volume is hard-coded in ChemMasterComponent
         maxVol: 30
   - type: RefillableSolution
     solution: drink

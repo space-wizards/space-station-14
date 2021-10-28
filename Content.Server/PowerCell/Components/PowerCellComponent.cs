@@ -21,7 +21,9 @@ namespace Content.Server.PowerCell.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(BatteryComponent))]
+#pragma warning disable 618
     public class PowerCellComponent : BatteryComponent, IExamine
+#pragma warning restore 618
     {
         public override string Name => "PowerCell";
         public const string SolutionName = "powerCell";

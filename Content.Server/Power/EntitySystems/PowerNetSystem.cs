@@ -279,6 +279,12 @@ namespace Content.Server.Power.EntitySystems
                 }
             }
 
+            foreach (var consumer in net.Consumers)
+            {
+                netNode.Loads.Add(consumer.NetworkLoad.Id);
+                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
+            }
+
             foreach (var apc in net.Apcs)
             {
                 var netBattery = apc.Owner.GetComponent<PowerNetworkBatteryComponent>();

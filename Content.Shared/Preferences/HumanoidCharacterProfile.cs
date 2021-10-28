@@ -349,7 +349,6 @@ namespace Content.Shared.Preferences
 
             string RandomName()
             {
-                if (Sex == null) return "Urist McHands"; // This shouldn't happen
                 var random = IoCManager.Resolve<IRobustRandom>();
                 var protoMan = IoCManager.Resolve<IPrototypeManager>();
                 var firstName = random.Pick(Sex.FirstNames(protoMan).Values);
