@@ -57,7 +57,7 @@ namespace Content.Server.Administration
                 Verb verb = new();
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
+                verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
                 args.Verbs.Add(verb);
             }
@@ -200,7 +200,7 @@ namespace Content.Server.Administration
                 // TODO CHEMISTRY
                 // Add reagent ui broke after solution refactor. Needs fixing
                 verb.Disabled = true;
-                verb.Tooltip = "Currently non functional after solution refactor.";
+                verb.Message = "Currently non functional after solution refactor.";
                 verb.Priority = -2;
 
                 args.Verbs.Add(verb);
