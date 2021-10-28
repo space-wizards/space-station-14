@@ -1,9 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 1
-  time: '2021-02-25T08:50:45.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: Added new first aid kits with fancy new sprites., type: Add}
@@ -2803,3 +2798,8 @@ Entries:
       or just a lot of roundstart engineers, type: Add}
   id: 500
   time: '2021-10-27T15:44:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix light replacer interaction with wall lights, type: Fix}
+  id: 501
+  time: '2021-10-28T02:36:09.0000000+00:00'
