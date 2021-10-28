@@ -16,7 +16,8 @@ namespace Content.Shared.Verbs
         public readonly SpriteSpecifier? Icon;
 
         /// <summary>
-        ///     If true, this verb category is shown in the context menu as a row of icons without any text.
+        ///     If true, the members of this verb category will be shown in the context menu as a row of icons without
+        ///     any text.
         /// </summary>
         /// <remarks>
         ///     For example, the 'Rotate' category simply shows two icons for rotating left and right.

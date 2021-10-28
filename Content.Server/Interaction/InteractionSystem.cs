@@ -411,7 +411,9 @@ namespace Content.Server.Interaction
             foreach (var interactHandComp in interactHandComps)
             {
                 // If an InteractHand returns a status completion we finish our interaction
+#pragma warning disable 618
                 if (interactHandComp.InteractHand(interactHandEventArgs))
+#pragma warning restore 618
                     return;
             }
 
@@ -442,7 +444,9 @@ namespace Content.Server.Interaction
                 foreach (var t in rangedInteractions)
                 {
                     // If an InteractUsingRanged returns a status completion we finish our interaction
+#pragma warning disable 618
                     if (t.RangedInteract(rangedInteractionEventArgs))
+#pragma warning restore 618
                         return true;
                 }
             }

@@ -20,6 +20,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
+#pragma warning disable 618
+
 namespace Content.Shared.Interaction
 {
     /// <summary>
@@ -528,7 +530,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.TryExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb);
                 break;
             }
         }

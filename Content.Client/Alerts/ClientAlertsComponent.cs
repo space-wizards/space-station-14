@@ -208,7 +208,9 @@ namespace Content.Client.Alerts
                 return;
             }
 
+#pragma warning disable 618
             SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
+#pragma warning restore 618
         }
 
         protected override void AfterShowAlert()
