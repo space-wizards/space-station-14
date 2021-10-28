@@ -1,14 +1,4 @@
 Entries:
-- author: tmtmtl30
-  changes:
-  - {message: Constructed walls don't have broken lighting anymore, type: Fix}
-  id: 3
-  time: '2021-02-25T10:52:26.0000000+00:00'
-- author: AJCM
-  changes:
-  - {message: Can now cook banana cream pies, type: Add}
-  id: 4
-  time: '2021-02-25T11:45:11.0000000+00:00'
 - author: Peptide90
   changes:
   - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
@@ -2803,3 +2793,15 @@ Entries:
   - {message: Updated context menu UI, type: Tweak}
   id: 502
   time: '2021-10-28T05:21:19.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix rare construction bug where some interactions would be incorrect.,
+    type: Fix}
+  id: 503
+  time: '2021-10-28T09:23:03.038084+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fix being able to build machines for free by taking the board out,
+      putting it in again and screwing.', type: Fix}
+  id: 504
+  time: '2021-10-28T09:23:03.038979+00:00'
