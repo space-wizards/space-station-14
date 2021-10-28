@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Alert;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
@@ -11,10 +12,13 @@ namespace Content.Server.Temperature.Systems
     public class TemperatureSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
+        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(ChangeDamage);
+            SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
             SubscribeLocalEvent<ServerAlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
         }
 
@@ -51,6 +55,14 @@ namespace Content.Server.Temperature.Systems
 
                 RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta));
             }
+        }
+
+        private void OnAtmosExposedUpdate(EntityUid uid, TemperatureComponent temperature, ref AtmosExposedUpdateEvent args)
+        {
+            var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
+            var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
+            var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
+            _temperatureSystem.ReceiveHeat(uid, heat, temperature);
         }
 
         private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
@@ -111,19 +123,19 @@ namespace Content.Server.Temperature.Systems
             }
 
         }
+    }
 
-        public class OnTemperatureChangeEvent : EntityEventArgs
+    public class OnTemperatureChangeEvent : EntityEventArgs
+    {
+        public float CurrentTemperature { get; }
+        public float LastTemperature { get; }
+        public float TemperatureDelta { get; }
+
+        public OnTemperatureChangeEvent(float current, float last, float delta)
         {
-            public float CurrentTemperature { get; }
-            public float LastTemperature { get; }
-            public float TemperatureDelta { get; }
-
-            public OnTemperatureChangeEvent(float current, float last, float delta)
-            {
-                CurrentTemperature = current;
-                LastTemperature = last;
-                TemperatureDelta = delta;
-            }
+            CurrentTemperature = current;
+            LastTemperature = last;
+            TemperatureDelta = delta;
         }
     }
 }

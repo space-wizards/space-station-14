@@ -76,7 +76,8 @@ namespace Content.Server.Atmos.EntitySystems
                 {
                     var tile = GetTileMixture(exposed.Owner.Transform.Coordinates);
                     if (tile == null) continue;
-                    RaiseLocalEvent(exposed.Owner.Uid, new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile));
+                    var updateEvent = new AtmosExposedUpdateEvent(exposed.Owner.Transform.Coordinates, tile);
+                    RaiseLocalEvent(exposed.Owner.Uid, ref updateEvent);
                 }
 
                 _exposedTimer -= ExposedUpdateDelay;

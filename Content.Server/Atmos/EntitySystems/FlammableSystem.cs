@@ -209,10 +209,10 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (flammable.FireStacks > 0)
                 {
-                    _temperatureSystem.ReceiveHeat(flammable.Owner.Uid, 200 * flammable.FireStacks);
+                    _temperatureSystem.ReceiveHeat(uid, 200 * flammable.FireStacks);
                     // TODO ATMOS Fire resistance from armor
                     var damageScale = Math.Min((int) (flammable.FireStacks * 2.5f), 10);
-                    _damageableSystem.TryChangeDamage(flammable.Owner.Uid, flammable.Damage * damageScale);
+                    _damageableSystem.TryChangeDamage(uid, flammable.Damage * damageScale);
 
                     AdjustFireStacks(uid, -0.1f * (flammable.Resisting ? 10f : 1f), flammable);
                 }

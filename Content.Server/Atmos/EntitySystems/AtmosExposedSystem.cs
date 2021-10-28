@@ -7,32 +7,15 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.EntitySystems
 {
+    /* doesn't seem to be a use for this at the moment, so it's disabled
     public class AtmosExposedSystem : EntitySystem
+    {}
+    */
+
+    public readonly struct AtmosExposedUpdateEvent
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
-
-        public override void Initialize()
-        {
-            SubscribeLocalEvent<AtmosExposedComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
-        }
-
-        private void OnAtmosExposedUpdate(EntityUid uid, AtmosExposedComponent component, AtmosExposedUpdateEvent args)
-        {
-            if (EntityManager.TryGetComponent<TemperatureComponent>(uid, out var temperature))
-            {
-                var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
-                var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
-                var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
-                _temperatureSystem.ReceiveHeat(uid, heat);
-            }
-        }
-    }
-
-    public class AtmosExposedUpdateEvent : EntityEventArgs
-    {
-        public EntityCoordinates Coordinates;
-        public GasMixture GasMixture;
+        public readonly EntityCoordinates Coordinates;
+        public readonly GasMixture GasMixture;
 
         public AtmosExposedUpdateEvent(EntityCoordinates coordinates, GasMixture mixture)
         {
