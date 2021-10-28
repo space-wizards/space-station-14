@@ -16,24 +16,112 @@ namespace Content.Shared.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmDataComponent, ComponentHandleState>(OnDataHandleState);
         }
 
+        // server side
         private void OnDataGetState(EntityUid uid, AirAlarmDataComponent data, ref ComponentGetState state)
         {
             Logger.DebugS("AirAlarmData", "Attempting to grab state now.");
-            state.State = new AirAlarmDataComponentState(data.Pressure, data.Temperature, data.TotalMoles, data.CurrentMode, data.AlarmState, data.PressureThreshold, data.TemperatureThreshold, data.DeviceData, data.Gases, data.GasThresholds);
+            var alarmState = new AirAlarmDataComponentState
+            {
+                Pressure = data.Pressure,
+                Temperature = data.Temperature,
+                TotalMoles = data.TotalMoles,
+                AlarmState = data.AlarmState,
+                Gases = data.Gases
+            };
+
+            if (data.DirtyMode)
+            {
+                Logger.DebugS("AirAlarmData", "Dirty air alarm mode detected.");
+                alarmState.DirtyMode = true;
+                alarmState.CurrentMode = data.CurrentMode;
+                data.DirtyMode = false;
+            }
+
+            if (data.DirtyThresholds.Count != 0)
+            {
+                alarmState.DirtyThresholds = data.DirtyThresholds;
+                foreach (var threshold in data.DirtyThresholds)
+                {
+                    switch (threshold)
+                    {
+                        case AtmosMonitorThresholdType.Pressure:
+                            alarmState.PressureThreshold = data.PressureThreshold;
+                            break;
+                        case AtmosMonitorThresholdType.Temperature:
+                            alarmState.TemperatureThreshold = data.TemperatureThreshold;
+                            break;
+                        case AtmosMonitorThresholdType.Gas:
+                            alarmState.GasThresholds = data.GasThresholds;
+                            break;
+                    }
+                }
+                data.DirtyThresholds.Clear();
+            }
+
+            if (data.DirtyDevices.Count != 0)
+            {
+                alarmState.DirtyDevices = data.DirtyDevices;
+                var dirtyDevices = new Dictionary<string, IAtmosDeviceData>();
+                foreach (var deviceAddr in data.DirtyDevices)
+                    dirtyDevices.Add(deviceAddr, data.DeviceData[deviceAddr]);
+
+                alarmState.DeviceData = dirtyDevices;
+                data.DirtyDevices.Clear();
+            }
+
+            Logger.DebugS("AirAlarmData", "Setting state.");
+            state.State = alarmState;
         }
 
+        // client side
         private void OnDataHandleState(EntityUid uid, AirAlarmDataComponent data, ref ComponentHandleState state)
         {
             if (state.Current is not AirAlarmDataComponentState currentState) return;
 
-            var update = new AirAlarmData
+            Logger.DebugS("AirAlarmData", "Handling state.");
+            var update = new AirAlarmAirData
             {
                 Pressure = currentState.Pressure,
                 Temperature = currentState.Temperature,
                 TotalMoles = currentState.TotalMoles,
+                AlarmState = currentState.AlarmState,
+                Gases = currentState.Gases
             };
 
             UpdateAirData(uid, update);
+
+            if (currentState.DirtyMode)
+            {
+                UpdateAlarmMode(uid, currentState.CurrentMode);
+                data.DirtyMode = false;
+            }
+
+            if (currentState.DirtyThresholds != null)
+            {
+                foreach (var threshold in currentState.DirtyThresholds)
+                    switch (threshold)
+                    {
+                        case AtmosMonitorThresholdType.Pressure:
+                            UpdateAlarmThreshold(uid, currentState.PressureThreshold!, threshold);
+                            break;
+                        case AtmosMonitorThresholdType.Temperature:
+                            UpdateAlarmThreshold(uid, currentState.TemperatureThreshold!, threshold);
+                            break;
+                        case AtmosMonitorThresholdType.Gas:
+                            foreach (var (gas, gasThreshold) in currentState.GasThresholds!)
+                                UpdateAlarmThreshold(uid, gasThreshold, threshold, gas);
+                            break;
+                    }
+                data.DirtyThresholds.Clear();
+            }
+
+            if (currentState.DirtyDevices != null)
+            {
+                var deviceData = new Dictionary<string, IAtmosDeviceData>(currentState.DeviceData!);
+                foreach (var addr in currentState.DirtyDevices)
+                    UpdateDeviceData(uid, addr, deviceData![addr]);
+                data.DirtyDevices.Clear();
+            }
         }
 
         public void UpdateDeviceData(EntityUid uid, string addr, IAtmosDeviceData data, AirAlarmDataComponent? alarmData = null)
@@ -41,6 +129,7 @@ namespace Content.Shared.Atmos.Monitor.Systems
             if (!Resolve(uid, ref alarmData)) return;
 
             alarmData.DeviceData[addr] = data;
+            alarmData.DirtyDevices.Add(addr);
             alarmData.Dirty();
 
             RaiseLocalEvent(uid, new AirAlarmDeviceDataUpdateEvent(addr));
@@ -50,7 +139,9 @@ namespace Content.Shared.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref alarmData)) return;
 
+            Logger.DebugS("AirAlarmData", "Attempting to update alarm mode now.");
             alarmData.CurrentMode = mode;
+            alarmData.DirtyMode = true;
             alarmData.Dirty();
 
             RaiseLocalEvent(uid, new AirAlarmSetModeEvent());
@@ -74,25 +165,28 @@ namespace Content.Shared.Atmos.Monitor.Systems
                     break;
             }
 
+            alarmData.DirtyThresholds.Add(type);
             alarmData.Dirty();
 
             RaiseLocalEvent(uid, new AirAlarmSetThresholdEvent(threshold, type, gas));
         }
 
-        public void UpdateAirData(EntityUid uid, AirAlarmData update, AirAlarmDataComponent? data = null)
+        public void UpdateAirData(EntityUid uid, AirAlarmAirData update, AirAlarmDataComponent? data = null)
         {
             if (!Resolve(uid, ref data)) return;
 
-            Logger.DebugS("AirAlarmData", "Attempting to update data now.");
+            Logger.DebugS("AirAlarmData", "Attempting to update air data now.");
 
             // TODO: Lerping? (sounds like a noise a furry would make lmao)
             data.Pressure = update.Pressure;
             data.Temperature = update.Temperature;
             data.TotalMoles = update.TotalMoles;
+            data.AlarmState = update.AlarmState;
 
-            foreach (var (gas, amount) in update.Gases)
-                if (!data.Gases.TryAdd(gas, amount))
-                    data.Gases[gas] = amount;
+            if (update.Gases != null)
+                foreach (var (gas, amount) in update.Gases)
+                    if (!data.Gases.TryAdd(gas, amount))
+                        data.Gases[gas] = amount;
 
             data.Dirty();
         }
@@ -100,23 +194,14 @@ namespace Content.Shared.Atmos.Monitor.Systems
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmData
+    public class AirAlarmAirData
     {
         public float? Pressure { get; set; }
         public float? Temperature { get; set; }
         public float? TotalMoles { get; set; }
+        public AtmosMonitorAlarmType AlarmState { get; set; }
 
-        public Dictionary<Gas, float> Gases { get; } = new();
-
-        /*
-        public AirAlarmData(float? pressure, float? temperature, float? moles, Dictionary<Gas, float> gases)
-        {
-            Pressure = pressure;
-            Temperature = temperature;
-            TotalMoles = moles;
-            Gases = gases;
-        }
-        */
+        public IReadOnlyCollection<KeyValuePair<Gas, float>>? Gases { get; set; }
     }
 
     public class AirAlarmSetThresholdEvent : EntityEventArgs

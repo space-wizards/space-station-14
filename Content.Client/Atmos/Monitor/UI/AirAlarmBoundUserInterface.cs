@@ -41,20 +41,17 @@ namespace Content.Client.Atmos.Monitor.UI
 
         private void OnDeviceDataChanged(string address, IAtmosDeviceData data)
         {
-            if (_owner != null)
-                _airAlarmDataSystem.UpdateDeviceData((EntityUid) _owner, address, data);
+            SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
         }
 
         private void OnAirAlarmModeChanged(AirAlarmMode mode)
         {
-            if (_owner != null)
-                _airAlarmDataSystem.UpdateAlarmMode((EntityUid) _owner, mode);
+            SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
         }
 
         private void OnThresholdChanged(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
         {
-            if (_owner != null)
-                _airAlarmDataSystem.UpdateAlarmThreshold((EntityUid) _owner, threshold, type, gas);
+            SendMessage(new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

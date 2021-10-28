@@ -9,6 +9,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 
@@ -137,7 +138,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
-            SubscribeLocalEvent<AtmosMonitorComponent, AirAlarmSetThresholdEvent>(OnSetThreshold);
+            SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetThresholdEvent>(OnSetThreshold);
             SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetModeEvent>(OnSetMode);
             SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmDeviceDataUpdateEvent>(OnDeviceDataUpdate);
         }
@@ -147,7 +148,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SyncAllDevices(uid);
         }
 
-        private void OnSetThreshold(EntityUid uid, AtmosMonitorComponent data, AirAlarmSetThresholdEvent args)
+        private void OnSetThreshold(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetThresholdEvent args)
         {
             // Justification: This data is already in the shared component. The event
             // just lets us transmit the data without having to call for the component,
@@ -157,6 +158,9 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnSetMode(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetModeEvent args)
         {
+            Logger.DebugS("AirAlarmData", "Dirty air alarm mode detected.");
+            Logger.DebugS("AirAlarmData", $"CurrentMode: {data.CurrentMode}");
+            Logger.DebugS("AirAlarmData", $"DirtyMode: {data.DirtyMode}");
             // TODO: Mode setting/programs.
         }
 
@@ -229,17 +233,21 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (!power.Powered) return;
 
-            var data = new AirAlarmData();
+            var data = new AirAlarmAirData();
 
             if (monitor.TileGas != null)
             {
                 data.Pressure = monitor.TileGas.Pressure;
                 data.Temperature = monitor.TileGas.Temperature;
                 data.TotalMoles = monitor.TileGas.TotalMoles;
+                data.AlarmState = monitor.LastAlarmState;
+
+                var gases = new Dictionary<Gas, float>();
 
                 foreach (var gas in Enum.GetValues<Gas>())
-                    if (!data.Gases.TryAdd(gas, monitor.TileGas.GetMoles(gas)))
-                        data.Gases[gas] = monitor.TileGas.GetMoles(gas);
+                    gases.Add(gas, monitor.TileGas.GetMoles(gas));
+
+                data.Gases = gases;
 
                 Logger.DebugS("AirAlarmSystem", "Attempting to update data now.");
 

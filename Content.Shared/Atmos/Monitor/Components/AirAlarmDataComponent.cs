@@ -33,62 +33,84 @@ namespace Content.Shared.Atmos.Monitor.Components
     {
         public override string Name => "AirAlarmData";
 
+        // These are the 'hot' values an air alarm contains.
+        // These are the ones that have to be updated by
+        // the server.
         [ViewVariables] public float? Pressure { get; set; }
         [ViewVariables] public float? Temperature { get; set; }
         [ViewVariables] public float? TotalMoles { get; set; }
-        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
         [ViewVariables] public AtmosMonitorAlarmType AlarmState { get; set; }
+        [ViewVariables] public Dictionary<Gas, float> Gases { get; } = new();
+
+        // These ar the user configurable values an air alarm contains.
+        // These are the ones that are updated by an end user, after
+        // being fetched from a server.
+        [ViewVariables] public bool DirtyMode { get; set; }
+        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
+
+        // If any of these thresholds are dirty, it is added to the hash set.
+        // Upon state transfer, all dirty-indicator sets should be cleared.
+        [ViewVariables] public HashSet<AtmosMonitorThresholdType> DirtyThresholds { get; } = new();
         [ViewVariables] public AtmosAlarmThreshold PressureThreshold { get; set; } = new();
         [ViewVariables] public AtmosAlarmThreshold TemperatureThreshold { get; set; } = new();
+        [ViewVariables] public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; } = new();
 
-        [ViewVariables] public Dictionary<string, IAtmosDeviceData> DeviceData { get; } = new();
+        [ViewVariables] public HashSet<string> DirtyDevices { get; } = new();
+        [ViewVariables] public Dictionary<string, IAtmosDeviceData> DeviceData { get; set; } = new();
         // might be needed, might not
         // sync errors need to be implemented first
         [ViewVariables] public Dictionary<string, bool> DeviceDataErrors { get; } = new();
-        [ViewVariables] public Dictionary<Gas, float> Gases { get; } = new();
-        [ViewVariables] public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; } = new();
     }
 
     [Serializable, NetSerializable]
     public sealed class AirAlarmDataComponentState : ComponentState
     {
-        public float? Pressure { get; set; }
-        public float? Temperature { get; set; }
-        public float? TotalMoles { get; set; }
-        public AirAlarmMode CurrentMode { get; set; }
-        public AtmosMonitorAlarmType AlarmState { get; set; }
-        public AtmosAlarmThreshold PressureThreshold { get; set; } = new();
-        public AtmosAlarmThreshold TemperatureThreshold { get; set; } = new();
+        // These are the 'hot' values an air alarm contains.
+        // These are the ones that have to be updated by
+        // the server.
+        [ViewVariables] public float? Pressure { get; set; }
+        [ViewVariables] public float? Temperature { get; set; }
+        [ViewVariables] public float? TotalMoles { get; set; }
+        [ViewVariables] public AtmosMonitorAlarmType AlarmState { get; set; }
+        [ViewVariables] public Dictionary<Gas, float>? Gases;
+        /*
+        [ViewVariables] public IReadOnlyDictionary<Gas, float>? Gases
+        {
+            get => _gases;
+            set { if (value != null) _gases = new Dictionary<Gas, float>(value); }
+        }
+        */
 
-        public Dictionary<string, IAtmosDeviceData> DeviceData { get; }
+        // These ar the user configurable values an air alarm contains.
+        // These are the ones that are updated by an end user, after
+        // being fetched from a server.
+        [ViewVariables] public bool DirtyMode { get; set; }
+        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
+
+        // If any of these thresholds are dirty, it is added to the hash set.
+        [ViewVariables] public HashSet<AtmosMonitorThresholdType>? DirtyThresholds { get; set; }
+        [ViewVariables] public AtmosAlarmThreshold? PressureThreshold { get; set; }
+        [ViewVariables] public AtmosAlarmThreshold? TemperatureThreshold { get; set; }
+        [ViewVariables] public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
+        /*
+        [ViewVariables] public IReadOnlyDictionary<Gas, AtmosAlarmThreshold>? GasThresholds
+        {
+            get => _gasThresholds;
+            set { if (value != null) _gasThresholds = new Dictionary<Gas, AtmosAlarmThreshold>(value); }
+        }
+        */
+        [ViewVariables] public HashSet<string>? DirtyDevices { get; set; }
+        [ViewVariables] public Dictionary<string, IAtmosDeviceData>? DeviceData;
+        /*
+        [ViewVariables] public IReadOnlyDictionary<string, IAtmosDeviceData>? DeviceData
+        {
+            get => _deviceData;
+            set { if (value != null) _deviceData = new Dictionary<string, IAtmosDeviceData>(value); }
+        }
+        */
         // might be needed, might not
         // sync errors need to be implemented first
-        // public Dictionary<string, bool> DeviceDataErrors { get; }
-        public Dictionary<Gas, float> Gases { get; }
-        public Dictionary<Gas, AtmosAlarmThreshold> GasThresholds { get; }
-
-        public AirAlarmDataComponentState(float? pressure,
-            float? temperature,
-            float? totalMoles,
-            AirAlarmMode currentMode,
-            AtmosMonitorAlarmType alarmState,
-            AtmosAlarmThreshold pressureThreshold,
-            AtmosAlarmThreshold temperatureThreshold,
-            Dictionary<string, IAtmosDeviceData> deviceData,
-            Dictionary<Gas, float> gases,
-            Dictionary<Gas, AtmosAlarmThreshold> gasThresholds)
-        {
-            Pressure = pressure;
-            Temperature = temperature;
-            TotalMoles = totalMoles;
-            CurrentMode = currentMode;
-            AlarmState = alarmState;
-            PressureThreshold = pressureThreshold;
-            TemperatureThreshold = temperatureThreshold;
-            DeviceData = deviceData;
-            Gases = gases;
-            GasThresholds = gasThresholds;
-        }
+        [ViewVariables] public Dictionary<string, bool> DeviceDataErrors { get; } = new();
 
     }
 }

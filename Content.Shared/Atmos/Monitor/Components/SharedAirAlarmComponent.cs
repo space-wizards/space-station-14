@@ -40,6 +40,45 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
+    public class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
+    {
+        public AirAlarmMode Mode { get; }
+
+        public AirAlarmUpdateAlarmModeMessage(AirAlarmMode mode)
+        {
+            Mode = mode;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class AirAlarmUpdateDeviceDataMessage : BoundUserInterfaceMessage
+    {
+        public string Address { get; }
+        public IAtmosDeviceData Data { get; }
+
+        public AirAlarmUpdateDeviceDataMessage(string addr, IAtmosDeviceData data)
+        {
+            Address = addr;
+            Data = data;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class AirAlarmUpdateAlarmThresholdMessage : BoundUserInterfaceMessage
+    {
+        public AtmosAlarmThreshold Threshold { get; }
+        public AtmosMonitorThresholdType Type { get; }
+        public Gas? Gas { get; }
+
+        public AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType type, AtmosAlarmThreshold threshold, Gas? gas = null)
+        {
+            Threshold = threshold;
+            Type = type;
+            Gas = gas;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class GasVentPumpData : IAtmosDeviceData
     {
         public bool Enabled { get; set; }

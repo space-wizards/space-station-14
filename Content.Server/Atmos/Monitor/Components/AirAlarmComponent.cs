@@ -6,6 +6,7 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Interaction;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -23,6 +24,7 @@ namespace Content.Server.Atmos.Monitor.Components
         [ComponentDependency] public readonly AirAlarmDataComponent? AirAlarmDataComponent = default!;
 
         private AirAlarmSystem? _airAlarmSystem = default!;
+        private AirAlarmDataSystem? _airAlarmDataSystem = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
 
@@ -33,6 +35,7 @@ namespace Content.Server.Atmos.Monitor.Components
             base.Initialize();
 
             _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
+            _airAlarmDataSystem = EntitySystem.Get<AirAlarmDataSystem>();
             _userInterface = Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key);
             if (_userInterface != null)
             {
@@ -82,7 +85,22 @@ namespace Content.Server.Atmos.Monitor.Components
         }
 
         public void OnMessageReceived(ServerBoundUserInterfaceMessage message)
-        {}
+        {
+            if (_airAlarmDataSystem == null) return;
+
+            switch (message.Message)
+            {
+                case AirAlarmUpdateAlarmModeMessage alarmMessage:
+                    _airAlarmDataSystem.UpdateAlarmMode(Owner.Uid, alarmMessage.Mode);
+                    break;
+                case AirAlarmUpdateAlarmThresholdMessage thresholdMessage:
+                    _airAlarmDataSystem.UpdateAlarmThreshold(Owner.Uid, thresholdMessage.Threshold, thresholdMessage.Type, thresholdMessage.Gas);
+                    break;
+                case AirAlarmUpdateDeviceDataMessage dataMessage:
+                    _airAlarmDataSystem.UpdateDeviceData(Owner.Uid, dataMessage.Address, dataMessage.Data);
+                    break;
+            }
+        }
     }
 
     public class AirAlarmModeProgram

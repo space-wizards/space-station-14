@@ -39,6 +39,15 @@ namespace Content.Client.Atmos.Monitor.UI
         public AirAlarmWindow()
         {
             RobustXamlLoader.Load(this);
+
+            foreach (var mode in Enum.GetValues<AirAlarmMode>())
+                _modes.AddItem($"{mode}", (int) mode);
+
+            _modes.OnItemSelected += args =>
+            {
+                _modes.SelectId(args.Id);
+                AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
+            };
         }
 
         public void UpdateState(AirAlarmDataComponent state)
