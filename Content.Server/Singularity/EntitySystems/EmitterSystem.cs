@@ -214,9 +214,7 @@ namespace Content.Server.Singularity.EntitySystems
                 state = EmitterVisualState.Off;
             }
 
-            var locked = EntityManager.TryGetComponent(component.Owner.Uid, out LockComponent? lockComp) && lockComp.Locked;
             component.Appearance.SetData(EmitterVisuals.VisualState, state);
-            component.Appearance.SetData(EmitterVisuals.Locked, locked);
         }
     }
 }
