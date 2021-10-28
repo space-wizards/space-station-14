@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
-  id: 5
-  time: '2021-02-25T15:10:54.0000000+00:00'
 - author: Macoron
   changes:
   - {message: Ghosts can flick lights and spook living, type: Add}
@@ -2805,3 +2800,8 @@ Entries:
       putting it in again and screwing.', type: Fix}
   id: 504
   time: '2021-10-28T09:23:03.038979+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed not being angle to anchor emitters., type: Fix}
+  id: 505
+  time: '2021-10-28T11:29:19.0000000+00:00'
