@@ -85,7 +85,7 @@ namespace Content.Server.Administration
                 return null;
             }
 
-            return new LocatedPlayerData(new NetUserId(responseData.UserId), null, null);
+            return new LocatedPlayerData((NetUserId) responseData.UserId, null, null);
         }
 
         public async Task<LocatedPlayerData?> LookupIdAsync(NetUserId userId, CancellationToken cancel = default)
@@ -125,7 +125,7 @@ namespace Content.Server.Administration
         {
             if (Guid.TryParse(playerName, out var guid))
             {
-                var userId = new NetUserId(guid);
+                var userId = (NetUserId) guid;
 
                 return await LookupIdAsync(userId, cancel);
             }

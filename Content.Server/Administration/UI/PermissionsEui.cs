@@ -76,7 +76,7 @@ namespace Content.Server.Administration.UI
                     NegFlags = AdminFlagsHelper.NamesToFlags(p.a.Flags.Where(f => f.Negative).Select(f => f.Flag)),
                     Title = p.a.Title,
                     RankId = p.a.AdminRankId,
-                    UserId = new NetUserId(p.a.UserId),
+                    UserId = (NetUserId) p.a.UserId,
                     UserName = p.lastUserName
                 }).ToArray(),
 
@@ -293,7 +293,7 @@ namespace Content.Server.Administration.UI
             NetUserId userId;
             if (Guid.TryParse(ca.UserNameOrId, out var guid))
             {
-                userId = new NetUserId(guid);
+                userId = (NetUserId) guid;
                 var playerRecord = await _db.GetPlayerRecordByUserId(userId);
                 if (playerRecord == null)
                 {

@@ -25,7 +25,7 @@ namespace Content.Server.Commands
             if (plyMgr.TryGetSessionByUsername(usernameOrId, out session)) return true;
             if (Guid.TryParse(usernameOrId, out var targetGuid))
             {
-                if (plyMgr.TryGetSessionById(new NetUserId(targetGuid), out session)) return true;
+                if (plyMgr.TryGetSessionById((NetUserId) targetGuid, out session)) return true;
                 shell.WriteLine("Unable to find user with that name/id.");
                 return false;
             }

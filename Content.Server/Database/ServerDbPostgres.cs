@@ -148,13 +148,13 @@ namespace Content.Server.Database
             NetUserId? uid = null;
             if (ban.UserId is {} guid)
             {
-                uid = new NetUserId(guid);
+                uid = (NetUserId) guid;
             }
 
             NetUserId? aUid = null;
             if (ban.BanningAdmin is {} aGuid)
             {
-                aUid = new NetUserId(aGuid);
+                aUid = (NetUserId) aGuid;
             }
 
             var unbanDef = ConvertUnban(ban.Unban);
@@ -181,7 +181,7 @@ namespace Content.Server.Database
             NetUserId? aUid = null;
             if (unban.UnbanningAdmin is {} aGuid)
             {
-                aUid = new NetUserId(aGuid);
+                aUid = (NetUserId) aGuid;
             }
 
             return new ServerUnbanDef(
@@ -280,7 +280,7 @@ namespace Content.Server.Database
             }
 
             return new PlayerRecord(
-                new NetUserId(record.UserId),
+                (NetUserId) record.UserId,
                 new DateTimeOffset(record.FirstSeenTime),
                 record.LastSeenUserName,
                 new DateTimeOffset(record.LastSeenTime),

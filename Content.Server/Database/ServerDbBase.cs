@@ -229,7 +229,7 @@ namespace Content.Server.Database
             await using var db = await GetDb();
 
             var assigned = await db.DbContext.AssignedUserId.SingleOrDefaultAsync(p => p.UserName == name);
-            return assigned?.UserId is { } g ? new NetUserId(g) : default(NetUserId?);
+            return assigned?.UserId is { } g ? (NetUserId) g : default(NetUserId?);
         }
 
         public async Task AssignUserIdAsync(string name, NetUserId netUserId)

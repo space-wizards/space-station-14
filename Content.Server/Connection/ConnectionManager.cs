@@ -109,7 +109,7 @@ The ban reason is: ""{ban.Reason}""
                 return userId;
             }
 
-            var assigned = new NetUserId(Guid.NewGuid());
+            var assigned = (NetUserId) Guid.NewGuid();
             await _db.AssignUserIdAsync(name, assigned);
             return assigned;
         }

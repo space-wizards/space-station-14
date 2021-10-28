@@ -85,7 +85,7 @@ namespace Content.Tests.Server.Preferences
         public async Task TestInitPrefs()
         {
             var db = GetDb();
-            var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+            var username = (NetUserId) new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd");
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
             await db.InitPrefsAsync(username, originalProfile);
@@ -97,7 +97,7 @@ namespace Content.Tests.Server.Preferences
         public async Task TestDeleteCharacter()
         {
             var db = GetDb();
-            var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
+            var username = (NetUserId) new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd");
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             prototypeManager.Initialize();

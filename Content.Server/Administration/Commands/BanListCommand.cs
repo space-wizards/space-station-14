@@ -36,7 +36,7 @@ namespace Content.Server.Administration.Commands
             }
             else if (Guid.TryParse(target, out var targetGuid))
             {
-                targetUid = new NetUserId(targetGuid);
+                targetUid = (NetUserId) targetGuid;
             }
             else
             {
