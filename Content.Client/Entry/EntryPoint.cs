@@ -91,7 +91,6 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("advertisementsPack");
-            prototypes.RegisterIgnore("alarmThreshold");
 
             ClientContentIoC.Register();
 

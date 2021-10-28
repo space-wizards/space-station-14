@@ -296,7 +296,8 @@ namespace Content.Client.Entry
             "Armor",
             "AtmosMonitor",
             "AtmosAlarmable",
-            "FireAlarm"
+            "FireAlarm",
+            "AirAlarm"
         };
     }
 }

@@ -146,6 +146,18 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void OnComponentStartup(EntityUid uid, AirAlarmComponent component, ComponentStartup args)
         {
             SyncAllDevices(uid);
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor))
+            {
+                if (monitor.PressureThreshold != null)
+                    _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.PressureThreshold, AtmosMonitorThresholdType.Pressure);
+
+                if (monitor.TemperatureThreshold != null)
+                    _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
+
+                if (monitor.GasThresholds != null)
+                    foreach (var (gas, threshold) in monitor.GasThresholds)
+                        _airAlarmDataSystem.UpdateAlarmThreshold(uid, threshold, AtmosMonitorThresholdType.Gas, gas);
+            }
         }
 
         private void OnSetThreshold(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetThresholdEvent args)
@@ -185,10 +197,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
                     // Save into component.
                     // Sync data to interface.
-                    if (!alarmData.DeviceData.TryAdd(args.SenderAddress, data))
-                        alarmData.DeviceData[args.SenderAddress] = data;
-
-                    alarmData.Dirty();
+                    _airAlarmDataSystem.UpdateDeviceData(uid, args.SenderAddress, data);
 
                     controller.UpdateUI();
 

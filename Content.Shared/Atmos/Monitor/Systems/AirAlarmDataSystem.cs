@@ -39,9 +39,11 @@ namespace Content.Shared.Atmos.Monitor.Systems
 
             if (data.DirtyThresholds.Count != 0)
             {
+                Logger.DebugS("AirAlarmData", "Dirty thresholds detected.");
                 alarmState.DirtyThresholds = data.DirtyThresholds;
                 foreach (var threshold in data.DirtyThresholds)
                 {
+                    Logger.DebugS("AirAlarmData", $"Sending {threshold} as part of state.");
                     switch (threshold)
                     {
                         case AtmosMonitorThresholdType.Pressure:
@@ -92,12 +94,14 @@ namespace Content.Shared.Atmos.Monitor.Systems
 
             if (currentState.DirtyMode)
             {
+                Logger.DebugS("AirAlarmData", "Dirty mode detected.");
                 UpdateAlarmMode(uid, currentState.CurrentMode);
                 data.DirtyMode = false;
             }
 
             if (currentState.DirtyThresholds != null)
             {
+                Logger.DebugS("AirAlarmData", "Dirty threshold detected.");
                 foreach (var threshold in currentState.DirtyThresholds)
                     switch (threshold)
                     {
