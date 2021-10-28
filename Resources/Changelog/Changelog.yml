@@ -1,9 +1,4 @@
 Entries:
-- author: Peptide90
-  changes:
-  - {message: Added new first aid kits with fancy new sprites., type: Add}
-  id: 2
-  time: '2021-02-25T10:46:21.0000000+00:00'
 - author: tmtmtl30
   changes:
   - {message: Constructed walls don't have broken lighting anymore, type: Fix}
@@ -2803,3 +2798,8 @@ Entries:
   - {message: Fix light replacer interaction with wall lights, type: Fix}
   id: 501
   time: '2021-10-28T02:36:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Updated context menu UI, type: Tweak}
+  id: 502
+  time: '2021-10-28T05:21:19.0000000+00:00'
