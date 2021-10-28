@@ -18,7 +18,6 @@ namespace Content.Server.Atmos.EntitySystems
     public partial class AtmosphereSystem : SharedAtmosphereSystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AtmosExposedSystem _atmosExposedSystem = default!;
 
         private const float ExposedUpdateDelay = 1f;
         private float _exposedTimer = 0f;
