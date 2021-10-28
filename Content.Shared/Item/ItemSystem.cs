@@ -1,10 +1,9 @@
-using Content.Shared.Item;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 
-namespace Content.Server.Items
+namespace Content.Shared.Item
 {
     public class ItemSystem : EntitySystem
     {
@@ -29,7 +28,7 @@ namespace Content.Server.Items
 
             // if the item already in the user's inventory, change the text
             if (args.Target.TryGetContainer(out var container) && container.Owner == args.User)
-                verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory"); 
+                verb.Text = Loc.GetString("pick-up-verb-get-data-text-inventory");
             else
                 verb.Text = Loc.GetString("pick-up-verb-get-data-text");
 

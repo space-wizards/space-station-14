@@ -23,8 +23,6 @@ namespace Content.Client.Traitor.Uplink
 
         private UplinkWithdrawWindow? _withdrawWindow;
 
-        public RichTextLabel BalanceInfo => BalanceInfoProtected;
-
         public event Action<BaseButton.ButtonEventArgs, UplinkListingData>? OnListingButtonPressed;
         public event Action<BaseButton.ButtonEventArgs, UplinkCategory>? OnCategoryButtonPressed;
         public event Action<int>? OnWithdrawAttempt;

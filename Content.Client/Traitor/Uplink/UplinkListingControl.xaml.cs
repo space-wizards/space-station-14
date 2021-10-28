@@ -10,7 +10,6 @@ namespace Content.Client.Traitor.Uplink
     [GenerateTypedNameReferences]
     public partial class UplinkListingControl : Control
     {
-        public Button UplinkItemBuyButton => UplinkItemBuyButtonProtected;
 
         public UplinkListingControl(string itemName, string itemDescription,
             int itemPrice, bool canBuy, Texture? texture = null)
@@ -20,8 +19,8 @@ namespace Content.Client.Traitor.Uplink
             UplinkItemName.Text = itemName;
             UplinkItemDescription.SetMessage(itemDescription);
 
-            UplinkItemBuyButtonProtected.Text = $"{itemPrice} TC";
-            UplinkItemBuyButtonProtected.Disabled = !canBuy;
+            UplinkItemBuyButton.Text = $"{itemPrice} TC";
+            UplinkItemBuyButton.Disabled = !canBuy;
 
             UplinkItemTexture.Texture = texture;
         }

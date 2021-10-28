@@ -91,9 +91,32 @@ namespace Content.Shared.Hands.Components
         public virtual void HandsModified()
         {
             // todo axe all this for ECS.
+            // todo burn it all down.
+            UpdateHandVisualizer();
             Dirty();
 
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new HandsModifiedMessage { Hands = this });
+        }
+
+        public void UpdateHandVisualizer()
+        {
+            if (!Owner.TryGetComponent(out SharedAppearanceComponent? appearance))
+                return;
+
+            var hands = new List<HandVisualState>();
+            foreach (var hand in Hands)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                if (!hand.HeldEntity.TryGetComponent(out SharedItemComponent? item) || item.RsiPath == null)
+                    continue;
+
+                var handState = new HandVisualState(item.RsiPath, item.EquippedPrefix, hand.Location, item.Color);
+                hands.Add(handState);
+            }
+
+            appearance.SetData(HandsVisuals.VisualState, new HandsVisualState(hands));
         }
 
         public void AddHand(string handName, HandLocation handLocation)
@@ -811,6 +834,42 @@ namespace Content.Shared.Hands.Components
 
         protected virtual void HandlePickupAnimation(IEntity entity) { }
     }
+
+    #region visualizerData
+    [Serializable, NetSerializable]
+    public enum HandsVisuals : byte
+    {
+        VisualState
+    }
+
+    [Serializable, NetSerializable]
+    public class HandsVisualState
+    {
+        public List<HandVisualState> Hands { get; } = new();
+
+        public HandsVisualState(List<HandVisualState> hands)
+        {
+            Hands = hands;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public class HandVisualState
+    {
+        public string RsiPath { get; }
+        public string? EquippedPrefix { get; }
+        public HandLocation Location { get; }
+        public Color Color { get; }
+
+        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
+        {
+            RsiPath = rsiPath;
+            EquippedPrefix = equippedPrefix;
+            Location = location;
+            Color = color;
+        }
+    }
+    #endregion
 
     public class Hand
     {

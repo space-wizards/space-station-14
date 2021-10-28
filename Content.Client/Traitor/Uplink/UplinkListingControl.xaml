@@ -4,7 +4,8 @@
         <BoxContainer Orientation="Horizontal">
             <Label Name="UplinkItemName"
                    HorizontalExpand="True"/>
-            <Button Name="UplinkItemBuyButtonProtected"
+            <Button Name="UplinkItemBuyButton"
+                    Access="Public"
                     HorizontalAlignment="Right"
                     MinWidth="64"/>
         </BoxContainer>

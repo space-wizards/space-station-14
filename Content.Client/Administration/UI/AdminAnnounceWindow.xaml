@@ -4,12 +4,12 @@
     MinWidth="500">
     <GridContainer Columns="1">
         <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
-            <LineEdit Name="_announcer" PlaceHolder="{Loc 'announcer-placeholder'}" Text="{Loc 'Central Command'}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+            <LineEdit Name="Announcer" Access="Public" PlaceHolder="{Loc 'announcer-placeholder'}" Text="{Loc 'Central Command'}" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
             <Control HorizontalExpand="True" SizeFlagsStretchRatio="1" />
-            <OptionButton Name="_announceMethod" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
+            <OptionButton Name="AnnounceMethod" Access="Public" HorizontalExpand="True" SizeFlagsStretchRatio="2"/>
         </BoxContainer>
-        <LineEdit Name="_announcement" PlaceHolder="{Loc 'announcement-placeholder'}"/>
+        <LineEdit Name="Announcement" Access="Public" PlaceHolder="{Loc 'announcement-placeholder'}"/>
 
-        <Button Name="_announceButton" Disabled="True" Text="{Loc 'Announce'}" HorizontalAlignment="Center"/>
+        <Button Name="AnnounceButton" Access="Public" Disabled="True" Text="{Loc 'Announce'}" HorizontalAlignment="Center"/>
     </GridContainer>
 </SS14Window>

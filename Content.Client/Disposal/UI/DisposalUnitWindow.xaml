@@ -23,14 +23,17 @@
         </BoxContainer>
         <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
-            <Button Name="EngageProtected"
+            <Button Name="Engage"
+                    Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-flush'}"
                     StyleClasses="OpenRight"
                     ToggleMode="True" />
-            <Button Name="EjectProtected"
+            <Button Name="Eject"
+                    Access="Public"
                     Text="{Loc 'ui-disposal-unit-button-eject'}"
                     StyleClasses="OpenBoth" />
-            <CheckButton Name="PowerProtected"
+            <CheckButton Name="Power"
+                         Access="Public"
                          Text="{Loc 'ui-disposal-unit-button-power'}"
                          StyleClasses="OpenLeft" />
         </BoxContainer>
