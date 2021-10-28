@@ -242,3 +242,43 @@
       magState: mag
       steps: 5
       zeroVisible: false
+
+- type: entity
+  name: STAR Laser Pistol
+  parent: BaseItem
+  id: LaserPistolStar
+  description: A cheap and widely used vintage laser pistol, first developed by the now defunct One Star Corporation.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/star.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/star.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 20
+    ammoPrototype: RedLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
