@@ -21,6 +21,13 @@
   spritePath: grenadineglass.rsi
 
 - type: reagent
+  id: IcedTea
+  name: iced tea
+  desc: No relation to a certain rap artist/actor.
+  physicalDesc: aromatic
+  color: "#104038"
+
+- type: reagent
   id: Menthol
   name: menthol
   desc: Alleviates coughing symptoms one might have.
@@ -68,6 +75,13 @@
   spritePath: nothing.rsi
 
 - type: reagent
+  id: SodaWater
+  name: soda water
+  desc: A container of club soda. Why not make a scotch and soda?
+  physicalDesc: fizzy
+  color: "#619494"
+
+- type: reagent
   id: Tea
   name: tea
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
@@ -75,21 +89,7 @@
   color: "#8a5a3a"
 
 - type: reagent
-  id: TeaIced
-  name: iced tea
-  desc: No relation to a certain rap artist/actor.
-  physicalDesc: aromatic
-  color: "#104038"
-
-- type: reagent
-  id: WaterSoda
-  name: soda water
-  desc: A container of club soda. Why not make a scotch and soda?
-  physicalDesc: fizzy
-  color: "#619494"
-
-- type: reagent
-  id: WaterTonic
+  id: TonicWater
   name: tonic water
   desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
   physicalDesc: fizzy
