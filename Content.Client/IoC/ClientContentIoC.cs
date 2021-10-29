@@ -38,7 +38,6 @@ namespace Content.Client.IoC
             IoCManager.Register<IScreenshotHook, ScreenshotHook>();
             IoCManager.Register<IClickMapManager, ClickMapManager>();
             IoCManager.Register<IStationEventManager, StationEventManager>();
-            IoCManager.Register<IAdminMenuManager, AdminMenuManager>();
             IoCManager.Register<AlertManager, AlertManager>();
             IoCManager.Register<ActionManager, ActionManager>();
             IoCManager.Register<IClientAdminManager, ClientAdminManager>();
