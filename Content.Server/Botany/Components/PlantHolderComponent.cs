@@ -9,7 +9,6 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -29,6 +28,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Botany.Components
 {

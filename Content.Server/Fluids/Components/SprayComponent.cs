@@ -4,7 +4,6 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
 using Content.Shared.Fluids;
@@ -23,6 +22,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Timing;
 using Robust.Shared.ViewVariables;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Fluids.Components
 {

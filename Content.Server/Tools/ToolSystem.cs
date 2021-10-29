@@ -7,13 +7,13 @@ using Content.Server.Popups;
 using Content.Server.Tools.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Tools
 {

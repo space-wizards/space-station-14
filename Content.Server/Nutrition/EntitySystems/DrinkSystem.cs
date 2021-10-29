@@ -1,7 +1,7 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
@@ -11,6 +11,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

@@ -16,7 +16,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
-namespace Content.Shared.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems
 {
     /// <summary>
     /// This event alerts system that the solution was changed

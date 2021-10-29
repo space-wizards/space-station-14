@@ -1,6 +1,5 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Content.Shared.Chemistry.Components.SolutionManager;

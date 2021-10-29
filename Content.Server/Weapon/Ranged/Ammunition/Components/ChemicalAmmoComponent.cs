@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {

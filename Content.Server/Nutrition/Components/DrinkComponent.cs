@@ -2,7 +2,6 @@ using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -21,6 +20,7 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 using System.Threading.Tasks;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Nutrition.Components
 {

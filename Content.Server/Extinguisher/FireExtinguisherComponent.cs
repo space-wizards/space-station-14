@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Content.Server.Chemistry.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -15,6 +14,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Extinguisher
 {

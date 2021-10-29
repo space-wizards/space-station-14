@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 
-namespace Content.Shared.Chemistry.EntitySystems
+namespace Content.Server.Chemistry.EntitySystems
 {
     public partial class SolutionContainerSystem
     {

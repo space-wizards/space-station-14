@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
@@ -12,6 +11,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Nutrition.EntitySystems
 {

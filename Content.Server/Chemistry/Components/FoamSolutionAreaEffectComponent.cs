@@ -2,13 +2,13 @@
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Foam;
 using Content.Shared.Inventory;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Chemistry.Components
 {
