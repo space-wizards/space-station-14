@@ -12,7 +12,6 @@ namespace Content.Server.Temperature.Systems
     public class TemperatureSystem : EntitySystem
     {
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly TemperatureSystem _temperatureSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
         public override void Initialize()
@@ -62,7 +61,7 @@ namespace Content.Server.Temperature.Systems
             var temperatureDelta = args.GasMixture.Temperature - temperature.CurrentTemperature;
             var tileHeatCapacity = _atmosphereSystem.GetHeatCapacity(args.GasMixture);
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity / (tileHeatCapacity + temperature.HeatCapacity));
-            _temperatureSystem.ReceiveHeat(uid, heat, temperature);
+            ReceiveHeat(uid, heat, temperature);
         }
 
         private void ServerAlert(EntityUid uid, ServerAlertsComponent status, OnTemperatureChangeEvent args)
