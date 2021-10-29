@@ -40,8 +40,6 @@ namespace Content.Client.Administration.UI
             _channelId = channelId;
 
             SenderLineEdit.OnTextEntered += Input_OnTextEntered;
-
-            MinSize = (650, 450);
         }
 
         private void Input_OnTextEntered(LineEdit.LineEditEventArgs args)
