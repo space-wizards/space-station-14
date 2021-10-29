@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: material crates for cargo, type: Add}
-  - {message: singularity crates for cargo, type: Add}
-  id: 14
-  time: '2021-02-28T19:57:44.0000000+00:00'
 - author: PJB
   changes:
   - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
@@ -2801,3 +2795,8 @@ Entries:
     type: Add}
   id: 513
   time: '2021-10-29T09:49:52.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
+  id: 514
+  time: '2021-10-29T10:20:50.0000000+00:00'
