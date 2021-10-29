@@ -146,18 +146,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         private void OnComponentStartup(EntityUid uid, AirAlarmComponent component, ComponentStartup args)
         {
             SyncAllDevices(uid);
-            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor))
-            {
-                if (monitor.PressureThreshold != null)
-                    _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.PressureThreshold, AtmosMonitorThresholdType.Pressure);
-
-                if (monitor.TemperatureThreshold != null)
-                    _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
-
-                if (monitor.GasThresholds != null)
-                    foreach (var (gas, threshold) in monitor.GasThresholds)
-                        _airAlarmDataSystem.UpdateAlarmThreshold(uid, threshold, AtmosMonitorThresholdType.Gas, gas);
-            }
         }
 
         private void OnSetThreshold(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetThresholdEvent args)
@@ -183,6 +171,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnPacketRecv(EntityUid uid, AirAlarmComponent controller, PacketSentEvent args)
         {
+            Logger.DebugS("AirAlarmSystem", $"Received packet from {args.SenderAddress}");
             if (!EntityManager.TryGetComponent<AirAlarmDataComponent>(uid, out var alarmData))
                 return;
 
@@ -242,29 +231,46 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             if (!power.Powered) return;
 
-            var data = new AirAlarmAirData();
 
             if (monitor.TileGas != null)
             {
-                data.Pressure = monitor.TileGas.Pressure;
-                data.Temperature = monitor.TileGas.Temperature;
-                data.TotalMoles = monitor.TileGas.TotalMoles;
-                data.AlarmState = monitor.LastAlarmState;
-
                 var gases = new Dictionary<Gas, float>();
 
                 foreach (var gas in Enum.GetValues<Gas>())
                     gases.Add(gas, monitor.TileGas.GetMoles(gas));
 
-                data.Gases = gases;
+                var data = new AirAlarmAirData(monitor.TileGas.Pressure, monitor.TileGas.Temperature, monitor.TileGas.TotalMoles, monitor.LastAlarmState, gases);
 
                 Logger.DebugS("AirAlarmSystem", "Attempting to update data now.");
 
                 _airAlarmDataSystem.UpdateAirData(uid, data);
             }
 
-
             alarm.UpdateUI();
+        }
+
+        public void SendAlarmMode(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null, AirAlarmDataComponent? data = null)
+        {
+            if (!Resolve(uid, ref monitor, ref power, ref data)
+                || !power.Powered) return;
+
+            _airAlarmDataSystem.UpdateAlarmMode(uid, data.CurrentMode);
+        }
+
+        public void SendThresholds(EntityUid uid, AtmosMonitorComponent? monitor = null, ApcPowerReceiverComponent? power = null)
+        {
+            if (!Resolve(uid, ref monitor, ref power)
+                || !power.Powered) return;
+
+            if (monitor.PressureThreshold != null)
+                _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.PressureThreshold, AtmosMonitorThresholdType.Pressure);
+
+            if (monitor.TemperatureThreshold != null)
+                _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
+
+            if (monitor.GasThresholds != null)
+                foreach (var (gas, threshold) in monitor.GasThresholds)
+                    _airAlarmDataSystem.UpdateAlarmThreshold(uid, threshold, AtmosMonitorThresholdType.Gas, gas);
         }
 
         private const float _delay = 16f;

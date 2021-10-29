@@ -32,33 +32,33 @@
             </BoxContainer>
         </BoxContainer>
         <!-- Gas/Device Data -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True">
-            <TabContainer>
-                <!-- Gas readout -->
-                <ScrollContainer>
-                    <BoxContainer Name="CGasContainer" />
-                </ScrollContainer>
-                <!-- Vent devices -->
-                <ScrollContainer>
-                    <BoxContainer Name="CVentContainer" />
-                </ScrollContainer>
-                <!-- Scrubber devices -->
-                <ScrollContainer>
-                    <BoxContainer Name="CScrubberContainer" />
-                </ScrollContainer>
-                <!-- Alarm thresholds -->
-                <ScrollContainer>
-                    <BoxContainer Name="CPressureThreshold">
+        <TabContainer Name="CTabContainer" VerticalExpand="True">
+            <!-- Gas readout -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CGasContainer" Orientation="Vertical" VerticalExpand="True" />
+            </ScrollContainer>
+            <!-- Vent devices -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CVentContainer" />
+            </ScrollContainer>
+            <!-- Scrubber devices -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Name="CScrubberContainer" />
+            </ScrollContainer>
+            <!-- Alarm thresholds -->
+            <ScrollContainer VerticalExpand="True">
+                <BoxContainer Orientation="Vertical" VerticalExpand="True">
+                    <BoxContainer Name="CPressureThreshold" Orientation="Vertical">
                         <Label Text="{Loc 'Pressure'}" />
                     </BoxContainer>
-                    <BoxContainer Name="CTemperatureThreshold">
+                    <BoxContainer Name="CTemperatureThreshold" Orientation="Vertical">
                         <Label Text="{Loc 'Temperature'}" />
                     </BoxContainer>
-                    <BoxContainer Name="CGasThresholdContainer">
+                    <BoxContainer Name="CGasThresholdContainer" Orientation="Vertical">
                     </BoxContainer>
-                </ScrollContainer>
-            </TabContainer>
-        </BoxContainer>
+                </BoxContainer>
+            </ScrollContainer>
+        </TabContainer>
         <!-- Mode buttons -->
         <BoxContainer Orientation="Horizontal">
             <OptionButton Name="CModeButton" HorizontalExpand="True" />

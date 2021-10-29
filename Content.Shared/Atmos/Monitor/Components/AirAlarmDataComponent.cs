@@ -36,11 +36,14 @@ namespace Content.Shared.Atmos.Monitor.Components
         // These are the 'hot' values an air alarm contains.
         // These are the ones that have to be updated by
         // the server.
+        /*
         [ViewVariables] public float? Pressure { get; set; }
         [ViewVariables] public float? Temperature { get; set; }
         [ViewVariables] public float? TotalMoles { get; set; }
         [ViewVariables] public AtmosMonitorAlarmType AlarmState { get; set; }
         [ViewVariables] public Dictionary<Gas, float> Gases { get; } = new();
+        */
+        [ViewVariables] public AirAlarmAirData AirData;
 
         // These ar the user configurable values an air alarm contains.
         // These are the ones that are updated by an end user, after
@@ -68,11 +71,16 @@ namespace Content.Shared.Atmos.Monitor.Components
         // These are the 'hot' values an air alarm contains.
         // These are the ones that have to be updated by
         // the server.
+        /*
         [ViewVariables] public float? Pressure { get; set; }
         [ViewVariables] public float? Temperature { get; set; }
         [ViewVariables] public float? TotalMoles { get; set; }
         [ViewVariables] public AtmosMonitorAlarmType AlarmState { get; set; }
         [ViewVariables] public Dictionary<Gas, float>? Gases;
+        */
+
+        public AirAlarmAirData AirData { get; set; }
+
         /*
         [ViewVariables] public IReadOnlyDictionary<Gas, float>? Gases
         {
@@ -88,7 +96,12 @@ namespace Content.Shared.Atmos.Monitor.Components
         [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
 
         // If any of these thresholds are dirty, it is added to the hash set.
-        [ViewVariables] public HashSet<AtmosMonitorThresholdType>? DirtyThresholds { get; set; }
+        private HashSet<AtmosMonitorThresholdType>? _dirtyThresholds;
+        [ViewVariables] public IReadOnlyCollection<AtmosMonitorThresholdType>? DirtyThresholds
+        {
+            get => _dirtyThresholds;
+            set { if (value != null) _dirtyThresholds = new HashSet<AtmosMonitorThresholdType>(value); }
+        }
         [ViewVariables] public AtmosAlarmThreshold? PressureThreshold { get; set; }
         [ViewVariables] public AtmosAlarmThreshold? TemperatureThreshold { get; set; }
         [ViewVariables] public Dictionary<Gas, AtmosAlarmThreshold>? GasThresholds;
@@ -99,7 +112,12 @@ namespace Content.Shared.Atmos.Monitor.Components
             set { if (value != null) _gasThresholds = new Dictionary<Gas, AtmosAlarmThreshold>(value); }
         }
         */
-        [ViewVariables] public HashSet<string>? DirtyDevices { get; set; }
+        private HashSet<string>? _dirtyDevices;
+        public IReadOnlyCollection<string>? DirtyDevices
+        {
+            get => _dirtyDevices;
+            set { if (value != null) _dirtyDevices = new HashSet<string>(value); }
+        }
         [ViewVariables] public Dictionary<string, IAtmosDeviceData>? DeviceData;
         /*
         [ViewVariables] public IReadOnlyDictionary<string, IAtmosDeviceData>? DeviceData
@@ -113,4 +131,26 @@ namespace Content.Shared.Atmos.Monitor.Components
         [ViewVariables] public Dictionary<string, bool> DeviceDataErrors { get; } = new();
 
     }
+
+    [Serializable, NetSerializable]
+    public readonly struct AirAlarmAirData
+    {
+        public readonly float? Pressure { get; }
+        public readonly float? Temperature { get; }
+        public readonly float? TotalMoles { get; }
+        public readonly AtmosMonitorAlarmType AlarmState { get; }
+
+        private readonly Dictionary<Gas, float>? _gases;
+        public readonly IReadOnlyDictionary<Gas, float>? Gases { get => _gases; }
+
+        public AirAlarmAirData(float? pressure, float? temperature, float? moles, AtmosMonitorAlarmType state, Dictionary<Gas, float>? gases)
+        {
+            Pressure = pressure;
+            Temperature = temperature;
+            TotalMoles = moles;
+            AlarmState = state;
+            _gases = gases;
+        }
+    }
+
 }

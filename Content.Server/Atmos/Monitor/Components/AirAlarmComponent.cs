@@ -48,14 +48,15 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public void OpenUI(IPlayerSession player)
         {
-            _userInterface?.Open(player);
             _activePlayers.Add(player.UserId);
             if (_airAlarmSystem != null) // if this is null you got a lot of other shit to deal with
             {
                 _airAlarmSystem.AddActiveInterface(Owner.Uid);
                 _airAlarmSystem.UpdateAirData(Owner.Uid);
+                _airAlarmSystem.SendAlarmMode(Owner.Uid);
+                _airAlarmSystem.SendThresholds(Owner.Uid);
             }
-
+            _userInterface?.Open(player);
         }
 
         private void OnCloseUI(IPlayerSession player)

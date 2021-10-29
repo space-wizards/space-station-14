@@ -66,7 +66,27 @@ namespace Content.Client.Atmos.Monitor.UI
             _owner = owner.Uid;
             if (!_entityManager.TryGetComponent<AirAlarmDataComponent>(owner.Uid, out var data)) return;
 
-            _window.UpdateState(data);
+            _window.UpdateGasData(ref data.AirData);
+
+            if (data.DirtyMode)
+            {
+                _window.UpdateModeSelector(data.CurrentMode);
+                data.DirtyMode = false;
+            }
+
+            if (data.DirtyDevices.Count != 0)
+            {
+                _window.UpdateDeviceData(data.DeviceData);
+                data.DirtyDevices.Clear();
+            }
+
+            if (data.DirtyThresholds.Count != 0)
+            {
+                Logger.DebugS("AirAlarmUI", "Attempting to update thresholds now.");
+                _window.UpdateThresholds(data);
+                Logger.DebugS("AirAlarmUI", "Clearing thresholds.");
+                data.DirtyThresholds.Clear();
+            }
         }
     }
 }
