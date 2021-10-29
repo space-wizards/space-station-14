@@ -28,7 +28,6 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             SubscribeLocalEvent<GasFilterComponent, AtmosDeviceUpdateEvent>(OnFilterUpdated);
             SubscribeLocalEvent<GasFilterComponent, InteractHandEvent>(OnFilterInteractHand);
-            SubscribeLocalEvent<GasFilterComponent, UpdateFilterUIEvent>(DirtyUI);
             // Bound UI subscriptions
             SubscribeLocalEvent<GasFilterComponent, GasFilterChangeRateMessage>(OnTransferRateChangeMessage);
             SubscribeLocalEvent<GasFilterComponent, GasFilterSelectGasMessage>(OnSelectGasMessage);
@@ -83,12 +82,13 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
-            component.Owner.GetUIOrNull(GasFilterUiKey.Key)?.Open(actor.PlayerSession);
-            DirtyUI(uid, component, args);
+            _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
+            DirtyUI(uid, component);
+            
             args.Handled = true;
         }
 
-        private void DirtyUI(EntityUid uid, GasFilterComponent? filter, EntityEventArgs _)
+        private void DirtyUI(EntityUid uid, GasFilterComponent? filter)
         {
 
             if (!Resolve(uid, ref filter))
@@ -101,11 +101,14 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         private void OnToggleStatusMessage(EntityUid uid, GasFilterComponent filter, GasFilterToggleStatusMessage args)
         {
             filter.Enabled = args.Enabled;
+            DirtyUI(uid, filter);
         }
 
         private void OnTransferRateChangeMessage(EntityUid uid, GasFilterComponent filter, GasFilterChangeRateMessage args)
         {
             filter.TransferRate = Math.Clamp(args.Rate, 0f, Atmospherics.MaxTransferRate);
+            DirtyUI(uid, filter);
+
         }
 
         private void OnSelectGasMessage(EntityUid uid, GasFilterComponent filter, GasFilterSelectGasMessage args)
@@ -113,6 +116,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (Enum.TryParse<Gas>(args.ID.ToString(), true, out var parsedGas))
             {
                 filter.FilteredGas = parsedGas;
+                DirtyUI(uid, filter);
             }
 
         }

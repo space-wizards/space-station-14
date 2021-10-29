@@ -12,17 +12,9 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
     {
         public override string Name => "GasFilter";
 
-        private bool _enabled = true;
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                _enabled = value;
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
-            }
-        }
+        public bool Enabled { get; set; } = true;
+
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
         public string InletName { get; set; } = "inlet";
@@ -35,27 +27,10 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         [DataField("outlet")]
         public string OutletName { get; set; } = "outlet";
 
-        private float _transferRate = Atmospherics.MaxTransferRate;
         [ViewVariables(VVAccess.ReadWrite)]
-        public float TransferRate
-        {
-            get => _transferRate;
-            set
-            {
-                _transferRate = value;
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
-            }
-        }
-        private Gas? _filteredGas;
+        public float TransferRate { get; set; } = Atmospherics.MaxTransferRate;
+
         [ViewVariables(VVAccess.ReadWrite)]
-        public Gas? FilteredGas
-        {
-            get => _filteredGas;
-            set
-            {
-                _filteredGas = value;
-                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new UpdateFilterUIEvent(Owner.Uid));
-            }
-        }
+        public Gas? FilteredGas { get; set; }
     }
 }
