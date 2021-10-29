@@ -3,7 +3,6 @@ using Content.Server.Popups;
 using Content.Shared.Actions.Behaviors;
 using Content.Shared.Actions.Behaviors.Item;
 using Content.Shared.Cooldown;
-using Content.Shared.Guardian;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -25,10 +24,10 @@ namespace Content.Server.Actions.Actions
 
         public void DoInstantAction(InstantActionEventArgs args)
         {
-           if (args.Performer.TryGetComponent<GuardianSharedComponent>(out GuardianSharedComponent? comp))
+           if (args.Performer.TryGetComponent<GuardianHostComponent>(out GuardianHostComponent? comp))
            {
-                EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(comp.Guardian, comp.Host, comp.Guardianloose);
-                comp.Guardianloose = !comp.Guardianloose;
+                var actionguardian = comp._hostedguardian;
+                EntitySystem.Get<GuardianSystem>().OnGuardianManifestAction(actionguardian, args.Performer.Uid);
                 args.PerformerActions?.Cooldown(args.ActionType, Cooldowns.SecondsFromNow(Cooldown));
            }
            else

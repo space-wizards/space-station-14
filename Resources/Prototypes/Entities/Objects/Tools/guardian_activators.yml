@@ -10,4 +10,3 @@
     netsync: false
   - type: GuardianCreator
     GuardianID: MobHoloparasite
-    DistanceAllowed: 8.0

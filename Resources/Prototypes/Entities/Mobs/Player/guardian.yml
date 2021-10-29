@@ -1,13 +1,18 @@
+# Does not inherit from simplemob
 - type: entity
   name: Holoparasite
-  parent: SimpleMobBase
   id: MobHoloparasite
   description: A mezmirising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into it's owner's life to sustain itself.
   components:
-  - type: GhostTakeoverAvailable
-    makeSentient: true
-    name: Holoparasite
-    description: A mezmirising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands tall, tuning into it's owner's life to sustain itself.
+  - type: Mind
+    showExamineInfo: true
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+  - type: Input
+    context: "human"
+  - type: PlayerInputMover
+  - type: PlayerMobMover
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -15,7 +20,7 @@
       state: tech_basic
       sprite: Mobs/Aliens/Guardians/guardians.rsi
   - type: Physics
-    bodyType: Dynamic
+    bodyType: KinematicController
     fixtures:
     - shape:
         !type:PhysShapeAabb
@@ -33,15 +38,18 @@
   - type: Actions
     innateActions:
       - CombatMode
+  - type: Clickable
+  - type: InteractionOutline
   - type: Eye
   - type: CameraRecoil
   - type: Examiner
   - type: Puller
   - type: Speech
   - type: UserInterface
-    interfaces:
-    - key: enum.StrippingUiKey.Key
-      type: StrippableBoundUserInterface
+  - type: Alerts
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Biological
   - type: UnarmedCombat
     range: 2
     arcwidth: 30
@@ -50,4 +58,7 @@
     arcCooldownTime: 0.3
     damage:
       types:
-        Blunt: 35
+        Blunt: 45
+  - type: Guardian
+    distanceAllowed: 8
+    damageShare: 0.8
