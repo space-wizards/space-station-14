@@ -315,6 +315,10 @@ namespace Content.Shared.MobState.Components
             SendMessage(message);
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
+            var uid = Owner.Uid;
+
+            Owner.EntityManager.EventBus.RaiseLocalEvent(uid, new MobStateChangedEvent(state, uid));
+
             Dirty();
         }
     }

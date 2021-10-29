@@ -1,0 +1,10 @@
+<SS14Window xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:s="clr-namespace:Content.Client.Stylesheets"
+            MinSize="250 100" Title="Health Sensor">
+    <BoxContainer Orientation="Vertical" SeparationOverride="10">
+        <OptionButton Name="SensorOptions" MinSize="100 0" HorizontalExpand="True" />
+        <Button Name="ResetSensor" Text="Reset Targets"/>
+        <CheckBox Text="Active" ToggleMode="True" HorizontalAlignment="Center" Name="SensorActive"/>
+    </BoxContainer>
+</SS14Window>

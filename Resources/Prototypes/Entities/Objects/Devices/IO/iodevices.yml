@@ -14,6 +14,9 @@
       - Belt
   - type: Signaler
     frequency: 200
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 0.5
   - type: DeviceNetwork
     deviceNetId: Wireless #Wireless network.
     frequency: 200
@@ -88,6 +91,9 @@
     Slots:
     - Belt
   - type: ProximitySensor
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 0.5
   - type: UserInterface
     interfaces:
     - key: enum.ProximitySensorUiKey.Key
@@ -116,3 +122,29 @@
       mass: 5
       mask:
         - SmallImpassable
+
+- type: entity
+  parent: BaseItem
+  id: HealthSensor
+  name: health sensor
+  description: A health sensor, able to detect when you fall unconsciouus or when you are killed.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/healthsensor.rsi
+    state: health
+  - type: Clothing
+    QuickEquip: false
+    size: 5
+    Slots:
+    - Belt
+  - type: HealthSensor
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 0.5
+  - type: UserInterface
+    interfaces:
+    - key: enum.HealthSensorUiKey.Key
+      type: HealthSensorBoundUserInterface
+  - type: Tag
+    tags:
+      - IODevice
