@@ -65,33 +65,18 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkAlcoGreenFull
-  name: emeraldine melon liquor
-  description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
+  id: DrinkBlueCuracaoFull
+  name: Miss Blue Curacao
+  description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         reagents:
-        - ReagentId: MelonLiquor
+        - ReagentId: BlueCuracao
           Quantity: 100
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/alco-green.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkAleBottleFull
-  name: Magm-Ale
-  description: A true dorf's drink of choice.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        reagents:
-        - ReagentId: Ale
-          Quantity: 100
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/alebottle.rsi
+    sprite: Objects/Consumable/Drinks/alco-blue.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -122,6 +107,22 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/cognacbottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkColaBottle
+  name: space cola bottle
+  description: Cola. in space
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: Cola
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/colabottle.rsi
+
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -187,6 +188,21 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
+  id: DrinkMelonLiquorFull
+  name: emeraldine melon liquor
+  description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: MelonLiquor
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/alco-green.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkPatronBottleFull
   name: wrapp artiste patron bottle
   description: Silver laced tequilla, served in space night clubs across the galaxy.
@@ -229,6 +245,38 @@
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/rumbottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSpaceMountainWindBottle
+  name: space mountain wind bottle
+  description: Blows right through you like a space wind.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSpaceUpBottle
+  name: space-up bottle
+  description: Tastes like a hull breach in your mouth.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -309,53 +357,19 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkColaBottle
-  name: space cola bottle
-  description: Cola. in space
+  id: DrinkAleBottleFull
+  name: Magm-Ale
+  description: A true dorf's drink of choice.
   components:
   - type: SolutionContainerManager
     solutions:
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: Cola
+        - ReagentId: Ale
           Quantity: 50
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/colabottle.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkSpaceUpBottle
-  name: space-up bottle
-  description: Tastes like a hull breach in your mouth.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SpaceUp
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space-up_bottle.rsi
-
-- type: entity
-  parent: DrinkBottleBaseFull
-  id: DrinkSpaceMountainWindBottle
-  name: space mountain wind bottle
-  description: Blows right through you like a space wind.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SpaceMountainWind
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/space_mountain_wind_bottle.rsi
+    sprite: Objects/Consumable/Drinks/alebottle.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -373,3 +387,55 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
+
+# Cartons, TODO: this needs to be moved elsewhere eventually, since jugs and cartons shouldnt smash into glass shards
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkCreamCarton
+  name: Milk Cream
+  description: It's cream. Made from milk. What else did you think you'd find in there?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Cream
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/cream.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkMilk
+  name: milk
+  description: An opaque white liquid produced by the mammary glands of mammals.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: Milk
+          Quantity: 100
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/milk.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkSoyMilk
+  name: soy milk
+  description: White and nutritious soy goodness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 100
+        reagents:
+        - ReagentId: MilkSoy
+          Quantity: 100
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/soymilk.rsi
