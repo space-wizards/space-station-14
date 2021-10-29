@@ -1,4 +1,0 @@
-﻿author: mirrorcult
-changes:
-- type: Fix # One of the following: Add, Remove, Tweak, Fix
-  message: Fix certain windoors not autoclosing.

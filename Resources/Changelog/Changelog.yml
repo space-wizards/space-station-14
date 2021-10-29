@@ -1,10 +1,4 @@
 Entries:
-- author: AJCM
-  changes:
-  - {message: Fixes the changelog escape menu button text going out of the limits
-      of the button when there is an update., type: Fix}
-  id: 9
-  time: '2021-02-27T17:33:32.0000000+00:00'
 - author: ike709
   changes:
   - {message: 'Added a basic implementation of livers. They handle reagent metabolization
@@ -2804,3 +2798,8 @@ Entries:
   - {message: Fix lasers not passing through grilles., type: Fix}
   id: 508
   time: '2021-10-29T05:26:45.714056+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fix certain windoors not autoclosing., type: Fix}
+  id: 509
+  time: '2021-10-29T05:39:44.812307+00:00'
