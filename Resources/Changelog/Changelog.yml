@@ -1,39 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 1
-  time: '2021-02-25T08:50:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new first aid kits with fancy new sprites., type: Add}
-  id: 2
-  time: '2021-02-25T10:46:21.0000000+00:00'
-- author: tmtmtl30
-  changes:
-  - {message: Constructed walls don't have broken lighting anymore, type: Fix}
-  id: 3
-  time: '2021-02-25T10:52:26.0000000+00:00'
-- author: AJCM
-  changes:
-  - {message: Can now cook banana cream pies, type: Add}
-  id: 4
-  time: '2021-02-25T11:45:11.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
-  id: 5
-  time: '2021-02-25T15:10:54.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Ghosts can flick lights and spook living, type: Add}
-  id: 6
-  time: '2021-02-26T01:31:06.0000000+00:00'
-- author: daniel-cr
-  changes:
-  - {message: Adjusted a margin in the new context menu., type: Tweak}
-  id: 7
-  time: '2021-02-26T04:59:10.0000000+00:00'
 - author: AJCM
   changes:
   - {message: Makes gravity generator and windows repairable with a lit welding tool,
@@ -2803,3 +2768,40 @@ Entries:
       or just a lot of roundstart engineers, type: Add}
   id: 500
   time: '2021-10-27T15:44:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix light replacer interaction with wall lights, type: Fix}
+  id: 501
+  time: '2021-10-28T02:36:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Updated context menu UI, type: Tweak}
+  id: 502
+  time: '2021-10-28T05:21:19.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix rare construction bug where some interactions would be incorrect.,
+    type: Fix}
+  id: 503
+  time: '2021-10-28T09:23:03.038084+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fix being able to build machines for free by taking the board out,
+      putting it in again and screwing.', type: Fix}
+  id: 504
+  time: '2021-10-28T09:23:03.038979+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed not being angle to anchor emitters., type: Fix}
+  id: 505
+  time: '2021-10-28T11:29:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes in-hand sprites not properly updating., type: Fix}
+  id: 506
+  time: '2021-10-28T12:34:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix not being able to build windows on top of grilles., type: Fix}
+  id: 507
+  time: '2021-10-28T17:03:11.646371+00:00'

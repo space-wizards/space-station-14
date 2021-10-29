@@ -1,15 +1,9 @@
-using System;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Maths;
-using Robust.Shared.Timing;
 
-namespace Content.Client.GameObjects.Components
+namespace Content.Client.Computer
 {
     /// <summary>
     /// ComputerBoundUserInterface shunts all sorts of responsibilities that are in the BoundUserInterface for architectural reasons into the Window.
@@ -63,7 +57,8 @@ namespace Content.Client.GameObjects.Components
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
         public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey) {}
-        public void SendMessage(BoundUserInterfaceMessage msg)
+
+        public new void SendMessage(BoundUserInterfaceMessage msg)
         {
             base.SendMessage(msg);
         }
