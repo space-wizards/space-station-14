@@ -67,7 +67,7 @@ namespace Content.Server.Devices.Systems
                     return;
                 _userInterfaceSystem.TryOpen(uid, SignalerUiKey.Key, actorComponent.PlayerSession);
             };
-            verb.Text = "Tune Frequency";
+            verb.Text = Loc.GetString("signaler-component-tune-verb");
             args.Verbs.Add(verb);
         }
 
@@ -86,7 +86,7 @@ namespace Content.Server.Devices.Systems
             if (owner.TryGetContainer(out var container))
             {
                 var viewer = container.Owner;
-                viewer.PopupMessage(viewer, "The signaler winks in acknowledgement.");
+                viewer.PopupMessage(viewer, Loc.GetString("signaler-component-update-acknowledgement"));
             }
 
             SetFrequency(uid, freq, component);
@@ -107,7 +107,7 @@ namespace Content.Server.Devices.Systems
                     if (owner.TryGetContainer(out var container))
                     {
                         var viewer = container.Owner;
-                        viewer.PopupMessage(viewer, "You feel your signaler vibrate.");
+                        viewer.PopupMessage(viewer, Loc.GetString("signaler-component-owner-notify"));
 
                         //if the device is in a container, try to apply an output signal to that container.
                         //i'm not a big fan of this, but I can't think of an ideal way to do this other than maybe
@@ -117,7 +117,7 @@ namespace Content.Server.Devices.Systems
                     }
                     else
                     {
-                        owner.PopupMessageEveryone("BZZzzzz...", null, 5);
+                        owner.PopupMessageEveryone(Loc.GetString("signaler-component-generic-notify"), null, 5);
                     }
 
                 }

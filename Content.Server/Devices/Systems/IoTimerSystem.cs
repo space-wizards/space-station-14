@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Devices.Systems
@@ -90,7 +91,7 @@ namespace Content.Server.Devices.Systems
             if (owner.TryGetContainer(out var container))
             {
                 var viewer = container.Owner;
-                viewer.PopupMessage(viewer, "Your timer winks in acknowledgement.");
+                viewer.PopupMessage(viewer, Loc.GetString("io-timer-component-update-duration"));
             }
         }
 
@@ -112,7 +113,7 @@ namespace Content.Server.Devices.Systems
                     return;
                 _userInterfaceSystem.TryOpen(uid, IoTimerUiKey.Key, actorComponent.PlayerSession);
             };
-            verb.Text = "Configure";
+            verb.Text = Loc.GetString("io-timer-component-configure");
             args.Verbs.Add(verb);
         }
 
@@ -143,14 +144,14 @@ namespace Content.Server.Devices.Systems
             if (owner.TryGetContainer(out var container))
             {
                 var viewer = container.Owner;
-                viewer.PopupMessage(viewer, "You feel your timer vibrating..");
+                viewer.PopupMessage(viewer, Loc.GetString("io-timer-component-holder-notify"));
 
                 //if the device is in a container, try to apply an output signal to that container.
                 RaiseLocalEvent(container.Owner.Uid, new IoDeviceOutputEvent());
             }
             else
             {
-                owner.PopupMessageEveryone("*BEEP* *BEEP* *BEEP*", null, 15);
+                owner.PopupMessageEveryone(Loc.GetString("io-timer-component-beep"), null, 15);
             }
         }
 
@@ -163,7 +164,8 @@ namespace Content.Server.Devices.Systems
             if (owner.TryGetContainer(out var container))
             {
                 var viewer = container.Owner;
-                viewer.PopupMessage(viewer, active ? "You start the timer." : "You pause the timer.");
+                viewer.PopupMessage(viewer, active ? Loc.GetString("io-timer-component-turn-on")
+                    : Loc.GetString("io-timer-component-turn-off"));
             }
         }
 

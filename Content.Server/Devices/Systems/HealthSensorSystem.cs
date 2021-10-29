@@ -14,6 +14,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 
 namespace Content.Server.Devices.Systems
@@ -56,7 +57,7 @@ namespace Content.Server.Devices.Systems
                     return;
                 _userInterfaceSystem.TryOpen(uid, HealthSensorUiKey.Key, actorComponent.PlayerSession);
             };
-            verb.Text = "Configure";
+            verb.Text = Loc.GetString("health-sensor-component-configure-verb");
             args.Verbs.Add(verb);
         }
 
@@ -93,8 +94,8 @@ namespace Content.Server.Devices.Systems
 
             if (args.Target.TryGetComponent<MobStateComponent>(out var stateComponent))
             {
-                args.User.PopupMessage("You attach the health tracker.");
-                args.Target.PopupMessage("You feel something prick your skin.");
+                args.User.PopupMessage(Loc.GetString("health-sensor-implant-tracker"));
+                args.Target.PopupMessage(Loc.GetString("health-sensor-implant-notify"));
                 TrackMobState(uid, args.Target.Uid, component);
                 args.Handled = true;
                 return;
@@ -170,7 +171,9 @@ namespace Content.Server.Devices.Systems
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetContainer(out var container))
             {
-                container.Owner.PopupMessage(healthComp.IsActive ? "You turn the sensor on." : "You turn the sensor off.");
+                container.Owner.PopupMessage(healthComp.IsActive ?
+                    Loc.GetString("health-sensor-turn-on")
+                    : Loc.GetString("health-sensor-turn-off"));
             }
 
             //if the sensor is suddenly turned on, we should check the state of whatever it's watching.
@@ -253,7 +256,7 @@ namespace Content.Server.Devices.Systems
             var owner = EntityManager.GetEntity(uid);
             if (owner.TryGetContainer(out var container))
             {
-                container.Owner.PopupMessage("You clear the sensors targets.");
+                container.Owner.PopupMessage(Loc.GetString("health-sensor-clear-targets"));
             }
         }
 
@@ -267,11 +270,12 @@ namespace Content.Server.Devices.Systems
             {
                 RaiseLocalEvent(container.Owner.Uid, new IoDeviceOutputEvent());
 
-                container.Owner.PopupMessage("The health sensor vibrates.");
+                container.Owner.PopupMessage(Loc.GetString("health-sensor-notify-owner"));
             }
             else
             {
-                owner.PopupMessageEveryone("Bzzzzz...", null, 15);
+                owner.PopupMessageEveryone(Loc.GetString("health-sensor-notify-generic"),
+                    null, 15);
             }
         }
     }
