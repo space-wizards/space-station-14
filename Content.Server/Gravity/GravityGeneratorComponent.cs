@@ -42,15 +42,11 @@ namespace Content.Server.Gravity
         /// <summary>
         /// Is the gravity generator currently "producing" gravity?
         /// </summary>
-        [ViewVariables]
-        public bool GravityActive { get; set; }
-
-        /// <summary>
-        /// Serialized copy of <see cref="GravityActive"/> used to avoid shaking the grid on first tick.
-        /// </summary>
-        [DataField("active")] public bool GravityActiveStored { get; set; } = true;
+        [DataField("active")]
+        public bool GravityActive { get; set; } = true;
 
         // Do we need a UI update even if the charge doesn't change? Used by power button.
         [ViewVariables] public bool NeedUIUpdate { get; set; }
+        [ViewVariables] public bool NeedGravityUpdate { get; set; }
     }
 }

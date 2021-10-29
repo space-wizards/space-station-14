@@ -17,6 +17,7 @@ namespace Content.Server.Gravity.EntitySystems
         [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly GravitySystem _gravitySystem = default!;
+        [Dependency] private readonly GravityShakeSystem _gravityShakeSystem = default!;
 
         public override void Initialize()
         {
@@ -61,6 +62,8 @@ namespace Content.Server.Gravity.EntitySystems
                     chargeRate = -gravGen.ChargeRate;
                 }
 
+                var updateGravity = gravGen.NeedGravityUpdate;
+                var shakeGravity = false;
                 var lastCharge = gravGen.Charge;
                 gravGen.Charge = Math.Clamp(gravGen.Charge + frameTime * chargeRate, 0, 1);
                 if (chargeRate > 0)
@@ -68,8 +71,9 @@ namespace Content.Server.Gravity.EntitySystems
                     // Charging.
                     if (MathHelper.CloseTo(gravGen.Charge, 1) && !gravGen.GravityActive)
                     {
+                        shakeGravity = true;
+                        updateGravity = true;
                         gravGen.GravityActive = true;
-                        UpdateGravityActive(gravGen);
                     }
                 }
                 else
@@ -77,8 +81,9 @@ namespace Content.Server.Gravity.EntitySystems
                     // Discharging
                     if (MathHelper.CloseTo(gravGen.Charge, 0) && gravGen.GravityActive)
                     {
+                        shakeGravity = true;
+                        updateGravity = true;
                         gravGen.GravityActive = false;
-                        UpdateGravityActive(gravGen);
                     }
                 }
 
@@ -91,6 +96,11 @@ namespace Content.Server.Gravity.EntitySystems
 
                 if (updateUI)
                     UpdateUI(gravGen, powerReceiver, chargeRate);
+
+                if (updateGravity)
+                {
+                    UpdateGravityActive(gravGen, shakeGravity);
+                }
             }
         }
 
@@ -161,6 +171,9 @@ namespace Content.Server.Gravity.EntitySystems
 
         private void HandleComponentInitialized(EntityUid uid, GravityGeneratorComponent component, ComponentInit args)
         {
+            // Always update gravity on init.
+            component.NeedGravityUpdate = true;
+
             ApcPowerReceiverComponent? powerReceiver = null;
             if (!Resolve(uid, ref powerReceiver, false))
                 return;
@@ -169,7 +182,7 @@ namespace Content.Server.Gravity.EntitySystems
             UpdateState(component, powerReceiver);
         }
 
-        private void UpdateGravityActive(GravityGeneratorComponent grav)
+        private void UpdateGravityActive(GravityGeneratorComponent grav, bool shake)
         {
             var gridId = grav.Owner.Transform.GridID;
             if (gridId == GridId.Invalid)
@@ -178,14 +191,13 @@ namespace Content.Server.Gravity.EntitySystems
             var grid = _mapManager.GetGrid(gridId);
             var gravity = EntityManager.GetComponent<GravityComponent>(grid.GridEntityId);
 
-            var shake = grav.GravityActiveStored != grav.GravityActive;
-
             if (grav.GravityActive)
-                _gravitySystem.EnableGravity(gravity, shake);
+                _gravitySystem.EnableGravity(gravity);
             else
-                _gravitySystem.DisableGravity(gravity, shake);
+                _gravitySystem.DisableGravity(gravity);
 
-            grav.GravityActiveStored = grav.GravityActive;
+            if (shake)
+                _gravityShakeSystem.ShakeGrid(gridId, gravity);
         }
 
         private void HandleInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
