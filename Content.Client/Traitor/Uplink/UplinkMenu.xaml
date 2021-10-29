@@ -12,6 +12,10 @@
                                Access="Public"
                                HorizontalExpand="True"
                                HorizontalAlignment="Left" />
+                <Button Name="WithdrawButton"
+                        Text="Withdraw"
+                        HorizontalAlignment="Right"
+                        MinWidth="64"/>
             </BoxContainer>
             <PanelContainer VerticalExpand="True">
                 <PanelContainer.PanelOverride>

@@ -6,6 +6,7 @@ using Content.Server.PDA;
 using Content.Server.Traitor.Uplink.Account;
 using Content.Server.Traitor.Uplink.Components;
 using Content.Server.UserInterface;
+using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Traitor.Uplink;
 using Robust.Server.GameObjects;
@@ -34,8 +35,11 @@ namespace Content.Server.Traitor.Uplink
             SubscribeLocalEvent<UplinkComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<UplinkComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<UplinkComponent, UseInHandEvent>(OnUseHand);
+
+            // UI events
             SubscribeLocalEvent<UplinkComponent, UplinkBuyListingMessage>(OnBuy);
             SubscribeLocalEvent<UplinkComponent, UplinkRequestUpdateInterfaceMessage>(OnRequestUpdateUI);
+            SubscribeLocalEvent<UplinkComponent, UplinkTryWithdrawTC>(OnWithdrawTC);
 
             SubscribeLocalEvent<UplinkAccountBalanceChanged>(OnBalanceChangedBroadcast);
         }
@@ -129,6 +133,31 @@ namespace Content.Server.Traitor.Uplink
                 uplink.Owner, AudioParams.Default.WithVolume(-2f));
 
             RaiseNetworkEvent(new UplinkBuySuccessMessage(), message.Session.ConnectedClient);
+        }
+
+        private void OnWithdrawTC(EntityUid uid, UplinkComponent uplink, UplinkTryWithdrawTC args)
+        {
+            var acc = uplink.UplinkAccount;
+            if (acc == null)
+                return;
+
+            var player = args.Session.AttachedEntity;
+            if (player == null) return;
+            var cords = player.Transform.Coordinates;
+
+            // try to withdraw TCs from account
+            if (!_accounts.TryWithdrawTC(acc, args.TC, cords, out var tcUid))
+                return;
+
+            // try to put it into players hands
+            if (player.TryGetComponent(out SharedHandsComponent? hands))
+                hands.TryPutInAnyHand(EntityManager.GetEntity(tcUid.Value));
+
+            // play buying sound
+            SoundSystem.Play(Filter.SinglePlayer(args.Session), uplink.BuySuccessSound.GetSound(),
+                    uplink.Owner, AudioParams.Default.WithVolume(-2f));
+
+            UpdateUserInterface(uplink);
         }
 
         public void ToggleUplinkUI(UplinkComponent component, IPlayerSession session)
