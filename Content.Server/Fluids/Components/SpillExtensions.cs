@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
@@ -8,7 +9,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Fluids.Components
 {

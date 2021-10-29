@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Kitchen.Components;
@@ -21,7 +22,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Kitchen.EntitySystems
 {

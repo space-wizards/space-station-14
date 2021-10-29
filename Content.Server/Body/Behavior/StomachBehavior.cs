@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Body.Behavior
 {

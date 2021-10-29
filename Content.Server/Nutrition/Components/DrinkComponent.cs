@@ -20,7 +20,7 @@ using Robust.Shared.ViewVariables;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Chemistry.Components.SolutionManager;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Nutrition.Components
 {

@@ -1,4 +1,5 @@
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Interaction.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
@@ -14,7 +15,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Chemistry.Components
 {

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
@@ -11,7 +12,6 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Fluids.Components
 {

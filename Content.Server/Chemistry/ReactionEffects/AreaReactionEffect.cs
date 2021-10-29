@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Components;
@@ -14,7 +15,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Chemistry.ReactionEffects
 {

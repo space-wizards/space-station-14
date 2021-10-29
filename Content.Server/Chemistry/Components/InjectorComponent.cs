@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
@@ -13,7 +14,6 @@ using Robust.Shared.Localization;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
-using SolutionContainerSystem = Content.Server.Chemistry.EntitySystems.SolutionContainerSystem;
 
 namespace Content.Server.Chemistry.Components
 {
