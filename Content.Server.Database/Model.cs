@@ -80,6 +80,7 @@ namespace Content.Server.Database
         }
     }
 
+    [Table("preference")]
     public class Preference
     {
         // NOTE: on postgres there SHOULD be an FK ensuring that the selected character slot always exists.
@@ -87,46 +88,49 @@ namespace Content.Server.Database
         // Because if I let EFCore know about it it would explode on a circular reference.
         // Also it has to be DEFERRABLE INITIALLY DEFERRED so that insertion of new preferences works.
         // Also I couldn't figure out how to create it on SQLite.
-        public int Id { get; set; }
-        public Guid UserId { get; set; }
-        public int SelectedCharacterSlot { get; set; }
-        public string AdminOOCColor { get; set; } = null!;
+
+        [Column("preference_id")] public int Id { get; set; }
+        [Column("user_id")] public Guid UserId { get; set; }
+        [Column("selected_character_slot")] public int SelectedCharacterSlot { get; set; }
+        [Column("admin_ooc_color")] public string AdminOOCColor { get; set; } = null!;
         public List<Profile> Profiles { get; } = new();
     }
 
+    [Table("profile")]
     public class Profile
     {
-        public int Id { get; set; }
-        public int Slot { get; set; }
+        [Column("profile_id")] public int Id { get; set; }
+        [Column("slot")] public int Slot { get; set; }
         [Column("char_name")] public string CharacterName { get; set; } = null!;
-        public int Age { get; set; }
-        public string Sex { get; set; } = null!;
-        public string Gender { get; set; } = null!;
-        public string HairName { get; set; } = null!;
-        public string HairColor { get; set; } = null!;
-        public string FacialHairName { get; set; } = null!;
-        public string FacialHairColor { get; set; } = null!;
-        public string EyeColor { get; set; } = null!;
-        public string SkinColor { get; set; } = null!;
-        public string Clothing { get; set; } = null!;
-        public string Backpack { get; set; } = null!;
+        [Column("age")] public int Age { get; set; }
+        [Column("sex")] public string Sex { get; set; } = null!;
+        [Column("gender")] public string Gender { get; set; } = null!;
+        [Column("hair_name")] public string HairName { get; set; } = null!;
+        [Column("hair_color")] public string HairColor { get; set; } = null!;
+        [Column("facial_hair_name")] public string FacialHairName { get; set; } = null!;
+        [Column("facial_hair_color")] public string FacialHairColor { get; set; } = null!;
+        [Column("eye_color")] public string EyeColor { get; set; } = null!;
+        [Column("skin_color")] public string SkinColor { get; set; } = null!;
+        [Column("clothing")] public string Clothing { get; set; } = null!;
+        [Column("backpack")] public string Backpack { get; set; } = null!;
         public List<Job> Jobs { get; } = new();
         public List<Antag> Antags { get; } = new();
 
         [Column("pref_unavailable")] public DbPreferenceUnavailableMode PreferenceUnavailable { get; set; }
 
-        public int PreferenceId { get; set; }
+        [Column("preference_id")] public int PreferenceId { get; set; }
         public Preference Preference { get; set; } = null!;
     }
 
+    [Table("job")]
     public class Job
     {
-        public int Id { get; set; }
+        [Column("job_id")] public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
-        public int ProfileId { get; set; }
+        [Column("profile_id")] public int ProfileId { get; set; }
 
-        public string JobName { get; set; } = null!;
-        public DbJobPriority Priority { get; set; }
+        [Column("job_name")] public string JobName { get; set; } = null!;
+        [Column("priority")] public DbJobPriority Priority { get; set; }
     }
 
     public enum DbJobPriority
@@ -138,13 +142,14 @@ namespace Content.Server.Database
         High = 3
     }
 
+    [Table("antag")]
     public class Antag
     {
-        public int Id { get; set; }
+        [Column("antag_id")] public int Id { get; set; }
         public Profile Profile { get; set; } = null!;
-        public int ProfileId { get; set; }
+        [Column("profile_id")] public int ProfileId { get; set; }
 
-        public string AntagName { get; set; } = null!;
+        [Column("antag_name")] public string AntagName { get; set; } = null!;
     }
 
     public enum DbPreferenceUnavailableMode
@@ -154,49 +159,54 @@ namespace Content.Server.Database
         SpawnAsOverflow,
     }
 
+    [Table("assigned_user_id")]
     public class AssignedUserId
     {
-        public int Id { get; set; }
-        public string UserName { get; set; } = null!;
+        [Column("assigned_user_id_id")] public int Id { get; set; }
+        [Column("user_name")] public string UserName { get; set; } = null!;
 
-        public Guid UserId { get; set; }
+        [Column("user_id")] public Guid UserId { get; set; }
     }
 
+    [Table("admin")]
     public class Admin
     {
-        [Key] public Guid UserId { get; set; }
-        public string? Title { get; set; }
+        [Column("user_id"), Key] public Guid UserId { get; set; }
+        [Column("title")] public string? Title { get; set; }
 
-        public int? AdminRankId { get; set; }
+        [Column("admin_rank_id")] public int? AdminRankId { get; set; }
         public AdminRank? AdminRank { get; set; }
         public List<AdminFlag> Flags { get; set; } = default!;
     }
 
+    [Table("admin_flag")]
     public class AdminFlag
     {
-        public int Id { get; set; }
-        public string Flag { get; set; } = default!;
-        public bool Negative { get; set; }
+        [Column("admin_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
+        [Column("negative")] public bool Negative { get; set; }
 
-        public Guid AdminId { get; set; }
+        [Column("admin_id")] public Guid AdminId { get; set; }
         public Admin Admin { get; set; } = default!;
     }
 
+    [Table("admin_rank")]
     public class AdminRank
     {
-        public int Id { get; set; }
-        public string Name { get; set; } = default!;
+        [Column("admin_rank_id")] public int Id { get; set; }
+        [Column("name")] public string Name { get; set; } = default!;
 
         public List<Admin> Admins { get; set; } = default!;
         public List<AdminRankFlag> Flags { get; set; } = default!;
     }
 
+    [Table("admin_rank_flag")]
     public class AdminRankFlag
     {
-        public int Id { get; set; }
-        public string Flag { get; set; } = default!;
+        [Column("admin_rank_flag_id")] public int Id { get; set; }
+        [Column("flag")] public string Flag { get; set; } = default!;
 
-        public int AdminRankId { get; set; }
+        [Column("admin_rank_id")] public int AdminRankId { get; set; }
         public AdminRank Rank { get; set; } = default!;
     }
 }
