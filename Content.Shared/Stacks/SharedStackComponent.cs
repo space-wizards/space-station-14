@@ -29,22 +29,21 @@ namespace Content.Shared.Stacks
         public int Count { get; set; } = 30;
 
         /// <summary>
-        ///     Max amount of things that can be in the stack. Set to -1 for unlimited.
+        ///     Max amount of things that can be in the stack.
         /// </summary>
-        [DataField("max")] private int _maxCount = 30;
         [ViewVariables(VVAccess.ReadOnly)]
-        public int MaxCount
-        {
-            get
-            {
-                if(_maxCount == -1) return int.MaxValue;
-                return _maxCount;
-            }
-            set => _maxCount = value;
-        }
+        [DataField("max")]
+        public int MaxCount  { get; set; } = 30;
+
+        /// <summary>
+        ///     Set to true to have an unlimited max count.
+        /// </summary>
+        [DataField("unlimited")]
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool UnlimitedCount { get; set; }
 
         [ViewVariables]
-        public int AvailableSpace => MaxCount - Count;
+        public int AvailableSpace => UnlimitedCount ? int.MaxValue - Count : MaxCount - Count;
     }
 
     [Serializable, NetSerializable]
