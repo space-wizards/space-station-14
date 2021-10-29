@@ -72,7 +72,7 @@ namespace Content.Server.Nutrition.Components
         private bool IsEmpty()
         {
             var drainAvailable = EntitySystem.Get<SolutionContainerSystem>()
-                .DrainAvailable(Owner);
+                .DrainAvailable(Owner.Uid);
             return drainAvailable <= 0;
         }
 
@@ -122,7 +122,7 @@ namespace Content.Server.Nutrition.Components
             }
 
             if (!Owner.HasComponent<SolutionContainerManagerComponent>() ||
-                EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner) <= 0)
+                EntitySystem.Get<SolutionContainerSystem>().DrainAvailable(Owner.Uid) <= 0)
             {
                 args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", Owner)));
                 return true;

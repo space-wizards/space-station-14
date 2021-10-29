@@ -79,7 +79,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var drainAvailable = Get<SolutionContainerSystem>().DrainAvailable(component.Owner);
+            var drainAvailable = Get<SolutionContainerSystem>().DrainAvailable(component.Owner.Uid);
             appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }

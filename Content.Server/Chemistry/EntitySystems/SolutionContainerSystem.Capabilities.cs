@@ -73,18 +73,18 @@ namespace Content.Server.Chemistry.EntitySystems
             return false;
         }
 
-        public bool TryGetDrainableSolution(EntityUid targetUid,
-            [NotNullWhen(true)] out Solution? solution)
+        public bool TryGetDrainableSolution(EntityUid uid,
+            [NotNullWhen(true)] out Solution? solution,
+            DrainableSolutionComponent? drainable = null,
+            SolutionContainerManagerComponent? manager = null)
         {
-            if (EntityManager.TryGetComponent(targetUid,out DrainableSolutionComponent? drainable) &&
-                EntityManager.TryGetComponent(targetUid,out SolutionContainerManagerComponent? manager) &&
+            if (Resolve(uid, ref drainable, ref manager) &&
                 manager.Solutions.TryGetValue(drainable.Solution, out solution))
-            {
                 return true;
-            }
 
             solution = null;
             return false;
+
         }
 
         public bool TryGetDrawableSolution(IEntity owner,
@@ -107,6 +107,13 @@ namespace Content.Server.Chemistry.EntitySystems
                 return ReagentUnit.Zero;
 
             return solution.CurrentVolume;
+        }
+
+        public ReagentUnit DrainAvailable(EntityUid uid)
+        {
+            return !TryGetDrainableSolution(uid, out var solution)
+                ? ReagentUnit.Zero
+                : solution.CurrentVolume;
         }
 
         public bool HasFitsInDispenser(IEntity owner)
