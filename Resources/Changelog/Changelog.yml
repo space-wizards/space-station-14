@@ -1,10 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
-      cooldown for the caller.', type: Tweak}
-  id: 15
-  time: '2021-02-28T21:13:03.652572+00:00'
 - author: Swept
   changes:
   - {message: Added Particle Accelerator crate to cargo, type: Add}
@@ -2800,3 +2794,9 @@ Entries:
   - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
   id: 514
   time: '2021-10-29T10:20:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'If holding a multitool, examining cables reads various power statistics.',
+    type: Add}
+  id: 515
+  time: '2021-10-29T12:42:18.0000000+00:00'
