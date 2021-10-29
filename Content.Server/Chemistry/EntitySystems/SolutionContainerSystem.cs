@@ -97,10 +97,11 @@ namespace Content.Server.Chemistry.EntitySystems
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
-        private void UpdateAppearance(EntityUid uid, Solution solution)
+        private void UpdateAppearance(EntityUid uid, Solution solution,
+            SharedAppearanceComponent? appearanceComponent = null)
         {
             if (!EntityManager.EntityExists(uid)
-                || !Resolve(uid, ref appearanceComponent))
+                || !Resolve(uid, ref appearanceComponent, false))
                 return;
 
             var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();

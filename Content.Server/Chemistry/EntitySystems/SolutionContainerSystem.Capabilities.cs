@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
-            InjectableSolutionComponent? injectableSolution)
+            InjectableSolutionComponent? injectableSolution = null)
         {
             if (!Resolve(targetUid, ref injectableSolution))
                 return;
@@ -46,11 +46,11 @@ namespace Content.Server.Chemistry.EntitySystems
 
         public bool TryGetInjectableSolution(EntityUid targetUid,
             [NotNullWhen(true)] out Solution? solution,
-            InjectableSolutionComponent? injectable,
-            SolutionContainerManagerComponent? manager
+            InjectableSolutionComponent? injectable = null,
+            SolutionContainerManagerComponent? manager = null
             )
         {
-            if (!Resolve(targetUid, ref manager, ref injectable)
+            if (!Resolve(targetUid, ref manager, ref injectable, false)
                 || !manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
                 solution = null;
@@ -65,7 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
             SolutionContainerManagerComponent? solutionManager = null,
             RefillableSolutionComponent? refillable = null)
         {
-            if (!Resolve(targetUid, ref solutionManager, ref refillable)
+            if (!Resolve(targetUid, ref solutionManager, ref refillable, false)
                 || !solutionManager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
             {
                 solution = null;
@@ -81,7 +81,7 @@ namespace Content.Server.Chemistry.EntitySystems
             DrainableSolutionComponent? drainable = null,
             SolutionContainerManagerComponent? manager = null)
         {
-            if (!Resolve(uid, ref drainable, ref manager) ||
+            if (!Resolve(uid, ref drainable, ref manager, false) ||
                 !manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
                 solution = null;
@@ -96,7 +96,7 @@ namespace Content.Server.Chemistry.EntitySystems
             DrawableSolutionComponent? drawable = null,
             SolutionContainerManagerComponent? manager = null)
         {
-            if (!Resolve(uid, ref drawable, ref manager)
+            if (!Resolve(uid, ref drawable, ref manager, false)
                 || !manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
                 solution = null;
@@ -118,7 +118,7 @@ namespace Content.Server.Chemistry.EntitySystems
             FitsInDispenserComponent? dispenserFits =  null,
             SolutionContainerManagerComponent? solutionManager = null)
         {
-            if (!Resolve(owner, ref dispenserFits, ref solutionManager)
+            if (!Resolve(owner, ref dispenserFits, ref solutionManager, false)
                 || !solutionManager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
             {
                 solution = null;
