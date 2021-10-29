@@ -245,6 +245,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable

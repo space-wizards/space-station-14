@@ -60,4 +60,8 @@
     node: window
   - type: Appearance
     visuals:
-    - type: WindowVisualizer
+    - type: DamageVisualizer
+      thresholds: [4, 8, 12]
+      trackAllDamage: true
+      damageOverlay:
+        sprite: Structures/Windows/cracks.rsi
