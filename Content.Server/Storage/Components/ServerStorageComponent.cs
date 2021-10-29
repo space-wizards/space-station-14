@@ -68,10 +68,7 @@ namespace Content.Server.Storage.Components
         private int _storageCapacityMax = 10000;
 
         [DataField("maxItemSize")]
-        private int _storageMaxItemSize = 10000;
-
-        [DataField("maxItemSizeWhitelistBypass")]
-        private bool _storageMaxItemSizeWhitelistBypass = false;
+        private int? _storageMaxItemSize;
         public readonly HashSet<IPlayerSession> SubscribedSessions = new();
 
         [DataField("storageSoundCollection")]
@@ -140,17 +137,22 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
-            // Is this item below the max item size for this container?
-            bool maxItemSizeCheck = (store?.Size <= _storageMaxItemSize);
-
-            if (_whitelist != null && !_whitelist.IsValid(entity))
+            if (_whitelist != null && !_whitelist.IsValid(entity) && (_storageMaxItemSize == null))
             {
-                // If item is not whitelisted, but passes the maximum item size check,
-                // it succeeds - if it's allowed to bypass the whitelist.
-                return (maxItemSizeCheck && _storageMaxItemSizeWhitelistBypass) ? true : false;
+                return false;
             }
 
-            return maxItemSizeCheck;
+            if (store?.Size > _storageMaxItemSize)
+            {
+                return false;
+            }
+
+            if (entity.Transform.Anchored)
+            {
+                return false;
+            }
+            
+            return true;
         }
 
         /// <summary>
