@@ -121,9 +121,11 @@ namespace Content.Server.Gravity.EntitySystems
 
             var chargeTarget = chargeRate < 0 ? 0 : 1;
             short chargeEta;
+            var atTarget = false;
             if (MathHelper.CloseTo(component.Charge, chargeTarget))
             {
                 chargeEta = short.MinValue; // N/A
+                atTarget = true;
             }
             else
             {
@@ -131,12 +133,21 @@ namespace Content.Server.Gravity.EntitySystems
                 chargeEta = (short) Math.Abs(diff / chargeRate);
             }
 
+            var status = chargeRate switch
+            {
+                > 0 when atTarget => GravityGeneratorPowerStatus.FullyCharged,
+                < 0 when atTarget => GravityGeneratorPowerStatus.Off,
+                > 0 => GravityGeneratorPowerStatus.Charging,
+                < 0 => GravityGeneratorPowerStatus.Discharging,
+                _ => throw new ArgumentOutOfRangeException()
+            };
+
             var state = new SharedGravityGeneratorComponent.GeneratorState(
                 component.SwitchedOn,
                 (byte) (component.Charge * 255),
-                GravityGeneratorPowerStatus.Charging,
-                (short) powerReceiver.PowerReceived,
-                (short) powerReceiver.Load,
+                status,
+                (short) Math.Round(powerReceiver.PowerReceived),
+                (short) Math.Round(powerReceiver.Load),
                 chargeEta
             );
 
@@ -144,6 +155,8 @@ namespace Content.Server.Gravity.EntitySystems
                 component.Owner.Uid,
                 SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key,
                 state);
+
+            component.NeedUIUpdate = false;
         }
 
         private void HandleComponentInitialized(EntityUid uid, GravityGeneratorComponent component, ComponentInit args)
@@ -185,6 +198,7 @@ namespace Content.Server.Gravity.EntitySystems
                 return;
 
             _uiSystem.TryOpen(uid, SharedGravityGeneratorComponent.GravityGeneratorUiKey.Key, actor.PlayerSession);
+            component.NeedUIUpdate = true;
         }
 
         public void UpdateState(GravityGeneratorComponent grav, ApcPowerReceiverComponent powerReceiver)

@@ -28,7 +28,7 @@ namespace Content.Shared.Gravity
         public class GeneratorState : BoundUserInterfaceState
         {
             public bool On;
-            // 0 -> 1
+            // 0 -> 255
             public byte Charge;
             public GravityGeneratorPowerStatus PowerStatus;
             public short PowerDraw;
