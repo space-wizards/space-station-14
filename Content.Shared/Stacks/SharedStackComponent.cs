@@ -36,14 +36,14 @@ namespace Content.Shared.Stacks
         public int MaxCount  { get; set; } = 30;
 
         /// <summary>
-        ///     Set to true to have an unlimited max count.
+        ///     Set to true to not reduce the count when used.
         /// </summary>
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]
-        public bool UnlimitedCount { get; set; }
+        public bool Unlimited { get; set; }
 
         [ViewVariables]
-        public int AvailableSpace => UnlimitedCount ? int.MaxValue - Count : MaxCount - Count;
+        public int AvailableSpace => MaxCount - Count;
     }
 
     [Serializable, NetSerializable]
