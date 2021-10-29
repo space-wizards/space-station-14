@@ -1242,22 +1242,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkMilkJug
-  name: milk jug
-  description: An opaque white liquid produced by the mammary glands of mammals.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Milk
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/milk.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkMilkshake
   name: milkshake
   description: Glorious brainfreezing mixture.
@@ -1667,23 +1651,6 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkSoyMilk
-  name: soy milk
-  description: White and nutritious soy goodness!
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: MilkSoy
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/soymilk.rsi
 
 - type: entity
   parent: DrinkGlassBase
