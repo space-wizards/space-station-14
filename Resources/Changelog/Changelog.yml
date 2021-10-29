@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Small physics refactor, type: Add}
-  id: 12
-  time: '2021-02-28T16:11:29.0000000+00:00'
 - author: PJB
   changes:
   - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
@@ -2803,3 +2798,8 @@ Entries:
   - {message: Disposals works properly under station rotation, type: Fix}
   id: 511
   time: '2021-10-29T08:07:32.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
+  id: 512
+  time: '2021-10-29T09:40:47.0000000+00:00'
