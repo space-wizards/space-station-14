@@ -1,13 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Material crates ordered from cargo are now fixed., type: Fix}
-  - {message: Singularity parts have their physics again., type: Fix}
-  - {message: 'Singularity crates contain one part, but cost less.', type: Tweak}
-  id: 18
-  time: '2021-03-01T20:55:34.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Added cable crates to cargo console, type: Add}
   id: 19
   time: '2021-03-01T20:56:14.0000000+00:00'
@@ -2800,3 +2793,9 @@ Entries:
   - {message: Ghosts can no longer use uplinks, type: Fix}
   id: 517
   time: '2021-10-29T16:37:34.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: The ban message now actually tells you which one of your deeds got you
+      banned, type: Add}
+  id: 518
+  time: '2021-10-29T18:54:15.0000000+00:00'
