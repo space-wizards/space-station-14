@@ -1,10 +1,4 @@
 Entries:
-- author: ike709
-  changes:
-  - {message: 'Added a basic implementation of livers. They handle reagent metabolization
-      now, but aren''t damaged by alcohol or toxins yet.', type: Add}
-  id: 10
-  time: '2021-02-28T01:58:09.0000000+00:00'
 - author: Ygg01
   changes:
   - {message: Stack visualizer no longer affected by open/close state by default.,
@@ -2803,3 +2797,10 @@ Entries:
   - {message: Fix certain windoors not autoclosing., type: Fix}
   id: 509
   time: '2021-10-29T05:39:44.812307+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has cut the budget on maintaining how pretty things look
+      on our stations. You may notice things around you slowly become more decrepit
+      over time, for example, skin.', type: Add}
+  id: 510
+  time: '2021-10-29T08:04:25.0000000+00:00'
