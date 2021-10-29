@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Shared.PDA
@@ -25,5 +26,8 @@ namespace Content.Shared.PDA
 
         [DataField("listingName")]
         public string ListingName { get; } = string.Empty;
+
+        [DataField("icon")]
+        public SpriteSpecifier? Icon { get; } = null;
     }
 }

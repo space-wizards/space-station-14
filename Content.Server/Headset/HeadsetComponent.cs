@@ -18,7 +18,9 @@ namespace Content.Server.Headset
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
+#pragma warning disable 618
     public class HeadsetComponent : Component, IListen, IRadio, IExamine
+#pragma warning restore 618
     {
         [Dependency] private readonly IServerNetManager _netManager = default!;
 

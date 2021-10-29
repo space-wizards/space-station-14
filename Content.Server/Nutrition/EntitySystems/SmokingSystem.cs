@@ -1,11 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;

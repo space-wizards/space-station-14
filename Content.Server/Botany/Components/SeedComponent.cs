@@ -10,7 +10,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class SeedComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "Seed";
 

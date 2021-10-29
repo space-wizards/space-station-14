@@ -107,7 +107,9 @@ namespace Content.Server.Configurable
                     _config[key] = value;
                 }
 
+#pragma warning disable 618
                 SendMessage(new ConfigUpdatedComponentMessage(config));
+#pragma warning restore 618
             }
         }
 

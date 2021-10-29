@@ -17,7 +17,9 @@ namespace Content.Server.Radio.Components
     [RegisterComponent]
     [ComponentReference(typeof(IRadio))]
     [ComponentReference(typeof(IListen))]
+#pragma warning disable 618
     public class HandheldRadioComponent : Component, IUse, IListen, IRadio, IActivate, IExamine
+#pragma warning restore 618
     {
         [Dependency] private readonly IChatManager _chatManager = default!;
         public override string Name => "Radio";

@@ -20,6 +20,8 @@ using Robust.Shared.Physics;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
+#pragma warning disable 618
+
 namespace Content.Shared.Interaction
 {
     /// <summary>
@@ -352,7 +354,7 @@ namespace Content.Shared.Interaction
             return inRange;
         }
 
-        public async Task<bool> InteractDoBefore(
+        public bool InteractDoBefore(
             IEntity user,
             IEntity used,
             IEntity? target,
@@ -374,7 +376,7 @@ namespace Content.Shared.Interaction
             if (!_actionBlockerSystem.CanInteract(user))
                 return;
 
-            if (await InteractDoBefore(user, used, target, clickLocation, true))
+            if (InteractDoBefore(user, used, target, clickLocation, true))
                 return;
 
             // all interactions should only happen when in range / unobstructed, so no range check is needed
@@ -528,7 +530,7 @@ namespace Content.Shared.Interaction
                 if (verb.Disabled)
                     continue;
 
-                _verbSystem.TryExecuteVerb(verb);
+                _verbSystem.ExecuteVerb(verb);
                 break;
             }
         }

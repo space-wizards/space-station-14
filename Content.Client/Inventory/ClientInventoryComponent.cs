@@ -232,23 +232,31 @@ namespace Content.Client.Inventory
         public void SendEquipMessage(Slots slot)
         {
             var equipMessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Equip);
+#pragma warning disable 618
             SendNetworkMessage(equipMessage);
+#pragma warning restore 618
         }
 
         public void SendUseMessage(Slots slot)
         {
             var equipmessage = new ClientInventoryMessage(slot, ClientInventoryUpdate.Use);
+#pragma warning disable 618
             SendNetworkMessage(equipmessage);
+#pragma warning restore 618
         }
 
         public void SendHoverMessage(Slots slot)
         {
+#pragma warning disable 618
             SendNetworkMessage(new ClientInventoryMessage(slot, ClientInventoryUpdate.Hover));
+#pragma warning restore 618
         }
 
         public void SendOpenStorageUIMessage(Slots slot)
         {
+#pragma warning disable 618
             SendNetworkMessage(new OpenSlotStorageUIMessage(slot));
+#pragma warning restore 618
         }
 
         public void PlayerDetached()
