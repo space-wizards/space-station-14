@@ -210,18 +210,6 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        public bool TryGetSolution(IEntity? target, string name,
-            [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
-        {
-            if (target == null || target.Deleted)
-            {
-                solution = null;
-                return false;
-            }
-
-            return TryGetSolution(target.Uid, name, out solution, solutionsMgr);
-        }
-
         public bool TryGetSolution(EntityUid uid, string name, [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
         {
             if (!Resolve(uid, ref solutionsMgr))
@@ -231,17 +219,6 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             return solutionsMgr.Solutions.TryGetValue(name, out solution);
-        }
-
-        /// <summary>
-        /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
-        /// </summary>
-        /// <param name="owner">Entity to which to add solution</param>
-        /// <param name="name">name for the solution</param>
-        /// <returns>solution</returns>
-        public Solution EnsureSolution(IEntity owner, string name)
-        {
-            return EnsureSolution(owner.Uid, name);
         }
 
         /// <summary>

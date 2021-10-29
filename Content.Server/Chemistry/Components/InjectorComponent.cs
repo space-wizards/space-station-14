@@ -175,7 +175,7 @@ namespace Content.Server.Chemistry.Components
         private void TryInjectIntoBloodstream(BloodstreamComponent targetBloodstream, IEntity user)
         {
             if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(user, SharedBloodstreamComponent.DefaultSolutionName, out var bloodstream)
+                    .TryGetSolution(user.Uid, SharedBloodstreamComponent.DefaultSolutionName, out var bloodstream)
                 || bloodstream.CurrentVolume == 0)
                 return;
 
@@ -216,7 +216,7 @@ namespace Content.Server.Chemistry.Components
 
         private void TryInject(IEntity targetEntity, Solution targetSolution, IEntity user, bool asRefill)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 || solution.CurrentVolume == 0)
             {
                 return;
@@ -259,7 +259,7 @@ namespace Content.Server.Chemistry.Components
         private void AfterInject()
         {
             // Automatically set syringe to draw after completely draining it.
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 && solution.CurrentVolume == 0)
             {
                 ToggleState = InjectorToggleMode.Draw;
@@ -269,7 +269,7 @@ namespace Content.Server.Chemistry.Components
         private void AfterDraw()
         {
             // Automatically set syringe to inject after completely filling it.
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 && solution.AvailableVolume == 0)
             {
                 ToggleState = InjectorToggleMode.Inject;
@@ -278,7 +278,7 @@ namespace Content.Server.Chemistry.Components
 
         private void TryDraw(IEntity targetEntity, Solution targetSolution, IEntity user)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 || solution.AvailableVolume == 0)
             {
                 return;
@@ -315,7 +315,7 @@ namespace Content.Server.Chemistry.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>()
-                .TryGetSolution(Owner, SolutionName, out var solution);
+                .TryGetSolution(Owner.Uid, SolutionName, out var solution);
 
             var currentVolume = solution?.CurrentVolume ?? ReagentUnit.Zero;
             var maxVolume = solution?.MaxVolume ?? ReagentUnit.Zero;

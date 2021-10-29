@@ -44,7 +44,7 @@ namespace Content.Server.Body.Circulatory
         {
             base.Initialize();
 
-            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
+            _internalSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, DefaultSolutionName);
             if (_internalSolution != null)
             {
                 _internalSolution.MaxVolume = _initialMaxVolume;

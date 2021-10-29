@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                     beaker = entityManager.SpawnEntity("BluespaceBeaker", MapCoordinates.Nullspace);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker, "beaker", out component));
+                        .TryGetSolution(beaker.Uid, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()

@@ -35,7 +35,7 @@ namespace Content.Server.Fluids.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
                 return solution;
             }
         }
@@ -81,7 +81,7 @@ namespace Content.Server.Fluids.Components
              * will spill some of the mop's solution onto the puddle which will evaporate eventually.
              */
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents ) ||
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var contents ) ||
                 Mopping ||
                 !eventArgs.InRangeUnobstructed(ignoreInsideBlocker: true, popup: true))
             {
@@ -156,7 +156,7 @@ namespace Content.Server.Fluids.Components
             }
             else
             {
-                if (solutionSystem.TryGetSolution(eventArgs.Target, puddleComponent.SolutionName, out var puddleSolution))
+                if (solutionSystem.TryGetSolution(eventArgs.Target.Uid, puddleComponent.SolutionName, out var puddleSolution))
                     solutionSystem.SplitSolution(eventArgs.Target.Uid, puddleSolution, transferAmount);
             }
 

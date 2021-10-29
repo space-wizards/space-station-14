@@ -86,7 +86,7 @@ namespace Content.Server.Nutrition.Components
         private void OnOpenedChanged()
         {
             var solutionSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSys.TryGetSolution(Owner, SolutionName, out _))
+            if (!solutionSys.TryGetSolution(Owner.Uid, SolutionName, out _))
             {
                 return;
             }

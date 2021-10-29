@@ -60,7 +60,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
-                _solutionContainerSystem.EnsureSolution(owner, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(owner.Uid, component.SolutionName);
             }
 
             UpdateAppearance(component);
