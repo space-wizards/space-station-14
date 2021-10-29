@@ -148,7 +148,6 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-  - type: MaterialStorage
   - type: Wires
   - type: TechnologyDatabase
   - type: MaterialStorage
