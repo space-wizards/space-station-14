@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
@@ -318,42 +319,5 @@ namespace Content.Server.Chemistry.EntitySystems
 
             return reagentQuantity;
         }
-    }
-
-    [Serializable, NetSerializable]
-    public enum SolutionContainerVisuals : byte
-    {
-        VisualState
-    }
-
-    [Serializable, NetSerializable]
-    public class SolutionContainerVisualState
-    {
-        public readonly Color Color;
-
-        /// <summary>
-        ///     Represents how full the container is, as a fraction equivalent to <see cref="FilledVolumeFraction"/>/<see cref="byte.MaxValue"/>.
-        /// </summary>
-        public readonly byte FilledVolumeFraction;
-
-        // do we really need this just to save three bytes?
-        public float FilledVolumePercent => (float) FilledVolumeFraction / byte.MaxValue;
-
-        /// <summary>
-        ///     Sets the solution state of a container.
-        /// </summary>
-        /// <param name="color"></param>
-        /// <param name="filledVolumeFraction">The fraction of the container's volume that is filled.</param>
-        public SolutionContainerVisualState(Color color, float filledVolumeFraction)
-        {
-            Color = color;
-            FilledVolumeFraction = (byte) (byte.MaxValue * filledVolumeFraction);
-        }
-    }
-
-    public enum SolutionContainerLayers : byte
-    {
-        Fill,
-        Base
     }
 }

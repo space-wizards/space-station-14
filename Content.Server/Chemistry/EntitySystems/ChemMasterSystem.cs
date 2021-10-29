@@ -1,8 +1,8 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Robust.Shared.IoC;
 using Content.Shared.ActionBlocker;
 

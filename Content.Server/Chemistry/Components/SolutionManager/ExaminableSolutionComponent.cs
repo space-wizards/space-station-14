@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Components.SolutionManager
+namespace Content.Server.Chemistry.Components.SolutionManager
 {
     [RegisterComponent]
     public class ExaminableSolutionComponent: Component

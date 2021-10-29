@@ -1,7 +1,7 @@
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Interaction.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.MobState.Components;
 using Content.Shared.Popups;

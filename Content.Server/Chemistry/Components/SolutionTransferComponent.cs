@@ -1,9 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.UserInterface;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;

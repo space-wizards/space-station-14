@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Components.SolutionManager
+namespace Content.Server.Chemistry.Components.SolutionManager
 {
     /// <summary>
     ///     Denotes the solution that can removed  be with syringes.
