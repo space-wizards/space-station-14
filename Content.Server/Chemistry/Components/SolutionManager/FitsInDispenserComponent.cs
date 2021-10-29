@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Components.SolutionManager
+namespace Content.Server.Chemistry.Components.SolutionManager
 {
     /// Allows the entity with this component to be placed in a <c>SharedReagentDispenserComponent</c>.
     /// <para>Otherwise it's considered to be too large or the improper shape to fit.</para>

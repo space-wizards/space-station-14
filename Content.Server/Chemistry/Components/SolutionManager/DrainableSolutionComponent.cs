@@ -2,18 +2,19 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
-namespace Content.Shared.Chemistry.Components.SolutionManager
+namespace Content.Server.Chemistry.Components.SolutionManager
 {
     /// <summary>
-    ///     Denotes a solution which can be added with syringes.
+    ///     Denotes the solution that can be easily removed through any reagent container.
+    ///     Think pouring this or draining from a water tank.
     /// </summary>
     [RegisterComponent]
-    public class InjectableSolutionComponent : Component
+    public class DrainableSolutionComponent : Component
     {
-        public override string Name => "InjectableSolution";
+        public override string Name => "DrainableSolution";
 
         /// <summary>
-        /// Solution name which can be added with syringes.
+        /// Solution name that can be drained.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("solution")]
