@@ -32,6 +32,21 @@ namespace Content.Server.Tools
 
             InitializeWelders();
             InitializeMultipleTools();
+
+            SubscribeLocalEvent<ToolDoAfterComplete>(OnDoAfterComplete);
+            SubscribeLocalEvent<ToolDoAfterCancelled>(OnDoAfterCancelled);
+        }
+
+        private void OnDoAfterComplete(ToolDoAfterComplete ev)
+        {
+            // Actually finish the tool use! Depending on whether that succeeds or not, either event will be broadcast.
+            RaiseLocalEvent(ToolFinishUse(ev.Uid, ev.UserUid, ev.Fuel) ? ev.CompletedEvent : ev.CancelledEvent);
+        }
+
+        private void OnDoAfterCancelled(ToolDoAfterCancelled ev)
+        {
+            // Broadcast wrapped event.
+            RaiseLocalEvent(ev.Event);
         }
 
         /// <summary>
@@ -88,8 +103,8 @@ namespace Content.Server.Tools
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
                     NeedHand = true,
-                    BroadcastFinishedEvent = doAfterCompleteEvent,
-                    BroadcastCancelledEvent = doAfterCancelledEvent,
+                    BroadcastFinishedEvent = new ToolDoAfterComplete(doAfterCompleteEvent, doAfterCancelledEvent, tool, user, fuel),
+                    BroadcastCancelledEvent = new ToolDoAfterCancelled(doAfterCancelledEvent),
                 };
 
                 _doAfterSystem.DoAfter(doAfterArgs);
@@ -211,6 +226,34 @@ namespace Content.Server.Tools
             base.Update(frameTime);
 
             UpdateWelders(frameTime);
+        }
+
+        private class ToolDoAfterComplete : EntityEventArgs
+        {
+            public readonly object CompletedEvent;
+            public readonly object CancelledEvent;
+            public readonly EntityUid Uid;
+            public readonly EntityUid UserUid;
+            public readonly float Fuel;
+
+            public ToolDoAfterComplete(object completedEvent, object cancelledEvent, EntityUid uid, EntityUid userUid, float fuel)
+            {
+                CompletedEvent = completedEvent;
+                Uid = uid;
+                UserUid = userUid;
+                Fuel = fuel;
+                CancelledEvent = cancelledEvent;
+            }
+        }
+
+        private class ToolDoAfterCancelled : EntityEventArgs
+        {
+            public readonly object Event;
+
+            public ToolDoAfterCancelled(object @event)
+            {
+                Event = @event;
+            }
         }
     }
 

@@ -6,13 +6,13 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Client.ContextMenu.UI
 {
-    public partial class ContextMenuView
+    public sealed partial class EntityMenuPresenter : ContextMenuPresenter
     {
         public const int GroupingTypesCount = 2;
         private int GroupingContextMenuType { get; set; }
-        public void OnGroupingContextMenuChanged(int obj)
+        public void OnGroupingChanged(int obj)
         {
-            CloseContextPopups();
+            Close();
             GroupingContextMenuType = obj;
         }
 

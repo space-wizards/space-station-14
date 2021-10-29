@@ -77,6 +77,7 @@
   targetNode: window
   category: Structures
   description: Clear.
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
@@ -95,6 +96,7 @@
   targetNode: reinforcedWindow
   category: Structures
   description: Clear but tough.
+  canBuildInImpassable: true
   conditions:
     - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
@@ -112,6 +114,7 @@
   startNode: start
   targetNode: plasmaWindow
   category: Structures
+  canBuildInImpassable: true
   description: Clear and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile {}
@@ -130,6 +133,7 @@
   startNode: start
   targetNode: reinforcedPlasmaWindow
   category: Structures
+  canBuildInImpassable: true
   description: Fire resistant and even tougher, with a purple tint.
   conditions:
     - !type:EmptyOrWindowValidInTile {}
