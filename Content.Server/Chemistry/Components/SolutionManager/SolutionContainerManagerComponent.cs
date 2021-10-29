@@ -9,9 +9,7 @@ using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Chemistry.Components.SolutionManager
 {
-    [NetworkedComponent()]
     [RegisterComponent]
-    [DataDefinition]
     [Friend(typeof(SolutionContainerSystem))]
     public class SolutionContainerManagerComponent : Component
     {
