@@ -162,7 +162,7 @@ namespace Content.Server.Gravity.EntitySystems
         private void HandleComponentInitialized(EntityUid uid, GravityGeneratorComponent component, ComponentInit args)
         {
             ApcPowerReceiverComponent? powerReceiver = null;
-            if (!Resolve(uid, ref powerReceiver))
+            if (!Resolve(uid, ref powerReceiver, false))
                 return;
 
             UpdatePowerState(component, powerReceiver);
