@@ -146,7 +146,7 @@ namespace Content.Server.Chemistry.Components
             }
             else if (ToggleState == InjectorToggleMode.Draw)
             {
-                if (solutionsSys.TryGetDrawableSolution(targetEntity, out var drawableSolution))
+                if (solutionsSys.TryGetDrawableSolution(targetEntity.Uid, out var drawableSolution))
                 {
                     TryDraw(targetEntity, drawableSolution, eventArgs.User);
                 }

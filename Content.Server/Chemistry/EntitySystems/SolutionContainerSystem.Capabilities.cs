@@ -84,21 +84,21 @@ namespace Content.Server.Chemistry.EntitySystems
 
             solution = null;
             return false;
-
         }
 
-        public bool TryGetDrawableSolution(IEntity owner,
-            [NotNullWhen(true)] out Solution? solution)
+        public bool TryGetDrawableSolution(EntityUid uid,
+            [NotNullWhen(true)] out Solution? solution,
+            DrawableSolutionComponent? drawable = null,
+            SolutionContainerManagerComponent? manager = null)
         {
-            if (owner.TryGetComponent(out DrawableSolutionComponent? drawable) &&
-                owner.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(drawable.Solution, out solution))
+            if (!Resolve(uid, ref drawable, ref manager)
+                || !manager.Solutions.TryGetValue(drawable.Solution, out solution))
             {
-                return true;
+                solution = null;
+                return false;
             }
 
-            solution = null;
-            return false;
+            return true;
         }
 
         public ReagentUnit DrainAvailable(EntityUid uid)
