@@ -31,16 +31,30 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CloningPodMachineCircuitboard:
+            min: 1
+            max: 1
+          SheetGlass1:
+            min: 1
+            max: 1
+          ScanningModuleStockPart:
+            min: 2
+            max: 2
+          MicroManipulatorStockPart:
+            min: 2
+            max: 2
+          CableApcStack:
+            min: 1
+            max: 1
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-    board: CloningPodMachineCircuitboard
   - type: MaterialStorage
   - type: Wires
-    BoardName: "CloningPod"
-    LayoutId: CloningPod
   - type: Appearance
     visuals:
       - type: GenericEnumVisualizer

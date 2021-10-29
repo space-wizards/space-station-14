@@ -95,16 +95,27 @@
         !type:DamageTrigger
         damage: 25
       behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ChemMasterMachineCircuitboard:
+            min: 1
+            max: 1
+          SheetGlass1:
+            min: 1
+            max: 1
+          Beaker:
+            min: 2
+            max: 2
+          MicroManipulatorStockPart:
+            min: 1
+            max: 1
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-    board: ChemMasterMachineCircuitboard
   - type: MaterialStorage
   - type: Wires
-    BoardName: "chem_master"
-    LayoutId: chem_master
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key

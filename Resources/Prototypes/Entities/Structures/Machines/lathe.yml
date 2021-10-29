@@ -39,16 +39,27 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          AutolatheMachineCircuitboard:
+            min: 1
+            max: 1
+          SheetGlass1:
+            min: 1
+            max: 1
+          MatterBinStockPart:
+            min: 3
+            max: 3
+          MicroManipulatorStockPart:
+            min: 1
+            max: 1
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-    board: AutolatheMachineCircuitboard
   - type: MaterialStorage
   - type: Wires
-    BoardName: "Autolathe"
-    LayoutId: Autolathe
   - type: LatheDatabase
     static: true
     recipes:
@@ -118,15 +129,27 @@
         !type:DamageTrigger
         damage: 100
       behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ProtolatheMachineCircuitboard:
+            min: 1
+            max: 1
+          Beaker:
+            min: 2
+            max: 2
+          MatterBinStockPart:
+            min: 2
+            max: 2
+          MicroManipulatorStockPart:
+            min: 2
+            max: 2
       - !type:ChangeConstructionNodeBehavior
         node: machineFrame
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: Machine
-    board: ProtolatheMachineCircuitboard
+  - type: MaterialStorage
   - type: Wires
-    BoardName: "Protolathe"
-    LayoutId: Protolathe
   - type: TechnologyDatabase
   - type: MaterialStorage
   - type: ProtolatheDatabase
