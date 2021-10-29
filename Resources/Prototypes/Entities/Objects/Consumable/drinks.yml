@@ -316,24 +316,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/beepskysmashglass.rsi
 
-
-#TODO: Move DrinkBeer to drinks_bottles small bottles and change to DrinkBottleBaseFull
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkBeer
-  name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
-  description: An alcoholic beverage made from malted grains, hops, yeast, and water.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: Beer
-          Quantity: 50
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/beer.rsi
-
 - type: entity
   parent: DrinkGlassBase
   id: DrinkBeerglass
@@ -1637,23 +1619,6 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkSodaWater
-  name: soda water
-  description: Soda water. Why not make a scotch and soda?
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: SodaWater
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/sodawater.rsi
-
-- type: entity
-  parent: DrinkGlassBase
   id: DrinkSoyLatte
   name: soy latte
   description: A nice and refrshing beverage while you are reading.
@@ -1818,23 +1783,6 @@
           Quantity: 50
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tomatojuice.rsi
-
-- type: entity
-  parent: DrinkGlassBase
-  id: DrinkTonicWater
-  name: tonic water
-  description: Quinine tastes funny, but at least it'll keep that Space Malaria away.
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      drink:
-        maxVol: 50
-        reagents:
-        - ReagentId: TonicWater
-          Quantity: 50
-  - type: Drink
-  - type: Sprite
-    sprite: Objects/Consumable/Drinks/tonic.rsi
 
 - type: entity
   parent: DrinkGlassBase

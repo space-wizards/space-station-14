@@ -65,7 +65,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkBlueCuracaoFull
+  id: DrinkBlueCuracaoBottleFull
   name: Miss Blue Curacao
   description: A fruity, exceptionally azure drink. Does not allow the imbiber to use the fifth magic.
   components:
@@ -110,7 +110,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkColaBottle
+  id: DrinkColaBottleFull
   name: space cola bottle
   description: Cola. in space
   components:
@@ -126,7 +126,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkGrenadineBottle
+  id: DrinkGrenadineBottleFull
   name: briar rose grenadine syrup bottle
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
   components:
@@ -188,7 +188,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkMelonLiquorFull
+  id: DrinkMelonLiquorBottleFull
   name: emeraldine melon liquor
   description: A bottle of 46 proof Emeraldine Melon Liquor. Sweet and light.
   components:
@@ -233,7 +233,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkRumbottleFull
+  id: DrinkRumBottleFull
   name: captain pete's cuban spiced rum
   description: This isn't just rum, oh no. It's practically GRIFF in a bottle.
   components:
@@ -248,7 +248,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkSpaceMountainWindBottle
+  id: DrinkSpaceMountainWindBottleFull
   name: space mountain wind bottle
   description: Blows right through you like a space wind.
   components:
@@ -264,7 +264,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkSpaceUpBottle
+  id: DrinkSpaceUpBottleFull
   name: space-up bottle
   description: Tastes like a hull breach in your mouth.
   components:
@@ -280,7 +280,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkTequilabottleFull
+  id: DrinkTequilaBottleFull
   name: caccavo guaranteed quality tequila bottle
   description: Made from premium petroleum distillates, pure thalidomide and other fine quality ingredients!
   components:
@@ -357,6 +357,22 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
+  id: DrinkBeer # Needs to be renamed DrinkBeerBottleFull
+  name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
+  description: An alcoholic beverage made from malted grains, hops, yeast, and water.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: Beer
+          Quantity: 50
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/beer.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
   id: DrinkAleBottleFull
   name: Magm-Ale
   description: A true dorf's drink of choice.
@@ -373,7 +389,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkWaterBottle
+  id: DrinkWaterBottleFull
   name: water bottle
   description: Simple clean water of unknown origin. You think that maybe you dont want to know it.
   components:
@@ -388,7 +404,58 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/waterbottle.rsi
 
-# Cartons, TODO: this needs to be moved elsewhere eventually, since jugs and cartons shouldnt smash into glass shards
+# Cartons, TODO: this needs to be moved elsewhere eventually, since cartons shouldnt smash into glass shards
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkJuiceLimeCarton
+  name: lime juice
+  description: Sweet-sour goodness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: JuiceLime
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/limejuice.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkJuiceOrangeCarton
+  name: orange juice
+  description: Full of vitamins and deliciousness!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: JuiceOrange
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/orangejuice.rsi
+
+- type: entity
+  parent: DrinkBottleBaseFull
+  id: DrinkJuiceTomatoCarton
+  name: tomato juice
+  description: Well, at least it LOOKS like tomato juice. You can't tell with all that redness.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tomatojuice.rsi
 
 - type: entity
   parent: DrinkBottleBaseFull
@@ -409,7 +476,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkMilk
+  id: DrinkMilkCarton
   name: milk
   description: An opaque white liquid produced by the mammary glands of mammals.
   components:
@@ -425,7 +492,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkSoyMilk
+  id: DrinkSoyMilkCarton
   name: soy milk
   description: White and nutritious soy goodness!
   components:

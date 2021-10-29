@@ -41,6 +41,13 @@
   name: space cola
   description: A refreshing beverage.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Cola
+          Quantity: 20
   - type: Tag
     tags:
     - Cola
@@ -51,10 +58,17 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkIceTeaCan
+  id: DrinkIcedTeaCan
   name: iced tea can
   description: A refreshing can of iced tea.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: IcedTea
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -66,6 +80,13 @@
   name: lemon-lime can
   description: You wanted ORANGE. It gave you Lemon-Lime.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: LemonLime
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Item
@@ -83,11 +104,35 @@
     sprite: Objects/Consumable/Drinks/purple_can.rsi
 
 - type: entity
+  parent: DrinkGlassBase
+  id: DrinkSodaWaterCan
+  name: soda water can
+  description: Soda water. Why not make a scotch and soda?
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: SodaWater
+          Quantity: 20
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/sodawater.rsi
+
+- type: entity
   parent: DrinkCanBaseFull
   id: DrinkSpaceMountainWindCan
   name: space mountain wind can
   description: Blows right through you like a space wind.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceMountainWind
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Item
@@ -99,6 +144,13 @@
   name: space-up can
   description: Tastes like a hull breach in your mouth.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: SpaceUp
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Item
@@ -114,6 +166,23 @@
     sprite: Objects/Consumable/Drinks/starkist.rsi
   - type: Item
     sprite: Objects/Consumable/Drinks/starkist.rsi
+
+- type: entity
+  parent: DrinkCanBaseFull
+  id: DrinkTonicWaterCan
+  name: tonic water can
+  description: Quinine tastes funny, but at least it'll keep that Space Malaria away.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: TonicWater
+          Quantity: 20
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/tonic.rsi
 
 - type: entity
   parent: DrinkCanBaseFull
@@ -135,10 +204,17 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkChangelingSting
-  name: Changeling sting
+  id: DrinkChangelingStingCan
+  name: Changeling sting can
   description: You take a tiny sip and feel a burning sensation...
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: ChangelingSting
+          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
@@ -147,10 +223,17 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkDrGibb
-  name: Dr. Gibb
+  id: DrinkDrGibbCan
+  name: Dr. Gibb can
   description: A delicious blend of 42 different flavours.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: DrGibb
+          Quantity: 20
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
