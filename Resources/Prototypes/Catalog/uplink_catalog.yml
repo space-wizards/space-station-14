@@ -58,13 +58,13 @@
   id: UplinkExplosiveGrenadeFlash
   category: Explosives
   itemId: GrenadeFlashBang
-  price: 4
+  price: 1
 
 - type: uplinkListing
   id: UplinkSyndieMiniBomb
   category: Explosives
   itemId: SyndieMiniBomb
-  price: 6
+  price: 5
 
 #- type: uplinkListing
 #  id: UplinkExplosiveC4
@@ -84,21 +84,21 @@
   id: UplinkPistol9mmMagazine
   category: Ammo
   itemId: MagazinePistol
-  price: 2
+  price: 1
 
 # For the Mandella
 - type: uplinkListing
   id: UplinkMagazineClRiflePistol
   category: Ammo
   itemId: MagazineClRiflePistol
-  price: 2
+  price: 1
 
 # For the Inspector
 - type: uplinkListing
   id: UplinkSLMagnum
   category: Ammo
   itemId: SLMagnum
-  price: 2
+  price: 1
 
 # Bundles
 
@@ -132,7 +132,7 @@
   id: UplinkToolbox
   category: Tools
   itemId: ToolboxSyndicateFilled
-  price: 5
+  price: 1
 
 - type: uplinkListing
   id: UplinkSyndicateJawsOfLife
@@ -144,13 +144,13 @@
   id: UplinkDuffelSurgery
   category: Tools
   itemId: ClothingBackpackDuffelSyndicateFilledMedical
-  price: 5
+  price: 1
 
 - type: uplinkListing
   id: UplinkCarpDehydrated
   category: Tools
   itemId: DehydratedSpaceCarp
-  price: 5
+  price: 1
 
 # Armor
 
@@ -165,19 +165,19 @@
   id: UplinkClothingOuterVestWeb
   category: Armor
   itemId: ClothingOuterVestWeb
-  price: 5
+  price: 3
 
 - type: uplinkListing
   id: UplinkHardsuitSyndie
   category: Armor
   itemId: ClothingOuterHardsuitSyndie
-  price: 5
+  price: 3
 
 - type: uplinkListing
-  id: UplinkHardsuitSyndieHelmet
+  id: UplinkHardsuitHelmetSyndie
   category: Armor
   itemId: ClothingHeadHelmetHardsuitSyndie
-  price: 5
+  price: 2
 
 # Misc
 
@@ -198,12 +198,6 @@
   category: Misc
   itemId: RevolverCapGun
   price: 4
-
-- type: uplinkListing
-  id: UplinkPen
-  category: Misc
-  itemId: Pen
-  price: 2
 
 - type: uplinkListing
   id: UplinkSoapSyndie
