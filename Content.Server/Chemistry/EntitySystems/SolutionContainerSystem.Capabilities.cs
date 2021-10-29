@@ -8,69 +8,72 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public partial class SolutionContainerSystem
     {
-        public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
+        public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+            RefillableSolutionComponent? refillableSolution = null)
         {
-            if (!EntityManager.HasComponent<RefillableSolutionComponent>(targetUid))
+            if (!Resolve(targetUid, ref refillableSolution))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
         }
 
-        public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution)
+        public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
+            InjectableSolutionComponent? injectableSolution)
         {
-            if (!EntityManager.HasComponent<InjectableSolutionComponent>(targetUid))
+            if (!Resolve(targetUid, ref injectableSolution))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
         }
 
-        public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount)
+        public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount,
+            DrawableSolutionComponent? drawableSolution = null)
         {
-            if (!EntityManager.HasComponent<DrawableSolutionComponent>(targetUid))
-            {
-                return new Solution();
-            }
+            if (!Resolve(targetUid, ref drawableSolution))
+                return new Solution();;
 
             return SplitSolution(targetUid, solution, amount);
         }
 
-        public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount)
+        public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount,
+            DrainableSolutionComponent? drainableSolution = null)
         {
-            if (!EntityManager.HasComponent<DrainableSolutionComponent>(targetUid))
-            {
+            if (!Resolve(targetUid, ref drainableSolution))
                 return new Solution();
-            }
 
             return SplitSolution(targetUid, targetSolution, amount);
         }
 
         public bool TryGetInjectableSolution(EntityUid targetUid,
-            [NotNullWhen(true)] out Solution? solution)
+            [NotNullWhen(true)] out Solution? solution,
+            InjectableSolutionComponent? injectable,
+            SolutionContainerManagerComponent? manager
+            )
         {
-            if (EntityManager.TryGetComponent(targetUid, out InjectableSolutionComponent? injectable) &&
-                EntityManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(injectable.Solution, out solution))
+            if (!Resolve(targetUid, ref manager, ref injectable)
+                || !manager.Solutions.TryGetValue(injectable.Solution, out solution))
             {
-                return true;
+                solution = null;
+                return false;
             }
 
-            solution = null;
-            return false;
+            return true;
         }
 
         public bool TryGetRefillableSolution(EntityUid targetUid,
-            [NotNullWhen(true)] out Solution? solution)
+            [NotNullWhen(true)] out Solution? solution,
+            SolutionContainerManagerComponent? solutionManager = null,
+            RefillableSolutionComponent? refillable = null)
         {
-            if (EntityManager.TryGetComponent(targetUid, out RefillableSolutionComponent? refillable) &&
-                EntityManager.TryGetComponent(targetUid, out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
+            if (!Resolve(targetUid, ref solutionManager, ref refillable)
+                || !solutionManager.Solutions.TryGetValue(refillable.Solution, out var refillableSolution))
             {
-                solution = refillableSolution;
-                return true;
+                solution = null;
+                return false;
             }
 
-            solution = null;
-            return false;
+            solution = refillableSolution;
+            return true;
         }
 
         public bool TryGetDrainableSolution(EntityUid uid,
@@ -78,12 +81,14 @@ namespace Content.Server.Chemistry.EntitySystems
             DrainableSolutionComponent? drainable = null,
             SolutionContainerManagerComponent? manager = null)
         {
-            if (Resolve(uid, ref drainable, ref manager) &&
-                manager.Solutions.TryGetValue(drainable.Solution, out solution))
-                return true;
+            if (!Resolve(uid, ref drainable, ref manager) ||
+                !manager.Solutions.TryGetValue(drainable.Solution, out solution))
+            {
+                solution = null;
+                return false;
+            }
 
-            solution = null;
-            return false;
+            return true;
         }
 
         public bool TryGetDrawableSolution(EntityUid uid,
@@ -109,18 +114,18 @@ namespace Content.Server.Chemistry.EntitySystems
         }
 
         public bool TryGetFitsInDispenser(EntityUid owner,
-            [NotNullWhen(true)] out Solution? solution)
+            [NotNullWhen(true)] out Solution? solution,
+            FitsInDispenserComponent? dispenserFits =  null,
+            SolutionContainerManagerComponent? solutionManager = null)
         {
-            if (EntityManager.TryGetEntity(owner, out var ownerEntity) &&
-                ownerEntity.TryGetComponent(out FitsInDispenserComponent? dispenserFits) &&
-                ownerEntity.TryGetComponent(out SolutionContainerManagerComponent? manager) &&
-                manager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
+            if (!Resolve(owner, ref dispenserFits, ref solutionManager)
+                || !solutionManager.Solutions.TryGetValue(dispenserFits.Solution, out solution))
             {
-                return true;
+                solution = null;
+                return false;
             }
 
-            solution = null;
-            return false;
+            return true;
         }
     }
 }
