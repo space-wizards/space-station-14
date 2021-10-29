@@ -1,12 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Added Particle Accelerator crate to cargo, type: Add}
-  - {message: Added circuit-boards for the Particle Accelerator parts, type: Add}
-  id: 16
-  time: '2021-03-01T20:53:17.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Cargo crates stop spawning underneath the teleporter., type: Fix}
   id: 17
   time: '2021-03-01T20:54:06.0000000+00:00'
@@ -2800,3 +2794,9 @@ Entries:
     type: Add}
   id: 515
   time: '2021-10-29T12:42:18.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
+    type: Tweak}
+  id: 516
+  time: '2021-10-29T12:48:02.0000000+00:00'
