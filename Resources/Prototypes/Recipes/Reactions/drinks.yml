@@ -385,6 +385,20 @@
     Martini: 3
 
 - type: reaction
+  id: Mojito
+  reactants:
+    JuiceLime:
+      amount: 1
+    Rum:
+      amount: 1
+    SodaWater:
+      amount: 1
+    Sugar:
+      amount: 1
+  products:
+    Mojito: 4
+
+- type: reaction
   id: Moonshine
   reactants:
     Tequila:
@@ -415,6 +429,16 @@
       amount: 1
   products:
     Patron: 10
+
+- type: reaction
+  id: Rewriter
+  reactants:
+    Coffee:
+      amount: 1
+    SpaceMountainWind:
+      amount: 1
+  products:
+    Rewriter: 2
 
 - type: reaction
   id: ScrewdriverCocktail

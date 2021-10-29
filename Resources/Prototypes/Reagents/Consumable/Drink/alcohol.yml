@@ -509,6 +509,14 @@
   spritePath: meadglass.rsi
 
 - type: reagent
+  id: Mojito
+  name: mojito
+  desc: If it's good enough for Spesscuba, it's good enough for you.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: mojito.rsi
+
+- type: reagent
   id: Moonshine
   name: moonshine
   desc: Artisanal homemade liquor. What could go wrong?
@@ -538,6 +546,14 @@
   physicalDesc: strong-smelling
   color: "#C73C00"
   spritePath: red_meadglass.rsi
+
+- type: reagent
+  id: Rewriter
+  name: rewriter
+  desc: The secret of the sanctuary of the Libarian...
+  physicalDesc: strong-smelling
+  color: "#485000"
+  spritePath: rewriter.rsi
 
 - type: reagent
   id: Sbitten
@@ -649,7 +665,7 @@
   desc: For the more refined griffon.
   physicalDesc: strong-smelling
   color: "#533600"
-  spritePath: whiskeysodaglass2.rsi
+  spritePath: whiskeysodaglass.rsi
 
 - type: reagent
   id: WhiteRussian
