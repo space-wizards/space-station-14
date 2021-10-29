@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Cargo crates stop spawning underneath the teleporter., type: Fix}
-  id: 17
-  time: '2021-03-01T20:54:06.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Material crates ordered from cargo are now fixed., type: Fix}
   - {message: Singularity parts have their physics again., type: Fix}
   - {message: 'Singularity crates contain one part, but cost less.', type: Tweak}
@@ -2800,3 +2795,8 @@ Entries:
     type: Tweak}
   id: 516
   time: '2021-10-29T12:48:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Ghosts can no longer use uplinks, type: Fix}
+  id: 517
+  time: '2021-10-29T16:37:34.0000000+00:00'
