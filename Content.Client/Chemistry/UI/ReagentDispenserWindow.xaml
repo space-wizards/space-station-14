@@ -7,28 +7,28 @@
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'reagent-dispenser-window-amount-to-dispense-label'}"/>
             <Control MinSize="20 0"></Control>
-            <Button Name="DispenseButton1" Access="Internal" Text="1" StyleClasses="OpenRight"/>
-            <Button Name="DispenseButton5" Access="Internal" Text="5" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton10" Access="Internal" Text="10" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton15" Access="Internal" Text="15" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton20" Access="Internal" Text="20" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton25" Access="Internal" Text="25" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton30" Access="Internal" Text="25" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton50" Access="Internal" Text="50" StyleClasses="OpenBoth"/>
-            <Button Name="DispenseButton100" Access="Internal" Text="100" StyleClasses="OpenLeft"/>
+            <Button Name="DispenseButton1" Access="Public" Text="1" StyleClasses="OpenRight"/>
+            <Button Name="DispenseButton5" Access="Public" Text="5" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton10" Access="Public" Text="10" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton15" Access="Public" Text="15" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton20" Access="Public" Text="20" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton25" Access="Public" Text="25" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton30" Access="Public" Text="25" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton50" Access="Public" Text="50" StyleClasses="OpenBoth"/>
+            <Button Name="DispenseButton100" Access="Public" Text="100" StyleClasses="OpenLeft"/>
         </BoxContainer>
         <Control MinSize="0 10"/>
-        <GridContainer Name="ChemicalList" Access="Internal" Columns="5">
+        <GridContainer Name="ChemicalList" Access="Public" Columns="5">
         </GridContainer>
         <Control MinSize="0 10"/>
         <BoxContainer Orientation="Horizontal">
             <Label Text="{Loc 'reagent-dispenser-window-container-label'}"/>
             <Button Name="ClearButton"
-                    Access="Internal"
+                    Access="Public"
                     Text="{Loc 'reagent-dispenser-window-clear-button'}"
                     StyleClasses="OpenRight"/>
             <Button Name="EjectButton"
-                    Access="Internal"
+                    Access="Public"
                     Text="{Loc 'reagent-dispenser-window-eject-button'}"
                     StyleClasses="OpenLeft"/>
         </BoxContainer>
