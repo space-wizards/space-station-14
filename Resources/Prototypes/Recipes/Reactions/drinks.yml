@@ -265,6 +265,16 @@
     IcedCoffee: 3
 
 - type: reaction
+  id: IcedGreenTea
+  reactants:
+    GreenTea:
+      amount: 2
+    Ice:
+      amount: 1
+  products:
+    IcedGreenTea: 3
+
+- type: reaction
   id: IcedTea
   reactants:
     Ice:

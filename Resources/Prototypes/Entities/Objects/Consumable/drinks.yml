@@ -826,6 +826,23 @@
 
 - type: entity
   parent: DrinkGlassBase
+  id: DrinkGreenTeaGlass
+  name: green tea glass
+  description: Tasty green tea. It has antioxidants; it's good for you!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: GreenTea
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
+
+- type: entity
+  parent: DrinkGlassBase
   id: DrinkGrenadineGlass
   name: grenadine syrup glass
   description: Sweet and tangy, a bar syrup used to add color or flavor to drinks.
@@ -911,6 +928,23 @@
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkIcedGreenTeaGlass
+  name: iced green tea glass
+  description: It looks like green tea with ice. One might even call it iced green tea.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 50
+        reagents:
+        - ReagentId: IcedGreenTea
+          Quantity: 50
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/glass_green.rsi #Placeholder
 
 - type: entity
   parent: DrinkGlassBase
@@ -1232,8 +1266,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Drinks/milkshake.rsi
 
-
-#recipe
 - type: entity
   parent: DrinkGlassBase
   id: DrinkMojito
