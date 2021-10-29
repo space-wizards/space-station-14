@@ -4,7 +4,7 @@
 - type: reagent
   id: Absinthe
   name: absinthe
-  desc: One sip of this and you just know you're gonna have a good time.
+  desc: A anise-flavoured spirit derived from botanicals.
   physicalDesc: strong-smelling
   color: "#33EE00"
   spritePath: absintheglass.rsi
@@ -12,7 +12,7 @@
 - type: reagent
   id: Ale
   name: ale
-  desc: A type of beer brewed using a warm fermentation method, resulting in a sweet, full-bodied and fruity taste.
+  desc: A dark alchoholic beverage made by malted barley and yeast.
   physicalDesc: bubbly
   color: "#663100"
   spritePath: aleglass.rsi
@@ -20,7 +20,7 @@
 - type: reagent
   id: Beer
   name: beer
-  desc: A cold pint of pale lager.
+  desc: An alcoholic beverage made from malted grains, hops, yeast, and water.
   physicalDesc: bubbly
   color: "#cfa85f"
   spritePath: beerglass.rsi
@@ -57,7 +57,7 @@
 - type: reagent
   id: Gin
   name: gin
-  desc: A crystal clear glass of Griffeater gin.
+  desc: A distilled alcoholic drink that derives its predominant flavour from juniper berries.
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: ginvodkaglass.rsi
@@ -65,7 +65,7 @@
 - type: reagent
   id: Kahlua
   name: kahlua
-  desc: A widely known, Mexican coffee-flavoured liqueur. In production since 1936!
+  desc: A widely known, Mexican coffee-flavoured liqueur.
   physicalDesc: cloudy
   color: "#664300"
   spritePath: kahluaglass.rsi
@@ -97,7 +97,7 @@
 - type: reagent
   id: Rum
   name: rum
-  desc: Popular with the sailors. Not very popular with anyone else.
+  desc: Distilled alcoholic drink made from sugarcane byproducts.
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: rumglass.rsi
@@ -105,21 +105,21 @@
 - type: reagent
   id: Sake
   name: sake
-  desc: A sweet rice wine of questionable legality and extreme potency.
+  desc: Alcoholic beverage made by fermenting rice that has been polished.
   physicalDesc: strong-smelling
   color: "#DDDDDD"
 
 - type: reagent
   id: Tequila
   name: tequila
-  desc: This stuff will get you fucked up.
+  desc: A strong and mildly flavoured, mexican produced spirit.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
 
 - type: reagent
   id: Vermouth
   name: vermouth
-  desc: You suddenly feel a craving for a martini...
+  desc: Aromatized, fortified white wine flavored with various botanicals.
   physicalDesc: strong-smelling
   color: "#91FF91"
   spritePath: vermouthglass.rsi
@@ -127,7 +127,7 @@
 - type: reagent
   id: Vodka
   name: vodka
-  desc: The glass contain wodka. Хуета.
+  desc: Clear distilled alcoholic beverage that originates from Poland and Russia.
   physicalDesc: strong-smelling
   color: "#d1d1d155"
   spritePath: ginvodkaglass.rsi
@@ -135,7 +135,7 @@
 - type: reagent
   id: Whiskey
   name: whiskey
-  desc: An alcoholic beverage made from fermented grain mash
+  desc: A type of distilled alcoholic beverage made from fermented grain mash.
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: whiskeyglass.rsi
@@ -143,7 +143,7 @@
 - type: reagent
   id: Wine
   name: wine
-  desc: An alcoholic drink made from fermented grapes
+  desc: An premium alchoholic beverage made from distilled grape juice.
   physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
@@ -193,7 +193,7 @@
 - type: reagent
   id: Antifreeze
   name: antifreeze
-  desc: The ultimate refreshment.
+  desc: Ultimate refreshment.
   physicalDesc: translucent
   color: "#ff7d63"
   spritePath: antifreeze.rsi
@@ -233,7 +233,7 @@
 - type: reagent
   id: Barefoot
   name: barefoot
-  desc: Barefoot and pregnant
+  desc: Barefoot and pregnant.
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: b&p.rsi
@@ -265,7 +265,7 @@
 - type: reagent
   id: BloodyMary
   name: bloody mary
-  desc: A strange yet pleasurable mixture made of vodka, tomato and lime juice. Tastes like liquid murder
+  desc: A strange yet pleasurable mixture made of vodka, tomato, and lime juice.
   physicalDesc: strong-smelling
   color: "#660000"
   spritePath: bloodymaryglass.rsi
@@ -297,7 +297,7 @@
 - type: reagent
   id: CubaLibre
   name: cuba libre
-  desc: A classic mix of rum and cola.
+  desc: Rum, mixed with cola. Viva la revolucion.
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
@@ -479,7 +479,7 @@
 - type: reagent
   id: ManlyDorf
   name: manly dorf
-  desc: A dwarfy concoction made from ale and beer. Intended for stout dwarves only.
+  desc: Beer and Ale, brought together in a delicious mix. Intended for stout dwarves only.
   physicalDesc: bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
@@ -487,7 +487,7 @@
 - type: reagent
   id: Margarita
   name: margarita
-  desc: "On the rocks with salt on the rim. Arriba~!"
+  desc: On the rocks with salt on the rim. Arriba~!
   physicalDesc: strong-smelling
   color: "#8CFF8C"
   spritePath: margaritaglass.rsi
@@ -590,7 +590,7 @@
 - type: reagent
   id: SnowWhite
   name: snow white
-  desc: A cold refreshment
+  desc: A cold refreshment.
   physicalDesc: bubbly
   color: "#FFFFFF"
   spritePath: snowwhite.rsi
@@ -614,7 +614,7 @@
 - type: reagent
   id: TequilaSunrise
   name: tequila sunrise
-  desc: Tequila and orange juice. Much like a Screwdriver, only Mexican~
+  desc: Tequila and orange juice. Much like a Screwdriver, only Mexican.
   physicalDesc: strong-smelling
   color: "#FFE48C"
   spritePath: tequillasunriseglass.rsi
@@ -654,7 +654,7 @@
 - type: reagent
   id: WhiskeyCola
   name: whiskey cola
-  desc: An innocent-looking mixture of cola and whiskey. Delicious.
+  desc: Whiskey, mixed with cola. Surprisingly refreshing.
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
