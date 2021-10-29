@@ -113,6 +113,9 @@ namespace Content.Server.Database
         {
             var entityType = entityTypeBuilder.Metadata;
 
+            if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
+                return;
+
             if (entityType.BaseType is null)
             {
                 entityTypeBuilder.ToTable(RewriteName(entityType.GetTableName()), entityType.GetSchema());
@@ -176,6 +179,9 @@ namespace Content.Server.Database
         {
             var entityType = entityTypeBuilder.Metadata;
 
+            if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
+                return;
+
             if (name != RelationalAnnotationNames.TableName
                 || StoreObjectIdentifier.Create(entityType, StoreObjectType.Table) is not StoreObjectIdentifier tableIdentifier)
             {
@@ -232,6 +238,9 @@ namespace Content.Server.Database
         {
             var entityType = keyBuilder.Metadata.DeclaringEntityType;
 
+            if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
+                return;
+
             if (entityType.FindOwnership() is null)
             {
                 keyBuilder.HasName(RewriteName(keyBuilder.Metadata.GetDefaultName()));
@@ -242,6 +251,9 @@ namespace Content.Server.Database
         {
             foreach (var entityType in modelBuilder.Metadata.GetEntityTypes())
             {
+                if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
+                    continue;
+
                 foreach (var property in entityType.GetProperties())
                 {
                     var columnName = property.GetColumnBaseName();
@@ -276,6 +288,9 @@ namespace Content.Server.Database
         {
             var property = propertyBuilder.Metadata;
             var entityType = property.DeclaringEntityType;
+
+            if (entityType.ClrType == typeof(Microsoft.EntityFrameworkCore.Migrations.HistoryRow))
+                return;
 
             property.Builder.HasNoAnnotation(RelationalAnnotationNames.ColumnName);
 
