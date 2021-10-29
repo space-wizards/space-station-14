@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
@@ -36,6 +37,17 @@ namespace Content.Server.Construction.Conditions
             }
 
             return ret;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            foreach (var condition in Conditions)
+            {
+                foreach (var entry in condition.GenerateGuideEntry())
+                {
+                    yield return entry;
+                }
+            }
         }
     }
 }

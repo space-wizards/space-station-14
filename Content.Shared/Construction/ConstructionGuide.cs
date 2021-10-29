@@ -18,17 +18,10 @@ namespace Content.Shared.Construction
     [Serializable, NetSerializable]
     public sealed class ConstructionGuideEntry
     {
-        public readonly string Localization;
-        public readonly (string, string)[]? Arguments;
-        public readonly bool Numbered;
-        public readonly SpriteSpecifier? Sprite;
-
-        public ConstructionGuideEntry(string localization, (string, string)[]? arguments, bool numbered, SpriteSpecifier? sprite)
-        {
-            Localization = localization;
-            Arguments = arguments;
-            Sprite = sprite;
-            Numbered = numbered;
-        }
+        public int? EntryNumber { get; set; } = null;
+        public int Padding { get; set; } = 0;
+        public string Localization { get; set; } = string.Empty;
+        public (string, object)[]? Arguments { get; set; } = null;
+        public SpriteSpecifier? Icon { get; set; } = null;
     }
 }

@@ -1,8 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -27,14 +29,24 @@ namespace Content.Server.Construction.Conditions
             switch (Anchored)
             {
                 case true when !entity.Transform.Anchored:
-                    args.PushMarkup("First, anchor it.");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
                     return true;
                 case false when entity.Transform.Anchored:
-                    args.PushMarkup("First, unanchor it.");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
                     return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Anchored
+                    ? "construction-step-condition-entity-anchored"
+                    : "construction-step-condition-entity-unanchored"
+            };
         }
     }
 }

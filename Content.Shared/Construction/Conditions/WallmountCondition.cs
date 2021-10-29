@@ -50,5 +50,10 @@ namespace Content.Shared.Construction.Conditions
                predicate: (e) => e == targetWall || !e.HasTag("Wall"));
             return !adjWallRaycastResults.Any();
         }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return null; // TODO CONSTRUCTION
+        }
     }
 }

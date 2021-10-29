@@ -6,7 +6,7 @@ namespace Content.Shared.Construction.Conditions
 {
     public interface IConstructionCondition
     {
-        ConstructionGuideEntry GenerateGuide();
+        ConstructionGuideEntry? GenerateGuideEntry();
         bool Condition(IEntity user, EntityCoordinates location, Direction direction);
     }
 }

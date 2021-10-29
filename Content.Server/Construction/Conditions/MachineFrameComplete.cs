@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
@@ -90,6 +91,11 @@ namespace Content.Server.Construction.Conditions
             }
 
             return true;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield break; // TODO CONSTRUCTION
         }
     }
 }

@@ -32,5 +32,10 @@ namespace Content.Shared.Construction.Conditions
             }
             return false;
         }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return null; // TODO CONSTRUCTION
+        }
     }
 }

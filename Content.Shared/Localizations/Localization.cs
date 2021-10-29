@@ -32,6 +32,19 @@ namespace Content.Shared.Localizations
             loc.LoadCulture(culture);
             loc.AddFunction(culture, "PRESSURE", FormatPressure);
             loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+            loc.AddFunction(culture, "LOC", FormatLoc);
+        }
+
+        private static ILocValue FormatLoc(LocArgs args)
+        {
+            var id = ((LocValueString)args.Args[0]).Value;
+
+            if (args.Args.Count > 1)
+            {
+
+            }
+
+            return new LocValueString(Loc.GetString(id));
         }
 
         private static ILocValue FormatToString(CultureInfo culture, LocArgs args)

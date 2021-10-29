@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.Construction.Steps;
 using Content.Shared.Examine;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -16,8 +17,18 @@ namespace Content.Server.Construction
 
         private void InitializeGuided()
         {
+            SubscribeNetworkEvent<RequestConstructionGuide>(OnGuideRequested);
             SubscribeLocalEvent<ConstructionComponent, GetOtherVerbsEvent>(AddDeconstructVerb);
             SubscribeLocalEvent<ConstructionComponent, ExaminedEvent>(HandleConstructionExamined);
+        }
+
+        private void OnGuideRequested(RequestConstructionGuide msg, EntitySessionEventArgs args)
+        {
+            if (!_prototypeManager.TryIndex(msg.ConstructionId, out ConstructionPrototype? prototype))
+                return;
+
+            if(GetGuide(prototype) is {} guide)
+                RaiseNetworkEvent(new ResponseConstructionGuide(msg.ConstructionId, guide), args.SenderSession.ConnectedClient);
         }
 
         private void AddDeconstructVerb(EntityUid uid, ConstructionComponent component, GetOtherVerbsEvent args)
@@ -88,8 +99,13 @@ namespace Content.Server.Construction
             }
         }
 
-        private ConstructionGuide? GenerateGuide(ConstructionPrototype construction)
+
+        private ConstructionGuide? GetGuide(ConstructionPrototype construction)
         {
+            // NOTE: This method might be allocate a fair bit, but do not worry!
+            // This method is specifically designed to generate guides once and cache the results,
+            // therefore we don't need to worry *too much* about the performance of this.
+
             // If we've generated and cached this guide before, return it.
             if (_guideCache.TryGetValue(construction, out var guide))
                 return guide;
@@ -108,17 +124,93 @@ namespace Content.Server.Construction
                 || path.Length == 0)
                 return null;
 
+            var step = 1;
+
             var entries = new List<ConstructionGuideEntry>()
             {
-                new(construction.Type == ConstructionType.Structure
+                // Initial construction header.
+                new()
+                {
+                    Localization = construction.Type == ConstructionType.Structure
                         ? "construction-presenter-to-build" : "construction-presenter-to-craft",
-                    null, false, null)
+                    EntryNumber = step,
+                }
             };
 
-            if (construction.Conditions.Count > 0)
+            foreach (var condition in construction.Conditions)
             {
-
+                if(condition.GenerateGuideEntry() is {} conditionEntry)
+                    entries.Add(conditionEntry);
             }
+
+            var conditions = new HashSet<string>();
+
+            // Iterate until the penultimate node.
+            var node = startNode;
+            var index = 0;
+            while(node != targetNode)
+            {
+                // Can't find path, therefore can't generate guide...
+                if (!node.TryGetEdge(path[index].Name, out var edge))
+                    return null;
+
+                // First steps are handled specially.
+                if (step == 1)
+                {
+                    foreach (var graphStep in edge.Steps)
+                    {
+                        // This graph is invalid, we only allow insert steps as the initial construction steps.
+                        if (graphStep is not EntityInsertConstructionGraphStep insertStep)
+                            return null;
+
+                        entries.Add(insertStep.GenerateGuideEntry());
+                    }
+
+                    step++;
+                    node = path[index++];
+                    continue;
+                }
+
+                var old = conditions;
+                conditions = new HashSet<string>();
+
+                var addedAnythingYet = false;
+
+                foreach (var condition in edge.Conditions)
+                {
+                    foreach (var conditionEntry in condition.GenerateGuideEntry())
+                    {
+                        conditions.Add(conditionEntry.Localization);
+
+                        // To prevent spamming the same stuff over and over again. This is a bit naive, but..ye
+                        if (old.Contains(conditionEntry.Localization))
+                            continue;
+
+                        if (!addedAnythingYet)
+                        {
+                            addedAnythingYet = true;
+                            // add padding since we're a superset of the old conditions.
+                            entries.Add(new ConstructionGuideEntry());
+                        }
+
+                        conditionEntry.Padding += 4;
+                        entries.Add(conditionEntry);
+                    }
+                }
+
+                foreach (var graphStep in edge.Steps)
+                {
+                    var entry = graphStep.GenerateGuideEntry();
+                    entry.EntryNumber = step++;
+                    entries.Add(entry);
+                }
+
+                node = path[index++];
+            }
+
+            guide = new ConstructionGuide(entries.ToArray());
+            _guideCache[construction] = guide;
+            return guide;
         }
     }
 }
