@@ -107,8 +107,6 @@ namespace Content.Server.Traitor.Uplink.Account
 
             // create a stack of TCs near player
             var stackEntity = EntityManager.SpawnEntity(TelecrystalProtoId, spawnCoords);
-            if (stackEntity == null)
-                return false;
             stackUid = stackEntity.Uid;
 
             // set right amount in stack
