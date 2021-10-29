@@ -53,6 +53,7 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   placement:
+    mode: SnapgridCenter
     snap:
     - Wallmount
 
@@ -74,6 +75,10 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer
@@ -159,6 +164,10 @@
       types:
         Heat: 20
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: DeviceNetworkComponent
+    deviceNetId: Apc
+  - type: ApcNetworkConnection
   - type: Appearance
     visuals:
     - type: PoweredLightVisualizer

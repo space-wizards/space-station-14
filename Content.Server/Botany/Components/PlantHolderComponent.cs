@@ -33,11 +33,12 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+#pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;
-        private const string SoilSolutionName = "soil";
 
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -119,6 +120,9 @@ namespace Content.Server.Botany.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ForceUpdate { get; set; }
+
+        [DataField("solution")]
+        public string SoilSolutionName { get; set; } = "soil";
 
         public void WeedInvasion()
         {

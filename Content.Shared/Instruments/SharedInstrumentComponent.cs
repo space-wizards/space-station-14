@@ -37,7 +37,9 @@ namespace Content.Shared.Instruments
     ///     This message is sent to the client to completely stop midi input and midi playback.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class InstrumentStopMidiMessage : ComponentMessage
+#pragma warning restore 618
     {
     }
 
@@ -45,7 +47,9 @@ namespace Content.Shared.Instruments
     ///     This message is sent to the client to start the synth.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class InstrumentStartMidiMessage : ComponentMessage
+#pragma warning restore 618
     {
 
     }
@@ -54,7 +58,9 @@ namespace Content.Shared.Instruments
     ///     This message carries a MidiEvent to be played on clients.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class InstrumentMidiEventMessage : ComponentMessage
+#pragma warning restore 618
     {
         public MidiEvent[] MidiEvent;
 

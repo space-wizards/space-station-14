@@ -52,3 +52,12 @@
      Steel: 100
      Glass: 100
 
+- type: latheRecipe
+  id: HydroponicsTrayMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: HydroponicsTrayMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+

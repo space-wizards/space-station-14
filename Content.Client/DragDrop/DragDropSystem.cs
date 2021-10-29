@@ -192,7 +192,7 @@ namespace Content.Client.DragDrop
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
-                if (dragSprite.Directional)
+                if (!dragSprite.NoRotation)
                 {
                     _dragShadow.Transform.WorldRotation = _dragDropHelper.Dragged.Transform.WorldRotation;
                 }

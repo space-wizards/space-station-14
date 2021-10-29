@@ -17,9 +17,9 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class MachineFrameComplete : IGraphCondition
     {
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (entity.Deleted || !entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
             return machineFrame.IsComplete;

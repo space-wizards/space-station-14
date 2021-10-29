@@ -27,7 +27,6 @@ namespace Content.Shared.Stunnable
     {
         [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         public override void Initialize()
         {

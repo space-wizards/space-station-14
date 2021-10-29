@@ -1,7 +1,9 @@
 using Content.Server.Administration;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Components;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
+using Content.Shared.Tag;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -24,11 +26,27 @@ namespace Content.Server.Atmos.Commands
             }
 
             var mapManager = IoCManager.Resolve<IMapManager>();
+            var entityManager = IoCManager.Resolve<IEntityManager>();
             var atmosphereSystem = EntitySystem.Get<AtmosphereSystem>();
 
-            var mixture = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
-            mixture.AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
-            mixture.AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+            var mixtures = new GasMixture[5];
+            for (var i = 0; i < mixtures.Length; i++)
+                mixtures[i] = new GasMixture(Atmospherics.CellVolume) { Temperature = Atmospherics.T20C };
+
+            // 0: Air
+            mixtures[0].AdjustMoles(Gas.Oxygen, Atmospherics.OxygenMolesStandard);
+            mixtures[0].AdjustMoles(Gas.Nitrogen, Atmospherics.NitrogenMolesStandard);
+
+            // 1: Vaccum
+
+            // 2: Oxygen (GM)
+            mixtures[2].AdjustMoles(Gas.Oxygen, Atmospherics.MolesCellGasMiner);
+
+            // 3: Nitrogen (GM)
+            mixtures[3].AdjustMoles(Gas.Nitrogen, Atmospherics.MolesCellGasMiner);
+
+            // 4: Plasma (GM)
+            mixtures[4].AdjustMoles(Gas.Plasma, Atmospherics.MolesCellGasMiner);
 
             foreach (var gid in args)
             {
@@ -41,17 +59,38 @@ namespace Content.Server.Atmos.Commands
 
                 var gridId = new GridId(i);
 
-                if (!mapManager.TryGetGrid(gridId, out _))
+                if (!mapManager.TryGetGrid(gridId, out var mapGrid))
                 {
                     shell.WriteError($"Grid \"{i}\" doesn't exist.");
                     continue;
                 }
 
-                foreach (var tile in atmosphereSystem.GetAllTileMixtures(gridId, true))
+                if (!entityManager.TryGetComponent(mapGrid.GridEntityId, out GridAtmosphereComponent? gridAtmosphere))
                 {
+                    shell.WriteError($"Grid \"{i}\" has no atmosphere component, try addatmos.");
+                    continue;
+                }
+
+                foreach (var (indices, tileMain) in gridAtmosphere.Tiles)
+                {
+                    var tile = tileMain.Air;
+                    if (tile == null)
+                        continue;
+
                     tile.Clear();
+                    var mixtureId = 0;
+                    foreach (var entUid in mapGrid.GetAnchoredEntities(indices))
+                    {
+                        if (!entityManager.TryGetComponent(entUid, out AtmosFixMarkerComponent? afm))
+                            continue;
+                        mixtureId = afm.Mode;
+                        break;
+                    }
+                    var mixture = mixtures[mixtureId];
                     atmosphereSystem.Merge(tile, mixture);
                     tile.Temperature = mixture.Temperature;
+
+                    atmosphereSystem.InvalidateTile(gridAtmosphere, indices);
                 }
             }
         }

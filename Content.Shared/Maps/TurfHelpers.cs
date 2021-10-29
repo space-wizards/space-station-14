@@ -152,7 +152,10 @@ namespace Content.Shared.Maps
         {
             lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), flags);
+            if (!GetWorldTileBox(turf, out var worldBox))
+                return Enumerable.Empty<IEntity>();
+
+            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
 
         /// <summary>
@@ -183,7 +186,8 @@ namespace Content.Shared.Maps
         {
             var physics = EntitySystem.Get<SharedPhysicsSystem>();
 
-            var worldBox = GetWorldTileBox(turf);
+            if (!GetWorldTileBox(turf, out var worldBox))
+                return false;
 
             var query = physics.GetCollidingEntities(turf.MapIndex, in worldBox);
 
@@ -209,20 +213,25 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Creates a box the size of a tile, at the same position in the world as the tile.
         /// </summary>
-        private static Box2 GetWorldTileBox(TileRef turf)
+        private static bool GetWorldTileBox(TileRef turf, out Box2Rotated res)
         {
             var map = IoCManager.Resolve<IMapManager>();
 
-            // This is scaled to 90 % so it doesn't encompass walls on other tiles.
-            var tileBox = Box2.UnitCentered.Scale(0.9f);
-
             if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
             {
+                // This is scaled to 90 % so it doesn't encompass walls on other tiles.
+                var tileBox = Box2.UnitCentered.Scale(0.9f);
                 tileBox = tileBox.Scale(tileGrid.TileSize);
-                return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
+                var worldPos = tileGrid.GridTileToWorldPos(turf.GridIndices);
+                tileBox = tileBox.Translated(worldPos);
+                // Now tileBox needs to be rotated to match grid rotation
+                res = new Box2Rotated(tileBox, tileGrid.WorldRotation, worldPos);
+                return true;
             }
 
-            return tileBox;
+            // Have to "return something"
+            res = Box2Rotated.UnitCentered;
+            return false;
         }
     }
 }

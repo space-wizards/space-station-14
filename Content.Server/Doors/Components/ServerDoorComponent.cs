@@ -4,8 +4,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Access;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Stunnable;
@@ -311,12 +313,13 @@ namespace Content.Server.Doors.Components
             var doorSystem = EntitySystem.Get<DoorSystem>();
             var isAirlockExternal = HasAccessType("External");
 
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
             return doorSystem.AccessType switch
             {
                 DoorSystem.AccessTypes.AllowAll => true,
-                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || access.IsAllowed(user),
+                DoorSystem.AccessTypes.AllowAllIdExternal => isAirlockExternal || accessSystem.IsAllowed(access, user.Uid),
                 DoorSystem.AccessTypes.AllowAllNoExternal => !isAirlockExternal,
-                _ => access.IsAllowed(user)
+                _ => accessSystem.IsAllowed(access, user.Uid)
             };
         }
 
@@ -430,7 +433,8 @@ namespace Content.Server.Doors.Components
                 return true;
             }
 
-            return access.IsAllowed(user);
+            var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+            return accessSystem.IsAllowed(access, user.Uid);
         }
 
         /// <summary>
@@ -724,7 +728,7 @@ namespace Content.Server.Doors.Components
         {
             // Ensure that the construction component is aware of the board container.
             if (Owner.TryGetComponent(out ConstructionComponent? construction))
-                construction.AddContainer("board");
+                EntitySystem.Get<ConstructionSystem>().AddContainer(Owner.Uid, "board", construction);
 
             // We don't do anything if this is null or empty.
             if (string.IsNullOrEmpty(_boardPrototype))

@@ -243,6 +243,7 @@
     - APCElectronics
     - CloningPodMachineCircuitboard
     - MedicalScannerMachineCircuitboard
+    - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
 
 # Basic Parts Technology Tree

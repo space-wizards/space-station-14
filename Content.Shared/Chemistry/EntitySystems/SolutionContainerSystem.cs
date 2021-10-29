@@ -104,7 +104,6 @@ namespace Content.Shared.Chemistry.EntitySystems
 
             var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
             appearance.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
-            solutionEntity.Dirty();
         }
 
         /// <summary>
@@ -241,7 +240,24 @@ namespace Content.Shared.Chemistry.EntitySystems
         /// <returns>solution</returns>
         public Solution EnsureSolution(IEntity owner, string name)
         {
-            var solutionsMgr = owner.EnsureComponent<SolutionContainerManagerComponent>();
+            return EnsureSolution(owner.Uid, name);
+        }
+
+        /// <summary>
+        /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
+        /// </summary>
+        /// <param name="uid">EntityUid to which to add solution</param>
+        /// <param name="name">name for the solution</param>
+        /// <param name="solutionsMgr">solution components used in resolves</param>
+        /// <returns>solution</returns>
+        public Solution EnsureSolution(EntityUid uid, string name,
+            SolutionContainerManagerComponent? solutionsMgr = null)
+        {
+            if (!Resolve(uid, ref solutionsMgr, false))
+            {
+                solutionsMgr = EntityManager.EnsureComponent<SolutionContainerManagerComponent>(uid);
+            }
+
             if (!solutionsMgr.Solutions.ContainsKey(name))
             {
                 var newSolution = new Solution();

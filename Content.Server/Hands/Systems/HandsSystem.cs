@@ -140,7 +140,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(args.SenderSession, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity();
+            hands.ActivateItem();
         }
 
         private void HandleInteractUsingInHand(ClientInteractUsingInHandMsg msg, EntitySessionEventArgs args)
@@ -212,7 +212,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(session, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity();
+            hands.ActivateItem();
         }
 
         private void HandleAltActivateItem(ICommonSession? session)
@@ -220,7 +220,7 @@ namespace Content.Server.Hands.Systems
             if (!TryGetHandsComp(session, out var hands))
                 return;
 
-            hands.UseActiveHeldEntity(altInteract: true);
+            hands.ActivateItem(altInteract: true);
         }
 
         private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
@@ -247,7 +247,7 @@ namespace Content.Server.Hands.Systems
 
                 throwEnt = splitStack;
             }
-            else if (!hands.TryDropEntityToFloor(throwEnt))
+            else if (!hands.Drop(throwEnt))
                 return false;
 
             var direction = coords.ToMapPos(EntityManager) - playerEnt.Transform.WorldPosition;

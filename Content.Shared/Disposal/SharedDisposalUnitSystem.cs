@@ -63,11 +63,19 @@ namespace Content.Shared.Disposal
             if (!entity.TryGetComponent(out IPhysBody? physics) ||
                 !physics.CanCollide && storable == null)
             {
-                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead())) {
+                if (!(entity.TryGetComponent(out IMobStateComponent? damageState) && damageState.IsDead()))
+                {
                     return false;
                 }
             }
+
             return true;
+        }
+
+        public bool CanInsert(SharedDisposalUnitComponent component, EntityUid entityId)
+        {
+            var entity = EntityManager.GetEntity(entityId);
+            return CanInsert(component, entity);
         }
     }
 }

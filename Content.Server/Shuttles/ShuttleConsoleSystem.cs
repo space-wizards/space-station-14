@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles;
 using Content.Shared.Tag;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -15,6 +16,8 @@ namespace Content.Server.Shuttles
 {
     internal sealed class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
+        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -28,14 +31,22 @@ namespace Content.Server.Shuttles
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in EntityManager.EntityQuery<PilotComponent>().ToArray())
+
+            var toRemove = new RemQueue<PilotComponent>();
+
+            foreach (var comp in EntityManager.EntityQuery<PilotComponent>())
             {
                 if (comp.Console == null) continue;
 
-                if (!Get<ActionBlockerSystem>().CanInteract(comp.Owner))
+                if (!_blocker.CanInteract(comp.Owner))
                 {
-                    RemovePilot(comp);
+                    toRemove.Add(comp);
                 }
+            }
+
+            foreach (var comp in toRemove)
+            {
+                RemovePilot(comp);
             }
         }
 
@@ -75,7 +86,7 @@ namespace Content.Server.Shuttles
                 return;
             }
 
-            var pilotComponent = args.User.EnsureComponent<PilotComponent>();
+            var pilotComponent = EntityManager.EnsureComponent<PilotComponent>(args.User.Uid);
 
             if (!component.Enabled)
             {
@@ -111,7 +122,7 @@ namespace Content.Server.Shuttles
 
         public void AddPilot(IEntity entity, ShuttleConsoleComponent component)
         {
-            if (!Get<ActionBlockerSystem>().CanInteract(entity) ||
+            if (!_blocker.CanInteract(entity) ||
                 !entity.TryGetComponent(out PilotComponent? pilotComponent) ||
                 component.SubscribedPilots.Contains(pilotComponent))
             {
@@ -146,10 +157,7 @@ namespace Content.Server.Shuttles
             }
 
             pilotComponent.Owner.PopupMessage(Loc.GetString("shuttle-pilot-end"));
-            // TODO: RemoveComponent<T> is cooked and doesn't sync to client so this fucks up movement prediction.
-            // EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
-            pilotComponent.Console = null;
-            pilotComponent.Dirty();
+            EntityManager.RemoveComponent<PilotComponent>(pilotComponent.Owner.Uid);
         }
 
         public void RemovePilot(IEntity entity)

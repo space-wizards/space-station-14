@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using Content.Server.Access;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.AI.Pathfinding.Pathfinders;
 using Content.Server.CPUJob.JobQueues;
 using Content.Server.CPUJob.JobQueues.Queues;
@@ -31,6 +32,7 @@ namespace Content.Server.AI.Pathfinding
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
         public IReadOnlyDictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> Graph => _graph;
         private readonly Dictionary<GridId, Dictionary<Vector2i, PathfindingChunk>> _graph = new();
@@ -375,11 +377,10 @@ namespace Content.Server.AI.Pathfinding
                 return false;
             }
 
-            var access = AccessReader.FindAccessTags(entity);
-
+            var access = _accessReader.FindAccessTags(entity.Uid);
             foreach (var reader in node.AccessReaders)
             {
-                if (!reader.IsAllowed(access))
+                if (!_accessReader.IsAllowed(reader, access))
                 {
                     return false;
                 }

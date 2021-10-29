@@ -97,7 +97,7 @@
   abstract: true
   components:
   - type: Sprite
-    directional: false
+    noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
