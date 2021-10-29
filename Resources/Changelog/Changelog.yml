@@ -1,12 +1,6 @@
 Entries:
 - author: AJCM
   changes:
-  - {message: Makes gravity generator and windows repairable with a lit welding tool,
-    type: Add}
-  id: 8
-  time: '2021-02-27T14:30:48.420921+00:00'
-- author: AJCM
-  changes:
   - {message: Fixes the changelog escape menu button text going out of the limits
       of the button when there is an update., type: Fix}
   id: 9
@@ -2805,3 +2799,8 @@ Entries:
   - {message: Fix not being able to build windows on top of grilles., type: Fix}
   id: 507
   time: '2021-10-28T17:03:11.646371+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fix lasers not passing through grilles., type: Fix}
+  id: 508
+  time: '2021-10-29T05:26:45.714056+00:00'
