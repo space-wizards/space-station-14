@@ -101,24 +101,11 @@ namespace Content.Server.Chemistry.EntitySystems
             return false;
         }
 
-        public ReagentUnit DrainAvailable(IEntity? owner)
-        {
-            if (owner == null || !TryGetDrainableSolution(owner.Uid, out var solution))
-                return ReagentUnit.Zero;
-
-            return solution.CurrentVolume;
-        }
-
         public ReagentUnit DrainAvailable(EntityUid uid)
         {
             return !TryGetDrainableSolution(uid, out var solution)
                 ? ReagentUnit.Zero
                 : solution.CurrentVolume;
-        }
-
-        public bool HasFitsInDispenser(IEntity owner)
-        {
-            return !owner.Deleted && owner.HasComponent<FitsInDispenserComponent>();
         }
 
         public bool TryGetFitsInDispenser(EntityUid owner,
