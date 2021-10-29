@@ -226,7 +226,7 @@
     solutions:
       drink:
         reagents:
-        - ReagentId: WinePoison
+        - ReagentId: PoisonWine
           Quantity: 100
   - type: Sprite
     sprite: Objects/Consumable/Drinks/pwinebottle.rsi

@@ -906,7 +906,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId:
+        - ReagentId: Hooch
           Quantity: 50
   - type: Drink
   - type: Sprite
@@ -1516,7 +1516,7 @@
 
 - type: entity
   parent: DrinkGlassBase
-  id: DrinkScrewdriverGlass
+  id: DrinkScrewdriverCocktailGlass
   name: screwdriver glass
   description: A simple, yet superb mixture of Vodka and orange juice. Just the thing for the tired engineer.
   components:
@@ -1525,7 +1525,7 @@
       drink:
         maxVol: 50
         reagents:
-        - ReagentId: Screwdriver
+        - ReagentId: ScrewdriverCocktail
           Quantity: 50
   - type: Drink
   - type: Sprite

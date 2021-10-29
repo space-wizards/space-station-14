@@ -556,8 +556,8 @@
   spritePath: rewriter.rsi
 
 - type: reagent
-  id: Sbitten
-  name: sbitten
+  id: Sbiten
+  name: sbiten
   desc: A spicy Vodka! Might be a little hot for the little guys!
   physicalDesc: strong-smelling
   color: "#004166"
