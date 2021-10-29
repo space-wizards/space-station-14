@@ -8,10 +8,15 @@ traitor-round-end-result = {$traitorCount ->
 }
 
 # Shown at the end of a round of Traitor
-traitor-user-was-a-traitor = {$user} was a traitor.
+traitor-user-was-a-traitor = [color=White]{$user}[/color] was a traitor.
+traitor-user-was-a-traitor-named = [color=White]{$user}[/color] was a traitor named [color=White]{$name}[/color].
+traitor-was-a-traitor-named = There was a traitor named [color=White]{$name}[/color].
 
-# Shown at the end of a round of Traitor
-traitor-objective-list-start = and had the following objectives:
+traitor-user-was-a-traitor-with-objectives = [color=White]{$user}[/color] was a traitor who had the following objectives:
+traitor-user-was-a-traitor-with-objectives-named = [color=White]{$user}[/color] was a traitor, named [color=White]{$name}[/color], who had the following objectives:
+traitor-was-a-traitor-with-objectives-named = There was a traitor, named [color=White]{$name}[/color], who had the following objectives:
+
+preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
 
 # Shown at the end of a round of Traitor
 traitor-objective-condition-success = {$condition} | [color={$markupColor}]Success![/color]
