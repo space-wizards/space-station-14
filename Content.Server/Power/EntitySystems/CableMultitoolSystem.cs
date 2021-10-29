@@ -43,8 +43,7 @@ namespace Content.Server.Power.EntitySystems
             if (args.IsInDetailsRange)
             {
                 // Determine if they are holding a multitool.
-                var hands = args.Examiner.GetComponent<HandsComponent>();
-                if (hands.TryGetActiveHand(out var hand))
+                if (args.Examiner.TryGetComponent<HandsComponent>(out var hands) && hands.TryGetActiveHand(out var hand))
                 {
                     var held = hand.HeldEntity;
                     // Pulsing is hardcoded here because I don't think it needs to be more complex than that right now.
