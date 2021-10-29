@@ -114,25 +114,41 @@ namespace Content.Server.PAI
             if (args.User == null || !args.CanAccess || !args.CanInteract)
                 return;
 
-            if (!(EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind))
-                return;
-
-            Verb verb = new();
-            verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
-            verb.Act = () => {
-                if (pai.Deleted)
-                    return;
-                // Wiping device :(
-                // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
-                // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                if (EntityManager.HasComponent<MindComponent>(uid))
-                {
-                    EntityManager.RemoveComponent<MindComponent>(uid);
-                    _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User.Uid));
-                    UpdatePAIAppearance(uid, PAIStatus.Off);
-                }
-            };
-            args.Verbs.Add(verb);
+            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
+                verb.Act = () => {
+                    if (pai.Deleted)
+                        return;
+                    // Wiping device :(
+                    // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
+                    // EDIT: But it doesn't!!!! Wtf? Do stuff manually
+                    if (EntityManager.HasComponent<MindComponent>(uid))
+                    {
+                        EntityManager.RemoveComponent<MindComponent>(uid);
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User.Uid));
+                        UpdatePAIAppearance(uid, PAIStatus.Off);
+                    }
+                };
+                args.Verbs.Add(verb);
+            }
+            else if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pai-system-stop-searching-verb-text");
+                verb.Act = () => {
+                    if (pai.Deleted)
+                        return;
+                    if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
+                    {
+                        EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+                        _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, Filter.Entities(args.User.Uid));
+                        UpdatePAIAppearance(uid, PAIStatus.Off);
+                    }
+                };
+                args.Verbs.Add(verb);
+            }
         }
     }
 }
