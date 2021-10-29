@@ -1,10 +1,4 @@
 Entries:
-- author: Ygg01
-  changes:
-  - {message: Stack visualizer no longer affected by open/close state by default.,
-    type: Fix}
-  id: 11
-  time: '2021-02-28T11:02:08.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Small physics refactor, type: Add}
@@ -2804,3 +2798,8 @@ Entries:
       over time, for example, skin.', type: Add}
   id: 510
   time: '2021-10-29T08:04:25.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Disposals works properly under station rotation, type: Fix}
+  id: 511
+  time: '2021-10-29T08:07:32.0000000+00:00'
