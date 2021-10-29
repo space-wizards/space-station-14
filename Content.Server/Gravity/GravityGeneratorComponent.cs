@@ -45,6 +45,11 @@ namespace Content.Server.Gravity
         [ViewVariables]
         public bool GravityActive { get; set; }
 
+        /// <summary>
+        /// Serialized copy of <see cref="GravityActive"/> used to avoid shaking the grid on first tick.
+        /// </summary>
+        [DataField("active")] public bool GravityActiveStored { get; set; } = true;
+
         // Do we need a UI update even if the charge doesn't change? Used by power button.
         [ViewVariables] public bool NeedUIUpdate { get; set; }
     }

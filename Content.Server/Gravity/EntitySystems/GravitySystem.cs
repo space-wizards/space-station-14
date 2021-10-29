@@ -76,25 +76,27 @@ namespace Content.Server.Gravity.EntitySystems
             }
         }
 
-        public void EnableGravity(GravityComponent comp)
+        public void EnableGravity(GravityComponent comp, bool shake)
         {
             if (comp.Enabled) return;
             comp.Enabled = true;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes, comp);
+            if (shake)
+                ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, true);
             RaiseLocalEvent(message);
         }
 
-        public void DisableGravity(GravityComponent comp)
+        public void DisableGravity(GravityComponent comp, bool shake)
         {
             if (!comp.Enabled) return;
             comp.Enabled = false;
 
             var gridId = comp.Owner.Transform.GridID;
-            ScheduleGridToShake(gridId, ShakeTimes, comp);
+            if (shake)
+                ScheduleGridToShake(gridId, ShakeTimes, comp);
 
             var message = new GravityChangedMessage(gridId, false);
             RaiseLocalEvent(message);

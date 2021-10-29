@@ -178,10 +178,14 @@ namespace Content.Server.Gravity.EntitySystems
             var grid = _mapManager.GetGrid(gridId);
             var gravity = EntityManager.GetComponent<GravityComponent>(grid.GridEntityId);
 
+            var shake = grav.GravityActiveStored != grav.GravityActive;
+
             if (grav.GravityActive)
-                _gravitySystem.EnableGravity(gravity);
+                _gravitySystem.EnableGravity(gravity, shake);
             else
-                _gravitySystem.DisableGravity(gravity);
+                _gravitySystem.DisableGravity(gravity, shake);
+
+            grav.GravityActiveStored = grav.GravityActive;
         }
 
         private void HandleInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
