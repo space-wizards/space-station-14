@@ -80,13 +80,13 @@ namespace Content.Server.Bql
             {
                 return input.Where(x =>
                     x.HasComponent<MindComponent>() &&
-                    ((x.GetComponent<MindComponent>().Mind?.CharacterDeadPhysically ?? false) ^ isInverted));
+                    (!(x.GetComponent<MindComponent>().Mind?.CharacterDeadPhysically ?? false) ^ isInverted));
             }
 
             public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
             {
                 return IoCManager.Resolve<IEntityManager>().EntityQuery<MindComponent>()
-                    .Where(mind => (mind.Mind?.CharacterDeadPhysically ?? false) ^ isInverted)
+                    .Where(mind => !(mind.Mind?.CharacterDeadPhysically ?? false) ^ isInverted)
                     .Select(x => x.Owner);
             }
         }
