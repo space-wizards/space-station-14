@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mind.Components;
+using Content.Server.Power.Components;
+using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Tag;
 using Robust.Server.Bql;
 using Robust.Shared.GameObjects;
@@ -86,6 +88,45 @@ namespace Content.Server.Bql
                 return IoCManager.Resolve<IEntityManager>().EntityQuery<MindComponent>()
                     .Where(mind => (mind.Mind?.CharacterDeadPhysically ?? false) ^ isInverted)
                     .Select(x => x.Owner);
+            }
+        }
+
+        [RegisterBqlQuerySelector]
+        public class HasReagentQuerySelector : BqlQuerySelector
+        {
+            public override string Token => "hasreagent";
+
+            public override QuerySelectorArgument[] Arguments => new [] { QuerySelectorArgument.String };
+
+            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            {
+                var reagent = (string) arguments[0];
+                return input.Where(x =>
+                {
+                    if (x.TryGetComponent<SolutionContainerManagerComponent>(out var solutionContainerManagerComponent))
+                    {
+                        return solutionContainerManagerComponent.Solutions
+                            .Any((solution) => solution.Value.ContainsReagent(reagent)) ^ isInverted;
+                    }
+
+                    return isInverted;
+                });
+            }
+        }
+
+        [RegisterBqlQuerySelector]
+        public class PoweredQuerySelector : BqlQuerySelector
+        {
+            public override string Token => "powered";
+
+            public override QuerySelectorArgument[] Arguments => Array.Empty<QuerySelectorArgument>();
+
+            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            {
+                return input.Where(x =>
+                    x.TryGetComponent<ApcPowerReceiverComponent>(out var apcPowerReceiver)
+                        ? apcPowerReceiver.Powered ^ isInverted
+                        : isInverted);
             }
         }
     }
