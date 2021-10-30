@@ -18,6 +18,27 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
+    public static class ResCacheExtension
+    {
+        public static Font notoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
+        {
+            var ds = display ? "Display" : "";
+            var sv = variation.StartsWith("Bold") ? "Bold" : "Regular";
+            return resCache.GetFont
+            (
+                // Ew, but ok
+                new []
+                {
+                    $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
+                    $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                },
+                size
+            );
+
+        }
+
+    }
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -84,19 +105,19 @@ namespace Content.Client.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
-            var notoSansBoldItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-BoldItalic.ttf", 12);
-            var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSansDisplayBold16 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 16);
-            var notoSans15 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 15);
-            var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
-            var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
+            var notoSans10 = resCache.notoStack(size: 10);
+            var notoSansItalic10 = resCache.notoStack(variation: "Italic", size: 10);
+            var notoSans12 = resCache.notoStack(size: 12);
+            var notoSansItalic12 = resCache.notoStack(variation: "Italic", size: 12);
+            var notoSansBold12 = resCache.notoStack(variation: "Bold", size: 12);
+            var notoSansBoldItalic12 = resCache.notoStack(variation: "BoldItalic", size: 12);
+            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14); 
+            var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
+            var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
+            var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
+            var notoSansBold16 = resCache.notoStack(variation: "Bold", size: 16);
+            var notoSansBold18 = resCache.notoStack(variation: "Bold", size: 18);
+            var notoSansBold20 = resCache.notoStack(variation: "Bold", size: 20);
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
