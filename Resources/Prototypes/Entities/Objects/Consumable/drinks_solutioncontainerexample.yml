@@ -8,10 +8,11 @@
   name: solution container vis cut-out
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: SolutionContainer
-    maxVol: 30
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite
@@ -37,10 +38,11 @@
   name: solution container vis cut-not
   description: A stainless steel insulated pitcher. Everyone's best friend in the morning.
   components:
-  - type: SolutionContainer
-    maxVol: 30
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
         - ReagentId: JuiceWatermelon
           Quantity: 30
   - type: Sprite

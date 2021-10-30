@@ -58,10 +58,6 @@ entities:
     type: Transform
   - index: 0
     type: MapGrid
-  - fixtures:
-    - shape: !type:PhysShapeGrid
-        grid: 0
-    type: Physics
   - tiles:
       -1,-1: 0
       0,-1: 0
@@ -75,15 +71,6 @@ entities:
     uniqueMixes:
     - volume: 2500
       temperature: 293.15
-      molesArchived:
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
-      - 0
       moles:
       - 20
       - 80
@@ -94,6 +81,10 @@ entities:
       - 0
       - 0
     type: GridAtmosphere
+  - linearDamping: 0.05
+    fixtures: []
+    bodyType: Dynamic
+    type: Physics
 - uid: 1
   type: WallReinforced
   components:

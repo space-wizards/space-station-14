@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
@@ -6,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Shared.CharacterAppearance;
 using Content.Shared.Preferences;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Enums;
@@ -56,7 +56,7 @@ namespace Content.Server.Database
 
             if (profile is null)
             {
-                DeleteCharacterSlot(db.DbContext, userId, slot);
+                await DeleteCharacterSlot(db.DbContext, userId, slot);
                 await db.DbContext.SaveChangesAsync();
                 return;
             }
@@ -87,12 +87,13 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
         }
 
-        private static void DeleteCharacterSlot(ServerDbContext db, NetUserId userId, int slot)
+        private static async Task DeleteCharacterSlot(ServerDbContext db, NetUserId userId, int slot)
         {
-            db.Preference
-                .Single(p => p.UserId == userId.UserId)
-                .Profiles
-                .RemoveAll(h => h.Slot == slot);
+            var profile = await db.Profile.Include(p => p.Preference)
+                .Where(p => p.Preference.UserId == userId.UserId && p.Slot == slot)
+                .SingleOrDefaultAsync();
+
+            db.Profile.Remove(profile);
         }
 
         public async Task<PlayerPreferences> InitPrefsAsync(NetUserId userId, ICharacterProfile defaultProfile)
@@ -120,7 +121,7 @@ namespace Content.Server.Database
         {
             await using var db = await GetDb();
 
-            DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
+            await DeleteCharacterSlot(db.DbContext, userId, deleteSlot);
             await SetSelectedCharacterSlotAsync(userId, newSlot, db.DbContext);
 
             await db.DbContext.SaveChangesAsync();

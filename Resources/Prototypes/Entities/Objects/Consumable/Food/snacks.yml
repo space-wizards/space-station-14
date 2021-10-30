@@ -9,13 +9,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
-  - type: LoopingSound
-  - type: SolutionContainer
-    maxVol: 30 # Room for extra condiments
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 10
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30 # Room for extra condiments
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     HeldPrefix: packet
@@ -71,26 +71,56 @@
   description: Tastes like cardboard.
   components:
   - type: Sprite
-    layers:
-      - state: chocolatebar-open
-      - state: chocolatebar
+    state: chocolatebar
   - type: Item
-    color: red
-  - type: Food
-    trash: FoodPacketChocolateTrash
+    HeldPrefix: chocolatebar
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketChocolateTrash
+      - id: FoodSnackChocolateBar
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: chocolate bar
+  parent: FoodSnackBase
+  id: FoodSnackChocolateBar
+  description: Tastes like cardboard.
+  abstract: true
+  components:
+  - type: Sprite
+    state: chocolatebar-open
+  - type: Item
+    color: brown
 
 - type: entity
   name: energy bar
   parent: FoodSnackBase
-  id: FoodSnackEnergybar
+  id: FoodSnackEnergy
   description: An energy bar with a lot of punch.
   components:
   - type: Sprite
     state: energybar
   - type: Item
-    color: green
-  - type: Food
-    trash: FoodPacketEnergyTrash
+    color: lime
+  - type: SpawnItemsOnUse
+    items:
+      - id: FoodPacketEnergyTrash
+      - id: FoodSnackEnergyBar
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: energy bar
+  parent: FoodSnackBase
+  id: FoodSnackEnergyBar
+  description: An energy bar with a lot of punch.
+  abstract: true
+  components:
+  - type: Sprite
+    state: energybar-open
+  - type: Item
+    color: yellow
 
 - type: entity
   name: popcorn
@@ -101,7 +131,7 @@
   - type: Sprite
     state: popcorn
   - type: Item
-    color: blue
+    HeldPrefix: popcorn
   - type: Food
     trash: FoodPacketPopcornTrash
 

@@ -53,15 +53,15 @@ namespace Content.IntegrationTests.Tests
                 entityManager.SpawnEntity("Dummy", new EntityCoordinates(gridOne.GridEntityId, Vector2.One));
 
                 var entityTiles = tileLookup.GetIndices(entityOne);
-                Assert.That(entityTiles.Count, Is.EqualTo(4));
+                Assert.That(entityTiles.Count, Is.EqualTo(1));
 
                 entities = tileLookup.GetEntitiesIntersecting(entityOne).ToList();
-                Assert.That(entities.Count, Is.EqualTo(5));
+                Assert.That(entities.Count, Is.EqualTo(1));
 
                 entityManager.SpawnEntity("Dummy", new EntityCoordinates(gridOne.GridEntityId, Vector2.Zero));
 
                 entities = tileLookup.GetEntitiesIntersecting(gridOne.Index, new Vector2i(0, 0)).ToList();
-                Assert.That(entities.Count, Is.EqualTo(3));
+                Assert.That(entities.Count, Is.EqualTo(2));
             });
 
             await server.WaitIdleAsync();

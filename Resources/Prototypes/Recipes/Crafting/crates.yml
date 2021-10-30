@@ -6,6 +6,6 @@
   targetNode: cratelivestock
   category: Storage
   description: "A wooden crate for holding livestock"
-  icon: Constructible/Storage/Crates/livestock.rsi/livestockcrate.png
+  icon: Structures/Storage/Crates/livestock.rsi/livestockcrate.png
   objectType: Item
   

@@ -4,28 +4,41 @@
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: Tag
+    tags:
+    - Spear
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
     state: spear
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Piercing: 10
     range: 1.5
     arcwidth: 0
     arc: spear
   - type: DamageOtherOnHit
-    amount: 15
-  - type: Item
+    damage:
+      types:
+        Piercing: 15
+  - type: Clothing
     size: 24
     sprite: Objects/Weapons/Melee/spear.rsi
-    prefix: inhand
+    Slots:
+    - back
   - type: Construction
     graph: spear
     node: spear
   - type: ItemCooldown
   - type: MeleeChemicalInjector
-  - type: SolutionContainer
-    maxVol: 5
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: melee
   - type: SolutionTransfer
+    maxTransferAmount: 5
 
 - type: MeleeWeaponAnimation
   id: spear

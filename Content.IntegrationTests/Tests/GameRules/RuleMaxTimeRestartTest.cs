@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.GameRules;
-using Content.Server.Interfaces.GameTicking;
+using Content.Server.GameTicking.Rules;
 using NUnit.Framework;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Timing;
 
 namespace Content.IntegrationTests.Tests.GameRules
@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests.GameRules
 
             await server.WaitIdleAsync();
 
-            var sGameTicker = server.ResolveDependency<IGameTicker>();
+            var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
 
             RuleMaxTimeRestart maxTimeRule = null;

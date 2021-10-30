@@ -1,0 +1,39 @@
+- type: entity
+  id: MeteorLarge
+  name: meteor
+  abstract: true
+  components:
+  - type: Sprite
+    noRot: false
+    netsync: false
+    sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
+    scale: 4,4
+    layers:
+    - state: large
+      shader: unshaded
+  - type: ExplodeOnTrigger
+  - type: DeleteOnTrigger
+  - type: TriggerOnCollide
+  - type: Projectile
+    deleteOnCollide: false
+  - type: Explosive
+    devastationRange: 3
+    heavyImpactRange: 5
+    lightImpactRange: 7
+    flashRange: 10
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+    fixtures:
+    - shape:
+        !type:PhysShapeCircle
+          radius: 0.5
+      mass: 200
+      hard: true
+      # Didn't use MapGrid for now as the bounds are stuffed.
+      layer:
+        - Impassable
+        - SmallImpassable
+        - VaultImpassable
+      mask:
+        - Impassable

@@ -1,11 +1,10 @@
 ﻿- type: vendingMachineInventory
   id: DiscountDansInventory
   name: Discount Dan's
-  description: A vending machine containing discount snacks from the infamous 'Discount Dan' franchise.
   spriteName: discount
   startingInventory:
     FoodSnackCheesie: 3
     FoodSnackChips: 3
     FoodSnackBoritos: 2
     FoodSnackPopcorn: 1
-    FoodSnackEnergybar: 2
+    FoodSnackEnergy: 2

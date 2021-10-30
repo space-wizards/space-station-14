@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
+using Robust.Shared.ViewVariables;
+
+namespace Content.Shared.VendingMachines
+{
+    [NetworkedComponent()]
+    public class SharedVendingMachineComponent : Component
+    {
+        public override string Name => "VendingMachine";
+
+        [ViewVariables]
+        public List<VendingMachineInventoryEntry> Inventory = new();
+
+        [Serializable, NetSerializable]
+        public enum VendingMachineVisuals
+        {
+            VisualState,
+        }
+
+        [Serializable, NetSerializable]
+        public enum VendingMachineVisualState
+        {
+            Normal,
+            Off,
+            Broken,
+            Eject,
+            Deny,
+        }
+
+        [Serializable, NetSerializable]
+        public class VendingMachineEjectMessage : BoundUserInterfaceMessage
+        {
+            public readonly string ID;
+            public VendingMachineEjectMessage(string id)
+            {
+                ID = id;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public enum VendingMachineUiKey
+        {
+            Key,
+        }
+
+        [Serializable, NetSerializable]
+        public class InventorySyncRequestMessage : BoundUserInterfaceMessage
+        {
+        }
+
+        [Serializable, NetSerializable]
+        public class VendingMachineInventoryMessage : BoundUserInterfaceMessage
+        {
+            public readonly List<VendingMachineInventoryEntry> Inventory;
+            public VendingMachineInventoryMessage(List<VendingMachineInventoryEntry> inventory)
+            {
+                Inventory = inventory;
+            }
+        }
+
+        [Serializable, NetSerializable]
+        public class VendingMachineInventoryEntry
+        {
+            [ViewVariables(VVAccess.ReadWrite)]
+            public string ID;
+            [ViewVariables(VVAccess.ReadWrite)]
+            public uint Amount;
+            public VendingMachineInventoryEntry(string id, uint amount)
+            {
+                ID = id;
+                Amount = amount;
+            }
+        }
+    }
+}

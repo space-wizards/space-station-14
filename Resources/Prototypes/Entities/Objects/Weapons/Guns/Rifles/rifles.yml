@@ -22,13 +22,20 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 90
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
-    soundBoltOpen: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
-    soundBoltClosed: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/sf_rifle_cock.ogg
+    soundBoltOpen:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_open.ogg
+    soundBoltClosed:
+      path: /Audio/Weapons/Guns/Bolt/rifle_bolt_closed.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
 
 - type: entity
   name: AKMS
@@ -58,10 +65,14 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 90
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -97,10 +108,14 @@
     maxAngle: 60
     angleIncrease: 15
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -139,10 +154,14 @@
     maxAngle: 45
     angleIncrease: 15
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/batrifle.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/batrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -180,10 +199,14 @@
     maxAngle: 60
     angleIncrease: 10
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/m41.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/m41_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/m41_reload.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/m41.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/m41_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/m41_reload.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -221,10 +244,14 @@
     maxAngle: 45
     angleIncrease: 15
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -304,10 +331,14 @@
     maxAngle: 45
     angleIncrease: 15
     angleDecay: 60
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/ltrifle.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -345,10 +376,14 @@
     maxAngle: 25
     angleIncrease: 15
     angleDecay: 25
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
-    soundRack: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
-    soundMagInsert: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
-    soundMagEject: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/rifle2.ogg
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/ltrifle_cock.ogg
+    soundMagInsert:
+      path: /Audio/Weapons/Guns/MagIn/ltrifle_magin.ogg
+    soundMagEject:
+      path: /Audio/Weapons/Guns/MagOut/ltrifle_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer

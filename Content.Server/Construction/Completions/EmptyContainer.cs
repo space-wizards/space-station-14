@@ -1,10 +1,10 @@
-﻿#nullable enable
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Construction.Completions
@@ -15,18 +15,17 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("container")] public string Container { get; private set; } = string.Empty;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted) return;
-
-            if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
+            if (!entityManager.TryGetComponent(uid, out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return;
 
-            // TODO: Use container helpers.
+            // TODO: Use container system methods.
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
             foreach (var contained in container.ContainedEntities.ToArray())
             {
                 container.ForceRemove(contained);
-                contained.Transform.Coordinates = entity.Transform.Coordinates;
+                contained.Transform.Coordinates = transform.Coordinates;
                 contained.Transform.AttachToGridOrMap();
             }
         }

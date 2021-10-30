@@ -1,0 +1,9 @@
+- type: soundCollection
+  id: explosion
+  files:
+  - /Audio/Effects/explosion1.ogg
+  - /Audio/Effects/explosion2.ogg
+  - /Audio/Effects/explosion3.ogg
+  - /Audio/Effects/explosion4.ogg
+  - /Audio/Effects/explosion5.ogg
+  - /Audio/Effects/explosion6.ogg

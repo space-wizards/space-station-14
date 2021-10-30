@@ -1,5 +1,5 @@
 using System;
-using Content.Client.Interfaces.Parallax;
+using Content.Client.Parallax.Managers;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using Robust.Shared.IoC;
@@ -11,8 +11,6 @@ namespace Content.Client.Parallax
     public class ParallaxOverlay : Overlay
     {
         [Dependency] private readonly IParallaxManager _parallaxManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IClyde _displayManager = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private const float Slowness = 0.5f;

@@ -1,0 +1,1 @@
+holiday-greet = Have a happy {$holidayName}!

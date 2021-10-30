@@ -26,9 +26,12 @@
     maxAngle: 45
     angleIncrease: 20
     angleDecay: 15
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/sniper.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/sniper.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/bullet_insert.ogg
 
 - type: entity
   name: Kardashev-Mosin

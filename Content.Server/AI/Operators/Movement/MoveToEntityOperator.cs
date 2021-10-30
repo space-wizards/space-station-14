@@ -1,5 +1,5 @@
 using System;
-using Content.Server.GameObjects.EntitySystems.AI.Steering;
+using Content.Server.AI.Steering;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
 

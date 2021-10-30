@@ -2,96 +2,84 @@
 
 - type: entity
   parent: BaseItem
+  id: BasePlushie
+  abstract: true
+  components:
+  - type: EmitSoundOnUse
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnLand
+    sound:
+      collection: ToySqueak
+  - type: EmitSoundOnActivate
+    sound:
+      collection: ToySqueak
+  - type: ItemCooldown
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BasePlushie
   id: PlushieBee
   name: bee plushie
   description: A cute toy that resembles an even cuter programmer.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_h
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieNuke
   name: nukie plushie
   description: A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_nuke
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieLizard
   name: lizard plushie
   description: An adorable stuffed toy that resembles a lizardperson. Made by CentCom as a token initiative to combat speciesism in work environments. "Welcome your new colleges as you do this plush, with open arms!"
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_lizard
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieNar
   name: nar'sie plushie
   description: A small stuffed doll of the elder goddess Nar'Sie.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: narplush
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieCarp
   name: carp plushie
   description: An adorable stuffed toy that resembles the monstrous space carp.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: carpplush
   - type: Item
     sprite: Objects/Fun/toys.rsi
     HeldPrefix: carpplush
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
-  parent: BaseItem
+  parent: BasePlushie
   id: PlushieSlime
   name: slime plushie
   description: An adorable stuffed toy that resembles a slime. It's basically a hacky sack.
   components:
-  - type: Toys
-  - type: LoopingSound
   - type: Sprite
     sprite: Objects/Fun/toys.rsi
     state: plushie_slime
-  - type: ItemCooldown
-  - type: UseDelay
-    delay: 1.0
 
 - type: entity
   parent: BaseItem
@@ -103,9 +91,9 @@
     sprite: Objects/Fun/toys.rsi
     state: plushie_snake
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/rattle.ogg
+    sound:
+      path: /Audio/Items/Toys/rattle.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -119,9 +107,46 @@
     sprite: Objects/Fun/toys.rsi
     state: toy_mouse
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/mousesqueek.ogg
+    sound:
+      path: /Audio/Items/Toys/mousesqueek.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BaseItem
+  id: ToyRubberDuck
+  name: rubber ducky
+  description: Not carried here by ocean currents.
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/ducky.rsi
+    state: icon
+  - type: Clothing
+    QuickEquip: false
+    sprite: Objects/Fun/ducky.rsi
+    Slots:
+    - Helmet
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Items/Toys/quack.ogg
+  - type: UseDelay
+    delay: 1.0
+
+- type: entity
+  parent: BaseItem
+  id: PlushieVox
+  name: vox plushie
+  description: SKREEEEEEEEEEEE!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/toys.rsi
+    state: plushie_vox
+  - type: ItemCooldown
+  - type: EmitSoundOnUse
+    sound:
+      path: /Audio/Voice/Vox/shriek1.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -141,11 +166,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/helpme.ogg
+    sound:
+      path: /Audio/Items/Toys/helpme.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/helpme.ogg
+    sound:
+      path: /Audio/Items/Toys/helpme.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -161,11 +187,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/hellothere.ogg
+    sound:
+      path: /Audio/Items/Toys/hellothere.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/hellothere.ogg
+    sound:
+      path: /Audio/Items/Toys/hellothere.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -181,11 +208,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/thankyou.ogg
+    sound:
+      path: /Audio/Items/Toys/thankyou.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/thankyou.ogg
+    sound:
+      path: /Audio/Items/Toys/thankyou.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -201,11 +229,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/verygood.ogg
+    sound:
+      path: /Audio/Items/Toys/verygood.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/verygood.ogg
+    sound:
+      path: /Audio/Items/Toys/verygood.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -221,11 +250,12 @@
   - type: Item
     sprite: Objects/Misc/carvings.rsi
   - type: EmitSoundOnThrow
-    sound: /Audio/Items/Toys/imsorry.ogg
+    sound:
+      path: /Audio/Items/Toys/imsorry.ogg
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/imsorry.ogg
+    sound:
+      path: /Audio/Items/Toys/imsorry.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -294,9 +324,9 @@
     sprite: Objects/Fun/toys.rsi
     state: ian
   - type: ItemCooldown
-  - type: LoopingSound
   - type: EmitSoundOnUse
-    sound: /Audio/Items/Toys/ian.ogg
+    sound:
+      path: /Audio/Items/Toys/ian.ogg
   - type: UseDelay
     delay: 1.0
 
@@ -470,9 +500,12 @@
     - Single
     fireRate: 0.5
     capacity: 1
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/click.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/drawbow2.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundGunshot:
+      path: /Audio/Weapons/click.ogg
+    soundInsert:
+      path: /Audio/Weapons/drawbow2.ogg
 
 - type: entity
   parent: BaseItem
@@ -509,9 +542,12 @@
     caliber: Cap
     capacity: 6
     autoCycle: true
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/revolver.ogg
-    soundEmpty: /Audio/Weapons/Guns/Empty/empty.ogg
-    soundInsert: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/empty.ogg
+    soundInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
   - type: Appearance
     visuals:
     - type: BarrelBoltVisualizer
@@ -529,6 +565,9 @@
     range: 2.0
     arcwidth: 0
     arc: spear
+    damage:
+      types:
+        Blunt: 1
   - type: Item
     size: 24
     sprite: Objects/Fun/toys.rsi
@@ -605,7 +644,9 @@
   - type: Icon
     sprite: Objects/Fun/toys.rsi
     state: singularitytoy
-  - type: ToySingularity
+  - type: SingularityDistortion
+    intensity: 2
+    falloff: 7
   - type: Item
     size: 12
     sprite: Objects/Fun/toys.rsi

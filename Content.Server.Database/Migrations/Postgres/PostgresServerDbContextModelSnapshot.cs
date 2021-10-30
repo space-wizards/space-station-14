@@ -196,6 +196,13 @@ namespace Content.Server.Database.Migrations.Postgres
 
                     b.HasIndex("ProfileId");
 
+                    b.HasIndex("ProfileId", "JobName")
+                        .IsUnique();
+
+                    b.HasIndex(new[] { "ProfileId" }, "IX_job_one_high_priority")
+                        .IsUnique()
+                        .HasFilter("priority = 3");
+
                     b.ToTable("job");
                 });
 

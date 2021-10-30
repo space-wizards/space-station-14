@@ -7,6 +7,6 @@
       tags:
       - DoorElectronics
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: door_electronics
     - type: AccessReader

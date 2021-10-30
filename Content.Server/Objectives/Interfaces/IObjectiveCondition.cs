@@ -1,6 +1,4 @@
-﻿#nullable enable
-using System;
-using Content.Server.Mobs;
+﻿using System;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Interfaces
@@ -12,7 +10,7 @@ namespace Content.Server.Objectives.Interfaces
         /// </summary>
         /// <param name="mind">Mind to assign to.</param>
         /// <returns>The new IObjectiveCondition.</returns>
-        IObjectiveCondition GetAssigned(Mind mind);
+        IObjectiveCondition GetAssigned(Mind.Mind mind);
 
         /// <summary>
         /// Returns the title of the condition.

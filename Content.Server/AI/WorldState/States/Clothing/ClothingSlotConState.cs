@@ -1,4 +1,4 @@
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Inventory;
 
 namespace Content.Server.AI.WorldState.States.Clothing
 {

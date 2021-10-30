@@ -238,7 +238,6 @@
       - state: mag-unshaded-0
         map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
         shader: unshaded
-
   - type: Item
     size: 24
     sprite: Objects/Weapons/Guns/Battery/xray.rsi
@@ -275,6 +274,9 @@
   id: TaserGun
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
   components:
+  - type: Tag
+    tags:
+    - Taser
   - type: Sprite
     netsync: false
     sprite: Objects/Weapons/Guns/Battery/taser.rsi
@@ -317,3 +319,47 @@
       magState: mag
       steps: 5
       zeroVisible: true
+
+- type: entity
+  name: laser gun
+  parent: BaseItem
+  id: LaserSecGun
+  description: Standard issued laser carbine for Nanotrasen security operatives.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    minAngle: 10
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 6
+    powerCellPrototype: PowerCellMediumStandard
+    powerCellRemovable: true
+    ammoPrototype: RedLaser
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false

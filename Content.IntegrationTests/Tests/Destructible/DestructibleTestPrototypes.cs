@@ -1,4 +1,4 @@
-﻿namespace Content.IntegrationTests.Tests.Destructible
+namespace Content.IntegrationTests.Tests.Destructible
 {
     public static class DestructibleTestPrototypes
     {
@@ -6,9 +6,41 @@
         public const string DestructibleEntityId = "DestructibleTestsDestructibleEntity";
         public const string DestructibleDestructionEntityId = "DestructibleTestsDestructibleDestructionEntity";
         public const string DestructibleDamageTypeEntityId = "DestructibleTestsDestructibleDamageTypeEntity";
-        public const string DestructibleDamageClassEntityId = "DestructibleTestsDestructibleDamageClassEntity";
+        public const string DestructibleDamageGroupEntityId = "DestructibleTestsDestructibleDamageGroupEntity";
 
         public static readonly string Prototypes = $@"
+- type: damageType
+  id: TestBlunt
+
+- type: damageType
+  id: TestSlash
+
+- type: damageType
+  id: TestPiercing
+
+- type: damageType
+  id: TestHeat
+
+- type: damageType
+  id: TestShock
+
+- type: damageType
+  id: TestCold
+
+- type: damageGroup
+  id: TestBrute
+  damageTypes:
+    - TestBlunt
+    - TestSlash
+    - TestPiercing
+
+- type: damageGroup
+  id: TestBurn
+  damageTypes:
+    - TestHeat
+    - TestShock
+    - TestCold
+
 - type: entity
   id: {SpawnedEntityId}
   name: {SpawnedEntityId}
@@ -30,7 +62,8 @@
         triggersOnce: false
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:
@@ -38,7 +71,6 @@
             max: 1
       - !type:DoActsBehavior
         acts: [""Breakage""]
-  - type: TestThresholdListener
 
 - type: entity
   id: {DestructibleDestructionEntityId}
@@ -52,7 +84,8 @@
         damage: 50
       behaviors:
       - !type:PlaySoundBehavior
-        sound: /Audio/Effects/woodhit.ogg
+        sound:
+            path: /Audio/Effects/woodhit.ogg
       - !type:SpawnEntitiesBehavior
         spawn:
           {SpawnedEntityId}:
@@ -60,7 +93,6 @@
             max: 1
       - !type:DoActsBehavior # This must come last as it destroys the entity.
         acts: [""Destruction""]
-  - type: TestThresholdListener
 
 - type: entity
   id: {DestructibleDamageTypeEntityId}
@@ -73,16 +105,15 @@
         !type:AndTrigger
         triggers:
         - !type:DamageTypeTrigger
-          type: Blunt
+          damageType: TestBlunt
           damage: 10
         - !type:DamageTypeTrigger
-          type: Slash
+          damageType: TestSlash
           damage: 10
-  - type: TestThresholdListener
 
 - type: entity
-  id: {DestructibleDamageClassEntityId}
-  name: {DestructibleDamageClassEntityId}
+  id: {DestructibleDamageGroupEntityId}
+  name: {DestructibleDamageGroupEntityId}
   components:
   - type: Damageable
   - type: Destructible
@@ -90,12 +121,11 @@
     - trigger:
         !type:AndTrigger
         triggers:
-        - !type:DamageClassTrigger
-          class: Brute
+        - !type:DamageGroupTrigger
+          damageGroup: TestBrute
           damage: 10
-        - !type:DamageClassTrigger
-          class: Burn
-          damage: 10
-  - type: TestThresholdListener";
+        - !type:DamageGroupTrigger
+          damageGroup: TestBurn
+          damage: 10";
     }
 }

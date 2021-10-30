@@ -1,4 +1,5 @@
 using Content.Client;
+using Content.Client.Clickable;
 using NUnit.Framework;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;

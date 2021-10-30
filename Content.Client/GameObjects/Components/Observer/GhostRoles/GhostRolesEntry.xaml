@@ -1,9 +1,0 @@
-<VBoxContainer
-    xmlns="https://spacestation14.io">
-
-    <RichTextLabel Name="Title" />
-    <HBoxContainer SeparationOverride="10">
-        <RichTextLabel Name="Description" HorizontalExpand="True" />
-        <Button Name="RequestButton" Text="Request" TextAlign="Center" SizeFlagsHorizontal="ShrinkEnd" />
-    </HBoxContainer>
-</VBoxContainer>

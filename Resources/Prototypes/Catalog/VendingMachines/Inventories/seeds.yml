@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: MegaSeedServitorInventory
   name: MegaSeed Servitor
-  description: For when you need seeds fast. Hands down the best seed selection on the station!
   animationDuration: 1.3
   spriteName: seeds
   startingInventory:

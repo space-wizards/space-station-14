@@ -1,7 +1,6 @@
 - type: vendingMachineInventory
   id: RobotechDeluxeInventory
   name: Robotech Deluxe
-  description: All the fine parts you need in one vending machine!
   spriteName: robotics
   startingInventory:
     #TO DO: add missing prototypes

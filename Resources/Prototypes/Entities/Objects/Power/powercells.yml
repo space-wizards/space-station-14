@@ -11,14 +11,18 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.2,0.3" # TODO: these are placeholder values
+          bounds: "-0.3,-0.15,0.3,0.2" # TODO: these are placeholder values
   - type: PowerCell
   - type: Sprite
     netsync: false
-  - type: SolutionContainer
-    maxVol: 5
-    caps: Injectable, Drawable
-
+  - type: SolutionContainerManager
+    solutions:
+      powerCell:
+        maxVol: 5
+  - type: InjectableSolution
+    solution: powerCell
+  - type: DrawableSolution
+    solution: powerCell
 
 - type: entity
   id: PowerCellSmallBase

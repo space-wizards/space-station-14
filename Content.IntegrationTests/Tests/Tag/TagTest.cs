@@ -1,8 +1,7 @@
 ﻿#nullable enable
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Content.Shared.GameObjects.Components.Tag;
-using Content.Shared.Prototypes.Tag;
+using Content.Shared.Tag;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

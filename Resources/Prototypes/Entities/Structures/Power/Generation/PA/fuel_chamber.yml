@@ -1,0 +1,42 @@
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamber
+  name: PA fuel chamber
+  description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds.
+  components:
+    - type: Sprite
+      sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
+      layers:
+        - state: chamberc
+          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
+        - state: unlitp
+          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: Appearance
+      visuals:
+        - type: ParticleAcceleratorPartVisualizer
+          baseState: unlit
+    - type: ParticleAcceleratorFuelChamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: completed
+
+# Unfinished
+
+- type: entity
+  parent: ParticleAcceleratorBase
+  id: ParticleAcceleratorFuelChamberUnfinished
+  name: PA fuel chamber
+  suffix: Unfinished
+  description: Formally known as the EM Acceleration Chamber. This is where the Alpha particles are accelerated to radical speeds. It looks unfinished.
+  components:
+    - type: Physics
+      bodyType: Dynamic
+    - type: Sprite
+      sprite: Structures/Power/Generation/PA/fuel_chamber.rsi
+      state: chamber
+    - type: Construction
+      graph: particleAcceleratorFuelChamber
+      node: start
+      defaultTarget: completed

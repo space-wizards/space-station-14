@@ -1,7 +1,11 @@
 - type: entity
   id: debugRotation1
   name: dbg_rotation1
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -15,7 +19,11 @@
 - type: entity
   id: debugRotation4
   name: dbg_rotation4
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -29,7 +37,11 @@
 - type: entity
   id: debugRotationTex
   name: dbg_rotationTex
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite

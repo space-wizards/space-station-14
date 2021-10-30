@@ -1,4 +1,4 @@
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Hands.Components;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.AI.Operators.Inventory

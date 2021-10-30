@@ -1,0 +1,147 @@
+﻿- type: entity
+  abstract: true
+  id: GasPipeBase
+  name: pipe
+  description: Holds gas.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Item
+    size: 10
+  - type: Clickable
+  - type: InteractionOutline
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 0.5
+  - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 5
+        mask:
+          - Impassable
+          - VaultImpassable
+        restitution: 0.3  # fite me
+        friction: 0.2
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Anchorable
+  - type: Rotatable
+  - type: Pullable
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Piping/Atmospherics/pipe.rsi
+    drawdepth: BelowFloor
+    netsync: false
+  - type: Appearance
+    visuals:
+    - type: PipeConnectorVisualizer
+    - type: PipeColorVisualizer
+  - type: NodeContainer
+  - type: AtmosUnsafeUnanchor
+  - type: AtmosPipeColor
+  - type: SubFloorHide
+
+#Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeHalf
+  suffix: Half
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: South
+  - type: Sprite
+    layers:
+      - state: pipeHalf
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeStraight
+  suffix: Straight
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Longitudinal
+  - type: Sprite
+    layers:
+      - state: pipeStraight
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeBend
+  suffix: Bend
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: SWBend
+  - type: Sprite
+    layers:
+      - state: pipeBend
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeTJunction
+  suffix: TJunction
+  components:
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: TSouth
+  - type: Sprite
+    layers:
+      - state: pipeTJunction
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]
+
+- type: entity
+  parent: GasPipeBase
+  id: GasPipeFourway
+  suffix: Fourway
+  components:
+  - type: Transform
+    noRot: true
+  - type: NodeContainer
+    nodes:
+      pipe:
+        !type:PipeNode
+        nodeGroupID: Pipe
+        pipeDirection: Fourway
+  - type: Sprite
+    layers:
+      - state: pipeFourway
+        map: [ "enum.PipeColorVisualizer+Layers.Pipe" ]

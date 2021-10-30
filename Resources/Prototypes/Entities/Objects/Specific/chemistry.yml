@@ -12,17 +12,35 @@
     netsync: false
     layers:
       - state: beaker
-      - state: beaker1  
+      - state: beaker1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker.rsi
-  - type: SolutionContainer
-    maxVol: 50
-    caps: OpenContainer, FitsInDispenser # can add and remove solutions and fits in the chemmaster.
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
   - type: SolutionTransfer
-    transferAmount: 5.0
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
+    solution: beaker
   - type: Drink
     isOpen: true
   - type: Appearance
@@ -30,6 +48,39 @@
     - type: SolutionContainerVisualizer
       maxFillLevels: 6
       fillBaseName: beaker
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 10 # glass resistance set reduces damage. Need to land twice (w/o hitting wall)
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 2
+    damage:
+      types:
+        Blunt: 5
 
 - type: entity
   name: large beaker
@@ -41,13 +92,15 @@
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
     layers:
       - state: beakerlarge
-      - state: beakerlarge1  
+      - state: beakerlarge1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
   - type: Item
     sprite: Objects/Specific/Chemistry/beaker_large.rsi
-  - type: SolutionContainer
-    maxVol: 100
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 100
   - type: Appearance
     visuals:
     - type: SolutionContainerVisualizer
@@ -64,9 +117,11 @@
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
       - state: beakernoreact
-  - type: SolutionContainer
-    maxVol: 60
-    canReact: false
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 60
+        canReact: false
 
 - type: entity
   name: bluespace beaker
@@ -78,8 +133,10 @@
     sprite: Objects/Specific/Chemistry/beaker_bluespace.rsi
     layers:
       - state: beakerbluespace
-  - type: SolutionContainer
-    maxVol: 300
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 300
 
 - type: entity
   name: dropper
@@ -95,12 +152,27 @@
       - state: dropper1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
-  - type: SolutionContainer
-    caps: OpenContainer
-    maxVol: 5
+  - type: SolutionContainerManager
+    solutions:
+      dropper:
+        maxVol: 5
+  - type: RefillableSolution
+    solution: dropper
+  - type: DrainableSolution
+    solution: dropper
+  - type: ExaminableSolution
+    solution: dropper
   - type: SolutionTransfer
-    transferAmount: 5.0
+    minTransferAmount: 1
+    transferAmount: 1
+    maxTransferAmount: 5
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Spillable
+    solution: dropper
   - type: Item
     sprite: Objects/Specific/Chemistry/dropper.rsi
   - type: Appearance
@@ -119,22 +191,26 @@
     sprite: Objects/Specific/Chemistry/syringe.rsi
     netsync: false
     layers:
-      - state: syringe1  
+      - state: syringe1
         map: ["enum.SolutionContainerLayers.Fill"]
         visible: false
       - state: syringe_base0
         map: ["enum.SolutionContainerLayers.Base"]
-  - type: SolutionContainer
-    maxVol: 15
+  - type: Item
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    HeldPrefix: 0
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
   - type: Injector
     injectOnly: false
   - type: Spillable
-  - type: Item
-    sprite: Objects/Specific/Chemistry/syringe.rsi
+    solution: injector
   - type: Appearance
     visuals:
       # this visualizer used for reagent inside
-    - type: SolutionContainerVisualizer 
+    - type: SolutionContainerVisualizer
       maxFillLevels: 4
       fillBaseName: syringe
       # this one for syrigine itself (plunger)
@@ -154,7 +230,15 @@
   - type: Sprite
     sprite: Objects/Specific/Chemistry/pills.rsi
     state: pill
-  - type: Pill
-  - type: SolutionContainer
-    maxVol: 50
-    caps: None
+  - type: Item
+    sprite: Objects/Specific/Chemistry/pills.rsi
+  - type: Tag
+    tags:
+      - Pill
+  - type: Food
+    transferAmount: null
+    eatMessage: food-swallow
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50

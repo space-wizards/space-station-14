@@ -7,7 +7,11 @@
 - type: entity
   abstract: true
   id: ClickTestBase
+  suffix: DEBUG
   components:
+  - type: Tag
+    tags:
+      - Debug
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
@@ -42,8 +46,8 @@
     bounds:
       south: "0.125,0.125,0.375,0.375"
       north: "-0.375,-0.375,-0.125,-0.125"
-      east: "0.125,-0.375,0.375,-0.125"
-      west: "-0.375,0.125,-0.125,0.375"
+      east: "-0.375,0.125,-0.125,0.375"
+      west: "0.125,-0.375,0.375,-0.125"
 
   - type: InteractionOutline
   - type: Sprite
@@ -80,4 +84,3 @@
   - type: InteractionOutline
   - type: Sprite
     state: invis_base
-

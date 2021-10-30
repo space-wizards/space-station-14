@@ -8,8 +8,9 @@
     sprite: Objects/Weapons/Guns/Projectiles/slug.rsi
     state: base
   - type: Projectile
-    damages:
-      Piercing: 13
+    damage:
+      types:
+        Piercing: 13
 
 - type: entity
   id: PelletShotgunBeanbag
@@ -21,9 +22,10 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Blunt: 10
-  - type: StunnableProjectile
+    damage:
+      types:
+        Blunt: 10
+  - type: StunOnCollide
 
 - type: entity
   id: PelletShotgun
@@ -35,8 +37,9 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Piercing: 13
+    damage:
+      types:
+        Piercing: 13
 
 - type: entity
   id: PelletShotgunFlash
@@ -48,8 +51,9 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Blunt: 13
+    damage:
+      types:
+        Blunt: 13
 
 - type: entity
   id: PelletShotgunIncendiary
@@ -61,8 +65,9 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Blunt: 13
+    damage:
+      types:
+        Blunt: 13
 
 - type: entity
   id: PelletShotgunPractice
@@ -74,8 +79,9 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Blunt: 1
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   id: PelletShotgunTranquilizer
@@ -87,10 +93,16 @@
     sprite: Objects/Weapons/Guns/Projectiles/buckshot.rsi
     state: base
   - type: Projectile
-    damages:
-      Blunt: 1
-  - type: SolutionContainer
-    maxVol: 15
-    caps: Refillable, Drainable
-  - type: ChemicalInjectionProjectile
+    damage:
+      types:
+        Blunt: 1
+  - type: SolutionContainerManager
+    solutions:
+      ammo:
+        maxVol: 15
+  - type: RefillableSolution
+    solution: ammo
+  - type: DrainableSolution
+    solution: ammo
+  - type: SolutionInjectOnCollide
     transferAmount: 15

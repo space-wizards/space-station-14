@@ -1,5 +1,5 @@
 - type: soundCollection
-  id: bodyfall
+  id: BodyFall
   files:
   - /Audio/Effects/bodyfall1.ogg
   - /Audio/Effects/bodyfall2.ogg

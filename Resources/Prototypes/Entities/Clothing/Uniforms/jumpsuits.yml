@@ -571,3 +571,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/rainbow.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformOveralls
+  name: overalls
+  description: Great for working outdoors.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/overalls.rsi

@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Construction;
+using System.Threading.Tasks;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -16,35 +17,40 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class MachineFrameComplete : IGraphCondition
     {
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (entity.Deleted || !entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
                 return false;
 
             return machineFrame.IsComplete;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)
             {
-                message.AddMarkup(Loc.GetString("Insert [color=cyan]any machine circuit board[/color]."));
+                args.PushMarkup(Loc.GetString("construction-condition-machine-frame-insert-circuit-board-message"));
                 return true;
             }
 
             if (machineFrame.IsComplete) return false;
 
-            message.AddMarkup(Loc.GetString("Requires:\n"));
+            args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-requirement-label") + "\n");
             foreach (var (part, required) in machineFrame.Requirements)
             {
                 var amount = required - machineFrame.Progress[part];
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(part.ToString())));
+                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                           ("amount", amount),
+                                           ("elementName", Loc.GetString(part.ToString())))
+                                       + "\n");
             }
 
             foreach (var (material, required) in machineFrame.MaterialRequirements)
@@ -53,7 +59,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", amount, Loc.GetString(material.ToString())));
+                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                           ("amount", amount),
+                                           ("elementName", Loc.GetString(material.ToString())))
+                                       + "\n");
             }
 
             foreach (var (compName, info) in machineFrame.ComponentRequirements)
@@ -62,7 +71,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                                ("amount", info.Amount),
+                                                ("elementName", Loc.GetString(info.ExamineName)))
+                                  + "\n");
             }
 
             foreach (var (tagName, info) in machineFrame.TagRequirements)
@@ -71,7 +83,10 @@ namespace Content.Server.Construction.Conditions
 
                 if(amount == 0) continue;
 
-                message.AddMarkup(Loc.GetString("[color=yellow]{0}x[/color] [color=green]{1}[/color]\n", info.Amount, Loc.GetString(info.ExamineName)));
+                args.Message.AddMarkup(Loc.GetString("construction-condition-machine-frame-required-element-entry",
+                                           ("amount", info.Amount),
+                                           ("elementName", Loc.GetString(info.ExamineName)))
+                                       + "\n");
             }
 
             return true;

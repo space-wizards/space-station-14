@@ -1,4 +1,4 @@
-﻿using Content.Client.GameObjects.EntitySystems.HealthOverlay;
+﻿using Content.Client.HealthOverlay;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 

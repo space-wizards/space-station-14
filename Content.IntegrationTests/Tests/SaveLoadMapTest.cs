@@ -27,12 +27,12 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = server.ResolveDependency<IMapLoader>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
+            var resManager = server.ResolveDependency<IResourceManager>();
 
             server.Post(() =>
             {
                 var dir = new ResourcePath(mapPath).Directory;
-                IoCManager.Resolve<IResourceManager>()
-                    .UserData.CreateDir(dir);
+                resManager.UserData.CreateDir(dir);
 
                 var mapId = mapManager.CreateMap(new MapId(5));
 

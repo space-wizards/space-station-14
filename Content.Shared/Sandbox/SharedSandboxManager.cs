@@ -1,5 +1,4 @@
-﻿#nullable enable
-using Lidgren.Network;
+﻿using Lidgren.Network;
 using Robust.Shared.Network;
 
 namespace Content.Shared.Sandbox
@@ -8,13 +7,7 @@ namespace Content.Shared.Sandbox
     {
         protected sealed class MsgSandboxStatus : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgSandboxStatus);
-            public MsgSandboxStatus(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public bool SandboxAllowed { get; set; }
 
@@ -31,13 +24,7 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxRespawn : NetMessage
         {
-            #region REQUIRED
-
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgSandboxRespawn);
-            public MsgSandboxRespawn(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
@@ -50,13 +37,8 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxGiveAccess : NetMessage
         {
-             #region REQUIRED
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgSandboxGiveAccess);
-            public MsgSandboxGiveAccess(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
             }
@@ -69,13 +51,8 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxGiveAghost : NetMessage
         {
-            #region REQUIRED
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgSandboxGiveAghost);
-            public MsgSandboxGiveAghost(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
             }
@@ -88,13 +65,8 @@ namespace Content.Shared.Sandbox
 
         protected sealed class MsgSandboxSuicide : NetMessage
         {
-            #region REQUIRED
+            public override MsgGroups MsgGroup => MsgGroups.Command;
 
-            public const MsgGroups GROUP = MsgGroups.Command;
-            public const string NAME = nameof(MsgSandboxSuicide);
-            public MsgSandboxSuicide(INetChannel channel) : base(NAME, GROUP) { }
-
-            #endregion
             public override void ReadFromBuffer(NetIncomingMessage buffer)
             {
             }

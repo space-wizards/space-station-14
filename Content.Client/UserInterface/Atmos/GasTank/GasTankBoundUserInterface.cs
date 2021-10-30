@@ -1,4 +1,4 @@
-﻿using Content.Shared.GameObjects.Components.Atmos.GasTank;
+﻿using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;

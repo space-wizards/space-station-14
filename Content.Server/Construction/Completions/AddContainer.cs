@@ -1,6 +1,5 @@
-﻿#nullable enable
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Construction;
+﻿using System.Threading.Tasks;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -14,13 +13,12 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("container")] public string? Container { get; private set; } = null;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted || string.IsNullOrEmpty(Container))
+            if (string.IsNullOrEmpty(Container))
                 return;
 
-            var construction = entity.GetComponent<ConstructionComponent>();
-            construction.AddContainer(Container);
+            entityManager.EntitySysManager.GetEntitySystem<ConstructionSystem>().AddContainer(uid, Container);
         }
     }
 }

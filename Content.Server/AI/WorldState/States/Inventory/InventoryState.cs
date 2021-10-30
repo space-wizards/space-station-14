@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.GUI;
+using Content.Server.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 

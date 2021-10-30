@@ -1,14 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Client.GameObjects.Components.Mobs;
+using Content.Client.Actions;
+using Content.Client.Actions.UI;
 using Content.Client.UserInterface;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Actions;
+using Content.Server.Hands.Components;
+using Content.Server.Items;
 using Content.Shared.Actions;
-using Content.Shared.GameObjects.Components.Mobs;
-using Content.Shared.Utility;
+using Content.Shared.Actions.Components;
+using Content.Shared.Actions.Prototypes;
+using Content.Shared.Cooldown;
 using NUnit.Framework;
 using Robust.Client.UserInterface;
 using Robust.Shared.GameObjects;
@@ -40,8 +42,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: Sprite
       sprite: Objects/Tools/flashlight.rsi
       layers:
-        - state: lantern_off
-        - state: HandheldLightOnOverlay
+        - state: flashlight
+        - state: flashlight-overlay
           shader: unshaded
           visible: false
     - type: Item
@@ -50,7 +52,6 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
     - type: PointLight
       enabled: false
       radius: 3
-    - type: LoopingSound
     - type: Appearance
       visuals:
         - type: FlashLightVisualizer
@@ -328,7 +329,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
             {
                 // drop the item, and the item actions should go away
                 serverPlayerEnt.GetComponent<HandsComponent>()
-                    .Drop(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
+                    .TryDropEntity(serverFlashlight, serverPlayerEnt.Transform.Coordinates, false);
                 Assert.That(serverActionsComponent.ItemActionStates().ContainsKey(serverFlashlight.Uid), Is.False);
             });
 

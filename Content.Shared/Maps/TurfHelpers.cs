@@ -1,10 +1,9 @@
-#nullable enable
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Physics;
-using Content.Shared.Utility;
+using Content.Shared.Random.Helpers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -149,32 +148,35 @@ namespace Content.Shared.Maps
         ///     Helper that returns all entities in a turf.
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, bool approximate = false, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this TileRef turf, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             lookupSystem ??= IoCManager.Resolve<IEntityLookup>();
 
-            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, GetWorldTileBox(turf), approximate);
+            if (!GetWorldTileBox(turf, out var worldBox))
+                return Enumerable.Empty<IEntity>();
+
+            return lookupSystem.GetEntitiesIntersecting(turf.MapIndex, worldBox, flags);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, bool approximate = false, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this EntityCoordinates coordinates, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
             var turf = coordinates.GetTileRef();
 
             if (turf == null)
                 return Enumerable.Empty<IEntity>();
 
-            return GetEntitiesInTile(turf.Value, approximate, lookupSystem);
+            return GetEntitiesInTile(turf.Value, flags, lookupSystem);
         }
 
         /// <summary>
         ///     Helper that returns all entities in a turf.
         /// </summary>
-        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, bool approximate = false, IEntityLookup? lookupSystem = null)
+        public static IEnumerable<IEntity> GetEntitiesInTile(this Vector2i indices, GridId gridId, LookupFlags flags = LookupFlags.IncludeAnchored, IEntityLookup? lookupSystem = null)
         {
-            return GetEntitiesInTile(indices.GetTileRef(gridId), approximate, lookupSystem);
+            return GetEntitiesInTile(indices.GetTileRef(gridId), flags, lookupSystem);
         }
 
         /// <summary>
@@ -182,9 +184,10 @@ namespace Content.Shared.Maps
         /// </summary>
         public static bool IsBlockedTurf(this TileRef turf, bool filterMobs)
         {
-            var physics = EntitySystem.Get<SharedBroadPhaseSystem>();
+            var physics = EntitySystem.Get<SharedPhysicsSystem>();
 
-            var worldBox = GetWorldTileBox(turf);
+            if (!GetWorldTileBox(turf, out var worldBox))
+                return false;
 
             var query = physics.GetCollidingEntities(turf.MapIndex, in worldBox);
 
@@ -210,20 +213,25 @@ namespace Content.Shared.Maps
         /// <summary>
         /// Creates a box the size of a tile, at the same position in the world as the tile.
         /// </summary>
-        private static Box2 GetWorldTileBox(TileRef turf)
+        private static bool GetWorldTileBox(TileRef turf, out Box2Rotated res)
         {
             var map = IoCManager.Resolve<IMapManager>();
 
-            // This is scaled to 90 % so it doesn't encompass walls on other tiles.
-            var tileBox = Box2.UnitCentered.Scale(0.9f);
-
             if (map.TryGetGrid(turf.GridIndex, out var tileGrid))
             {
+                // This is scaled to 90 % so it doesn't encompass walls on other tiles.
+                var tileBox = Box2.UnitCentered.Scale(0.9f);
                 tileBox = tileBox.Scale(tileGrid.TileSize);
-                return tileBox.Translated(tileGrid.GridTileToWorldPos(turf.GridIndices));
+                var worldPos = tileGrid.GridTileToWorldPos(turf.GridIndices);
+                tileBox = tileBox.Translated(worldPos);
+                // Now tileBox needs to be rotated to match grid rotation
+                res = new Box2Rotated(tileBox, tileGrid.WorldRotation, worldPos);
+                return true;
             }
 
-            return tileBox;
+            // Have to "return something"
+            res = Box2Rotated.UnitCentered;
+            return false;
         }
     }
 }

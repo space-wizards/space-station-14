@@ -1,7 +1,6 @@
-﻿#nullable enable
 
 using Content.Server.Database;
-using Content.Server.Interfaces;
+using Content.Server.Preferences.Managers;
 using Content.Shared.Administration;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -15,14 +14,14 @@ namespace Content.Server.Administration.Commands
     internal class SetAdminOOC : IConsoleCommand
     {
         public string Command => "setadminooc";
-        public string Description => Loc.GetString($"Sets the color of your OOC messages. Color must be in hex format, example: {Command} #c43b23");
-        public string Help => Loc.GetString($"Usage: {Command} <color>");
+        public string Description => Loc.GetString("set-admin-ooc-command-description", ("command", Command));
+        public string Help => Loc.GetString("set-admin-ooc-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
             if (!(shell.Player is IPlayerSession))
             {
-                shell.WriteError(Loc.GetString("Only players can use this command"));
+                shell.WriteError(Loc.GetString("shell-only-players-can-run-this-command"));
                 return;
             }
 
@@ -36,7 +35,7 @@ namespace Content.Server.Administration.Commands
             var color = Color.TryFromHex(colorArg);
             if (!color.HasValue)
             {
-                shell.WriteError(Loc.GetString("Invalid color hex!"));
+                shell.WriteError(Loc.GetString("shell-invalid-color-hex"));
                 return;
             }
 

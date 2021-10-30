@@ -7,5 +7,5 @@
   components:
     - type: MachineBoard
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: id_mod

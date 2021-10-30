@@ -5,6 +5,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: FlashlightSeclite
+        prob: 1
       - id: TaserGun
         prob: 0.3
       - id: ClothingHeadHatWarden
@@ -31,6 +33,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: FlashlightSeclite
+        prob: 0.8
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
       - id: ClothingHeadHelmetHelmet
@@ -65,11 +69,12 @@
         prob: 1
       - id: ClothingOuterCoatDetective
         prob: 1
-
+      - id: FlashlightSeclite
+        prob: 1
 
 - type: entity
-  id: LockerBombFilled
-  parent: LockerBomb
+  id: ClosetBombFilled
+  parent: ClosetBomb
   suffix: Filled
   components:
   - type: StorageFill

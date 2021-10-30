@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Mobs;
+using Content.Server.Mind;
 using Content.Server.Players;
-using Content.Shared.Utility;
+using Content.Shared.Coordinates;
 using NUnit.Framework;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

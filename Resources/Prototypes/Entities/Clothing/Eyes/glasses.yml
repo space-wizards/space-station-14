@@ -20,7 +20,9 @@
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/gar.rsi
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -36,7 +38,9 @@
     HeldPrefix: alt
     ClothingPrefix: alt
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -51,7 +55,9 @@
     sprite: Clothing/Eyes/Glasses/gar.rsi
     ClothingPrefix: super
   - type: MeleeWeapon
-    damage: 10
+    damage:
+      types:
+        Blunt: 10
 
 - type: entity
   parent: ClothingEyesBase
@@ -63,12 +69,16 @@
     sprite: Clothing/Eyes/Glasses/meson.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/meson.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Radiation: 0.5
 
 - type: entity
   parent: ClothingEyesBase
   id: ClothingEyesGlasses
   name: glasses
-  description: You want to wear glasses in a game? Imagine rping as physically disabled.
+  description: A pair of spectacular spectacles with prescription lenses.
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/glasses.rsi
@@ -85,6 +95,7 @@
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+  - type: FlashImmunity
 
 - type: entity
   parent: ClothingEyesBase
@@ -96,6 +107,7 @@
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/secglasses.rsi
+  - type: FlashImmunity
 
 #Make a scanner category when these actually function and we get the trayson
 - type: entity

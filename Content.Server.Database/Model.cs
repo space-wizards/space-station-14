@@ -44,6 +44,18 @@ namespace Content.Server.Database
                 .HasIndex(p => new {HumanoidProfileId = p.ProfileId, p.AntagName})
                 .IsUnique();
 
+            modelBuilder.Entity<Job>()
+                .HasIndex(j => j.ProfileId);
+
+            modelBuilder.Entity<Job>()
+                .HasIndex(j => j.ProfileId, "IX_job_one_high_priority")
+                .IsUnique()
+                .HasFilter("priority = 3");
+
+            modelBuilder.Entity<Job>()
+                .HasIndex(j => new { j.ProfileId, j.JobName })
+                .IsUnique();
+
             modelBuilder.Entity<AssignedUserId>()
                 .HasIndex(p => p.UserName)
                 .IsUnique();

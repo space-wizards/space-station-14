@@ -1,6 +1,6 @@
 using Content.Server.AI.WorldState;
 using Content.Server.AI.WorldState.States.Combat;
-using Content.Server.GameObjects.Components.Weapon.Melee;
+using Content.Server.Weapon.Melee.Components;
 
 namespace Content.Server.AI.Utility.Considerations.Combat.Melee
 {
@@ -16,7 +16,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat.Melee
             }
 
             // Just went with max health
-            return meleeWeaponComponent.Damage / 300.0f;
+            return meleeWeaponComponent.Damage.Total / 300.0f;
         }
     }
 }

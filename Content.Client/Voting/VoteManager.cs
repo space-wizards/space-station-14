@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Content.Shared.Network.NetMessages;
+using Content.Shared.Voting;
 using Robust.Client;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -9,7 +9,6 @@ using Robust.Shared.IoC;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
-#nullable enable
 
 namespace Content.Client.Voting
 {
@@ -20,7 +19,10 @@ namespace Content.Client.Voting
         void ClearPopupContainer();
         void SetPopupContainer(Control container);
         bool CanCallVote { get; }
+
+        bool CanCallStandardVote(StandardVoteType type, out TimeSpan whenCan);
         event Action<bool> CanCallVoteChanged;
+        event Action CanCallStandardVotesChanged;
     }
 
     public sealed class VoteManager : IVoteManager
@@ -30,17 +32,21 @@ namespace Content.Client.Voting
         [Dependency] private readonly IClientConsoleHost _console = default!;
         [Dependency] private readonly IBaseClient _client = default!;
 
+        private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();
-        private readonly Dictionary<int, VotePopup> _votePopups = new();
+        private readonly Dictionary<int, UI.VotePopup> _votePopups = new();
         private Control? _popupContainer;
 
         public bool CanCallVote { get; private set; }
+
         public event Action<bool>? CanCallVoteChanged;
+
+        public event Action? CanCallStandardVotesChanged;
 
         public void Initialize()
         {
-            _netManager.RegisterNetMessage<MsgVoteData>(MsgVoteData.NAME, ReceiveVoteData);
-            _netManager.RegisterNetMessage<MsgVoteCanCall>(MsgVoteCanCall.NAME, ReceiveVoteCanCall);
+            _netManager.RegisterNetMessage<MsgVoteData>(ReceiveVoteData);
+            _netManager.RegisterNetMessage<MsgVoteCanCall>(ReceiveVoteCanCall);
 
             _client.RunLevelChanged += ClientOnRunLevelChanged;
         }
@@ -53,6 +59,11 @@ namespace Content.Client.Voting
                 ClearPopupContainer();
                 _votes.Clear();
             }
+        }
+
+        public bool CanCallStandardVote(StandardVoteType type, out TimeSpan whenCan)
+        {
+            return !_standardVoteTimeouts.TryGetValue(type, out whenCan);
         }
 
         public void ClearPopupContainer()
@@ -83,7 +94,7 @@ namespace Content.Client.Voting
 
             foreach (var (vId, vote) in _votes)
             {
-                var popup = new VotePopup(vote);
+                var popup = new UI.VotePopup(vote);
 
                 _votePopups.Add(vId, popup);
                 _popupContainer.AddChild(popup);
@@ -148,7 +159,7 @@ namespace Content.Client.Voting
 
             if (@new && _popupContainer != null)
             {
-                var popup = new VotePopup(existingVote);
+                var popup = new UI.VotePopup(existingVote);
 
                 _votePopups.Add(voteId, popup);
                 _popupContainer.AddChild(popup);
@@ -162,11 +173,20 @@ namespace Content.Client.Voting
 
         private void ReceiveVoteCanCall(MsgVoteCanCall message)
         {
-            if (CanCallVote == message.CanCall)
-                return;
+            if (CanCallVote != message.CanCall)
+            {
+                // TODO: actually use the "when can call vote" time for UI display or something.
+                CanCallVote = message.CanCall;
+                CanCallVoteChanged?.Invoke(CanCallVote);
+            }
 
-            CanCallVote = message.CanCall;
-            CanCallVoteChanged?.Invoke(CanCallVote);
+            _standardVoteTimeouts.Clear();
+            foreach (var (type, time) in message.VotesUnavailable)
+            {
+                _standardVoteTimeouts.Add(type, _gameTiming.RealServerToLocal(time));
+            }
+
+            CanCallStandardVotesChanged?.Invoke();
         }
 
         public void SendCastVote(int voteId, int option)

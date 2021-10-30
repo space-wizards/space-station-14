@@ -1,4 +1,3 @@
-﻿#nullable enable
 using System;
 using System.Collections.Generic;
 using Robust.Shared.Prototypes;
@@ -17,9 +16,6 @@ namespace Content.Shared.VendingMachines
 
         [DataField("name")]
         public string Name { get; } = string.Empty;
-
-        [DataField("description")]
-        public string Description { get; } = string.Empty;
 
         [DataField("animationDuration")]
         public double AnimationDuration { get; }

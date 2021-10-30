@@ -5,8 +5,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 32
+    damage:
+      types:
+        Piercing: 32
 
 - type: entity
   id: BulletMagnumFlash
@@ -15,8 +16,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 32
+    damage:
+      types:
+        Piercing: 32
 
 - type: entity
   id: BulletMagnumHV
@@ -25,8 +27,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Piercing: 35
+    damage:
+      types:
+        Piercing: 35
 
 - type: entity
   id: BulletMagnumPractice
@@ -35,8 +38,9 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 1
+    damage:
+      types:
+        Blunt: 1
 
 - type: entity
   id: BulletMagnumRubber
@@ -45,5 +49,6 @@
   abstract: true
   components:
   - type: Projectile
-    damages:
-      Blunt: 3
+    damage:
+      types:
+        Blunt: 3

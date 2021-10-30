@@ -15,6 +15,7 @@ blockgame-menu-gameover-info = Global: {$global}
 blockgame-menu-title = Nanotrasen Block Game
 blockgame-menu-button-new-game = New Game
 blockgame-menu-button-scoreboard = Scoreboard
+blockgame-menu-button-pause = Pause
 blockgame-menu-button-unpause = Unpause
 blockgame-menu-msg-game-over = Game over!
 blockgame-menu-label-highscores = Highscores

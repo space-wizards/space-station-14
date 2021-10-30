@@ -1,10 +1,7 @@
 # Base
 
-- type: Tag
-  id: Egg
-
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodEggBase
   description: An egg!
   abstract: true
@@ -20,26 +17,38 @@
     sprite: Objects/Consumable/Food/egg.rsi
     netsync: false
     size: 1
-  - type: SolutionContainer
-    maxVol: 5
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 5
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 6
+        reagents:
+        - ReagentId: Egg
+          Quantity: 5
   - type: DamageOnLand
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
   - type: DamageOtherOnHit
-    amount: 1
+    damage:
+      types:
+        Blunt: 1
+       #Dignity: 25
+  - type: DamageOnHighSpeedImpact
+    minimumSpeed: 0.1
+    damage:
+      types:
+        Blunt: 1
   - type: Damageable
+    damageContainer: Biological
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 1
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: desecration
+      - !type:PlaySoundBehavior
+        sound:
+          collection: desecration
       - !type:SpawnEntitiesBehavior
         spawn:
           Eggshells:
@@ -61,12 +70,21 @@
   description: If the floor was a little hotter this would fry.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Food/egg.rsi
+    sprite: Fluids/egg_splat.rsi
     state: egg-0
+    netsync: false
   - type: Puddle
-    variants: 4
-    state: egg
-    
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Egg
+          Quantity: 2
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -80,12 +98,16 @@
     netsync: false
   - type: Item
     size: 1
-  - type: SolutionContainer
-    maxVol: 1
-    contents:
-      reagents:
-      - ReagentId: Egg
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 2
+        reagents:
+        - ReagentId: Egg
+          Quantity: 1
+  - type: Tag
+    tags:
+    - Egg
 
 # Egg
 

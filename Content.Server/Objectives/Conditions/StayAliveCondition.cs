@@ -1,7 +1,4 @@
-﻿#nullable enable
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using JetBrains.Annotations;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,16 +10,16 @@ namespace Content.Server.Objectives.Conditions
     [DataDefinition]
     public class StayAliveCondition : IObjectiveCondition
     {
-        private Mind? _mind;
+        private Mind.Mind? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind mind)
+        public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             return new StayAliveCondition {_mind = mind};
         }
 
-        public string Title => Loc.GetString("Stay alive.");
+        public string Title => Loc.GetString("objective-condition-stay-alive-title");
 
-        public string Description => Loc.GetString("Survive this shift, we need you for another assignment.");
+        public string Description => Loc.GetString("objective-condition-stay-alive-description");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/skub.rsi"), "icon"); //didn't know what else would have been a good icon for staying alive
 

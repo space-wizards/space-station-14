@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Damage;
+using System.Collections.Generic;
+using Content.Server.AI.Components;
+using Content.Shared.Damage;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -32,7 +32,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
                     continue;
                 }
 
-                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<IDamageableComponent>())
+                if (player.AttachedEntity != Owner && player.AttachedEntity.HasComponent<DamageableComponent>())
                 {
                     result.Add(player.AttachedEntity);
                 }

@@ -1,7 +1,4 @@
-﻿#nullable enable
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
-using Content.Shared.GameObjects.Components.Mobs.State;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -9,12 +6,12 @@ namespace Content.Server.Objectives.Conditions
 {
     public abstract class KillPersonCondition : IObjectiveCondition
     {
-        protected Mind? Target;
-        public abstract IObjectiveCondition GetAssigned(Mind mind);
+        protected Mind.Mind? Target;
+        public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
 
-        public string Title => Loc.GetString("Kill {0}", Target?.OwnedEntity?.Name ?? "");
+        public string Title => Loc.GetString("objective-condition-kill-person-title", ("targetName", Target?.OwnedEntity?.Name ?? string.Empty));
 
-        public string Description => Loc.GetString("Do it however you like, just make sure they don't last the shift.");
+        public string Description => Loc.GetString("objective-condition-kill-person-description");
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Weapons/Guns/Pistols/mk58_wood.rsi"), "icon");
 

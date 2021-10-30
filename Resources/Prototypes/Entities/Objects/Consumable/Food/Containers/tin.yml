@@ -7,8 +7,10 @@
   name: tin
   description: A tin of something, sealed tight.
   components:
-  - type: SolutionContainer
-    maxVol: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     netsync: false
@@ -17,10 +19,15 @@
     HeldPrefix: packet
     color: gray
   - type: DamageOnLand
-    amount: 3
+    damage:
+      types:
+        Blunt: 3
   - type: DamageOtherOnHit
-    amount: 3
+    damage:
+      types:
+        Blunt: 3
   - type: Damageable
+    damageContainer: Inorganic
 
 - type: entity
   abstract: true
@@ -55,8 +62,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesOpen:
@@ -73,12 +81,13 @@
   components:
   - type: Sprite
     state: peachtin-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinPeachesTrash
 
@@ -104,8 +113,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinPeachesMaintOpen:
@@ -122,12 +132,12 @@
   components:
   - type: Sprite
     state: peachtinmaint-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinPeachesMaintTrash
 
@@ -153,8 +163,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinBeansOpen:
@@ -171,12 +182,12 @@
   components:
   - type: Sprite
     state: beans-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinBeansTrash
 
@@ -204,8 +215,9 @@
         !type:DamageTrigger
         damage: 6
       behaviors:
-      - !type:PlaySoundCollectionBehavior
-        soundCollection: canOpenSounds
+      - !type:PlaySoundBehavior
+        sound:
+          collection: canOpenSounds
       - !type:SpawnEntitiesBehavior
         spawn:
           FoodTinMREOpen:
@@ -222,12 +234,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/mre.rsi
     state: tin-open
-  - type: SolutionContainer
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 15
-  - type: LoopingSound
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
   - type: Food
     trash: FoodTinMRETrash
 

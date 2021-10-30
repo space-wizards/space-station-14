@@ -1,0 +1,4 @@
+- type: soundCollection
+  id: BikeHorn
+  files:
+  - /Audio/Items/bikehorn.ogg

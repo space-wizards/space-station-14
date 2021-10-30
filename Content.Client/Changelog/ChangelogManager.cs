@@ -13,7 +13,6 @@ using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Utility;
 
-#nullable enable
 
 namespace Content.Client.Changelog
 {

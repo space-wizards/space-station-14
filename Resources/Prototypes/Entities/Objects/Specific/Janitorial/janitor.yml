@@ -12,8 +12,10 @@
     size: 10
     sprite: Objects/Specific/Janitorial/mop.rsi
   - type: Mop
-  - type: SolutionContainer
-    maxVol: 10
+  - type: SolutionContainerManager
+    solutions:
+      mop:
+        maxVol: 10
 
 - type: entity
   name: mop bucket
@@ -30,10 +32,11 @@
     drawdepth: Objects
   - type: InteractionOutline
   - type: Bucket
-  - type: SolutionContainer
-    maxVol: 500
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+        maxVol: 500
+        reagents:
         - ReagentId: Water
           Quantity: 500
   - type: Physics
@@ -41,7 +44,7 @@
     fixtures:
     - shape:
         !type:PhysShapeAabb
-          bounds: "-0.40,-0.25,0.25,0.25"
+          bounds: "-0.25,-0.40,0.25,0.25"
       mass: 20
       mask:
       - Impassable

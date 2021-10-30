@@ -12,14 +12,24 @@
     sprite: Objects/Tools/bucket.rsi
     state: icon
   - type: Clothing
+    size: 100
     sprite: Objects/Tools/bucket.rsi
     Slots:
     - Helmet
   - type: Bucket
-  - type: SolutionContainer
-    maxVol: 500
+  - type: SolutionContainerManager
+    solutions:
+      bucket:
+        maxVol: 500
   - type: SolutionTransfer
     transferAmount: 50
+    maxTransferAmount: 100
+    minTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
   - type: Physics
     bodyType: Dynamic
     fixtures:
@@ -30,3 +40,4 @@
       mask:
       - Impassable
   - type: Spillable
+    solution: bucket

@@ -1,7 +1,7 @@
-#nullable enable
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
 using System;
+// ReSharper disable InconsistentNaming
 
 namespace Content.Shared.Atmos
 {
@@ -25,6 +25,12 @@ namespace Content.Shared.Atmos
         ///     1 ATM in kPA.
         /// </summary>
         public const float OneAtmosphere = 101.325f;
+
+        /// <summary>
+        ///     Maximum external pressure (in kPA) a gas miner will, by default, output to.
+        ///     This is used to initialize roundstart atmos rooms.
+        /// </summary>
+        public const float GasMinerDefaultMaxExternalPressure = 6500f;
 
         /// <summary>
         ///     -270.3ºC in K. CMB stands for Cosmic Microwave Background.
@@ -56,6 +62,11 @@ namespace Content.Shared.Atmos
         ///     Moles in a 2.5 m^3 cell at 101.325 kPa and 20ºC
         /// </summary>
         public const float MolesCellStandard = (OneAtmosphere * CellVolume / (T20C * R));
+
+        /// <summary>
+        ///     Moles in a 2.5 m^3 cell at GasMinerDefaultMaxExternalPressure kPa and 20ºC
+        /// </summary>
+        public const float MolesCellGasMiner = (GasMinerDefaultMaxExternalPressure * CellVolume / (T20C * R));
 
         /// <summary>
         ///     Compared against for superconduction.
@@ -142,14 +153,14 @@ namespace Content.Shared.Atmos
         #endregion
 
         /// <summary>
-        ///     Hard limit for tile equalization.
+        ///     Hard limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosHardTileLimit = 2000;
+        public const int MonstermosHardTileLimit = 2000;
 
         /// <summary>
         ///     Limit for zone-based tile equalization.
         /// </summary>
-        public const int ZumosTileLimit = 200;
+        public const int MonstermosTileLimit = 200;
 
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
@@ -244,6 +255,20 @@ namespace Content.Shared.Atmos
         public const float HumanProducedOxygen = HumanNeededOxygen * 0.75f;
 
         public const float HumanProducedCarbonDioxide = HumanNeededOxygen * 0.25f;
+
+        #region Pipes
+
+        /// <summary>
+        ///     The pressure pumps and powered equipment max out at, in kPa.
+        /// </summary>
+        public const float MaxOutputPressure = 4500;
+
+        /// <summary>
+        ///     The maximum speed powered equipment can work at, in L/s.
+        /// </summary>
+        public const float MaxTransferRate = 200;
+
+        #endregion
     }
 
     /// <summary>

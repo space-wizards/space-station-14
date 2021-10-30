@@ -4,7 +4,7 @@
 # Base
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: FoodMealBase
   abstract: true
   description: A delicious meal, cooked with love.
@@ -13,12 +13,13 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/meals.rsi
     netsync: false
-  - type: SolutionContainer
-    maxVol: 20
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 20
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 26
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 20
 
 # Meals
 
@@ -100,12 +101,14 @@
   components:
   - type: Sprite
     state: mint
-  - type: SolutionContainer
-    maxVol: 1
-    contents:
-      reagents:
-      - ReagentId: Nutriment
-        Quantity: 1
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        # Note that this acts as the limiter against injecting anything.
+        maxVol: 1
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 1
 # Tastes like parsnips, salt.
 
 - type: entity

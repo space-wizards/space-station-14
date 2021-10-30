@@ -1,25 +1,14 @@
 ﻿- type: stack
   id: Cable
-  name: cable
+  name: lv cable
   icon: "/Textures/Objects/Tools/cable-coils.rsi/coil-30.png"
-  spawn: ApcExtensionCableStack1
+  spawn: CableApcStack1
 
 - type: stack
-  id: MVCable
+  id: CableMV
   name: mv cable
+  spawn: CableHVStack1
 
 - type: stack
-  id: HVCable
+  id: CableHV
   name: hv cable
-
-- type: stack
-  id: HVWireStack1
-  name: hv wire
-
-- type: stack
-  id: MVWireStack1
-  name: mv wire
-
-- type: stack
-  id: ApcExtensionCableStack1
-  name: apc extension cable

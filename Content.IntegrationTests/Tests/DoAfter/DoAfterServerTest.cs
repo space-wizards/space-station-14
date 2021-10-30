@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.DoAfter;
 using Content.Server.GameObjects.Components;
-using Content.Server.GameObjects.EntitySystems.DoAfter;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime / 2, cancelToken.Token);
-                task = EntitySystem.Get<DoAfterSystem>().DoAfter(args);
+                task = EntitySystem.Get<DoAfterSystem>().WaitDoAfter(args);
             });
 
             await server.WaitRunTicks(1);
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
                 var mob = entityManager.SpawnEntity("Dummy", MapCoordinates.Nullspace);
                 var cancelToken = new CancellationTokenSource();
                 var args = new DoAfterEventArgs(mob, tickTime * 2, cancelToken.Token);
-                task = EntitySystem.Get<DoAfterSystem>().DoAfter(args);
+                task = EntitySystem.Get<DoAfterSystem>().WaitDoAfter(args);
                 cancelToken.Cancel();
             });
 

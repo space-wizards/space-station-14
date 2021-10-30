@@ -10,7 +10,7 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
-    sprite: Constructible/Power/conveyor.rsi
+    sprite: Structures/conveyor.rsi
     state: conveyor_stopped_cw
   conditions:
     - !type:TileNotBlocked {}
@@ -26,7 +26,7 @@
   objectType: Structure
   canBuildInImpassable: false
   icon:
-    sprite: Constructible/Power/conveyor.rsi
+    sprite: Structures/conveyor.rsi
     state: switch-off
   conditions:
     - !type:TileNotBlocked {}

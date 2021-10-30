@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="32"
+   height="32"
+   viewBox="0 0 8.4666665 8.4666665"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   sodipodi:docname="die.svg"
+   inkscape:export-filename="C:\Users\vince\Documents\GitKraken\space-wizards\space-station-14\Resources\Textures\Interface\VerbIcons\die.svg.192dpi.png"
+   inkscape:export-xdpi="192"
+   inkscape:export-ydpi="192">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313709"
+     inkscape:cx="11.175023"
+     inkscape:cy="18.632593"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="true"
+     units="px"
+     objecttolerance="20"
+     inkscape:pagecheckerboard="true"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     scale-x="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid5090"
+       originx="0"
+       originy="-3.4933333e-006" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-288.53334)">
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:3.90235829;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       d="M 8 4 C 5.7840003 4 4 5.7840252 4 8 L 4 24 C 4 26.216013 5.7840003 28 8 28 L 24 28 C 26.216 28 28 26.216013 28 24 L 28 8 C 28 5.7840252 26.216 4 24 4 L 8 4 z M 10.5 8 A 2.4999999 2.4999999 0 0 1 13 10.5 A 2.4999999 2.4999999 0 0 1 10.5 13 A 2.4999999 2.4999999 0 0 1 8 10.5 A 2.4999999 2.4999999 0 0 1 10.5 8 z M 21.5 8 A 2.4999999 2.4999999 0 0 1 24 10.5 A 2.4999999 2.4999999 0 0 1 21.5 13 A 2.4999999 2.4999999 0 0 1 19 10.5 A 2.4999999 2.4999999 0 0 1 21.5 8 z M 16 13.5 A 2.4999999 2.4999999 0 0 1 18.5 16 A 2.4999999 2.4999999 0 0 1 16 18.5 A 2.4999999 2.4999999 0 0 1 13.5 16 A 2.4999999 2.4999999 0 0 1 16 13.5 z M 10.5 19 A 2.4999999 2.4999999 0 0 1 13 21.5 A 2.4999999 2.4999999 0 0 1 10.5 24 A 2.4999999 2.4999999 0 0 1 8 21.5 A 2.4999999 2.4999999 0 0 1 10.5 19 z M 21.5 19 A 2.4999999 2.4999999 0 0 1 24 21.5 A 2.4999999 2.4999999 0 0 1 21.5 24 A 2.4999999 2.4999999 0 0 1 19 21.5 A 2.4999999 2.4999999 0 0 1 21.5 19 z "
+       transform="matrix(0.26458333,0,0,0.26458333,0,288.53334)"
+       id="rect5088" />
+  </g>
+</svg>

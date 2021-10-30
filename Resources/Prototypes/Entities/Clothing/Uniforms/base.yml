@@ -7,6 +7,8 @@
     state: icon
   - type: Clothing
     Slots: [innerclothing]
+    EquipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg
 
 - type: entity
   abstract: true
@@ -18,3 +20,5 @@
   - type: Clothing
     Slots: [innerclothing]
     femaleMask: UniformTop
+    EquipSound:
+      path: /Audio/Items/jumpsuit_equip.ogg

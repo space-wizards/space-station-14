@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
+using Content.Server.AI.Components;
 using Content.Server.AI.Utils;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Body;
+using Content.Shared.Body.Components;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -21,7 +21,7 @@ namespace Content.Server.AI.WorldState.States.Mobs
                 return result;
             }
 
-            foreach (var entity in Visibility.GetEntitiesInRange(Owner.Transform.Coordinates, typeof(IBody), controller.VisionRadius))
+            foreach (var entity in Visibility.GetEntitiesInRange(Owner.Transform.Coordinates, typeof(SharedBodyComponent), controller.VisionRadius))
             {
                 if (entity == Owner) continue;
                 result.Add(entity);

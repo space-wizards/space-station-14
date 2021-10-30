@@ -4,5 +4,4 @@
   abstract: true
   components:
   - type: Sprite
-  - type: Physics
   - type: AnimationPlayer

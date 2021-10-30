@@ -19,6 +19,8 @@
         amount: 1
       - id: PlushieLizard
         amount: 1
+      - id: PlushieVox
+        amount: 1
 
 - type: entity
   id: CrateFunInstruments

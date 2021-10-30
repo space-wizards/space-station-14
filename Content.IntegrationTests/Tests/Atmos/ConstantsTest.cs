@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems;
+using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Atmos
 
             await server.WaitIdleAsync();
 
-            server.Post(() =>
+            await server.WaitPost(() =>
             {
                 var atmosSystem = EntitySystem.Get<AtmosphereSystem>();
 

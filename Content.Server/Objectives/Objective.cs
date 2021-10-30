@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Content.Server.Mobs;
 using Content.Server.Objectives.Interfaces;
 using Robust.Shared.ViewVariables;
 
@@ -9,14 +8,14 @@ namespace Content.Server.Objectives
     public class Objective : IEquatable<Objective>
     {
         [ViewVariables]
-        public readonly Mind Mind;
+        public readonly Mind.Mind Mind;
         [ViewVariables]
         public readonly ObjectivePrototype Prototype;
         private readonly List<IObjectiveCondition> _conditions = new();
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
-        public Objective(ObjectivePrototype prototype, Mind mind)
+        public Objective(ObjectivePrototype prototype, Mind.Mind mind)
         {
             Prototype = prototype;
             Mind = mind;

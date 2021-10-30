@@ -24,9 +24,9 @@
 #  parent: LockerFormal
 
 - type: entity
-  id: LockerChefFilled
+  id: ClosetChefFilled
   suffix: Filled
-  parent: LockerChef
+  parent: ClosetChef
   components:
   - type: StorageFill
     contents:
@@ -36,9 +36,9 @@
       - id: ReagentContainerFlour
 
 - type: entity
-  id: LockerJanitorFilled
+  id: ClosetJanitorFilled
   suffix: Filled
-  parent: LockerJanitor
+  parent: ClosetJanitor
   components:
   - type: StorageFill
     contents:
@@ -72,6 +72,10 @@
         prob: 1
       - id: ClothingOuterApronBotanist
         prob: 0.8
+      - id: HydroponicsToolClippers
+        prob: 0.5
+      - id: ClothingBeltPlant
+        prob: 1
       - id: TowercapSeeds
         prob: 1
       - id: BananaSeeds
@@ -82,3 +86,7 @@
         prob: 0.8
       - id: TomatoSeeds
         prob: 1
+      - id: ClothingUniformOveralls
+        prob: 1
+      - id: ClothingHeadHatTrucker
+        prob: 0.1

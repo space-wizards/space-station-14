@@ -1,16 +1,12 @@
-// ReSharper disable once RedundantUsingDirective
-// Used to warn the player in big red letters in debug mode
 using System;
-using Content.Client.GameObjects.Components;
-using Content.Client.GameObjects.EntitySystems;
-using Content.Client.Interfaces;
-using Content.Shared.GameObjects.Components;
-using Content.Shared.GameObjects.EntitySystems;
+using Content.Client.Markers;
+using Content.Client.Popups;
+using Content.Shared.SubFloor;
 using Robust.Client.GameObjects;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using DrawDepth = Content.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Commands
 {
@@ -54,7 +50,7 @@ namespace Content.Client.Commands
             EntitySystem.Get<SubFloorHideSystem>()
                 .ShowAll = true;
 
-            var components = IoCManager.Resolve<IEntityManager>().ComponentManager
+            var components = IoCManager.Resolve<IEntityManager>()
                 .EntityQuery<SubFloorHideComponent>(true);
 
             foreach (var component in components)
@@ -77,8 +73,7 @@ namespace Content.Client.Commands
         {
             var message = args[0];
 
-            var notifyManager = IoCManager.Resolve<IClientNotifyManager>();
-            notifyManager.PopupMessage(message);
+            EntitySystem.Get<PopupSystem>().PopupCursor(message);
         }
     }
 

@@ -1,4 +1,4 @@
-﻿- type: construction
+- type: construction
   name: girder
   id: girder
   graph: girder
@@ -7,7 +7,7 @@
   category: Structures
   description: A large structural assembly made out of metal.
   icon:
-    sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+    sprite: /Textures/Structures/Walls/solid.rsi
     state: wall_girder
   objectType: Structure
   placementMode: SnapgridCenter
@@ -25,7 +25,7 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -43,7 +43,7 @@
   category: Structures
   description: Keeps the air in and the greytide out.
   icon:
-    sprite: Constructible/Structures/Walls/solid.rsi
+    sprite: Structures/Walls/solid.rsi
     state: rgeneric
   objectType: Structure
   placementMode: SnapgridCenter
@@ -53,19 +53,18 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: low wall
-  id: LowWall
-  graph: lowWall
+  name: grille
+  id: Grille
+  graph: grille
   startNode: start
-  targetNode: lowWall
+  targetNode: grille
   category: Structures
-  description: A low wall used for mounting windows.
+  description: A flimsy framework of iron rods.
   conditions:
-    - !type:NoWindowsInTile {}
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
   icon:
-    sprite: Constructible/Structures/Walls/low_wall.rsi
-    state: metal
+    sprite: Structures/Walls/grille.rsi
+    state: grille
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
@@ -77,12 +76,13 @@
   startNode: start
   targetNode: window
   category: Structures
-  description: Clear. Must be built on top of a low wall.
+  description: Clear.
+  canBuildInImpassable: true
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/window.rsi
+    sprite: Structures/Windows/window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -95,12 +95,13 @@
   startNode: start
   targetNode: reinforcedWindow
   category: Structures
-  description: Clear but tough. Must be built on top of a low wall.
+  description: Clear but tough.
+  canBuildInImpassable: true
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/reinforced_window.rsi
+    sprite: Structures/Windows/reinforced_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -113,19 +114,39 @@
   startNode: start
   targetNode: plasmaWindow
   category: Structures
-  description: Clear and even tougher, with an orange tint. Must be built on top of a low wall.
+  canBuildInImpassable: true
+  description: Clear and even tougher, with a purple tint.
   conditions:
-    - !type:LowWallInTile {}
+    - !type:EmptyOrWindowValidInTile {}
     - !type:NoWindowsInTile {}
   icon:
-    sprite: Constructible/Structures/Windows/plasma_window.rsi
+    sprite: Structures/Windows/plasma_window.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
 
 - type: construction
-  name: Firelock
+  name: reinforced plasma window
+  id: ReinforcedPlasmaWindow
+  graph: window
+  startNode: start
+  targetNode: reinforcedPlasmaWindow
+  category: Structures
+  canBuildInImpassable: true
+  description: Fire resistant and even tougher, with a purple tint.
+  conditions:
+    - !type:EmptyOrWindowValidInTile {}
+    - !type:NoWindowsInTile {}
+  icon:
+    sprite: Structures/Windows/reinforced_plasma_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: firelock
   id: Firelock
   graph: Firelock
   startNode: start
@@ -133,7 +154,7 @@
   category: Structures
   description: This is a firelock - it locks an area when a fire alarm in the area is triggered. Don't get squished!
   icon:
-    sprite: Constructible/Structures/Doors/Standard/firelock.rsi
+    sprite: Structures/Doors/Airlocks/Standard/firelock.rsi
     state: closed
   objectType: Structure
   placementMode: SnapgridCenter
@@ -142,7 +163,7 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Catwalk
+  name: catwalk
   id: Catwalk
   graph: Catwalk
   startNode: start
@@ -157,14 +178,14 @@
         - plating
         - underplating
   icon:
-    sprite: Constructible/Tiles/catwalk.rsi
+    sprite: Structures/catwalk.rsi
     state: catwalk_preview
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
 
 - type: construction
-  name: Wooden Barricade
+  name: wooden barricade
   id: Barricade
   graph: barricade
   startNode: start
@@ -172,7 +193,7 @@
   category: Structures
   description: An improvised barricade made out of wooden planks.
   icon:
-    sprite: Constructible/Structures/barricades.rsi
+    sprite: Structures/Walls/barricades.rsi
     state: barricadewooden
   objectType: Structure
   placementMode: SnapgridCenter
@@ -181,7 +202,7 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: Airlock
+  name: airlock
   id: airlock
   graph: airlock
   startNode: start
@@ -189,10 +210,44 @@
   category: Structures
   description: It opens, it closes, and maybe crushes you.
   icon:
-    sprite: Constructible/Structures/Doors/Standard/basic.rsi
+    sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     state: assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: windoor
+  id: windoor
+  graph: windoor
+  startNode: start
+  targetNode: windoor
+  category: Structures
+  description: It opens, it closes, and you can see through it!
+  icon:
+    sprite: Structures/Doors/Windoors/windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked {}
+
+- type: construction
+  name: secure windoor
+  id: secureWindoor
+  graph: windoor
+  startNode: start
+  targetNode: windoorSecure
+  category: Structures
+  description: It opens, it closes, and you can see through it! This one looks tough.
+  icon:
+    sprite: Structures/Doors/Windoors/windoor.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked {}

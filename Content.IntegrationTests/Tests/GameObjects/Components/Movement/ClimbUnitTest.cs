@@ -1,7 +1,7 @@
 #nullable enable
 
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Movement;
+using Content.Server.Climbing.Components;
 using Content.Shared.Physics;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;

@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Database;
+using Content.Shared.CharacterAppearance;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
@@ -98,7 +99,9 @@ namespace Content.Tests.Server.Preferences
             var db = GetDb();
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             IoCManager.Resolve<ISerializationManager>().Initialize();
-            IoCManager.Resolve<IPrototypeManager>().LoadFromStream(new StringReader(Prototypes));
+            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
+            prototypeManager.LoadFromStream(new StringReader(Prototypes));
             await db.InitPrefsAsync(username, HumanoidCharacterProfile.Default());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);

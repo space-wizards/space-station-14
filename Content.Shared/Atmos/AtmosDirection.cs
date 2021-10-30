@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System;
+﻿using System;
 using System.Runtime.CompilerServices;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization;
@@ -142,6 +141,28 @@ namespace Content.Shared.Atmos
         public static bool IsFlagSet(this AtmosDirection direction, AtmosDirection other)
         {
             return (direction & other) == other;
+        }
+
+        public static Vector2i CardinalToIntVec(this AtmosDirection dir)
+        {
+            switch (dir)
+            {
+                case AtmosDirection.North:
+                    return new Vector2i(0, 1);
+                case AtmosDirection.East:
+                    return new Vector2i(1, 0);
+                case AtmosDirection.South:
+                    return new Vector2i(0, -1);
+                case AtmosDirection.West:
+                    return new Vector2i(-1, 0);
+                default:
+                    throw new ArgumentException($"Direction dir {dir} is not a cardinal direction", nameof(dir));
+            }
+        }
+
+        public static Vector2i Offset(this Vector2i pos, AtmosDirection dir)
+        {
+            return pos + dir.CardinalToIntVec();
         }
     }
 

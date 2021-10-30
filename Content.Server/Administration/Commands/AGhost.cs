@@ -1,7 +1,8 @@
-﻿using Content.Server.GameObjects.Components.Observer;
-using Content.Server.Interfaces.GameTicking;
+﻿using Content.Server.GameTicking;
+using Content.Server.Ghost.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -35,18 +36,23 @@ namespace Content.Server.Administration.Commands
 
             if (mind.VisitingEntity != null && mind.VisitingEntity.HasComponent<GhostComponent>())
             {
-                shell.WriteLine("Aren't you a ghost already?");
+                player.ContentData()!.Mind?.UnVisit();
                 return;
             }
 
             var canReturn = mind.CurrentEntity != null;
             var ghost = IoCManager.Resolve<IEntityManager>()
                 .SpawnEntity("AdminObserver", player.AttachedEntity?.Transform.Coordinates
-                                              ?? IoCManager.Resolve<IGameTicker>().GetObserverSpawnPoint());
+                                              ?? EntitySystem.Get<GameTicker>().GetObserverSpawnPoint());
 
             if (canReturn)
             {
-                ghost.Name = mind.CharacterName ?? string.Empty;
+                // TODO: Remove duplication between all this and "GamePreset.OnGhostAttempt()"...
+                if(!string.IsNullOrWhiteSpace(mind.CharacterName))
+                    ghost.Name = mind.CharacterName;
+                else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
+                    ghost.Name = mind.Session.Name;
+
                 mind.Visit(ghost);
             }
             else
@@ -55,7 +61,8 @@ namespace Content.Server.Administration.Commands
                 mind.TransferTo(ghost);
             }
 
-            ghost.GetComponent<GhostComponent>().CanReturnToBody = canReturn;
+            var comp = ghost.GetComponent<GhostComponent>();
+            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(comp, canReturn);
         }
     }
 }

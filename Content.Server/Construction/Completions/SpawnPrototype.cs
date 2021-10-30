@@ -1,10 +1,7 @@
-﻿#nullable enable
-using System;
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Stack;
+﻿using System.Threading.Tasks;
+using Content.Server.Stack;
 using Content.Shared.Construction;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Shared.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -19,17 +16,18 @@ namespace Content.Server.Construction.Completions
         [DataField("prototype")] public string Prototype { get; private set; } = string.Empty;
         [DataField("amount")] public int Amount { get; private set; } = 1;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted || string.IsNullOrEmpty(Prototype)) return;
+            if (string.IsNullOrEmpty(Prototype))
+                return;
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var coordinates = entity.Transform.Coordinates;
+            var coordinates = entityManager.GetComponent<ITransformComponent>(uid).Coordinates;
 
             if (EntityPrototypeHelpers.HasComponent<StackComponent>(Prototype))
             {
-                var stack = entityManager.SpawnEntity(Prototype, coordinates);
-                stack.EntityManager.EventBus.RaiseLocalEvent(stack.Uid, new StackChangeCountEvent(Amount), false);
+                var stackEnt = entityManager.SpawnEntity(Prototype, coordinates);
+                var stack = stackEnt.GetComponent<StackComponent>();
+                entityManager.EntitySysManager.GetEntitySystem<StackSystem>().SetCount(stackEnt.Uid, Amount, stack);
             }
             else
             {

@@ -5,5 +5,5 @@
   description: Advanced circuit board used to detect differences in pressure, temperature and gas concentrations between the two sides of the door.
   components:
     - type: Sprite
-      sprite: Constructible/Misc/module.rsi
+      sprite: Objects/Misc/module.rsi
       state: generic

@@ -1,23 +1,27 @@
-#nullable enable
+using System;
 using System.Collections.Generic;
-using Content.Server.Actions;
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.Components.Movement;
-using Content.Server.GameObjects.Components.Sound;
+using Content.Server.Inventory.Components;
+using Content.Server.Items;
+using Content.Server.Movement.Components;
+using Content.Server.Shuttles;
 using Content.Shared.Audio;
-using Content.Shared.GameObjects.Components.Inventory;
-using Content.Shared.GameObjects.Components.Movement;
-using Content.Shared.GameObjects.Components.Tag;
+using Content.Shared.CCVar;
+using Content.Shared.Inventory;
 using Content.Shared.Maps;
-using Content.Shared.Physics.Controllers;
+using Content.Shared.Movement;
+using Content.Shared.Movement.Components;
+using Content.Shared.Sound;
+using Content.Shared.Shuttles;
+using Content.Shared.Tag;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Player;
@@ -29,22 +33,22 @@ namespace Content.Server.Physics.Controllers
 {
     public class MoverController : SharedMoverController
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
-        private AudioSystem _audioSystem = default!;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
+
+        private float _shuttleDockSpeedCap;
 
         private HashSet<EntityUid> _excludedMobs = new();
 
         public override void Initialize()
         {
             base.Initialize();
-            _audioSystem = EntitySystem.Get<AudioSystem>();
+
+            var configManager = IoCManager.Resolve<IConfigurationManager>();
+            configManager.OnValueChanged(CCVars.ShuttleDockSpeedCap, value => _shuttleDockSpeedCap = value, true);
         }
 
         public override void UpdateBeforeSolve(bool prediction, float frameTime)
@@ -52,19 +56,20 @@ namespace Content.Server.Physics.Controllers
             base.UpdateBeforeSolve(prediction, frameTime);
             _excludedMobs.Clear();
 
-            foreach (var (mobMover, mover, physics) in ComponentManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
+            foreach (var (mobMover, mover, physics) in EntityManager.EntityQuery<IMobMoverComponent, IMoverComponent, PhysicsComponent>())
             {
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleMobMovement(mover, physics, mobMover);
             }
 
-            foreach (var mover in ComponentManager.EntityQuery<ShuttleControllerComponent>())
+            foreach (var (pilot, mover) in EntityManager.EntityQuery<PilotComponent, SharedPlayerInputMoverComponent>())
             {
+                if (pilot.Console == null) continue;
                 _excludedMobs.Add(mover.Owner.Uid);
                 HandleShuttleMovement(mover);
             }
 
-            foreach (var (mover, physics) in ComponentManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
+            foreach (var (mover, physics) in EntityManager.EntityQuery<IMoverComponent, PhysicsComponent>(true))
             {
                 if (_excludedMobs.Contains(mover.Owner.Uid)) continue;
 
@@ -78,24 +83,74 @@ namespace Content.Server.Physics.Controllers
          * The reason for this is that vehicles change direction very slowly compared to players so you don't really have the requirement for quick movement anyway
          * As such could probably just look at applying a force / impulse to the shuttle server-side only so it controls like the titanic.
          */
-        private void HandleShuttleMovement(ShuttleControllerComponent mover)
+        private void HandleShuttleMovement(SharedPlayerInputMoverComponent mover)
         {
             var gridId = mover.Owner.Transform.GridID;
 
             if (!_mapManager.TryGetGrid(gridId, out var grid) || !EntityManager.TryGetEntity(grid.GridEntityId, out var gridEntity)) return;
 
-            //TODO: Switch to shuttle component
-            if (!gridEntity.TryGetComponent(out PhysicsComponent? physics))
+            if (!gridEntity.TryGetComponent(out ShuttleComponent? shuttleComponent) ||
+                !gridEntity.TryGetComponent(out PhysicsComponent? physicsComponent))
             {
-                physics = gridEntity.AddComponent<PhysicsComponent>();
-                physics.BodyStatus = BodyStatus.InAir;
-                physics.CanCollide = true;
-                physics.AddFixture(new Fixture(physics, new PhysShapeGrid(grid)));
+                return;
             }
 
-            // TODO: Uhh this probably doesn't work but I still need to rip out the entity tree and make RenderingTreeSystem use grids so I'm not overly concerned about breaking shuttles.
-            physics.ApplyForce(mover.VelocityDir.walking + mover.VelocityDir.sprinting);
-            mover.VelocityDir = (Vector2.Zero, Vector2.Zero);
+            // Depending whether you have "cruise" mode on (tank controls, higher speed) or "docking" mode on (strafing, lower speed)
+            // inputs will do different things.
+            // TODO: Do that
+            float speedCap;
+            var angularSpeed = 0.75f;
+
+            // ShuttleSystem has already worked out the ratio so we'll just multiply it back by the mass.
+            var movement = (mover.VelocityDir.walking + mover.VelocityDir.sprinting);
+
+            switch (shuttleComponent.Mode)
+            {
+                case ShuttleMode.Docking:
+                    if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                    {
+                        movement *= 5f;
+                    }
+
+                    if (movement.Length != 0f)
+                        physicsComponent.ApplyLinearImpulse(physicsComponent.Owner.Transform.WorldRotation.RotateVec(movement) * shuttleComponent.SpeedMultipler * physicsComponent.Mass);
+
+                    speedCap = _shuttleDockSpeedCap;
+                    break;
+                case ShuttleMode.Cruise:
+                    if (movement.Length != 0.0f)
+                    {
+                        if (physicsComponent.LinearVelocity.LengthSquared == 0f)
+                        {
+                            movement.Y *= 5f;
+                        }
+
+                        // Currently this is slow BUT we'd have a separate multiplier for docking and cruising or whatever.
+                        physicsComponent.ApplyLinearImpulse((physicsComponent.Owner.Transform.WorldRotation + new Angle(MathF.PI / 2)).ToVec() *
+                                                            shuttleComponent.SpeedMultipler *
+                                                            physicsComponent.Mass *
+                                                            movement.Y *
+                                                            2.5f);
+
+                        physicsComponent.ApplyAngularImpulse(-movement.X * angularSpeed * physicsComponent.Mass);
+                    }
+
+                    // TODO WHEN THIS ACTUALLY WORKS
+                    speedCap = _shuttleDockSpeedCap * 10;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            // Look don't my ride ass on this stuff most of the PR was just getting the thing working, we can
+            // ideaguys the shit out of it later.
+
+            var velocity = physicsComponent.LinearVelocity;
+
+            if (velocity.Length > speedCap)
+            {
+                physicsComponent.LinearVelocity = velocity.Normalized * speedCap;
+            }
         }
 
         protected override void HandleFootsteps(IMoverComponent mover, IMobMoverComponent mobMover)
@@ -155,38 +210,34 @@ namespace Content.Server.Physics.Controllers
 
             // If the coordinates have a FootstepModifier component
             // i.e. component that emit sound on footsteps emit that sound
-            string? soundCollectionName = null;
+            string? soundToPlay = null;
             foreach (var maybeFootstep in grid.GetAnchoredEntities(tile.GridIndices))
             {
-                if (EntityManager.ComponentManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
+                if (EntityManager.TryGetComponent(maybeFootstep, out FootstepModifierComponent? footstep))
                 {
-                    soundCollectionName = footstep._soundCollectionName;
+                    soundToPlay = footstep.SoundCollection.GetSound();
                     break;
                 }
             }
             // if there is no FootstepModifierComponent, determine sound based on tiles
-            if (soundCollectionName == null)
+            if (soundToPlay == null)
             {
                 // Walking on a tile.
                 var def = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
-                if (string.IsNullOrEmpty(def.FootstepSounds))
-                {
-                    // Nothing to play, oh well.
+                soundToPlay = def.FootstepSounds.GetSound();
+                if (string.IsNullOrEmpty(soundToPlay))
                     return;
-                }
-
-                soundCollectionName = def.FootstepSounds;
             }
 
-            if (!_prototypeManager.TryIndex(soundCollectionName, out SoundCollectionPrototype? soundCollection))
+            if (string.IsNullOrWhiteSpace(soundToPlay))
             {
-                Logger.ErrorS("sound", $"Unable to find sound collection for {soundCollectionName}");
+                Logger.ErrorS("sound", $"Unable to find sound in {nameof(PlayFootstepSound)}");
                 return;
             }
 
             SoundSystem.Play(
                 Filter.Pvs(coordinates),
-                _robustRandom.Pick(soundCollection.PickFiles),
+                soundToPlay,
                 mover.Transform.Coordinates,
                 sprinting ? AudioParams.Default.WithVolume(0.75f) : null);
         }

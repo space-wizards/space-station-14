@@ -7,12 +7,12 @@
   category: Utility
   description: "Area Power Controller (APC). Controls power. In an area."
   icon:
-    sprite: Constructible/Power/apc.rsi
+    sprite: Structures/Power/apc.rsi
     state: apc0
   objectType: Structure
-  placementMode: AlignWallProper
+  placementMode: SnapgridCenter
   canBuildInImpassable: true
-  
+
 - type: construction
   name: Solar Assembly
   id: SolarPanel
@@ -22,10 +22,25 @@
   category: Utility
   description: "Can be turned into a solar panel or solar tracker."
   icon:
-    sprite: Constructible/Power/solar_panel.rsi
+    sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked {}
+
+- type: construction
+  name: Cable Terminal
+  id: cableTerminal
+  graph: cable_terminal
+  startNode: start
+  targetNode: cable_terminal
+  category: Utility
+  description: "Input of devices such as the SMES. The red cables needs to face the device."
+  icon:
+    sprite: Structures/Power/cable_terminal.rsi
+    state: term
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

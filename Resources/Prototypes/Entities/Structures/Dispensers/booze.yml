@@ -1,0 +1,12 @@
+- type: entity
+  id: BoozeDispenser
+  name: booze dispenser
+  description: A booze dispenser with a single slot for a container to be filled.
+  parent: ReagentDispenserBase
+  components:
+  - type: Rotatable
+  - type: Sprite
+    sprite: Structures/dispensers.rsi
+    state: booze
+  - type: ReagentDispenser
+    pack: BoozeDispenserInventory

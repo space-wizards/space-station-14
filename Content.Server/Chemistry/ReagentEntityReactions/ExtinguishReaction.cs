@@ -1,6 +1,8 @@
 using System.Collections.Generic;
-using Content.Server.GameObjects.Components.Atmos;
-using Content.Shared.Chemistry;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -9,7 +11,6 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEntityReactions
 {
     [UsedImplicitly]
-    [DataDefinition]
     public class ExtinguishReaction : ReagentEntityReaction
     {
         [DataField("reagents", true, customTypeSerializer:typeof(PrototypeIdHashSetSerializer<ReagentPrototype>))]
@@ -20,8 +21,9 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         {
             if (!entity.TryGetComponent(out FlammableComponent? flammable) || !_reagents.Contains(reagent.ID)) return;
 
-            flammable.Extinguish();
-            flammable.AdjustFireStacks(-1.5f);
+            var flammableSystem = EntitySystem.Get<FlammableSystem>();
+            flammableSystem.Extinguish(entity.Uid, flammable);
+            flammableSystem.AdjustFireStacks(entity.Uid, -1.5f, flammable);
         }
     }
 }

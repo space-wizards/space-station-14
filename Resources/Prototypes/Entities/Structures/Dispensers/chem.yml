@@ -1,0 +1,13 @@
+﻿- type: entity
+  id: chem_dispenser
+  name: chemical dispenser
+  parent: ReagentDispenserBase
+  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  components:
+  - type: Sprite
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+  - type: ReagentDispenser
+    pack: ChemDispenserStandardInventory
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver

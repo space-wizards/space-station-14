@@ -92,6 +92,17 @@
       - plasma
       - plasma_2
       - plasma_3
+  - type: Extractable
+    extractableSolution: plasma
+  - type: SolutionContainerManager
+    solutions:
+      plasma:
+        reagents:
+        - ReagentId: Plasma
+          Quantity: 10
+  - type: Tag
+    tags:
+    - Sheet
 
 - type: entity
   parent: SheetPlasma

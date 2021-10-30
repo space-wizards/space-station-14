@@ -1,9 +1,9 @@
 - type: cargoProduct
   name: "air canister"
-  id: cargo.atmosphericsair
+  id: AtmosphericsAir
   description: "Air canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: grey
   product: AirCanister
   cost: 1000
@@ -12,10 +12,10 @@
 
 - type: cargoProduct
   name: "oxygen canister"
-  id: cargo.atmosphericsoxygen
+  id: AtmosphericsOxygen
   description: "Oxygen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: blue
   product: OxygenCanister
   cost: 1000
@@ -24,10 +24,10 @@
 
 - type: cargoProduct
   name: "nitrogen canister"
-  id: cargo.atmosphericsnitrogen
+  id: AtmosphericsNitrogen
   description: "Nitrogen canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: red
   product: NitrogenCanister
   cost: 1000
@@ -36,10 +36,10 @@
 
 - type: cargoProduct
   name: "carbon dioxide canister"
-  id: cargo.atmosphericscarbondioxide
+  id: AtmosphericsCarbonDioxide
   description: "Carbon dioxide canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: black
   product: CarbonDioxideCanister
   cost: 1000
@@ -48,10 +48,10 @@
 
 - type: cargoProduct
   name: "water vapor canister"
-  id: cargo.atmosphericswatervapor
+  id: AtmosphericsWaterVapor
   description: "Water vapor canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: water_vapor
   product: WaterVaporCanister
   cost: 1000
@@ -60,10 +60,10 @@
 
 - type: cargoProduct
   name: "plasma canister"
-  id: cargo.atmosphericsplasma
+  id: AtmosphericsPlasma
   description: "Plasma canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: orange
   product: PlasmaCanister
   cost: 2000
@@ -72,10 +72,10 @@
 
 - type: cargoProduct
   name: "tritium canister"
-  id: cargo.atmosphericstritium
+  id: AtmosphericsTritium
   description: "Tritium canister"
   icon:
-    sprite: Constructible/Atmos/canister.rsi
+    sprite: Structures/Storage/canister.rsi
     state: green
   product: TritiumCanister
   cost: 2000

@@ -3,13 +3,19 @@
   id: BaseKnife
   abstract: true
   components:
+  - type: Tag
+    tags:
+    - Knife
   - type: Utensil
     types:
       - Knife
   - type: ItemCooldown
   - type: MeleeWeapon
-    hitSound: /Audio/Weapons/bladeslice.ogg
-    damage: 12
+    damage:
+      types:
+        Slash: 12
+    hitSound: 
+      path: /Audio/Weapons/bladeslice.ogg
   - type: Sprite
     netsync: false
   - type: Item
@@ -20,11 +26,13 @@
   id: KitchenKnife
   description: A general purpose Chef's Knife made by Asters Merchant Guild. Guaranteed to stay sharp for years to come..
   components:
+  - type: Tag
+    tags:
+    - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
     size: 2
     state: icon
-
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/kitchen_knife.rsi
@@ -37,13 +45,17 @@
   id: ButchCleaver
   description: A huge blade used for chopping and chopping up meat. This includes clowns and clown-by-products.
   components:
+  - type: Tag
+    tags:
+    - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/cleaver.rsi
     size: 4
     state: butch
-
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/cleaver.rsi
@@ -55,12 +67,18 @@
   id: CombatKnife
   description: A deadly knife intended for melee confrontations.
   components:
+  - type: Tag
+    tags:
+    - CombatKnife
+    - Knife
   - type: Sprite
     sprite: Objects/Weapons/Melee/combat_knife.rsi
     size: 2
     state: icon
   - type: MeleeWeapon
-    damage: 15
+    damage:
+      types:
+        Slash: 15
   - type: Item
     size: 10
     sprite: Objects/Weapons/Melee/combat_knife.rsi

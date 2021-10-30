@@ -1,0 +1,66 @@
+﻿- type: entity
+  id: Windoor
+  parent: BaseWindoor
+  name: windoor
+  description: It's a window and a sliding door. Wow!
+
+- type: entity
+  id: WindoorSecure
+  parent: BaseSecureWindoor
+  name: secure windoor
+  description: It's a sturdy window and a sliding door. Wow!
+
+# TODO remove these with parameterized prototypes/whatever we end up doing
+# Bar windoor
+- type: entity
+  parent: Windoor
+  id: WindoorBarLocked
+  suffix: Bar, Locked
+  components:
+  - type: AccessReader
+    access: [["Bar"]]
+
+# Chemistry windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorMedicalLocked
+  suffix: Medical, Locked
+  components:
+  - type: AccessReader
+    access: [["Medical"]]
+
+# Science windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorScienceLocked
+  suffix: Science, Locked
+  components:
+  - type: AccessReader
+    access: [["Research"]]
+
+# HOP's office windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorCommandLocked
+  suffix: Command, Locked
+  components:
+  - type: AccessReader
+    access: [["Command"]]
+
+# Cargo windoor
+- type: entity
+  parent: Windoor
+  id: WindoorCargoLocked
+  suffix: Cargo, Locked
+  components:
+  - type: AccessReader
+    access: [["Cargo"]]
+
+# Security windoor
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecurityLocked
+  suffix: Security, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]

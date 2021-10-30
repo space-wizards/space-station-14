@@ -1,0 +1,10 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            xmlns:tabs="clr-namespace:Content.Client.EscapeMenu.UI.Tabs"
+            Title="{Loc 'ui-options-title'}"
+            MinSize="800 450">
+    <TabContainer Name="Tabs">
+        <tabs:GraphicsTab />
+        <tabs:KeyRebindTab />
+        <tabs:AudioTab />
+    </TabContainer>
+</SS14Window>

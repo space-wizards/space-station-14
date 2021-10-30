@@ -1,6 +1,3 @@
-- type: Tag
-  id: Crayon
-
 - type: entity
   abstract: true
   parent: BaseItem
@@ -12,12 +9,12 @@
     tags:
     - Write
     - Crayon
-  - type: Item
-    size: 1
   - type: UserInterface
     interfaces:
     - key: enum.CrayonUiKey.Key
       type: CrayonBoundUserInterface
+  - type: Crayon
+    capacity: 5
 
 - type: entity
   parent: Crayon
@@ -27,9 +24,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: white
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: white
   - type: Crayon
     color: white
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonWhite
 
 - type: entity
   parent: Crayon
@@ -39,9 +43,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: mime
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: mime
   - type: Crayon
     color: white
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonWhite
 
 - type: entity
   parent: Crayon
@@ -51,9 +62,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: black
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: black
   - type: Crayon
     color: black
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonBlack
 
 - type: entity
   parent: Crayon
@@ -63,9 +81,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: red
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: red
   - type: Crayon
     color: red
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonRed
 
 - type: entity
   parent: Crayon
@@ -75,9 +100,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: orange
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: orange
   - type: Crayon
     color: orange
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonOrange
 
 - type: entity
   parent: Crayon
@@ -87,9 +119,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: yellow
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: yellow
   - type: Crayon
     color: yellow
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonYellow
 
 - type: entity
   parent: Crayon
@@ -99,9 +138,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: green
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: green
   - type: Crayon
     color: green
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonGreen
 
 - type: entity
   parent: Crayon
@@ -111,9 +157,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: blue
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: blue
   - type: Crayon
     color: lightblue
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonBlue
 
 - type: entity
   parent: Crayon
@@ -123,9 +176,16 @@
   - type: Sprite
     sprite: Objects/Fun/crayons.rsi
     state: purple
+  - type: Item
+    sprite: Objects/Fun/crayons.rsi
+    size: 1
+    HeldPrefix: purple
   - type: Crayon
     color: purple
     capacity: 5
+  - type: Tag
+    tags:
+    - CrayonPurple
 
 - type: entity
   parent: BaseItem
@@ -140,9 +200,9 @@
   - type: Storage
     capacity: 7
   - type: Item
+    sprite: Objects/Fun/crayons.rsi
     size: 9999
-  - type: StorageCounter
-    countTag: Crayon
+    HeldPrefix: box
   - type: StorageFill
     contents:
     - id: CrayonRed
@@ -152,15 +212,37 @@
     - id: CrayonBlue
     - id: CrayonPurple
     - id: CrayonBlack
+  - type: ItemMapper
+    mapLayers:
+      black_box:
+        whitelist:
+          tags:
+          - CrayonBlack
+      blue_box:
+        whitelist:
+          tags:
+          - CrayonBlue
+      green_box:
+        whitelist:
+          tags:
+          - CrayonGreen
+      orange_box:
+        whitelist:
+          tags:
+          - CrayonOrange
+      purple_box:
+        whitelist:
+          tags:
+          - CrayonPurple
+      red_box:
+        whitelist:
+          tags:
+          - CrayonRed
+      yellow_box:
+        whitelist:
+          tags:
+          - CrayonYellow
+
   - type: Appearance
     visuals:
-    - type: StackVisualizer
-      composite: true
-      stackLayers:
-      - red_box
-      - orange_box
-      - yellow_box
-      - green_box
-      - blue_box
-      - purple_box
-      - black_box
+    - type: MappedItemVisualizer

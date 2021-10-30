@@ -1,6 +1,5 @@
-﻿#nullable enable
-using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Construction;
+﻿using System.Threading.Tasks;
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -12,12 +11,9 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class MachineFrameRegenerateProgress : IGraphAction
     {
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (entity.Deleted)
-                return;
-
-            if (entity.TryGetComponent<MachineFrameComponent>(out var machineFrame))
+            if (entityManager.TryGetComponent<MachineFrameComponent>(uid, out var machineFrame))
             {
                 machineFrame.RegenerateProgress();
             }

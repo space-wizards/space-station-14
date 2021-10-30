@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.EntitySystems;
-using Content.Shared.Utility;
+using Content.Client.Interactable;
+using Content.Shared.Interaction;
+using Content.Shared.Interaction.Helpers;
 using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Interaction
     [TestOf(typeof(UnobstructedExtensions))]
     public class InRangeUnobstructed : ContentIntegrationTest
     {
-        private const string HumanId = "BaseHumanMob_Content";
+        private const string HumanId = "MobHumanBase";
 
         private const float InteractionRange = SharedInteractionSystem.InteractionRange;
 

@@ -1,7 +1,6 @@
 ﻿using System.IO;
-using Content.Server.GameObjects.Components.Mobs;
+using Content.Server.Alert;
 using Content.Shared.Alert;
-using Content.Shared.GameObjects.Components.Mobs;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -37,6 +36,7 @@ namespace Content.Tests.Server.GameObjects.Components.Mobs
 
             IoCManager.Resolve<ISerializationManager>().Initialize();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            prototypeManager.Initialize();
             var factory = IoCManager.Resolve<IComponentFactory>();
             factory.RegisterClass<ServerAlertsComponent>();
             prototypeManager.LoadFromStream(new StringReader(PROTOTYPES));

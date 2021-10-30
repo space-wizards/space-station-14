@@ -1,4 +1,5 @@
 using Content.Shared;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.IoC;

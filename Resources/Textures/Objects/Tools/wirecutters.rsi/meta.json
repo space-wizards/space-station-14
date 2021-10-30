@@ -23,6 +23,30 @@
     {
       "name": "inhand-right",
       "directions": 4
+    },
+    {
+      "name": "cutters-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "cutters-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "handle-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "handle-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "cutters-equipped-BELT",
+      "directions": 4
+    },
+    {
+      "name": "handle-equipped-BELT",
+      "directions": 4
     }
   ]
 }

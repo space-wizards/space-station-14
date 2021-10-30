@@ -1,4 +1,3 @@
-#nullable enable
 using System;
 
 namespace Content.Shared.Chat
@@ -7,60 +6,60 @@ namespace Content.Shared.Chat
     ///     Represents chat channels that the player can filter chat tabs by.
     /// </summary>
     [Flags]
-    public enum ChatChannel : short
+    public enum ChatChannel : ushort
     {
         None = 0,
 
         /// <summary>
         ///     Chat heard by players within earshot
         /// </summary>
-        Local = 1,
+        Local = 1 << 0,
 
         /// <summary>
         ///     Messages from the server
         /// </summary>
-        Server = 2,
+        Server = 1 << 1,
 
         /// <summary>
         ///     Damage messages
         /// </summary>
-        Damage = 4,
+        Damage = 1 << 2,
 
         /// <summary>
         ///     Radio messages
         /// </summary>
-        Radio = 8,
+        Radio = 1 << 3,
 
         /// <summary>
         ///     Out-of-character channel
         /// </summary>
-        OOC = 16,
+        OOC = 1 << 4,
 
         /// <summary>
         ///     Visual events the player can see.
         ///     Basically like visual_message in SS13.
         /// </summary>
-        Visual = 32,
+        Visual = 1 << 5,
 
         /// <summary>
         ///     Emotes
         /// </summary>
-        Emotes = 64,
+        Emotes = 1 << 6,
 
         /// <summary>
         ///     Deadchat
         /// </summary>
-        Dead = 128,
+        Dead = 1 << 7,
 
         /// <summary>
         ///     Admin chat
         /// </summary>
-        AdminChat = 256,
+        Admin = 1 << 8,
 
         /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 512,
+        Unspecified = 1 << 9,
 
         /// <summary>
         ///     Channels considered to be IC.

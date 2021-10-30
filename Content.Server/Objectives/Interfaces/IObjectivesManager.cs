@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Content.Server.Mobs;
 
 namespace Content.Server.Objectives.Interfaces
 {
@@ -8,11 +7,11 @@ namespace Content.Server.Objectives.Interfaces
         /// <summary>
         /// Returns all objectives the provided mind is valid for.
         /// </summary>
-        IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind mind);
+        IEnumerable<ObjectivePrototype> GetAllPossibleObjectives(Mind.Mind mind);
 
         /// <summary>
         /// Returns a randomly picked objective the provided mind is valid for.
         /// </summary>
-        ObjectivePrototype? GetRandomObjective(Mind mind);
+        ObjectivePrototype? GetRandomObjective(Mind.Mind mind);
     }
 }

@@ -1,26 +1,116 @@
 - type: Tag
+  id: Baguette
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: BotanyHatchet
+
+- type: Tag
+  id: BotanyHoe
+
+- type: Tag
   id: BotanySharp
+
+- type: Tag
+  id: BotanyShovel
+
+- type: Tag
+  id: Bottle
+
+- type: Tag
+  id: CableCoil
+
+- type: Tag
+  id: Carrot
+
+- type: Tag
+  id: CanPilot
+
+- type: Tag
+  id: CaptainSabre
+
+- type: Tag
+  id: CigPack
+
+- type: Tag
+  id: Crayon
+
+- type: Tag
+  id: CrayonBlack
+
+- type: Tag
+  id: CrayonBlue
+
+- type: Tag
+  id: CrayonGreen
+
+- type: Tag
+  id: CrayonOrange
+
+- type: Tag
+  id: CrayonPurple
+
+- type: Tag
+  id: CrayonRed
+
+- type: Tag
+  id: CrayonWhite
+
+- type: Tag
+  id: CrayonYellow
+
+- type: Tag
+  id: Crowbar
+
+- type: Tag
+  id: CrowbarRed
 
 - type: Tag
   id: ConveyorAssembly
 
 - type: Tag
+  id: Cola
+
+- type: Tag
+  id: CombatKnife
+
+- type: Tag
+  id: Debug
+
+- type: Tag
   id: DoorElectronics
+
+- type: Tag
+  id: Donut
+
+- type: Tag
+  id: Egg
 
 - type: Tag
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAxe
+
+- type: Tag
   id: FirelockElectronics
+
+- type: Tag
+  id: Flare
+
+- type: Tag
+  id: Flashlight
 
 - type: Tag
   id: FootstepSound
 
 - type: Tag
-  id: GlassBeaker
+  id: Gauze
 
 - type: Tag
-  id: Grindable
+  id: GlassBeaker
 
 - type: Tag
   id: Hoe
@@ -29,25 +119,101 @@
   id: Ingot
 
 - type: Tag
+  id: JawsOfLife
+
+- type: Tag
+  id: Katana
+
+- type: Tag
+  id: Knife
+
+- type: Tag
+  id: Machete
+
+- type: Tag
+  id: Matchstick
+
+- type: Tag
+  id: MonkeyCube
+
+- type: Tag
+  id: NoSpinOnThrow
+
+- type: Tag
+  id: Ointment
+
+- type: Tag
   id: Ore
+
+- type: Tag
+  id: Pill
+
+- type: Tag
+  id: Pizza
+
+- type: Tag
+  id: PlantAnalyzer
+
+- type: Tag
+  id: PlantBGone
 
 - type: Tag
   id: PlantSampleTaker
 
 - type: Tag
+  id: Powerdrill
+
+- type: Tag
+  id: RodMetal1
+
+- type: Tag
+  id: RollingPaper
+
+- type: Tag
+  id: Screwdriver
+
+- type: Tag
   id: Sheet
+
+- type: Tag
+  id: ShotgunShell
 
 - type: Tag
   id: Shovel
 
 - type: Tag
-  id: Teleportable
+  id: Soap
+
+- type: Tag
+  id: Spray
+
+- type: Tag
+  id: Spear
+
+- type: Tag
+  id: Taser
 
 - type: Tag
   id: Wall
 
 - type: Tag
+  id: Wirecutter
+
+- type: Tag
+  id: Wrench
+
+- type: Tag
   id: Write
 
 - type: Tag
+  id: RCDDeconstructWhitelist
+
+- type: Tag
+  id: Wooden # just like our atmos
+
+- type: Tag
   id: EmitterBolt
+  
+- type: Tag
+  id: HideContextMenu
+

@@ -1,0 +1,16 @@
+- type: damageContainer
+  id: Biological
+  supportedGroups:
+    - Brute
+    - Burn
+    - Toxin
+    - Airloss
+    - Genetic
+
+- type: damageContainer
+  id: Inorganic
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+    - Shock

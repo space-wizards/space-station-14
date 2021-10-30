@@ -1,0 +1,49 @@
+﻿using Content.Shared.Nutrition.Components;
+using JetBrains.Annotations;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+
+namespace Content.Client.Nutrition.Visualizers
+{
+    [UsedImplicitly]
+    public class CreamPiedVisualizer : AppearanceVisualizer
+    {
+        [DataField("state")]
+        private string? _state;
+
+        public override void InitializeEntity(IEntity entity)
+        {
+            base.InitializeEntity(entity);
+
+            var sprite = entity.GetComponent<ISpriteComponent>();
+
+            sprite.LayerMapReserveBlank(CreamPiedVisualLayers.Pie);
+            sprite.LayerSetRSI(CreamPiedVisualLayers.Pie, "Effects/creampie.rsi");
+            sprite.LayerSetVisible(CreamPiedVisualLayers.Pie, false);
+        }
+
+        public override void OnChangeData(AppearanceComponent component)
+        {
+            base.OnChangeData(component);
+
+            if (component.TryGetData<bool>(CreamPiedVisuals.Creamed, out var pied))
+            {
+                SetPied(component, pied);
+            }
+        }
+
+        private void SetPied(AppearanceComponent component, bool pied)
+        {
+            var sprite = component.Owner.GetComponent<ISpriteComponent>();
+
+            sprite.LayerSetVisible(CreamPiedVisualLayers.Pie, pied);
+            sprite.LayerSetState(CreamPiedVisualLayers.Pie, _state);
+        }
+    }
+
+    public enum CreamPiedVisualLayers : byte
+    {
+        Pie,
+    }
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.IntegrationTests;
+using Content.Shared.CCVar;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Markdown.Validation;
 using Robust.Shared.Timing;
@@ -69,6 +70,7 @@ namespace Content.YAMLLinter
             var server = StartServer(new ServerContentIntegrationOption()
             {
                 FailureLogLevel = null,
+                CVarOverrides = { {CCVars.GameDummyTicker.Name, "true"} }
             });
 
             await server.WaitIdleAsync();

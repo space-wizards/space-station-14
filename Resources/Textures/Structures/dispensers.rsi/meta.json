@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/11402f6ae62facc2e8bcfa1f8ef5353b26663278",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "booze",
+      "directions": 4
+    },
+    {
+      "name": "soda",
+      "directions": 4
+    },
+    {
+      "name": "industrial"
+    },
+    {
+      "name": "industrial-off"
+    },
+    {
+      "name": "industrial-panel"
+    },
+    {
+      "name": "industrial-working",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

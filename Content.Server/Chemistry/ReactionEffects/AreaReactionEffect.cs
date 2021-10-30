@@ -1,17 +1,19 @@
-#nullable enable
-using System;
-using Content.Server.GameObjects.Components.Chemistry;
-using Content.Server.Utility;
+﻿using System;
+using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Coordinates.Helpers;
 using Content.Shared.Audio;
-using Content.Shared.Interfaces.Chemistry;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reaction;
+using Content.Shared.Sound;
 using JetBrains.Annotations;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Server.Chemistry.ReactionEffects
@@ -21,7 +23,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// </summary>
     [UsedImplicitly]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class AreaReactionEffect : IReactionEffect
+    public abstract class AreaReactionEffect : IReactionEffect, ISerializationHooks
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
 
@@ -80,19 +82,16 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// <summary>
         /// Sound that will get played when this reaction effect occurs.
         /// </summary>
-        [DataField("sound")] private string? _sound;
+        [DataField("sound", required: true)] private SoundSpecifier _sound = default!;
 
-        protected AreaReactionEffect()
+        void ISerializationHooks.AfterDeserialization()
         {
             IoCManager.InjectDependencies(this);
         }
 
-        public void React(IEntity solutionEntity, double intensity)
+        public void React(Solution solution, IEntity solutionEntity, double intensity)
         {
-            if (!solutionEntity.TryGetComponent(out SolutionContainerComponent? contents))
-                return;
-
-            var solution = contents.SplitSolution(contents.MaxVolume);
+            var splitSolution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(solutionEntity.Uid, solution, solution.MaxVolume);
             // We take the square root so it becomes harder to reach higher amount values
             var amount = (int) Math.Round(_rangeConstant + _rangeMultiplier*Math.Sqrt(intensity));
             amount = Math.Min(amount, _maxRange);
@@ -115,7 +114,7 @@ namespace Content.Server.Chemistry.ReactionEffects
                     solutionFraction = amount * (1 - _reagentMaxConcentrationFactor) / _reagentDilutionStart +
                                        _reagentMaxConcentrationFactor;
                 }
-                solution.RemoveSolution(solution.TotalVolume * solutionFraction);
+                splitSolution.RemoveSolution(splitSolution.TotalVolume * solutionFraction);
             }
 
             if (!_mapManager.TryFindGridAt(solutionEntity.Transform.MapPosition, out var grid)) return;
@@ -133,13 +132,10 @@ namespace Content.Server.Chemistry.ReactionEffects
                 return;
             }
 
-            areaEffectComponent.TryAddSolution(solution);
+            areaEffectComponent.TryAddSolution(splitSolution);
             areaEffectComponent.Start(amount, _duration, _spreadDelay, _removeDelay);
 
-            if (!string.IsNullOrEmpty(_sound))
-            {
-                SoundSystem.Play(Filter.Pvs(solutionEntity), _sound, solutionEntity, AudioHelpers.WithVariation(0.125f));
-            }
+            SoundSystem.Play(Filter.Pvs(solutionEntity), _sound.GetSound(), solutionEntity, AudioHelpers.WithVariation(0.125f));
         }
 
         protected abstract SolutionAreaEffectComponent? GetAreaEffectComponent(IEntity entity);

@@ -6,7 +6,6 @@
     <LangVersion>9</LangVersion>
     <IsPackable>false</IsPackable>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <OutputPath>../bin/Content.Shared</OutputPath>
     <Configurations>Release;Debug</Configurations>
     <Platforms>AnyCPU</Platforms>
     <WarningsAsErrors>nullable</WarningsAsErrors>
@@ -28,7 +27,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="GameObjects\Components\Trigger\" />
     <EmbeddedResource Include="Text\Names\*.txt" />
   </ItemGroup>
   <Import Project="..\RobustToolbox\MSBuild\Robust.Analyzers.targets" />

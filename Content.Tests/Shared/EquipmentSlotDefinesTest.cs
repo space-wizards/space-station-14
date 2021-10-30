@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
-using Content.Shared.GameObjects.Components.Inventory;
+using Content.Shared.Inventory;
 using NUnit.Framework;
-using static Content.Shared.GameObjects.Components.Inventory.EquipmentSlotDefines;
+using static Content.Shared.Inventory.EquipmentSlotDefines;
 
 namespace Content.Tests.Shared
 {

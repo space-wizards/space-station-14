@@ -18,7 +18,7 @@
       actions:
         - !type:SpriteChange
           specifier:
-            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            sprite: /Textures/Structures/Walls/solid.rsi
             state: wall_girder
       edges:
         - to: start
@@ -70,7 +70,7 @@
       actions:
         - !type:SpriteChange
           specifier:
-            sprite: /Textures/Constructible/Structures/Walls/solid.rsi
+            sprite: /Textures/Structures/Walls/solid.rsi
             state: reinforced_wall_girder
       edges:
         - to: reinforcedWall

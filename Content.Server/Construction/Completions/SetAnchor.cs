@@ -1,5 +1,4 @@
-﻿#nullable enable
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -15,11 +14,10 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out IPhysBody? physics)) return;
-
-            physics.BodyType = Value ? BodyType.Static : BodyType.Dynamic;
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            transform.Anchored = Value;
         }
     }
 }

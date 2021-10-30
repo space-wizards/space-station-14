@@ -1,5 +1,5 @@
-﻿using Content.Client.GameObjects.Components.Arcade;
-using Content.Shared.GameObjects.Components.Arcade;
+﻿using Content.Client.Arcade.UI;
+using Content.Shared.Arcade;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.Localization;

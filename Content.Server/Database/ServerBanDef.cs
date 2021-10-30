@@ -3,7 +3,6 @@ using System.Collections.Immutable;
 using System.Net;
 using Robust.Shared.Network;
 
-#nullable enable
 
 namespace Content.Server.Database
 {
@@ -52,6 +51,20 @@ namespace Content.Server.Database
             Reason = reason;
             BanningAdmin = banningAdmin;
             Unban = unban;
+        }
+
+        public string DisconnectMessage
+        {
+            get {
+                var expires = "This is a permanent ban.";
+                if (this.ExpirationTime is { } expireTime)
+                {
+                    var duration = expireTime - this.BanTime;
+                    var utc = expireTime.ToUniversalTime();
+                    expires = $"This ban is for {duration.TotalMinutes:N0} minutes and will expire at {utc:f} UTC.";
+                }
+                return $"You, or another user of this computer or connection, are banned from playing here.\nThe ban reason is: \"{this.Reason}\"\n{expires}";
+            }
         }
     }
 }

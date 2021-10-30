@@ -5,16 +5,21 @@
   description: Kills those pesky weeds!
   suffix: "Filled"
   components:
+  - type: Tag
+    tags:
+    - PlantBGone
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: plantbgone
-  - type: SolutionContainer
-    maxVol: 100
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
         - ReagentId: PlantBGone
           Quantity: 100
+  - type: DrainableSolution
+    solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     HeldPrefix: plantbgone
@@ -29,14 +34,17 @@
   - type: Sprite
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     state: weedspray
-  - type: SolutionContainer
-    maxVol: 50
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
         - ReagentId: WeedKiller
           Quantity: 50
+  - type: DrainableSolution
+    solution: spray
   - type: Spillable
+    solution: spray
   - type: ItemCooldown
   - type: Spray
     transferAmount: 1
@@ -47,17 +55,19 @@
   name: pest spray
   id: PestSpray
   parent: WeedSpray
-  description: Objects/Tools/Hydroponics/sprays.rsi
+  description: It's some pest eliminator spray! Do not inhale!
   suffix: "Filled"
   components:
   - type: Sprite
     state: pestspray
-  - type: SolutionContainer
-    maxVol: 50
-    caps: Drainable
-    contents:
-      reagents:
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
         - ReagentId: PestKiller
           Quantity: 50
+  - type: DrainableSolution
+    solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi

@@ -1,0 +1,1 @@
+barsign-component-name = bar sign

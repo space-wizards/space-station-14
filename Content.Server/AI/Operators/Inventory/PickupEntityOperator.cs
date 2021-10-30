@@ -1,8 +1,7 @@
-#nullable enable
-using Content.Server.GameObjects.Components.GUI;
-using Content.Server.GameObjects.Components.Items.Storage;
-using Content.Server.GameObjects.EntitySystems.Click;
-using Content.Shared.Utility;
+using Content.Server.Hands.Components;
+using Content.Server.Interaction;
+using Content.Server.Items;
+using Content.Shared.Interaction.Helpers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -58,7 +57,7 @@ namespace Content.Server.AI.Operators.Inventory
             }
 
             var interactionSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<InteractionSystem>();
-            interactionSystem.Interaction(_owner, _target);
+            interactionSystem.InteractHand(_owner, _target);
             return Outcome.Success;
         }
     }

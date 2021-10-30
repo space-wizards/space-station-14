@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -15,24 +17,27 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("open")] public bool Open { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
+            if (!entityManager.TryGetComponent(uid, out WiresComponent? wires))
+                return false;
 
             return wires.IsPanelOpen == Open;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out WiresComponent? wires)) return false;
 
             switch (Open)
             {
                 case true when !wires.IsPanelOpen:
-                    message.AddMarkup(Loc.GetString("First, open the maintenance panel.\n"));
+                    args.PushMarkup(Loc.GetString("construction-condition-wire-panel-open"));
                     return true;
                 case false when wires.IsPanelOpen:
-                    message.AddMarkup(Loc.GetString("First, close the maintenance panel.\n"));
+                    args.PushMarkup(Loc.GetString("construction-condition-wire-panel-close"));
                     return true;
             }
 

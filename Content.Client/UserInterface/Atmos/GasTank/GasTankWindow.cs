@@ -1,6 +1,7 @@
-﻿using Content.Client.UserInterface.Stylesheets;
-using Content.Client.Utility;
-using Content.Shared.GameObjects.Components.Atmos.GasTank;
+using Content.Client.Message;
+using Content.Client.Resources;
+using Content.Client.Stylesheets;
+using Content.Shared.Atmos.Components;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -9,6 +10,7 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
+using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.UserInterface.Atmos.GasTank
 {
@@ -17,7 +19,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
     {
         private GasTankBoundUserInterface _owner;
         private readonly Label _lblName;
-        private readonly VBoxContainer _topContainer;
+        private readonly BoxContainer _topContainer;
         private readonly Control _contentContainer;
 
 
@@ -67,11 +69,15 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             LayoutContainer.SetGrowHorizontal(bottomWrap, LayoutContainer.GrowDirection.Both);
 
 
-            var topContainerWrap = new VBoxContainer
+            var topContainerWrap = new BoxContainer
             {
+                Orientation = LayoutOrientation.Vertical,
                 Children =
                 {
-                    (_topContainer = new VBoxContainer()),
+                    (_topContainer = new BoxContainer
+                    {
+                        Orientation = LayoutOrientation.Vertical
+                    }),
                     new Control {MinSize = (0, 110)}
                 }
             };
@@ -82,14 +88,15 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             var font = _resourceCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
 
-            var topRow = new HBoxContainer
+            var topRow = new BoxContainer
             {
+                Orientation = LayoutOrientation.Horizontal,
                 Margin = new Thickness(4, 2, 12, 2),
                 Children =
                 {
                     (_lblName = new Label
                     {
-                        Text = Loc.GetString("Gas Tank"),
+                        Text = Loc.GetString("gas-tank-window-label"),
                         FontOverride = font,
                         FontColorOverride = StyleNano.NanoGold,
                         VerticalAlignment = VAlignment.Center,
@@ -110,8 +117,9 @@ namespace Content.Client.UserInterface.Atmos.GasTank
                 PanelOverride = new StyleBoxFlat {BackgroundColor = Color.FromHex("#202025")},
                 Children =
                 {
-                    (_contentContainer = new VBoxContainer
+                    (_contentContainer = new BoxContainer
                     {
+                        Orientation = LayoutOrientation.Vertical,
                         Margin = new Thickness(8, 4),
                     })
                 }
@@ -137,11 +145,12 @@ namespace Content.Client.UserInterface.Atmos.GasTank
             //internals
             _lblInternals = new RichTextLabel
                 {MinSize = (200, 0), VerticalAlignment = VAlignment.Center};
-            _btnInternals = new Button {Text = Loc.GetString("Toggle")};
+            _btnInternals = new Button {Text = Loc.GetString("gas-tank-window-internals-toggle-button") };
 
             _contentContainer.AddChild(
-                new HBoxContainer
+                new BoxContainer
                 {
+                    Orientation = LayoutOrientation.Horizontal,
                     Margin = new Thickness(0, 7, 0, 0),
                     Children = {_lblInternals, _btnInternals}
                 });
@@ -154,7 +163,7 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
             _contentContainer.AddChild(new Label
             {
-                Text = Loc.GetString("Output Pressure"),
+                Text = Loc.GetString("gas-tank-window-output-pressure-label"),
                 Align = Label.AlignMode.Center
             });
             _spbPressure = new FloatSpinBox
@@ -180,11 +189,11 @@ namespace Content.Client.UserInterface.Atmos.GasTank
 
         public void UpdateState(GasTankBoundUserInterfaceState state)
         {
-            _lblPressure.SetMarkup(Loc.GetString("Pressure: {0:0.##} kPa", state.TankPressure));
+            _lblPressure.SetMarkup(Loc.GetString("gas-tank-window-tank-pressure-text", ("tankPressure", $"{state.TankPressure:0.##}")));
             _btnInternals.Disabled = !state.CanConnectInternals;
-            _lblInternals.SetMarkup(Loc.GetString("Internals: [color={0}]{1}[/color]",
-                state.InternalsConnected ? "green" : "red",
-                state.InternalsConnected ? "Connected" : "Disconnected"));
+            _lblInternals.SetMarkup(Loc.GetString("gas-tank-window-internal-text",
+                ("colorName" ,state.InternalsConnected ? "green" : "red"),
+                ("status", state.InternalsConnected ? "Connected" : "Disconnected")));
             if (state.OutputPressure.HasValue)
             {
                 _spbPressure.Value = state.OutputPressure.Value;

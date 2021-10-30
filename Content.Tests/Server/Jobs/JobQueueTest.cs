@@ -1,8 +1,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Content.Server.GameObjects.EntitySystems.JobQueues;
-using Content.Server.GameObjects.EntitySystems.JobQueues.Queues;
+using Content.Server.CPUJob.JobQueues;
+using Content.Server.CPUJob.JobQueues.Queues;
 using NUnit.Framework;
 using Robust.Shared.Timing;
 using Robust.UnitTesting;

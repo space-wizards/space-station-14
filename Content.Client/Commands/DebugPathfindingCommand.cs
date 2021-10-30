@@ -1,4 +1,4 @@
-using Content.Client.GameObjects.EntitySystems.AI;
+using Content.Client.AI;
 using JetBrains.Annotations;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
@@ -58,7 +58,7 @@ namespace Content.Client.Commands
                         debugSystem.ToggleTooltip(PathfindingDebugMode.Regions);
                         anyAction = true;
                         break;
-                    
+
                     default:
                         continue;
                 }

@@ -26,6 +26,14 @@
       "name": "peel3"
     },
     {
+      "name": "peel-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "peel-inhand-right",
+      "directions": 4
+    },
+    {
       "name": "seed"
     },
     {

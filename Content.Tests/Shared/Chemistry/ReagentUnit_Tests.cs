@@ -1,5 +1,6 @@
 ﻿using System;
 using Content.Shared.Chemistry;
+using Content.Shared.Chemistry.Reagent;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry

@@ -1,0 +1,47 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:s="clr-namespace:Content.Client.Stylesheets"
+         xmlns:hudUi="clr-namespace:Content.Client.HUD.UI">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Vertical" Margin="8 8 8 8" VerticalExpand="True">
+            <Label Text="{Loc 'ui-options-volume-label'}"
+                   FontColorOverride="{x:Static s:StyleNano.NanoGold}"
+                   StyleClasses="LabelKeyText"/>
+            <BoxContainer Orientation="Vertical" Margin="0 3 0 0">
+                <BoxContainer Orientation="Horizontal" Margin="5 0 0 0">
+                    <Label Text="{Loc 'ui-options-master-volume'}" />
+                    <Control MinSize="8 0" />
+                    <Slider Name="MasterVolumeSlider"
+                            MinValue="0"
+                            MaxValue="100"
+                            HorizontalExpand="True"
+                            MinSize="80 0"
+                            Rounded="True" />
+                    <Control MinSize="8 0" />
+                    <Label Name="MasterVolumeLabel" MinSize="48 0" Align="Right" />
+                    <Control MinSize="4 0"/>
+                </BoxContainer>
+                <Control MinSize="0 8" />
+                <CheckBox Name="AmbienceCheckBox" Text="{Loc 'ui-options-ambient-hum'}" />
+                <CheckBox Name="LobbyMusicCheckBox" Text="{Loc 'ui-options-lobby-music'}" />
+            </BoxContainer>
+        </BoxContainer>
+        <hudUi:StripeBack HasBottomEdge="False" HasMargins="False">
+            <BoxContainer Orientation="Horizontal"
+                          Align="End"
+                          HorizontalExpand="True"
+                          VerticalExpand="True">
+                <Button Name="ResetButton"
+                        Text="{Loc 'ui-options-reset-all'}"
+                        StyleClasses="Caution"
+                        HorizontalExpand="True"
+                        HorizontalAlignment="Right" />
+                <Control MinSize="2 0" />
+                <Button Name="ApplyButton"
+                        Text="{Loc 'ui-options-apply'}"
+                        TextAlign="Center"
+                        HorizontalAlignment="Right" />
+            </BoxContainer>
+        </hudUi:StripeBack>
+    </BoxContainer>
+</Control>

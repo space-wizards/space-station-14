@@ -5,6 +5,8 @@
   components:
   - type: Sprite
     sprite: Objects/Misc/utensils.rsi
+  - type: Item
+    sprite: Objects/Misc/utensils.rsi
 
 - type: entity
   parent: UtensilBase
@@ -29,6 +31,8 @@
   components:
   - type: Sprite
     state: plastic_fork
+  - type: Item
+    color: white
   - type: Utensil
     types:
     - Fork
@@ -42,6 +46,8 @@
   components:
   - type: Sprite
     state: spoon
+  - type: Item
+    HeldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -54,6 +60,9 @@
   components:
   - type: Sprite
     state: plastic_spoon
+  - type: Item
+    color: white
+    HeldPrefix: spoon
   - type: Utensil
     types:
     - Spoon
@@ -67,6 +76,8 @@
   components:
   - type: Sprite
     state: plastic_knife
+  - type: Item
+    color: white
   - type: Utensil
     types:
     - Knife

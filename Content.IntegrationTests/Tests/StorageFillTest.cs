@@ -1,6 +1,6 @@
 #nullable enable
 using System.Threading.Tasks;
-using Content.Server.GameObjects.Components.Items.Storage;
+using Content.Server.Storage.Components;
 using NUnit.Framework;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;

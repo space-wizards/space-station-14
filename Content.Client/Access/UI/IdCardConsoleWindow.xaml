@@ -1,0 +1,30 @@
+﻿<SS14Window xmlns="https://spacestation14.io"
+            MinSize="650 290">
+    <BoxContainer Orientation="Vertical">
+        <GridContainer Columns="3">
+            <Label Text="{Loc 'id-card-console-window-privileged-id'}" />
+            <Button Name="PrivilegedIdButton" />
+            <Label Name="PrivilegedIdLabel" />
+
+            <Label Text="{Loc 'id-card-console-window-target-id'}" />
+            <Button Name="TargetIdButton" />
+            <Label Name="TargetIdLabel" />
+        </GridContainer>
+        <Control MinSize="0 8" />
+        <GridContainer Columns="3" HSeparationOverride="4">
+            <Label Name="FullNameLabel" Text="{Loc 'id-card-console-window-full-name-label'}" />
+            <LineEdit Name="FullNameLineEdit" HorizontalExpand="True" />
+            <Button Name="FullNameSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+
+            <Label Name="JobTitleLabel" Text="{Loc 'id-card-console-window-job-title-label'}" />
+            <LineEdit Name="JobTitleLineEdit" HorizontalExpand="True" />
+            <Button Name="JobTitleSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+        </GridContainer>
+        <Control MinSize="0 8" />
+        <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
+
+            <!-- Access level buttons are added here by the C# code -->
+
+        </GridContainer>
+    </BoxContainer>
+</SS14Window>
