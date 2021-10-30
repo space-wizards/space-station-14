@@ -56,6 +56,18 @@
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateFilledRevolver
+  name: Predator bundle
+  description: "Go loud and proud with a fully loaded Magnum Predator, bundled with two speed loaders." 
+  components:
+  - type: StorageFill
+    contents:
+      - id: RevolverPredator
+      - id: SLMagnum
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."

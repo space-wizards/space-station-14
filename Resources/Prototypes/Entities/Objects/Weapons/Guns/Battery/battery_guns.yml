@@ -28,6 +28,7 @@
     fireRate: 2
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
+    fireCost: 40
     ammoPrototype: RedLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
@@ -67,6 +68,7 @@
     angleDecay: 45
     powerCellPrototype: PowerCellSmallSuper
     powerCellRemovable: true
+    fireCost: 600
     ammoPrototype: RedHeavyLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
   - type: Appearance
@@ -151,6 +153,7 @@
     angleDecay: 15
     powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: false
+    fireCost: 80
     ammoPrototype: BulletTaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: Appearance
@@ -161,14 +164,14 @@
       zeroVisible: true
 
 - type: entity
-  name: laser gun
+  name: STAR Laser Pistol
   parent: BaseItem
-  id: LaserSecGun
-  description: Standard issued laser carbine for Nanotrasen security operatives.
+  id: LaserPistolStar
+  description: A cheap and widely used laser pistol.
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: Objects/Weapons/Guns/Battery/star.rsi
     layers:
       - state: base
         map: ["enum.RangedBarrelVisualLayers.Base"]
@@ -177,19 +180,100 @@
         shader: unshaded
   - type: Item
     size: 24
-    sprite: Objects/Weapons/Guns/Battery/laser_gun.rsi
+    sprite: Objects/Weapons/Guns/Battery/star.rsi
   - type: RangedWeapon
   - type: BatteryBarrel
-    minAngle: 10
-    maxAngle: 45
-    angleIncrease: 15
-    angleDecay: 45
     currentSelector: Single
     allSelectors:
     - Single
-    fireRate: 6
-    powerCellPrototype: PowerCellMediumStandard
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
     powerCellRemovable: true
+    fireCost: 20
+    ammoPrototype: RedLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: COG Laser Carbine
+  parent: BaseItem
+  id: LaserRifleCog
+  description: Standard issued laser carbine for Nanotrasen security officers.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/cog.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 10
+    ammoPrototype: RedLaser
+    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+  - type: Appearance
+    visuals:
+    - type: MagVisualizer
+      magState: mag
+      steps: 5
+      zeroVisible: false
+
+- type: entity
+  name: Makeshift Laser Gun
+  parent: BaseItem
+  id: MakeshiftLaser
+  description: Better pray it won't burn your hands off when you fire it.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+    layers:
+      - state: base
+        map: ["enum.RangedBarrelVisualLayers.Base"]
+      - state: mag-unshaded-4
+        map: ["enum.RangedBarrelVisualLayers.MagUnshaded"]
+        shader: unshaded
+  - type: Item
+    size: 24
+    sprite: Objects/Weapons/Guns/Battery/makeshift.rsi
+  - type: RangedWeapon
+  - type: BatteryBarrel
+    currentSelector: Single
+    allSelectors:
+    - Single
+    fireRate: 2
+    minAngle: 0
+    maxAngle: 45
+    angleIncrease: 15
+    angleDecay: 45
+    powerCellPrototype: PowerCellSmallStandard
+    powerCellRemovable: true
+    fireCost: 40
     ammoPrototype: RedLaser
     soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
   - type: Appearance
