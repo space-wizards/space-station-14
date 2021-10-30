@@ -14,6 +14,12 @@ namespace Content.Shared.HandLabeler
         Key,
     }
 
+    [Serializable, NetSerializable]
+    public enum PaperLabelVisuals
+    {
+        HasLabel,
+    }
+
     /// <summary>
     /// Represents a <see cref="HandLabelerComponent"/> state that can be sent to the client
     /// </summary>

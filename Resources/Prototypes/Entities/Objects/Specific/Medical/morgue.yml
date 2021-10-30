@@ -32,6 +32,13 @@
       path: /Audio/Misc/zip.ogg
     openSound:
       path: /Audio/Misc/zip.ogg
+  - type: PaperLabel
+  - type: ItemSlots
+    slots:
+      labelSlot:
+        whitelist:
+          components:
+            - Paper
   - type: Appearance
     visuals:
     - type: StorageVisualizer
