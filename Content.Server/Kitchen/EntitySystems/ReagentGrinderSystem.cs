@@ -227,8 +227,9 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
 
-                        canJuice = component.GrindableSolution == null;
-                        canGrind = component.GrindableSolution != null;
+                        canJuice = component.JuiceSolution != null;
+                        canGrind = component.GrindableSolution != null 
+                                   && _solutionsSystem.TryGetSolution(entity.Uid, component.GrindableSolution, out _);
                     }
                 }
 
@@ -340,10 +341,10 @@ namespace Content.Server.Kitchen.EntitySystems
                             }
 
                             if (component.HeldBeaker.CurrentVolume +
-                                juiceMe.ResultSolution.TotalVolume * juiceEvent.Scalar >
+                                juiceMe.JuiceSolution!.TotalVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
-                            juiceMe.ResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.ResultSolution);
+                            juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.JuiceSolution);
                             item.Delete();
                         }
 

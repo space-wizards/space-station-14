@@ -9,7 +9,7 @@
   - type: Mechanism
   - type: Food
   - type: Extractable
-    extractableSolution: extractableSolution
+    grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
