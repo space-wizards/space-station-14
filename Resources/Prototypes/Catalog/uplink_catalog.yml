@@ -9,7 +9,7 @@
 - type: uplinkListing
   id: UplinkRevolverInspector
   category: Weapons
-  itemId: RevolverInspector
+  itemId: RevolverPredator
   price: 8
 
 # Inbuilt suppressor so it's sneaky + more expensive.
