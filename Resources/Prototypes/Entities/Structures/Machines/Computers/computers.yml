@@ -226,6 +226,7 @@
   - type: CargoOrderDatabase
   - type: GalacticMarket
     products:
+      - MedicalSupplies
       - EmergencyExplosive
       - EmergencyFire
       - EmergencyInternals
@@ -242,8 +243,11 @@
       - HydroponicsSeeds
       - HydroponicsSeedsExotic
       - LivestockMonkeyCube
+      - FoodPizza
       - ServiceJanitorial
       - ServiceLightsReplacement
+      - ServiceSmokeables
+      - ServiceCustomSmokable
       - EngineeringCableLv
       - EngineeringCableMv
       - EngineeringCableHv
