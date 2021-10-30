@@ -6,6 +6,7 @@ namespace Content.Shared.Pinpointer
     [Serializable, NetSerializable]
     public enum PinpointerVisuals : byte
     {
-        IsActive
+        IsActive,
+        TargetDirection
     }
 }

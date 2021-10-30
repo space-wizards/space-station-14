@@ -1,7 +1,9 @@
+using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
+using System;
 using System.Collections.Generic;
 
 namespace Content.Server.Pinpointer
@@ -13,6 +15,13 @@ namespace Content.Server.Pinpointer
         public override void Initialize()
         {
             base.Initialize();
+
+            SubscribeLocalEvent<PinpointerComponent, UseInHandEvent>(OnUseInHand);
+        }
+
+        private void OnUseInHand(EntityUid uid, PinpointerComponent component, UseInHandEvent args)
+        {
+            TogglePinpointer(uid, component);
         }
 
         public override void Update(float frameTime)
@@ -47,6 +56,9 @@ namespace Content.Server.Pinpointer
             return dir;
         }
 
+        /// <summary>
+        ///     Set pinpointers target to track
+        /// </summary>
         public void SetTarget(EntityUid uid, EntityUid? target, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))
@@ -55,6 +67,9 @@ namespace Content.Server.Pinpointer
             pinpointer.Target = target;
         }
 
+        /// <summary>
+        ///     Toggle Pinpointer screen. If it has target it will start tracking it.
+        /// </summary>
         public void TogglePinpointer(EntityUid uid, PinpointerComponent? pinpointer = null)
         {
             if (!Resolve(uid, ref pinpointer))

@@ -5,8 +5,16 @@
   id: PinpointerBase
   components:
   - type: Sprite
+    netsync: false
     sprite: Objects/Devices/pinpointer.rsi
     layers:
     - state: pinpointer
+      map: ["enum.PinpointerLayers.Base"]
+    - state: pinonnull
+      map: ["enum.PinpointerLayers.Screen"]
   - type: Item
     sprite: Objects/Devices/pinpointer.rsi
+  - type: Pinpointer
+  - type: Appearance
+    visuals:
+    - type: PinpointerVisualizer
