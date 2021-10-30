@@ -52,10 +52,8 @@ namespace Content.IntegrationTests.Tests
                 generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
                 Assert.That(generator.HasComponent<GravityGeneratorComponent>());
                 Assert.That(generator.HasComponent<ApcPowerReceiverComponent>());
-                var generatorComponent = generator.GetComponent<GravityGeneratorComponent>();
-                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
 
-                Assert.That(generatorComponent.GravityActive, Is.False);
+                var powerComponent = generator.GetComponent<ApcPowerReceiverComponent>();
                 powerComponent.NeedsPower = false;
             });
             server.RunTicks(1);
