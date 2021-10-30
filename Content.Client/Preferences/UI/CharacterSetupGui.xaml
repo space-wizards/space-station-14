@@ -10,19 +10,19 @@
             <BoxContainer Orientation="Horizontal" MinSize="0 40">
                 <Label Text="{Loc 'character-setup-gui-character-setup-label'}"
                        Margin="8 0 0 0" VAlign="Center"
-                       StyleClasses="{x:Static style:StyleNano.StyleClassLabelHeadingBigger}" />
+                       StyleClasses="LabelHeadingBigger" />
                 <Button Name="RulesButton" HorizontalExpand="True"
                         Text="{Loc 'character-setup-gui-character-setup-rules-button'}"
-                        StyleClasses="{x:Static style:StyleNano.StyleClassButtonBig}"
+                        StyleClasses="ButtonBig"
                         HorizontalAlignment="Right" />
                 <Button Name="SaveButton"
                         Access="Public"
                         Text="{Loc 'character-setup-gui-character-setup-save-button'}"
-                        StyleClasses="{x:Static style:StyleNano.StyleClassButtonBig}"/>
+                        StyleClasses="ButtonBig"/>
                 <Button Name="CloseButton"
                         Access="Public"
                         Text="{Loc 'character-setup-gui-character-setup-close-button'}"
-                        StyleClasses="{x:Static style:StyleNano.StyleClassButtonBig}"/>
+                        StyleClasses="ButtonBig"/>
             </BoxContainer>
             <PanelContainer>
                 <PanelContainer.PanelOverride>
