@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Content.Shared.ActionBlocker;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Players;
@@ -11,7 +9,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Shared.Ghost
 {
     [NetworkedComponent()]
-    public class SharedGhostComponent : Component, IActionBlocker
+    public class SharedGhostComponent : Component
     {
         public override string Name => "Ghost";
 
@@ -66,14 +64,6 @@ namespace Content.Shared.Ghost
             CanReturnToBody = state.CanReturnToBody;
             CanGhostInteract = state.CanGhostInteract;
         }
-
-        public bool CanInteract() => CanGhostInteract;
-        public bool CanUse() => CanGhostInteract;
-        public bool CanThrow() => CanGhostInteract;
-        public bool CanDrop() => CanGhostInteract;
-        public bool CanPickup() => CanGhostInteract;
-        public bool CanEmote() => false;
-        public bool CanAttack() => CanGhostInteract;
     }
 
     [Serializable, NetSerializable]

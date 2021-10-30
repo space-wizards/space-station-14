@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Plants;
@@ -9,7 +10,6 @@ using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Botany;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -33,7 +33,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class PlantHolderComponent : Component, IInteractUsing, IInteractHand, IActivate, IExamine
+#pragma warning restore 618
     {
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 4f;

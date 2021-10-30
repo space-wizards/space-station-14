@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

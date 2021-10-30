@@ -13,7 +13,9 @@ namespace Content.Shared.CharacterInfo
         public override string Name => "CharacterInfo";
 
         [Serializable, NetSerializable]
+#pragma warning disable 618
         protected class RequestCharacterInfoMessage : ComponentMessage
+#pragma warning restore 618
         {
             public RequestCharacterInfoMessage()
             {
@@ -22,7 +24,9 @@ namespace Content.Shared.CharacterInfo
         }
 
         [Serializable, NetSerializable]
+#pragma warning disable 618
         protected class CharacterInfoMessage : ComponentMessage
+#pragma warning restore 618
         {
             public readonly Dictionary<string, List<ConditionInfo>> Objectives;
             public readonly string JobTitle;

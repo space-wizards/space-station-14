@@ -20,10 +20,10 @@
                 <!-- Top row -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40">
                     <Label Margin="8 0 0 0" StyleClasses="LabelHeadingBigger" VAlign="Center" Text="{Loc 'Lobby'}" />
-                    <Label Name="CServerName" StyleClasses="LabelHeadingBigger" VAlign="Center" />
-                    <ui:VoteCallMenuButton Name="CCallVoteButton" StyleClasses="ButtonBig" />
-                    <Button Name="COptionsButton" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
-                    <Button Name="CLeaveButton" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
+                    <Label Name="ServerName" Access="Public" StyleClasses="LabelHeadingBigger" VAlign="Center" />
+                    <ui:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
+                    <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'Options'}" />
+                    <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'Leave'}" />
                 </BoxContainer>
                 <!-- Gold line -->
                 <PanelContainer>
@@ -35,18 +35,20 @@
                 <!-- Middle section with the two vertical panels -->
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True">
                     <!-- Left panel -->
-                    <BoxContainer Orientation="Vertical" Name="CLeftPanelContainer" HorizontalExpand="True">
+                    <BoxContainer Orientation="Vertical" Name="LeftPanelContainer" HorizontalExpand="True">
                         <hudUi:StripeBack>
                             <BoxContainer Orientation="Horizontal" SeparationOverride="6" Margin="3 3 3 3">
-                                <cc:UICommandButton Command="observe" Name="CObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
-                                <Label Name="CStartTime" Align="Right"
+                                <cc:UICommandButton Command="observe" Name="ObserveButton" Text="{Loc 'Observe'}" StyleClasses="ButtonBig"  WindowType="{x:Type lobbyUi:ObserveWarningWindow}"/>
+                                <Label Name="StartTime"
+                                       Access="Public"
+                                       Align="Right"
                                        FontColorOverride="{x:Static maths:Color.DarkGray}"
                                        StyleClasses="LabelBig" HorizontalExpand="True" />
-                                <Button Name="CReadyButton" ToggleMode="True" Text="{Loc 'Ready Up'}"
+                                <Button Name="ReadyButton" Access="Public" ToggleMode="True" Text="{Loc 'Ready Up'}"
                                         StyleClasses="ButtonBig" />
                             </BoxContainer>
                         </hudUi:StripeBack>
-                        <chatUi:ChatBox Name="CChat" VerticalExpand="True" Margin="3 3 3 3"/>
+                        <chatUi:ChatBox Name="Chat" Access="Public" VerticalExpand="True" Margin="3 3 3 3"/>
                     </BoxContainer>
                     <!-- Gold line -->
                     <PanelContainer MinSize="2 0">
@@ -59,16 +61,21 @@
                         <BoxContainer Orientation="Vertical">
                             <!-- Player list -->
                             <hudUi:NanoHeading Text="{Loc 'Online Players'}" />
-                            <lobbyUi:LobbyPlayerList Name="COnlinePlayerList"
+                            <lobbyUi:LobbyPlayerList Name="OnlinePlayerList"
+                                                     Access="Public"
                                                      HorizontalExpand="True"
                                                      VerticalExpand="True"
                                                      Margin="3 3 3 3" />
                             <!-- Server info -->
                             <hudUi:NanoHeading Text="{Loc 'Server Info'}" />
-                            <info:ServerInfo Name="CServerInfo" VerticalExpand="True" Margin="3 3 3 3"/>
+                            <info:ServerInfo Name="ServerInfo"
+                                             Access="Public"
+                                             VerticalExpand="True"
+                                             Margin="3 3 3 3"/>
                         </BoxContainer>
                         <BoxContainer Orientation="Vertical"
-                                      Name="CVoteContainer"
+                                      Name="VoteContainer"
+                                      Access="Public"
                                       HorizontalAlignment="Right"
                                       Margin="0 8 8 0" />
                     </Control>

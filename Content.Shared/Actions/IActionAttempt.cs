@@ -19,10 +19,12 @@ namespace Content.Shared.Actions
         /// Action Prototype attempting to be performed
         /// </summary>
         BaseActionPrototype Action { get; }
+#pragma warning disable 618
         ComponentMessage PerformInstantActionMessage();
         ComponentMessage PerformToggleActionMessage(bool on);
         ComponentMessage PerformTargetPointActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args);
         ComponentMessage PerformTargetEntityActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args);
+#pragma warning restore 618
         /// <summary>
         /// Tries to get the action state for this action from the actionsComponent, returning
         /// true if found.
@@ -99,12 +101,16 @@ namespace Content.Shared.Actions
                 target));
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformInstantActionMessage()
+#pragma warning restore 618
         {
             return new PerformInstantActionMessage(_action.ActionType);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformToggleActionMessage(bool toggleOn)
+#pragma warning restore 618
         {
             if (toggleOn)
             {
@@ -113,12 +119,16 @@ namespace Content.Shared.Actions
             return new PerformToggleOffActionMessage(_action.ActionType);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformTargetPointActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
+#pragma warning restore 618
         {
             return new PerformTargetPointActionMessage(_action.ActionType, args.Coordinates);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformTargetEntityActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
+#pragma warning restore 618
         {
             return new PerformTargetEntityActionMessage(_action.ActionType, args.EntityUid);
         }
@@ -176,12 +186,16 @@ namespace Content.Shared.Actions
             _itemActions.Toggle(_action.ActionType, toggleOn);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformInstantActionMessage()
+#pragma warning restore 618
         {
             return new PerformInstantItemActionMessage(_action.ActionType, _item.Uid);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformToggleActionMessage(bool toggleOn)
+#pragma warning restore 618
         {
             if (toggleOn)
             {
@@ -190,12 +204,16 @@ namespace Content.Shared.Actions
             return new PerformToggleOffItemActionMessage(_action.ActionType, _item.Uid);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformTargetPointActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
+#pragma warning restore 618
         {
             return new PerformTargetPointItemActionMessage(_action.ActionType, _item.Uid, args.Coordinates);
         }
 
+#pragma warning disable 618
         public ComponentMessage PerformTargetEntityActionMessage(PointerInputCmdHandler.PointerInputCmdArgs args)
+#pragma warning restore 618
         {
             return new PerformTargetEntityItemActionMessage(_action.ActionType, _item.Uid, args.EntityUid);
         }

@@ -229,7 +229,9 @@ namespace Content.Client.Instruments
 
             if (!fromStateChange)
             {
+#pragma warning disable 618
                 SendNetworkMessage(new InstrumentStartMidiMessage());
+#pragma warning restore 618
             }
         }
 
@@ -258,7 +260,9 @@ namespace Content.Client.Instruments
 
             if (!fromStateChange && IoCManager.Resolve<INetManager>().IsConnected)
             {
+#pragma warning disable 618
                 SendNetworkMessage(new InstrumentStopMidiMessage());
+#pragma warning restore 618
             }
         }
 
@@ -268,6 +272,7 @@ namespace Content.Client.Instruments
             EndRenderer();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -472,7 +477,9 @@ namespace Content.Client.Instruments
 
             if (eventCount == 0) return;
 
+#pragma warning disable 618
             SendNetworkMessage(new InstrumentMidiEventMessage(events));
+#pragma warning restore 618
 
             _sentWithinASec += eventCount;
 

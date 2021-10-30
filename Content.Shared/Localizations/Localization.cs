@@ -31,6 +31,8 @@ namespace Content.Shared.Localizations
 
             loc.LoadCulture(culture);
             loc.AddFunction(culture, "PRESSURE", FormatPressure);
+            loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
+            loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
             loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
         }
 
@@ -46,7 +48,7 @@ namespace Content.Shared.Localizations
             return new LocValueString(obj?.ToString() ?? "");
         }
 
-        private static ILocValue FormatPressure(LocArgs args)
+        private static ILocValue FormatUnitsGeneric(LocArgs args, string mode)
         {
             const int maxPlaces = 5; // Matches amount in _lib.ftl
             var pressure = ((LocValueNumber) args.Args[0]).Value;
@@ -58,7 +60,22 @@ namespace Content.Shared.Localizations
                 places += 1;
             }
 
-            return new LocValueString(Loc.GetString("zzzz-fmt-pressure", ("divided", pressure), ("places", places)));
+            return new LocValueString(Loc.GetString(mode, ("divided", pressure), ("places", places)));
+        }
+
+        private static ILocValue FormatPressure(LocArgs args)
+        {
+            return FormatUnitsGeneric(args, "zzzz-fmt-pressure");
+        }
+
+        private static ILocValue FormatPowerWatts(LocArgs args)
+        {
+            return FormatUnitsGeneric(args, "zzzz-fmt-power-watts");
+        }
+
+        private static ILocValue FormatPowerJoules(LocArgs args)
+        {
+            return FormatUnitsGeneric(args, "zzzz-fmt-power-joules");
         }
     }
 }

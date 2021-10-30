@@ -15,11 +15,6 @@ namespace Content.Client.Pointing
         {
             base.OnChangeData(component);
 
-            if (component.Deleted)
-            {
-                return;
-            }
-
             if (component.TryGetData<double>(RoguePointingArrowVisuals.Rotation, out var degrees))
             {
                 SetRotation(component, Angle.FromDegrees(degrees));

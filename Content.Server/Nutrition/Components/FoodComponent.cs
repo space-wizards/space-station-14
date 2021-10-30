@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Body.Behavior;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -181,7 +181,7 @@ namespace Content.Server.Nutrition.Components
 
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
-            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage));
+            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage, ("food", Owner)));
 
             // If utensils were used
             if (utensils != null)

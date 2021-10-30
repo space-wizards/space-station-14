@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -19,7 +19,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     class SliceableFoodComponent : Component, IInteractUsing, IExamine
+#pragma warning restore 618
     {
         public override string Name => "SliceableFood";
 

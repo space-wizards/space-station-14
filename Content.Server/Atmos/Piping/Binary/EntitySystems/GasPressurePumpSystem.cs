@@ -4,9 +4,11 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
@@ -20,6 +22,19 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
+            SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
+        }
+
+        private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
+        {
+            if (!pump.Owner.Transform.Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+                return;
+
+            if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
+                        ("statusColor", "lightblue"), // TODO: change with pressure?
+                        ("pressure", pump.TargetPressure)
+            ))
+                args.PushMarkup(str);
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)

@@ -13,9 +13,6 @@ namespace Content.Client.Disposal.UI
     [GenerateTypedNameReferences]
     public partial class DisposalTaggerWindow : SS14Window
     {
-        public LineEdit TagInput => TagInputProtected;
-        public Button Confirm => ConfirmProtected;
-
         public DisposalTaggerWindow()
         {
             RobustXamlLoader.Load(this);

@@ -37,6 +37,7 @@
     - state: panel_open
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
@@ -59,6 +60,8 @@
   - type: AccessReader
   - type: Airlock
     openPanelVisible: true
+    # needed so that windoors will close regardless of whether there are people in it; it doesn't crush after all
+    safety: false
   - type: Door
     weldable: false
     crushDamage:

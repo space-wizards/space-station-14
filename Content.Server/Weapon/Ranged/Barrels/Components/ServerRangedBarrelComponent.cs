@@ -34,7 +34,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
     /// All of the ranged weapon components inherit from this to share mechanics like shooting etc.
     /// Only difference between them is how they retrieve a projectile to shoot (battery, magazine, etc.)
     /// </summary>
+#pragma warning disable 618
     public abstract class ServerRangedBarrelComponent : SharedRangedBarrelComponent, IUse, IInteractUsing, IExamine, ISerializationHooks
+#pragma warning restore 618
     {
         // There's still some of py01 and PJB's work left over, especially in underlying shooting logic,
         // it's just when I re-organised it changed me as the contributor
@@ -359,7 +361,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
                 projectile.Transform.LocalRotation = projectileAngle + MathHelper.PiOver2;
             }
+#pragma warning disable 618
             ammo.SendMessage(this, new BarrelFiredMessage(firedProjectiles));
+#pragma warning restore 618
         }
 
         /// <summary>
@@ -415,7 +419,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         }
     }
 
+#pragma warning disable 618
     public class BarrelFiredMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly List<IEntity> FiredProjectiles;
 
