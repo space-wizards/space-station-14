@@ -1,7 +1,7 @@
-using Content.Server.HandLabeler.Components;
+using Content.Server.Labels.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
-using Content.Shared.HandLabeler;
+using Content.Shared.Labels;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -12,7 +12,7 @@ using Robust.Shared.Localization;
 using Content.Shared.Popups;
 using System;
 
-namespace Content.Server.HandLabeler
+namespace Content.Server.Labels
 {
     /// <summary>
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .

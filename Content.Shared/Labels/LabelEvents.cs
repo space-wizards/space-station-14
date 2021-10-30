@@ -2,7 +2,7 @@ using System;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.HandLabeler
+namespace Content.Shared.Labels
 {
     /// <summary>
     /// Key representing which <see cref="BoundUserInterface"/> is currently open.

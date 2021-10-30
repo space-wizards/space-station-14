@@ -1,8 +1,8 @@
-using Content.Server.HandLabeler.Components;
+using Content.Server.Labels.Components;
 using Content.Server.Paper;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Examine;
-using Content.Shared.HandLabeler;
+using Content.Shared.Labels;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -10,7 +10,7 @@ using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 using System;
 
-namespace Content.Server.HandLabeler
+namespace Content.Server.Labels
 {
     /// <summary>
     /// A system that lets players see the contents of a label on an object.

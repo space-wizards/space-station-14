@@ -1,4 +1,4 @@
-using Content.Shared.HandLabeler;
+using Content.Shared.Labels;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 
