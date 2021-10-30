@@ -7,6 +7,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -45,7 +46,8 @@ namespace Content.Server.Construction.Conditions
             {
                 Localization = Anchored
                     ? "construction-step-condition-entity-anchored"
-                    : "construction-step-condition-entity-unanchored"
+                    : "construction-step-condition-entity-unanchored",
+                Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/wrench.rsi"), "icon"),
             };
         }
     }

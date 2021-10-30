@@ -41,11 +41,6 @@ namespace Content.Shared.Localizations
         {
             var id = ((LocValueString)args.Args[0]).Value;
 
-            if (args.Args.Count > 1)
-            {
-
-            }
-
             return new LocValueString(Loc.GetString(id));
         }
 

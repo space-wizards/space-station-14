@@ -18,6 +18,13 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public class MachineFrameComplete : IGraphCondition
     {
+        [DataField("guideIconBoard")]
+        public SpriteSpecifier? GuideIconBoard { get; }
+
+        [DataField("guideIconParts")]
+        public SpriteSpecifier? GuideIconPart { get; }
+
+
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
             if (!entityManager.TryGetComponent(uid, out MachineFrameComponent? machineFrame))
@@ -95,7 +102,19 @@ namespace Content.Server.Construction.Conditions
 
         public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
         {
-            yield break; // TODO CONSTRUCTION
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-machine-frame-board",
+                Icon = GuideIconBoard,
+                EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
+            };
+
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-machine-frame-parts",
+                Icon = GuideIconPart,
+                EntryNumber = 0, // Set this to anything so the guide generation takes this as a numbered step.
+            };
         }
     }
 }

@@ -5,6 +5,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.Conditions
 {
@@ -12,7 +13,14 @@ namespace Content.Shared.Construction.Conditions
     [DataDefinition]
     public class TileType : IConstructionCondition
     {
-        [DataField("targets")] public List<string> TargetTiles { get; private set; } = new();
+        [DataField("targets")]
+        public List<string> TargetTiles { get; } = new();
+
+        [DataField("guideText")]
+        public string? GuideText = null;
+
+        [DataField("guideIcon")]
+        public SpriteSpecifier? GuideIcon = null;
 
         public bool Condition(IEntity user, EntityCoordinates location, Direction direction)
         {
@@ -35,7 +43,14 @@ namespace Content.Shared.Construction.Conditions
 
         public ConstructionGuideEntry? GenerateGuideEntry()
         {
-            return null; // TODO CONSTRUCTION
+            if (GuideText == null)
+                return null;
+
+            return new ConstructionGuideEntry()
+            {
+                Localization = GuideText,
+                Icon = GuideIcon,
+            };
         }
     }
 }

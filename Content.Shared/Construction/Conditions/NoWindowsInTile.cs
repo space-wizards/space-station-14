@@ -25,7 +25,10 @@ namespace Content.Shared.Construction.Conditions
 
         public ConstructionGuideEntry? GenerateGuideEntry()
         {
-            return null; // TODO CONSTRUCTION
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-no-windows-in-tile"
+            };
         }
     }
 }

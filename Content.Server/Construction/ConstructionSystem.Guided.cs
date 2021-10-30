@@ -137,12 +137,6 @@ namespace Content.Server.Construction
                 }
             };
 
-            foreach (var condition in construction.Conditions)
-            {
-                if(condition.GenerateGuideEntry() is {} conditionEntry)
-                    entries.Add(conditionEntry);
-            }
-
             var conditions = new HashSet<string>();
 
             // Iterate until the penultimate node.
@@ -166,15 +160,28 @@ namespace Content.Server.Construction
                         entries.Add(insertStep.GenerateGuideEntry());
                     }
 
+                    // Now actually list the construction conditions.
+                    foreach (var condition in construction.Conditions)
+                    {
+                        if (condition.GenerateGuideEntry() is not {} conditionEntry)
+                            continue;
+
+                        conditionEntry.Padding += 4;
+                        entries.Add(conditionEntry);
+                    }
+
                     step++;
                     node = path[index++];
+
+                    // Add a bit of padding if there will be more steps after this.
+                    if(node != targetNode)
+                        entries.Add(new ConstructionGuideEntry());
+
                     continue;
                 }
 
                 var old = conditions;
                 conditions = new HashSet<string>();
-
-                var addedAnythingYet = false;
 
                 foreach (var condition in edge.Conditions)
                 {
@@ -182,18 +189,23 @@ namespace Content.Server.Construction
                     {
                         conditions.Add(conditionEntry.Localization);
 
-                        // To prevent spamming the same stuff over and over again. This is a bit naive, but..ye
-                        if (old.Contains(conditionEntry.Localization))
-                            continue;
+                        // Okay so if the condition entry had a non-null value here, we take it as a numbered step.
+                        // This is for cases where there is a lot of snowflake behavior, such as machine frames...
+                        // So that the step of inserting a machine board and inserting all of its parts is numbered.
+                        if (conditionEntry.EntryNumber != null)
+                            conditionEntry.EntryNumber = step++;
 
-                        if (!addedAnythingYet)
+                        // To prevent spamming the same stuff over and over again. This is a bit naive, but..ye.
+                        // Also we will only hide this condition *if* it isn't numbered.
+                        else
                         {
-                            addedAnythingYet = true;
-                            // add padding since we're a superset of the old conditions.
-                            entries.Add(new ConstructionGuideEntry());
+                            if (old.Contains(conditionEntry.Localization))
+                                continue;
+
+                            // We only add padding for non-numbered entries.
+                            conditionEntry.Padding += 4;
                         }
 
-                        conditionEntry.Padding += 4;
                         entries.Add(conditionEntry);
                     }
                 }
