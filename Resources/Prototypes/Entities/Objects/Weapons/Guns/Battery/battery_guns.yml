@@ -137,7 +137,7 @@
   name: COG Laser Carbine
   parent: BaseItem
   id: LaserRifleCog
-  description: Favoured by Nanotrasen Security for bring cheap and easy to use.
+  description: Favoured by Nanotrasen Security for being cheap and easy to use.
   components:
   - type: Sprite
     netsync: false
@@ -324,7 +324,7 @@
   name: laser gun
   parent: BaseItem
   id: LaserSecGun
-  description: Standard issued laser carbine for Nanotrasen security operatives.
+  description: A laser gun.
   components:
   - type: Sprite
     netsync: false
