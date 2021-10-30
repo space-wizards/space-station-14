@@ -199,7 +199,7 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
 
-            _constructionView.CategoryButton.Clear();
+            _constructionView.Category.Clear();
 
             var array = uniqueCategories.ToArray();
             Array.Sort(array);
@@ -207,7 +207,7 @@ namespace Content.Client.Construction.UI
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.CategoryButton.AddItem(category, i);
+                _constructionView.Category.AddItem(category, i);
             }
 
             _constructionView.Categories = array;

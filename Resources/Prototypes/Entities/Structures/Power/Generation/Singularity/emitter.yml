@@ -69,5 +69,7 @@
   - type: Appearance
     visuals:
     - type: EmitterVisualizer
+  - type: Lock
+    locked: false
   - type: AccessReader
     access: [[ "Engineering" ]]
