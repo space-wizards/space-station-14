@@ -344,7 +344,7 @@
       Beer:
         effects:
         - !type:SatiateThirst
-      BlueCuraco:
+      BlueCuracao:
         effects:
         - !type:SatiateThirst
       Cognac:
@@ -465,10 +465,10 @@
       DriestMartini:
         effects:
         - !type:SatiateThirst
-      ErkiaSuprise:
+      ErikaSuprise:
         effects:
         - !type:SatiateThirst
-      Gargleblaster:
+      GargleBlaster:
         effects:
         - !type:SatiateThirst
       GinTonic:
