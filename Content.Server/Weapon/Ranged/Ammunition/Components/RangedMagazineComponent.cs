@@ -18,7 +18,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class RangedMagazineComponent : Component, IMapInit, IInteractUsing, IUse, IExamine
+#pragma warning restore 618
     {
         public override string Name => "RangedMagazine";
 

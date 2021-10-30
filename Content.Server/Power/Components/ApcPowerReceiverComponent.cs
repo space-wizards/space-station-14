@@ -21,7 +21,9 @@ namespace Content.Server.Power.Components
     ///     so that it can receive power from a <see cref="IApcNet"/>.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class ApcPowerReceiverComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "ApcPowerReceiver";
 
@@ -34,6 +36,8 @@ namespace Content.Server.Power.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("powerLoad")]
         public float Load { get => NetworkLoad.DesiredPower; set => NetworkLoad.DesiredPower = value; }
+
+        public ApcPowerProviderComponent? Provider = null;
 
         /// <summary>
         ///     When false, causes this to appear powered even if not receiving power from an Apc.
@@ -68,6 +72,13 @@ namespace Content.Server.Power.Components
             DesiredPower = 5
         };
 
+        protected override void OnRemove()
+        {
+            Provider?.RemoveReceiver(this);
+
+            base.OnRemove();
+        }
+
         public void ApcPowerChanged()
         {
             OnNewPowerState();
@@ -75,7 +86,9 @@ namespace Content.Server.Power.Components
 
         private void OnNewPowerState()
         {
+#pragma warning disable 618
             SendMessage(new PowerChangedMessage(Powered));
+#pragma warning restore 618
             Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new PowerChangedEvent(Powered));
 
             if (Owner.TryGetComponent<AppearanceComponent>(out var appearance))
@@ -95,7 +108,9 @@ namespace Content.Server.Power.Components
         }
     }
 
+#pragma warning disable 618
     public class PowerChangedMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly bool Powered;
 

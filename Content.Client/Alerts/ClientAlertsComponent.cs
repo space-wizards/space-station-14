@@ -112,7 +112,7 @@ namespace Content.Client.Alerts
             {
                 _alertControls.Remove(alertKeyToRemove, out var control);
                 if (control == null) return;
-                _ui.Grid.Children.Remove(control);
+                _ui.AlertContainer.Children.Remove(control);
             }
 
             // now we know that alertControls contains alerts that should still exist but
@@ -145,7 +145,7 @@ namespace Content.Client.Alerts
                 {
                     if (existingAlertControl != null)
                     {
-                        _ui.Grid.Children.Remove(existingAlertControl);
+                        _ui.AlertContainer.Children.Remove(existingAlertControl);
                     }
 
                     // this is a new alert + alert key or just a different alert with the same
@@ -154,12 +154,12 @@ namespace Content.Client.Alerts
                     if (_alertOrder != null)
                     {
                         var added = false;
-                        foreach (var alertControl in _ui.Grid.Children)
+                        foreach (var alertControl in _ui.AlertContainer.Children)
                         {
                             if (_alertOrder.Compare(newAlert, ((AlertControl) alertControl).Alert) < 0)
                             {
                                 var idx = alertControl.GetPositionInParent();
-                                _ui.Grid.Children.Add(newAlertControl);
+                                _ui.AlertContainer.Children.Add(newAlertControl);
                                 newAlertControl.SetPositionInParent(idx);
                                 added = true;
                                 break;
@@ -168,12 +168,12 @@ namespace Content.Client.Alerts
 
                         if (!added)
                         {
-                            _ui.Grid.Children.Add(newAlertControl);
+                            _ui.AlertContainer.Children.Add(newAlertControl);
                         }
                     }
                     else
                     {
-                        _ui.Grid.Children.Add(newAlertControl);
+                        _ui.AlertContainer.Children.Add(newAlertControl);
                     }
 
                     _alertControls[newAlert.AlertKey] = newAlertControl;
@@ -208,7 +208,9 @@ namespace Content.Client.Alerts
                 return;
             }
 
+#pragma warning disable 618
             SendNetworkMessage(new ClickAlertMessage(alert.Alert.AlertType));
+#pragma warning restore 618
         }
 
         protected override void AfterShowAlert()

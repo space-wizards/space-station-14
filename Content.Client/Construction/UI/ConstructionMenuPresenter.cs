@@ -155,6 +155,7 @@ namespace Content.Client.Construction.UI
             var recipesList = _constructionView.Recipes;
 
             recipesList.Clear();
+            var recipes = new List<ConstructionPrototype>();
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -170,6 +171,13 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
+                recipes.Add(recipe);
+            }
+
+            recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+
+            foreach (var recipe in recipes)
+            {
                 recipesList.Add(GetItem(recipe, recipesList));
             }
 
@@ -191,7 +199,7 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
 
-            _constructionView.CategoryButton.Clear();
+            _constructionView.Category.Clear();
 
             var array = uniqueCategories.ToArray();
             Array.Sort(array);
@@ -199,7 +207,7 @@ namespace Content.Client.Construction.UI
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.CategoryButton.AddItem(category, i);
+                _constructionView.Category.AddItem(category, i);
             }
 
             _constructionView.Categories = array;
@@ -283,58 +291,6 @@ namespace Content.Client.Construction.UI
                                                  ("name", arbitraryStep.Name)),
                                              icon);
                             break;
-
-                        case NestedConstructionGraphStep nestedStep:
-                            var parallelNumber = 1;
-                            stepList.AddItem(Loc.GetString("construction-presenter-nested-step", ("step-number", stepNumber++)));
-
-                            foreach (var steps in nestedStep.Steps)
-                            {
-                                var subStepNumber = 1;
-
-                                foreach (var subStep in steps)
-                                {
-                                    icon = GetTextureForStep(_resourceCache, subStep);
-
-                                    switch (subStep)
-                                    {
-                                        case MaterialConstructionGraphStep materialStep:
-                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString(
-                                                    "construction-presenter-material-substep",
-                                                    ("step-number", stepNumber),
-                                                    ("parallel-number", parallelNumber),
-                                                    ("substep-number", subStepNumber++),
-                                                    ("amount", materialStep.Amount),
-                                                    ("material", materialStep.MaterialPrototype.Name)),
-                                                icon);
-                                            break;
-
-                                        case ToolConstructionGraphStep toolStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-tool-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
-                                                            icon);
-                                            break;
-
-                                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-arbitrary-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("name", arbitraryStep.Name)),
-                                                             icon);
-                                            break;
-                                    }
-                                }
-
-                                parallelNumber++;
-                            }
-
-                            break;
                     }
                 }
 
@@ -354,9 +310,6 @@ namespace Content.Client.Construction.UI
 
                 case ArbitraryInsertConstructionGraphStep arbitraryStep:
                     return arbitraryStep.Icon?.Frame0();
-
-                case NestedConstructionGraphStep:
-                    return null;
             }
 
             return null;

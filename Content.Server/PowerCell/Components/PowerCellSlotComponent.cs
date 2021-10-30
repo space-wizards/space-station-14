@@ -20,7 +20,9 @@ namespace Content.Server.PowerCell.Components
     /// <see cref="PowerCellSize"/>. Intended to supplement other components, not very useful by itself.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class PowerCellSlotComponent : Component, IExamine, IMapInit
+#pragma warning restore 618
     {
         public override string Name => "PowerCellSlot";
 

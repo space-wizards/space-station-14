@@ -1,4 +1,4 @@
-using Content.Shared.Chemistry.EntitySystems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;

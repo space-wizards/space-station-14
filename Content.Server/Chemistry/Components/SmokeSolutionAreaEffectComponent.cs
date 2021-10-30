@@ -1,7 +1,7 @@
 ﻿using Content.Server.Body.Circulatory;
 using Content.Server.Body.Respiratory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Smoking;
 using Robust.Server.GameObjects;
@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.Components
     public class SmokeSolutionAreaEffectComponent : SolutionAreaEffectComponent
     {
         public override string Name => "SmokeSolutionAreaEffect";
-        public const string SolutionName = "smoke";
+        public new const string SolutionName = "smoke";
 
         protected override void UpdateVisuals()
         {

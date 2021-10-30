@@ -32,7 +32,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.WireHacking
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class WiresComponent : SharedWiresComponent, IInteractUsing, IExamine, IMapInit
+#pragma warning restore 618
     {
         [Dependency] private readonly IRobustRandom _random = default!;
 

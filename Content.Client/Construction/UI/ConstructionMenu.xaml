@@ -3,9 +3,9 @@
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.4">
             <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
                 <LineEdit Name="SearchBar" PlaceHolder="Search" HorizontalExpand="True"/>
-                <OptionButton Name="Category" MinSize="130 0"/>
+                <OptionButton Name="Category" Access="Public" MinSize="130 0"/>
             </BoxContainer>
-            <ItemList Name="RecipesList" SelectMode="Single" VerticalExpand="True"/>
+            <ItemList Name="Recipes" Access="Public" SelectMode="Single" VerticalExpand="True"/>
         </BoxContainer>
         <Control MinSize="10 0"/>
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="0.6">
@@ -19,7 +19,7 @@
                     </BoxContainer>
                 </BoxContainer>
             </Control>
-            <ItemList Name="StepList" VerticalExpand="True"/>
+            <ItemList Name="RecipeStepList" Access="Public" VerticalExpand="True"/>
             <BoxContainer Orientation="Vertical">
                 <Button Name="BuildButton" Disabled="True" ToggleMode="True" VerticalExpand="True" SizeFlagsStretchRatio="0.5"/>
                 <BoxContainer Orientation="Horizontal" VerticalExpand="True" SizeFlagsStretchRatio="0.5">

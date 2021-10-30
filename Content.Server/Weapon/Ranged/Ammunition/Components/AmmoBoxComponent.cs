@@ -18,7 +18,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Weapon.Ranged.Ammunition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public sealed class AmmoBoxComponent : Component, IInteractUsing, IUse, IInteractHand, IMapInit, IExamine
+#pragma warning restore 618
     {
         public override string Name => "AmmoBox";
 
