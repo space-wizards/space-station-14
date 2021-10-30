@@ -309,9 +309,18 @@ namespace Content.Shared.Containers.ItemSlots
                     : slot.Item!.Name ?? string.Empty;
 
                 Verb verb = new();
-                verb.Text = verbSubject;
-                verb.Category = VerbCategory.Eject;
                 verb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
+
+                if (slot.EjectVerbText == null)
+                {
+                    verb.Text = verbSubject;
+                    verb.Category = VerbCategory.Eject;
+                }
+                else
+                {
+                    verb.Text = Loc.GetString(slot.EjectVerbText);
+                    verb.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
+                }
 
                 args.Verbs.Add(verb);
             }
@@ -335,9 +344,14 @@ namespace Content.Shared.Containers.ItemSlots
                         : slot.Item!.Name ?? string.Empty;
 
                     Verb takeVerb = new();
-                    takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
                     takeVerb.Act = () => TryEjectToHands(uid, slot, args.User.Uid);
                     takeVerb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
+
+                    if (slot.EjectVerbText == null)
+                        takeVerb.Text = Loc.GetString("take-item-verb-text", ("subject", verbSubject));
+                    else
+                        takeVerb.Text = Loc.GetString(slot.EjectVerbText);
+
                     args.Verbs.Add(takeVerb);
                 }
             }
@@ -348,7 +362,7 @@ namespace Content.Shared.Containers.ItemSlots
 
             foreach (var slot in itemSlots.Slots.Values)
             {
-                if (!CanInsert(args.Using, slot, swap: true))
+                if (!CanInsert(args.Using, slot))
                     continue;
 
                 var verbSubject = slot.Name != string.Empty
@@ -356,7 +370,14 @@ namespace Content.Shared.Containers.ItemSlots
                     : args.Using.Name ?? string.Empty;
 
                 Verb insertVerb = new();
-                if (slot.EjectOnInteract)
+                insertVerb.Act = () => Insert(uid, slot, args.Using);
+
+                if (slot.InsertVerbText != null)
+                {
+                    insertVerb.Text = Loc.GetString(slot.InsertVerbText);
+                    insertVerb.IconTexture = "/Textures/Interface/VerbIcons/insert.svg.192dpi.png";
+                }
+                else if(slot.EjectOnInteract)
                 {
                     // Inserting/ejecting is a primary interaction for this entity. Instead of using the insert
                     // category, we will use a single "Place <item>" verb.
@@ -367,14 +388,6 @@ namespace Content.Shared.Containers.ItemSlots
                 {
                     insertVerb.Category = VerbCategory.Insert;
                     insertVerb.Text = verbSubject;
-                }
-
-                insertVerb.Act = () => Insert(uid, slot, args.Using);
-                if (slot.HasItem)
-                {
-                    // This action will swap out the item already in the slot. For something like ID card consoles which
-                    // have more than one slot with the same whitelist, we want to prioritize slotting into empty slots.
-                    insertVerb.Priority = -1;
                 }
 
                 args.Verbs.Add(insertVerb);

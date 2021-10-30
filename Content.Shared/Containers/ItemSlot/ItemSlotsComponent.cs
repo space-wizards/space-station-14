@@ -98,6 +98,20 @@ namespace Content.Shared.Containers.ItemSlots
         [DataField("ejectOnInteract")]
         public bool EjectOnInteract = false;
 
+        /// <summary>
+        ///     Override the insert verb text. Defaults to [insert category] -> [item-name]. If not null, the verb will
+        ///     not be given a category.
+        /// </summary>
+        [DataField("insertVerbText")]
+        public string? InsertVerbText;
+
+        /// <summary>
+        ///     Override the insert verb text. Defaults to [eject category] -> [item-name]. If not null, the verb will
+        ///     not be given a category.
+        /// </summary>
+        [DataField("ejectVerbText")]
+        public string? EjectVerbText;
+
         [ViewVariables]
         public ContainerSlot ContainerSlot = default!;
 
