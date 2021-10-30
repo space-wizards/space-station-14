@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Added cable crates to cargo console, type: Add}
-  id: 19
-  time: '2021-03-01T20:56:14.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Starting cargo balance is now 1000 instead of 100000, type: Tweak}
   - {message: Cargo passive point income doubled, type: Tweak}
   id: 20
@@ -2799,3 +2794,9 @@ Entries:
       banned, type: Add}
   id: 518
   time: '2021-10-29T18:54:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'can no longer place multiple wires of the same type on one spot, HV
+      no longer blocks other wires.', type: Fix}
+  id: 519
+  time: '2021-10-30T23:08:48.0000000+00:00'
