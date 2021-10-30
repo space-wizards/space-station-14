@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public void Refill(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
             RefillableSolutionComponent? refillableSolution = null)
         {
-            if (!Resolve(targetUid, ref refillableSolution))
+            if (!Resolve(targetUid, ref refillableSolution, false))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
@@ -20,7 +20,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public void Inject(EntityUid targetUid, Solution targetSolution, Solution addedSolution,
             InjectableSolutionComponent? injectableSolution = null)
         {
-            if (!Resolve(targetUid, ref injectableSolution))
+            if (!Resolve(targetUid, ref injectableSolution, false))
                 return;
 
             TryAddSolution(targetUid, targetSolution, addedSolution);
@@ -29,8 +29,8 @@ namespace Content.Server.Chemistry.EntitySystems
         public Solution Draw(EntityUid targetUid, Solution solution, ReagentUnit amount,
             DrawableSolutionComponent? drawableSolution = null)
         {
-            if (!Resolve(targetUid, ref drawableSolution))
-                return new Solution();;
+            if (!Resolve(targetUid, ref drawableSolution, false))
+                return new Solution();
 
             return SplitSolution(targetUid, solution, amount);
         }
@@ -38,7 +38,7 @@ namespace Content.Server.Chemistry.EntitySystems
         public Solution Drain(EntityUid targetUid, Solution targetSolution, ReagentUnit amount,
             DrainableSolutionComponent? drainableSolution = null)
         {
-            if (!Resolve(targetUid, ref drainableSolution))
+            if (!Resolve(targetUid, ref drainableSolution, false))
                 return new Solution();
 
             return SplitSolution(targetUid, targetSolution, amount);
@@ -81,8 +81,8 @@ namespace Content.Server.Chemistry.EntitySystems
             DrainableSolutionComponent? drainable = null,
             SolutionContainerManagerComponent? manager = null)
         {
-            if (!Resolve(uid, ref drainable, ref manager, false) ||
-                !manager.Solutions.TryGetValue(drainable.Solution, out solution))
+            if (!Resolve(uid, ref drainable, ref manager, false)
+                || !manager.Solutions.TryGetValue(drainable.Solution, out solution))
             {
                 solution = null;
                 return false;
