@@ -74,7 +74,9 @@ namespace Content.Shared.Storage
     /// Updates the client component about what entities this storage is holding
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class StorageHeldItemsMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly int StorageSizeMax;
         public readonly int StorageSizeUsed;
@@ -93,7 +95,9 @@ namespace Content.Shared.Storage
     /// Component message for adding an entity to the storage entity.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class InsertEntityMessage : ComponentMessage
+#pragma warning restore 618
     {
         public InsertEntityMessage()
         {
@@ -105,7 +109,9 @@ namespace Content.Shared.Storage
     /// Component message for displaying an animation of entities flying into a storage entity
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class AnimateInsertingEntitiesMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly List<EntityUid> StoredEntities;
         public readonly List<EntityCoordinates> EntityPositions;
@@ -121,7 +127,9 @@ namespace Content.Shared.Storage
     /// Component message for removing a contained entity from the storage entity
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class RemoveEntityMessage : ComponentMessage
+#pragma warning restore 618
     {
         public EntityUid EntityUid;
 
@@ -136,7 +144,9 @@ namespace Content.Shared.Storage
     /// Component message for opening the storage UI
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class OpenStorageUIMessage : ComponentMessage
+#pragma warning restore 618
     {
         public OpenStorageUIMessage()
         {
@@ -149,7 +159,9 @@ namespace Content.Shared.Storage
     /// E.g when the player moves too far away from the container.
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class CloseStorageUIMessage : ComponentMessage
+#pragma warning restore 618
     {
         public CloseStorageUIMessage()
         {

@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
@@ -14,7 +15,6 @@ using Content.Server.Players;
 using Content.Server.Verbs;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -57,7 +57,7 @@ namespace Content.Server.Administration
                 Verb verb = new();
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
+                verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
                 args.Verbs.Add(verb);
             }
@@ -200,7 +200,7 @@ namespace Content.Server.Administration
                 // TODO CHEMISTRY
                 // Add reagent ui broke after solution refactor. Needs fixing
                 verb.Disabled = true;
-                verb.Tooltip = "Currently non functional after solution refactor.";
+                verb.Message = "Currently non functional after solution refactor.";
                 verb.Priority = -2;
 
                 args.Verbs.Add(verb);

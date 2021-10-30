@@ -130,10 +130,10 @@ namespace Content.Server.Construction.Components
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialIdRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
-            _tagRequirements = machineBoard.TagRequirements;
+            _requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+            _materialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+            _componentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
+            _tagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
 
             _progress.Clear();
             _materialProgress.Clear();

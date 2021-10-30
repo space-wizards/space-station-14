@@ -37,8 +37,8 @@ namespace Content.Server.Disposal.Tube.Components
             var next = Owner.Transform.LocalRotation.GetDir();
             var directions = ConnectableDirections().Skip(1).ToArray();
 
-            if (holder.PreviousTube == null ||
-                DirectionTo(holder.PreviousTube) == next)
+            if (holder.PreviousDirectionFrom == Direction.Invalid ||
+                holder.PreviousDirectionFrom == next)
             {
                 return _random.Pick(directions);
             }

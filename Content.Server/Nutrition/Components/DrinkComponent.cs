@@ -1,8 +1,6 @@
 using Content.Server.Body.Behavior;
 using Content.Server.Fluids.Components;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -21,11 +19,15 @@ using Robust.Shared.Utility;
 using Robust.Shared.ViewVariables;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class DrinkComponent : Component, IUse, IAfterInteract, IExamine
+#pragma warning restore 618
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;

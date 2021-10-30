@@ -28,38 +28,38 @@ namespace Content.Shared.Verbs
         /// </summary>
         /// <remarks>
         ///     This delegate probably just points to some function in the system assembling this verb. This delegate
-        ///     will be run regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="NetworkVerbEventArgs"/>
-        ///     are defined.
+        ///     will be run regardless of whether <see cref="ExecutionEventArgs"/> is defined.
         /// </remarks>
         [NonSerialized]
         public Action? Act;
 
         /// <summary>
-        ///     This is local event that will be raised when the verb is executed.
+        ///     This is a general local event that will be raised when the verb is executed.
         /// </summary>
         /// <remarks>
-        ///     This event will be raised regardless of whether <see cref="NetworkVerbEventArgs"/> or <see cref="Act"/>
-        ///     are defined.
+        ///     If not null, this event will be raised regardless of whether <see cref="Act"/> was run. If this event
+        ///     exists purely to call a specific system method, then <see cref="Act"/> should probably be used instead (method
+        ///     events are a no-go).
         /// </remarks>
         [NonSerialized]
-        public object? LocalVerbEventArgs;
+        public object? ExecutionEventArgs;
 
         /// <summary>
-        ///     Where do direct the local event.
+        ///     Where do direct the local event. If invalid, the event is not raised directed at any entity.
         /// </summary>
         [NonSerialized]
-        public EntityUid LocalEventTarget = EntityUid.Invalid;
+        public EntityUid EventTarget = EntityUid.Invalid;
 
         /// <summary>
-        ///     This is networked event that will be raised when the verb is executed.
+        ///     If a verb is only defined client-side, this should be set to true.
         /// </summary>
         /// <remarks>
-        ///     This event will be raised regardless of whether <see cref="LocalVerbEventArgs"/> or <see cref="Act"/>
-        ///     are defined.
+        ///     If true, the client will not also ask the server to run this verb when executed locally. This just
+        ///     prevents unnecessary network events and "404-verb-not-found" log entries.
         /// </remarks>
         [NonSerialized]
-        public EntityEventArgs? NetworkVerbEventArgs;
-        
+        public bool ClientExclusive;
+
         /// <summary>
         ///     The text that the user sees on the verb button.
         /// </summary>
@@ -74,6 +74,7 @@ namespace Content.Shared.Verbs
                 IconTexture == null ? null : new SpriteSpecifier.Texture(new ResourcePath(IconTexture));
             set => _icon = value;
         }
+        [NonSerialized]
         private SpriteSpecifier? _icon;
 
         /// <summary>
@@ -86,18 +87,20 @@ namespace Content.Shared.Verbs
         /// </summary>
         /// <remarks>
         ///     Disabled verbs are shown in the context menu with a slightly darker background color, and cannot be
-        ///     executed. It is recommended that a <see cref="Tooltip"/> message be provided outlining why this verb is
+        ///     executed. It is recommended that a <see cref="Message"/> message be provided outlining why this verb is
         ///     disabled.
         /// </remarks>
         public bool Disabled;
 
         /// <summary>
-        ///     Optional tooltip to show when hovering over this verb. 
+        ///     Optional informative message.  
         /// </summary>
         /// <remarks>
-        ///     Useful for disabled verbs as a replacement for informative pop-up messages.
+        ///     This will be shown as a tooltip when hovering over this verb in the context menu. Additionally, iF a
+        ///     <see cref="Disabled"/> verb is executed, this message will also be shown as a pop-up message. Useful for
+        ///     disabled verbs to inform users about why they cannot perform a given action.
         /// </remarks>
-        public string? Tooltip;
+        public string? Message;
 
         /// <summary>
         ///     Determines the priority of the verb. This affects both how the verb is displayed in the context menu
@@ -109,7 +112,7 @@ namespace Content.Shared.Verbs
         public int Priority;
 
         /// <summary>
-        ///     Raw texture path used to load the <see cref="Icon"/>.
+        ///     Raw texture path used to load the <see cref="Icon"/> for displaying on the client.
         /// </summary>
         public string? IconTexture;
 

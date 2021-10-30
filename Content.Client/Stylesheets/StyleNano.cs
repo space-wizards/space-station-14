@@ -1,11 +1,13 @@
 using System.Linq;
 using Content.Client.Actions.UI;
+using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Resources;
 using Content.Client.Targeting;
 using Content.Client.UserInterface.Controls;
+using Content.Client.Verbs.UI;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
@@ -38,7 +40,6 @@ namespace Content.Client.Stylesheets
         public const string StyleClassChatLineEdit = "chatLineEdit";
         public const string StyleClassChatChannelSelectorButton = "chatSelectorOptionButton";
         public const string StyleClassChatFilterOptionButton = "chatFilterOptionButton";
-        public const string StyleClassContextMenuCount = "contextMenuCount";
         public const string StyleClassStorageButton = "storageButton";
 
         public const string StyleClassSliderRed = "Red";
@@ -66,6 +67,12 @@ namespace Content.Client.Stylesheets
         public static readonly Color ButtonColorCautionPressed = Color.FromHex("#3e6c45");
         public static readonly Color ButtonColorCautionDisabled = Color.FromHex("#602a2a");
 
+        // Context menu button colors
+        public static readonly Color ButtonColorContext = Color.FromHex("#1119");
+        public static readonly Color ButtonColorContextHover = Color.DarkSlateGray;
+        public static readonly Color ButtonColorContextPressed = Color.LightSlateGray;
+        public static readonly Color ButtonColorContextDisabled = Color.Black;
+
         //Used by the APC and SMES menus
         public const string StyleClassPowerStateNone = "PowerStateNone";
         public const string StyleClassPowerStateLow = "PowerStateLow";
@@ -82,6 +89,7 @@ namespace Content.Client.Stylesheets
             var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
             var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
             var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
+            var notoSansBoldItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-BoldItalic.ttf", 12);
             var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
             var notoSansDisplayBold16 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 16);
             var notoSans15 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 15);
@@ -111,6 +119,12 @@ namespace Content.Client.Stylesheets
                 Texture = borderedWindowBackgroundTex,
             };
             borderedWindowBackground.SetPatchMargin(StyleBox.Margin.All, 2);
+
+            var contextMenuBackground = new StyleBoxTexture
+            {
+                Texture = borderedWindowBackgroundTex,
+            };
+            contextMenuBackground.SetPatchMargin(StyleBox.Margin.All, ContextMenuElement.ElementMargin);
 
             var invSlotBgTex = resCache.GetTexture("/Textures/Interface/Inventory/inv_slot_background.png");
             var invSlotBg = new StyleBoxTexture
@@ -146,6 +160,8 @@ namespace Content.Client.Stylesheets
             buttonStorage.SetPadding(StyleBox.Margin.All, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Vertical, 0);
             buttonStorage.SetContentMarginOverride(StyleBox.Margin.Horizontal, 4);
+
+            var buttonContext = new StyleBoxTexture { Texture = Texture.White };
 
             var buttonRectTex = resCache.GetTexture("/Textures/Interface/Nano/light_panel_background_bordered.png");
             var buttonRect = new StyleBoxTexture(BaseButton)
@@ -504,6 +520,43 @@ namespace Content.Client.Stylesheets
                         new StyleProperty("font-color", Color.FromHex("#E5E5E581")),
                     }),
 
+                // Context Menu window
+                Element<PanelContainer>().Class(ContextMenuPopup.StyleClassContextMenuPopup)
+                    .Prop(PanelContainer.StylePropertyPanel, contextMenuBackground),
+
+                // Context menu buttons
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Prop(ContainerButton.StylePropertyStyleBox, buttonContext),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassNormal)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContext),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassHover)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextHover),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassPressed)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextPressed),
+
+                Element<ContextMenuElement>().Class(ContextMenuElement.StyleClassContextMenuButton)
+                    .Pseudo(ContainerButton.StylePseudoClassDisabled)
+                    .Prop(Control.StylePropertyModulateSelf, ButtonColorContextDisabled),
+
+                // Context Menu Labels
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbInteractionText)
+                    .Prop(Label.StylePropertyFont, notoSansBoldItalic12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbActivationText)
+                    .Prop(Label.StylePropertyFont, notoSansBold12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbAlternativeText)
+                    .Prop(Label.StylePropertyFont, notoSansItalic12),
+
+                Element<RichTextLabel>().Class(VerbMenuElement.StyleClassVerbOtherText)
+                    .Prop(Label.StylePropertyFont, notoSans12),
+
                 // Thin buttons (No padding nor vertical margin)
                 Element<EntityContainerButton>().Class(StyleClassStorageButton)
                     .Prop(ContainerButton.StylePropertyStyleBox, buttonStorage),
@@ -708,8 +761,8 @@ namespace Content.Client.Stylesheets
                     new StyleProperty("font", notoSans15)
                 }),
 
-                // small number for the context menu
-                new StyleRule(new SelectorElement(typeof(Label), new[] {StyleClassContextMenuCount}, null, null), new[]
+                // small number for the entity counter in the entity menu
+                new StyleRule(new SelectorElement(typeof(Label), new[] {EntityMenuElement.StyleClassEntityMenuCountText}, null, null), new[]
                 {
                     new StyleProperty("font", notoSans10),
                     new StyleProperty(Label.StylePropertyAlignMode, Label.AlignMode.Right),
