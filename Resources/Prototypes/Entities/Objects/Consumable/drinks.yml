@@ -710,7 +710,7 @@
           Quantity: 50
   - type: Drink
   - type: Sprite
-    sprite: Objects/Consumable/Drinks/Fourteen_loko_glass.rsi
+    sprite: Objects/Consumable/Drinks/fourteen_loko_glass.rsi
 
 - type: entity
   parent: DrinkGlassBase
