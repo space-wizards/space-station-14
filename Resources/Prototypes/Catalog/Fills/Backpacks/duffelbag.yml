@@ -29,6 +29,19 @@
       - id: Scalpel
 
 - type: entity
+  parent: ClothingBackpackDuffelSyndicate
+  id: ClothingBackpackDuffelSyndicateFilledHardsuit
+  name: syndicate hardsuit duffel bag
+  description: "A large duffel bag with space equipment for syndicate agents."
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetHardsuitSyndie
+      - id: ClothingOuterHardsuitSyndie
+      - id: ClothingMaskBreath
+      - id: RedOxygenTankFilled
+
+- type: entity
   parent: ClothingBackpackDuffelSyndicateAmmo
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bojevic bundle
