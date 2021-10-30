@@ -17,6 +17,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -132,7 +133,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(EntityUid uid, GasVentPumpComponent component, PacketSentEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
-                || args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 
             var payload = new NetworkPayload();
@@ -143,6 +144,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSyncData);
                     payload.Add(AirAlarmSystem.AirAlarmSyncData, component.ToAirAlarmData());
 
+                    Logger.DebugS("GasVentPumpSystem", $"Sending sync to {args.SenderAddress}.");
                     _deviceNetSystem.QueuePacket(uid, args.SenderAddress, AirAlarmSystem.Freq, payload);
 
                     return;

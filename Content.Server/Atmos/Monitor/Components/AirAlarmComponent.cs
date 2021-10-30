@@ -55,6 +55,7 @@ namespace Content.Server.Atmos.Monitor.Components
                 _airAlarmSystem.UpdateAirData(Owner.Uid);
                 _airAlarmSystem.SendAlarmMode(Owner.Uid);
                 _airAlarmSystem.SendThresholds(Owner.Uid);
+                _airAlarmSystem.SyncAllDevices(Owner.Uid); // this should honestly be a button
             }
             _userInterface?.Open(player);
         }

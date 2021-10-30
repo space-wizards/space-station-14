@@ -12,6 +12,7 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Atmos.Monitor.UI
@@ -38,6 +39,9 @@ namespace Content.Client.Atmos.Monitor.UI
         private BoxContainer _pressureThreshold => CPressureThreshold;
         private BoxContainer _temperatureThreshold => CTemperatureThreshold;
         private BoxContainer _gasThreshold => CGasThresholdContainer;
+
+        private Dictionary<string, PumpControl> _pumps = new();
+        private Dictionary<string, ScrubberControl> _scrubbers = new();
 
         private ThresholdControl? _pressureThresholdControl;
         private ThresholdControl? _temperatureThresholdControl;
@@ -67,6 +71,8 @@ namespace Content.Client.Atmos.Monitor.UI
                 _gasLabels.Add(gas, gasLabel);
             }
 
+
+
             _tabContainer.SetTabTitle(0, Loc.GetString("Gases"));
             _tabContainer.SetTabTitle(1, Loc.GetString("Vents"));
             _tabContainer.SetTabTitle(2, Loc.GetString("Scrubbers"));
@@ -90,8 +96,6 @@ namespace Content.Client.Atmos.Monitor.UI
             _modes.SelectId((int) mode);
         }
 
-        // Devices are the only 'dynamic' thing here.
-        // TODO: Find a nicer way to make this... work.
         public void UpdateDeviceData(Dictionary<string, IAtmosDeviceData> deviceData)
         {
             foreach (var (addr, device) in deviceData)
@@ -99,15 +103,31 @@ namespace Content.Client.Atmos.Monitor.UI
                 switch (device)
                 {
                     case GasVentPumpData pump:
-                        var pumpControl = new PumpControl(pump, addr);
-                        pumpControl.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
-                        CVentContainer.AddChild(pumpControl);
+                        if (!_pumps.TryGetValue(addr, out var pumpControl))
+                        {
+                            var control= new PumpControl(pump, addr);
+                            control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
+                            _pumps.Add(addr, control);
+                            CVentContainer.AddChild(control);
+                        }
+                        else
+                        {
+                            pumpControl.ChangeData(pump);
+                        }
 
                         break;
                     case GasVentScrubberData scrubber:
-                        var scrubberControl = new ScrubberControl(scrubber, addr);
-                        scrubberControl.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
-                        CScrubberContainer.AddChild(scrubberControl);
+                        if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
+                        {
+                            var control = new ScrubberControl(scrubber, addr);
+                            control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
+                            _scrubbers.Add(addr, control);
+                            CScrubberContainer.AddChild(control);
+                        }
+                        else
+                        {
+                            scrubberControl.ChangeData(scrubber);
+                        }
 
                         break;
                 }

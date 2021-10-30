@@ -39,11 +39,11 @@
             </ScrollContainer>
             <!-- Vent devices -->
             <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="CVentContainer" />
+                <BoxContainer Name="CVentContainer" Orientation="Vertical"/>
             </ScrollContainer>
             <!-- Scrubber devices -->
             <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="CScrubberContainer" />
+                <BoxContainer Name="CScrubberContainer" Orientation="Vertical"/>
             </ScrollContainer>
             <!-- Alarm thresholds -->
             <ScrollContainer VerticalExpand="True">

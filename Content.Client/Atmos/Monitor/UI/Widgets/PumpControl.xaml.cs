@@ -27,6 +27,8 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         {
             RobustXamlLoader.Load(this);
 
+            this.Name = address;
+
             _data = data;
             _address = address;
 
@@ -88,6 +90,24 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 _data.PressureChecks = (VentPressureBound) args.Id;
                 PumpDataChanged?.Invoke(_address, _data);
             };
+        }
+
+        public void ChangeData(GasVentPumpData data)
+        {
+            _data.Enabled = data.Enabled;
+            _enabled.Pressed = _data.Enabled;
+
+            _data.PumpDirection = data.PumpDirection;
+            _pumpDirection.SelectId((int) _data.PumpDirection);
+
+            _data.PressureChecks = data.PressureChecks;
+            _pressureCheck.SelectId((int) _data.PressureChecks);
+
+            _data.ExternalPressureBound = data.ExternalPressureBound;
+            _externalBound.Value = _data.ExternalPressureBound;
+
+            _data.InternalPressureBound = data.InternalPressureBound;
+            _internalBound.Value = _data.InternalPressureBound;
         }
     }
 }

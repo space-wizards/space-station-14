@@ -145,7 +145,6 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnComponentStartup(EntityUid uid, AirAlarmComponent component, ComponentStartup args)
         {
-            SyncAllDevices(uid);
         }
 
         private void OnSetThreshold(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetThresholdEvent args)
