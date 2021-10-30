@@ -38,7 +38,7 @@
       labelSlot:
         whitelist:
           components:
-            - Paper
+          - Paper
   - type: Appearance
     visuals:
     - type: StorageVisualizer

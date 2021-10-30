@@ -78,7 +78,8 @@ namespace Content.Server.Labels
             }
 
             args.PushMarkup(Loc.GetString("comp-paper-label-has-label"));
-            args.PushMarkup(paper.Content);
+            var text = paper.Content;
+            args.PushMarkup(text.TrimEnd());
         }
 
 

@@ -13,7 +13,9 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cargo.Components
@@ -61,6 +63,12 @@ namespace Content.Server.Cargo.Components
 
         [DataField("errorSound")]
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
+
+        /// <summary>
+        ///     The entity prototype to spawn when approving prototypes. Should have the paper component.
+        /// </summary>
+        [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string PrinterOutput = "Paper";
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
@@ -135,6 +143,10 @@ namespace Content.Server.Cargo.Components
                         break;
                     }
 
+                    var uid = msg.Session.AttachedEntityUid;
+                    if (uid == null)
+                        break;
+
                     PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product);
                     if (product == null!)
                         break;
@@ -143,13 +155,14 @@ namespace Content.Server.Cargo.Components
                         (capacity.CurrentCapacity == capacity.MaxCapacity
                         || capacity.CurrentCapacity + order.Amount > capacity.MaxCapacity
                         || !_cargoConsoleSystem.CheckBalance(_bankAccount.Id, (-product.PointCost) * order.Amount)
-                        || !_cargoConsoleSystem.ApproveOrder(orders.Database.Id, msg.OrderNumber)
+                        || !_cargoConsoleSystem.ApproveOrder(Owner.Uid, uid.Value, orders.Database.Id, msg.OrderNumber)
                         || !_cargoConsoleSystem.ChangeBalance(_bankAccount.Id, (-product.PointCost) * order.Amount))
                         )
                     {
                         SoundSystem.Play(Filter.Local(), _errorSound.GetSound(), Owner, AudioParams.Default);
                         break;
                     }
+
                     UpdateUIState();
                     break;
                 }
