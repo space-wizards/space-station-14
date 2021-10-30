@@ -30,7 +30,12 @@
     powerCellRemovable: true
     fireCost: 40
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -70,7 +75,12 @@
     powerCellRemovable: true
     fireCost: 40
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -110,7 +120,12 @@
     powerCellRemovable: true
     fireCost: 20
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -150,7 +165,12 @@
     powerCellRemovable: true
     fireCost: 10
     ammoPrototype: RedLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -190,7 +210,12 @@
     powerCellRemovable: true
     fireCost: 600
     ammoPrototype: RedHeavyLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -231,7 +256,12 @@
     powerCellRemovable: true
     fireCost: 600
     ammoPrototype: XrayLaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser3.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
@@ -275,7 +305,12 @@
     powerCellRemovable: false
     fireCost: 40
     ammoPrototype: BulletTaser
-    soundGunshot: /Audio/Weapons/Guns/Gunshots/taser.ogg
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/taser.ogg
+    soundPowerCellInsert:
+      path: /Audio/Weapons/Guns/MagIn/revolver_magin.ogg
+    soundPowerCellEject:
+      path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
   - type: Appearance
     visuals:
     - type: MagVisualizer
