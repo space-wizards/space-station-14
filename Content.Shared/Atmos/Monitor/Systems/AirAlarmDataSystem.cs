@@ -76,7 +76,14 @@ namespace Content.Shared.Atmos.Monitor.Systems
             if (state.Current is not AirAlarmDataComponentState currentState) return;
 
             Logger.DebugS("AirAlarmData", "Handling state.");
-            Logger.DebugS("AirAlarmData", $"Current state info:\nmoded:{currentState.DirtyMode}\nthresd:{currentState.DirtyThresholds}\ndevd:{currentState.DirtyDevices}");
+            Logger.DebugS("AirAlarmData", $"Current state info:");
+            Logger.DebugS("AirAlarmData", $"moded:{currentState.DirtyMode}");
+            if (currentState.DirtyThresholds != null)
+                foreach (var threshold in currentState.DirtyThresholds)
+                    Logger.DebugS("AirAlarmData", $"thresd:{threshold}");
+            if (currentState.DirtyDevices != null)
+                foreach (var device in currentState.DirtyDevices)
+                    Logger.DebugS("AirAlarmData", $"devd:{device}");
 
             UpdateAirData(uid, currentState.AirData);
 

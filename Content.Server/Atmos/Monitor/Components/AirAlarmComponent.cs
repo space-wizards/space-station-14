@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Power.Components;
@@ -45,6 +46,8 @@ namespace Content.Server.Atmos.Monitor.Components
         }
 
         private HashSet<NetUserId> _activePlayers = new();
+
+        public bool HasPlayers() => _activePlayers.Any();
 
         public void OpenUI(IPlayerSession player)
         {

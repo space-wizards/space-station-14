@@ -138,13 +138,64 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetThresholdEvent>(OnSetThreshold);
             SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetModeEvent>(OnSetMode);
             SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmDeviceDataUpdateEvent>(OnDeviceDataUpdate);
         }
 
+        // tempted to make air alarm modes just broadcast packets that the
+        // scrubbers/filters themselves process, instead of
+        // doing a filter/type switch on saved device data
+        //
+        // that way air alarms can blindly set modes without having
+        // to sync against all devices :HECK:
+        //
+        // this also creates the issue, however, that anyone who
+        // accesses the network can simply send a single broadcast
+        // and cause a room to siphon without even touching the
+        // air alarm (atmos devices should have only a 'panic'
+        // switch packet-wise, which does a predetermined thing, and not
+        // some too-simple thing that could potentially be
+        // abusable)
+        //
+        // so instead we'll just use a raised targetted event to mimic
+        // the panic mode on a vent/scrubber
+        //
+        // TODO: consolidate all the data into one component, holy shit lmao
+
         private void OnComponentStartup(EntityUid uid, AirAlarmComponent component, ComponentStartup args)
         {
+        }
+
+        private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosMonitorAlarmEvent args)
+        {
+            if (component.HasPlayers())
+            {
+                SyncAllDevices(uid);
+                UpdateAirData(uid);
+            }
+
+            if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
+            {
+
+                _airAlarmDataSystem.UpdateAlarmMode(uid, AirAlarmMode.None);
+                // set mode to off to mimic the vents/scrubbers being turned off
+                // update UI
+                //
+                // no, the mode isn't processed here - it's literally just
+                // set to what mimics 'off'
+            }
+            else if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
+            {
+                // if the mode is still set to off, set it to filtering instead
+                // alternatively, set it to the last saved mode
+                //
+                // no, this still doesn't execute the mode
+                _airAlarmDataSystem.UpdateAlarmMode(uid, AirAlarmMode.Filtering);
+            }
+
+            component.UpdateUI();
         }
 
         private void OnSetThreshold(EntityUid uid, AirAlarmDataComponent data, AirAlarmSetThresholdEvent args)
@@ -196,7 +247,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                     // Sync data to interface.
                     // This should say if the result
                     // failed, or succeeded. Don't save it.l
-
 
                     controller.UpdateUI();
 

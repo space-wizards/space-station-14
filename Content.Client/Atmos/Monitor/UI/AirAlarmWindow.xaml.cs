@@ -71,13 +71,10 @@ namespace Content.Client.Atmos.Monitor.UI
                 _gasLabels.Add(gas, gasLabel);
             }
 
-
-
             _tabContainer.SetTabTitle(0, Loc.GetString("Gases"));
             _tabContainer.SetTabTitle(1, Loc.GetString("Vents"));
             _tabContainer.SetTabTitle(2, Loc.GetString("Scrubbers"));
             _tabContainer.SetTabTitle(3, Loc.GetString("Thresholds"));
-
         }
 
         public void UpdateGasData(ref AirAlarmAirData state)

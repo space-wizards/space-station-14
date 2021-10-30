@@ -269,6 +269,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 appearanceComponent.SetData("alarmType", monitor.LastAlarmState);
 
             BroadcastAlertPacket(monitor, alarms);
+            RaiseLocalEvent(monitor.Owner.Uid, new AtmosMonitorAlarmEvent(monitor.LastAlarmState, monitor.HighestAlarmInNetwork()));
             // TODO: Central system that grabs *all* alarms from wired network
         }
 
