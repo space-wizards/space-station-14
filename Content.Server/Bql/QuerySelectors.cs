@@ -20,30 +20,24 @@ namespace Content.Server.Bql
 
             public override QuerySelectorArgument[] Arguments => Array.Empty<QuerySelectorArgument>();
 
-            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input,
-                IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input,
+                IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return input.Where(x =>
+                return input.Where(e =>
                 {
-                    if (x.TryGetComponent<MindComponent>(out var mind))
-                    {
-                        return (mind.Mind?.VisitingEntity?.Uid == x.Uid) ^ isInverted;
-                    }
+                    if (entityManager.TryGetComponent<MindComponent>(e, out var mind))
+                        return (mind.Mind?.VisitingEntity?.Uid == e) ^ isInverted;
 
                     return isInverted;
                 });
             }
 
-            public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                if (isInverted)
-                {
-                    return base.DoInitialSelection(arguments, isInverted);
-                }
 
-                return IoCManager.Resolve<IEntityManager>().EntityQuery<MindComponent>()
-                    .Where(mind => (mind.Mind?.VisitingEntity?.Uid == mind.Mind?.CurrentEntity?.Uid) ^ isInverted)
-                    .Select(x => x.Owner);
+                return DoSelection(
+                    entityManager.EntityQuery<MindComponent>().Select(x => x.Owner.Uid),
+                    arguments, isInverted, entityManager);
             }
         }
 
@@ -54,18 +48,18 @@ namespace Content.Server.Bql
 
             public override QuerySelectorArgument[] Arguments => new [] { QuerySelectorArgument.String };
 
-            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return input.Where(x =>
-                    x.HasComponent<TagComponent>() &&
-                    (x.GetComponent<TagComponent>().Tags.Contains((string) arguments[0]) ^ isInverted));
+                return input.Where(e =>
+                    (entityManager.TryGetComponent<TagComponent>(e, out var tag) &&
+                    tag.Tags.Contains((string) arguments[0])) ^ isInverted);
             }
 
-            public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return IoCManager.Resolve<IEntityManager>().EntityQuery<TagComponent>()
-                    .Where(tag => tag.Tags.Contains((string) arguments[0]))
-                    .Select(x => x.Owner);
+                return DoSelection(entityManager.EntityQuery<TagComponent>().Select(x => x.Owner.Uid), arguments,
+                    isInverted, entityManager);
+
             }
         }
 
@@ -76,18 +70,17 @@ namespace Content.Server.Bql
 
             public override QuerySelectorArgument[] Arguments => Array.Empty<QuerySelectorArgument>();
 
-            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return input.Where(x =>
-                    x.HasComponent<MindComponent>() &&
-                    (!(x.GetComponent<MindComponent>().Mind?.CharacterDeadPhysically ?? false) ^ isInverted));
+                return input.Where(e =>
+                    (entityManager.TryGetComponent<MindComponent>(e, out var mind) &&
+                    !(mind.Mind?.CharacterDeadPhysically ?? false)) ^ isInverted);
             }
 
-            public override IEnumerable<IEntity> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return IoCManager.Resolve<IEntityManager>().EntityQuery<MindComponent>()
-                    .Where(mind => !(mind.Mind?.CharacterDeadPhysically ?? false) ^ isInverted)
-                    .Select(x => x.Owner);
+                return DoSelection(entityManager.EntityQuery<MindComponent>().Select(x => x.Owner.Uid), arguments,
+                    isInverted, entityManager);
             }
         }
 
@@ -98,35 +91,47 @@ namespace Content.Server.Bql
 
             public override QuerySelectorArgument[] Arguments => new [] { QuerySelectorArgument.String };
 
-            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
                 var reagent = (string) arguments[0];
-                return input.Where(x =>
+                return input.Where(e =>
                 {
-                    if (x.TryGetComponent<SolutionContainerManagerComponent>(out var solutionContainerManagerComponent))
+                    if (entityManager.TryGetComponent<SolutionContainerManagerComponent>(e, out var solutionContainerManagerComponent))
                     {
                         return solutionContainerManagerComponent.Solutions
-                            .Any((solution) => solution.Value.ContainsReagent(reagent)) ^ isInverted;
+                            .Any(solution => solution.Value.ContainsReagent(reagent)) ^ isInverted;
                     }
 
                     return isInverted;
                 });
             }
+
+            public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
+            {
+                return DoSelection(entityManager.EntityQuery<SolutionContainerManagerComponent>().Select(x => x.Owner.Uid), arguments,
+                    isInverted, entityManager);
+            }
         }
 
         [RegisterBqlQuerySelector]
-        public class PoweredQuerySelector : BqlQuerySelector
+        public class ApcPoweredQuerySelector : BqlQuerySelector
         {
-            public override string Token => "powered";
+            public override string Token => "apcpowered";
 
             public override QuerySelectorArgument[] Arguments => Array.Empty<QuerySelectorArgument>();
 
-            public override IEnumerable<IEntity> DoSelection(IEnumerable<IEntity> input, IReadOnlyList<object> arguments, bool isInverted)
+            public override IEnumerable<EntityUid> DoSelection(IEnumerable<EntityUid> input, IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
             {
-                return input.Where(x =>
-                    x.TryGetComponent<ApcPowerReceiverComponent>(out var apcPowerReceiver)
+                return input.Where(e =>
+                    entityManager.TryGetComponent<ApcPowerReceiverComponent>(e, out var apcPowerReceiver)
                         ? apcPowerReceiver.Powered ^ isInverted
                         : isInverted);
+            }
+
+            public override IEnumerable<EntityUid> DoInitialSelection(IReadOnlyList<object> arguments, bool isInverted, IEntityManager entityManager)
+            {
+                return DoSelection(entityManager.EntityQuery<ApcPowerReceiverComponent>().Select(x => x.Owner.Uid), arguments,
+                    isInverted, entityManager);
             }
         }
     }
