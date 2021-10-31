@@ -19,19 +19,19 @@ namespace Content.Server.Atmos.EntitySystems
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
+            //SubscribeLocalEvent<GasTankComponent, GetActivationVerbsEvent>(AddOpenUIVerb);
         }
 
         private void AddOpenUIVerb(EntityUid uid, GasTankComponent component, GetActivationVerbsEvent args)
         {
-            if (!args.CanAccess ||  !args.User.TryGetComponent<ActorComponent>(out var actor))
+            /*if (!args.CanAccess ||  !args.User.TryGetComponent<ActorComponent>(out var actor))
                 return;
 
             Verb verb = new();
             verb.Act = () => component.OpenInterface(actor.PlayerSession);
             verb.Text = Loc.GetString("control-verb-open-control-panel-text");
             // TODO VERBS add "open UI" icon?
-            args.Verbs.Add(verb);
+            args.Verbs.Add(verb);*/
         }
 
         public override void Update(float frameTime)
@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 _atmosphereSystem.React(gasTank.Air, gasTank);
                 gasTank.CheckStatus();
-                gasTank.UpdateUserInterface();
+                //gasTank.UpdateUserInterface();
             }
         }
     }

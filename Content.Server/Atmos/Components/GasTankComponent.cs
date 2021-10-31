@@ -31,9 +31,8 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
 #pragma warning disable 618
-    public class GasTankComponent : Component, IExamine, IGasMixtureHolder, IUse, IDropped, IActivate
+    public class GasTankComponent : Component, IExamine, IGasMixtureHolder
 #pragma warning restore 618
     {
         public override string Name => "GasTank";
@@ -42,10 +41,6 @@ namespace Content.Server.Atmos.Components
         private const float DefaultOutputPressure = Atmospherics.OneAtmosphere;
 
         private int _integrity = 3;
-
-        [ComponentDependency] private readonly ItemActionsComponent? _itemActions = null;
-
-        [ViewVariables] private BoundUserInterface? _userInterface;
 
         [DataField("ruptureSound")] private SoundSpecifier _ruptureSound = new SoundPathSpecifier("Audio/Effects/spray.ogg");
 
@@ -57,16 +52,6 @@ namespace Content.Server.Atmos.Components
         [DataField("outputPressure")]
         [ViewVariables]
         public float OutputPressure { get; private set; } = DefaultOutputPressure;
-
-        /// <summary>
-        ///     Tank is connected to internals.
-        /// </summary>
-        [ViewVariables] public bool IsConnected { get; set; }
-
-        /// <summary>
-        ///     Represents that tank is functional and can be connected to internals.
-        /// </summary>
-        public bool IsFunctional => GetInternalsComponent() != null;
 
         /// <summary>
         ///     Pressure at which tanks start leaking.
@@ -95,33 +80,16 @@ namespace Content.Server.Atmos.Components
         protected override void Initialize()
         {
             base.Initialize();
-            _userInterface = Owner.GetUIOrNull(SharedGasTankUiKey.Key);
-            if (_userInterface != null)
-            {
-                _userInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
-            }
-        }
-
-        public void OpenInterface(IPlayerSession session)
-        {
-            _userInterface?.Open(session);
-            UpdateUserInterface(true);
         }
 
         public void Examine(FormattedMessage message, bool inDetailsRange)
         {
             message.AddMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(Air?.Pressure ?? 0))));
-            if (IsConnected)
-            {
-                message.AddText("\n");
-                message.AddMarkup(Loc.GetString("comp-gas-tank-connected"));
-            }
         }
 
         protected override void Shutdown()
         {
             base.Shutdown();
-            DisconnectFromInternals();
         }
 
         public GasMixture? RemoveAir(float amount)
@@ -140,7 +108,7 @@ namespace Content.Server.Atmos.Components
             if (tankPressure < OutputPressure)
             {
                 OutputPressure = tankPressure;
-                UpdateUserInterface();
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new GasTankPressureDeficitEvent(tankPressure), false);
             }
 
             var molesNeeded = OutputPressure * volume / (Atmospherics.R * Air.Temperature);
@@ -153,90 +121,6 @@ namespace Content.Server.Atmos.Components
                 return new GasMixture(volume);
 
             return air;
-        }
-
-        bool IUse.UseEntity(UseEntityEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return false;
-            OpenInterface(actor.PlayerSession);
-            return true;
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor)) return;
-            OpenInterface(actor.PlayerSession);
-        }
-
-        public void ConnectToInternals()
-        {
-            if (IsConnected || !IsFunctional) return;
-            var internals = GetInternalsComponent();
-            if (internals == null) return;
-            IsConnected = internals.TryConnectTank(Owner);
-            UpdateUserInterface();
-        }
-
-        public void DisconnectFromInternals(IEntity? owner = null)
-        {
-            if (!IsConnected) return;
-            IsConnected = false;
-            GetInternalsComponent(owner)?.DisconnectTank();
-            UpdateUserInterface();
-        }
-
-        public void UpdateUserInterface(bool initialUpdate = false)
-        {
-            var internals = GetInternalsComponent();
-            _userInterface?.SetState(
-                new GasTankBoundUserInterfaceState
-                {
-                    TankPressure = Air?.Pressure ?? 0,
-                    OutputPressure = initialUpdate ? OutputPressure : (float?) null,
-                    InternalsConnected = IsConnected,
-                    CanConnectInternals = IsFunctional && internals != null
-                });
-
-            if (internals == null) return;
-            _itemActions?.GrantOrUpdate(ItemActionType.ToggleInternals, IsFunctional, IsConnected);
-        }
-
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
-        {
-            switch (message.Message)
-            {
-                case GasTankSetPressureMessage msg:
-                    OutputPressure = msg.Pressure;
-                    break;
-                case GasTankToggleInternalsMessage _:
-                    ToggleInternals();
-                    break;
-            }
-        }
-
-        internal void ToggleInternals()
-        {
-            var user = GetInternalsComponent()?.Owner;
-
-            if (user == null || !EntitySystem.Get<ActionBlockerSystem>().CanUse(user))
-                return;
-
-            if (IsConnected)
-            {
-                DisconnectFromInternals();
-                return;
-            }
-
-            ConnectToInternals();
-        }
-
-        private InternalsComponent? GetInternalsComponent(IEntity? owner = null)
-        {
-            if (Owner.Deleted) return null;
-            if (owner != null) return owner.GetComponentOrNull<InternalsComponent>();
-            return Owner.TryGetContainer(out var container)
-                ? container.Owner.GetComponentOrNull<InternalsComponent>()
-                : null;
         }
 
         public void AssumeAir(GasMixture giver)
@@ -318,24 +202,14 @@ namespace Content.Server.Atmos.Components
                 _integrity++;
         }
 
-        void IDropped.Dropped(DroppedEventArgs eventArgs)
+        public class GasTankPressureDeficitEvent
         {
-            DisconnectFromInternals(eventArgs.User);
-        }
-    }
+            float NewValue;
 
-    [UsedImplicitly]
-    [DataDefinition]
-    public class ToggleInternalsAction : IToggleItemAction
-    {
-        public bool DoToggleAction(ToggleItemActionEventArgs args)
-        {
-            if (!args.Item.TryGetComponent<GasTankComponent>(out var gasTankComponent)) return false;
-            // no change
-            if (gasTankComponent.IsConnected == args.ToggledOn) return false;
-            gasTankComponent.ToggleInternals();
-            // did we successfully toggle to the desired status?
-            return gasTankComponent.IsConnected == args.ToggledOn;
+            public GasTankPressureDeficitEvent(float newValue)
+            {
+                NewValue = newValue;
+            }
         }
     }
 }

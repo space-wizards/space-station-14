@@ -15,6 +15,7 @@
     sprite: Objects/Tanks/generic.rsi
     QuickEquip: false
   - type: GasTank
+  - type: InternalsProvider
   - type: ItemActions
     actions:
     - actionType: ToggleInternals

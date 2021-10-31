@@ -1,4 +1,5 @@
 ﻿using Content.Server.Atmos.Components;
+using Content.Server.Internals;
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 
@@ -35,9 +36,9 @@ namespace Content.Server.Body.Respiratory
 
         public void DisconnectTank()
         {
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
+            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out InternalsProviderComponent? provider))
             {
-                tank.DisconnectFromInternals(Owner);
+                provider.Owner.EntityManager.EventBus.RaiseLocalEvent(provider.Owner.Uid, new ToggleInternalsEvent(false));
             }
 
             GasTankEntity = null;
@@ -48,9 +49,9 @@ namespace Content.Server.Body.Respiratory
             if (BreathToolEntity == null)
                 return false;
 
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out GasTankComponent? tank))
+            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out InternalsProviderComponent? provider))
             {
-                tank.DisconnectFromInternals(Owner);
+                provider.Owner.EntityManager.EventBus.RaiseLocalEvent(provider.Owner.Uid, new ToggleInternalsEvent(false));
             }
 
             GasTankEntity = tankEntity;

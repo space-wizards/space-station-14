@@ -4,7 +4,8 @@
 comp-gas-tank-examine = Pressure: [color=orange]{PRESSURE($pressure)}[/color].
 
 # Examine text when internals are active.
-comp-gas-tank-connected = It's connected to an external component.
+comp-gas-tank-connected = It's connected to {$connectedTo}.
+comp-gas-tank-inside-connected = {$name} inside of it is connected to {$connectedTo}.
 
 ## ControlVerb
 control-verb-open-control-panel-text = Open Control Panel
