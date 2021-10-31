@@ -1,8 +1,8 @@
 using System;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Reaction;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;

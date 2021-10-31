@@ -99,7 +99,7 @@ namespace Content.Client.MainMenu
 
         private void TryConnect(string address)
         {
-            var inputName = _mainMenuControl.UserNameBox.Text.Trim();
+            var inputName = _mainMenuControl.UsernameBox.Text.Trim();
             if (!UsernameHelpers.IsNameValid(inputName, out var reason))
             {
                 var invalidReason = Loc.GetString(reason.ToText());
@@ -110,7 +110,7 @@ namespace Content.Client.MainMenu
             }
 
             var configName = _configurationManager.GetCVar(CVars.PlayerName);
-            if (_mainMenuControl.UserNameBox.Text != configName)
+            if (_mainMenuControl.UsernameBox.Text != configName)
             {
                 _configurationManager.SetCVar(CVars.PlayerName, inputName);
                 _configurationManager.SaveToFile();

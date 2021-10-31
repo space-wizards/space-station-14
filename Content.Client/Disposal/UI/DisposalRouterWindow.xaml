@@ -6,12 +6,14 @@
         <Label Text="{Loc 'disposal-router-window-tags-label'}" />
         <Control MinSize="0 10" />
         <BoxContainer Orientation="Horizontal">
-            <LineEdit Name="TagInputProtected"
+            <LineEdit Name="TagInput"
+                      Access="Public"
                       HorizontalExpand="True"
                       MinSize="320 0"
                       ToolTip="{Loc 'disposal-router-window-tag-input-tooltip'}" />
             <Control MinSize="10 0" />
-            <Button Name="ConfirmProtected"
+            <Button Name="Confirm"
+                    Access="Public"
                     Text="{Loc 'disposal-router-window-tag-input-confirm-button'}" />
         </BoxContainer>
     </BoxContainer>
