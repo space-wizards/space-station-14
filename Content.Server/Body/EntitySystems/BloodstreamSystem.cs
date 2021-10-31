@@ -10,7 +10,7 @@ namespace Content.Server.Body.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var blood in ComponentManager.EntityQuery<BloodstreamComponent>(false))
+            foreach (var blood in EntityManager.EntityQuery<BloodstreamComponent>(false))
             {
                 // TODO MIRROR BODY events
                 var Owner = blood.Owner;

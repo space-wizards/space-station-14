@@ -12,7 +12,7 @@ namespace Content.Server.Body.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var thermal in ComponentManager.EntityQuery<ThermalRegulatorComponent>(false))
+            foreach (var thermal in EntityManager.EntityQuery<ThermalRegulatorComponent>(false))
             {
                 var Owner = thermal.Owner;
                 // TODO MIRROR BODY events

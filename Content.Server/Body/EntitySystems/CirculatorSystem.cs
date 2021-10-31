@@ -14,7 +14,7 @@ namespace Content.Server.Body.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var circ in ComponentManager.EntityQuery<CirculatorComponent>())
+            foreach (var circ in EntityManager.EntityQuery<CirculatorComponent>())
             {
                 circ.AccumulatedFrametime += frameTime;
 

@@ -22,7 +22,7 @@ namespace Content.Server.Body.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var respirator in ComponentManager.EntityQuery<RespiratorComponent>(false))
+            foreach (var respirator in EntityManager.EntityQuery<RespiratorComponent>(false))
             {
                 // TODO MIRROR instead of explicitly checking for critical, just make lung behavior not run if the heart
                 // isn't pumping blood, and have the heart stop pumping when you die (?)

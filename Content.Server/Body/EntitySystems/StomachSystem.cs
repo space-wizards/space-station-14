@@ -12,7 +12,6 @@ namespace Content.Server.Body.EntitySystems
 {
     public class StomachSystem : EntitySystem
     {
-        [Dependency] private BodySystem _bodySystem = default!;
         [Dependency] private SolutionContainerSystem _solutionSystem = default!;
 
         public override void Initialize()
