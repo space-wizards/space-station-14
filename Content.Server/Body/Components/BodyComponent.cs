@@ -24,7 +24,7 @@ namespace Content.Server.Body.Components
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyComponent))]
     [ComponentReference(typeof(IGhostOnMove))]
-    public class BodyComponent : SharedBodyComponent, IRelayMoveInput, IGhostOnMove
+    public class BodyComponent : SharedBodyComponent, IGhostOnMove
     {
         private Container _partContainer = default!;
 
@@ -87,17 +87,6 @@ namespace Content.Server.Body.Components
             foreach (var (part, _) in Parts)
             {
                 part.Dirty();
-            }
-        }
-
-        void IRelayMoveInput.MoveInputPressed(ICommonSession session)
-        {
-            if (Owner.TryGetComponent(out IMobStateComponent? mobState) &&
-                mobState.IsDead() &&
-                Owner.TryGetComponent(out MindComponent? mind) &&
-                mind.HasMind)
-            {
-                 EntitySystem.Get<GameTicker>().OnGhostAttempt(mind.Mind!, true);
             }
         }
 
