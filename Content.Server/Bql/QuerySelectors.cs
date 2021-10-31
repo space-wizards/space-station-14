@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Power.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Tag;
 using Robust.Server.Bql;
 using Robust.Shared.GameObjects;
