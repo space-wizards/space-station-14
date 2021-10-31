@@ -1,11 +1,6 @@
 Entries:
 - author: Swept
   changes:
-  - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
-  id: 22
-  time: '2021-03-02T02:31:38.0000000+00:00'
-- author: Swept
-  changes:
   - {message: Added rules, type: Add}
   - {message: Added admeen aboose, type: Add}
   - {message: Removed fun, type: Remove}
@@ -2804,3 +2799,8 @@ Entries:
   - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
   id: 521
   time: '2021-10-31T13:57:06.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: RougePointingArrow will no longer attack ghosts, type: Fix}
+  id: 522
+  time: '2021-10-31T14:03:32.0000000+00:00'
