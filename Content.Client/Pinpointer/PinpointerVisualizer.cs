@@ -24,11 +24,24 @@ namespace Content.Client.Pinpointer
 
             // check if it has direction to target
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
-            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir))
+
+            var dir = GetDirection(component);
+            if (dir == Direction.Invalid)
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                 return;
             }
+
+            sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
+            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+        }
+
+        private Direction GetDirection(AppearanceComponent component)
+        {
+            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out sbyte dirByte))
+                return Direction.Invalid;
+
+            return (Direction) dirByte;
         }
     }
 

@@ -1,15 +1,19 @@
 using Content.Shared.Interaction;
 using Content.Shared.Pinpointer;
+using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Content.Server.Pinpointer
 {
     public class PinpointerSystem : EntitySystem
     {
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         private readonly HashSet<EntityUid> _activePinpointers = new();
 
         public override void Initialize()
@@ -22,6 +26,13 @@ namespace Content.Server.Pinpointer
         private void OnUseInHand(EntityUid uid, PinpointerComponent component, UseInHandEvent args)
         {
             TogglePinpointer(uid, component);
+
+            // check automatically find target
+            if (component.IsActive && component.Whitelist != null)
+            {
+                var target = FindTargetFromWhitelist(uid, component.Whitelist);
+                SetTarget(uid, target, component);
+            }
         }
 
         public override void Update(float frameTime)
@@ -33,13 +44,24 @@ namespace Content.Server.Pinpointer
                 if (!EntityManager.TryGetComponent(uid, out PinpointerComponent? pinpointer))
                     continue;
 
-                if (pinpointer.Target == null)
-                    continue;
+                var target = pinpointer.Target;
+                if (target != null && EntityManager.EntityExists(target.Value))
+                {
+                    var dir = CalculateDirection(uid, target.Value);
+                    pinpointer.DirectionToTarget = dir;
+                }
+                else
+                {
+                    pinpointer.DirectionToTarget = Direction.Invalid;
+                }
 
-                var dir = CalculateDirection(uid, pinpointer.Target.Value);
+                UpdateAppearance(uid, pinpointer);
             }    
         }
 
+        /// <summary>
+        ///     Calculate direction to pinpointers target
+        /// </summary>
         private Direction CalculateDirection(EntityUid fromUid, EntityUid toUid)
         {
             // check if entities have transform component
@@ -52,8 +74,36 @@ namespace Content.Server.Pinpointer
             if (from.MapID != to.MapID)
                 return Direction.Invalid;
 
-            var dir = (to.WorldPosition - from.WorldPosition).GetDir();
+            var dir = (from.WorldPosition - to.WorldPosition).GetDir();
             return dir;
+        }
+
+        /// <summary>
+        ///     Try to find the closest entity from whitelist
+        ///     Will return null if can't find anything
+        /// </summary>
+        private EntityUid? FindTargetFromWhitelist(EntityUid uid, EntityWhitelist whitelist,
+            ITransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref transform))
+                return null;
+
+            var mapId = transform.MapID;
+            var ents = _entityLookup.GetEntitiesInMap(mapId);
+
+            // sort all entities in distance increasing order
+            var l = new SortedList<float, EntityUid>();
+            foreach (var e in ents)
+            {
+                if (whitelist.IsValid(e))
+                {
+                    var dist = (e.Transform.WorldPosition - transform.WorldPosition).LengthSquared;
+                    l.TryAdd(dist, e.Uid);
+                }
+            }
+
+            // return uid with a smallest distacne
+            return l.Count > 0 ? l.First().Value : null;
         }
 
         /// <summary>
@@ -84,10 +134,17 @@ namespace Content.Server.Pinpointer
                 _activePinpointers.Remove(uid);
 
             // update pinpointer appearance
-            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
-            {
-                appearance.SetData(PinpointerVisuals.IsActive, pinpointer.IsActive);
-            }
+            UpdateAppearance(uid, pinpointer);
+        }
+
+        private void UpdateAppearance(EntityUid uid, PinpointerComponent? pinpointer = null,
+            AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref pinpointer, ref appearance))
+                return;
+
+            appearance.SetData(PinpointerVisuals.IsActive, pinpointer.IsActive);
+            appearance.SetData(PinpointerVisuals.TargetDirection, (sbyte) pinpointer.DirectionToTarget);
         }
     }
 }
