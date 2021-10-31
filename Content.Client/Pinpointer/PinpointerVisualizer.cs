@@ -1,6 +1,8 @@
 using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
+using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer
@@ -32,8 +34,10 @@ namespace Content.Client.Pinpointer
                 return;
             }
 
-            sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
-            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+            var eye = IoCManager.Resolve<IEyeManager>().CurrentEye;
+
+            sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
+            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle() + eye.Rotation);
         }
 
         private Direction GetDirection(AppearanceComponent component)

@@ -62,19 +62,20 @@ namespace Content.Server.Pinpointer
         /// <summary>
         ///     Calculate direction to pinpointers target
         /// </summary>
-        private Direction CalculateDirection(EntityUid fromUid, EntityUid toUid)
+        private Direction CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             // check if entities have transform component
-            if (!EntityManager.TryGetComponent(fromUid, out ITransformComponent? from))
+            if (!EntityManager.TryGetComponent(pinUid, out ITransformComponent? pin))
                 return Direction.Invalid;
-            if (!EntityManager.TryGetComponent(toUid, out ITransformComponent? to))
+            if (!EntityManager.TryGetComponent(trgUid, out ITransformComponent? trg))
                 return Direction.Invalid;
 
             // check if they are on same map
-            if (from.MapID != to.MapID)
+            if (pin.MapID != trg.MapID)
                 return Direction.Invalid;
 
-            var dir = (from.WorldPosition - to.WorldPosition).GetDir();
+            // get world direction vector
+            var dir = (trg.WorldPosition - pin.WorldPosition).GetDir();
             return dir;
         }
 
