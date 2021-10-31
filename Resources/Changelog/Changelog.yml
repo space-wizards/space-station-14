@@ -1,10 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Can place lattice and underplating again, type: Add}
-  - {message: Glass floors, type: Add}
-  id: 21
-  time: '2021-03-01T20:57:04.0000000+00:00'
 - author: Swept
   changes:
   - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
@@ -2800,3 +2794,13 @@ Entries:
       under the field...', type: Add}
   id: 520
   time: '2021-10-31T13:39:37.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
+  - {message: Fixed some bottles in booze-o-mat and admin spawn panel being empty,
+    type: Fix}
+  - {message: Added various new reagents for bartending and added them to dispensers
+      and vending machines, type: Add}
+  - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
+  id: 521
+  time: '2021-10-31T13:57:06.0000000+00:00'
