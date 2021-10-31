@@ -137,7 +137,7 @@
       state_anchored: pipe-j1s
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalRouterFlipped
+    mirrorEntity: DisposalRouterFlipped
   - type: UserInterface
     interfaces:
     - key: enum.DisposalRouterUiKey.Key
@@ -170,7 +170,7 @@
       state_anchored: pipe-j2s
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalRouter
+    mirrorEntity: DisposalRouter
   - type: Physics
     fixtures:
     - shape:
@@ -200,7 +200,7 @@
       state_anchored: pipe-j1
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalJunctionFlipped
+    mirrorEntity: DisposalJunctionFlipped
   - type: Physics
     fixtures:
     - shape:
@@ -229,7 +229,7 @@
       state_anchored: pipe-j2
       state_broken: pipe-b
   - type: Flippable
-    entity: DisposalJunction
+    mirrorEntity: DisposalJunction
   - type: Physics
     fixtures:
     - shape:

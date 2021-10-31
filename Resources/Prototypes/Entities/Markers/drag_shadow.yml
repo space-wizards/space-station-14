@@ -3,7 +3,9 @@
   id: dragshadow
   abstract: true
   components:
-    - type: Sprite
-      layers:
-        - shader: unshaded
-    - type: HideContextMenu
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Sprite
+    layers:
+    - shader: unshaded

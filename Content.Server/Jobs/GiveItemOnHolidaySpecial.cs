@@ -27,7 +27,7 @@ namespace Content.Server.Jobs
             if (string.IsNullOrEmpty(Holiday) || string.IsNullOrEmpty(Prototype))
                 return;
 
-            if (!IoCManager.Resolve<IHolidayManager>().IsCurrentlyHoliday(Holiday))
+            if (!EntitySystem.Get<HolidaySystem>().IsCurrentlyHoliday(Holiday))
                 return;
 
             var entity = mob.EntityManager.SpawnEntity(Prototype, mob.Transform.Coordinates);

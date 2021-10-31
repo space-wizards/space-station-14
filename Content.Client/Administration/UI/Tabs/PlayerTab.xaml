@@ -1,10 +1,14 @@
 ﻿<Control xmlns="https://spacestation14.io">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
-            <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.7"
+            <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
                    Text="{Loc Player Count}" />
-            <Button Name="RefreshButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.3"
+            <Button Name="RefreshButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
                     Text="{Loc Refresh}" />
+            <Button Name="OverlayButtonOn" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
+                    Text="{Loc Overlay On}"/>
+            <Button Name="OverlayButtonOff" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
+                    Text="{Loc Overlay Off}"/>
         </BoxContainer>
         <Control MinSize="0 5" />
         <ScrollContainer HorizontalExpand="True" VerticalExpand="True">

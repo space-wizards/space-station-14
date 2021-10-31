@@ -6,6 +6,7 @@
   departments:
   - Civilian
   icon: "Bartender"
+  supervisors: "the head of personnel"
   access:
   - Service
   - Maintenance

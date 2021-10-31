@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
 
         private bool CanJoinAtmosphere(AtmosDeviceComponent component)
         {
-            return !component.RequireAnchored || !component.Owner.Transform.Anchored;
+            return !component.RequireAnchored || component.Owner.Transform.Anchored;
         }
 
         public void JoinAtmosphere(AtmosDeviceComponent component)

@@ -106,32 +106,32 @@ namespace Content.Shared.Chemistry.Reagent
 
         public static bool operator <=(ReagentUnit a, int b)
         {
-            return a.ShiftDown() <= b;
+            return a <= New(b);
         }
 
         public static bool operator >=(ReagentUnit a, int b)
         {
-            return a.ShiftDown() >= b;
+            return a >= New(b);
         }
 
         public static bool operator <(ReagentUnit a, int b)
         {
-            return a.ShiftDown() < b;
+            return a < New(b);
         }
 
         public static bool operator >(ReagentUnit a, int b)
         {
-            return a.ShiftDown() > b;
+            return a > New(b);
         }
 
         public static bool operator ==(ReagentUnit a, int b)
         {
-            return a.Int() == b;
+            return a == New(b);
         }
 
         public static bool operator !=(ReagentUnit a, int b)
         {
-            return a.Int() != b;
+            return a != New(b);
         }
 
         public static bool operator ==(ReagentUnit a, ReagentUnit b)

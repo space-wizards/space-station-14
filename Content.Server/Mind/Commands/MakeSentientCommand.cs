@@ -3,6 +3,7 @@ using Content.Server.AI.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Administration;
 using Content.Shared.Emoting;
+using Content.Shared.Examine;
 using Content.Shared.Movement.Components;
 using Content.Shared.Speech;
 using Robust.Shared.Console;
@@ -59,6 +60,7 @@ namespace Content.Server.Mind.Commands
                 entity.EnsureComponent<SharedPlayerMobMoverComponent>();
                 entity.EnsureComponent<SharedSpeechComponent>();
                 entity.EnsureComponent<SharedEmotingComponent>();
+                entity.EnsureComponent<ExaminerComponent>();
             });
         }
     }

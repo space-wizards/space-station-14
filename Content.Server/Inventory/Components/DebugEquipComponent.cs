@@ -1,7 +1,6 @@
 ﻿using Content.Shared.Hands;
 using Content.Shared.Inventory;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Inventory.Components

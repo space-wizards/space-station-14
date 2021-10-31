@@ -18,14 +18,17 @@
     - type: ItemCabinet
       doorSound:
         path: /Audio/Machines/machine_switch.ogg
-      whitelist:
-        tags:
-        - FireAxe
     - type: Appearance
       visuals:
         - type: ItemCabinetVisualizer
           closedState: glass
           openState: glass-up
+    - type: ItemSlots
+      slots:
+        cabinetSlot:
+          whitelist:
+            tags:
+            - FireAxe
   placement:
     mode: SnapgridCenter
 
@@ -42,8 +45,14 @@
   parent: FireAxeCabinet
   suffix: Filled
   components:
-    - type: ItemCabinet
-      spawnPrototype: FireAxe
+  - type: ItemCabinet
+  - type: ItemSlots
+    slots:
+      cabinetSlot:
+        item: FireAxe
+        whitelist:
+          tags:
+          - FireAxe
 
 - type: entity
   id: FireAxeCabinetFilledOpen

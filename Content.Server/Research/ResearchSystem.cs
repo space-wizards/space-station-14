@@ -71,7 +71,7 @@ namespace Content.Server.Research
 
             if (_timer >= ResearchConsoleUIUpdateTime)
             {
-                foreach (var console in ComponentManager.EntityQuery<ResearchConsoleComponent>())
+                foreach (var console in EntityManager.EntityQuery<ResearchConsoleComponent>())
                 {
                     console.UpdateUserInterface();
                 }

@@ -1,67 +1,68 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Interaction;
-using Content.Shared.Physics;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Shared.Verbs
 {
     public class SharedVerbSystem : EntitySystem
     {
-        [Dependency] private readonly IEntityLookup _lookup = default!;
+        /// <summary>
+        ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
+        ///     does not request verbs from the server.
+        /// </summary>
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        {
+            Dictionary<VerbType, SortedSet<Verb>> verbs = new();
+
+            if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
+            {
+                GetInteractionVerbsEvent getVerbEvent = new(user, target);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
+            }
+
+            if ((verbTypes & VerbType.Activation) == VerbType.Activation)
+            {
+                GetActivationVerbsEvent getVerbEvent = new(user, target);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
+            }
+
+            if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
+            {
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
+            }
+
+            if ((verbTypes & VerbType.Other) == VerbType.Other)
+            {
+                GetOtherVerbsEvent getVerbEvent = new(user, target);
+                RaiseLocalEvent(target.Uid, getVerbEvent);
+                verbs.Add(VerbType.Other, getVerbEvent.Verbs);
+            }
+
+            return verbs;
+        }
 
         /// <summary>
-        ///     Get all of the entities relevant for the contextmenu
+        ///     Execute the provided verb.
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="targetPos"></param>
-        /// <param name="contextEntities"></param>
-        /// <param name="buffer">Whether we should slightly extend out the ignored range for the ray predicated</param>
-        /// <returns></returns>
-        public bool TryGetContextEntities(IEntity player, MapCoordinates targetPos, [NotNullWhen(true)] out List<IEntity>? contextEntities, bool buffer = false)
+        /// <remarks>
+        ///     This will try to call the action delegates and raise the local events for the given verb.
+        /// </remarks>
+        public void ExecuteVerb(Verb verb)
         {
-            contextEntities = null;
-            var length = buffer ? 1.0f: 0.5f;
 
-            var entities = _lookup.GetEntitiesIntersecting(
-                    targetPos.MapId,
-                    Box2.CenteredAround(targetPos.Position, (length, length)))
-                .ToList();
+            verb.Act?.Invoke();
 
-            if (entities.Count == 0) return false;
-
-            // TODO: Can probably do a faster distance check with EntityCoordinates given we don't need to get map stuff.
-
-            // Check if we have LOS to the clicked-location, otherwise no popup.
-            var playerPos = player.Transform.MapPosition;
-            var vectorDiff = playerPos.Position - targetPos.Position;
-            var distance = vectorDiff.Length + 0.01f;
-
-            bool Ignored(IEntity entity)
+            // Maybe raise a local event
+            if (verb.ExecutionEventArgs != null)
             {
-                return entities.Contains(entity) ||
-                       entity == player ||
-                       !entity.TryGetComponent(out OccluderComponent? occluder) ||
-                       !occluder.Enabled;
+                if (verb.EventTarget.IsValid())
+                    RaiseLocalEvent(verb.EventTarget, verb.ExecutionEventArgs);
+                else
+                    RaiseLocalEvent(verb.ExecutionEventArgs);
             }
-
-            var mask = player.TryGetComponent(out SharedEyeComponent? eye) && eye.DrawFov
-                ? CollisionGroup.Opaque
-                : CollisionGroup.None;
-
-            var result = Get<SharedInteractionSystem>().InRangeUnobstructed(playerPos, targetPos, distance, mask, Ignored);
-
-            if (!result)
-            {
-                return false;
-            }
-
-            contextEntities = entities;
-            return true;
         }
     }
 }

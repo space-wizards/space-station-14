@@ -9,11 +9,13 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.PDA;
 using Content.Server.Players;
 using Content.Server.Traitor;
-using Content.Shared;
+using Content.Server.Traitor.Uplink;
+using Content.Server.Traitor.Uplink.Account;
+using Content.Server.Traitor.Uplink.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Inventory;
-using Content.Shared.PDA;
+using Content.Shared.Traitor.Uplink;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
@@ -34,6 +36,7 @@ namespace Content.Server.GameTicking.Presets
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] protected readonly IEntityManager EntityManager = default!;
 
         public override string ModeTitle => Loc.GetString("traitor-title");
 
@@ -59,7 +62,7 @@ namespace Content.Server.GameTicking.Presets
 
             if (!force && readyPlayers.Count < MinPlayers)
             {
-                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minumumPlayers", MinPlayers)));
+                _chatManager.DispatchServerAnnouncement(Loc.GetString("traitor-not-enough-ready-players", ("readyPlayersCount", readyPlayers.Count), ("minimumPlayers", MinPlayers)));
                 return false;
             }
 
@@ -119,28 +122,17 @@ namespace Content.Server.GameTicking.Presets
                 // initiate uplink account.
                 DebugTools.AssertNotNull(mind.OwnedEntity);
 
-                var uplinkAccount = new UplinkAccount(mind.OwnedEntity!.Uid, StartingBalance);
-                var inventory = mind.OwnedEntity.GetComponent<InventoryComponent>();
-                if (!inventory.TryGetSlotItem(EquipmentSlotDefines.Slots.IDCARD, out ItemComponent? pdaItem))
-                {
-                    Logger.ErrorS("preset", "Failed getting pda for picked traitor.");
-                    continue;
-                }
+                var uplinkAccount = new UplinkAccount(StartingBalance, mind.OwnedEntity!.Uid);
+                var accounts = EntityManager.EntitySysManager.GetEntitySystem<UplinkAccountsSystem>();
+                accounts.AddNewAccount(uplinkAccount);
 
-                var pda = pdaItem.Owner;
-
-                var pdaComponent = pda.GetComponent<PDAComponent>();
-                if (pdaComponent.IdSlotEmpty)
-                {
-                    Logger.ErrorS("preset","PDA had no id for picked traitor");
+                if (!EntityManager.EntitySysManager.GetEntitySystem<UplinkSystem>()
+                    .AddUplink(mind.OwnedEntity, uplinkAccount))
                     continue;
-                }
 
                 var traitorRole = new TraitorRole(mind);
-
                 mind.AddRole(traitorRole);
                 _traitors.Add(traitorRole);
-                pdaComponent.InitUplinkAccount(uplinkAccount);
             }
 
             var adjectives = _prototypeManager.Index<DatasetPrototype>("adjectives").Values;

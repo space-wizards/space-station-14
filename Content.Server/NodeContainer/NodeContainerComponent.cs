@@ -15,11 +15,14 @@ namespace Content.Server.NodeContainer
     ///     Creates and maintains a set of <see cref="Node"/>s.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class NodeContainerComponent : Component, IExamine
+#pragma warning restore 618
     {
         public override string Name => "NodeContainer";
 
-        [DataField("nodes")] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
+        //HACK: THIS BEING readOnly IS A FILTHY HACK AND I HATE IT --moony
+        [DataField("nodes", readOnly: true)] [ViewVariables] public Dictionary<string, Node> Nodes { get; } = new();
 
         [DataField("examinable")] private bool _examinable = false;
 

@@ -7,15 +7,12 @@ using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Exceptions;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
 using Content.Shared.Interaction;
 using Content.Shared.MachineLinking;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Server.Player;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Utility;
 
@@ -23,7 +20,6 @@ namespace Content.Server.MachineLinking.System
 {
     public class SignalLinkerSystem : EntitySystem
     {
-        [Dependency] private IComponentManager _componentManager = default!;
         private InteractionSystem _interaction = default!;
 
         private SignalLinkCollection _linkCollection = new();
@@ -76,7 +72,7 @@ namespace Content.Server.MachineLinking.System
                 if (!IsInRange(component, link.ReceiverComponent)) continue;
 
                 RaiseLocalEvent(link.ReceiverComponent.Owner.Uid,
-                    new SignalReceivedEvent(link.Receiverport.Name, args.Value));
+                    new SignalReceivedEvent(link.Receiverport.Name, args.Value), false);
             }
         }
 
@@ -127,7 +123,7 @@ namespace Content.Server.MachineLinking.System
                         !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner) ||
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true) ||
                         !signalLinkerComponent.Port.HasValue ||
                         !signalLinkerComponent.Port.Value.transmitter.Outputs.ContainsPort(signalLinkerComponent.Port
                             .Value.port) || !component.Inputs.ContainsPort(portSelected.Port))
@@ -167,7 +163,7 @@ namespace Content.Server.MachineLinking.System
                         !msg.Session.AttachedEntity.TryGetComponent(out HandsComponent? hands) ||
                         !hands.TryGetActiveHeldEntity(out var heldEntity) ||
                         !heldEntity.TryGetComponent(out SignalLinkerComponent? signalLinkerComponent) ||
-                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner))
+                        !_interaction.InRangeUnobstructed(msg.Session.AttachedEntity, component.Owner, ignoreInsideBlocker: true))
                         return;
                     LinkerSaveInteraction(msg.Session.AttachedEntity, signalLinkerComponent, component,
                         portSelected.Port);

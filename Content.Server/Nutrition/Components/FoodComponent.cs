@@ -7,11 +7,10 @@ using Content.Server.Body.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -29,7 +28,9 @@ namespace Content.Server.Nutrition.Components
     public class FoodComponent : Component, IUse, IAfterInteract
     {
         public override string Name => "Food";
-        public static string SolutionName = "food";
+
+        [DataField("solution")]
+        public string SolutionName { get; set; } = "food";
 
         [ViewVariables]
         [DataField("useSound")]
@@ -184,7 +185,7 @@ namespace Content.Server.Nutrition.Components
 
             SoundSystem.Play(Filter.Pvs(trueTarget), UseSound.GetSound(), trueTarget, AudioParams.Default.WithVolume(-1f));
 
-            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage));
+            trueTarget.PopupMessage(user, Loc.GetString(_eatMessage, ("food", Owner)));
 
             // If utensils were used
             if (utensils != null)

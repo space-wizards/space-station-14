@@ -1,8 +1,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -138,13 +139,15 @@ namespace Content.Server.Fluids.Components
                 }
             }
 
+            var puddleSystem = EntitySystem.Get<PuddleSystem>();
+
             foreach (var spillEntity in spillEntities)
             {
                 if (!spillEntity.TryGetComponent(out PuddleComponent? puddleComponent)) continue;
 
-                if (!overflow && puddleComponent.WouldOverflow(solution)) return null;
+                if (!overflow && puddleSystem.WouldOverflow(puddleComponent.Owner.Uid, solution, puddleComponent)) return null;
 
-                if (!puddleComponent.TryAddSolution(solution, sound)) continue;
+                if (!puddleSystem.TryAddSolution(puddleComponent.Owner.Uid, solution, sound)) continue;
 
                 puddle = puddleComponent;
                 spilt = true;
@@ -157,7 +160,7 @@ namespace Content.Server.Fluids.Components
             var puddleEnt = serverEntityManager.SpawnEntity(prototype, spillGridCoords);
             var newPuddleComponent = puddleEnt.GetComponent<PuddleComponent>();
 
-            newPuddleComponent.TryAddSolution(solution, sound);
+            puddleSystem.TryAddSolution(newPuddleComponent.Owner.Uid, solution, sound);
 
             return newPuddleComponent;
         }

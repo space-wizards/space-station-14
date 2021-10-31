@@ -44,7 +44,7 @@ namespace Content.Client.Instruments
                 return;
             }
 
-            foreach (var instrumentComponent in EntityManager.ComponentManager.EntityQuery<InstrumentComponent>(true))
+            foreach (var instrumentComponent in EntityManager.EntityQuery<InstrumentComponent>(true))
             {
                 instrumentComponent.Update(frameTime);
             }

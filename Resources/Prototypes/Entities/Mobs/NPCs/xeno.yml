@@ -1,7 +1,7 @@
 # Hacky for the stress test so don't even consider adding to this
 - type: entity
   name: Xeno
-  id: XenoMob_Content
+  id: MobXeno
   parent: SimpleMobBase
   description: They mostly come at night. Mostly.
   components:

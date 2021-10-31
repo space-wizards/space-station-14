@@ -1,6 +1,5 @@
-﻿# Vox bad. moff best.
-- type: entity
-  parent: HumanMob_Content
+﻿- type: entity
+  parent: MobHuman
   abstract: True
   id: BaseVox
   components:
@@ -115,3 +114,4 @@
     categoriesFacialHair: VoxFacialHair
   - type: Inventory
     speciesId: vox
+  - type: DoorBumpOpener

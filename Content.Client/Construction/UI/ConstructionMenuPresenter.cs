@@ -5,7 +5,8 @@ using Content.Client.HUD;
 using Content.Client.Resources;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
-using Content.Shared.Tool;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Client.Graphics;
 using Robust.Client.Placement;
 using Robust.Client.ResourceManagement;
@@ -154,6 +155,7 @@ namespace Content.Client.Construction.UI
             var recipesList = _constructionView.Recipes;
 
             recipesList.Clear();
+            var recipes = new List<ConstructionPrototype>();
 
             foreach (var recipe in _prototypeManager.EnumeratePrototypes<ConstructionPrototype>())
             {
@@ -169,6 +171,13 @@ namespace Content.Client.Construction.UI
                         continue;
                 }
 
+                recipes.Add(recipe);
+            }
+
+            recipes.Sort((a, b) => string.Compare(a.Name, b.Name, StringComparison.InvariantCulture));
+
+            foreach (var recipe in recipes)
+            {
                 recipesList.Add(GetItem(recipe, recipesList));
             }
 
@@ -190,7 +199,7 @@ namespace Content.Client.Construction.UI
                     uniqueCategories.Add(category);
             }
 
-            _constructionView.CategoryButton.Clear();
+            _constructionView.Category.Clear();
 
             var array = uniqueCategories.ToArray();
             Array.Sort(array);
@@ -198,7 +207,7 @@ namespace Content.Client.Construction.UI
             for (var i = 0; i < array.Length; i++)
             {
                 var category = array[i];
-                _constructionView.CategoryButton.AddItem(category, i);
+                _constructionView.Category.AddItem(category, i);
             }
 
             _constructionView.Categories = array;
@@ -271,7 +280,7 @@ namespace Content.Client.Construction.UI
                             stepList.AddItem(Loc.GetString(
                                                  "construction-presenter-tool-step",
                                                  ("step-number", stepNumber++),
-                                                 ("tool", toolStep.Tool.GetToolName())),
+                                                 ("tool", Loc.GetString(_prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).ToolName))),
                                              icon);
                             break;
 
@@ -282,58 +291,6 @@ namespace Content.Client.Construction.UI
                                                  ("name", arbitraryStep.Name)),
                                              icon);
                             break;
-
-                        case NestedConstructionGraphStep nestedStep:
-                            var parallelNumber = 1;
-                            stepList.AddItem(Loc.GetString("construction-presenter-nested-step", ("step-number", stepNumber++)));
-
-                            foreach (var steps in nestedStep.Steps)
-                            {
-                                var subStepNumber = 1;
-
-                                foreach (var subStep in steps)
-                                {
-                                    icon = GetTextureForStep(_resourceCache, subStep);
-
-                                    switch (subStep)
-                                    {
-                                        case MaterialConstructionGraphStep materialStep:
-                                            if (prototype.Type != ConstructionType.Item) stepList.AddItem(Loc.GetString(
-                                                    "construction-presenter-material-substep",
-                                                    ("step-number", stepNumber),
-                                                    ("parallel-number", parallelNumber),
-                                                    ("substep-number", subStepNumber++),
-                                                    ("amount", materialStep.Amount),
-                                                    ("material", materialStep.MaterialPrototype.Name)),
-                                                icon);
-                                            break;
-
-                                        case ToolConstructionGraphStep toolStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-tool-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("tool", toolStep.Tool.GetToolName())),
-                                                            icon);
-                                            break;
-
-                                        case ArbitraryInsertConstructionGraphStep arbitraryStep:
-                                            stepList.AddItem(Loc.GetString(
-                                                                 "construction-presenter-arbitrary-substep",
-                                                                 ("step-number", stepNumber),
-                                                                 ("parallel-number", parallelNumber),
-                                                                 ("substep-number", subStepNumber++),
-                                                                 ("name", arbitraryStep.Name)),
-                                                             icon);
-                                            break;
-                                    }
-                                }
-
-                                parallelNumber++;
-                            }
-
-                            break;
                     }
                 }
 
@@ -341,7 +298,7 @@ namespace Content.Client.Construction.UI
             }
         }
 
-        private static Texture? GetTextureForStep(IResourceCache resourceCache, ConstructionGraphStep step)
+        private Texture? GetTextureForStep(IResourceCache resourceCache, ConstructionGraphStep step)
         {
             switch (step)
             {
@@ -349,29 +306,10 @@ namespace Content.Client.Construction.UI
                     return materialStep.MaterialPrototype.Icon?.Frame0();
 
                 case ToolConstructionGraphStep toolStep:
-                    switch (toolStep.Tool)
-                    {
-                        case ToolQuality.Anchoring:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/wrench.rsi/icon.png");
-                        case ToolQuality.Prying:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/crowbar.rsi/icon.png");
-                        case ToolQuality.Screwing:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/screwdriver.rsi/screwdriver-map.png");
-                        case ToolQuality.Cutting:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/wirecutters.rsi/cutters-map.png");
-                        case ToolQuality.Welding:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/welder.rsi/icon.png");
-                        case ToolQuality.Multitool:
-                            return resourceCache.GetTexture("/Textures/Objects/Tools/multitool.rsi/icon.png");
-                    }
-
-                    break;
+                    return _prototypeManager.Index<ToolQualityPrototype>(toolStep.Tool).Icon?.Frame0();
 
                 case ArbitraryInsertConstructionGraphStep arbitraryStep:
                     return arbitraryStep.Icon?.Frame0();
-
-                case NestedConstructionGraphStep:
-                    return null;
             }
 
             return null;

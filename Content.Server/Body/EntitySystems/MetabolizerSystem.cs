@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Content.Server.Body.Components;
+using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -31,7 +31,7 @@ namespace Content.Server.Body.EntitySystems
         {
             base.Update(frameTime);
 
-            foreach (var metab in ComponentManager.EntityQuery<MetabolizerComponent>(false))
+            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
             {
                 metab.AccumulatedFrametime += frameTime;
 
@@ -102,7 +102,7 @@ namespace Content.Server.Body.EntitySystems
                     }
 
                     if (!conditionsMet)
-                        return;
+                        continue;
 
                     // If we're part of a body, pass that entity to Metabolize
                     // Otherwise, just pass our owner entity, maybe we're a plant or something

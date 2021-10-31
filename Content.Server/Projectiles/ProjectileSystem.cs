@@ -71,7 +71,7 @@ namespace Content.Server.Projectiles
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<ProjectileComponent>())
+            foreach (var component in EntityManager.EntityQuery<ProjectileComponent>())
             {
                 component.TimeLeft -= frameTime;
 

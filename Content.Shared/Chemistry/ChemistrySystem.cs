@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
@@ -12,15 +13,22 @@ namespace Content.Shared.Chemistry
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume,
-            Components.Solution? source)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, Solution solution)
+        {
+            foreach (var (id, quantity) in solution)
+            {
+                ReactionEntity(entity, method, id, quantity, solution);
+            }
+        }
+
+        public void ReactionEntity(IEntity entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
-        public void ReactionEntity(IEntity? entity, ReactionMethod method, ReagentPrototype reagent,
-            ReagentUnit reactVolume, Components.Solution? source)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, ReagentPrototype reagent,
+            ReagentUnit reactVolume, Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

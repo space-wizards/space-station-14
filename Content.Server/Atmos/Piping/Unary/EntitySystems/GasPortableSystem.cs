@@ -29,7 +29,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchorAttempt(EntityUid uid, GasPortableComponent component, AnchorAttemptEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out ITransformComponent? transform))
+            if (!EntityManager.TryGetComponent(uid, out ITransformComponent? transform))
                 return;
 
             // If we can't find any ports, cancel the anchoring.
@@ -39,7 +39,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableAnchored(EntityUid uid, GasPortableComponent portable, AnchoredEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
@@ -47,7 +47,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             portableNode.ConnectionsEnabled = true;
 
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(GasPortableVisuals.ConnectedState, true);
             }
@@ -55,7 +55,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnPortableUnanchored(EntityUid uid, GasPortableComponent portable, UnanchoredEvent args)
         {
-            if (!ComponentManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
+            if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
             if (!nodeContainer.TryGetNode(portable.PortName, out PipeNode? portableNode))
@@ -63,7 +63,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             portableNode.ConnectionsEnabled = false;
 
-            if (ComponentManager.TryGetComponent(uid, out AppearanceComponent? appearance))
+            if (EntityManager.TryGetComponent(uid, out AppearanceComponent? appearance))
             {
                 appearance.SetData(GasPortableVisuals.ConnectedState, false);
             }
@@ -80,7 +80,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             foreach (var entityUid in grid.GetLocal(coordinates))
             {
-                if (ComponentManager.TryGetComponent<GasPortComponent>(entityUid, out port))
+                if (EntityManager.TryGetComponent<GasPortComponent>(entityUid, out port))
                 {
                     return true;
                 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Access.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Server.GameTicking;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -18,6 +19,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Inventory.EquipmentSlotDefines;
+using Content.Server.Access.Systems;
 
 namespace Content.Server.Sandbox
 {
@@ -133,7 +135,12 @@ namespace Content.Server.Sandbox
                 {
                     if (pda.ContainedID == null)
                     {
-                        pda.InsertIdCard(CreateFreshId().GetComponent<IdCardComponent>());
+                        var newID = CreateFreshId();
+                        if (pda.Owner.TryGetComponent(out SharedItemSlotsComponent? itemSlots))
+                        {
+                            _entityManager.EntitySysManager.GetEntitySystem<SharedItemSlotsSystem>().
+                                TryInsertContent(itemSlots, newID, pda.IdSlot);
+                        }
                     }
                     else
                     {
@@ -152,8 +159,8 @@ namespace Content.Server.Sandbox
 
             void UpgradeId(IEntity id)
             {
-                var access = id.GetComponent<AccessComponent>();
-                access.SetTags(allAccess);
+                var accessSystem = EntitySystem.Get<AccessSystem>();
+                accessSystem.TrySetTags(id.Uid, allAccess);
 
                 if (id.TryGetComponent(out SpriteComponent? sprite))
                 {

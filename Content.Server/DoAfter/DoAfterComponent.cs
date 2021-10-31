@@ -31,7 +31,7 @@ namespace Content.Server.DoAfter
                     doAfter.EventArgs.BreakOnUserMove,
                     doAfter.EventArgs.BreakOnTargetMove,
                     doAfter.EventArgs.MovementThreshold,
-                    doAfter.EventArgs.Target?.Uid ?? EntityUid.Invalid);
+                    doAfter.EventArgs.Target ?? EntityUid.Invalid);
 
                 toAdd.Add(clientDoAfter);
             }
@@ -52,7 +52,9 @@ namespace Content.Server.DoAfter
                 return;
 
             _doAfters.Remove(doAfter);
+#pragma warning disable 618
             SendNetworkMessage(new CancelledDoAfterMessage(index));
+#pragma warning restore 618
         }
 
         /// <summary>

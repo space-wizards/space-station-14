@@ -1,8 +1,8 @@
-# Anything human specific (e.g. UI, input) goes under HumanMob_Content
+# Anything human specific (e.g. UI, input) goes under MobHuman
 - type: entity
   save: false
   name: Urist McHands
-  id: BaseHumanMob_Content
+  id: MobHumanBase
   description: A miserable pile of secrets.
   abstract: true
   components:
@@ -60,8 +60,15 @@
     solution: bloodstream
   - type: DrawableSolution
     solution: bloodstream
-  # StatusEffects
-  - type: Stunnable
+  - type: Bloodstream
+    max_volume: 100
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
   # Other
   - type: Inventory
   - type: Clickable
@@ -240,6 +247,21 @@
     - type: CreamPiedVisualizer
       state: creampie_human
     - type: HandsVisualizer
+    - type: DamageVisualizer
+      thresholds: [20, 40, 100]
+      targetLayers:
+      - "enum.HumanoidVisualLayers.Chest"
+      - "enum.HumanoidVisualLayers.Head"
+      - "enum.HumanoidVisualLayers.LArm"
+      - "enum.HumanoidVisualLayers.LLeg"
+      - "enum.HumanoidVisualLayers.RArm"
+      - "enum.HumanoidVisualLayers.RLeg"
+      damageOverlayGroups:
+        Brute:
+          sprite: Mobs/Effects/brute_damage.rsi
+          color: "#FF0000"
+        Burn:
+          sprite: Mobs/Effects/burn_damage.rsi
   - type: CombatMode
   - type: Climbing
   - type: Cuffable
@@ -273,11 +295,12 @@
     attributes:
       proper: true
   - type: StandingState
+  - type: DoorBumpOpener
 
 - type: entity
   save: false
   name: Urist McHands
-  id: HumanMob_Dummy
+  id: MobHumanDummy
   abstract: true
   description: A dummy human meant to be used in character setup.
   components:

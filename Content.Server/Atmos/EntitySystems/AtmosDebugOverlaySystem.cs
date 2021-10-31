@@ -17,7 +17,6 @@ namespace Content.Server.Atmos.EntitySystems
     [UsedImplicitly]
     public sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;

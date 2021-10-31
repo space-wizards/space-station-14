@@ -18,7 +18,7 @@ namespace Content.Client.Markers
 
         private void UpdateMarkers()
         {
-            foreach (var markerComponent in EntityManager.ComponentManager.EntityQuery<MarkerComponent>(true))
+            foreach (var markerComponent in EntityManager.EntityQuery<MarkerComponent>(true))
             {
                 markerComponent.UpdateVisibility();
             }

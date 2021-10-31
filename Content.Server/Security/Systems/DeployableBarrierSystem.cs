@@ -38,6 +38,9 @@ namespace Content.Server.Security.Systems
 
             var state = isDeployed ? DeployableBarrierState.Deployed : DeployableBarrierState.Idle;
             appearanceComponent.SetData(DeployableBarrierVisuals.State, state);
+
+            if (component.Owner.TryGetComponent(out PointLightComponent? light))
+                light.Enabled = isDeployed;
         }
     }
 }

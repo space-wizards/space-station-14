@@ -2,6 +2,9 @@
   name: pointing arrow
   id: pointingarrow
   components:
+  - type: Tag
+    tags:
+    - HideContextMenu
   - type: Sprite
     netsync: false
     sprite: Interface/Misc/pointing.rsi
@@ -13,4 +16,3 @@
   - type: Appearance
     visuals:
     - type: RoguePointingArrowVisualizer
-  - type: HideContextMenu

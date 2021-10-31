@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.DoAfter.UI
 {
-    public sealed class DoAfterGui : VBoxContainer
+    public sealed class DoAfterGui : BoxContainer
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
@@ -32,6 +32,8 @@ namespace Content.Client.DoAfter.UI
 
         public DoAfterGui()
         {
+            Orientation = LayoutOrientation.Vertical;
+
             IoCManager.InjectDependencies(this);
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
             SeparationOverride = 0;

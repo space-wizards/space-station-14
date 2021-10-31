@@ -1,8 +1,8 @@
 using System.Linq;
-using Content.Client.CharacterAppearance;
 using Content.Client.HUD.UI;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
@@ -32,7 +32,7 @@ namespace Content.Client.Lobby.UI
             IClientPreferencesManager preferencesManager)
         {
             _preferencesManager = preferencesManager;
-            _previewDummy = entityManager.SpawnEntity("HumanMob_Dummy", MapCoordinates.Nullspace);
+            _previewDummy = entityManager.SpawnEntity("MobHumanDummy", MapCoordinates.Nullspace);
 
             var header = new NanoHeading
             {
@@ -130,9 +130,7 @@ namespace Content.Client.Lobby.UI
                 else
                 {
                     _summaryLabel.Text = selectedCharacter.Summary;
-                    var component = _previewDummy.GetComponent<HumanoidAppearanceComponent>();
-                    component.UpdateFromProfile(selectedCharacter);
-
+                    EntitySystem.Get<SharedHumanoidAppearanceSystem>().UpdateFromProfile(_previewDummy.Uid, selectedCharacter);
                     GiveDummyJobClothes(_previewDummy, selectedCharacter);
                 }
             }

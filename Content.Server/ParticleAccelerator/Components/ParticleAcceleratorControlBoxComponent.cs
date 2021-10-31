@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
-using Content.Server.Notification;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
@@ -112,9 +112,12 @@ namespace Content.Server.ParticleAccelerator.Components
             _apcPowerReceiverComponent!.Load = 250;
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -337,7 +340,7 @@ namespace Content.Server.ParticleAccelerator.Components
             }
 
             var powerBlock = _wirePowerBlocked;
-            var keyboardLight = new StatusLightData(Color.Green,
+            var keyboardLight = new StatusLightData(Color.LimeGreen,
                 _wireInterfaceBlocked
                     ? StatusLightState.BlinkingFast
                     : StatusLightState.On,
@@ -387,7 +390,7 @@ namespace Content.Server.ParticleAccelerator.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var maybeFuel in grid.GetCardinalNeighborCells(coords))
                 {
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(maybeFuel, out _partFuelChamber))
+                    if (Owner.EntityManager.TryGetComponent(maybeFuel, out _partFuelChamber))
                     {
                         break;
                     }
@@ -461,7 +464,7 @@ namespace Content.Server.ParticleAccelerator.Components
             var coords = Owner.Transform.Coordinates;
             foreach (var ent in grid.GetOffset(coords, offset))
             {
-                if (Owner.EntityManager.ComponentManager.TryGetComponent(ent, out part) && !part.Deleted)
+                if (Owner.EntityManager.TryGetComponent(ent, out part) && !part.Deleted)
                 {
                     return true;
                 }

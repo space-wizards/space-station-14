@@ -7,6 +7,7 @@
   departments:
   - Engineering
   icon: "StationEngineer"
+  supervisors: "the chief engineer"
   access:
   - Maintenance
   - Engineering

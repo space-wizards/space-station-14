@@ -17,7 +17,7 @@ namespace Content.Server.Radio.EntitySystems
 
             _messages.Add(message);
 
-            foreach (var radio in ComponentManager.EntityQuery<IRadio>(true))
+            foreach (var radio in EntityManager.EntityQuery<IRadio>(true))
             {
                 if (radio.Channels.Contains(channel))
                 {

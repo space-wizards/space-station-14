@@ -17,10 +17,10 @@
   spawn: BananiumOre1
 
 - type: stack
-  id: DiamondOre
+  id: DiamondRaw
   name: diamond ore
   icon: /Textures/Objects/Materials/ore.rsi/diamond.png
-  spawn: DiamondOre1
+  spawn: DiamondRaw1
 
 - type: stack
   id: GoldOre

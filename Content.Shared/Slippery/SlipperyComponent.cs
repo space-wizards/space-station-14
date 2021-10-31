@@ -20,7 +20,7 @@ namespace Content.Shared.Slippery
 
         private float _paralyzeTime = 3f;
         private float _intersectPercentage = 0.3f;
-        private float _requiredSlipSpeed = 0.1f;
+        private float _requiredSlipSpeed = 5f;
         private float _launchForwardsMultiplier = 1f;
         private bool _slippery = true;
         private SoundSpecifier _slipSound = new SoundPathSpecifier("/Audio/Effects/slip.ogg");
@@ -63,7 +63,7 @@ namespace Content.Shared.Slippery
             get => _paralyzeTime;
             set
             {
-                if (MathHelper.CloseTo(_paralyzeTime, value)) return;
+                if (MathHelper.CloseToPercent(_paralyzeTime, value)) return;
 
                 _paralyzeTime = value;
                 Dirty();
@@ -80,7 +80,7 @@ namespace Content.Shared.Slippery
             get => _intersectPercentage;
             set
             {
-                if (MathHelper.CloseTo(_intersectPercentage, value)) return;
+                if (MathHelper.CloseToPercent(_intersectPercentage, value)) return;
 
                 _intersectPercentage = value;
                 Dirty();
@@ -97,7 +97,7 @@ namespace Content.Shared.Slippery
             get => _requiredSlipSpeed;
             set
             {
-                if (MathHelper.CloseTo(_requiredSlipSpeed, value)) return;
+                if (MathHelper.CloseToPercent(_requiredSlipSpeed, value)) return;
 
                 _requiredSlipSpeed = value;
                 Dirty();
@@ -114,7 +114,7 @@ namespace Content.Shared.Slippery
             get => _launchForwardsMultiplier;
             set
             {
-                if (MathHelper.CloseTo(_launchForwardsMultiplier, value)) return;
+                if (MathHelper.CloseToPercent(_launchForwardsMultiplier, value)) return;
 
                 _launchForwardsMultiplier = value;
                 Dirty();

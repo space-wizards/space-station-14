@@ -17,7 +17,7 @@ namespace Content.Server.Objectives.Conditions
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var allHumans = entityMgr.ComponentManager.EntityQuery<MindComponent>(true).Where(mc =>
+            var allHumans = entityMgr.EntityQuery<MindComponent>(true).Where(mc =>
             {
                 var entity = mc.Mind?.OwnedEntity;
                 return (entity?.GetComponentOrNull<IMobStateComponent>()?.IsAlive() ?? false) && mc.Mind != mind;

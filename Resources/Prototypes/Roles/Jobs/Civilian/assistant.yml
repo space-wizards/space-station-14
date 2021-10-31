@@ -6,6 +6,7 @@
   departments:
   - Civilian
   icon: "Assistant"
+  supervisors: "absolutely everyone"
   access:
   - Maintenance
 

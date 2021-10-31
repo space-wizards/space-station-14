@@ -6,7 +6,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Targeting
 {
-    public sealed class TargetingDoll : VBoxContainer
+    public sealed class TargetingDoll : BoxContainer
     {
         private TargetingZone _activeZone = TargetingZone.Middle;
         public const string StyleClassTargetDollZone = "target-doll-zone";
@@ -40,6 +40,8 @@ namespace Content.Client.Targeting
 
         public TargetingDoll(IResourceCache resourceCache)
         {
+            Orientation = LayoutOrientation.Vertical;
+
             _buttonHigh = new TextureButton
             {
                 TextureNormal = resourceCache.GetTexture(TextureHigh),

@@ -1,19 +1,12 @@
-using Content.Shared.ActionBlocker;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
-using Content.Shared.Whitelist;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cabinet
 {
     /// <summary>
-    ///     Used for entities that can hold one item that fits the whitelist, which can be extracted by interacting with
-    ///     the entity, and can have an item fitting the whitelist placed back inside
+    ///     Used for entities that can be opened, closed, and can hold one item. E.g., fire extinguisher cabinets.
     /// </summary>
     [RegisterComponent]
     public class ItemCabinetComponent : Component
@@ -28,21 +21,10 @@ namespace Content.Server.Cabinet
         public SoundSpecifier DoorSound { get; set; } = default!;
 
         /// <summary>
-        ///     The prototype that should be spawned inside the cabinet when it is map initialized.
+        ///     The slot name, used to get the actual item slot from the ItemSlotsComponent.
         /// </summary>
-        [ViewVariables]
-        [DataField("spawnPrototype")]
-        public string? SpawnPrototype { get; set; }
-
-        /// <summary>
-        ///     A whitelist defining which entities are allowed into the cabinet.
-        /// </summary>
-        [ViewVariables]
-        [DataField("whitelist")]
-        public EntityWhitelist? Whitelist = null;
-
-        [ViewVariables]
-        public ContainerSlot ItemContainer = default!;
+        [DataField("cabinetSlot")]
+        public string CabinetSlot = "cabinetSlot";
 
         /// <summary>
         ///     Whether the cabinet is currently open or not.
@@ -50,52 +32,5 @@ namespace Content.Server.Cabinet
         [ViewVariables]
         [DataField("opened")]
         public bool Opened { get; set; } = false;
-
-        [Verb]
-        public sealed class EjectItemFromCabinetVerb : Verb<ItemCabinetComponent>
-        {
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
-            {
-                if (component.ItemContainer.ContainedEntity == null || !component.Opened || !EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    data.Visibility = VerbVisibility.Invisible;
-                else
-                {
-                    data.Text = Loc.GetString("comp-item-cabinet-eject-verb-text");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                    data.Visibility = VerbVisibility.Visible;
-                }
-            }
-
-            protected override void Activate(IEntity user, ItemCabinetComponent component)
-            {
-                component.Owner.EntityManager.EventBus.RaiseLocalEvent(component.Owner.Uid, new TryEjectItemCabinetEvent(user), false);
-            }
-        }
-
-        [Verb]
-        public sealed class ToggleItemCabinetVerb : Verb<ItemCabinetComponent>
-        {
-            // Unlike lockers, you cannot open/close cabinets by clicking on them, as this usually removes their item
-            // instead. So open/close is the alt-interact verb
-
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ItemCabinetComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user))
-                    data.Visibility = VerbVisibility.Invisible;
-                else
-                {
-                    data.Text = Loc.GetString(component.Opened ? "comp-item-cabinet-close-verb-text" : "comp-item-cabinet-open-verb-text");
-                    data.IconTexture = component.Opened ? "/Textures/Interface/VerbIcons/close.svg.192dpi.png" : "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
-                    data.Visibility = VerbVisibility.Visible;
-                }
-            }
-
-            protected override void Activate(IEntity user, ItemCabinetComponent component)
-            {
-                component.Owner.EntityManager.EventBus.RaiseLocalEvent(component.Owner.Uid, new ToggleItemCabinetEvent(), false);
-            }
-        }
     }
 }

@@ -20,7 +20,7 @@ namespace Content.Server.Jobs
             var component = (Component)IoCManager.Resolve<IComponentFactory>().GetComponent(Component);
             component.Owner = mob;
 
-            IoCManager.Resolve<IComponentManager>().AddComponent(mob, component);
+            IoCManager.Resolve<IEntityManager>().AddComponent(mob, component);
         }
     }
 }

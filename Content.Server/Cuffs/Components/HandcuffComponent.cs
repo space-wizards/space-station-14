@@ -6,10 +6,10 @@ using Content.Server.Stunnable.Components;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
@@ -198,7 +198,7 @@ namespace Content.Server.Cuffs.Components
         {
             var cuffTime = CuffTime;
 
-            if (target.TryGetComponent<StunnableComponent>(out var stun) && stun.Stunned)
+            if (target.HasComponent<StunnedComponent>())
             {
                 cuffTime = MathF.Max(0.1f, cuffTime - StunBonus);
             }

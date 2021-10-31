@@ -16,12 +16,17 @@ using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
 using Robust.Shared.Players;
+using Robust.Shared.IoC;
+using Content.Shared.Verbs;
+using Robust.Shared.Localization;
 
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
-    public abstract class SharedPullingSystem : EntitySystem
+    public abstract partial class SharedPullingSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
+
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.
         /// </summary>
@@ -60,9 +65,37 @@ namespace Content.Shared.Pulling
             SubscribeLocalEvent<SharedPullableComponent, PullStartedMessage>(PullableHandlePullStarted);
             SubscribeLocalEvent<SharedPullableComponent, PullStoppedMessage>(PullableHandlePullStopped);
 
+            SubscribeLocalEvent<SharedPullableComponent, GetOtherVerbsEvent>(AddPullVerbs);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.MovePulledObject, new PointerInputCmdHandler(HandleMovePulledObject))
                 .Register<SharedPullingSystem>();
+        }
+
+        private void AddPullVerbs(EntityUid uid, SharedPullableComponent component, GetOtherVerbsEvent args)
+        {
+            if (args.Hands == null || !args.CanAccess || !args.CanInteract)
+                return;
+
+            // Are they trying to pull themselves up by their bootstraps?
+            if (args.User == args.Target)
+                return;
+
+            //TODO VERB ICONS add pulling icon
+            if (component.Puller == args.User)
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pulling-verb-get-data-text-stop-pulling");
+                verb.Act = () => TryStopPull(component, args.User);
+                args.Verbs.Add(verb);
+            }
+            else if (CanPull(args.User, args.Target))
+            {
+                Verb verb = new();
+                verb.Text = Loc.GetString("pulling-verb-get-data-text");
+                verb.Act = () => TryStartPull(args.User, args.Target);
+                args.Verbs.Add(verb);
+            }
         }
 
         // Raise a "you are being pulled" alert if the pulled entity has alerts.
@@ -101,12 +134,6 @@ namespace Content.Shared.Pulling
 
         private void OnPullStarted(PullStartedMessage message)
         {
-            if (_pullers.TryGetValue(message.Puller.Owner, out var pulled) &&
-                pulled.TryGetComponent(out SharedPullableComponent? pulledComponent))
-            {
-                pulledComponent.TryStopPull();
-            }
-
             SetPuller(message.Puller.Owner, message.Pulled.Owner);
         }
 
@@ -128,7 +155,16 @@ namespace Content.Shared.Pulling
         private void PullerMoved(ref MoveEvent ev)
         {
             var puller = ev.Sender;
+
             if (!TryGetPulled(ev.Sender, out var pulled))
+            {
+                return;
+            }
+
+            // The pulled object may have already been deleted.
+            // TODO: Work out why. Monkey + meat spike is a good test for this,
+            //  assuming you're still pulling the monkey when it gets gibbed.
+            if (pulled.Deleted)
             {
                 return;
             }
@@ -144,7 +180,7 @@ namespace Content.Shared.Pulling
 
             if (pulled.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.MovingTo = null;
+                _pullSm.ForceSetMovingTo(pullable, null);
             }
         }
 
@@ -153,7 +189,7 @@ namespace Content.Shared.Pulling
         {
             if (message.Entity.TryGetComponent(out SharedPullableComponent? pullable))
             {
-                pullable.TryStopPull();
+                TryStopPull(pullable);
             }
 
             if (message.Entity.TryGetComponent(out SharedPullerComponent? puller))
@@ -165,7 +201,7 @@ namespace Content.Shared.Pulling
                     return;
                 }
 
-                pulling.TryStopPull();
+                TryStopPull(pulling);
             }
         }
 
@@ -188,7 +224,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            pullable.TryMoveTo(coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords.ToMap(EntityManager));
 
             return false;
         }
@@ -221,7 +257,7 @@ namespace Content.Shared.Pulling
         private void UpdatePulledRotation(IEntity puller, IEntity pulled)
         {
             // TODO: update once ComponentReference works with directed event bus.
-            if (!pulled.TryGetComponent(out SharedRotatableComponent? rotatable))
+            if (!pulled.TryGetComponent(out RotatableComponent? rotatable))
                 return;
 
             if (!rotatable.RotateWhilePulling)
@@ -237,13 +273,6 @@ namespace Content.Shared.Pulling
                 if (Math.Abs(diff.Degrees) > ThresholdRotAngle)
                     pulled.Transform.WorldRotation = newAngle;
             }
-        }
-
-        public bool CanPull(IEntity puller, IEntity pulled)
-        {
-            var startPull = new StartPullAttemptEvent(puller, pulled);
-            RaiseLocalEvent(puller.Uid, startPull);
-            return !startPull.Cancelled;
         }
     }
 }

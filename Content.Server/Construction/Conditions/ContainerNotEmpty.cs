@@ -1,6 +1,8 @@
 using System.Threading.Tasks;
 using Content.Shared.Construction;
+using Content.Shared.Examine;
 using JetBrains.Annotations;
+using Robust.Server.Containers;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -15,23 +17,26 @@ namespace Content.Server.Construction.Conditions
         [DataField("container")] public string Container { get; private set; } = string.Empty;
         [DataField("text")] public string Text { get; private set; } = string.Empty;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
-                !containerManager.TryGetContainer(Container, out var container)) return false;
+            var containerSystem = entityManager.EntitySysManager.GetEntitySystem<ContainerSystem>();
+            if (!containerSystem.TryGetContainer(uid, Container, out var container))
+                return false;
 
             return container.ContainedEntities.Count != 0;
         }
 
-        public bool DoExamine(IEntity entity, FormattedMessage message, bool inDetailsRange)
+        public bool DoExamine(ExaminedEvent args)
         {
+            var entity = args.Examined;
+
             if (!entity.TryGetComponent(out ContainerManagerComponent? containerManager) ||
                 !containerManager.TryGetContainer(Container, out var container)) return false;
 
             if (container.ContainedEntities.Count != 0)
                 return false;
 
-            message.AddMarkup(Text);
+            args.PushMarkup(Text);
             return true;
 
         }

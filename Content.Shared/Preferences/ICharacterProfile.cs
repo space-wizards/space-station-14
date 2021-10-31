@@ -1,6 +1,5 @@
 using Content.Shared.CharacterAppearance;
 
-
 namespace Content.Shared.Preferences
 {
     public interface ICharacterProfile

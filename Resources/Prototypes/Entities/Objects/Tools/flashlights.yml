@@ -25,6 +25,8 @@
     HeldPrefix: off
   - type: PointLight
     enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
     radius: 3
   - type: Appearance
     visuals:

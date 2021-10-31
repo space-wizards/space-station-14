@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
 using Content.Server.Atmos.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -68,11 +68,11 @@ namespace Content.Server.Chemistry.Components
                 var coords = Owner.Transform.Coordinates;
                 foreach (var neighbor in grid.GetInDir(coords, dir))
                 {
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                    if (Owner.EntityManager.TryGetComponent(neighbor,
                         out SolutionAreaEffectComponent? comp) && comp.Inception == Inception)
                         return;
 
-                    if (Owner.EntityManager.ComponentManager.TryGetComponent(neighbor,
+                    if (Owner.EntityManager.TryGetComponent(neighbor,
                         out AirtightComponent? airtight) && airtight.AirBlocked)
                         return;
                 }

@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;

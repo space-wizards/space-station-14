@@ -1,5 +1,5 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Kitchen.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
@@ -23,7 +23,7 @@ namespace Content.Server.Kitchen.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var comp in ComponentManager.EntityQuery<MicrowaveComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<MicrowaveComponent>())
             {
                 comp.OnUpdate();
             }

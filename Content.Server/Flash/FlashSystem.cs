@@ -1,6 +1,8 @@
+using System;
 using Content.Server.Flash.Components;
 using Content.Server.Inventory.Components;
 using Content.Server.Items;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Server.Weapon.Melee;
 using Content.Shared.Examine;
@@ -8,9 +10,10 @@ using Content.Shared.Flash;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Inventory;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Physics;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -25,6 +28,7 @@ namespace Content.Server.Flash
     {
         [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()
         {
@@ -120,17 +124,15 @@ namespace Content.Server.Flash
             if (attempt.Cancelled)
                 return;
 
-            if (ComponentManager.TryGetComponent<FlashableComponent>(target, out var flashable))
+            if (EntityManager.TryGetComponent<FlashableComponent>(target, out var flashable))
             {
                 flashable.LastFlash = _gameTiming.CurTime;
                 flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
                 flashable.Dirty();
             }
 
-            if (ComponentManager.TryGetComponent<StunnableComponent>(target, out var stunnableComponent))
-            {
-                stunnableComponent.Slowdown(flashDuration / 1000f, slowTo, slowTo);
-            }
+            _stunSystem.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f),
+                slowTo, slowTo);
 
             if (displayPopup && user != null && target != user)
             {
@@ -149,7 +151,7 @@ namespace Content.Server.Flash
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
-            var transform = ComponentManager.GetComponent<ITransformComponent>(source);
+            var transform = EntityManager.GetComponent<ITransformComponent>(source);
 
             foreach (var entity in _entityLookup.GetEntitiesInRange(transform.Coordinates, range))
             {

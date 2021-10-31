@@ -3,6 +3,7 @@ using Content.Client.Chat;
 using Content.Client.Chat.Managers;
 using Content.Client.Chat.UI;
 using Content.Client.Construction.UI;
+using Content.Client.Hands;
 using Content.Client.HUD;
 using Content.Client.HUD.UI;
 using Content.Client.Voting;
@@ -28,10 +29,8 @@ namespace Content.Client.Viewport
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IClyde _clyde = default!;
         [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private readonly IOverlayManager _overlayManager = default!;
 
         [ViewVariables] private ChatBox? _gameChat;
         private ConstructionMenuPresenter? _constructionMenu;
@@ -73,10 +72,13 @@ namespace Content.Client.Viewport
             SetupPresenters();
 
             _eyeManager.MainViewport = Viewport.Viewport;
+
+            _overlayManager.AddOverlay(new ShowHandItemOverlay());
         }
 
         public override void Shutdown()
         {
+            _overlayManager.RemoveOverlay<ShowHandItemOverlay>();
             DisposePresenters();
 
             base.Shutdown();

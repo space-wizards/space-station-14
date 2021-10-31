@@ -5,6 +5,7 @@ using System.Linq;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Preset;
 using Content.Shared.Body.Template;
+using Content.Shared.CharacterAppearance.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Standing;
@@ -147,6 +148,7 @@ namespace Content.Shared.Body.Components
 
             var argsAdded = new BodyPartAddedEventArgs(slot.Id, part);
 
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartAdded(Owner.Uid, argsAdded);
             foreach (var component in Owner.GetAllComponents<IBodyPartAdded>().ToArray())
             {
                 component.BodyPartAdded(argsAdded);
@@ -173,6 +175,8 @@ namespace Content.Shared.Body.Components
 
             var args = new BodyPartRemovedEventArgs(slot.Id, part);
 
+
+            EntitySystem.Get<SharedHumanoidAppearanceSystem>().BodyPartRemoved(Owner.Uid, args);
             foreach (var component in Owner.GetAllComponents<IBodyPartRemoved>())
             {
                 component.BodyPartRemoved(args);
@@ -182,7 +186,7 @@ namespace Content.Shared.Body.Components
             if (part.PartType == BodyPartType.Leg &&
                 GetPartsOfType(BodyPartType.Leg).ToArray().Length == 0)
             {
-                EntitySystem.Get<StandingStateSystem>().Down(Owner);
+                EntitySystem.Get<StandingStateSystem>().Down(Owner.Uid);
             }
 
             if (part.IsVital && SlotParts.Count(x => x.Value.PartType == part.PartType) == 0)

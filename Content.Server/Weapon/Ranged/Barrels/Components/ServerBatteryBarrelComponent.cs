@@ -4,18 +4,14 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.Projectiles.Components;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Sound;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Barrels.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
-using Robust.Shared.Localization;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
@@ -46,7 +42,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
         [DataField("powerCellPrototype")]
         private string? _powerCellPrototype = default;
         [DataField("powerCellRemovable")]
-        [ViewVariables] private bool _powerCellRemovable = default;
+        [ViewVariables] public bool PowerCellRemovable = default;
 
         public override int ShotsLeft
         {
@@ -226,7 +222,7 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 
         public override bool UseEntity(UseEntityEventArgs eventArgs)
         {
-            if (!_powerCellRemovable)
+            if (!PowerCellRemovable)
             {
                 return false;
             }
@@ -239,9 +235,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             return TryEjectCell(eventArgs.User);
         }
 
-        private bool TryEjectCell(IEntity user)
+        public bool TryEjectCell(IEntity user)
         {
-            if (PowerCell == null || !_powerCellRemovable)
+            if (PowerCell == null || !PowerCellRemovable)
             {
                 return false;
             }
@@ -277,37 +273,6 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
             }
 
             return TryInsertPowerCell(eventArgs.Using);
-        }
-
-        [Verb]
-        public sealed class EjectCellVerb : Verb<ServerBatteryBarrelComponent>
-        {
-            public override bool AlternativeInteraction => true;
-
-            protected override void GetData(IEntity user, ServerBatteryBarrelComponent component, VerbData data)
-            {
-                if (!EntitySystem.Get<ActionBlockerSystem>().CanInteract(user) || !component._powerCellRemovable)
-                {
-                    data.Visibility = VerbVisibility.Invisible;
-                    return;
-                }
-
-                if (component.PowerCell == null)
-                {
-                    data.Text = Loc.GetString("eject-cell-verb-get-data-text-no-cell");
-                    data.Visibility = VerbVisibility.Disabled;
-                }
-                else
-                {
-                    data.Text = Loc.GetString("eject-cell-verb-get-data-text");
-                    data.IconTexture = "/Textures/Interface/VerbIcons/eject.svg.192dpi.png";
-                }
-            }
-
-            protected override void Activate(IEntity user, ServerBatteryBarrelComponent component)
-            {
-                component.TryEjectCell(user);
-            }
         }
     }
 }

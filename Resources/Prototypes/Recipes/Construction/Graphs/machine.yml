@@ -6,7 +6,7 @@
       actions:
         - !type:SpawnPrototype
           prototype: SheetSteel1
-        - !type:DeleteEntity {}
+        - !type:DeleteEntity
       edges:
         - to: missingWires
           completed:
@@ -22,11 +22,11 @@
       actions:
         - !type:SpriteStateChange
           state: "box_0"
-        - !type:EmptyAllContainers {}
+        - !type:EmptyAllContainers
       edges:
         - to: machineFrame
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           steps:
             - material: Cable
         - to: start
@@ -37,7 +37,7 @@
             - !type:SpawnPrototype
               prototype: SheetSteel1
               amount: 5
-            - !type:DeleteEntity {}
+            - !type:DeleteEntity
           steps:
             - tool: Screwing
               doAfter: 2
@@ -45,22 +45,22 @@
     - node: machineFrame
       entity: MachineFrame
       actions:
-        - !type:MachineFrameRegenerateProgress {}
+        - !type:MachineFrameRegenerateProgress
       edges:
         - to: machine
           conditions:
-            - !type:EntityAnchored {}
-            - !type:MachineFrameComplete {}
+            - !type:EntityAnchored
+            - !type:MachineFrameComplete
           completed:
             # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
-            - !type:BuildMachine {}
+            - !type:BuildMachine
           steps:
             - tool: Screwing
               doAfter: 0.5
 
         - to: missingWires
           conditions:
-            - !type:EntityAnchored {}
+            - !type:EntityAnchored
           completed:
             - !type:SpawnPrototype
               prototype: CableApcStack1
@@ -68,8 +68,8 @@
             - tool: Prying
               doAfter: 2
               completed:
-                - !type:EmptyAllContainers {}
-                - !type:MachineFrameRegenerateProgress {}
+                - !type:EmptyAllContainers
+                - !type:MachineFrameRegenerateProgress
             - tool: Cutting
               doAfter: 0.25
 
@@ -82,8 +82,8 @@
       edges:
         - to: machineFrame
           conditions:
-            - !type:EntityAnchored {}
-            - !type:WirePanel {}
+            - !type:EntityAnchored
+            - !type:WirePanel
           steps:
             - tool: Prying
               doAfter: 0.25

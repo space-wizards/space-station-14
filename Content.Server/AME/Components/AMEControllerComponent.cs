@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Hands.Components;
@@ -8,8 +9,7 @@ using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.AME;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Events;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -28,7 +28,8 @@ namespace Content.Server.AME.Components
     public class AMEControllerComponent : SharedAMEControllerComponent, IActivate, IInteractUsing
     {
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(AMEControllerUiKey.Key);
-        [ViewVariables] private bool _injecting;
+        private bool _injecting;
+        [ViewVariables] public bool Injecting => _injecting;
         [ViewVariables] public int InjectionAmount;
 
         private AppearanceComponent? _appearance;
@@ -62,9 +63,12 @@ namespace Content.Server.AME.Components
             _jarSlot = ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-fuelJarContainer");
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:
@@ -134,6 +138,12 @@ namespace Content.Server.AME.Components
         }
 
         private void OnPowerChanged(PowerChangedMessage e)
+        {
+            UpdateUserInterface();
+        }
+
+        // Used to update core count
+        public void OnAMENodeGroupUpdate()
         {
             UpdateUserInterface();
         }
@@ -217,7 +227,7 @@ namespace Content.Server.AME.Components
                     break;
             }
 
-            GetAMENodeGroup()?.UpdateCoreVisuals(InjectionAmount, _injecting);
+            GetAMENodeGroup()?.UpdateCoreVisuals();
 
             UpdateUserInterface();
             ClickSound();

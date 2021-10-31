@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Content.Server.Items;
 using Content.Server.MachineLinking.Events;
 using Content.Server.MachineLinking.Models;
 using Content.Server.Power.Components;
-using Content.Server.Recycling.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Conveyor;
 using Content.Shared.MachineLinking;
 using Content.Shared.Movement.Components;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,12 +18,12 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Dynamics;
 
 namespace Content.Server.Conveyor
 {
     public class ConveyorSystem : EntitySystem
     {
+        [Dependency] private StunSystem _stunSystem = default!;
         [Dependency] private IEntityLookup _entityLookup = default!;
 
         public override void Initialize()
@@ -60,11 +62,8 @@ namespace Content.Server.Conveyor
                 signal != TwoWayLeverSignal.Middle)
             {
                 args.Cancel();
-                if (args.Attemptee.TryGetComponent<StunnableComponent>(out var stunnableComponent))
-                {
-                    stunnableComponent.Paralyze(2);
-                    component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
-                }
+                _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(2f));
+                component.Owner.PopupMessage(args.Attemptee, Loc.GetString("conveyor-component-failed-link"));
             }
         }
 
@@ -134,7 +133,7 @@ namespace Content.Server.Conveyor
         public IEnumerable<(IEntity, IPhysBody)> GetEntitiesToMove(ConveyorComponent comp)
         {
             //todo uuuhhh cache this
-            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, LookupFlags.Approximate))
+            foreach (var entity in _entityLookup.GetEntitiesIntersecting(comp.Owner, flags: LookupFlags.Approximate))
             {
                 if (entity.Deleted)
                 {

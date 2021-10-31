@@ -1,7 +1,10 @@
+using System;
 using Content.Server.Damage.Components;
+using Content.Server.Stunnable;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
+using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -19,6 +22,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
+        [Dependency] private readonly StunSystem _stunSystem = default!;
 
         public override void Initialize()
         {
@@ -28,7 +32,7 @@ namespace Content.Server.Damage.Systems
 
         private void HandleCollide(EntityUid uid, DamageOnHighSpeedImpactComponent component, StartCollideEvent args)
         {
-            if (!ComponentManager.HasComponent<DamageableComponent>(uid)) return;
+            if (!EntityManager.HasComponent<DamageableComponent>(uid)) return;
 
             var otherBody = args.OtherFixture.Body.Owner;
             var speed = args.OurFixture.Body.LinearVelocity.Length;
@@ -42,8 +46,8 @@ namespace Content.Server.Damage.Systems
 
             component.LastHit = _gameTiming.CurTime;
 
-            if (ComponentManager.TryGetComponent(uid, out StunnableComponent? stun) && _robustRandom.Prob(component.StunChance))
-                stun.Stun(component.StunSeconds);
+            if (_robustRandom.Prob(component.StunChance))
+                _stunSystem.TryStun(uid, TimeSpan.FromSeconds(component.StunSeconds));
 
             var damageScale = (speed / component.MinimumSpeed) * component.Factor;
             _damageableSystem.TryChangeDamage(uid, component.Damage * damageScale);

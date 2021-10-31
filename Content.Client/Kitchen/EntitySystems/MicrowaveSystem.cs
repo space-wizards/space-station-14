@@ -18,14 +18,7 @@ namespace Content.Client.Kitchen.EntitySystems
 
         public void StopSoundLoop(MicrowaveComponent microwave)
         {
-            try
-            {
-                microwave.PlayingStream?.Stop();
-            }
-            catch (Exception _)
-            {
-                // TODO: HOLY SHIT EXPOSE SOME DISPOSED PROPERTY ON PLAYING STREAM OR SOMETHING.
-            }
+            microwave.PlayingStream?.Stop();
         }
     }
 }

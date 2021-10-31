@@ -1,0 +1,83 @@
+using System;
+using System.Collections.Generic;
+using Content.Shared.Alert;
+using Content.Shared.StatusEffect;
+using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.IoC;
+using Robust.Shared.Timing;
+
+namespace Content.Shared.Jittering
+{
+    /// <summary>
+    ///     A system for applying a jitter animation to any entity.
+    /// </summary>
+    public abstract class SharedJitteringSystem : EntitySystem
+    {
+        [Dependency] protected readonly IGameTiming GameTiming = default!;
+        [Dependency] protected readonly StatusEffectsSystem StatusEffects = default!;
+
+        public float MaxAmplitude = 300f;
+        public float MinAmplitude = 1f;
+
+        public float MaxFrequency = 10f;
+        public float MinFrequency = 1f;
+
+        public override void Initialize()
+        {
+            SubscribeLocalEvent<JitteringComponent, ComponentGetState>(OnGetState);
+            SubscribeLocalEvent<JitteringComponent, ComponentHandleState>(OnHandleState);
+        }
+
+        private void OnGetState(EntityUid uid, JitteringComponent component, ref ComponentGetState args)
+        {
+            args.State = new JitteringComponentState(component.Amplitude, component.Frequency);
+        }
+
+        private void OnHandleState(EntityUid uid, JitteringComponent component, ref ComponentHandleState args)
+        {
+            if (args.Current is not JitteringComponentState jitteringState)
+                return;
+
+            component.Amplitude = jitteringState.Amplitude;
+            component.Frequency = jitteringState.Frequency;
+        }
+
+        /// <summary>
+        ///     Applies a jitter effect to the specified entity.
+        ///     You can apply this to any entity whatsoever, so be careful what you use it on!
+        /// </summary>
+        /// <remarks>
+        ///     If the entity is already jittering, the jitter values will be updated but only if they're greater
+        ///     than the current ones and <see cref="forceValueChange"/> is false.
+        /// </remarks>
+        /// <param name="uid">Entity in question.</param>
+        /// <param name="time">For how much time to apply the effect.</param>
+        /// <param name="amplitude">Jitteriness of the animation. See <see cref="MaxAmplitude"/> and <see cref="MinAmplitude"/>.</param>
+        /// <param name="frequency">Frequency for jittering. See <see cref="MaxFrequency"/> and <see cref="MinFrequency"/>.</param>
+        /// <param name="forceValueChange">Whether to change any existing jitter value even if they're greater than the ones we're setting.</param>
+        /// <param name="status">The status effects component to modify.</param>
+        /// <param name="alerts">The alerts component.</param>
+        public void DoJitter(EntityUid uid, TimeSpan time, float amplitude = 10f, float frequency = 4f, bool forceValueChange = false,
+            StatusEffectsComponent? status = null,
+            SharedAlertsComponent? alerts = null)
+        {
+            if (!Resolve(uid, ref status, false))
+                return;
+
+            amplitude = Math.Clamp(amplitude, MinAmplitude, MaxAmplitude);
+            frequency = Math.Clamp(frequency, MinFrequency, MaxFrequency);
+
+            if (StatusEffects.TryAddStatusEffect<JitteringComponent>(uid, "Jitter", time, status, alerts))
+            {
+                var jittering = EntityManager.GetComponent<JitteringComponent>(uid);
+
+                if(forceValueChange || jittering.Amplitude < amplitude)
+                    jittering.Amplitude = amplitude;
+
+                if (forceValueChange || jittering.Frequency < frequency)
+                    jittering.Frequency = frequency;
+            }
+        }
+    }
+}

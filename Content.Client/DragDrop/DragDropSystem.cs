@@ -4,8 +4,7 @@ using Content.Client.Viewport;
 using Content.Shared.DragDrop;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -193,7 +192,7 @@ namespace Content.Client.DragDrop
                 dragSprite.Color = dragSprite.Color.WithAlpha(0.7f);
                 // keep it on top of everything
                 dragSprite.DrawDepth = (int) DrawDepth.Overlays;
-                if (dragSprite.Directional)
+                if (!dragSprite.NoRotation)
                 {
                     _dragShadow.Transform.WorldRotation = _dragDropHelper.Dragged.Transform.WorldRotation;
                 }

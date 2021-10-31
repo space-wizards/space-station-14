@@ -12,7 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.HealthOverlay.UI
 {
-    public class HealthOverlayGui : VBoxContainer
+    public class HealthOverlayGui : BoxContainer
     {
         [Dependency] private readonly IEyeManager _eyeManager = default!;
 
@@ -21,6 +21,7 @@ namespace Content.Client.HealthOverlay.UI
             IoCManager.InjectDependencies(this);
             IoCManager.Resolve<IUserInterfaceManager>().StateRoot.AddChild(this);
             SeparationOverride = 0;
+            Orientation = LayoutOrientation.Vertical;
 
             CritBar = new HealthOverlayBar
             {
@@ -33,7 +34,7 @@ namespace Content.Client.HealthOverlay.UI
             {
                 Visible = false,
                 VerticalAlignment = VAlignment.Center,
-                Color = Color.Green
+                Color = Color.LimeGreen
             };
 
             AddChild(Panel = new PanelContainer

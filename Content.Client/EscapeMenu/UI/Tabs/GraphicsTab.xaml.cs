@@ -73,6 +73,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 UpdateViewportScale();
             };
 
+            ShowHeldItemCheckBox.OnToggled += OnCheckBoxToggled;
             IntegerScalingCheckBox.OnToggled += OnCheckBoxToggled;
             ViewportLowResCheckBox.OnToggled += OnCheckBoxToggled;
             ApplyButton.OnPressed += OnApplyButtonPressed;
@@ -85,6 +86,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
             IntegerScalingCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0;
             ViewportLowResCheckBox.Pressed = !_cfg.GetCVar(CCVars.ViewportScaleRender);
+            ShowHeldItemCheckBox.Pressed = _cfg.GetCVar(CCVars.HudHeldItemShow);
 
             UpdateViewportScale();
             UpdateApplyButton();
@@ -119,6 +121,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             _cfg.SetCVar(CCVars.ViewportSnapToleranceMargin,
                          IntegerScalingCheckBox.Pressed ? CCVars.ViewportSnapToleranceMargin.DefaultValue : 0);
             _cfg.SetCVar(CCVars.ViewportScaleRender, !ViewportLowResCheckBox.Pressed);
+            _cfg.SetCVar(CCVars.HudHeldItemShow, ShowHeldItemCheckBox.Pressed);
             _cfg.SaveToFile();
             UpdateApplyButton();
         }
@@ -140,11 +143,12 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             var isFullscreenSame = FullscreenCheckBox.Pressed == ConfigIsFullscreen;
             var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
             var isHudThemeSame = HudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
-            var isUIScaleSame = MathHelper.CloseTo(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
+            var isUIScaleSame = MathHelper.CloseToPercent(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
             var isVPStretchSame = ViewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
             var isVPResSame = ViewportLowResCheckBox.Pressed == !_cfg.GetCVar(CCVars.ViewportScaleRender);
+            var isShowHeldItemSame = ShowHeldItemCheckBox.Pressed == _cfg.GetCVar(CCVars.HudHeldItemShow);
 
             ApplyButton.Disabled = isVSyncSame &&
                                    isFullscreenSame &&
@@ -154,7 +158,8 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                                    isVPScaleSame &&
                                    isIntegerScalingSame &&
                                    isVPResSame &&
-                                   isHudThemeSame;
+                                   isHudThemeSame &&
+                                   isShowHeldItemSame;
         }
 
         private bool ConfigIsFullscreen =>
@@ -191,18 +196,22 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 case 0:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 8);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, false);
                     break;
                 case 1:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, false);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 2:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 2);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
                 case 3:
                     _cfg.SetCVar(CVars.DisplayLightMapDivider, 1);
                     _cfg.SetCVar(CVars.DisplaySoftShadows, true);
+                    _cfg.SetCVar(CVars.DisplayBlurLight, true);
                     break;
             }
         }
@@ -211,7 +220,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
         {
             for (var i = 0; i < UIScaleOptions.Length; i++)
             {
-                if (MathHelper.CloseTo(UIScaleOptions[i], value))
+                if (MathHelper.CloseToPercent(UIScaleOptions[i], value))
                 {
                     return i;
                 }

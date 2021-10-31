@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Zumorica",
+    "size": {
+        "x": 548,
+        "y": 548
+    },
+    "states": [
+        {
+            "name": "board"
+        }
+    ]
+}

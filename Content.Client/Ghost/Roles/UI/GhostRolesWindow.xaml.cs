@@ -12,8 +12,8 @@ namespace Content.Client.Ghost.Roles.UI
 
         public void ClearEntries()
         {
-            EntryContainer.DisposeAllChildren();
             NoRolesMessage.Visible = true;
+            EntryContainer.DisposeAllChildren();
         }
 
         public void AddEntry(GhostRoleInfo info)

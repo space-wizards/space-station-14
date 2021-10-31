@@ -29,9 +29,11 @@ namespace Content.Server.Atmos.Piping.Trinary.Components
         public float TargetPressure = Atmospherics.OneAtmosphere;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("inletOneConcentration")]
         public float InletOneConcentration = 0.5f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("inletTwoConcentration")]
         public float InletTwoConcentration = 0.5f;
     }
 }

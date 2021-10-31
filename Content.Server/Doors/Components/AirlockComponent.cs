@@ -4,14 +4,9 @@ using Content.Server.Power.Components;
 using Content.Server.VendingMachines;
 using Content.Server.WireHacking;
 using Content.Shared.Doors;
-using Content.Shared.Interaction;
-using Content.Shared.Notification;
-using Content.Shared.Notification.Managers;
 using Content.Shared.Sound;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
-using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -119,6 +114,7 @@ namespace Content.Server.Doors.Components
         public float AutoCloseDelayModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("safety")]
         public bool Safety = true;
 
         protected override void Initialize()
@@ -183,7 +179,7 @@ namespace Content.Server.Doors.Components
 
             var timingStatus =
                 new StatusLightData(Color.Orange, !AutoClose ? StatusLightState.Off :
-                                                    !MathHelper.CloseTo(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
+                                                    !MathHelper.CloseToPercent(ev.CloseTimeModifier, 1.0f) ? StatusLightState.BlinkingSlow :
                                                     StatusLightState.On,
                                                     "TIME");
 

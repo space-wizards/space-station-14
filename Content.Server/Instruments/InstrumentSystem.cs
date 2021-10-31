@@ -51,7 +51,7 @@ namespace Content.Server.Instruments
         {
             base.Update(frameTime);
 
-            foreach (var component in ComponentManager.EntityQuery<InstrumentComponent>(true))
+            foreach (var component in EntityManager.EntityQuery<InstrumentComponent>(true))
             {
                 component.Update(frameTime);
             }

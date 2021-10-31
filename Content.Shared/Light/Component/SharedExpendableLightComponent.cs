@@ -34,7 +34,7 @@ namespace Content.Shared.Light.Component
         public sealed override string Name => "ExpendableLight";
 
         [ViewVariables(VVAccess.ReadOnly)]
-        protected ExpendableLightState CurrentState { get; set; }
+        public ExpendableLightState CurrentState { get; set; }
 
         [ViewVariables]
         [DataField("turnOnBehaviourID")]

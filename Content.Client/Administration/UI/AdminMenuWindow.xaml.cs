@@ -21,6 +21,18 @@ namespace Content.Client.Administration.UI
             remove => PlayerTabControl.OnPlayerListRefresh -= value;
         }
 
+        public event PlayerTab.AdminNameOverlayToggle? OnAdminNameOverlayOn
+        {
+            add => PlayerTabControl.OnAdminNameOverlayOn += value;
+            remove => PlayerTabControl.OnAdminNameOverlayOn -= value;
+        }
+
+        public event PlayerTab.AdminNameOverlayToggle? OnAdminNameOverlayOff
+        {
+            add => PlayerTabControl.OnAdminNameOverlayOff += value;
+            remove => PlayerTabControl.OnAdminNameOverlayOff -= value;
+        }
+
         public AdminMenuWindow()
         {
             MinSize = SetSize = (500, 250);

@@ -17,7 +17,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (!args.Handled
                 && args.Used.TryGetComponent<MatchstickComponent>(out var matchstick)
-                && matchstick.CurrentState == SharedBurningStates.Unlit)
+                && matchstick.CurrentState == SmokableState.Unlit)
             {
                 Get<MatchstickSystem>().Ignite(matchstick, args.User);
                 args.Handled = true;

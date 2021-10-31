@@ -3,7 +3,7 @@
 
 - type: entity
   id: Cigarette
-  parent: BaseSmokeable
+  parent: BaseCigar
   name: cigarette
   description: A roll of tobacco and nicotine.
   components:

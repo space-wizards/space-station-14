@@ -14,6 +14,7 @@ using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.MobState;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -256,7 +257,7 @@ namespace Content.Server.Body.Components
                 alertsComponent.ShowAlert(AlertType.LowOxygen);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, Damage, true);
         }
 
         public void StopSuffocation()
@@ -268,7 +269,7 @@ namespace Content.Server.Body.Components
                 alertsComponent.ClearAlert(AlertType.LowOxygen);
             }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery);
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, DamageRecovery, true);
         }
 
         public GasMixture Clean(BloodstreamComponent bloodstream)

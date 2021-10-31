@@ -38,12 +38,12 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var comp = IoCManager.Resolve<IComponentManager>();
+            var entMan = IoCManager.Resolve<IEntityManager>();
             var location = args[0];
             if (location == "?")
             {
                 var locations = string.Join(", ",
-                    comp.EntityQuery<WarpPointComponent>(true)
+                    entMan.EntityQuery<WarpPointComponent>(true)
                         .Select(p => p.Location)
                         .Where(p => p != null)
                         .OrderBy(p => p)
@@ -62,9 +62,8 @@ namespace Content.Server.Administration.Commands
                 var mapManager = IoCManager.Resolve<IMapManager>();
                 var currentMap = player.AttachedEntity.Transform.MapID;
                 var currentGrid = player.AttachedEntity.Transform.GridID;
-                var entityManager = IoCManager.Resolve<IEntityManager>();
 
-                var found = comp.EntityQuery<WarpPointComponent>(true)
+                var found = entMan.EntityQuery<WarpPointComponent>(true)
                     .Where(p => p.Location == location)
                     .Select(p => p.Owner.Transform.Coordinates)
                     .OrderBy(p => p, Comparer<EntityCoordinates>.Create((a, b) =>
@@ -72,8 +71,8 @@ namespace Content.Server.Administration.Commands
                         // Sort so that warp points on the same grid/map are first.
                         // So if you have two maps loaded with the same warp points,
                         // it will prefer the warp points on the map you're currently on.
-                        var aGrid = a.GetGridId(entityManager);
-                        var bGrid = b.GetGridId(entityManager);
+                        var aGrid = a.GetGridId(entMan);
+                        var bGrid = b.GetGridId(entMan);
 
                         if (aGrid == bGrid)
                         {
@@ -112,7 +111,7 @@ namespace Content.Server.Administration.Commands
                     }))
                     .FirstOrDefault();
 
-                if (found.GetGridId(entityManager) != GridId.Invalid)
+                if (found.GetGridId(entMan) != GridId.Invalid)
                 {
                     player.AttachedEntity.Transform.Coordinates = found;
                     if (player.AttachedEntity.TryGetComponent(out IPhysBody? physics))

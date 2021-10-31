@@ -1,16 +1,11 @@
-﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
-using Content.Server.Cabinet;
-using Content.Server.GameObjects.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Whitelist;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.IntegrationTests.Tests.Utility
 {
@@ -30,14 +25,16 @@ namespace Content.IntegrationTests.Tests.Utility
 - type: entity
   id: WhitelistDummy
   components:
-  - type: ItemCabinet
-    whitelist:
-      prototypes:
-      - ValidPrototypeDummy
-      components:
-      - {ValidComponent}
-      tags:
-      - ValidTag
+  - type: ItemSlots
+    slots:
+      slotName:
+        whitelist:
+          prototypes:
+          - ValidPrototypeDummy
+          components:
+          - {ValidComponent}
+          tags:
+          - ValidTag
 
 - type: entity
   id: InvalidComponentDummy
@@ -102,7 +99,7 @@ namespace Content.IntegrationTests.Tests.Utility
 
                 // Test from serialized
                 var dummy = entityManager.SpawnEntity("WhitelistDummy", mapCoordinates);
-                var whitelistSer = dummy.GetComponent<ItemCabinetComponent>().Whitelist;
+                var whitelistSer = dummy.GetComponent<SharedItemSlotsComponent>().Slots.Values.First().Whitelist;
                 Assert.That(whitelistSer, Is.Not.Null);
 
                 Assert.That(whitelistSer.Components, Is.Not.Null);

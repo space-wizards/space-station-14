@@ -4,3 +4,7 @@ ghost-gui-ghost-roles-button = Ghost Roles
 
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}
+
+ghost-roles-window-title = Ghost Roles
+ghost-roles-window-request-role-button = Request
+ghost-roles-window-no-roles-available-label = There are currently no available ghost roles.

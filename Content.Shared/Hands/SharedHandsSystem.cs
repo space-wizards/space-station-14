@@ -20,8 +20,15 @@ namespace Content.Shared.Hands
 
         public void DropHandItems(IEntity entity, bool doMobChecks = true)
         {
-            if (!entity.TryGetComponent(out SharedHandsComponent? handsComponent)) return;
-            DropHandItems(handsComponent, doMobChecks);
+            DropHandItems(entity.Uid, doMobChecks);
+        }
+
+        public void DropHandItems(EntityUid uid, bool doMobChecks = true, SharedHandsComponent? hands = null)
+        {
+            if (!Resolve(uid, ref hands))
+                return;
+
+            DropHandItems(hands, doMobChecks);
         }
 
         private void DropHandItems(SharedHandsComponent handsComponent, bool doMobChecks = true)
@@ -94,6 +101,22 @@ namespace Content.Shared.Hands
         public RequestSetHandEvent(string handName)
         {
             HandName = handName;
+        }
+    }
+
+    /// <summary>
+    ///     Raised directed on both the blocking entity and user when
+    ///     a virtual hand item is deleted.
+    /// </summary>
+    public class VirtualItemDeletedEvent : EntityEventArgs
+    {
+        public EntityUid BlockingEntity;
+        public EntityUid User;
+
+        public VirtualItemDeletedEvent(EntityUid blockingEntity, EntityUid user)
+        {
+            BlockingEntity = blockingEntity;
+            User = user;
         }
     }
 }

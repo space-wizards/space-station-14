@@ -156,10 +156,10 @@ namespace Content.Client.Items.UI
             if (_entity == null)
                 return;
 
-            if (_entity.TryGetComponent(out HandVirtualPullComponent? virtualPull)
-                && _entityManager.TryGetEntity(virtualPull.PulledEntity, out var pulledEnt))
+            if (_entity.TryGetComponent(out HandVirtualItemComponent? virtualItem)
+                && _entityManager.TryGetEntity(virtualItem.BlockingEntity, out var blockEnt))
             {
-                _itemNameLabel.Text = pulledEnt.Name;
+                _itemNameLabel.Text = blockEnt.Name;
             }
             else
             {

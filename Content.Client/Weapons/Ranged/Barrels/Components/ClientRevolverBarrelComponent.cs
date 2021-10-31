@@ -132,7 +132,7 @@ namespace Content.Client.Weapons.Ranged.Barrels.Components
                         {
                             Texture = texture,
                             TextureScale = (scale, scale),
-                            ModulateSelfOverride = Color.Green,
+                            ModulateSelfOverride = Color.LimeGreen,
                         });
                     }
                     Color color;
