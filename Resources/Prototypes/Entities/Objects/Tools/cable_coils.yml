@@ -37,7 +37,7 @@
     HeldPrefix: coilhv
   - type: CablePlacer
     cablePrototypeID: CableHV
-    blockingCableType: HighVoltage
+    blockingWireType: HighVoltage
   - type: Appearance
     visuals:
       - type: StackVisualizer
@@ -73,7 +73,7 @@
     HeldPrefix: coilmv
   - type: CablePlacer
     cablePrototypeID: CableMV
-    blockingCableType: MediumVoltage
+    blockingWireType: MediumVoltage
   - type: Appearance
     visuals:
       - type: StackVisualizer
@@ -108,7 +108,7 @@
     HeldPrefix: coillv
   - type: CablePlacer
     cablePrototypeID: CableApcExtension
-    blockingCableType: Apc
+    blockingWireType: Apc
   - type: Appearance
     visuals:
       - type: StackVisualizer

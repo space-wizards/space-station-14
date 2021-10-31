@@ -155,6 +155,10 @@ namespace Content.Server.Electrocution
                 }
             }
 
+            var siemens = electrified.SiemensCoefficient;
+            if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
+                return false; // If electrocution would fail, do nothing.
+
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);
             if (!electrified.RequirePower)

@@ -153,7 +153,7 @@ namespace Content.Server.Morgue.Components
             }
 
             var entityLookup = IoCManager.Resolve<IEntityLookup>();
-            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray))
+            foreach (var entity in entityLookup.GetEntitiesIntersecting(_tray, flags: LookupFlags.None))
             {
                 yield return entity;
             }

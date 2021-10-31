@@ -427,7 +427,7 @@ namespace Content.Server.Interaction
         /// </summary>
         public async Task<bool> InteractUsingRanged(IEntity user, IEntity used, IEntity? target, EntityCoordinates clickLocation, bool inRangeUnobstructed)
         {
-            if (await InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
+            if (InteractDoBefore(user, used, inRangeUnobstructed ? target : null, clickLocation, false))
                 return true;
 
             if (target != null)

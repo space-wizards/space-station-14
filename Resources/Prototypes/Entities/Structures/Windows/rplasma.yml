@@ -35,3 +35,11 @@
   - type: Construction
     graph: window
     node: reinforcedPlasmaWindow
+  - type: Appearance
+    visuals:
+    - type: DamageVisualizer
+      thresholds: [4, 8, 12]
+      damageDivisor: 36
+      trackAllDamage: true
+      damageOverlay:
+        sprite: Structures/Windows/cracks.rsi
