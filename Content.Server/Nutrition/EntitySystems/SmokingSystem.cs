@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Content.Server.Body.Circulatory;
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;

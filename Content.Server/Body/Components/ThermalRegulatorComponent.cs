@@ -1,8 +1,9 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Notification.Managers;
+using Content.Shared.Popups;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Localization;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -73,25 +74,26 @@ namespace Content.Server.Body.Components
 
         public void ProcessThermalRegulation(float frameTime)
         {
-            if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
-            temperatureComponent.ReceiveHeat(MetabolismHeat);
-            temperatureComponent.RemoveHeat(RadiatedHeat);
+            if (!Owner.TryGetComponent(out TemperatureComponent? temp)) return;
+            var tempsys = EntitySystem.Get<TemperatureSystem>();
+            tempsys.ReceiveHeat(Owner.Uid, MetabolismHeat, temp);
+            tempsys.RemoveHeat(Owner.Uid, RadiatedHeat, temp);
 
             // implicit heat regulation
-            var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
-            var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
-            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
+            var tempDiff = Math.Abs(temp.CurrentTemperature - NormalBodyTemperature);
+            var targetHeat = tempDiff * temp.HeatCapacity;
+            if (temp.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                tempsys.RemoveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temp);
             }
             else
             {
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                tempsys.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temp);
             }
 
             // recalc difference and target heat
-            tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
-            targetHeat = tempDiff * temperatureComponent.HeatCapacity;
+            tempDiff = Math.Abs(temp.CurrentTemperature - NormalBodyTemperature);
+            targetHeat = tempDiff * temp.HeatCapacity;
 
             // if body temperature is not within comfortable, thermal regulation
             // processes starts
@@ -109,7 +111,7 @@ namespace Content.Server.Body.Components
 
             var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
 
-            if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
+            if (temp.CurrentTemperature > NormalBodyTemperature)
             {
                 if (!actionBlocker.CanSweat(Owner)) return;
                 if (!IsSweating)
@@ -121,7 +123,7 @@ namespace Content.Server.Body.Components
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
+                    tempsys.RemoveHeat(Owner.Uid, Math.Min(targetHeat, SweatHeatRegulation), temp);
                 }
             }
             else
@@ -133,7 +135,7 @@ namespace Content.Server.Body.Components
                     IsShivering = true;
                 }
 
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
+                tempsys.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ShiveringHeatRegulation), temp);
             }
         }
     }

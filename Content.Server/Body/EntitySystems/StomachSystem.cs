@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Robust.Shared.GameObjects;
@@ -37,7 +37,7 @@ namespace Content.Server.Body.EntitySystems
         /// </param>
         public override void Update(float frameTime)
         {
-            foreach(var stom in ComponentManager.EntityQuery<StomachComponent>())
+            foreach(var stom in EntityManager.EntityQuery<StomachComponent>())
             {
                 stom.AccumulatedFrameTime += frameTime;
 
