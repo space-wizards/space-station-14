@@ -137,6 +137,13 @@
   price: 25
   icon: /Textures/Objects/Weapons/Guns/Launchers/china_lake.rsi/icon.png
 
+- type: uplinkListing
+  id: UplinkCarbineBundle
+  category: Bundles
+  itemId: ClothingBackpackDuffelSyndicateFilledCarbine
+  price: 35
+  icon: /Textures/Objects/Weapons/Guns/Launchers/carbine.rsi/icon.png
+
 # Tools
 
 - type: uplinkListing
