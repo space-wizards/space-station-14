@@ -137,21 +137,27 @@ namespace Content.Server.Storage.Components
                 return false;
             }
 
+            // Item is not in whitelist & there is no max item size.
             if (_whitelist != null && !_whitelist.IsValid(entity) && (_storageMaxItemSize == null))
             {
                 return false;
             }
 
-            if (store?.Size > _storageMaxItemSize)
+            // Item is above max item size
+            if (_storageMaxItemSize != null && store?.Size > _storageMaxItemSize)
             {
-                return false;
+                // Item is not whitelisted or there isn't a whitelist.
+                if (_whitelist == null || (_whitelist != null && !_whitelist.IsValid(entity)))
+                {
+                    return false;
+                }
             }
 
             if (entity.Transform.Anchored)
             {
                 return false;
             }
-            
+
             return true;
         }
 
