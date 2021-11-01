@@ -4,9 +4,12 @@ using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
+using Content.Shared.Interaction;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -27,6 +30,7 @@ namespace Content.Server.Atmos.Monitor.Systems
     {
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
+        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
@@ -148,10 +152,42 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
-            // SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetThresholdEvent>(OnSetThreshold);
-            // SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmSetModeEvent>(OnSetMode);
-            // SubscribeLocalEvent<AirAlarmDataComponent, AirAlarmDeviceDataUpdateEvent>(OnDeviceDataUpdate);
+            SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
+            SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
+            SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+            SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
+            SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
         }
+
+        private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
+        {
+            component.ActivePlayers.Remove(args.Session.UserId);
+            if (component.ActivePlayers.Count == 0)
+                RemoveActiveInterface(uid);
+        }
+
+        private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            component.Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
+            component.ActivePlayers.Add(actor.PlayerSession.UserId);
+            AddActiveInterface(uid);
+            SendAlarmMode(uid);
+            SendThresholds(uid);
+            SyncAllDevices(uid);
+            SendAirData(uid);
+        }
+
+        private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args) =>
+            SetMode(uid, args.Mode);
+
+        private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args) =>
+            SetThreshold(uid, args.Threshold, args.Type, args.Gas);
+
+        private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args) =>
+            SetDeviceData(uid, args.Address, args.Data);
 
         // tempted to make air alarm modes just broadcast packets that the
         // scrubbers/filters themselves process, instead of
@@ -179,7 +215,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnAtmosAlarm(EntityUid uid, AirAlarmComponent component, AtmosMonitorAlarmEvent args)
         {
-            if (component.HasPlayers())
+            if (component.ActivePlayers.Count != 0)
             {
                 SyncAllDevices(uid);
                 SendAirData(uid);
@@ -220,7 +256,7 @@ namespace Content.Server.Atmos.Monitor.Systems
 
             _atmosMonitorSystem.SetThreshold(uid, type, threshold, gas);
 
-            controller.SendMessage(new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
+            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
 
             /*
             switch (type)
@@ -249,7 +285,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             if (!Resolve(uid, ref controller)) return;
             controller.CurrentMode = mode;
-            controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
+            // controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
+            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(mode));
 
             if (!noSync) SyncMode(uid, mode);
             /*
@@ -319,7 +356,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     controller.UpdateUI();
                     */
 
-                    controller.SendMessage(new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
+                    _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
 
                     return;
                 case AirAlarmSetDataStatus:
@@ -384,7 +421,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 data.Dirty();
                 */
 
-                alarm.SendMessage(new AirAlarmUpdateAirDataMessage(airData));
+                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAirDataMessage(airData));
             }
 
             // alarm.UpdateUI();
@@ -395,7 +432,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!Resolve(uid, ref monitor, ref power, ref controller)
                 || !power.Powered) return;
 
-            controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(controller.CurrentMode));
+            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(controller.CurrentMode));
 
             // _airAlarmDataSystem.UpdateAlarmMode(uid, data.CurrentMode);
             // data.DirtyMode = true;
@@ -417,12 +454,12 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.PressureThreshold, AtmosMonitorThresholdType.Pressure);
                 // data.PressureThreshold = monitor.PressureThreshold;
                 // data.DirtyThresholds.Add(AtmosMonitorThresholdType.Pressure);
-                controller.SendMessage(new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Pressure, monitor.PressureThreshold));
+                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Pressure, monitor.PressureThreshold));
             }
 
             if (monitor.TemperatureThreshold != null)
             {
-                controller.SendMessage(new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Temperature, monitor.TemperatureThreshold));
+                _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Temperature, monitor.TemperatureThreshold));
                 // _airAlarmDataSystem.UpdateAlarmThreshold(uid, monitor.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
                 // data.TemperatureThreshold = monitor.TemperatureThreshold;
                 // data.DirtyThresholds.Add(AtmosMonitorThresholdType.Temperature);
@@ -432,7 +469,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 // data.DirtyThresholds.Add(AtmosMonitorThresholdType.Gas);
                 foreach (var (gas, threshold) in monitor.GasThresholds)
-                    controller.SendMessage(new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Gas, threshold, gas));
+                    _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmThresholdMessage(AtmosMonitorThresholdType.Gas, threshold, gas));
                     // _airAlarmDataSystem.UpdateAlarmThreshold(uid, threshold, AtmosMonitorThresholdType.Gas, gas);
                     // data.GasThresholds[gas] = threshold;
             }

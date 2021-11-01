@@ -79,9 +79,13 @@ namespace Content.Server.Doors.Systems
             component.LastAlarmState = args.HighestNetworkType;
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
-                component.DoorComponent.Open();
+                if (component.DoorComponent.State != SharedDoorComponent.DoorState.Open
+                    || component.DoorComponent.State != SharedDoorComponent.DoorState.Opening)
+                    component.DoorComponent.Open();
             else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
-                component.EmergencyPressureStop();
+                if (component.DoorComponent.State != SharedDoorComponent.DoorState.Closed
+                    || component.DoorComponent.State != SharedDoorComponent.DoorState.Closing)
+                    component.EmergencyPressureStop();
         }
     }
 }
