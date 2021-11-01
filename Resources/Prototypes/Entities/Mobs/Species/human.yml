@@ -62,6 +62,17 @@
     solution: bloodstream
   - type: Bloodstream
     max_volume: 100
+    needsGases:
+      Nitrogen: 0.00060763888
+    producesGases:
+      Nitrogen: 0.00045572916
+      CarbonDioxide: 0.00015190972
+    damage:
+      types:
+        Asphyxiation: 1
+    damageRecovery:
+      types:
+        Asphyxiation: -1
   - type: StatusEffects
     allowed:
     - Stun
