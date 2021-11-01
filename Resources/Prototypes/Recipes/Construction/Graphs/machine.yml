@@ -87,3 +87,10 @@
           steps:
             - tool: Prying
               doAfter: 0.25
+              completed:
+                # Empty these containers because if this isn't done, the entities inside are deleted.
+                - !type:EmptyContainer
+                  container: ChemMaster-reagentContainerContainer
+                - !type:EmptyContainer
+                  container: ReagentDispenser-reagentContainerContainer
+
