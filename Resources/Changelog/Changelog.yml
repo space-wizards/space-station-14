@@ -1,11 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Added rules, type: Add}
-  - {message: Added admeen aboose, type: Add}
-  - {message: Removed fun, type: Remove}
-  id: 23
-  time: '2021-03-03T06:56:52.0000000+00:00'
 - author: PJB
   changes:
   - {message: You can burn yourself on wall lights again., type: Fix}
@@ -2804,3 +2797,9 @@ Entries:
   - {message: RougePointingArrow will no longer attack ghosts, type: Fix}
   id: 522
   time: '2021-10-31T14:03:32.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Added additional flavor text to consoles, type: Add}
+  - {message: Replaced placeholder piloting alert icon, type: Tweak}
+  id: 523
+  time: '2021-11-01T13:26:37.0000000+00:00'
