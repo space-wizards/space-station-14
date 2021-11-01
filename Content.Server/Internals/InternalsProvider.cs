@@ -1,26 +1,15 @@
-using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Content.Shared.Hands.Components;
-using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.IoC;
-using Content.Shared.Interaction.Helpers;
+using Robust.Shared.Log;
 using Content.Shared.ActionBlocker;
-using Content.Server.Stack;
-using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using System.Threading.Tasks;
-using Content.Shared.Item;
-using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Localization;
 using Content.Server.Body.Respiratory;
+using Content.Shared.Actions;
+using Content.Shared.Actions.Components;
 
 namespace Content.Server.Internals
 {
@@ -33,87 +22,94 @@ namespace Content.Server.Internals
 
             SubscribeLocalEvent<InternalsProviderComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<InternalsProviderComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<InternalsProviderComponent, EntInsertedIntoContainerMessage>(OnContainerInserted);
+            SubscribeLocalEvent<InternalsProviderComponent, EntRemovedFromContainerMessage>(OnContainerRemoved);
             SubscribeLocalEvent<InternalsProviderComponent, ToggleInternalsEvent>(OnToggleInternals);
         }
 
         public void OnShutdown(EntityUid uid, InternalsProviderComponent component, ComponentShutdown args)
-        {
-            DisconnectFromInternals(uid, component);
-        }
+            => DisconnectFromInternals(uid, component);
 
         public void OnExamined(EntityUid uid, InternalsProviderComponent component, ExaminedEvent args)
         {
             if (component.Connected) {
                 if (!args.IsInDetailsRange)
                     return;
-                args.PushText("");
-                args.PushMarkup(Loc.GetString("comp-gas-tank-connected", ("connectedTo", GetConnectedTo(component)?.Name ?? "ERROR-NULL-ENTITY")));
+                args.PushMarkup(Loc.GetString(
+                    "comp-gas-tank-connected",
+                    ("connectedTo", component.ConnectedTo?.Name ?? "ERROR-NULL-ENTITY")
+                ));
             }
         }
 
         public void OnSuitExamined(EntityUid uid, InternalsSuitComponent suit, InternalsProviderComponent component, ExaminedEvent args)
         {
             if (component.Connected) {
-                args.PushText("");
                 args.PushMarkup(Loc.GetString(
                     "comp-gas-tank-inside-connected",
                     ("name", component.Owner.Name),
-                    ("connectedTo", GetConnectedTo(component)?.Name ?? "ERROR-NULL-ENTITY")
+                    ("connectedTo", component.ConnectedTo?.Name ?? "ERROR-NULL-ENTITY")
                 ));
             }
         }
 
         public void OnDropped(EntityUid uid, InternalsProviderComponent component, DroppedEvent args)
-        {
-            DisconnectFromInternals(uid, component);
-        }
+            => DisconnectFromInternals(uid, component);
+
+        public void OnContainerInserted(EntityUid uid, InternalsProviderComponent component, EntInsertedIntoContainerMessage args)
+            => DisconnectFromInternals(uid, component);
+
+        public void OnContainerRemoved(EntityUid uid, InternalsProviderComponent component, EntRemovedFromContainerMessage args)
+            => DisconnectFromInternals(uid, component);
 
         public void OnToggleInternals(EntityUid uid, InternalsProviderComponent component, ToggleInternalsEvent args)
         {
-            ToggleInternals(uid, component, args);
-        }
+            if (args.BypassCheck == false)
+            {
+                var user = GetInternalsComponent(component)?.Owner; // Todo: grab from event
+                if (user == null || !Get<ActionBlockerSystem>().CanUse(user))
+                    return;
+            }
 
-        public bool ToggleInternals(EntityUid uid, InternalsProviderComponent component, ToggleInternalsEvent args) {
+            Logger.DebugS("internals", $"Trying to set internals @{uid} to \"{args.ForcedState ?? !component.Connected}\" - {(args.ForcedState != null ? "Forced ": "")}{(args.BypassCheck ? "Bypassed!" : "")}");
 
-            var user = GetInternalsComponent(component)?.Owner;
-
-            if (user == null || !Get<ActionBlockerSystem>().CanUse(user))
-                return false;
-
+            var wasConnected = component.Connected;
             if (args.ForcedState == true || (args.ForcedState == null && !component.Connected))
-            {
                 ConnectToInternals(uid, component);
-                return component.Connected;
-            }
             else if (args.ForcedState == false || (args.ForcedState == null && component.Connected))
-            {
                 DisconnectFromInternals(uid, component);
-                return !component.Connected;
-            }
-            return false;
+
+            args.Handled = wasConnected != component.Connected || component.Connected == args.ForcedState;
+
+            if (args.Actions is not null)
+                args.Actions.GrantOrUpdate(ItemActionType.ToggleInternals, GetInternalsComponent(component) != null, component.Connected);
+
+            if (args.BypassCheck && !args.Handled)
+                Logger.ErrorS("internals", $"Internals @{uid} state change failed to change to \"{args.ForcedState}\" despite being forced to bypass a usability check");
         }
 
         public void ConnectToInternals(EntityUid uid, InternalsProviderComponent component)
         {
-            if (component.Connected || !IsFunctional(component)) return;
-            var internals = GetInternalsComponent(component);
+            if (component.Connected) return;
 
-            if (internals == null) return;
-            component.Connected = internals.TryConnectTank(component.Owner);
+            var internals = GetInternalsComponent(component);
+            if (internals?.TryConnectTank(component.Owner) ?? false)
+                component.Internals = internals;
         }
 
         public void DisconnectFromInternals(EntityUid uid, InternalsProviderComponent component)
         {
             if (!component.Connected) return;
-            component.Connected = false;
-            GetInternalsComponent(component)?.DisconnectTank();
-        }
 
-        private IEntity? GetConnectedTo(InternalsProviderComponent component)
-        {
-            var internals = GetInternalsComponent(component);
+            Logger.DebugS("internals", $"Disconnecting internals @{uid} from {component.Internals!.Owner.Name}");
 
-            return internals?.BreathToolEntity;
+            var internals = component.Internals!;
+            component.Internals = null;
+            internals.DisconnectTank(true);
+
+            ItemActionsComponent? actions = null;
+            if (Resolve(uid, ref actions))
+                actions.GrantOrUpdate(ItemActionType.ToggleInternals, GetInternalsComponent(component) != null, component.Connected);
         }
 
         private InternalsComponent? GetInternalsComponent(InternalsProviderComponent component)
@@ -133,11 +129,6 @@ namespace Content.Server.Internals
 
             return null;
         }
-
-        private bool IsFunctional(InternalsProviderComponent component)
-        {
-            return GetInternalsComponent(component) != null;
-        }
     }
 
     [RegisterComponent]
@@ -149,6 +140,12 @@ namespace Content.Server.Internals
         ///     Tank is connected to internals.
         /// </summary>
         [ViewVariables]
-        public bool Connected { get; set; }
+        public bool Connected { get => Internals is not null; }
+
+        [ViewVariables]
+        public IEntity? ConnectedTo { get => Internals?.BreathToolEntity; }
+
+        [ViewVariables]
+        public InternalsComponent? Internals { get; set; }
     }
 }

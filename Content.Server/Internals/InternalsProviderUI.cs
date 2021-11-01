@@ -89,7 +89,6 @@ namespace Content.Server.Internals
 
             if (internals == null) return;*/
             var actions = component.Owner.GetComponentOrNull<ItemActionsComponent>();
-            actions?.GrantOrUpdate(ItemActionType.ToggleInternals, true, provider.Connected);
         }
 
         private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)

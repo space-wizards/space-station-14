@@ -34,14 +34,15 @@ namespace Content.Server.Body.Respiratory
             BreathToolEntity = toolEntity;
         }
 
-        public void DisconnectTank()
+        public void DisconnectTank(bool handled = false)
         {
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out InternalsProviderComponent? provider))
-            {
-                provider.Owner.EntityManager.EventBus.RaiseLocalEvent(provider.Owner.Uid, new ToggleInternalsEvent(false));
-            }
+            if (GasTankEntity == null)
+                return;
 
+            var entity = GasTankEntity;
             GasTankEntity = null;
+            if (!handled)
+                entity.EntityManager.EventBus.RaiseLocalEvent(entity.Uid, new ToggleInternalsEvent(false, true));
         }
 
         public bool TryConnectTank(IEntity tankEntity)
@@ -49,10 +50,7 @@ namespace Content.Server.Body.Respiratory
             if (BreathToolEntity == null)
                 return false;
 
-            if (GasTankEntity != null && GasTankEntity.TryGetComponent(out InternalsProviderComponent? provider))
-            {
-                provider.Owner.EntityManager.EventBus.RaiseLocalEvent(provider.Owner.Uid, new ToggleInternalsEvent(false));
-            }
+            DisconnectTank();
 
             GasTankEntity = tankEntity;
             return true;

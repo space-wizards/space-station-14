@@ -1,4 +1,3 @@
-using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
@@ -6,18 +5,9 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Content.Shared.Hands.Components;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
-using Robust.Shared.IoC;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.ActionBlocker;
-using Content.Server.Stack;
 using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using System.Threading.Tasks;
 using Content.Shared.Item;
-using Robust.Shared.Map;
+using Content.Shared.Actions.Components;
 
 namespace Content.Server.Internals
 {
@@ -29,9 +19,47 @@ namespace Content.Server.Internals
             base.Initialize();
 
             SubscribeLocalEvent<InternalsSuitComponent, ComponentStartup>(OnStartup);
-            SubscribeLocalEvent<InternalsSuitComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<InternalsSuitComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<InternalsSuitComponent, ComponentShutdown>(OnShutdown);
+            SubscribeLocalEvent<InternalsSuitComponent, DroppedEvent>(OnDropped);
+            SubscribeLocalEvent<InternalsSuitComponent, EntInsertedIntoContainerMessage>(OnContainerInserted);
+            SubscribeLocalEvent<InternalsSuitComponent, EntRemovedFromContainerMessage>(OnContainerRemoved);
             SubscribeLocalEvent<InternalsSuitComponent, ToggleInternalsEvent>(OnToggleInternals);
+
+            SubscribeLocalEvent<InternalsSuitComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<InternalsSuitComponent, InteractUsingEvent>(OnInteractUsing);
+        }
+
+        private ItemActionsComponent? GetActions(EntityUid uid)
+        {
+            ItemActionsComponent? actions = null;
+            Resolve(uid, ref actions);
+            return actions;
+        }
+
+        private void OnStartup(EntityUid uid, InternalsSuitComponent component, ComponentStartup args)
+        {
+            component.GasTankContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(component.Owner, $"{component.Name}-gasTank");
+        }
+
+        private void OnShutdown(EntityUid uid, InternalsSuitComponent component, ComponentShutdown args)
+            => SendToggleEvent(uid, component, new ToggleInternalsEvent(false, true, GetActions(uid)));
+
+        public void OnDropped(EntityUid uid, InternalsSuitComponent component, DroppedEvent args)
+            => SendToggleEvent(uid, component, new ToggleInternalsEvent(false, true, GetActions(uid)));
+
+        public void OnContainerInserted(EntityUid uid, InternalsSuitComponent component, EntInsertedIntoContainerMessage args)
+            => SendToggleEvent(uid, component, new ToggleInternalsEvent(false, true, GetActions(uid)));
+
+        public void OnContainerRemoved(EntityUid uid, InternalsSuitComponent component, EntRemovedFromContainerMessage args)
+            => SendToggleEvent(uid, component, new ToggleInternalsEvent(false, true, GetActions(uid)));
+
+        public void OnToggleInternals(EntityUid uid, InternalsSuitComponent component, ToggleInternalsEvent args)
+            => SendToggleEvent(uid, component, args);
+
+        public void SendToggleEvent(EntityUid uid, InternalsSuitComponent component, ToggleInternalsEvent args)
+        {
+            if (component.GasTankPresent)
+                RaiseLocalEvent(component.GasTankContainer.ContainedEntity!.Uid, args);
         }
 
         private void OnExamined(EntityUid uid, InternalsSuitComponent component, ExaminedEvent args)
@@ -43,16 +71,13 @@ namespace Content.Server.Internals
             var color = component.GasTankPresent ? "green" : "red";
             var sign = component.GasTankPresent ? "." : "!";
             args.PushMarkup($"It is capable of holding an air tank which is currently [color={color}]{(component.GasTankPresent ? "attached" : "missing")}[/color]{sign}");
+
+            // TODO: add a pressure gauge / approximate one?
             if (
                 component.GasTankPresent
                 && component.GasTankContainer.ContainedEntity!.TryGetComponent(out InternalsProviderComponent? provider)
             )
                 Get<InternalsProviderSystem>().OnSuitExamined(uid, component, provider, args);
-        }
-
-        private void OnStartup(EntityUid uid, InternalsSuitComponent component, ComponentStartup args)
-        {
-            component.GasTankContainer = ContainerHelpers.EnsureContainer<ContainerSlot>(component.Owner, $"{component.Name}-gasTank");
         }
 
         private async void OnInteractUsing(EntityUid uid, InternalsSuitComponent component, InteractUsingEvent args)
@@ -81,28 +106,11 @@ namespace Content.Server.Internals
                 }
                 var entity = component.GasTankContainer.ContainedEntity!;
                 if (component.GasTankContainer.Remove(entity!))
-                {
-                    if (entity.TryGetComponent(out InternalsProviderComponent? provider))
-                        Get<InternalsProviderSystem>().DisconnectFromInternals(entity.Uid, provider);
-
                     if (entity.TryGetComponent(out SharedItemComponent? item))
                         hands.PutInHand(item);
-                }
             }
             else
                 component.Owner.PopupMessage(user, "Not a gas tank!");
-        }
-
-        public void OnToggleInternals(EntityUid uid, InternalsSuitComponent component, ToggleInternalsEvent args)
-        {
-            ToggleInternals(uid, component, args);
-        }
-
-        public bool ToggleInternals(EntityUid uid, InternalsSuitComponent component, ToggleInternalsEvent args)
-        {
-            return component.GasTankPresent
-                && component.GasTankContainer.ContainedEntity!.TryGetComponent(out InternalsProviderComponent? provider)
-                && Get<InternalsProviderSystem>().ToggleInternals(provider.Owner.Uid, provider!, args);
         }
     }
 

@@ -15,13 +15,10 @@ namespace Content.Server.Actions.Actions
     {
         public bool DoToggleAction(ToggleItemActionEventArgs args)
         {
-            if (args.Item.TryGetComponent(out InternalsProviderComponent? provider))
-                return EntitySystem.Get<InternalsProviderSystem>().ToggleInternals(args.Item.Uid, provider!, new ToggleInternalsEvent(args.ToggledOn));
+            var toggleEvent = new ToggleInternalsEvent(args.ToggledOn, false, args.ItemActions);
+            args.Item.EntityManager.EventBus.RaiseLocalEvent(args.Item.Uid, toggleEvent);
 
-            if (args.Item.TryGetComponent(out InternalsSuitComponent? suit))
-                return EntitySystem.Get<InternalsSuitSystem>().ToggleInternals(args.Item.Uid, suit!, new ToggleInternalsEvent(args.ToggledOn));
-
-            return false;
+            return toggleEvent.Handled;
         }
     }
 }
