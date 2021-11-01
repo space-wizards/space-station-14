@@ -12,6 +12,14 @@ namespace Content.Server.Temperature.Components
 
         public int GetHeatResistance()
         {
+            // TODO: When making into system: Any animal that touches bulb that has no
+            // InventoryComponent but still would have default heat resistance in the future (maybe)
+            if (!Owner.TryGetComponent<InventoryComponent>(out var inventoryComp))
+            {
+                // Magical number just copied from below
+                return int.MinValue;
+            }
+
             if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ClothingComponent? gloves))
             {
                 return gloves?.HeatResistance ?? int.MinValue;
