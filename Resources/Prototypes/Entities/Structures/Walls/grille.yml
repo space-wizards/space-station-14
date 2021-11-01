@@ -48,7 +48,6 @@
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           layer:
-            - Opaque
             - Impassable
             - MobImpassable
             - VaultImpassable

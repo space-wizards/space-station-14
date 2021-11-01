@@ -1,137 +1,6 @@
 Entries:
 - author: PJB
   changes:
-  - {message: Added a changelog. You're reading it right now!, type: Add}
-  id: 1
-  time: '2021-02-25T08:50:45.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: Added new first aid kits with fancy new sprites., type: Add}
-  id: 2
-  time: '2021-02-25T10:46:21.0000000+00:00'
-- author: tmtmtl30
-  changes:
-  - {message: Constructed walls don't have broken lighting anymore, type: Fix}
-  id: 3
-  time: '2021-02-25T10:52:26.0000000+00:00'
-- author: AJCM
-  changes:
-  - {message: Can now cook banana cream pies, type: Add}
-  id: 4
-  time: '2021-02-25T11:45:11.0000000+00:00'
-- author: Peptide90
-  changes:
-  - {message: APC Construction fixed and will not align to walls correctly., type: Fix}
-  id: 5
-  time: '2021-02-25T15:10:54.0000000+00:00'
-- author: Macoron
-  changes:
-  - {message: Ghosts can flick lights and spook living, type: Add}
-  id: 6
-  time: '2021-02-26T01:31:06.0000000+00:00'
-- author: daniel-cr
-  changes:
-  - {message: Adjusted a margin in the new context menu., type: Tweak}
-  id: 7
-  time: '2021-02-26T04:59:10.0000000+00:00'
-- author: AJCM
-  changes:
-  - {message: Makes gravity generator and windows repairable with a lit welding tool,
-    type: Add}
-  id: 8
-  time: '2021-02-27T14:30:48.420921+00:00'
-- author: AJCM
-  changes:
-  - {message: Fixes the changelog escape menu button text going out of the limits
-      of the button when there is an update., type: Fix}
-  id: 9
-  time: '2021-02-27T17:33:32.0000000+00:00'
-- author: ike709
-  changes:
-  - {message: 'Added a basic implementation of livers. They handle reagent metabolization
-      now, but aren''t damaged by alcohol or toxins yet.', type: Add}
-  id: 10
-  time: '2021-02-28T01:58:09.0000000+00:00'
-- author: Ygg01
-  changes:
-  - {message: Stack visualizer no longer affected by open/close state by default.,
-    type: Fix}
-  id: 11
-  time: '2021-02-28T11:02:08.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Small physics refactor, type: Add}
-  id: 12
-  time: '2021-02-28T16:11:29.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: Patrons can now flex on poor people to get a cool colored name in OOC.,
-    type: Add}
-  - {message: 'To link your account, go to central.spacestation14.io and find the
-      "Patreon" section in your account settings.', type: Add}
-  id: 13
-  time: '2021-02-28T18:00:33.108215+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: material crates for cargo, type: Add}
-  - {message: singularity crates for cargo, type: Add}
-  id: 14
-  time: '2021-02-28T19:57:44.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: 'Restart votes now need an 80% majority to succeed, and have a longer
-      cooldown for the caller.', type: Tweak}
-  id: 15
-  time: '2021-02-28T21:13:03.652572+00:00'
-- author: Swept
-  changes:
-  - {message: Added Particle Accelerator crate to cargo, type: Add}
-  - {message: Added circuit-boards for the Particle Accelerator parts, type: Add}
-  id: 16
-  time: '2021-03-01T20:53:17.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Cargo crates stop spawning underneath the teleporter., type: Fix}
-  id: 17
-  time: '2021-03-01T20:54:06.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Material crates ordered from cargo are now fixed., type: Fix}
-  - {message: Singularity parts have their physics again., type: Fix}
-  - {message: 'Singularity crates contain one part, but cost less.', type: Tweak}
-  id: 18
-  time: '2021-03-01T20:55:34.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Added cable crates to cargo console, type: Add}
-  id: 19
-  time: '2021-03-01T20:56:14.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Starting cargo balance is now 1000 instead of 100000, type: Tweak}
-  - {message: Cargo passive point income doubled, type: Tweak}
-  id: 20
-  time: '2021-03-01T20:56:39.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Can place lattice and underplating again, type: Add}
-  - {message: Glass floors, type: Add}
-  id: 21
-  time: '2021-03-01T20:57:04.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
-  id: 22
-  time: '2021-03-02T02:31:38.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Added rules, type: Add}
-  - {message: Added admeen aboose, type: Add}
-  - {message: Removed fun, type: Remove}
-  id: 23
-  time: '2021-03-03T06:56:52.0000000+00:00'
-- author: PJB
-  changes:
   - {message: You can burn yourself on wall lights again., type: Fix}
   id: 24
   time: '2021-03-03T15:30:18.279719+00:00'
@@ -2803,3 +2672,134 @@ Entries:
       or just a lot of roundstart engineers, type: Add}
   id: 500
   time: '2021-10-27T15:44:31.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Fix light replacer interaction with wall lights, type: Fix}
+  id: 501
+  time: '2021-10-28T02:36:09.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Updated context menu UI, type: Tweak}
+  id: 502
+  time: '2021-10-28T05:21:19.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix rare construction bug where some interactions would be incorrect.,
+    type: Fix}
+  id: 503
+  time: '2021-10-28T09:23:03.038084+00:00'
+- author: Zumorica
+  changes:
+  - {message: 'Fix being able to build machines for free by taking the board out,
+      putting it in again and screwing.', type: Fix}
+  id: 504
+  time: '2021-10-28T09:23:03.038979+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed not being angle to anchor emitters., type: Fix}
+  id: 505
+  time: '2021-10-28T11:29:19.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixes in-hand sprites not properly updating., type: Fix}
+  id: 506
+  time: '2021-10-28T12:34:59.0000000+00:00'
+- author: Zumorica
+  changes:
+  - {message: Fix not being able to build windows on top of grilles., type: Fix}
+  id: 507
+  time: '2021-10-28T17:03:11.646371+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fix lasers not passing through grilles., type: Fix}
+  id: 508
+  time: '2021-10-29T05:26:45.714056+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fix certain windoors not autoclosing., type: Fix}
+  id: 509
+  time: '2021-10-29T05:39:44.812307+00:00'
+- author: vulppine
+  changes:
+  - {message: 'NanoTrasen has cut the budget on maintaining how pretty things look
+      on our stations. You may notice things around you slowly become more decrepit
+      over time, for example, skin.', type: Add}
+  id: 510
+  time: '2021-10-29T08:04:25.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Disposals works properly under station rotation, type: Fix}
+  id: 511
+  time: '2021-10-29T08:07:32.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: 'Add withdraw button and preview icons in Uplink UI,', type: Add}
+  id: 512
+  time: '2021-10-29T09:40:47.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Gave Centcomm more varied and precise battery drainage-related tooling.,
+    type: Add}
+  id: 513
+  time: '2021-10-29T09:49:52.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Make warning for if FluidSynth is not installed more informative, type: Tweak}
+  id: 514
+  time: '2021-10-29T10:20:50.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'If holding a multitool, examining cables reads various power statistics.',
+    type: Add}
+  id: 515
+  time: '2021-10-29T12:42:18.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: Tweaked the Reagent Window to not have the weird cutoff like before.,
+    type: Tweak}
+  id: 516
+  time: '2021-10-29T12:48:02.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Ghosts can no longer use uplinks, type: Fix}
+  id: 517
+  time: '2021-10-29T16:37:34.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: The ban message now actually tells you which one of your deeds got you
+      banned, type: Add}
+  id: 518
+  time: '2021-10-29T18:54:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'can no longer place multiple wires of the same type on one spot, HV
+      no longer blocks other wires.', type: Fix}
+  id: 519
+  time: '2021-10-30T23:08:48.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
+      under the field...', type: Add}
+  id: 520
+  time: '2021-10-31T13:39:37.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
+  - {message: Fixed some bottles in booze-o-mat and admin spawn panel being empty,
+    type: Fix}
+  - {message: Added various new reagents for bartending and added them to dispensers
+      and vending machines, type: Add}
+  - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
+  id: 521
+  time: '2021-10-31T13:57:06.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: RougePointingArrow will no longer attack ghosts, type: Fix}
+  id: 522
+  time: '2021-10-31T14:03:32.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Added additional flavor text to consoles, type: Add}
+  - {message: Replaced placeholder piloting alert icon, type: Tweak}
+  id: 523
+  time: '2021-11-01T13:26:37.0000000+00:00'

@@ -114,6 +114,7 @@ namespace Content.Server.Doors.Components
         public float AutoCloseDelayModifier = 1.0f;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("safety")]
         public bool Safety = true;
 
         protected override void Initialize()

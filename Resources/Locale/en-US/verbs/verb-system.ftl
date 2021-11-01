@@ -1,5 +1,4 @@
 verb-system-waiting-on-server-text = Waiting on Server...
-verb-system-no-verbs-text = No verbs!
 verb-system-null-server-response = Entity not in view. You should not see this.
 
 
@@ -10,15 +9,17 @@ verb-self-target-pronoun = Yourself
 
 # verb categories & common verbs. These appear across multiple systems, so they may as well go here.
 
-verb-toggle-light = Toggle light
-
 verb-categories-debug = Debug
 verb-categories-eject = Eject
 verb-categories-insert = Insert
 verb-categories-buckle = Buckle
 verb-categories-unbuckle = Unbuckle
-verb-categories-close = Close
-verb-categories-open = Open
 verb-categories-rotate = Rotate
 verb-categories-transfer = Set Transfer Amount
 verb-categories-split = Split
+
+verb-common-toggle-light = Toggle light
+verb-common-close = Close
+verb-common-open = Open
+verb-common-close-ui = Close UI
+verb-common-open-ui = Open UI

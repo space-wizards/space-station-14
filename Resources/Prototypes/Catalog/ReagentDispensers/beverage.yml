@@ -1,23 +1,53 @@
 - type: reagentDispenserInventory
   id: SodaDispenserInventory
   inventory:
-  - Coffee
-  - Cola
-  - Cream
-  - Ice
-  - Tea
+
   - Water
-  - ThirteenLoko
+  - Ice
+  - Coffee
+  - Cream
+  - Tea
+  - GreenTea
+  - IcedTea
+  - IcedGreenTea
+  - Cola
+  - SpaceMountainWind
+  - DrGibb
+  - SpaceUp
+  - TonicWater
+  - SodaWater
+  - LemonLime
+  - Sugar
+  - JuiceOrange
+  - JuiceLime
+  - JuiceWatermelon
+  ###Hacked
+  #- Fourteen Loko
+  #- GrapeSoda
 
 - type: reagentDispenserInventory
   id: BoozeDispenserInventory
   inventory:
-  - Ale
+  - LemonLime
+  - Sugar
+  - JuiceOrange
+  - JuiceLime
+  - SodaWater
+  - TonicWater
   - Beer
-  - Cognac
-  - Ice
   - Kahlua
-  - Rum
-  - Vodka
   - Whiskey
   - Wine
+  - Vodka
+  - Gin
+  - Rum
+  - Tequila
+  - Vermouth
+  - Cognac
+  - Ale
+  - Mead
+  ###Hacked
+  #- Goldschlager
+  #- Patron
+  #- JuiceWatermelon
+  #- JuiceBerry

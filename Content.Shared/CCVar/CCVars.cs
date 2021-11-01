@@ -404,9 +404,9 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
-         * Context Menu Grouping Types
+         * Entity Menu Grouping Types
          */
-        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+        public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
 
         /*
          * VOTE

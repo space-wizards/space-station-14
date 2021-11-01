@@ -64,12 +64,12 @@ namespace Content.Server.Cabinet
             toggleVerb.Act = () => ToggleItemCabinet(uid, cabinet);
             if (cabinet.Opened)
             {
-                toggleVerb.Text = Loc.GetString("verb-categories-close");
+                toggleVerb.Text = Loc.GetString("verb-common-close");
                 toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/close.svg.192dpi.png";
             }
             else
             {
-                toggleVerb.Text = Loc.GetString("verb-categories-open");
+                toggleVerb.Text = Loc.GetString("verb-common-open");
                 toggleVerb.IconTexture = "/Textures/Interface/VerbIcons/open.svg.192dpi.png";
             }
             args.Verbs.Add(toggleVerb);

@@ -54,7 +54,13 @@ namespace Content.Server.Construction
             // If we're currently in an edge, we'll let the edge handle or validate the interaction.
             if (GetCurrentEdge(uid, construction) is {} edge)
             {
-                return HandleEdge(uid, ev, edge, validation, construction);
+                var result = HandleEdge(uid, ev, edge, validation, construction);
+
+                // Reset edge index to none if this failed...
+                if (!validation && result is HandleResult.False && construction.StepIndex == 0)
+                    construction.EdgeIndex = null;
+
+                return result;
             }
 
             // If we're not on an edge, let the node handle or validate the interaction.
@@ -85,10 +91,17 @@ namespace Content.Server.Construction
                 if (HandleEdge(uid, ev, edge, validation, construction) is var result and not HandleResult.False)
                 {
                     // Only a True result may modify the state.
-                    // In the case of DoAfter, we don't want it modifying the state yet, other than the waiting flag.
+                    // In the case of DoAfter, it's only allowed to modify the waiting flag and the current edge index.
                     // In the case of validated, it should NEVER modify the state at all.
                     if (result is not HandleResult.True)
+                    {
+                        if (result is HandleResult.DoAfter)
+                        {
+                            construction.EdgeIndex = i;
+                        }
+
                         return result;
+                    }
 
                     // If we're not on the same edge as we were before, that means handling that edge changed the node.
                     if (construction.Node != node.Name)
