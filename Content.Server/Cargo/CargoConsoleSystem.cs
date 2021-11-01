@@ -3,12 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.Cargo.Components;
-using Content.Server.Paper;
 using Content.Shared.Cargo;
 using Content.Shared.GameTicking;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 
 namespace Content.Server.Cargo
 {
@@ -199,7 +197,6 @@ namespace Content.Server.Cargo
                 return false;
 
             SyncComponentsWithId(id);
-            PrintOrderInfo(uid, order);
             return true;
         }
 
@@ -227,31 +224,6 @@ namespace Content.Server.Cargo
                     continue;
                 comp.Dirty();
             }
-        }
-
-        /// <summary>
-        ///     Spawn a piece of paper with the order information. Can be attached to crates.
-        /// </summary>
-        private void PrintOrderInfo(EntityUid uid, CargoOrderData data, CargoConsoleComponent? component = null)
-        {
-            if (!Resolve(uid, ref component))
-                return;
-
-            if (!EntityManager.TryGetComponent(uid, out ITransformComponent tranform))
-                return;
-
-            var printed = EntityManager.SpawnEntity(component.PrinterOutput, tranform.Coordinates);
-
-            if (!EntityManager.TryGetComponent(printed.Uid, out PaperComponent paper))
-                return;
-
-            paper.SetContent(Loc.GetString(
-                "cargo-console-paper-print-text",
-                ("requester", data.Requester),
-                ("reason", data.Reason),
-                ("approver", data.Approver)));
-
-            printed.Name = Loc.GetString("cargo-console-paper-print-name", ("orderNumber", data.OrderNumber));
         }
     }
 }

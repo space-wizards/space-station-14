@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Cargo

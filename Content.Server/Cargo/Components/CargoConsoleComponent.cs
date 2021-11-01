@@ -13,9 +13,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Cargo.Components
@@ -63,12 +61,6 @@ namespace Content.Server.Cargo.Components
 
         [DataField("errorSound")]
         private SoundSpecifier _errorSound = new SoundPathSpecifier("/Audio/Effects/error.ogg");
-
-        /// <summary>
-        ///     The entity prototype to spawn when approving prototypes. Should have the paper component.
-        /// </summary>
-        [DataField("printerOutput", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string PrinterOutput = "Paper";
 
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
         private CargoConsoleSystem _cargoConsoleSystem = default!;
@@ -202,12 +194,7 @@ namespace Content.Server.Cargo.Components
                             orders.Database.ClearOrderCapacity();
                             foreach (var order in approvedOrders)
                             {
-                                if (!PrototypeManager.TryIndex(order.ProductId, out CargoProductPrototype? product))
-                                    continue;
-                                for (var i = 0; i < order.Amount; i++)
-                                {
-                                    telepadComponent.QueueTeleport(product);
-                                }
+                                telepadComponent.QueueTeleport(order);
                             }
                         }
                     }
