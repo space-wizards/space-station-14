@@ -52,4 +52,7 @@
   - type: Construction
     graph: machine
     node: machine
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - ChemMaster-reagentContainerContainer
 
