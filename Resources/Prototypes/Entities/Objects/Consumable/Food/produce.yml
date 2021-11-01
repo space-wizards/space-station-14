@@ -313,10 +313,21 @@
   description: Splat.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/tomato.rsi
+    sprite: Fluids/tomato_splat.rsi
     state: puddle-0
+    netsync: false
   - type: Puddle
-    variants: 3
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 10
+  - type: Evaporation
+    lowerLimit: 2
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: eggplant

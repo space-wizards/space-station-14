@@ -3,6 +3,8 @@ using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
@@ -14,9 +16,6 @@ using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.EntitySystems;
-using Content.Shared.GameTicking;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -64,7 +63,7 @@ namespace Content.Server.Administration
                 Verb verb = new();
                 verb.Text = Loc.GetString("delete-verb-get-data-text");
                 verb.Category = VerbCategory.Debug;
-                verb.IconTexture = "/Textures/Interface/VerbIcons/delete.svg.192dpi.png";
+                verb.IconTexture = "/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png";
                 verb.Act = () => args.Target.Delete();
                 args.Verbs.Add(verb);
             }

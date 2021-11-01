@@ -57,7 +57,7 @@ namespace Content.Server.Disposal.Tube.Components
         /// </summary>
         public override Direction NextDirection(DisposalHolderComponent holder)
         {
-            if (holder.PreviousTube != null && DirectionTo(holder.PreviousTube) == ConnectableDirections()[0])
+            if (holder.PreviousDirectionFrom != Direction.Invalid && holder.PreviousDirectionFrom == ConnectableDirections()[0])
             {
                 var invalidDirections = new[] { ConnectableDirections()[0], Direction.Invalid };
                 var directions = Enum.GetValues(typeof(Direction))

@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Mind.Components;
+using Content.Server.Stack;
+using Content.Shared.Stacks;
 using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -13,8 +16,12 @@ namespace Content.Server.Traitor.Uplink.Account
     /// </summary>
     public class UplinkAccountsSystem : EntitySystem
     {
+        public const string TelecrystalProtoId = "Telecrystal";
+
         [Dependency]
         private readonly UplinkListingSytem _listingSystem = default!;
+        [Dependency]
+        private readonly SharedStackSystem _stackSystem = default!;
 
         private readonly HashSet<UplinkAccount> _accounts = new();
 
@@ -84,6 +91,26 @@ namespace Content.Server.Traitor.Uplink.Account
             }
 
             purchasedItem = EntityManager.SpawnEntity(listing.ItemId, spawnCoords);
+            return true;
+        }
+
+        public bool TryWithdrawTC(UplinkAccount acc, int tc, EntityCoordinates spawnCoords, [NotNullWhen(true)] out EntityUid? stackUid)
+        {
+            stackUid = null;
+
+            // try to charge TC from players account
+            var actTC = Math.Min(tc, acc.Balance);
+            if (actTC <= 0)
+                return false;
+            if (!RemoveFromBalance(acc, actTC))
+                return false;
+
+            // create a stack of TCs near player
+            var stackEntity = EntityManager.SpawnEntity(TelecrystalProtoId, spawnCoords);
+            stackUid = stackEntity.Uid;
+
+            // set right amount in stack
+            _stackSystem.SetCount(stackUid.Value, actTC);
             return true;
         }
     }

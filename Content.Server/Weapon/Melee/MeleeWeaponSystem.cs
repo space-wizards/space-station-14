@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Chemistry.Components;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Weapon.Melee.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Hands;
 using Content.Shared.Interaction;
@@ -90,6 +90,8 @@ namespace Content.Server.Weapon.Melee
                     var targets = new[] { target };
                     SendAnimation(comp.ClickArc, angle, args.User, owner, targets, comp.ClickAttackEffect, false);
 
+                    RaiseLocalEvent(target.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+
                     _damageableSystem.TryChangeDamage(target.Uid,
                         DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                     SoundSystem.Play(Filter.Pvs(owner), comp.HitSound.GetSound(), target);
@@ -156,6 +158,8 @@ namespace Content.Server.Weapon.Melee
 
                 foreach (var entity in hitEntities)
                 {
+                    RaiseLocalEvent(entity.Uid, new AttackedEvent(args.Used, args.User, args.ClickLocation));
+
                     _damageableSystem.TryChangeDamage(entity.Uid,
                             DamageSpecifier.ApplyModifierSets(comp.Damage, hitEvent.ModifiersList));
                 }

@@ -38,3 +38,4 @@
   id: BaseMachinePowered
   components:
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver

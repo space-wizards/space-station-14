@@ -59,10 +59,6 @@ namespace Content.Client.Light.Visualizers
         public override void OnChangeData(AppearanceComponent component)
         {
             base.OnChangeData(component);
-            if (component.Deleted)
-            {
-                return;
-            }
 
             if (component.TryGetData(HandheldLightVisuals.Power,
                 out HandheldLightPowerStates state))

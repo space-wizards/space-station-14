@@ -6,9 +6,8 @@
   placement:
     mode: SnapgridCenter
   components:
-# Re-add when containers no longer pick up anchored items.
-#  - type: Item
-#    size: 10
+  - type: Item
+    size: 10
   - type: Clickable
   - type: InteractionOutline
   - type: MovedByPressure
@@ -54,7 +53,6 @@
     sprite: Structures/Piping/Atmospherics/pipe.rsi
     drawdepth: BelowFloor
     netsync: false
-    noRot: true # TODO: This is a hack so pipe connectors don't look wrong.
   - type: Appearance
     visuals:
     - type: PipeConnectorVisualizer
@@ -135,6 +133,8 @@
   id: GasPipeFourway
   suffix: Fourway
   components:
+  - type: Transform
+    noRot: true
   - type: NodeContainer
     nodes:
       pipe:

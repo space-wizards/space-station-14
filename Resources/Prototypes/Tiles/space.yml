@@ -5,3 +5,4 @@
   friction: 0
   is_subfloor: true
   is_space: true
+  sturdy: false

@@ -6,18 +6,32 @@
   color: "#FDAD01"
 
 - type: reagent
+  id: JuiceBanana
+  name: banana juice
+  desc: The raw essence of a banana. HONK.
+  physicalDesc: crisp
+  color: "#FFE777"
+
+- type: reagent
   id: JuiceBerry
   name: berry juice
   desc: A delicious blend of several different kinds of berries.
   physicalDesc: sweet
   color: "#660099"
 
+# /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
+
+# if(..())
+# return 1
+
+# M.adjustToxLoss(1)
+
 - type: reagent
-  id: JuiceBanana
-  name: banana juice
-  desc: The raw essence of a banana. HONK.
-  physicalDesc: crisp
-  color: "#FFE777"
+  id: JuiceBerryPoison
+  name: poison berry juice
+  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
+  physicalDesc: aromatic #maybe should be 'sickly'?
+  color: "#6600CC"
 
 #TODO: port on_mob_life: restore eyesight
 #if(..())
@@ -38,11 +52,11 @@
   color: "#FF8820"
 
 - type: reagent
-  id: JuiceLime
-  name: lime juice
-  desc: The sweet-sour juice of limes.
-  physicalDesc: citric
-  color: "#99bb43"
+  id: JuiceGrape
+  name: grape juice
+  desc: Freshly squeezed juice from red grapes. Quite sweet.
+  physicalDesc: crisp
+  color: "#512284"
 
 - type: reagent
   id: JuiceLemon
@@ -52,11 +66,11 @@
   color: "#fff690"
 
 - type: reagent
-  id: JuiceGrape
-  name: grape juice
-  desc: Freshly squeezed juice from red grapes. Quite sweet.
-  physicalDesc: crisp
-  color: "#512284"
+  id: JuiceLime
+  name: lime juice
+  desc: The sweet-sour juice of limes.
+  physicalDesc: citric
+  color: "#99bb43"
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
 
@@ -74,25 +88,25 @@
   color: "#E78108"
 
 - type: reagent
+  id: JuicePineapple
+  name: pineapple juice
+  desc: The delicious juice of a pineapple.
+  physicalDesc: tropical
+  color: yellow
+
+- type: reagent
+  id: JuicePotato
+  name: potato juice
+  desc: Juice of the potato. Bleh.
+  physicalDesc: starchy
+  color: "#302000"
+
+- type: reagent
   id: JuiceTomato
   name: tomato juice
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
   color: "#731008"
-
-# /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
-
-# if(..())
-# return 1
-
-# M.adjustToxLoss(1)
-
-- type: reagent
-  id: JuiceBerryPoison
-  name: poison berry juice
-  desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
-  physicalDesc: aromatic #maybe should be 'sickly'?
-  color: "#6600CC"
 
 - type: reagent
   id: JuiceWatermelon
@@ -100,17 +114,3 @@
   desc: The delicious juice of a watermelon.
   physicalDesc: sweet
   color: "#EF3520"
-
-- type: reagent
-  id: JuicePineapple
-  name: pineapple juice
-  desc: The delicious juice of a pineapple.
-  physicalDesc: tropical
-  color: yellow
-
-# - type: reagent
-#   id: PotatoJuice
-#   name: potato juice
-#   desc: Juice of the potato. Bleh.
-#   physicalDesc: starchy
-#   color: "#302000"
