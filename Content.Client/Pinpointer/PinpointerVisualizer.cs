@@ -1,8 +1,6 @@
 using Content.Shared.Pinpointer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using Robust.Client.Graphics;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 
 namespace Content.Client.Pinpointer
@@ -45,11 +43,5 @@ namespace Content.Client.Pinpointer
 
             return dir;
         }
-    }
-
-    public enum PinpointerLayers : byte
-    {
-        Base,
-        Screen
     }
 }

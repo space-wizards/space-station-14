@@ -9,4 +9,10 @@ namespace Content.Shared.Pinpointer
         IsActive,
         TargetDirection
     }
+
+    public enum PinpointerLayers : byte
+    {
+        Base,
+        Screen
+    }
 }

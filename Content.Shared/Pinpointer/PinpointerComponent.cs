@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Whitelist;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
@@ -10,6 +11,7 @@ namespace Content.Shared.Pinpointer
 {
     [RegisterComponent]
     [NetworkedComponent]
+    [Friend(typeof(SharedPinpointerSystem))]
     public class PinpointerComponent : Component
     {
         public override string Name => "Pinpointer";
