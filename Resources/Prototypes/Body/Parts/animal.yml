@@ -1,0 +1,187 @@
+﻿# Just copypasta of some human baisc body parts for interaction,
+# only differences for now is that limbs work in pairs,
+# they are unextractable and can't be spawned (no surgery on a Animals!?).
+
+- type: entity
+  id: PartAnimal
+  parent: BaseItem
+  name: "animal body part"
+  abstract: true
+  components:
+  - type: Damageable
+    damageContainer: Biological
+  - type: BiologicalSurgeryData
+
+# For primates mainly
+- type: entity
+  id: HandsAnimal
+  name: "animal hands"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Hand
+    size: 1
+    compatibility: Biological
+    symmetry: Left
+  - type: Grasp
+
+- type: entity
+  id: LegsAnimal
+  name: "animal legs"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Leg
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: FeetAnimal
+  name: "animal feet"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Foot
+    size: 1
+    compatibility: Biological
+
+- type: entity
+  id: TorsoAnimal
+  name: "animal torso"
+  parent: PartAnimal
+  abstract: true
+  components:
+  - type: BodyPart
+    partType: Torso
+    size: 7
+    compatibility: Biological
+    mechanisms:
+    - OrganAnimalLungs
+    - OrganAnimalStomach
+  - type: Damageable
+    damageContainer: Biological
+
+- type: entity
+  id: BaseAnimalOrgan
+  parent: BaseItem
+  abstract: true
+  components:
+  - type: Mechanism
+
+- type: entity
+  id: OrganAnimalLungs
+  parent: BaseAnimalOrgan
+  name: lungs
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:LungBehavior {}
+
+- type: entity
+  id: OrganAnimalStomach
+  parent: BaseAnimalOrgan
+  name: stomach
+  abstract: true
+  components:
+  - type: Mechanism
+    size: 1
+    compatibility: Biological
+    behaviors:
+    - !type:StomachBehavior
+      max_volume: 100
+      digestionDelay: 20
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 100
+  - type: Metabolizer 
+    metabolisms:
+      Flour:
+        effects:
+        - !type:SatiateHunger
+      JuiceApple:
+        effects:
+        - !type:SatiateThirst
+      JuiceBerry:
+        effects:
+        - !type:SatiateThirst
+      JuiceBanana:
+        effects:
+        - !type:SatiateThirst
+      JuiceCarrot:
+        effects:
+        - !type:SatiateThirst
+      JuiceLime:
+        effects:
+        - !type:SatiateThirst
+      JuiceLemon:
+        effects:
+        - !type:SatiateThirst
+      JuiceGrape:
+        effects:
+        - !type:SatiateThirst
+      JuiceOrange:
+        effects:
+        - !type:SatiateThirst
+      JuiceTomato:
+        effects:
+        - !type:SatiateThirst
+      JuiceBerryPoison:
+        effects:
+        - !type:SatiateThirst
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1
+      JuiceWatermelon:
+        effects:
+        - !type:SatiateThirst
+      JuicePineapple:
+        effects:
+        - !type:SatiateThirst
+      Nutriment:
+        effects:
+        - !type:SatiateHunger
+      Water:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+      Coffee:
+        effects:
+        - !type:SatiateThirst
+      Tea:
+        effects:
+        - !type:SatiateThirst
+      Milk:
+        effects:
+        - !type:SatiateThirst
+      SpoiledMilk:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: -2
+      MilkSoy:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+      MilkOat:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+      Cola:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 0.5
+      ThirteenLoko:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1

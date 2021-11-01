@@ -1,7 +1,7 @@
 - type: entity
   save: false
   abstract: true
-  id: SimpleMobBase
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?) 
   suffix: AI
   components:
   - type: Reactive
@@ -57,15 +57,18 @@
     bodyType: Dynamic
     fixtures:
     - shape:
-        !type:PhysShapeAabb {}
-      mass: 50
+        # Circles with optional sprites offset, cuz rotation of rectangles looks very bad
+        # TODO: But looks like Jittering system ruins offset idea
+        !type:PhysShapeCircle
+        radius: 0.35
+      mass: 20
       mask:
       - Impassable
-#      - MobImpassable Turns these off for now since humans don't have collisions either.
+      - MobImpassable #Bullets?!
       - VaultImpassable
       - SmallImpassable
       layer:
-      - MobImpassable
+      - Opaque
   - type: SolutionContainerManager
   - type: Bloodstream
     max_volume: 100
@@ -84,12 +87,67 @@
     currentTemperature: 310.15
     specificHeat: 42
     tempDamageCoefficient: 0.1
-    coldDamage:
-      types:
-        Cold : 1 #per second, scales with temperature & other constants
     heatDamage:
       types:
         Heat : 1 #per second, scales with temperature & other constants
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+      50: !type:CriticalMobState {}
+      100: !type:DeadMobState {}
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Internals
+  - type: StatusEffects
+    allowed:
+    - Stun
+    - KnockedDown
+    - SlowedDown
+    - Stutter
+    - Electrocution
+  - type: Body
+    template: AnimalTemplate
+    preset: AnimalPreset
+  - type: Examiner
+  - type: UnarmedCombat
+    range: 1.5
+    arcwidth: 0
+    arc: bite
+    damage:
+      groups:
+        Brute: 5
+  - type: Appearance
+    visuals:
+    - type: BuckleVisualizer
+    - type: FireVisualizer
+      sprite: Mobs/Effects/onfire.rsi
+      normalState: Generic_mob_burning
+  - type: Actions
+    innateActions:
+      - CombatMode
+  - type: DoAfter
+  - type: Climbing
+  - type: Flashable
+  - type: Pullable
+  - type: Puller
+  - type: Buckle
+  - type: Recyclable
+    safe: false
+  - type: StandingState
+  - type: Alerts
+
+- type: entity
+  save: false
+  abstract: true
+  id: SimpleMobBase # for air breathers
+  parent: SimpleSpaceMobBase
+  suffix: AI
+  components:
+  - type: UtilityAI
+    behaviorSets:
+    - Idle
+    - Hunger
+    - Thirst
   - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
@@ -109,36 +167,15 @@
     damageRecovery:
       types:
         Asphyxiation: -1
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
-      50: !type:CriticalMobState {}
-      100: !type:DeadMobState {}
-  - type: HeatResistance
-  - type: CombatMode
-  - type: Internals
-  - type: StatusEffects
-    allowed:
-    - Stun
-    - KnockedDown
-    - SlowedDown
-  - type: Examiner
-  - type: UnarmedCombat
-    range: 1.5
-    arcwidth: 0
-    arc: bite
-    damage:
-      groups:
-        Brute: 5
-  - type: Appearance
-    visuals:
-    - type: BuckleVisualizer
-    - type: FireVisualizer
-      sprite: Mobs/Effects/onfire.rsi
-      normalState: Generic_mob_burning
-  - type: Pullable
-  - type: Buckle
-  - type: Butcherable
-    meat: FoodMeat
-  - type: Recyclable
-    safe: false
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 260
+    currentTemperature: 310.15
+    specificHeat: 42
+    tempDamageCoefficient: 0.1
+    coldDamage:
+      types:
+        Cold : 1 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 1 #per second, scales with temperature & other constants
