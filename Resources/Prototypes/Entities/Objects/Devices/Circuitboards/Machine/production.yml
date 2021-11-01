@@ -84,7 +84,7 @@
       prototype: chem_dispenser
       requirements:
         Capacitor: 1
-        Manipulator: 1     
+        Manipulator: 1
         MatterBin: 2
       materialRequirements:
         Glass: 1
