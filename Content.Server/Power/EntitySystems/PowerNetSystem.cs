@@ -1,10 +1,13 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.Power.NodeGroups;
 using Content.Server.Power.Pow3r;
+using Content.Shared.Power;
 using JetBrains.Annotations;
+using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
 
@@ -20,7 +23,8 @@ namespace Content.Server.Power.EntitySystems
         private readonly HashSet<PowerNet> _powerNetReconnectQueue = new();
         private readonly HashSet<ApcNet> _apcNetReconnectQueue = new();
 
-        private readonly Dictionary<PowerNetworkBatteryComponent, float> _lastSupply = new();
+        private readonly Dictionary<PowerNetworkBatteryComponent, (float supply, float storage)> _lastBatteryState = new();
+        private readonly Dictionary<PowerNetworkBatteryComponent, PowerNetBatteryEvent> _lastBatteryEvent = new();
 
         private readonly BatteryRampPegSolver _solver = new();
 
@@ -70,6 +74,8 @@ namespace Content.Server.Power.EntitySystems
 
         private void BatteryShutdown(EntityUid uid, PowerNetworkBatteryComponent component, ComponentShutdown args)
         {
+            _lastBatteryState.Remove(component);
+            _lastBatteryEvent.Remove(component);
             _powerState.Batteries.Free(component.NetworkBattery.Id);
         }
 
@@ -211,7 +217,11 @@ namespace Content.Server.Power.EntitySystems
             {
                 foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
                 {
-                    _lastSupply[powerNetBattery] = powerNetBattery.CurrentSupply;
+                    _lastBatteryState[powerNetBattery] =
+                    (
+                        supply: powerNetBattery.CurrentSupply,
+                        storage: powerNetBattery.NetworkBattery.CurrentStorage
+                    );
                 }
             }
 
@@ -275,24 +285,32 @@ namespace Content.Server.Power.EntitySystems
 
                 foreach (var powerNetBattery in EntityManager.EntityQuery<PowerNetworkBatteryComponent>())
                 {
-                    if (!_lastSupply.TryGetValue(powerNetBattery, out var lastPowerSupply))
-                    {
-                        lastPowerSupply = 0f;
-                    }
+                    if (!_lastBatteryState.TryGetValue(powerNetBattery, out var lastState))
+                        lastState = (supply: 0f, storage: 0f);
+                    if (!_lastBatteryEvent.TryGetValue(powerNetBattery, out var lastEv))
+                        lastEv = new PowerNetBatteryEvent { Supplying=false, State=ChargeState.Still };
 
                     var currentSupply = powerNetBattery.CurrentSupply;
+                    var currentStorage = powerNetBattery.NetworkBattery.CurrentStorage;
 
-                    if (lastPowerSupply == 0f && currentSupply != 0f)
-                    {
-                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = true});
-                    }
-                    else if (lastPowerSupply > 0f && currentSupply == 0f)
-                    {
-                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent {Supply = false});
-                    }
+                    var cs = ChargeState.Still;
+                    if (currentStorage > lastState.storage)
+                        cs = ChargeState.Charging;
+                    else if (currentStorage < lastState.storage)
+                        cs = ChargeState.Discharging;
+
+                    var ev = new PowerNetBatteryEvent {
+                        Supplying=currentSupply != 0f,
+                        State=cs
+                    };
+
+                    if (ev != lastEv)
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, ev);
+
+                    _lastBatteryEvent[powerNetBattery] = ev;
                 }
 
-                _lastSupply.Clear();
+                _lastBatteryState.Clear();
             }
         }
 
@@ -419,9 +437,21 @@ namespace Content.Server.Power.EntitySystems
     /// <summary>
     /// Raised whenever a <see cref="PowerNetworkBatteryComponent"/> changes from / to 0 CurrentSupply.
     /// </summary>
+    [Obsolete("Use PowerNetBatteryEvent instead.")]
     public sealed class PowerNetBatterySupplyEvent : EntityEventArgs
     {
         public bool Supply { get; init;  }
+    }
+
+    public sealed class PowerNetBatteryEvent : EntityEventArgs
+    {
+        public bool Supplying { get; init; }
+        public ChargeState State { get; init; }
+
+        public static bool operator ==(PowerNetBatteryEvent l, PowerNetBatteryEvent r) => l.Supplying == r.Supplying && l.State == r.State;
+        public static bool operator !=(PowerNetBatteryEvent l, PowerNetBatteryEvent r) => !(l == r);
+        public override bool Equals(object? r) => r is PowerNetBatteryEvent && this == (PowerNetBatteryEvent) r;
+        public override int GetHashCode() => (this.State.GetHashCode() + this.Supplying.GetHashCode());
     }
 
     public struct PowerStatistics
