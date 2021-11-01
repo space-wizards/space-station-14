@@ -7,7 +7,8 @@ namespace Content.Shared.Pinpointer
     public enum PinpointerVisuals : byte
     {
         IsActive,
-        TargetDirection
+        TargetDirection,
+        TargetDistance
     }
 
     public enum PinpointerLayers : byte

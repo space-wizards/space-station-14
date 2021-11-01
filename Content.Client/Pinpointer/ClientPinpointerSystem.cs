@@ -38,6 +38,7 @@ namespace Content.Client.Pinpointer
             if (args.Current is not PinpointerComponentState state) return;
             SetActive(uid, state.IsActive, pinpointer);
             SetDirection(uid, state.DirectionToTarget, pinpointer);
+            SetDistance(uid, state.DistanceToTarget, pinpointer);
 
             UpdateAppearance(uid, pinpointer);
             UpdateEyeDir(uid, pinpointer);
@@ -50,6 +51,7 @@ namespace Content.Client.Pinpointer
                 return;
 
             appearance.SetData(PinpointerVisuals.IsActive, pinpointer.IsActive);
+            appearance.SetData(PinpointerVisuals.TargetDistance, pinpointer.DistanceToTarget);
         }
 
         private void UpdateDirAppearance(EntityUid uid, Direction dir,PinpointerComponent? pinpointer = null,

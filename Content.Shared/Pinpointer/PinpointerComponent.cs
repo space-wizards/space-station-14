@@ -19,9 +19,19 @@ namespace Content.Shared.Pinpointer
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 
+        [DataField("mediumDistance")]
+        public float MediumDistance = 16f;
+
+        [DataField("closeDistance")]
+        public float CloseDistance = 8f;
+
+        [DataField("reachedDistance")]
+        public float ReachedDistance = 1f;
+
         public EntityUid? Target = null;
         public bool IsActive = false;
         public Direction DirectionToTarget = Direction.Invalid;
+        public Distance DistanceToTarget = Distance.UNKNOWN;
     }
 
     [Serializable, NetSerializable]
@@ -29,5 +39,16 @@ namespace Content.Shared.Pinpointer
     {
         public bool IsActive;
         public Direction DirectionToTarget;
+        public Distance DistanceToTarget;
+    }
+
+    [Serializable, NetSerializable]
+    public enum Distance : byte
+    {
+        UNKNOWN,
+        REACHED,
+        CLOSE,
+        MEDIUM,
+        FAR
     }
 }

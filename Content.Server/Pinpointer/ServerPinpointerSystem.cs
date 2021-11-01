@@ -102,28 +102,56 @@ namespace Content.Server.Pinpointer
                 return;
             }
 
-            var dir = CalculateDirection(uid, target.Value);
-            SetDirection(uid, dir, pinpointer);
+            var dirVec = CalculateDirection(uid, target.Value);
+            if (dirVec != null)
+            {
+                var dir = dirVec.Value.GetDir();
+                SetDirection(uid, dir, pinpointer);
+                var dist = CalculateDistance(uid, dirVec.Value, pinpointer);
+                SetDistance(uid, dist, pinpointer);
+            }
+            else
+            {
+                SetDirection(uid, Direction.Invalid, pinpointer);
+                SetDistance(uid, Distance.UNKNOWN, pinpointer);
+            }
         }
 
         /// <summary>
         ///     Calculate direction from pinUid to trgUid
         /// </summary>
-        private Direction CalculateDirection(EntityUid pinUid, EntityUid trgUid)
+        /// <returns>Null if failed to caluclate distance between two entities</returns>
+        private Vector2? CalculateDirection(EntityUid pinUid, EntityUid trgUid)
         {
             // check if entities have transform component
             if (!EntityManager.TryGetComponent(pinUid, out ITransformComponent? pin))
-                return Direction.Invalid;
+                return null;
             if (!EntityManager.TryGetComponent(trgUid, out ITransformComponent? trg))
-                return Direction.Invalid;
+                return null;
 
             // check if they are on same map
             if (pin.MapID != trg.MapID)
-                return Direction.Invalid;
+                return null;
 
             // get world direction vector
-            var dir = (trg.WorldPosition - pin.WorldPosition).GetDir();
+            var dir = (trg.WorldPosition - pin.WorldPosition);
             return dir;
+        }
+
+        private Distance CalculateDistance(EntityUid uid, Vector2 vec, PinpointerComponent? pinpointer = null)
+        {
+            if (!Resolve(uid, ref pinpointer))
+                return Distance.UNKNOWN;
+
+            var dist = vec.Length;
+            if (dist <= pinpointer.ReachedDistance)
+                return Distance.REACHED;
+            else if (dist <= pinpointer.CloseDistance)
+                return Distance.CLOSE;
+            else if (dist <= pinpointer.MediumDistance)
+                return Distance.MEDIUM;
+            else
+                return Distance.FAR;
         }
     }
 }

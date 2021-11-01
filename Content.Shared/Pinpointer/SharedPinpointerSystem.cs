@@ -20,8 +20,24 @@ namespace Content.Shared.Pinpointer
             args.State = new PinpointerComponentState
             {
                 IsActive = pinpointer.IsActive,
-                DirectionToTarget = pinpointer.DirectionToTarget
+                DirectionToTarget = pinpointer.DirectionToTarget,
+                DistanceToTarget = pinpointer.DistanceToTarget
             };
+        }
+
+        /// <summary>
+        ///     Manually set distance from pinpointer to target
+        /// </summary>
+        public void SetDistance(EntityUid uid, Distance distance, PinpointerComponent? pinpointer = null)
+        {
+            if (!Resolve(uid, ref pinpointer))
+                return;
+
+            if (distance == pinpointer.DistanceToTarget)
+                return;
+
+            pinpointer.DistanceToTarget = distance;
+            pinpointer.Dirty();
         }
 
         /// <summary>

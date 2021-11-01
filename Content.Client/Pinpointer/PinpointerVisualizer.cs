@@ -24,24 +24,37 @@ namespace Content.Client.Pinpointer
 
             // check if it has direction to target
             sprite.LayerSetVisible(PinpointerLayers.Screen, true);
+            sprite.LayerSetRotation(PinpointerLayers.Screen, Angle.Zero);
 
-            var dir = GetDirection(component);
-            if (dir == Direction.Invalid)
+            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir) || dir == Direction.Invalid)
             {
                 sprite.LayerSetState(PinpointerLayers.Screen, "pinonnull");
                 return;
             }
 
-            sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
-            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
-        }
+            // check distance to target
+            if (!component.TryGetData(PinpointerVisuals.TargetDistance, out Distance dis))
+                dis = Distance.UNKNOWN;
 
-        private Direction GetDirection(AppearanceComponent component)
-        {
-            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir))
-                return Direction.Invalid;
-
-            return dir;
+            switch (dis)
+            {
+                case Distance.REACHED:
+                    sprite.LayerSetState(PinpointerLayers.Screen, "pinondirect");
+                    break;
+                case Distance.CLOSE:
+                    sprite.LayerSetState(PinpointerLayers.Screen, "pinonclose");
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    break;
+                case Distance.MEDIUM:
+                    sprite.LayerSetState(PinpointerLayers.Screen, "pinonmedium");
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    break;
+                case Distance.FAR:
+                case Distance.UNKNOWN:
+                    sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
+                    sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
+                    break;
+            }
         }
     }
 }
