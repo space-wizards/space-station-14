@@ -119,7 +119,7 @@ namespace Content.Shared.Movement
             // Regular movement.
             // Target velocity.
             // This is relative to the map / grid we're on.
-            var total = (walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed);
+            var total = walkDir * mover.CurrentWalkSpeed + sprintDir * mover.CurrentSprintSpeed;
 
             var worldTotal = _relativeMovement ?
                 new Angle(transform.Parent!.WorldRotation.Theta).RotateVec(total) :
@@ -131,6 +131,11 @@ namespace Content.Shared.Movement
             {
                 worldTotal *= mobMover.WeightlessStrength;
             }
+
+            if (transform.GridID == GridId.Invalid)
+                worldTotal = mover.LastGridAngle.RotateVec(worldTotal);
+            else
+                mover.LastGridAngle = transform.Parent!.WorldRotation;
 
             if (worldTotal != Vector2.Zero)
             {
