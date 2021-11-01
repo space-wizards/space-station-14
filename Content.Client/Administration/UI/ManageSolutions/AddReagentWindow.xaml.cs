@@ -12,7 +12,8 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Administration.UI.ManageSolutions
 {
     /// <summary>
-    ///     A debug window that allows you to add a reagent to a solution. Intended to be used with <see cref="EditSolutionsWindow"/>
+    ///     A debug window that allows you to add a reagent to a solution. Intended to be used with <see
+    ///     cref="EditSolutionsWindow"/>
     /// </summary>
     [GenerateTypedNameReferences]
     public sealed partial class AddReagentWindow : SS14Window
