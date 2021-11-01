@@ -1,7 +1,6 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
-using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -12,15 +11,12 @@ namespace Content.Client.Atmos.Monitor.UI
     public class AirAlarmBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
-        private readonly AirAlarmDataSystem _airAlarmDataSystem;
         private AirAlarmWindow? _window;
         private EntityUid? _owner;
 
         public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
         {
             IoCManager.InjectDependencies(this);
-
-            _airAlarmDataSystem = EntitySystem.Get<AirAlarmDataSystem>();
         }
 
         protected override void Open()
@@ -72,41 +68,6 @@ namespace Content.Client.Atmos.Monitor.UI
                 case AirAlarmUpdateAirDataMessage airDataMsg:
                     _window.UpdateGasData(ref airDataMsg.AirData);
                     break;
-            }
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            Logger.DebugS("AirAlarmUI", "Attempting to update data now.");
-
-            if (_window == null
-                || state is not AirAlarmBoundUserInterfaceState owner) return;
-
-            _owner = owner.Uid;
-            if (!_entityManager.TryGetComponent<AirAlarmDataComponent>(owner.Uid, out var data)) return;
-
-            _window.UpdateGasData(ref data.AirData);
-
-            if (data.DirtyMode)
-            {
-                _window.UpdateModeSelector(data.CurrentMode);
-                data.DirtyMode = false;
-            }
-
-            if (data.DirtyDevices.Count != 0)
-            {
-                // _window.UpdateDeviceData(data.DeviceData);
-                data.DirtyDevices.Clear();
-            }
-
-            if (data.DirtyThresholds.Count != 0)
-            {
-                Logger.DebugS("AirAlarmUI", "Attempting to update thresholds now.");
-                _window.UpdateThresholds(data);
-                Logger.DebugS("AirAlarmUI", "Clearing thresholds.");
-                data.DirtyThresholds.Clear();
             }
         }
     }

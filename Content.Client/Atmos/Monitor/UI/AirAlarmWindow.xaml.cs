@@ -165,26 +165,13 @@ namespace Content.Client.Atmos.Monitor.UI
                         break;
                     }
 
-                    var gasThreshold = new ThresholdControl(message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!);
+                    var gasThreshold = new ThresholdControl(message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!, 100);
                     gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
                     _gasThreshold.AddChild(new Label { Text = Loc.GetString($"{(Gas) message.Gas!}-threshold") });
                     _gasThresholdControls.Add((Gas) message.Gas!, gasThreshold);
                     _gasThreshold.AddChild(gasThreshold);
 
                     break;
-            }
-        }
-
-        public void UpdateThresholds(AirAlarmDataComponent state)
-        {
-
-
-
-            foreach (var (gas, threshold) in state.GasThresholds)
-            {
-
-
-
             }
         }
     }

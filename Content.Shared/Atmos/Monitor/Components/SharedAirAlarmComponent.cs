@@ -23,6 +23,27 @@ namespace Content.Shared.Atmos.Monitor.Components
         None
     }
 
+    [Serializable, NetSerializable]
+    public readonly struct AirAlarmAirData
+    {
+        public readonly float? Pressure { get; }
+        public readonly float? Temperature { get; }
+        public readonly float? TotalMoles { get; }
+        public readonly AtmosMonitorAlarmType AlarmState { get; }
+
+        private readonly Dictionary<Gas, float>? _gases;
+        public readonly IReadOnlyDictionary<Gas, float>? Gases { get => _gases; }
+
+        public AirAlarmAirData(float? pressure, float? temperature, float? moles, AtmosMonitorAlarmType state, Dictionary<Gas, float>? gases)
+        {
+            Pressure = pressure;
+            Temperature = temperature;
+            TotalMoles = moles;
+            AlarmState = state;
+            _gases = gases;
+        }
+    }
+
     public interface IAtmosDeviceData
     {
         public bool Enabled { get; set; }

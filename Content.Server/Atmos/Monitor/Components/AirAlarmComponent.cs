@@ -7,7 +7,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Atmos;
 using Content.Shared.Interaction;
 using Content.Shared.Atmos.Monitor.Components;
-using Content.Shared.Atmos.Monitor.Systems;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
@@ -22,12 +21,12 @@ namespace Content.Server.Atmos.Monitor.Components
     {
         [ComponentDependency] public readonly ApcPowerReceiverComponent? DeviceRecvComponent = default!;
         [ComponentDependency] public readonly AtmosMonitorComponent? AtmosMonitorComponent = default!;
-        [ComponentDependency] public readonly AirAlarmDataComponent? AirAlarmDataComponent = default!;
 
         private AirAlarmSystem? _airAlarmSystem = default!;
-        private AirAlarmDataSystem? _airAlarmDataSystem = default!;
 
         [ViewVariables] private BoundUserInterface? _userInterface;
+
+        [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
 
         public override string Name => "AirAlarm";
 
@@ -36,7 +35,6 @@ namespace Content.Server.Atmos.Monitor.Components
             base.Initialize();
 
             _airAlarmSystem = EntitySystem.Get<AirAlarmSystem>();
-            _airAlarmDataSystem = EntitySystem.Get<AirAlarmDataSystem>();
             _userInterface = Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key);
             if (_userInterface != null)
             {
@@ -74,14 +72,6 @@ namespace Content.Server.Atmos.Monitor.Components
             _activePlayers.Remove(player.UserId);
             if (_airAlarmSystem != null && _activePlayers.Count == 0)
                 _airAlarmSystem.RemoveActiveInterface(Owner.Uid);
-        }
-
-        public void UpdateUI()
-        {
-            // send it literally the data component's owner uid, similar to an event
-            // UI side will look at the component and set state from there
-            if (AirAlarmDataComponent != null)
-                _userInterface?.SetState(new AirAlarmBoundUserInterfaceState(AirAlarmDataComponent.Owner.Uid));
         }
 
         bool IInteractHand.InteractHand(InteractHandEventArgs eventArgs)

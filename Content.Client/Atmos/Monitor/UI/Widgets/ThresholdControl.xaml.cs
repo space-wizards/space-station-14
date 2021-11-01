@@ -31,7 +31,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         // i have played myself by making threshold values nullable to
         // indicate validity/disabled status, with several layers of side effect
         // dependent on the other three values when you change one :HECK:
-        public ThresholdControl(AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null)
+        public ThresholdControl(AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, float modifier = 1)
         {
             RobustXamlLoader.Load(this);
 
@@ -41,7 +41,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
             // i miss rust macros
 
-            _upperBoundControl = new ThresholdBoundControl("upper-bound", _threshold.UpperBound);
+            _upperBoundControl = new ThresholdBoundControl("upper-bound", _threshold.UpperBound, modifier);
             _upperBoundControl.OnBoundChanged += value =>
             {
                 // a lot of threshold logic is baked into the properties,
@@ -64,7 +64,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _dangerBounds.AddChild(_upperBoundControl);
 
-            _lowerBoundControl = new ThresholdBoundControl("lower-bound", _threshold.LowerBound);
+            _lowerBoundControl = new ThresholdBoundControl("lower-bound", _threshold.LowerBound, modifier);
             _lowerBoundControl.OnBoundChanged += value =>
             {
                 _threshold.LowerBound = value;
@@ -85,7 +85,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _dangerBounds.AddChild(_lowerBoundControl);
 
-            _upperWarningBoundControl = new ThresholdBoundControl("upper-warning-bound", _threshold.UpperWarningBound);
+            _upperWarningBoundControl = new ThresholdBoundControl("upper-warning-bound", _threshold.UpperWarningBound, modifier);
             _upperWarningBoundControl.OnBoundChanged += value =>
             {
                 _threshold.UpperWarningBound = value;
@@ -106,7 +106,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             };
             _warningBounds.AddChild(_upperWarningBoundControl);
 
-            _lowerWarningBoundControl = new ThresholdBoundControl("lower-warning-bound", _threshold.LowerWarningBound);
+            _lowerWarningBoundControl = new ThresholdBoundControl("lower-warning-bound", _threshold.LowerWarningBound, modifier);
             _lowerWarningBoundControl.OnBoundChanged += value =>
             {
                 _threshold.LowerWarningBound = value;
@@ -145,8 +145,27 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
         private class ThresholdBoundControl : BoxContainer
         {
+            // raw values to use in thresholds, prefer these
+            // over directly setting Modified(Value/LastValue)
+            // when working with the FloatSpinBox
             private float? _value;
             private float _lastValue;
+
+            // convenience thing for getting multiplied values
+            // and also setting value to a usable value
+            private float? ModifiedValue
+            {
+                get => _value * _modifier;
+                set => _value = value / _modifier;
+            }
+
+            private float ModifiedLastValue
+            {
+                get => _lastValue * _modifier;
+                set => _lastValue = value / _modifier;
+            }
+
+            private float _modifier;
 
             private FloatSpinBox _bound;
             private CheckBox _boundEnabled;
@@ -164,10 +183,19 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                     _boundEnabled.Pressed = false;
                     _bound.Value = 0;
                 }
+                else
+                {
+                    _boundEnabled.Pressed = true;
+                    _bound.Value = (float) ModifiedValue!;
+                }
             }
 
-            public ThresholdBoundControl(string name, float? value)
+            // Modifier indicates what factor the value should be multiplied by.
+            // Mostly useful to convert tiny decimals to human-readable 'percentages'
+            // (yes it's still a float, but floatspinbox unfucks that)
+            public ThresholdBoundControl(string name, float? value, float modifier = 1)
             {
+                _modifier = modifier > 0 ? modifier : 1;
                 _value = value;
 
                 this.HorizontalExpand = true;
@@ -183,7 +211,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 };
                 this.AddChild(_boundEnabled);
 
-                _bound.Value = _value ?? 0;
+                _bound.Value = ModifiedValue ?? 0;
                 _lastValue = _value ?? 0;
                 _boundEnabled.Pressed = _value != null;
 
@@ -194,8 +222,10 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
             private void ChangeValue(FloatSpinBox.FloatSpinBoxEventArgs args)
             {
+                // ensure that the value in the spinbox is transformed
+                ModifiedValue = args.Value;
                 // set the value in the scope above
-                var value = OnBoundChanged!(args.Value);
+                var value = OnBoundChanged!(_value);
                 // is the value not null, or has it changed?
                 if (value != null || value != _lastValue)
                 {
@@ -206,7 +236,8 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 // otherwise, just set it to the last known value
                 else
                 {
-                    _bound.Value = _lastValue;
+                    _value = _lastValue;
+                    _bound.Value = ModifiedLastValue;
                 }
             }
 
@@ -223,6 +254,11 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                         if (value == null || value < 0)
                         {
                             // TODO: Improve UX here, this is ass
+                            // basically this implies that the bound
+                            // you currently have is too aggressive
+                            // for the other set of values, so a
+                            // default value (which is +/-0.1) can't
+                            // be used
                             _boundEnabled.Pressed = false;
                             return;
                         }
@@ -230,7 +266,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
                     _value = value;
 
-                    _bound.Value = (float) _value;
+                    _bound.Value = (float) ModifiedValue!;
                     _lastValue = (float) _value;
                 }
                 else
