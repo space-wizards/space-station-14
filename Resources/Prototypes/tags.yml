@@ -217,3 +217,5 @@
 - type: Tag
   id: HideContextMenu
 
+- type: Tag
+  id: NukeDisk

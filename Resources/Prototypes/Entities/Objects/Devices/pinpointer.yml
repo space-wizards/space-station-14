@@ -28,5 +28,5 @@
   components:
   - type: Pinpointer
     whitelist:
-      components:
-      - FireExtinguisher
+      tags:
+        - NukeDisk
