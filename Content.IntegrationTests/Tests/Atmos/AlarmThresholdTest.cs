@@ -71,9 +71,14 @@ namespace Content.IntegrationTests.Tests.Atmos
             threshold.UpperWarningPercentage = null;
             threshold.LowerWarningPercentage = null;
 
-            // both of the below should always return null
             Assert.That(threshold.UpperWarningBound, Is.EqualTo(null));
             Assert.That(threshold.LowerWarningBound, Is.EqualTo(null));
+
+            threshold.UpperBound = null;
+            threshold.LowerBound = null;
+
+            Assert.That(threshold.UpperBound, Is.EqualTo(null));
+            Assert.That(threshold.LowerBound, Is.EqualTo(null));
         }
     }
 }

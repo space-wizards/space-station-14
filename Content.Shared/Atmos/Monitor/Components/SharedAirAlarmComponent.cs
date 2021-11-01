@@ -40,6 +40,17 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
+    public class AirAlarmUpdateAirDataMessage : BoundUserInterfaceMessage
+    {
+        public AirAlarmAirData AirData;
+
+        public AirAlarmUpdateAirDataMessage(AirAlarmAirData airData)
+        {
+            AirData = airData;
+        }
+    }
+
+    [Serializable, NetSerializable]
     public class AirAlarmUpdateAlarmModeMessage : BoundUserInterfaceMessage
     {
         public AirAlarmMode Mode { get; }

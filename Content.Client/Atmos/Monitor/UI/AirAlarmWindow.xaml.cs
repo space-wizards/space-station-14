@@ -93,81 +93,98 @@ namespace Content.Client.Atmos.Monitor.UI
             _modes.SelectId((int) mode);
         }
 
-        public void UpdateDeviceData(Dictionary<string, IAtmosDeviceData> deviceData)
+        public void UpdateDeviceData(string addr, IAtmosDeviceData device)
         {
-            foreach (var (addr, device) in deviceData)
+            switch (device)
             {
-                switch (device)
-                {
-                    case GasVentPumpData pump:
-                        if (!_pumps.TryGetValue(addr, out var pumpControl))
-                        {
-                            var control= new PumpControl(pump, addr);
-                            control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
-                            _pumps.Add(addr, control);
-                            CVentContainer.AddChild(control);
-                        }
-                        else
-                        {
-                            pumpControl.ChangeData(pump);
-                        }
+                case GasVentPumpData pump:
+                    if (!_pumps.TryGetValue(addr, out var pumpControl))
+                    {
+                        var control= new PumpControl(pump, addr);
+                        control.PumpDataChanged += AtmosDeviceDataChanged!.Invoke;
+                        _pumps.Add(addr, control);
+                        CVentContainer.AddChild(control);
+                    }
+                    else
+                    {
+                        pumpControl.ChangeData(pump);
+                    }
 
-                        break;
-                    case GasVentScrubberData scrubber:
-                        if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
-                        {
-                            var control = new ScrubberControl(scrubber, addr);
-                            control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
-                            _scrubbers.Add(addr, control);
-                            CScrubberContainer.AddChild(control);
-                        }
-                        else
-                        {
-                            scrubberControl.ChangeData(scrubber);
-                        }
+                    break;
+                case GasVentScrubberData scrubber:
+                    if (!_scrubbers.TryGetValue(addr, out var scrubberControl))
+                    {
+                        var control = new ScrubberControl(scrubber, addr);
+                        control.ScrubberDataChanged += AtmosDeviceDataChanged!.Invoke;
+                        _scrubbers.Add(addr, control);
+                        CScrubberContainer.AddChild(control);
+                    }
+                    else
+                    {
+                        scrubberControl.ChangeData(scrubber);
+                    }
 
+                    break;
+            }
+        }
+
+        public void UpdateThreshold(ref AirAlarmUpdateAlarmThresholdMessage message)
+        {
+            switch (message.Type)
+            {
+                case AtmosMonitorThresholdType.Pressure:
+                    if (_pressureThresholdControl == null)
+                    {
+                        _pressureThresholdControl = new ThresholdControl(message.Threshold, message.Type);
+                        _pressureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
+                        _pressureThreshold.AddChild(_pressureThresholdControl);
+                    }
+                    else
+                    {
+                        _pressureThresholdControl.UpdateThresholdData(message.Threshold);
+                    }
+
+                    break;
+                case AtmosMonitorThresholdType.Temperature:
+                    if (_temperatureThresholdControl == null)
+                    {
+                        _temperatureThresholdControl = new ThresholdControl(message.Threshold, message.Type);
+                        _temperatureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
+                        _temperatureThreshold.AddChild(_temperatureThresholdControl);
+                    }
+                    else
+                    {
+                        _temperatureThresholdControl.UpdateThresholdData(message.Threshold);
+                    }
+
+                    break;
+                case AtmosMonitorThresholdType.Gas:
+                    if (_gasThresholdControls.TryGetValue((Gas) message.Gas!, out var control))
+                    {
+                        control.UpdateThresholdData(message.Threshold);
                         break;
-                }
+                    }
+
+                    var gasThreshold = new ThresholdControl(message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!);
+                    gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
+                    _gasThreshold.AddChild(new Label { Text = Loc.GetString($"{(Gas) message.Gas!}-threshold") });
+                    _gasThresholdControls.Add((Gas) message.Gas!, gasThreshold);
+                    _gasThreshold.AddChild(gasThreshold);
+
+                    break;
             }
         }
 
         public void UpdateThresholds(AirAlarmDataComponent state)
         {
-            if (_pressureThresholdControl == null)
-            {
-                _pressureThresholdControl = new ThresholdControl(state.PressureThreshold, AtmosMonitorThresholdType.Pressure);
-                _pressureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                _pressureThreshold.AddChild(_pressureThresholdControl);
-            }
-            else
-            {
-                _pressureThresholdControl.UpdateThresholdData(state.PressureThreshold);
-            }
 
-            if (_temperatureThresholdControl == null)
-            {
-                _temperatureThresholdControl = new ThresholdControl(state.TemperatureThreshold, AtmosMonitorThresholdType.Temperature);
-                _temperatureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                _temperatureThreshold.AddChild(_temperatureThresholdControl);
-            }
-            else
-            {
-                _temperatureThresholdControl.UpdateThresholdData(state.TemperatureThreshold);
-            }
+
 
             foreach (var (gas, threshold) in state.GasThresholds)
             {
-                if (_gasThresholdControls.TryGetValue(gas, out var control))
-                {
-                    control.UpdateThresholdData(threshold);
-                    continue;
-                }
 
-                var gasThreshold = new ThresholdControl(threshold, AtmosMonitorThresholdType.Gas, gas);
-                gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                _gasThreshold.AddChild(new Label { Text = Loc.GetString($"{gas}-threshold") });
-                _gasThresholdControls.Add(gas, gasThreshold);
-                _gasThreshold.AddChild(gasThreshold);
+
+
             }
         }
     }

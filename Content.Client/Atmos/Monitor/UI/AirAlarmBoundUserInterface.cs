@@ -54,6 +54,27 @@ namespace Content.Client.Atmos.Monitor.UI
             SendMessage(new AirAlarmUpdateAlarmThresholdMessage(type, threshold, gas));
         }
 
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            if (_window == null) return;
+
+            switch (message)
+            {
+                case AirAlarmUpdateDeviceDataMessage deviceMsg:
+                    _window.UpdateDeviceData(deviceMsg.Address, deviceMsg.Data);
+                    break;
+                case AirAlarmUpdateAlarmModeMessage alarmMsg:
+                    _window.UpdateModeSelector(alarmMsg.Mode);
+                    break;
+                case AirAlarmUpdateAlarmThresholdMessage thresholdMsg:
+                    _window.UpdateThreshold(ref thresholdMsg);
+                    break;
+                case AirAlarmUpdateAirDataMessage airDataMsg:
+                    _window.UpdateGasData(ref airDataMsg.AirData);
+                    break;
+            }
+        }
+
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -76,7 +97,7 @@ namespace Content.Client.Atmos.Monitor.UI
 
             if (data.DirtyDevices.Count != 0)
             {
-                _window.UpdateDeviceData(data.DeviceData);
+                // _window.UpdateDeviceData(data.DeviceData);
                 data.DirtyDevices.Clear();
             }
 

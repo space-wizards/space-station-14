@@ -8,6 +8,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.Monitor.Systems
 {
+    // Note: sendEvent (bool) exists to avoid sending events server side at the moment
+    // when an update is called for data that needs to be synced to clients.
+    // This is a little awkward and tangly, and probably needs to be
+    // aggressively refactored
     public class AirAlarmDataSystem : EntitySystem
     {
         public override void Initialize()
@@ -16,6 +20,8 @@ namespace Content.Shared.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmDataComponent, ComponentHandleState>(OnDataHandleState);
         }
 
+        // server side (mostly), except for when
+        // this is initialized
         private void OnDataGetState(EntityUid uid, AirAlarmDataComponent data, ref ComponentGetState state)
         {
             Logger.DebugS("AirAlarmData", "Attempting to grab state now.");
@@ -85,12 +91,15 @@ namespace Content.Shared.Atmos.Monitor.Systems
                 foreach (var device in currentState.DirtyDevices)
                     Logger.DebugS("AirAlarmData", $"devd:{device}");
 
-            UpdateAirData(uid, currentState.AirData);
+            // UpdateAirData(uid, currentState.AirData);
+            data.AirData = currentState.AirData;
 
             if (currentState.DirtyMode)
             {
                 Logger.DebugS("AirAlarmData", "Dirty mode detected.");
-                UpdateAlarmMode(uid, currentState.CurrentMode);
+                // UpdateAlarmMode(uid, currentState.CurrentMode, false, data);
+                data.CurrentMode = currentState.CurrentMode;
+                data.DirtyMode = true;
             }
 
             if (currentState.DirtyThresholds != null)
@@ -98,18 +107,22 @@ namespace Content.Shared.Atmos.Monitor.Systems
                 Logger.DebugS("AirAlarmData", "Dirty thresholds detected");
                 foreach (var threshold in currentState.DirtyThresholds)
                 {
+                    data.DirtyThresholds.Add(threshold);
                     Logger.DebugS("AirAlarmData", $"Handling dirty threshold ${threshold}");
                     switch (threshold)
                     {
                         case AtmosMonitorThresholdType.Pressure:
-                            UpdateAlarmThreshold(uid, currentState.PressureThreshold!, threshold);
+                            // UpdateAlarmThreshold(uid, currentState.PressureThreshold!, threshold, null, false, data);
+                            data.PressureThreshold = currentState.PressureThreshold!;
                             break;
                         case AtmosMonitorThresholdType.Temperature:
-                            UpdateAlarmThreshold(uid, currentState.TemperatureThreshold!, threshold);
+                            // UpdateAlarmThreshold(uid, currentState.TemperatureThreshold!, threshold, null, false, data);
+                            data.TemperatureThreshold = currentState.TemperatureThreshold!;
                             break;
                         case AtmosMonitorThresholdType.Gas:
                             foreach (var (gas, gasThreshold) in currentState.GasThresholds!)
-                                UpdateAlarmThreshold(uid, gasThreshold, threshold, gas);
+                                // UpdateAlarmThreshold(uid, gasThreshold, threshold, gas, false, data);
+                                data.GasThresholds[gas] = gasThreshold;
                             break;
                     }
                 }
@@ -119,11 +132,15 @@ namespace Content.Shared.Atmos.Monitor.Systems
             {
                 var deviceData = new Dictionary<string, IAtmosDeviceData>(currentState.DeviceData!);
                 foreach (var addr in currentState.DirtyDevices)
-                    UpdateDeviceData(uid, addr, deviceData![addr]);
+                {
+                    data.DeviceData[addr] = currentState.DeviceData![addr];
+                    data.DirtyDevices.Add(addr);
+                }
             }
         }
 
-        public void UpdateDeviceData(EntityUid uid, string addr, IAtmosDeviceData data, AirAlarmDataComponent? alarmData = null)
+        /*
+        public void UpdateDeviceData(EntityUid uid, string addr, IAtmosDeviceData data, bool sendEvent = false, AirAlarmDataComponent? alarmData = null)
         {
             if (!Resolve(uid, ref alarmData)) return;
 
@@ -131,10 +148,11 @@ namespace Content.Shared.Atmos.Monitor.Systems
             alarmData.DirtyDevices.Add(addr);
             alarmData.Dirty();
 
-            RaiseLocalEvent(uid, new AirAlarmDeviceDataUpdateEvent(addr));
+            if (sendEvent)
+                RaiseLocalEvent(uid, new AirAlarmDeviceDataUpdateEvent(addr));
         }
 
-        public void UpdateAlarmMode(EntityUid uid, AirAlarmMode mode, AirAlarmDataComponent? alarmData = null)
+        public void UpdateAlarmMode(EntityUid uid, AirAlarmMode mode, bool sendEvent = false, AirAlarmDataComponent? alarmData = null)
         {
             if (!Resolve(uid, ref alarmData)) return;
 
@@ -143,10 +161,11 @@ namespace Content.Shared.Atmos.Monitor.Systems
             alarmData.DirtyMode = true;
             alarmData.Dirty();
 
-            RaiseLocalEvent(uid, new AirAlarmSetModeEvent());
+            if (sendEvent)
+                RaiseLocalEvent(uid, new AirAlarmSetModeEvent());
         }
 
-        public void UpdateAlarmThreshold(EntityUid uid, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, AirAlarmDataComponent? alarmData = null)
+        public void UpdateAlarmThreshold(EntityUid uid, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, bool sendEvent = false, AirAlarmDataComponent? alarmData = null)
         {
             if (!Resolve(uid, ref alarmData)) return;
 
@@ -167,7 +186,8 @@ namespace Content.Shared.Atmos.Monitor.Systems
             alarmData.DirtyThresholds.Add(type);
             alarmData.Dirty();
 
-            RaiseLocalEvent(uid, new AirAlarmSetThresholdEvent(threshold, type, gas));
+            if (sendEvent)
+                RaiseLocalEvent(uid, new AirAlarmSetThresholdEvent(threshold, type, gas));
         }
 
         public void UpdateAirData(EntityUid uid, AirAlarmAirData update, AirAlarmDataComponent? data = null)
@@ -181,6 +201,7 @@ namespace Content.Shared.Atmos.Monitor.Systems
 
             data.Dirty();
         }
+        */
 
     }
 

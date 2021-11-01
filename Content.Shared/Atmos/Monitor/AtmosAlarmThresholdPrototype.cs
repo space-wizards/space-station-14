@@ -19,6 +19,9 @@ namespace Content.Shared.Atmos.Monitor
         [DataField("ignore")]
         public bool Ignore = false;
 
+        // zero bounds are not allowed - just
+        // set the bound to null if you want
+        // to disable it
         private float? _upperBound;
         [ViewVariables]
         [DataField("upperBound")]
@@ -27,6 +30,17 @@ namespace Content.Shared.Atmos.Monitor
             get => _upperBound;
             set
             {
+                if (value == null)
+                {
+                    _upperBound = null;
+                    return;
+                }
+
+                if (value <= 0f
+                    || value == float.PositiveInfinity
+                    || value == float.NaN)
+                    return;
+
                 if (LowerBound != null
                     && value < LowerBound)
                     return;
@@ -43,6 +57,17 @@ namespace Content.Shared.Atmos.Monitor
             get => _lowerBound;
             set
             {
+                if (value == null)
+                {
+                    _lowerBound = null;
+                    return;
+                }
+
+                if (value <= 0f
+                    || value == float.NaN
+                    || value == float.NegativeInfinity)
+                    return;
+
                 if (UpperBound != null
                     && value > UpperBound)
                     return;
@@ -62,7 +87,17 @@ namespace Content.Shared.Atmos.Monitor
             get => _upperWarningPercentage;
             set
             {
-                if (value > 1f || value * UpperBound < LowerWarningBound) return;
+                if (value == null)
+                {
+                    _upperWarningPercentage = null;
+                    return;
+                }
+
+                var testValue = value * UpperBound;
+                if (value > 1f
+                    || testValue < LowerWarningBound
+                    || testValue < LowerBound)
+                    return;
 
                 _upperWarningPercentage = value;
             }
@@ -80,7 +115,17 @@ namespace Content.Shared.Atmos.Monitor
             get => _lowerWarningPercentage;
             set
             {
-                if (value < 1f || value * LowerBound > UpperWarningBound) return;
+                if (value == null)
+                {
+                    _lowerWarningPercentage = null;
+                    return;
+                }
+
+                var testValue = value * LowerBound;
+                if (value < 1f
+                    || testValue > UpperWarningBound
+                    || testValue > UpperBound)
+                    return;
 
                 _lowerWarningPercentage = value;
             }
@@ -96,11 +141,16 @@ namespace Content.Shared.Atmos.Monitor
             }
             set
             {
+                if (value == null)
+                {
+                    UpperWarningPercentage = null;
+                    return;
+                }
+
                 if (UpperBound != null)
                 {
                     float? percentage = value / UpperBound;
-                    // ensure that this bound is higher than the lower warning bound
-                    if (percentage != null && (UpperBound * percentage) > LowerWarningBound)
+                    if (percentage != null)
                         UpperWarningPercentage = percentage;
                 }
             }
@@ -117,11 +167,16 @@ namespace Content.Shared.Atmos.Monitor
             }
             set
             {
+                if (value == null)
+                {
+                    LowerWarningPercentage = null;
+                    return;
+                }
+
                 if (LowerBound != null)
                 {
                     float? percentage = value / LowerBound;
-                    // ensure that this bound is lower than the upper warning bound
-                    if (percentage != null && (LowerBound * percentage) < UpperWarningBound)
+                    if (percentage != null)
                         LowerWarningPercentage = percentage;
                 }
             }
@@ -148,6 +203,9 @@ namespace Content.Shared.Atmos.Monitor
         }
     }
 
+    // not really used in the prototype but in code,
+    // to differentiate between the different
+    // fields you can find this prototype in
     public enum AtmosMonitorThresholdType
     {
         Temperature,

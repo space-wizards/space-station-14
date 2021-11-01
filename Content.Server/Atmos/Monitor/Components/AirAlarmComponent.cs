@@ -49,18 +49,24 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public bool HasPlayers() => _activePlayers.Any();
 
+        public void SendMessage(BoundUserInterfaceMessage message)
+        {
+            if (_userInterface != null)
+                _userInterface.SendMessage(message);
+        }
+
         public void OpenUI(IPlayerSession player)
         {
             _activePlayers.Add(player.UserId);
+            _userInterface?.Open(player);
             if (_airAlarmSystem != null) // if this is null you got a lot of other shit to deal with
             {
                 _airAlarmSystem.AddActiveInterface(Owner.Uid);
-                _airAlarmSystem.UpdateAirData(Owner.Uid);
                 _airAlarmSystem.SendAlarmMode(Owner.Uid);
                 _airAlarmSystem.SendThresholds(Owner.Uid);
                 _airAlarmSystem.SyncAllDevices(Owner.Uid); // this should honestly be a button
+                _airAlarmSystem.SendAirData(Owner.Uid);
             }
-            _userInterface?.Open(player);
         }
 
         private void OnCloseUI(IPlayerSession player)
@@ -91,18 +97,18 @@ namespace Content.Server.Atmos.Monitor.Components
 
         public void OnMessageReceived(ServerBoundUserInterfaceMessage message)
         {
-            if (_airAlarmDataSystem == null) return;
+            if (_airAlarmSystem == null) return;
 
             switch (message.Message)
             {
                 case AirAlarmUpdateAlarmModeMessage alarmMessage:
-                    _airAlarmDataSystem.UpdateAlarmMode(Owner.Uid, alarmMessage.Mode);
+                    _airAlarmSystem.SetMode(Owner.Uid, alarmMessage.Mode);
                     break;
                 case AirAlarmUpdateAlarmThresholdMessage thresholdMessage:
-                    _airAlarmDataSystem.UpdateAlarmThreshold(Owner.Uid, thresholdMessage.Threshold, thresholdMessage.Type, thresholdMessage.Gas);
+                    _airAlarmSystem.SetThreshold(Owner.Uid, thresholdMessage.Threshold, thresholdMessage.Type, thresholdMessage.Gas);
                     break;
                 case AirAlarmUpdateDeviceDataMessage dataMessage:
-                    _airAlarmDataSystem.UpdateDeviceData(Owner.Uid, dataMessage.Address, dataMessage.Data);
+                    _airAlarmSystem.SetDeviceData(Owner.Uid, dataMessage.Address, dataMessage.Data);
                     break;
             }
         }
