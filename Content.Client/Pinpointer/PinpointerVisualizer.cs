@@ -34,18 +34,16 @@ namespace Content.Client.Pinpointer
                 return;
             }
 
-            var eye = IoCManager.Resolve<IEyeManager>().CurrentEye;
-
             sprite.LayerSetState(PinpointerLayers.Screen, "pinonfar");
-            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle() + eye.Rotation);
+            sprite.LayerSetRotation(PinpointerLayers.Screen, dir.ToAngle());
         }
 
         private Direction GetDirection(AppearanceComponent component)
         {
-            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out sbyte dirByte))
+            if (!component.TryGetData(PinpointerVisuals.TargetDirection, out Direction dir))
                 return Direction.Invalid;
 
-            return (Direction) dirByte;
+            return dir;
         }
     }
 

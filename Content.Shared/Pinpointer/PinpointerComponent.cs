@@ -1,11 +1,15 @@
+using System;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
 using Robust.Shared.Maths;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Pinpointer
+namespace Content.Shared.Pinpointer
 {
     [RegisterComponent]
+    [NetworkedComponent]
     public class PinpointerComponent : Component
     {
         public override string Name => "Pinpointer";
@@ -16,6 +20,12 @@ namespace Content.Server.Pinpointer
         public EntityUid? Target = null;
         public bool IsActive = false;
         public Direction DirectionToTarget = Direction.Invalid;
+    }
 
+    [Serializable, NetSerializable]
+    public sealed class PinpointerComponentState : ComponentState
+    {
+        public bool IsActive;
+        public Direction DirectionToTarget;
     }
 }
