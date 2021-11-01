@@ -81,8 +81,13 @@ namespace Content.Server.Internals
                 }
                 var entity = component.GasTankContainer.ContainedEntity!;
                 if (component.GasTankContainer.Remove(entity!))
+                {
+                    if (entity.TryGetComponent(out InternalsProviderComponent? provider))
+                        Get<InternalsProviderSystem>().DisconnectFromInternals(entity.Uid, provider);
+
                     if (entity.TryGetComponent(out SharedItemComponent? item))
                         hands.PutInHand(item);
+                }
             }
             else
                 component.Owner.PopupMessage(user, "Not a gas tank!");
@@ -92,6 +97,7 @@ namespace Content.Server.Internals
         {
             ToggleInternals(uid, component, args);
         }
+
         public bool ToggleInternals(EntityUid uid, InternalsSuitComponent component, ToggleInternalsEvent args)
         {
             return component.GasTankPresent
