@@ -13,8 +13,8 @@
 - type: entity
   parent: ComputerBase
   id: ComputerShuttleBase
-  name: shuttle navigation console
-  description: Used to pilot a shuttle by changing it's rotation and speed.
+  name: shuttle console
+  description: Used to pilot a shuttle.
   abstract: true
   components:
   - type: ShuttleConsole
@@ -28,8 +28,8 @@
 - type: entity
   parent: ComputerShuttleBase
   id: ComputerShuttle
-  name: shuttle navigation console
-  description: Used to pilot a shuttle by changing it's rotation and speed.
+  name: shuttle console
+  description: Used to pilot a shuttle.
   components:
   - type: Appearance
     visuals:
@@ -40,8 +40,8 @@
 - type: entity
   parent: ComputerShuttleBase
   id: ComputerShuttleSyndie
-  name: syndicate shuttle navigation console
-  description: Used to pilot a syndicate shuttle by changing it's rotation and speed.
+  name: syndicate shuttle console
+  description: Used to pilot a syndicate shuttle.
   components:
   - type: Appearance
     visuals:
@@ -73,7 +73,7 @@
   parent: ComputerBase
   id: ComputerMedicalRecords
   name: medical records computer
-  description: Allows you to check medical records. That is assuming they are kept around.
+  description: This can be used to check medical records.
   components:
   - type: Appearance
     visuals:
@@ -89,7 +89,7 @@
   parent: ComputerBase
   id: ComputerResearchAndDevelopment
   name: R&D computer
-  description: A computer allowing you to acess the research and development network. Works best with a sever room.
+  description: A computer used to interface with R&D tools.
   components:
   - type: Appearance
     visuals:
