@@ -144,7 +144,7 @@ namespace Content.Shared.Containers.ItemSlots
                     swap = slot.ContainerSlot.ContainedEntity;
 
                 // return if user can't drop active item in hand
-                if (!hands.TryDropEntityToFloor(item))
+                if (!hands.Drop(item))
                     return true;
 
                 // swap item in hand and item in slot

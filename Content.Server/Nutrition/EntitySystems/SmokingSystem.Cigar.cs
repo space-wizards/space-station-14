@@ -1,5 +1,4 @@
 using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;

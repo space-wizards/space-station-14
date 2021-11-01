@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Power.NodeGroups;
 using Content.Server.UserInterface;
 using Content.Shared.APC;
@@ -91,7 +92,8 @@ namespace Content.Server.Power.Components
                 var user = serverMsg.Session.AttachedEntity;
                 if (user == null) return;
 
-                if (_accessReader == null || _accessReader.IsAllowed(user))
+                var accessSystem = EntitySystem.Get<AccessReaderSystem>();
+                if (_accessReader == null || accessSystem.IsAllowed(_accessReader, user.Uid))
                 {
                     MainBreakerEnabled = !MainBreakerEnabled;
                     Owner.GetComponent<PowerNetworkBatteryComponent>().CanDischarge = MainBreakerEnabled;

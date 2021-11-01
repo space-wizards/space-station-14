@@ -59,6 +59,7 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/captain.rsi
     HeatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase
@@ -126,6 +127,8 @@
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/spaceninja.rsi
+    HeatResistance: 1400
+  - type: Insulated
 
 - type: entity
   parent: ClothingHandsBase

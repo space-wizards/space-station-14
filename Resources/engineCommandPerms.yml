@@ -49,6 +49,7 @@
   - tp
   - tpto
   - respawn
+  - forall
 
 - Flags: SERVER
   Commands:

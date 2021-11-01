@@ -27,7 +27,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
 {
     [RegisterComponent]
     [NetworkedComponent()]
+#pragma warning disable 618
     public sealed class ServerMagazineBarrelComponent : ServerRangedBarrelComponent, IExamine
+#pragma warning restore 618
     {
         public override string Name => "MagazineBarrel";
 
@@ -311,7 +313,9 @@ namespace Content.Server.Weapon.Ranged.Barrels.Components
                 SoundSystem.Play(Filter.Pvs(Owner), _soundAutoEject.GetSound(), Owner, AudioParams.Default.WithVolume(-2));
 
                 MagazineContainer.Remove(magazine);
+#pragma warning disable 618
                 SendNetworkMessage(new MagazineAutoEjectMessage());
+#pragma warning restore 618
             }
             return true;
         }

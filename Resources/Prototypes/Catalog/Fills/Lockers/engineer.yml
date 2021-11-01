@@ -87,6 +87,7 @@
     contents:
       - id: ClothingHeadHelmetHardsuitEngineering
       - id: ClothingOuterHardsuitEngineering
+      - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag

@@ -146,63 +146,60 @@ namespace Content.IntegrationTests.Tests.Fluids
                 Assert.True(sGridEntity.Paused);
             });
 
-            float sEvaporateTime = default;
-            PuddleComponent sPuddle = null;
-            Solution solution = null;
-            ReagentUnit sPuddleStartingVolume = default;
+            float evaporateTime = default;
+            PuddleComponent puddle = null;
+            EvaporationComponent evaporation;
+            var amount = 2;
 
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(20));
-                sPuddle = solution.SpillAt(sCoordinates, "PuddleSmear");
+                var solution = new Solution("water", ReagentUnit.New(amount));
+                puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created
-                Assert.NotNull(sPuddle);
+                Assert.NotNull(puddle);
 
-                sPuddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+                evaporation = puddle.Owner.GetComponent<EvaporationComponent>();
 
-                Assert.True(sPuddle.Owner.Paused);
+                puddle.Owner.Paused = true; // See https://github.com/space-wizards/RobustToolbox/issues/1445
+
+                Assert.True(puddle.Owner.Paused);
 
                 // Check that the puddle is going to evaporate
-                Assert.Positive(sPuddle.EvaporateTime);
+                Assert.Positive(evaporation.EvaporateTime);
 
                 // Should have a timer component added to it for evaporation
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
+                Assert.That(evaporation.Accumulator, Is.EqualTo(0f));
 
-                sEvaporateTime = sPuddle.EvaporateTime;
-                sPuddleStartingVolume = sPuddle.CurrentVolume;
+                evaporateTime = evaporation.EvaporateTime;
             });
 
             // Wait enough time for it to evaporate if it was unpaused
-            var sTimeToWait = (5 + (int) Math.Ceiling(sEvaporateTime * sGameTiming.TickRate)) * 2;
+            var sTimeToWait = (5 + (int)Math.Ceiling(amount * evaporateTime * sGameTiming.TickRate));
             await server.WaitRunTicks(sTimeToWait);
 
             // No evaporation due to being paused
             await server.WaitAssertion(() =>
             {
-                Assert.True(sPuddle.Owner.Paused);
-                Assert.True(sPuddle.Owner.TryGetComponent(out TimerComponent _));
+                Assert.True(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(sPuddle.Owner.Deleted);
+                Assert.False(puddle.Owner.Deleted);
             });
 
             // Unpause the map
-            await server.WaitPost(() =>
-            {
-                sPauseManager.SetMapPaused(sMapId, false);
-            });
+            await server.WaitPost(() => { sPauseManager.SetMapPaused(sMapId, false); });
 
             // Check that the map, grid and puddle are unpaused
             await server.WaitAssertion(() =>
             {
                 Assert.False(sPauseManager.IsMapPaused(sMapId));
                 Assert.False(sPauseManager.IsGridPaused(sGridId));
-                Assert.False(sPuddle.Owner.Paused);
+                Assert.False(puddle.Owner.Paused);
 
                 // Check that the puddle still exists
-                Assert.False(sPuddle.Owner.Deleted);
+                Assert.False(puddle.Owner.Deleted);
             });
 
             // Wait enough time for it to evaporate
@@ -212,16 +209,10 @@ namespace Content.IntegrationTests.Tests.Fluids
             await server.WaitAssertion(() =>
             {
                 // Check that the puddle is unpaused
-                Assert.False(sPuddle.Owner.Paused);
+                Assert.False(puddle.Owner.Paused);
 
-                // Check that the puddle has evaporated some of its volume
-                Assert.That(sPuddle.CurrentVolume, Is.LessThan(sPuddleStartingVolume));
-
-                // If its new volume is zero it should have been deleted
-                if (sPuddle.CurrentVolume == ReagentUnit.Zero)
-                {
-                    Assert.True(sPuddle.Deleted);
-                }
+                // Check that puddle has been deleted
+                Assert.True(puddle.Deleted);
             });
         }
     }

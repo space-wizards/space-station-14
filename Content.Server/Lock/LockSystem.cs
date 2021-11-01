@@ -1,4 +1,5 @@
 using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
@@ -9,6 +10,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 
@@ -20,6 +22,8 @@ namespace Content.Server.Lock
     [UsedImplicitly]
     public class LockSystem : EntitySystem
     {
+        [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+
         /// <inheritdoc />
         public override void Initialize()
         {
@@ -122,9 +126,12 @@ namespace Content.Server.Lock
             return true;
         }
 
+        /// <summary>
+        ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
+        /// </summary>
         public bool CanToggleLock(EntityUid uid, IEntity user, EntityStorageComponent? storage = null, bool quiet = true)
         {
-            if (!Resolve(uid, ref storage))
+            if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
 
             // Cannot lock if the entity is currently opened.
@@ -144,7 +151,7 @@ namespace Content.Server.Lock
             if (!Resolve(uid, ref reader))
                 return true;
 
-            if (!reader.IsAllowed(user))
+            if (!_accessReader.IsAllowed(reader, user.Uid))
             {
                 if (!quiet)
                     reader.Owner.PopupMessage(user, Loc.GetString("lock-comp-has-user-access-fail"));

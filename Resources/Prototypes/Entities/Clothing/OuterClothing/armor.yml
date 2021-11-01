@@ -1,3 +1,5 @@
+# Numbers for armor here largely taken from /tg/.
+
 - type: entity
   parent: ClothingOuterBase
   id: ClothingOuterArmorReflective
@@ -8,6 +10,13 @@
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/armor_reflec.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Heat: 0.4 # this technically means it protects against fires pretty well?
 
 - type: entity
   parent: ClothingOuterBase
@@ -19,6 +28,13 @@
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/bulletproof.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.4
+        Heat: 0.9
 
 - type: entity
   parent: ClothingOuterBase
@@ -30,6 +46,13 @@
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/cult_armour.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.6
+        Heat: 0.5
 
 - type: entity
   parent: ClothingOuterBase
@@ -41,9 +64,17 @@
     sprite: Clothing/OuterClothing/Armor/heavy.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Armor/heavy.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.2
+        Slash: 0.2
+        Piercing: 0.2
+        Heat: 0.5
+        Radiation: 0
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyGreen
   name: green heavy armor suit
   description: A heavily armored suit with green accents that protects against excessive damage.
@@ -54,7 +85,7 @@
     sprite: Clothing/OuterClothing/Armor/heavygreen.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorHeavyRed
   name: red heavy armor suit
   description: A heavily armored suit with red accents that protects against excessive damage.
@@ -65,7 +96,7 @@
     sprite: Clothing/OuterClothing/Armor/heavyred.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusblue
   name: magus blue
   description: An blue armored suit that provides good protection.
@@ -76,7 +107,7 @@
     sprite: Clothing/OuterClothing/Armor/magusblue.rsi
 
 - type: entity
-  parent: ClothingOuterBase
+  parent: ClothingOuterArmorHeavy
   id: ClothingOuterArmorMagusred
   name: magus red
   description: A red armored suit that provides good protection.

@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Dispenser;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -90,9 +90,12 @@ namespace Content.Server.Chemistry.Components
             UpdateUserInterface();
         }
 
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleMessage(ComponentMessage message, IComponent? component)
         {
+#pragma warning disable 618
             base.HandleMessage(message, component);
+#pragma warning restore 618
             switch (message)
             {
                 case PowerChangedMessage powerChanged:

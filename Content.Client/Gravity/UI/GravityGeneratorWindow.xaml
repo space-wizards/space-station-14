@@ -6,7 +6,8 @@
         <BoxContainer Orientation="Horizontal">
             <RichTextLabel Name="Status" />
         </BoxContainer>
-        <Button Name="SwitchProtected"
+        <Button Name="Switch"
+                Access="Public"
                 TextAlign="Center"
                 MinHeight="60" />
     </BoxContainer>

@@ -7,25 +7,30 @@
                       VerticalExpand="True"
                       HorizontalExpand="True"
                       MinSize="50 50">
-            <RichTextLabel Name="PdaOwnerLabelProtected" />
+            <RichTextLabel Name="PdaOwnerLabel" Access="Public" />
             <PanelContainer>
                 <BoxContainer Orientation="Horizontal">
-                    <RichTextLabel Name="IdInfoLabelProtected"
+                    <RichTextLabel Name="IdInfoLabel"
+                                   Access="Public"
                                    HorizontalExpand="True" />
-                    <Button Name="EjectIdButtonProtected"
+                    <Button Name="EjectIdButton"
+                            Access="Public"
                             Text="{Loc 'comp-pda-ui-eject-id-button'}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center" />
-                    <Button Name="EjectPenButtonProtected"
+                    <Button Name="EjectPenButton"
+                            Access="Public"
                             Text="{Loc 'comp-pda-ui-eject-pen-button'}"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center" />
                 </BoxContainer>
             </PanelContainer>
-            <Button Name="FlashLightToggleButtonProtected"
+            <Button Name="FlashLightToggleButton"
+                    Access="Public"
                     Text="{Loc 'comp-pda-ui-toggle-flashlight-button'}"
                     ToggleMode="True" />
-            <Button Name="ActivateUplinkButtonProtected"
+            <Button Name="ActivateUplinkButton"
+                    Access="Public"
                     Text="{Loc 'pda-bound-user-interface-uplink-tab-title'}" />
         </BoxContainer>
     </TabContainer>

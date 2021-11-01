@@ -87,3 +87,13 @@
     contents:
       - id: SheetPlasteel
         amount: 3
+
+- type: entity
+  id: CrateMaterialPlasma
+  name: solid plasma crate
+  parent: CrateGenericonimo
+  components:
+  - type: StorageFill
+    contents:
+      - id: SheetPlasma
+        amount: 3

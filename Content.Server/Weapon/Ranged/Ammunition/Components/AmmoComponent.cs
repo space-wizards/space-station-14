@@ -21,7 +21,9 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
     /// Generally used for bullets but can be used for other things like bananas
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     public class AmmoComponent : Component, IExamine, ISerializationHooks
+#pragma warning restore 618
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

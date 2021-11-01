@@ -124,16 +124,16 @@ namespace Content.Server.Construction.Components
             if (Owner.TryGetComponent<ConstructionComponent>(out var construction))
             {
                 // Attempt to set pathfinding to the machine node...
-                construction.SetNewTarget("machine");
+                EntitySystem.Get<ConstructionSystem>().SetPathfindingTarget(Owner.Uid, "machine", construction);
             }
         }
 
         private void ResetProgressAndRequirements(MachineBoardComponent machineBoard)
         {
-            _requirements = machineBoard.Requirements;
-            _materialRequirements = machineBoard.MaterialIdRequirements;
-            _componentRequirements = machineBoard.ComponentRequirements;
-            _tagRequirements = machineBoard.TagRequirements;
+            _requirements = new Dictionary<MachinePart, int>(machineBoard.Requirements);
+            _materialRequirements = new Dictionary<string, int>(machineBoard.MaterialIdRequirements);
+            _componentRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.ComponentRequirements);
+            _tagRequirements = new Dictionary<string, GenericPartInfo>(machineBoard.TagRequirements);
 
             _progress.Clear();
             _materialProgress.Clear();
@@ -271,7 +271,7 @@ namespace Content.Server.Construction.Components
                     if (Owner.TryGetComponent(out ConstructionComponent? construction))
                     {
                         // So prying the components off works correctly.
-                        construction.ResetEdge();
+                        EntitySystem.Get<ConstructionSystem>().ResetEdge(Owner.Uid, construction);
                     }
 
                     return true;

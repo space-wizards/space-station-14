@@ -46,7 +46,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class TryExecuteVerbEvent : EntityEventArgs
+    public class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
@@ -56,21 +56,12 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly VerbType Type;
 
-        public TryExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
         {
             Target = target;
             RequestedVerb = requestedVerb;
             Type = type;
         }
-    }
-
-    /// <summary>
-    ///     Event used to toggle visibility of all context menu entities.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class SetSeeAllContextEvent : EntityEventArgs
-    {
-        public bool CanSeeAllContext = false;
     }
 
     /// <summary>
