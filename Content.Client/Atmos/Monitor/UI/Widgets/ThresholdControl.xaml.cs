@@ -152,7 +152,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             private CheckBox _boundEnabled;
 
             public event Action? OnValidBoundChanged;
-            public Func<float, float?>? OnBoundChanged;
+            public Func<float?, float?>? OnBoundChanged;
             public Func<float>? OnBoundEnabled;
 
             public void SetValue(float? value)
@@ -194,12 +194,16 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
             private void ChangeValue(FloatSpinBox.FloatSpinBoxEventArgs args)
             {
+                // set the value in the scope above
                 var value = OnBoundChanged!(args.Value);
+                // is the value not null, or has it changed?
                 if (value != null || value != _lastValue)
                 {
                     _value = value;
+                    _lastValue = (float) value!;
                     OnValidBoundChanged!.Invoke();
                 }
+                // otherwise, just set it to the last known value
                 else
                 {
                     _bound.Value = _lastValue;
@@ -210,12 +214,18 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
             {
                 if (args.Pressed)
                 {
-                    var value = OnBoundChanged!(OnBoundEnabled!());
-                    if (value == null || value < 0)
+                    var value = OnBoundChanged!(_lastValue);
+
+                    if (value != _lastValue)
                     {
-                        // TODO: Improve UX here, this is ass
-                        _boundEnabled.Pressed = false;
-                        return;
+                        value = OnBoundChanged!(OnBoundEnabled!());
+
+                        if (value == null || value < 0)
+                        {
+                            // TODO: Improve UX here, this is ass
+                            _boundEnabled.Pressed = false;
+                            return;
+                        }
                     }
 
                     _value = value;
@@ -226,6 +236,8 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
                 else
                 {
                     _value = null;
+                    _bound.Value = 0f;
+                    OnBoundChanged!(_value);
                 }
 
                 OnValidBoundChanged!.Invoke();

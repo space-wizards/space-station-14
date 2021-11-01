@@ -206,8 +206,6 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // data.Dirty();
                 SetMode(uid, AirAlarmMode.Filtering);
             }
-
-            component.UpdateUI();
         }
 
         public void SetThreshold(EntityUid uid, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, AirAlarmDataComponent? data = null, AirAlarmComponent? controller = null)
