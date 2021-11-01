@@ -99,6 +99,11 @@ namespace Content.Client.CharacterAppearance.Systems
                 return;
             }
 
+            if (!args.Args.Part.Owner.HasComponent<HumanoidAppearanceComponent>())
+            {
+                return;
+            }
+
             var layers = args.Args.Part.ToHumanoidLayers();
             // TODO BODY Layer color, sprite and state
             foreach (var layer in layers)
@@ -114,6 +119,12 @@ namespace Content.Client.CharacterAppearance.Systems
             }
 
             if (!args.Args.Part.Owner.HasComponent<SpriteComponent>())
+            {
+                return;
+            }
+
+
+            if (!args.Args.Part.Owner.HasComponent<HumanoidAppearanceComponent>())
             {
                 return;
             }
