@@ -32,6 +32,7 @@ namespace Content.Shared.Interaction
     {
         [Dependency] private readonly SharedPhysicsSystem _sharedBroadphaseSystem = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IEntityLookup _entityLookup = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly SharedVerbSystem _verbSystem = default!;
 
@@ -139,32 +140,20 @@ namespace Content.Shared.Interaction
 
             predicate ??= _ => false;
 
-            var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
-
-            if (rayResults.Count == 0) return true;
-
-            // TODO: Wot? This should just be in the predicate.
-            if (!ignoreInsideBlocker) return false;
-
-            foreach (var result in rayResults)
+            Ignored finalPredicate = predicate;
+            if (ignoreInsideBlocker)
             {
-                if (!result.HitEntity.TryGetComponent(out IPhysBody? p))
-                {
-                    continue;
-                }
-
-                var bBox = p.GetWorldAABB();
-
-                if (bBox.Contains(origin.Position) || bBox.Contains(other.Position))
-                {
-                    continue;
-                }
-
-                return false;
+                var intersecting = _entityLookup.GetEntitiesIntersecting(origin).ToList();
+                intersecting.AddRange(_entityLookup.GetEntitiesIntersecting(other));
+                finalPredicate = (entity) => intersecting.Contains(entity) || predicate(entity);
             }
+            else
+                finalPredicate = predicate;
 
-            return true;
+            var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, finalPredicate.Invoke, false);
+
+            return !rayResults.Any();
         }
 
         /// <summary>
