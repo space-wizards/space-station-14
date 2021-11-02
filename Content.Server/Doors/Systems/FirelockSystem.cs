@@ -1,4 +1,4 @@
-﻿using Content.Server.Doors.Components;
+using Content.Server.Doors.Components;
 using Content.Shared.Doors;
 using Content.Shared.Popups;
 using Robust.Shared.GameObjects;

@@ -1,5 +1,3 @@
-#nullable enable
-using System;
 using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
@@ -28,13 +26,6 @@ namespace Content.Server.Doors
     }
 
     /// <summary>
-    /// Raised when the door is successfully opened.
-    /// </summary>
-    public class OnDoorOpenedEvent : HandledEntityEventArgs
-    {
-    }
-
-    /// <summary>
     /// Raised when the door is determining whether it is able to close.
     /// Cancel to stop the door from being closed.
     /// </summary>
@@ -43,24 +34,10 @@ namespace Content.Server.Doors
     }
 
     /// <summary>
-    /// Raised when the door is successfully  closed.
-    /// </summary>
-    public class OnDoorClosedEvent : HandledEntityEventArgs
-    {
-    }
-
-    /// <summary>
     /// Called when the door is determining whether it is able to deny.
     /// Cancel to stop the door from being able to deny.
     /// </summary>
     public class BeforeDoorDeniedEvent : CancellableEntityEventArgs
-    {
-    }
-
-    /// <summary>
-    /// Raised when access to the door is denied.
-    /// </summary>
-    public class OnDoorDeniedEvent : HandledEntityEventArgs
     {
     }
 

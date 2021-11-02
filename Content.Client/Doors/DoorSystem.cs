@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Doors;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
 
 namespace Content.Client.Doors
 {
@@ -19,6 +21,19 @@ namespace Content.Client.Doors
             base.Initialize();
 
             SubscribeLocalEvent<DoorStateMessage>(HandleDoorState);
+
+            SubscribeLocalEvent<ClientDoorComponent, DoorStateChangedEvent>(OnDoorStateChanged);
+        }
+
+        private void OnDoorStateChanged(EntityUid uid, ClientDoorComponent door, DoorStateChangedEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
+                return;
+
+            // set draw depth to open if and only if the state is currently open (not opening or closing).
+            sprite.DrawDepth = (args.State == DoorState.Open)
+                ? door.OpenDrawDepth
+                : door.ClosedDrawDepth;
         }
 
         /// <summary>

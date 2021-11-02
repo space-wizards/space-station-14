@@ -2,6 +2,11 @@ using System;
 using Content.Shared.Doors;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+using DrawDepthTag = Robust.Shared.GameObjects.DrawDepth;
+using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
+
 
 namespace Content.Client.Doors
 {
@@ -13,6 +18,12 @@ namespace Content.Client.Doors
     [ComponentReference(typeof(SharedDoorComponent))]
     public class ClientDoorComponent : SharedDoorComponent
     {
+        [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+        public int OpenDrawDepth = (int) DrawDepth.Doors;
+
+        [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
+        public int ClosedDrawDepth = (int) DrawDepth.Doors;
+
         private bool _stateChangeHasProgressed = false;
         private TimeSpan _timeOffset;
 
