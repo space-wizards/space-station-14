@@ -307,6 +307,10 @@ namespace Content.Server.Power.EntitySystems
                     if (ev != lastEv)
                         RaiseLocalEvent(powerNetBattery.Owner.Uid, ev);
 
+                    // TODO: Remove with PowerNetBatterySupplyEvent
+                    if (ev.Supplying != lastEv.Supplying)
+                        RaiseLocalEvent(powerNetBattery.Owner.Uid, new PowerNetBatterySupplyEvent{ Supply=ev.Supplying });
+
                     _lastBatteryEvent[powerNetBattery] = ev;
                 }
 
