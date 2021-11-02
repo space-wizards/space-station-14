@@ -46,9 +46,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if(!Resolve(uid, ref component))
                 return true;
 
-            var owner = EntityManager.GetEntity(uid);
-
-            return _solutionContainerSystem.DrainAvailable(owner) <= 0;
+            return _solutionContainerSystem.DrainAvailable(uid) <= 0;
         }
 
         private void OnExamined(EntityUid uid, DrinkComponent component, ExaminedEvent args)
@@ -121,11 +119,9 @@ namespace Content.Server.Nutrition.EntitySystems
                 return;
             }
 
-            var owner = EntityManager.GetEntity(uid);
-            if (EntityManager.TryGetComponent<SolutionContainerManagerComponent>(uid, out var existingDrainable)
-                && _solutionContainerSystem.DrainAvailable(uid) <= 0)
+            if (_solutionContainerSystem.DrainAvailable(uid) <= 0)
             {
-                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", owner)));
+                args.User.PopupMessage(Loc.GetString("drink-component-on-use-is-empty", ("owner", EntityManager.GetEntity(uid))));
                 return;
             }
 
@@ -156,15 +152,14 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SetOpen(uid, component.DefaultToOpened, component);
 
-            var owner = EntityManager.GetEntity(uid);
-            if (owner.TryGetComponent(out DrainableSolutionComponent? existingDrainable))
+            if (EntityManager.TryGetComponent(uid, out DrainableSolutionComponent? existingDrainable))
             {
                 // Beakers have Drink component but they should use the existing Drainable
                 component.SolutionName = existingDrainable.Solution;
             }
             else
             {
-                _solutionContainerSystem.EnsureSolution(owner, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
 
             UpdateAppearance(component);
@@ -177,13 +172,13 @@ namespace Content.Server.Nutrition.EntitySystems
 
         public void UpdateAppearance(DrinkComponent component)
         {
-            if (!component.Owner.TryGetComponent(out AppearanceComponent? appearance) ||
-                !component.Owner.HasComponent<SolutionContainerManagerComponent>())
+            if (!EntityManager.TryGetComponent(component.OwnerUid, out AppearanceComponent? appearance) ||
+                !EntityManager.HasComponent<SolutionContainerManagerComponent>(component.OwnerUid))
             {
                 return;
             }
 
-            var drainAvailable = Get<SolutionContainerSystem>().DrainAvailable(component.Owner);
+            var drainAvailable = _solutionContainerSystem.DrainAvailable(component.OwnerUid);
             appearance.SetData(FoodVisuals.Visual, drainAvailable.Float());
             appearance.SetData(DrinkCanStateVisual.Opened, component.Opened);
         }
@@ -201,7 +196,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetDrainableSolution(component.Owner.Uid, out var interactions) ||
+            if (!_solutionContainerSystem.TryGetDrainableSolution(component.OwnerUid, out var interactions) ||
                 interactions.DrainAvailable <= 0)
             {
                 if (!forced)
@@ -212,17 +207,15 @@ namespace Content.Server.Nutrition.EntitySystems
                 return false;
             }
 
-            if (!target.TryGetComponent(out SharedBodyComponent? body) ||
+            if (!EntityManager.TryGetComponent(target.Uid, out SharedBodyComponent? body) ||
                 !body.TryGetMechanismBehaviors<StomachBehavior>(out var stomachs))
             {
                 target.PopupMessage(Loc.GetString("drink-component-try-use-drink-cannot-drink", ("owner", owner)));
                 return false;
             }
 
-
             if (user != target && !user.InRangeUnobstructed(target, popup: true))
                 return false;
-
 
             var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
