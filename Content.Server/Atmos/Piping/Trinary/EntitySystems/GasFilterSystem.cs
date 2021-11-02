@@ -122,17 +122,5 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         }
     }
 
-    /// <summary>
-    /// Event fired on the User when the User attempts to cuff the Target.
-    /// Should generate popups on the User.
-    /// </summary>
-    public class UpdateFilterUIEvent : EntityEventArgs
-    {
-        public readonly EntityUid Uid;
-
-        public UpdateFilterUIEvent(EntityUid uid)
-        {
-            Uid = uid;
-        }
     }
 }
