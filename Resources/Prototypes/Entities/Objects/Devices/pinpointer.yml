@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-    enableOverrideDir: true
     sprite: Objects/Devices/pinpointer.rsi
     layers:
     - state: pinpointer
