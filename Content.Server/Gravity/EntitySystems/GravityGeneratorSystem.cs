@@ -23,10 +23,10 @@ namespace Content.Server.Gravity.EntitySystems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(HandleComponentInitialized);
-            SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(HandleInteractHand);
+            SubscribeLocalEvent<GravityGeneratorComponent, ComponentInit>(OnComponentInitialized);
+            SubscribeLocalEvent<GravityGeneratorComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<GravityGeneratorComponent, SharedGravityGeneratorComponent.SwitchGeneratorMessage>(
-                HandleSwitchGenerator);
+                OnSwitchGenerator);
         }
 
         public override void Update(float frameTime)
@@ -169,7 +169,7 @@ namespace Content.Server.Gravity.EntitySystems
             component.NeedUIUpdate = false;
         }
 
-        private void HandleComponentInitialized(EntityUid uid, GravityGeneratorComponent component, ComponentInit args)
+        private void OnComponentInitialized(EntityUid uid, GravityGeneratorComponent component, ComponentInit args)
         {
             // Always update gravity on init.
             component.NeedGravityUpdate = true;
@@ -200,7 +200,7 @@ namespace Content.Server.Gravity.EntitySystems
                 _gravityShakeSystem.ShakeGrid(gridId, gravity);
         }
 
-        private void HandleInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
+        private void OnInteractHand(EntityUid uid, GravityGeneratorComponent component, InteractHandEvent args)
         {
             if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
@@ -275,7 +275,7 @@ namespace Content.Server.Gravity.EntitySystems
             appearance?.SetData(GravityGeneratorVisuals.State, GravityGeneratorStatus.On);
         }
 
-        private void HandleSwitchGenerator(
+        private void OnSwitchGenerator(
             EntityUid uid,
             GravityGeneratorComponent component,
             SharedGravityGeneratorComponent.SwitchGeneratorMessage args)
