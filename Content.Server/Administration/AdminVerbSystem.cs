@@ -85,7 +85,6 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    targetMind.Mind?.TransferTo(null);
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 args.Verbs.Add(verb);

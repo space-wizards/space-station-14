@@ -11,3 +11,26 @@
     pack: ChemDispenserStandardInventory
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: ChemDispenserMachineCircuitboard
+  - type: MaterialStorage
+  - type: Wires
+    BoardName: "chem_dispenser"
+    LayoutId: chem_dispenser
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - ReagentDispenser-reagentContainerContainer
+

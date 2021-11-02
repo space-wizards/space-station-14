@@ -87,9 +87,14 @@
           container: machine_board
       edges:
         - to: machineFrame
+          completed:
+            - !type:RaiseEvent
+              event: !type:MachineDeconstructedEvent
+              broadcast: false
           conditions:
             - !type:EntityAnchored
             - !type:WirePanel
           steps:
             - tool: Prying
               doAfter: 0.25
+

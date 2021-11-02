@@ -65,7 +65,8 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,
             ExaminedEvent args)
         {
-            if (!args.Examined.TryGetComponent(out SolutionContainerManagerComponent? solutionsManager)
+            SolutionContainerManagerComponent? solutionsManager = null;
+            if (!Resolve(args.Examined.Uid, ref solutionsManager)
                 || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
                 return;
 
@@ -96,15 +97,15 @@ namespace Content.Server.Chemistry.EntitySystems
                 ("desc", Loc.GetString(proto.PhysicalDescription))));
         }
 
-        private void UpdateAppearance(EntityUid uid, Solution solution)
+        private void UpdateAppearance(EntityUid uid, Solution solution,
+            SharedAppearanceComponent? appearanceComponent = null)
         {
-            if (!EntityManager.TryGetEntity(uid, out var solutionEntity)
-                || solutionEntity.Deleted
-                || !solutionEntity.TryGetComponent<SharedAppearanceComponent>(out var appearance))
+            if (!EntityManager.EntityExists(uid)
+                || !Resolve(uid, ref appearanceComponent, false))
                 return;
 
             var filledVolumeFraction = solution.CurrentVolume.Float() / solution.MaxVolume.Float();
-            appearance.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
+            appearanceComponent.SetData(SolutionContainerVisuals.VisualState, new SolutionContainerVisualState(solution.Color, filledVolumeFraction));
         }
 
         /// <summary>
@@ -143,9 +144,9 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateChemicals(uid, solutionHolder);
         }
 
-        public void RemoveAllSolution(EntityUid uid)
+        public void RemoveAllSolution(EntityUid uid, SolutionContainerManagerComponent? solutionContainerManager = null)
         {
-            if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? solutionContainerManager))
+            if (!Resolve(uid, ref solutionContainerManager))
                 return;
 
             foreach (var solution in solutionContainerManager.Solutions.Values)
@@ -210,19 +211,9 @@ namespace Content.Server.Chemistry.EntitySystems
             return true;
         }
 
-        public bool TryGetSolution(IEntity? target, string name,
-            [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
-        {
-            if (target == null || target.Deleted)
-            {
-                solution = null;
-                return false;
-            }
-
-            return TryGetSolution(target.Uid, name, out solution, solutionsMgr);
-        }
-
-        public bool TryGetSolution(EntityUid uid, string name, [NotNullWhen(true)] out Solution? solution, SolutionContainerManagerComponent? solutionsMgr = null)
+        public bool TryGetSolution(EntityUid uid, string name,
+            [NotNullWhen(true)] out Solution? solution,
+            SolutionContainerManagerComponent? solutionsMgr = null)
         {
             if (!Resolve(uid, ref solutionsMgr))
             {
@@ -231,17 +222,6 @@ namespace Content.Server.Chemistry.EntitySystems
             }
 
             return solutionsMgr.Solutions.TryGetValue(name, out solution);
-        }
-
-        /// <summary>
-        /// Will ensure a solution is added to given entity even if it's missing solutionContainerManager
-        /// </summary>
-        /// <param name="owner">Entity to which to add solution</param>
-        /// <param name="name">name for the solution</param>
-        /// <returns>solution</returns>
-        public Solution EnsureSolution(IEntity owner, string name)
-        {
-            return EnsureSolution(owner.Uid, name);
         }
 
         /// <summary>

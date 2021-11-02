@@ -119,7 +119,7 @@ namespace Content.Server.Pointing.EntitySystems
                 var diff = mapCoords.Position - player.Transform.MapPosition.Position;
                 if (diff.LengthSquared > 0.01f)
                 {
-                    player.Transform.LocalRotation = new Angle(diff);
+                    player.Transform.WorldRotation = Angle.FromWorldVec(diff);
                 }
             }
 

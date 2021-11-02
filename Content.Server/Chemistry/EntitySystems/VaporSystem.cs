@@ -65,7 +65,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 return false;
             }
 
-            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner, SharedVaporComponent.SolutionName,
+            if (!_solutionContainerSystem.TryGetSolution(vapor.Owner.Uid, SharedVaporComponent.SolutionName,
                 out var vaporSolution))
             {
                 return false;

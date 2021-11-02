@@ -17,11 +17,11 @@ namespace Content.Server.Kitchen.Components
         public override string Name => "Extractable";
 
         [ViewVariables]
-        [DataField("result")] 
-        public Solution ResultSolution = new();
+        [DataField("juiceSolution")] 
+        public Solution? JuiceSolution;
 
         [ViewVariables] 
-        [DataField("extractableSolution")]
+        [DataField("grindableSolutionName")]
         public string? GrindableSolution;
     }
 }

@@ -1,7 +1,9 @@
 using Content.Shared.Verbs;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Construction.Components;
 using JetBrains.Annotations;
+using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Content.Shared.ActionBlocker;
@@ -56,12 +58,6 @@ namespace Content.Server.Chemistry.EntitySystems
                 !args.Using.HasComponent<FitsInDispenserComponent>() ||
                 !_actionBlockerSystem.CanDrop(args.User))
                 return;
-
-            if (!args.Using.HasComponent<FitsInDispenserComponent>() ||
-                !_solutionContainerSystem.TryGetSolution(args.Using.Uid, "beaker", out _))
-            {
-                return;
-            }
 
             Verb verb = new();
             verb.Act = () =>
