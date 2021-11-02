@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.Components
         protected override void UpdateVisuals()
         {
             if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 appearance.SetData(FoamVisuals.Color, solution.Color.WithAlpha(0.80f));
             }
@@ -31,7 +31,7 @@ namespace Content.Server.Chemistry.Components
 
         protected override void ReactWithEntity(IEntity entity, double solutionFraction)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
             if (!entity.TryGetComponent(out BloodstreamComponent? bloodstream))

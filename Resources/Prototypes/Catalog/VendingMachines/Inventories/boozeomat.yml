@@ -3,19 +3,31 @@
   name: Booze-O-Mat
   spriteName: boozeomat
   startingInventory:
-    DrinkGlass: 20 #Kept glasses at top for ease to differentiate from booze.
+
+    DrinkGlass: 30 #Kept glasses at top for ease to differentiate from booze.
     DrinkAbsintheBottleFull: 3
-    DrinkAlcoGreenFull: 3
-    DrinkAleBottleFull: 3
-    DrinkBeer: 10
-    DrinkCognacBottleFull: 3
-    DrinkGinBottleFull: 3
+    DrinkAleBottleFull: 6
+    DrinkBeer: 6 # Needs to be renamed DrinkBeerBottleFull
+    DrinkBlueCuracaoBottleFull: 2
+    DrinkCognacBottleFull: 5
+    DrinkColaBottleFull: 5
+    DrinkCreamCarton: 4
+    DrinkGinBottleFull: 5
     DrinkGoldschlagerBottleFull: 3
-    DrinkKahluaBottleFull: 3
+    DrinkGrenadineBottleFull: 5
+    DrinkJuiceLimeCarton: 4
+    DrinkJuiceOrangeCarton: 4
+    DrinkJuiceTomatoCarton: 4
+    DrinkKahluaBottleFull: 5
+    DrinkMelonLiquorBottleFull: 2
     DrinkPatronBottleFull: 3
-    DrinkRumbottleFull: 5
-    DrinkTequilabottleFull: 1
-    DrinkVermouthBottleFull: 3
-    DrinkVodkaBottleFull: 4
-    DrinkWhiskeyBottleFull: 2
-    DrinkWineBottleFull: 3
+    DrinkRumBottleFull: 5
+    DrinkSodaWaterCan: 15
+    DrinkSpaceMountainWindBottleFull: 5
+    DrinkSpaceUpBottleFull: 5
+    DrinkTequilaBottleFull: 5
+    DrinkTonicWaterCan: 8
+    DrinkVermouthBottleFull: 5
+    DrinkVodkaBottleFull: 5
+    DrinkWhiskeyBottleFull: 5
+    DrinkWineBottleFull: 5

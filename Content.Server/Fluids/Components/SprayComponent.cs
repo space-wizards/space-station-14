@@ -78,7 +78,7 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit CurrentVolume {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
                 return solution?.CurrentVolume ?? ReagentUnit.Zero;
             }
         }
@@ -105,7 +105,7 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;

@@ -5,8 +5,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.DoAfter;
 using Content.Server.Hands.Components;
+using Content.Server.Interaction;
 using Content.Server.Items;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Acts;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -15,7 +15,6 @@ using Content.Shared.Placeable;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Storage;
-using Content.Shared.Verbs;
 using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -24,7 +23,6 @@ using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
-using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
@@ -530,7 +528,8 @@ namespace Content.Server.Storage.Components
                 {
                     if (entity.IsInContainer()
                         || entity == eventArgs.User
-                        || !entity.HasComponent<SharedItemComponent>())
+                        || !entity.HasComponent<SharedItemComponent>()
+                        || !EntitySystem.Get<InteractionSystem>().InRangeUnobstructed(eventArgs.User, entity))
                         continue;
                     validStorables.Add(entity);
                 }

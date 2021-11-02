@@ -308,7 +308,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         {
                             if (!item.TryGetComponent(out ExtractableComponent? extract)
                                 || extract.GrindableSolution == null
-                                || !_solutionsSystem.TryGetSolution(item, extract.GrindableSolution, out var solution)) continue;
+                                || !_solutionsSystem.TryGetSolution(item.Uid, extract.GrindableSolution, out var solution)) continue;
 
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             RaiseLocalEvent(item.Uid, juiceEvent, false);

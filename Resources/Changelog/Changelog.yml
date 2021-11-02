@@ -1,44 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: Added cable crates to cargo console, type: Add}
-  id: 19
-  time: '2021-03-01T20:56:14.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Starting cargo balance is now 1000 instead of 100000, type: Tweak}
-  - {message: Cargo passive point income doubled, type: Tweak}
-  id: 20
-  time: '2021-03-01T20:56:39.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Can place lattice and underplating again, type: Add}
-  - {message: Glass floors, type: Add}
-  id: 21
-  time: '2021-03-01T20:57:04.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Cargo passive point gen tweaked from 20 -> 150  every 10 seconds., type: Tweak}
-  id: 22
-  time: '2021-03-02T02:31:38.0000000+00:00'
-- author: Swept
-  changes:
-  - {message: Added rules, type: Add}
-  - {message: Added admeen aboose, type: Add}
-  - {message: Removed fun, type: Remove}
-  id: 23
-  time: '2021-03-03T06:56:52.0000000+00:00'
-- author: PJB
-  changes:
-  - {message: You can burn yourself on wall lights again., type: Fix}
-  id: 24
-  time: '2021-03-03T15:30:18.279719+00:00'
-- author: PJB
-  changes:
-  - {message: Moved content builds over to a better server and threw it behind Cloudflare
-      caching. Should download MUCH faster now!, type: Tweak}
-  id: 25
-  time: '2021-03-04T01:20:22.853950+00:00'
 - author: walrusfromspace
   changes:
   - {message: Fixed a fatal error which crashed the client when opening the particle
@@ -2799,3 +2759,47 @@ Entries:
       banned, type: Add}
   id: 518
   time: '2021-10-29T18:54:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'can no longer place multiple wires of the same type on one spot, HV
+      no longer blocks other wires.', type: Fix}
+  id: 519
+  time: '2021-10-30T23:08:48.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Fix singulo field generators, somewhat. Do not remove the scaffold
+      under the field...', type: Add}
+  id: 520
+  time: '2021-10-31T13:39:37.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Changed Thirteen Loko to Fourteen Loko, type: Tweak}
+  - {message: Fixed some bottles in booze-o-mat and admin spawn panel being empty,
+    type: Fix}
+  - {message: Added various new reagents for bartending and added them to dispensers
+      and vending machines, type: Add}
+  - {message: 'Added many new craft-able mixed drinks, experiment to find out!', type: Add}
+  id: 521
+  time: '2021-10-31T13:57:06.0000000+00:00'
+- author: PaulRitter
+  changes:
+  - {message: RoguePointingArrow will no longer attack ghosts, type: Fix}
+  id: 522
+  time: '2021-10-31T14:03:32.0000000+00:00'
+- author: CrudeWax
+  changes:
+  - {message: Replaced placeholder piloting alert icon, type: Tweak}
+  id: 523
+  time: '2021-11-01T13:26:37.0000000+00:00'
+- author: PJB
+  changes:
+  - {message: Gravity generator now needs ~100 seconds to charge up/down when turned
+      on/off. This means spamming the power button won't immediately do anything.,
+    type: Tweak}
+  - {message: Gravity generator UI now looks very fancy., type: Tweak}
+  id: 524
+  time: '2021-11-02T00:12:55.0000000+00:00'
+- author: 20kdc
+  changes: []
+  id: 525
+  time: '2021-11-02T00:42:05.0000000+00:00'

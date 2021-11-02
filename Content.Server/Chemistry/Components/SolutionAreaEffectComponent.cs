@@ -85,7 +85,7 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     effectComponent.TryAddSolution(solution.Clone());
                 }
@@ -122,7 +122,7 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
@@ -160,7 +160,7 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =

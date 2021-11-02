@@ -14,7 +14,7 @@ namespace Content.Server.AI.Utility.Considerations.Nutrition.Drink
 
             if (target == null
                 || target.Deleted
-                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target, DrinkComponent.DefaultSolutionName, out var drink))
+                || !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(target.Uid, DrinkComponent.DefaultSolutionName, out var drink))
             {
                 return 0.0f;
             }
