@@ -20,6 +20,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
         public event Action<AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? ThresholdDataChanged;
 
+        private Label _name => CName;
         private CheckBox _ignore => CIgnore;
         private BoxContainer _dangerBounds => CDangerBounds;
         private BoxContainer _warningBounds => CWarningBounds;
@@ -31,13 +32,15 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         // i have played myself by making threshold values nullable to
         // indicate validity/disabled status, with several layers of side effect
         // dependent on the other three values when you change one :HECK:
-        public ThresholdControl(AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, float modifier = 1)
+        public ThresholdControl(string name, AtmosAlarmThreshold threshold, AtmosMonitorThresholdType type, Gas? gas = null, float modifier = 1)
         {
             RobustXamlLoader.Load(this);
 
             _threshold = threshold;
             _type = type;
             _gas = gas;
+
+            _name.Text = name;
 
             // i miss rust macros
 

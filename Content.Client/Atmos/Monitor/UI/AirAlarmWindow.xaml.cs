@@ -44,6 +44,7 @@ namespace Content.Client.Atmos.Monitor.UI
 
         private Dictionary<string, PumpControl> _pumps = new();
         private Dictionary<string, ScrubberControl> _scrubbers = new();
+        private Button _resyncDevices => CResyncButton;
 
         private ThresholdControl? _pressureThresholdControl;
         private ThresholdControl? _temperatureThresholdControl;
@@ -77,6 +78,15 @@ namespace Content.Client.Atmos.Monitor.UI
             _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-vents"));
             _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
             _tabContainer.SetTabTitle(3, Loc.GetString("air-alarm-ui-window-tab-thresholds"));
+
+            _resyncDevices.OnPressed += _ =>
+            {
+                _ventDevices.RemoveAllChildren();
+                _pumps.Clear();
+                _scrubberDevices.RemoveAllChildren();
+                _scrubbers.Clear();
+                ResyncAllRequested!.Invoke();
+            };
         }
 
         public void SetAddress(string address)
@@ -144,7 +154,7 @@ namespace Content.Client.Atmos.Monitor.UI
                 case AtmosMonitorThresholdType.Pressure:
                     if (_pressureThresholdControl == null)
                     {
-                        _pressureThresholdControl = new ThresholdControl(message.Threshold, message.Type);
+                        _pressureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-pressure-title"), message.Threshold, message.Type);
                         _pressureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
                         _pressureThreshold.AddChild(_pressureThresholdControl);
                     }
@@ -157,7 +167,7 @@ namespace Content.Client.Atmos.Monitor.UI
                 case AtmosMonitorThresholdType.Temperature:
                     if (_temperatureThresholdControl == null)
                     {
-                        _temperatureThresholdControl = new ThresholdControl(message.Threshold, message.Type);
+                        _temperatureThresholdControl = new ThresholdControl(Loc.GetString("air-alarm-ui-thresholds-temperature-title"), message.Threshold, message.Type);
                         _temperatureThresholdControl.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
                         _temperatureThreshold.AddChild(_temperatureThresholdControl);
                     }
@@ -174,9 +184,8 @@ namespace Content.Client.Atmos.Monitor.UI
                         break;
                     }
 
-                    var gasThreshold = new ThresholdControl(message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!, 100);
+                    var gasThreshold = new ThresholdControl(Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{(Gas) message.Gas!}")), message.Threshold, AtmosMonitorThresholdType.Gas, (Gas) message.Gas!, 100);
                     gasThreshold.ThresholdDataChanged += AtmosAlarmThresholdChanged!.Invoke;
-                    _gasThreshold.AddChild(new Label { Text = Loc.GetString($"air-alarm-ui-thresholds-gas-title", ("gas", $"{(Gas) message.Gas!}")) });
                     _gasThresholdControls.Add((Gas) message.Gas!, gasThreshold);
                     _gasThreshold.AddChild(gasThreshold);
 

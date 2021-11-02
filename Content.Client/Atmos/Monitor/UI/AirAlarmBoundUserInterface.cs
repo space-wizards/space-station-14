@@ -10,14 +10,10 @@ namespace Content.Client.Atmos.Monitor.UI
 {
     public class AirAlarmBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
         private AirAlarmWindow? _window;
-        private EntityUid? _owner;
 
         public AirAlarmBoundUserInterface(ClientUserInterfaceComponent owner, object uiKey) : base(owner, uiKey)
-        {
-            IoCManager.InjectDependencies(this);
-        }
+        {}
 
         protected override void Open()
         {
@@ -33,6 +29,12 @@ namespace Content.Client.Atmos.Monitor.UI
             _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
             _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
             _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
+            _window.ResyncAllRequested += ResyncAllDevices;
+        }
+
+        private void ResyncAllDevices()
+        {
+            SendMessage(new AirAlarmResyncAllDevicesMessage());
         }
 
         private void OnDeviceDataChanged(string address, IAtmosDeviceData data)

@@ -28,9 +28,15 @@ namespace Content.Server.Atmos.Monitor
     //
     // This is an interface that AirAlarmSystem uses
     // in order to 'update' air alarm modes so that
-    // modes like Fill can be implemented.
+    // modes like Replace can be implemented.
     public interface IAirAlarmModeUpdate
     {
+        // This is checked by AirAlarmSystem when
+        // a mode is updated. This should be set
+        // to a DeviceNetwork address, or some
+        // unique identifier that ID's the
+        // owner of the mode's executor.
+        public string NetOwner { get; set; }
         // This is executed every time the air alarm
         // update loop is fully executed. This should
         // be where all the logic goes.
@@ -167,51 +173,13 @@ namespace Content.Server.Atmos.Monitor
 
     public class AirAlarmReplaceMode : AirAlarmModeExecutor, IAirAlarmModeUpdate
     {
-        private void SetSiphon(EntityUid uid)
-        {
-            foreach (var (addr, device) in _devices)
-            {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        pumpData = GasVentPumpComponent.PanicModePreset;
-                        pumpData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, pumpData);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        scrubberData = GasVentScrubberComponent.PanicModePreset;
-                        scrubberData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, scrubberData);
-                        break;
-                }
-            }
-        }
-
-        private void SetFill(EntityUid uid)
-        {
-            foreach (var (addr, device) in _devices)
-            {
-                switch (device)
-                {
-                    case GasVentPumpData pumpData:
-                        pumpData = GasVentPumpComponent.FillModePreset;
-                        pumpData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, pumpData);
-                        break;
-                    case GasVentScrubberData scrubberData:
-                        scrubberData = GasVentScrubberComponent.FillModePreset;
-                        scrubberData.IgnoreAlarms = true;
-                        AirAlarmSystem.SetData(uid, addr, scrubberData);
-                        break;
-                }
-            }
-        }
-
         private Dictionary<string, IAtmosDeviceData> _devices = new();
         private float _lastPressure = Atmospherics.OneAtmosphere;
         private bool _isFilling = false;
         private AtmosMonitorComponent? _monitor;
         private AtmosAlarmableComponent? _alarmable;
+
+        public string NetOwner { get; set; } = string.Empty;
 
         public override void Execute(EntityUid uid)
         {
@@ -237,24 +205,33 @@ namespace Content.Server.Atmos.Monitor
             // just a little pointer
             var mixture = _monitor.TileGas;
 
-            if (!_isFilling)
+            _lastPressure = mixture.Pressure;
+            if (_lastPressure <= 0.2f) // anything below and it might get stuck
             {
-                _lastPressure = mixture.Pressure;
-                if (_lastPressure <= 0.2f) // anything below and it might get stuck
-                {
-                    SetFill(uid);
-                    _isFilling = true;
-                }
+                _alarmable.IgnoreAlarms = false;
+                AirAlarmSystem.SetMode(uid, NetOwner!, AirAlarmMode.Filtering, false, false);
             }
-            else
+        }
+
+        private void SetSiphon(EntityUid uid)
+        {
+            foreach (var (addr, device) in _devices)
             {
-                _lastPressure = mixture.Pressure;
-                if (_lastPressure >= Atmospherics.OneAtmosphere)
+                switch (device)
                 {
-                    _alarmable.IgnoreAlarms = false;
-                    AirAlarmSystem.SetMode(uid, AirAlarmMode.Filtering, false, false);
+                    case GasVentPumpData pumpData:
+                        pumpData = GasVentPumpComponent.PanicModePreset;
+                        pumpData.IgnoreAlarms = true;
+                        AirAlarmSystem.SetData(uid, addr, pumpData);
+                        break;
+                    case GasVentScrubberData scrubberData:
+                        scrubberData = GasVentScrubberComponent.PanicModePreset;
+                        scrubberData.IgnoreAlarms = true;
+                        AirAlarmSystem.SetData(uid, addr, scrubberData);
+                        break;
                 }
             }
         }
+
     }
 }

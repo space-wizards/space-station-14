@@ -50,6 +50,16 @@ namespace Content.Shared.Atmos.Monitor.Components
         public bool IgnoreAlarms { get; set; }
     }
 
+    // would be nice to include the entire state here
+    // but it's already handled by messages
+    [Serializable, NetSerializable]
+    public class AirAlarmUIState : BoundUserInterfaceState
+    {}
+
+    [Serializable, NetSerializable]
+    public class AirAlarmResyncAllDevicesMessage : BoundUserInterfaceMessage
+    {}
+
     [Serializable, NetSerializable]
     public class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
     {

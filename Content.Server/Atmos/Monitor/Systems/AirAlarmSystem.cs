@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -152,7 +153,9 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
+            SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
@@ -182,8 +185,18 @@ namespace Content.Server.Atmos.Monitor.Systems
             SendAirData(uid);
         }
 
-        private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args) =>
-            SetMode(uid, args.Mode, true, false);
+        private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
+        {
+            component.DeviceData.Clear();
+            SyncAllDevices(uid);
+        }
+
+        private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
+        {
+            string addr = string.Empty;
+            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)) addr = netConn.Address;
+            SetMode(uid, addr, args.Mode, true, false);
+        }
 
         private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args) =>
             SetThreshold(uid, args.Threshold, args.Type, args.Gas);
@@ -223,6 +236,10 @@ namespace Content.Server.Atmos.Monitor.Systems
                 SendAirData(uid);
             }
 
+            string addr = string.Empty;
+            if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)) addr = netConn.Address;
+
+
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
             {
 
@@ -231,7 +248,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // data.CurrentMode = AirAlarmMode.None;
                 // data.DirtyMode = true;
                 // data.Dirty();
-                SetMode(uid, AirAlarmMode.None, false);
+                SetMode(uid, addr, AirAlarmMode.None, true);
                 // set mode to off to mimic the vents/scrubbers being turned off
                 // update UI
                 //
@@ -248,7 +265,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // data.CurrentMode = AirAlarmMode.Filtering;
                 // data.DirtyMode = true;
                 // data.Dirty();
-                SetMode(uid, AirAlarmMode.Filtering, false);
+                SetMode(uid, addr, AirAlarmMode.Filtering, true);
             }
         }
 
@@ -283,13 +300,14 @@ namespace Content.Server.Atmos.Monitor.Systems
             */
         }
 
-        private HashSet<EntityUid> _modeActiveAlarms = new();
-
-        public void SetMode(EntityUid uid, AirAlarmMode mode, bool noSync = false, bool uiOnly = true, AirAlarmComponent? controller = null)
+        public void SetMode(EntityUid uid, string origin, AirAlarmMode mode, bool sync = false, bool uiOnly = true, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref controller)) return;
             controller.CurrentMode = mode;
 
+            // setting it to UI only maans we don't have
+            // to deal with the issue of not-single-owner
+            // alarm mode executors
             if (!uiOnly)
             {
                 var newMode = AirAlarmModeFactory.ModeToExecutor(mode);
@@ -299,21 +317,29 @@ namespace Content.Server.Atmos.Monitor.Systems
                     if (newMode is IAirAlarmModeUpdate updatedMode)
                     {
                         controller.CurrentModeUpdater = updatedMode;
-                        _modeActiveAlarms.Add(uid);
+                        controller.CurrentModeUpdater.NetOwner = origin;
                     }
-                    else
-                    {
-                        if (controller.CurrentModeUpdater != null) controller.CurrentModeUpdater = null;
-                        _modeActiveAlarms.Remove(uid);
-                    }
+                    else if (controller.CurrentModeUpdater != null)
+                        controller.CurrentModeUpdater = null;
                 }
             }
+            // only one air alarm in a network can use an air alarm mode
+            // that updates, so even if it's a ui-only change,
+            // we have to invalidte the last mode's updater and
+            // remove it because otherwise it'll execute a now
+            // invalid mode
+            else if (controller.CurrentModeUpdater != null
+                     && controller.CurrentModeUpdater.NetOwner != origin)
+                controller.CurrentModeUpdater = null;
 
             // controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(mode));
 
 
-            if (!noSync) SyncMode(uid, mode);
+            // setting sync deals with the issue of air alarms
+            // in the same network needing to have the same mode
+            // as other alarms
+            if (sync) SyncMode(uid, mode);
             /*
             Logger.DebugS("AirAlarmData", "Dirty air alarm mode detected.");
             Logger.DebugS("AirAlarmData", $"CurrentMode: {data.CurrentMode}");
@@ -398,7 +424,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 case AirAlarmSetMode:
                     if (!args.Data.TryGetValue(AirAlarmSetMode, out AirAlarmMode alarmMode)) break;
 
-                    SetMode(uid, alarmMode, true);
+                    SetMode(uid, args.SenderAddress, alarmMode);
 
                     return;
             }
@@ -509,7 +535,13 @@ namespace Content.Server.Atmos.Monitor.Systems
             }
         }
 
-        private const float _delay = 16f;
+        public void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
+        {
+            if (alarm.CurrentModeUpdater != null)
+                alarm.CurrentModeUpdater.Update(uid);
+        }
+
+        private const float _delay = 8f;
         private float _timer = 0f;
 
         public override void Update(float frameTime)
@@ -519,12 +551,10 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 _timer = 0f;
                 foreach (var uid in _activeUserInterfaces)
+                {
                     SendAirData(uid);
-
-                foreach (var uid in _modeActiveAlarms)
-                    if (EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
-                        if (alarm.CurrentModeUpdater != null)
-                            alarm.CurrentModeUpdater.Update(uid);
+                    _uiSystem.TrySetUiState(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUIState());
+                }
             }
         }
     }
