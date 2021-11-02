@@ -34,6 +34,14 @@ namespace Content.Shared.Localizations
             loc.AddFunction(culture, "POWERWATTS", FormatPowerWatts);
             loc.AddFunction(culture, "POWERJOULES", FormatPowerJoules);
             loc.AddFunction(culture, "TOSTRING", args => FormatToString(culture, args));
+            loc.AddFunction(culture, "LOC", FormatLoc);
+        }
+
+        private static ILocValue FormatLoc(LocArgs args)
+        {
+            var id = ((LocValueString)args.Args[0]).Value;
+
+            return new LocValueString(Loc.GetString(id));
         }
 
         private static ILocValue FormatToString(CultureInfo culture, LocArgs args)
