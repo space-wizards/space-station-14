@@ -1,14 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Cargo teleporter works again, type: Fix}
-  id: 31
-  time: '2021-03-05T01:38:41.0000000+00:00'
-- author: SweptWasTaken
-  changes:
-  - {message: Ejected casings now have much more variation and look cooler, type: Tweak}
-  id: 32
-  time: '2021-03-05T07:23:09.0000000+00:00'
 - author: daniel-cr
   changes: []
   id: 33
@@ -2808,3 +2798,14 @@ Entries:
       a split second, either', type: Fix}
   id: 530
   time: '2021-11-02T13:35:02.0000000+00:00'
+- author: Mith-randalf
+  changes:
+  - {message: Changed some clothing item names., type: Tweak}
+  id: 531
+  time: '2021-11-02T18:37:51.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Rotating on barstools/etc. now works in more cases and rotates the right
+      way., type: Fix}
+  id: 532
+  time: '2021-11-02T18:38:47.0000000+00:00'
