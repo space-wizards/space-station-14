@@ -1,14 +1,25 @@
 <BoxContainer xmlns="https://spacestation14.io"
          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-         Orientation="Vertical">
+         Orientation="Vertical" Margin="0 2 4 2">
+    <BoxContainer Orientation="Horizontal" Margin="0 0 2 0">
+        <Label Name="CAddress" HorizontalExpand="True" />
+        <CheckBox Name="CEnableDevice" Text="{Loc 'air-alarm-ui-widget-enable'}" />
+    </BoxContainer>
     <!-- Upper row: toggle, direction, volume rate, widenet -->
-    <BoxContainer Orientation="Horizontal">
-        <CheckBox Name="CEnableDevice" Text="{Loc 'Enabled'}" />
-        <OptionButton Name="CPumpDirection" HorizontalExpand="True" />
-        <FloatSpinBox Name="CVolumeRate" HorizontalExpand="True" />
-        <CheckBox Name="CWideNet" Text="{Loc 'WideNet'}" />
+    <BoxContainer Orientation="Horizontal" Margin="0 0 2 0" HorizontalExpand="True">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label Text="{Loc 'air-alarm-ui-scrubber-pump-direction-label'}" Margin="0 0 1 0"/>
+            <OptionButton Name="CPumpDirection" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+            <Label Text="{Loc 'air-alarm-ui-scrubber-volume-rate-label'}" Margin="0 0 1 0"/>
+            <FloatSpinBox Name="CVolumeRate" HorizontalExpand="True" />
+        </BoxContainer>
+    </BoxContainer>
+    <BoxContainer>
+        <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
     </BoxContainer>
     <!-- Lower row: every single gas -->
-    <BoxContainer Name="CGasContainer" Orientation="Horizontal">
+    <BoxContainer Name="CGasContainer" Orientation="Vertical">
     </BoxContainer>
 </BoxContainer>

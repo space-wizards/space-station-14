@@ -21,6 +21,7 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
         public event Action<string, IAtmosDeviceData>? ScrubberDataChanged;
 
         private CheckBox _enabled => CEnableDevice;
+        private Label _addressLabel => CAddress;
         private OptionButton _pumpDirection => CPumpDirection;
         private FloatSpinBox _volumeRate => CVolumeRate;
         private CheckBox _wideNet => CWideNet;
@@ -36,6 +37,8 @@ namespace Content.Client.Atmos.Monitor.UI.Widgets
 
             _data = data;
             _address = address;
+
+            _addressLabel.Text = Loc.GetString("air-alarm-ui-atmos-net-device-label", ("address", $"{address}"));
 
             _enabled.Pressed = data.Enabled;
             _enabled.OnToggled += _ =>

@@ -3,39 +3,38 @@
             MinSize="500 500" Title="Air Alarm">
     <BoxContainer Orientation="Vertical" Margin="5 5 5 5">
         <!-- Status (pressure, temperature, alarm state, device total, address, etc) -->
-        <BoxContainer Orientation="Horizontal">
-            <!-- Left column (address, device total) -->
-            <BoxContainer Orientation="Vertical">
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="{Loc 'Address'}" />
-                    <Label Name="CDeviceAddress" />
+        <BoxContainer Orientation="Horizontal" Margin="0 0 2 0">
+            <!-- Left column (pressure, temperature, alarm state) -->
+            <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" Margin="0 2 0 0" HorizontalExpand="True">
+                    <Label Text="{Loc 'air-alarm-ui-window-pressure-label'}" />
+                    <Label Text="{Loc 'air-alarm-ui-window-temperature-label'}" />
+                    <Label Text="{Loc 'air-alarm-ui-window-alarm-state-label'}" />
                 </BoxContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="{Loc 'Total devices'}" />
-                    <Label Name="CDeviceTotal" />
-                </BoxContainer>
-            </BoxContainer>
-            <!-- Right column (pressure, temperature, alarm state) -->
-            <BoxContainer Orientation="Vertical">
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="{Loc 'Pressure'}" HorizontalAlignment="Right" />
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
                     <RichTextLabel Name="CPressureLabel" />
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="{Loc 'Temperature'}" HorizontalAlignment="Right" />
                     <RichTextLabel Name="CTemperatureLabel" />
-                </BoxContainer>
-                <BoxContainer Orientation="Horizontal">
-                    <Label Text="{Loc 'Status'}" HorizontalAlignment="Right" />
                     <RichTextLabel Name="CStatusLabel" />
                 </BoxContainer>
             </BoxContainer>
+            <!-- Right column (address, device total) -->
+            <BoxContainer Orientation="Horizontal" Margin="0 2 0 0" HorizontalExpand="True">
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Text="{Loc 'air-alarm-ui-window-address-label'}" />
+                    <Label Text="{Loc 'air-alarm-ui-window-device-count-label'}" />
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical" HorizontalExpand="True">
+                    <Label Name="CDeviceAddress" />
+                    <Label Name="CDeviceTotal" />
+                </BoxContainer>
+            </BoxContainer>
+
         </BoxContainer>
         <!-- Gas/Device Data -->
-        <TabContainer Name="CTabContainer" VerticalExpand="True">
+        <TabContainer Name="CTabContainer" VerticalExpand="True" Margin="0 0 2 0">
             <!-- Gas readout -->
             <ScrollContainer VerticalExpand="True">
-                <BoxContainer Name="CGasContainer" Orientation="Vertical" VerticalExpand="True" />
+                <BoxContainer Name="CGasContainer" Orientation="Vertical" VerticalExpand="True"/>
             </ScrollContainer>
             <!-- Vent devices -->
             <ScrollContainer VerticalExpand="True">
@@ -49,10 +48,10 @@
             <ScrollContainer VerticalExpand="True">
                 <BoxContainer Orientation="Vertical" VerticalExpand="True">
                     <BoxContainer Name="CPressureThreshold" Orientation="Vertical">
-                        <Label Text="{Loc 'Pressure'}" />
+                        <Label Text="{Loc 'air-alarm-ui-thresholds-pressure-title'}" />
                     </BoxContainer>
                     <BoxContainer Name="CTemperatureThreshold" Orientation="Vertical">
-                        <Label Text="{Loc 'Temperature'}" />
+                        <Label Text="{Loc 'air-alarm-ui-thresholds-temperature-title'}" />
                     </BoxContainer>
                     <BoxContainer Name="CGasThresholdContainer" Orientation="Vertical">
                     </BoxContainer>

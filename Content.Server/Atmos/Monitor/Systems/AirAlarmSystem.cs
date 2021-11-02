@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -174,6 +175,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             component.Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
             component.ActivePlayers.Add(actor.PlayerSession.UserId);
             AddActiveInterface(uid);
+            SendAddress(uid);
             SendAlarmMode(uid);
             SendThresholds(uid);
             SyncAllDevices(uid);
@@ -417,6 +419,13 @@ namespace Content.Server.Atmos.Monitor.Systems
         public void RemoveActiveInterface(EntityUid uid)
         {
             _activeUserInterfaces.Remove(uid);
+        }
+
+        private void SendAddress(EntityUid uid, DeviceNetworkComponent? netConn = null)
+        {
+            if (!Resolve(uid, ref netConn)) return;
+
+            _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmSetAddressMessage(netConn.Address));
         }
 
         // Update an interface's air data. This is all the 'hot' data

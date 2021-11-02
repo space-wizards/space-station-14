@@ -56,6 +56,9 @@ namespace Content.Client.Atmos.Monitor.UI
 
             switch (message)
             {
+                case AirAlarmSetAddressMessage addrMsg:
+                    _window.SetAddress(addrMsg.Address);
+                    break;
                 case AirAlarmUpdateDeviceDataMessage deviceMsg:
                     _window.UpdateDeviceData(deviceMsg.Address, deviceMsg.Data);
                     break;

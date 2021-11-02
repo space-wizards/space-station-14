@@ -51,13 +51,13 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
-    public class AirAlarmBoundUserInterfaceState : BoundUserInterfaceState
+    public class AirAlarmSetAddressMessage : BoundUserInterfaceMessage
     {
-        public EntityUid Uid { get; }
+        public string Address { get; }
 
-        public AirAlarmBoundUserInterfaceState(EntityUid uid)
+        public AirAlarmSetAddressMessage(string address)
         {
-            Uid = uid;
+            Address = address;
         }
     }
 
