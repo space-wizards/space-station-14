@@ -1,9 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Radio messages not showing up, type: Fix}
-  id: 27
-  time: '2021-03-04T10:31:22.0000000+00:00'
 - author: PJB
   changes:
   - {message: Fixed the Particle Accelerator, type: Fix}
@@ -2803,3 +2798,9 @@ Entries:
       is possible.', type: Tweak}
   id: 526
   time: '2021-11-02T04:20:14.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Chem dispensers and ChemMasters are constructible and destructible now.,
+    type: Add}
+  id: 527
+  time: '2021-11-02T09:04:08.0000000+00:00'
