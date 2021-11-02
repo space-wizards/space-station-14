@@ -1,9 +1,4 @@
 Entries:
-- author: Zumorica
-  changes:
-  - {message: Fixed machine frames not correctly taking material sheets., type: Fix}
-  id: 30
-  time: '2021-03-04T15:16:49.762593+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Cargo teleporter works again, type: Fix}
@@ -2804,3 +2799,12 @@ Entries:
   - {message: Construction menu guides have been improved to be more accurate., type: Tweak}
   id: 529
   time: '2021-11-02T10:24:32.0000000+00:00'
+- author: Saphire
+  changes:
+  - {message: 'Make movement in space actually make sense, somewhat!', type: Add}
+  - {message: 'And make the camera not spaz out when you go into space. Still flips
+      around a bunch, but it isn''t jarring anymore!', type: Add}
+  - {message: 'Oh and spawning in won''t have your camera flipped around anymore for
+      a split second, either', type: Fix}
+  id: 530
+  time: '2021-11-02T13:35:02.0000000+00:00'
