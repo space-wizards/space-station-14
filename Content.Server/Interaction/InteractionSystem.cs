@@ -383,7 +383,7 @@ namespace Content.Server.Interaction
                         // (Since the user being buckled to it holds it down with their weight.)
                         // This is logically equivalent to RotateWhileAnchored.
                         // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        rotatable.Owner.Transform.LocalRotation = diffAngle;
+                        rotatable.Owner.Transform.WorldRotation = diffAngle;
                     }
                 }
             }
