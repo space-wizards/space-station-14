@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -34,13 +35,21 @@ namespace Content.Server.Construction.Conditions
             if (airlock.BoltsDown != Value)
             {
                 if (Value == true)
-                    args.PushMarkup(Loc.GetString("construction-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-bolt", ("entityName", entity.Name)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-airlock-unbolt", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Value ? "construction-step-condition-airlock-bolt" : "construction-step-condition-airlock-unbolt"
+            };
         }
     }
 }

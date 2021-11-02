@@ -57,7 +57,7 @@ namespace Content.Server.Chemistry.Components
             }
 
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            solutionsSys.TryGetSolution(Owner, SolutionName, out var hypoSpraySolution);
+            solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var hypoSpraySolution);
 
             if (hypoSpraySolution == null || hypoSpraySolution.CurrentVolume == 0)
             {
@@ -124,7 +124,7 @@ namespace Content.Server.Chemistry.Components
         public override ComponentState GetComponentState(ICommonSession player)
         {
             var solutionSys = Owner.EntityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-            return solutionSys.TryGetSolution(Owner, SolutionName, out var solution)
+            return solutionSys.TryGetSolution(Owner.Uid, SolutionName, out var solution)
                 ? new HyposprayComponentState(solution.CurrentVolume, solution.MaxVolume)
                 : new HyposprayComponentState(ReagentUnit.Zero, ReagentUnit.Zero);
         }

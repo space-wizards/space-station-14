@@ -31,7 +31,7 @@ namespace Content.Server.Administration.UI
         public override EuiStateBase GetNewState()
         {
             if (EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(_target, "default", out var container))
+                .TryGetSolution(_target.Uid, "default", out var container))
             {
                 return new AdminAddReagentEuiState
                 {
@@ -68,7 +68,7 @@ namespace Content.Server.Administration.UI
                     var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
 
                     if (_target.TryGetComponent(out InjectableSolutionComponent? injectable)
-                        && solutionsSys.TryGetSolution(_target, injectable.Name, out var targetSolution))
+                        && solutionsSys.TryGetSolution(_target.Uid, injectable.Name, out var targetSolution))
                     {
                         var solution = new Solution(id, amount);
                         solutionsSys.Inject(_target.Uid, targetSolution, solution);
@@ -76,7 +76,7 @@ namespace Content.Server.Administration.UI
                     else
                     {
                         //TODO decide how to find the solution
-                        if (solutionsSys.TryGetSolution(_target, "default", out var solution))
+                        if (solutionsSys.TryGetSolution(_target.Uid, "default", out var solution))
                         {
                             solutionsSys.TryAddReagent(_target.Uid,solution, id, amount, out _);
                         }

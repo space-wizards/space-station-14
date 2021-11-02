@@ -40,7 +40,7 @@ namespace Content.Server.Botany.Components
                 sprite.LayerSetState(0, Seed.PlantIconState);
             }
 
-            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            var solutionContainer = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
             if (solutionContainer == null)
             {
                 Logger.Warning($"No solution container found in {nameof(ProduceComponent)}.");

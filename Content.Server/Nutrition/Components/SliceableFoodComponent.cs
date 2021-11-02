@@ -48,7 +48,7 @@ namespace Content.Server.Nutrition.Components
             Count = _totalCount;
             var foodComp = Owner.EnsureComponent<FoodComponent>();
             Owner.EnsureComponent<SolutionContainerManagerComponent>();
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, foodComp.SolutionName);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, foodComp.SolutionName);
         }
 
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
@@ -60,7 +60,7 @@ namespace Content.Server.Nutrition.Components
 
             var scs = EntitySystem.Get<SolutionContainerSystem>();
 
-            if (!Owner.TryGetComponent<FoodComponent>(out var foodComp) || !scs.TryGetSolution(Owner, foodComp.SolutionName, out var solution))
+            if (!Owner.TryGetComponent<FoodComponent>(out var foodComp) || !scs.TryGetSolution(Owner.Uid, foodComp.SolutionName, out var solution))
             {
                 return false;
             }
@@ -80,7 +80,7 @@ namespace Content.Server.Nutrition.Components
             // It might be an idea to remove the removal of Nutriment & clear the food
             lostSolution.RemoveReagent("Nutriment", lostSolution.GetReagentQuantity("Nutriment"));
             // 3. Dump whatever we can into the slice
-            if (itemToSpawn.TryGetComponent<FoodComponent>(out var itsFoodComp) && scs.TryGetSolution(itemToSpawn, itsFoodComp.SolutionName, out var itsSolution))
+            if (itemToSpawn.TryGetComponent<FoodComponent>(out var itsFoodComp) && scs.TryGetSolution(itemToSpawn.Uid, itsFoodComp.SolutionName, out var itsSolution))
             {
                 var lostSolutionPart = lostSolution.SplitSolution(itsSolution.AvailableVolume);
                 scs.TryAddSolution(itemToSpawn.Uid, itsSolution, lostSolutionPart);

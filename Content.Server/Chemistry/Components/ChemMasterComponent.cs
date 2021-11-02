@@ -49,7 +49,7 @@ namespace Content.Server.Chemistry.Components
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         [ViewVariables]
-        private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+        private Solution BufferSolution => _bufferSolution ??= EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
 
         private Solution? _bufferSolution;
 
@@ -73,10 +73,11 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
+            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
             BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
-            _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            _bufferSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
 
             UpdateUserInterface();
         }
@@ -181,7 +182,7 @@ namespace Content.Server.Chemistry.Components
         {
             var beaker = BeakerContainer.ContainedEntity;
             if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
             {
                 return new ChemMasterBoundUserInterfaceState(Powered, false, ReagentUnit.New(0), ReagentUnit.New(0),
                     "", Owner.Name, new List<Solution.ReagentQuantity>(), BufferSolution.Contents, _bufferModeTransfer,
@@ -230,7 +231,7 @@ namespace Content.Server.Chemistry.Components
             var beaker = BeakerContainer.ContainedEntity;
 
             if (beaker is null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var beakerSolution))
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var beakerSolution))
                 return;
 
             if (isBuffer)
@@ -307,7 +308,7 @@ namespace Content.Server.Chemistry.Components
                     var bottle = Owner.EntityManager.SpawnEntity("ChemistryEmptyBottle01", Owner.Transform.Coordinates);
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
-                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle, "drink");
+                    var bottleSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(bottle.Uid, "drink");
 
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(bottle.Uid, bottleSolution, bufferSolution);
 
@@ -341,7 +342,7 @@ namespace Content.Server.Chemistry.Components
 
                     var bufferSolution = BufferSolution.SplitSolution(actualVolume);
 
-                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill, "food");
+                    var pillSolution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(pill.Uid, "food");
                     EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(pill.Uid, pillSolution, bufferSolution);
 
                     //Try to give them the bottle
@@ -434,6 +435,11 @@ namespace Content.Server.Chemistry.Components
             {
                 Owner.PopupMessage(args.User,
                     Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
+                // TBD: This is very definitely hax so that Construction & Wires get a chance to handle things.
+                // When this is ECS'd, drop this in favour of proper prioritization.
+                // Since this is a catch-all handler, that means do this last!
+                // Also note ReagentDispenserComponent did something similar before I got here.
+                return false;
             }
 
             return true;

@@ -44,6 +44,24 @@
      Glass: 100
 
 - type: latheRecipe
+  id: ChemMasterMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ChemMasterMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
+  id: ChemDispenserMachineCircuitboard
+  icon: Objects/Misc/module.rsi/id_mod.png
+  result: ChemDispenserMachineCircuitboard
+  completetime: 1000
+  materials:
+     Steel: 100
+     Glass: 100
+
+- type: latheRecipe
   id: SolarControlComputerCircuitboard
   icon: Objects/Misc/module.rsi/id_mod.png
   result: SolarControlComputerCircuitboard

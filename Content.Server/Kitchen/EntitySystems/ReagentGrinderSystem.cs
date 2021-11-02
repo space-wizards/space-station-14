@@ -20,6 +20,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
+using Robust.Shared.Log;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -227,8 +228,9 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         if (canJuice || !entity.TryGetComponent(out ExtractableComponent? component)) continue;
 
-                        canJuice = component.GrindableSolution == null;
-                        canGrind = component.GrindableSolution != null;
+                        canJuice = component.JuiceSolution != null;
+                        canGrind = component.GrindableSolution != null 
+                                   && _solutionsSystem.TryGetSolution(entity.Uid, component.GrindableSolution, out _);
                     }
                 }
 
@@ -308,7 +310,7 @@ namespace Content.Server.Kitchen.EntitySystems
                         {
                             if (!item.TryGetComponent(out ExtractableComponent? extract)
                                 || extract.GrindableSolution == null
-                                || !_solutionsSystem.TryGetSolution(item, extract.GrindableSolution, out var solution)) continue;
+                                || !_solutionsSystem.TryGetSolution(item.Uid, extract.GrindableSolution, out var solution)) continue;
 
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             RaiseLocalEvent(item.Uid, juiceEvent, false);
@@ -332,7 +334,12 @@ namespace Content.Server.Kitchen.EntitySystems
                     {
                         foreach (var item in component.Chamber.ContainedEntities.ToList())
                         {
-                            if (!item.TryGetComponent<ExtractableComponent>(out var juiceMe)) continue;
+                            if (!item.TryGetComponent<ExtractableComponent>(out var juiceMe)
+                                || juiceMe.JuiceSolution == null)
+                            {
+                                Logger.Warning("Couldn't find a juice solution on entityUid:{0}", item.Uid);
+                                continue;
+                            }
                             var juiceEvent = new ExtractableScalingEvent(); // default of scalar is always 1.0
                             if (item.HasComponent<StackComponent>())
                             {
@@ -340,10 +347,10 @@ namespace Content.Server.Kitchen.EntitySystems
                             }
 
                             if (component.HeldBeaker.CurrentVolume +
-                                juiceMe.ResultSolution.TotalVolume * juiceEvent.Scalar >
+                                juiceMe.JuiceSolution.TotalVolume * juiceEvent.Scalar >
                                 component.HeldBeaker.MaxVolume) continue;
-                            juiceMe.ResultSolution.ScaleSolution(juiceEvent.Scalar);
-                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.ResultSolution);
+                            juiceMe.JuiceSolution.ScaleSolution(juiceEvent.Scalar);
+                            _solutionsSystem.TryAddSolution(beakerEntity.Uid, component.HeldBeaker, juiceMe.JuiceSolution);
                             item.Delete();
                         }
 

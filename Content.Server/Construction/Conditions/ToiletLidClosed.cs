@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Server.Toilet;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
@@ -27,8 +28,16 @@ namespace Content.Server.Construction.Conditions
             if (!entity.TryGetComponent(out ToiletComponent? toilet)) return false;
             if (!toilet.LidOpen) return false;
 
-            args.PushMarkup(Loc.GetString("construction-condition-toilet-lid-closed") + "\n");
+            args.PushMarkup(Loc.GetString("construction-examine-condition-toilet-lid-closed") + "\n");
             return true;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-toilet-lid-closed"
+            };
         }
     }
 }

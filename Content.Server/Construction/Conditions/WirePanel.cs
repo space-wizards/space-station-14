@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Content.Server.GameObjects.Components;
 using Content.Server.WireHacking;
@@ -34,14 +35,24 @@ namespace Content.Server.Construction.Conditions
             switch (Open)
             {
                 case true when !wires.IsPanelOpen:
-                    args.PushMarkup(Loc.GetString("construction-condition-wire-panel-open"));
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-wire-panel-open"));
                     return true;
                 case false when wires.IsPanelOpen:
-                    args.PushMarkup(Loc.GetString("construction-condition-wire-panel-close"));
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-wire-panel-close"));
                     return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Open
+                    ? "construction-step-condition-wire-panel-open"
+                    : "construction-step-condition-wire-panel-close"
+            };
         }
     }
 }
