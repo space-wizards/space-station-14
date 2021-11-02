@@ -73,6 +73,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
+            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
             BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
@@ -434,6 +435,11 @@ namespace Content.Server.Chemistry.Components
             {
                 Owner.PopupMessage(args.User,
                     Loc.GetString("chem-master-component-cannot-put-entity-message", ("entity", activeHandEntity)));
+                // TBD: This is very definitely hax so that Construction & Wires get a chance to handle things.
+                // When this is ECS'd, drop this in favour of proper prioritization.
+                // Since this is a catch-all handler, that means do this last!
+                // Also note ReagentDispenserComponent did something similar before I got here.
+                return false;
             }
 
             return true;

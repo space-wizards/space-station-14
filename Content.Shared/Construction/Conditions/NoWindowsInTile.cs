@@ -22,5 +22,13 @@ namespace Content.Shared.Construction.Conditions
 
             return true;
         }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-no-windows-in-tile"
+            };
+        }
     }
 }

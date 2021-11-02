@@ -51,6 +51,12 @@
           conditions:
             - !type:EntityAnchored
             - !type:MachineFrameComplete
+              guideIconBoard:
+                sprite: Objects/Misc/module.rsi
+                state: id_mod
+              guideIconParts:
+                sprite: Objects/Misc/stock_parts.rsi
+                state: scan_module
           completed:
             # Yes, this is snowflaked so we don't have to make an unique graph per machine. You're welcome.
             - !type:BuildMachine
@@ -91,3 +97,4 @@
           steps:
             - tool: Prying
               doAfter: 0.25
+

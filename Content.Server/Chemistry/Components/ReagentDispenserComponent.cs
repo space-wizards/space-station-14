@@ -83,6 +83,7 @@ namespace Content.Server.Chemistry.Components
                 UserInterface.OnReceiveMessage += OnUiReceiveMessage;
             }
 
+            // Name relied upon by construction graph machine.yml to ensure beaker doesn't get deleted
             BeakerContainer =
                 ContainerHelpers.EnsureContainer<ContainerSlot>(Owner, $"{Name}-reagentContainerContainer");
 
