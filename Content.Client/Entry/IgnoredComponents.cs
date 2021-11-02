@@ -101,6 +101,7 @@ namespace Content.Client.Entry
             "SoundOnTrigger",
             "TriggerOnCollide",
             "DeleteOnTrigger",
+            "EmptyOnMachineDeconstruct",
             "ExplodeOnTrigger",
             "Utensil",
             "UnarmedCombat",
