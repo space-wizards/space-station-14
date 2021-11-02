@@ -23,7 +23,7 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         {
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(entity, _solution, out var solutionContainer)
+                    .TryGetSolution(entity.Uid, _solution, out var solutionContainer)
                 || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
             if (EntitySystem.Get<SolutionContainerSystem>()

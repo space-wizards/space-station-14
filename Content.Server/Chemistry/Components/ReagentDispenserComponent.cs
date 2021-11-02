@@ -60,7 +60,7 @@ namespace Content.Server.Chemistry.Components
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
                 return solution;
             }
         }
@@ -232,7 +232,7 @@ namespace Content.Server.Chemistry.Components
         {
             var beaker = BeakerContainer.ContainedEntity;
             if (beaker == null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
-                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker, fits.Solution, out var solution))
+                !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var solution))
             {
                 return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0),
                     ReagentUnit.New(0),
@@ -280,7 +280,7 @@ namespace Content.Server.Chemistry.Components
         {
             if (!HasBeaker || !BeakerContainer.ContainedEntity!.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(BeakerContainer.ContainedEntity, fits.Solution, out var solution))
+                    .TryGetSolution(BeakerContainer.ContainedEntity.Uid, fits.Solution, out var solution))
                 return;
 
             EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(BeakerContainer.ContainedEntity!.Uid, solution);
@@ -298,7 +298,7 @@ namespace Content.Server.Chemistry.Components
 
             if (BeakerContainer.ContainedEntity is not {} contained || !contained.TryGetComponent(out FitsInDispenserComponent? fits)
                 || !EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(BeakerContainer.ContainedEntity, fits.Solution, out var solution)) return;
+                .TryGetSolution(BeakerContainer.ContainedEntity.Uid, fits.Solution, out var solution)) return;
 
             EntitySystem.Get<SolutionContainerSystem>()
                 .TryAddReagent(BeakerContainer.ContainedEntity.Uid, solution, Inventory[dispenseIndex].ID, _dispenseAmount, out _);

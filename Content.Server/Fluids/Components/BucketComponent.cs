@@ -29,19 +29,19 @@ namespace Content.Server.Fluids.Components
         public ReagentUnit MaxVolume
         {
             get =>
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                     ? solution.MaxVolume
                     : ReagentUnit.Zero;
             set
             {
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
             ? solution.CurrentVolume
             : ReagentUnit.Zero;
 
@@ -52,7 +52,7 @@ namespace Content.Server.Fluids.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
+            if (!solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
                 !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
