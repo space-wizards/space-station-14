@@ -21,6 +21,12 @@ namespace Content.Server.Administration
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
         }
 
+        public override void Shutdown()
+        {
+            base.Shutdown();
+            _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
+        }
+
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
         {
             if (e.NewStatus != SessionStatus.Connected && e.NewStatus != SessionStatus.Disconnected) return;
