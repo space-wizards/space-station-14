@@ -12,7 +12,6 @@
     netsync: false
     sprite: Objects/Weapons/Guns/Ammunition/Explosives/rpg.rsi
     state: frag
-    drawdepth: FloorObjects
 
 - type: entity
   id: GrenadeBaton
