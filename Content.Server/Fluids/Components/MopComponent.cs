@@ -1,7 +1,8 @@
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
+using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
@@ -138,11 +139,11 @@ namespace Content.Server.Fluids.Components
             var transferAmount = ReagentUnit.Min(ReagentUnit.New(5), puddleComponent.CurrentVolume, CurrentVolume);
             var puddleCleaned = puddleComponent.CurrentVolume - transferAmount <= 0;
 
+            var puddleSystem = EntitySystem.Get<PuddleSystem>();
+            var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (transferAmount == 0)
             {
-                if (
-                    puddleComponent
-                        .EmptyHolder) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
+                if (puddleSystem.EmptyHolder(puddleComponent.Owner.Uid, puddleComponent)) //The puddle doesn't actually *have* reagents, for example vomit because there's no "vomit" reagent.
                 {
                     puddleComponent.Owner.Delete();
                     transferAmount = ReagentUnit.Min(ReagentUnit.New(5), CurrentVolume);
@@ -155,13 +156,13 @@ namespace Content.Server.Fluids.Components
             }
             else
             {
-                puddleComponent.SplitSolution(transferAmount);
+                if (solutionSystem.TryGetSolution(eventArgs.Target, puddleComponent.SolutionName, out var puddleSolution))
+                    solutionSystem.SplitSolution(eventArgs.Target.Uid, puddleSolution, transferAmount);
             }
 
-            if (
-                puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
+            if (puddleCleaned) //After cleaning the puddle, make a new puddle with solution from the mop as a "wet floor". Then evaporate it slowly.
             {
-                EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, transferAmount)
+                solutionSystem.SplitSolution(Owner.Uid, contents, transferAmount)
                     .SpillAt(eventArgs.ClickLocation, "PuddleSmear");
             }
             else

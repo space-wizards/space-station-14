@@ -1,9 +1,6 @@
 ﻿<SS14Window
     xmlns="https://spacestation14.io"
-    xmlns:adminTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminTab"
-    xmlns:adminbusTab="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
-    xmlns:atmosTab="clr-namespace:Content.Client.Administration.UI.Tabs.AtmosTab"
-    xmlns:tabs="clr-namespace:Content.Client.Administration.UI.Tabs">
+    SetSize="400 200">
     <BoxContainer Orientation="Vertical">
         <OutputPanel Name="TextOutput" VerticalExpand="true" />
         <HistoryLineEdit Name="SenderLineEdit" />

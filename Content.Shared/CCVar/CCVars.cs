@@ -91,6 +91,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("game.maxstationoffset", 1000.0f);
 
         /// <summary>
+        ///     Whether a random rotation will be applied to the station on roundstart.
+        /// </summary>
+        public static readonly CVarDef<bool> StationRotation =
+            CVarDef.Create("game.station_rotation", true);
+
+        /// <summary>
         ///     When enabled, guests will be assigned permanent UIDs and will have their preferences stored.
         /// </summary>
         public static readonly CVarDef<bool>
@@ -245,6 +251,13 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> HudTheme =
             CVarDef.Create("hud.theme", 0, CVar.ARCHIVE | CVar.CLIENTONLY);
 
+        public static readonly CVarDef<bool> HudHeldItemShow =
+            CVarDef.Create("hud.held_item_show", true, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+        public static readonly CVarDef<float> HudHeldItemOffset =
+            CVarDef.Create("hud.held_item_offset", 28f, CVar.ARCHIVE | CVar.CLIENTONLY);
+
+
         /*
          * AI
          */
@@ -391,9 +404,9 @@ namespace Content.Shared.CCVar
             CVarDef.Create("ooc.enabled_admin", true, CVar.NOTIFY);
 
         /*
-         * Context Menu Grouping Types
+         * Entity Menu Grouping Types
          */
-        public static readonly CVarDef<int> ContextMenuGroupingType = CVarDef.Create("context_menu", 0, CVar.CLIENTONLY);
+        public static readonly CVarDef<int> EntityMenuGroupingType = CVarDef.Create("entity_menu", 0, CVar.CLIENTONLY);
 
         /*
          * VOTE
@@ -461,5 +474,15 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<float> AfkTime =
             CVarDef.Create("afk.time", 60f, CVar.SERVERONLY);
+
+        /*
+         * IC
+         */
+
+        /// <summary>
+        /// Restricts IC character names to alphanumeric chars.
+        /// </summary>
+        public static readonly CVarDef<bool> RestrictedNames =
+            CVarDef.Create("ic.restricted_names", true, CVar.SERVER | CVar.REPLICATED);
     }
 }

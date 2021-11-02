@@ -35,4 +35,5 @@
       - !type:DoActsBehavior
         acts: ["Destruction"]
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: CargoTelepad

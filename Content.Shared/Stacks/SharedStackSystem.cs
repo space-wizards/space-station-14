@@ -73,7 +73,11 @@ namespace Content.Shared.Stacks
             }
 
             // We do have enough things in the stack, so remove them and change.
-            SetCount(uid, stack.Count - amount, stack);
+            if (!stack.Unlimited)
+            {
+                SetCount(uid, stack.Count - amount, stack);
+            }
+
             return true;
         }
 

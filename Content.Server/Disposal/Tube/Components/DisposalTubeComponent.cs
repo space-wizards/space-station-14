@@ -56,41 +56,6 @@ namespace Content.Server.Disposal.Tube.Components
             return NextDirection(holder).ToVec();
         }
 
-        protected Direction DirectionTo(IDisposalTubeComponent other)
-        {
-            return (other.Owner.Transform.WorldPosition - Owner.Transform.WorldPosition).GetDir();
-        }
-
-        public IDisposalTubeComponent? NextTube(DisposalHolderComponent holder)
-        {
-            var nextDirection = NextDirection(holder);
-            var oppositeDirection = new Angle(nextDirection.ToAngle().Theta + Math.PI).GetDir();
-
-            var grid = _mapManager.GetGrid(Owner.Transform.GridID);
-            var position = Owner.Transform.Coordinates;
-            foreach (var entity in grid.GetInDir(position, nextDirection))
-            {
-                if (!Owner.EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
-                {
-                    continue;
-                }
-
-                if (!tube.CanConnect(oppositeDirection, this))
-                {
-                    continue;
-                }
-
-                if (!CanConnect(nextDirection, tube))
-                {
-                    continue;
-                }
-
-                return tube;
-            }
-
-            return null;
-        }
-
         public bool Remove(DisposalHolderComponent holder)
         {
             var removed = Contents.Remove(holder.Owner);

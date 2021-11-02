@@ -24,6 +24,7 @@
         - MobImpassable
         - SmallImpassable
   - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
   - type: UserInterface
     interfaces:
     - key: enum.ReagentDispenserUiKey.Key

@@ -18,7 +18,9 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Suspicion
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class SuspicionRoleComponent : SharedSuspicionRoleComponent, IExamine
+#pragma warning restore 618
     {
         private Role? _role;
         [ViewVariables]
@@ -161,21 +163,6 @@ namespace Content.Server.Suspicion
             }
 
             return new SuspicionRoleComponentState(Role?.Name, Role?.Antagonist, allies.ToArray());
-        }
-
-        public override void HandleMessage(ComponentMessage message, IComponent? component)
-        {
-            base.HandleMessage(message, component);
-
-            switch (message)
-            {
-                case RoleAddedMessage {Role: SuspicionRole role}:
-                    Role = role;
-                    break;
-                case RoleRemovedMessage {Role: SuspicionRole}:
-                    Role = null;
-                    break;
-            }
         }
     }
 }

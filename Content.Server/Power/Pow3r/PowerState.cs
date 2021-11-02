@@ -350,8 +350,8 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public bool Paused;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
 
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
 
             // == Runtime parameters ==
 
@@ -399,8 +399,8 @@ namespace Content.Server.Power.Pow3r
             [ViewVariables(VVAccess.ReadWrite)] public float MaxChargeRate;
             [ViewVariables(VVAccess.ReadWrite)] public float MaxThroughput; // 0 = infinite cuz imgui
             [ViewVariables(VVAccess.ReadWrite)] public float MaxSupply;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance;
-            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampTolerance = 5000;
+            [ViewVariables(VVAccess.ReadWrite)] public float SupplyRampRate = 5000;
             [ViewVariables(VVAccess.ReadWrite)] public float Efficiency = 1;
 
             // == Runtime parameters ==
@@ -450,6 +450,9 @@ namespace Content.Server.Power.Pow3r
 
             // "Supplying" means the network is connected to the OUTPUT port of the battery.
             [ViewVariables] public List<NodeId> BatteriesDischarging = new();
+
+            [ViewVariables] public float LastAvailableSupplySum = 0f;
+            [ViewVariables] public float LastMaxSupplySum = 0f;
 
             [ViewVariables] [JsonIgnore] public int Height;
             [JsonIgnore] public bool HeightTouched;

@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Content.Server.Electrocution;
 using Content.Server.Stack;
 using Content.Server.Tools;
 using Content.Server.Tools.Components;
@@ -42,6 +43,8 @@ namespace Content.Server.Power.Components
                 return false;
 
             if (!await EntitySystem.Get<ToolSystem>().UseTool(eventArgs.Using.Uid, eventArgs.User.Uid, Owner.Uid, 0f, 0.25f, _cuttingQuality)) return false;
+
+            if (EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(Owner.Uid, eventArgs.User.Uid)) return false;
 
             Owner.Delete();
             var droppedEnt = Owner.EntityManager.SpawnEntity(_cableDroppedOnCutPrototype, eventArgs.ClickLocation);

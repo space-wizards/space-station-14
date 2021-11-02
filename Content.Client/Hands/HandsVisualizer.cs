@@ -61,38 +61,4 @@ namespace Content.Client.Hands
             return location.ToString();
         }
     }
-
-    public enum HandsVisuals : byte
-    {
-        VisualState
-    }
-
-    public class HandsVisualState
-    {
-        public List<HandVisualState> Hands { get; } = new();
-
-        public HandsVisualState(List<HandVisualState> hands)
-        {
-            Hands = hands;
-        }
-    }
-
-    public class HandVisualState
-    {
-        public string RsiPath { get; }
-
-        public string? EquippedPrefix { get; }
-
-        public HandLocation Location { get; }
-
-        public Color Color { get; }
-
-        public HandVisualState(string rsiPath, string? equippedPrefix, HandLocation location, Color color)
-        {
-            RsiPath = rsiPath;
-            EquippedPrefix = equippedPrefix;
-            Location = location;
-            Color = color;
-        }
-    }
 }
