@@ -123,7 +123,7 @@ namespace Content.Server.Ghost.Roles
 
             foreach (var (id, role) in _ghostRoles)
             {
-                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription};
+                roles[i] = new GhostRoleInfo(){Identifier = id, Name = role.RoleName, Description = role.RoleDescription, Rules = role.RoleRules};
                 i++;
             }
 
