@@ -7,13 +7,9 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Server.Doors.Components
 {
     /// <summary>
-    ///     Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying, and
-    ///     not being openable on open-hand click.
+    /// Companion component to ServerDoorComponent that handles firelock-specific behavior -- primarily prying,
+    /// and not being openable on open-hand click.
     /// </summary>
-    /// <remarks>
-    ///     The fire lock will also update its draw depth when opened or closed. This prevents the firelock from being
-    ///     drawn on top of windoors or furniture when it's open.
-    /// </remarks>
     [RegisterComponent]
     public class FirelockComponent : Component
     {

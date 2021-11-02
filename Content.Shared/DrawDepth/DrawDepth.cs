@@ -12,15 +12,19 @@ namespace Content.Shared.DrawDepth
         LowFloors = DrawDepthTag.Default - 7,
 
         /// <summary>
-        ///     Things that are beneath regular floors, such as wires.
+        ///     Things that are beneath regular floors, such as wires or pipes. vents/scrubbers also use this to ensure
+        ///     that they appear below carpets.
         /// </summary>
         BelowFloor = DrawDepthTag.Default - 6,
 
+        /// <summary>
+        ///     Used for entities like carpets.
+        /// </summary>
         FloorTiles = DrawDepthTag.Default - 5,
 
         /// <summary>
-        ///     Things that are actually right on the floor, like vents or puddles. This does not mean objects like
-        ///     tables, though they are technically "on the floor".
+        ///     Things that are actually right on the floor, like puddles. This does not mean objects like
+        ///     tables, even though they are technically "on the floor".
         /// </summary>
         FloorObjects = DrawDepthTag.Default - 4,
 
@@ -66,8 +70,8 @@ namespace Content.Shared.DrawDepth
         Ghosts = DrawDepthTag.Default + 6,
 
         /// <summary>
-        ///     Should be used for overlays (crit, dead, blinded, etc). Use this if it absolutely needs to be drawn
-        ///     above anything else.
+        ///    Use this selectively if it absolutely needs to be drawn above (almost) everything else. Examples include
+        ///    the pointing arrow, the drag & drop ghost-entity, and some debug tools.
         /// </summary>
         Overlays = DrawDepthTag.Default + 7,
     }
