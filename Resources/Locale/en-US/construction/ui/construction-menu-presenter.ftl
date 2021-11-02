@@ -1,6 +1,6 @@
 ﻿construction-presenter-category-all = All
-construction-presenter-to-craft = To craft this item, you need:
-construction-presenter-to-build = To build this, first you need:
+construction-presenter-to-craft = To craft this item, you need to:
+construction-presenter-to-build = To build this, first you need to:
 
 construction-presenter-step-wrapper = {$step-number}. {$text}
 
