@@ -159,7 +159,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
             else
             {
-                _solutionContainerSystem.EnsureSolution(owner.Uid, component.SolutionName);
+                _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
 
             UpdateAppearance(component);
