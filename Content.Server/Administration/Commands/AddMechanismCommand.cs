@@ -48,7 +48,7 @@ namespace Content.Server.Administration.Commands
                 }
                 else
                 {
-                    shell.WriteLine($@"Could not add {entityUid} to {storageUid}.");
+                    shell.WriteError($@"Could not add {entityUid} to {storageUid}.");
                 }
             }
             else
