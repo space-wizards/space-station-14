@@ -9,7 +9,7 @@ namespace Content.Client.Ghost.Roles.UI
     [GenerateTypedNameReferences]
     public partial class MakeGhostRoleWindow : SS14Window
     {
-        public delegate void MakeRole(EntityUid uid, string name, string description, bool makeSentient);
+        public delegate void MakeRole(EntityUid uid, string name, string description, string rules, bool makeSentient);
 
         public MakeGhostRoleWindow()
         {
@@ -21,6 +21,8 @@ namespace Content.Client.Ghost.Roles.UI
             RoleName.MinSize = (300, 0);
             RoleDescriptionLabel.MinSize = (150, 0);
             RoleDescription.MinSize = (300, 0);
+            RoleRulesLabel.MinSize = (150, 0);
+            RoleRules.MinSize = (300, 0);
 
             MakeButton.OnPressed += OnPressed;
         }
@@ -42,7 +44,7 @@ namespace Content.Client.Ghost.Roles.UI
                 return;
             }
 
-            OnMake?.Invoke(EntityUid.Value, RoleName.Text, RoleDescription.Text, MakeSentientCheckbox.Pressed);
+            OnMake?.Invoke(EntityUid.Value, RoleName.Text, RoleDescription.Text, RoleRules.Text, MakeSentientCheckbox.Pressed);
         }
     }
 }

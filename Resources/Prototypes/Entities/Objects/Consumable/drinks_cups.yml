@@ -199,3 +199,21 @@
     state: icon
   - type: Item
     sprite: Objects/Consumable/Drinks/lean.rsi
+
+- type: entity
+  parent: DrinkGlassBase
+  id: DrinkWaterCup
+  name: water cup
+  description: A paper water cup.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 20
+        reagents:
+        - ReagentId: Water
+          Quantity: 20
+  - type: Drink
+  - type: Sprite
+    sprite: Objects/Consumable/Drinks/water_cup.rsi
+    state: icon-1

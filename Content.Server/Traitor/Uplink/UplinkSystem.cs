@@ -18,6 +18,7 @@ using Robust.Shared.Log;
 using Robust.Shared.Player;
 using System;
 using System.Linq;
+using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -88,6 +89,10 @@ namespace Content.Server.Traitor.Uplink
             if (!EntityManager.TryGetComponent(args.User.Uid, out ActorComponent? actor))
                 return;
 
+            var actionBlocker = EntitySystem.Get<ActionBlockerSystem>();
+            if (!actionBlocker.CanInteract(uid) || !actionBlocker.CanUse(uid))
+                return;
+
             ToggleUplinkUI(component, actor.PlayerSession);
             args.Handled = true;
         }
@@ -100,7 +105,7 @@ namespace Content.Server.Traitor.Uplink
                 {
                     UpdateUserInterface(uplink);
                 }
-            }    
+            }
         }
 
         private void OnRequestUpdateUI(EntityUid uid, UplinkComponent uplink, UplinkRequestUpdateInterfaceMessage args)
