@@ -1,10 +1,4 @@
 Entries:
-- author: PJB
-  changes:
-  - {message: Moved content builds over to a better server and threw it behind Cloudflare
-      caching. Should download MUCH faster now!, type: Tweak}
-  id: 25
-  time: '2021-03-04T01:20:22.853950+00:00'
 - author: walrusfromspace
   changes:
   - {message: Fixed a fatal error which crashed the client when opening the particle
@@ -2806,3 +2800,7 @@ Entries:
   - {message: Gravity generator UI now looks very fancy., type: Tweak}
   id: 524
   time: '2021-11-02T00:12:55.0000000+00:00'
+- author: 20kdc
+  changes: []
+  id: 525
+  time: '2021-11-02T00:42:05.0000000+00:00'
