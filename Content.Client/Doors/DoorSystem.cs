@@ -26,13 +26,13 @@ namespace Content.Client.Doors
 
         private void OnDoorStateChanged(EntityUid uid, ClientDoorComponent door, DoorStateChangedEvent args)
         {
-            if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
-                return;
-
             if (args.State == DoorState.Open)
                 _activeDoors.Remove(door);
             else if (args.State == DoorState.Opening)
                 _activeDoors.Add(door);
+
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
+                return;
 
             // Update sprite draw depth.  If the door is opening or closing, we will use the cloded-draw depth.
             sprite.DrawDepth = (args.State == DoorState.Open)
