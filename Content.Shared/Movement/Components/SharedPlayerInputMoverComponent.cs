@@ -119,6 +119,7 @@ namespace Content.Shared.Movement.Components
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();
+            LastGridAngle = Owner.Transform.Parent?.WorldRotation ?? new Angle(0);
         }
 
         /// <summary>
