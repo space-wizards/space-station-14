@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Content.Server.Power.Components;
+using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -32,6 +33,10 @@ namespace Content.Server.Atmos.Monitor.Components
 
         [ViewVariables]
         public List<EntityUid> LinkedMonitors { get; set; } = new();
+
+        [ViewVariables] public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
+        [ViewVariables] public AtmosMonitorAlarmType HighestNetworkState = AtmosMonitorAlarmType.Normal;
+        [ViewVariables] public bool IgnoreAlarms { get; set; } = false;
 
         // list of prototypes that this alarmable can be
         // alarmed by - must be a prototype with AtmosMonitor

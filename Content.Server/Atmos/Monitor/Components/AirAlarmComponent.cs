@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using Content.Server.Atmos.Monitor;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Power.Components;
 using Content.Server.UserInterface;
@@ -24,14 +25,13 @@ namespace Content.Server.Atmos.Monitor.Components
 
         [ViewVariables] public AirAlarmMode CurrentMode { get; set; }
 
+        // Remember to null this afterwards.
+        [ViewVariables] public IAirAlarmModeUpdate? CurrentModeUpdater { get; set; }
+
         public override string Name => "AirAlarm";
 
-        public HashSet<NetUserId> ActivePlayers = new();
-    }
+        public Dictionary<string, IAtmosDeviceData> DeviceData = new();
 
-    public class AirAlarmModeProgram
-    {
-        public List<string> TurnDeviceOn = new();
-        public List<string> TurnDeviceOff = new();
+        public HashSet<NetUserId> ActivePlayers = new();
     }
 }

@@ -4,6 +4,7 @@ using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Doors.Components
 {
@@ -18,8 +19,6 @@ namespace Content.Server.Doors.Components
 
         [ComponentDependency]
         public readonly ServerDoorComponent? DoorComponent = null;
-
-        public AtmosMonitorAlarmType LastAlarmState = AtmosMonitorAlarmType.Normal;
 
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.

@@ -1,5 +1,6 @@
 using System;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
@@ -136,6 +137,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnPacketRecv(EntityUid uid, GasVentScrubberComponent component, PacketSentEvent args)
         {
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
+                || !EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable)
                 || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
                 return;
 
@@ -155,6 +157,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                         break;
 
                     component.FromAirAlarmData(setData);
+                    alarmable.IgnoreAlarms = setData.IgnoreAlarms;
                     payload.Add(DeviceNetworkConstants.Command, AirAlarmSystem.AirAlarmSetDataStatus);
                     payload.Add(AirAlarmSystem.AirAlarmSetDataStatus, true);
 

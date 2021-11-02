@@ -1,4 +1,5 @@
-﻿using Content.Server.Atmos.Monitor.Systems;
+﻿using Content.Server.Atmos.Monitor.Components;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Doors.Components;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
@@ -69,23 +70,28 @@ namespace Content.Server.Doors.Systems
             // Make firelocks autoclose, but only if the last alarm type it
             // remembers was a danger. This is to prevent people from
             // flooding hallways with endless bad air/fire.
-            if (component.LastAlarmState != AtmosMonitorAlarmType.Danger)
+            if (!EntityManager.TryGetComponent(uid, out AtmosAlarmableComponent alarmable))
+            {
+                args.Cancel();
+                return;
+            }
+            if (alarmable.HighestNetworkState != AtmosMonitorAlarmType.Danger)
                 args.Cancel();
         }
 
         private void OnAtmosAlarm(EntityUid uid, FirelockComponent component, AtmosMonitorAlarmEvent args)
         {
             if (component.DoorComponent == null) return;
-            component.LastAlarmState = args.HighestNetworkType;
 
             if (args.HighestNetworkType == AtmosMonitorAlarmType.Normal)
-                if (component.DoorComponent.State != SharedDoorComponent.DoorState.Open
-                    || component.DoorComponent.State != SharedDoorComponent.DoorState.Opening)
+            {
+                if (component.DoorComponent.State == SharedDoorComponent.DoorState.Closed)
                     component.DoorComponent.Open();
+            }
             else if (args.HighestNetworkType == AtmosMonitorAlarmType.Danger)
-                if (component.DoorComponent.State != SharedDoorComponent.DoorState.Closed
-                    || component.DoorComponent.State != SharedDoorComponent.DoorState.Closing)
-                    component.EmergencyPressureStop();
+            {
+                component.EmergencyPressureStop();
+            }
         }
     }
 }

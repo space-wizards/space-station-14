@@ -125,8 +125,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         {
             var payload = new NetworkPayload
             {
-                    [DeviceNetworkConstants.Command] = AirAlarmSetMode,
-                    [AirAlarmSetMode] = mode
+                [DeviceNetworkConstants.Command] = AirAlarmSetMode,
+                [AirAlarmSetMode] = mode
             };
 
             _deviceNet.QueuePacket(uid, string.Empty, Freq, payload, true);
@@ -181,7 +181,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         }
 
         private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args) =>
-            SetMode(uid, args.Mode);
+            SetMode(uid, args.Mode, true, false);
 
         private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args) =>
             SetThreshold(uid, args.Threshold, args.Type, args.Gas);
@@ -229,7 +229,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // data.CurrentMode = AirAlarmMode.None;
                 // data.DirtyMode = true;
                 // data.Dirty();
-                SetMode(uid, AirAlarmMode.None);
+                SetMode(uid, AirAlarmMode.None, false);
                 // set mode to off to mimic the vents/scrubbers being turned off
                 // update UI
                 //
@@ -246,7 +246,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 // data.CurrentMode = AirAlarmMode.Filtering;
                 // data.DirtyMode = true;
                 // data.Dirty();
-                SetMode(uid, AirAlarmMode.Filtering);
+                SetMode(uid, AirAlarmMode.Filtering, false);
             }
         }
 
@@ -281,12 +281,35 @@ namespace Content.Server.Atmos.Monitor.Systems
             */
         }
 
-        public void SetMode(EntityUid uid, AirAlarmMode mode, bool noSync = false, AirAlarmComponent? controller = null)
+        private HashSet<EntityUid> _modeActiveAlarms = new();
+
+        public void SetMode(EntityUid uid, AirAlarmMode mode, bool noSync = false, bool uiOnly = true, AirAlarmComponent? controller = null)
         {
             if (!Resolve(uid, ref controller)) return;
             controller.CurrentMode = mode;
+
+            if (!uiOnly)
+            {
+                var newMode = AirAlarmModeFactory.ModeToExecutor(mode);
+                if (newMode != null)
+                {
+                    newMode.Execute(uid);
+                    if (newMode is IAirAlarmModeUpdate updatedMode)
+                    {
+                        controller.CurrentModeUpdater = updatedMode;
+                        _modeActiveAlarms.Add(uid);
+                    }
+                    else
+                    {
+                        if (controller.CurrentModeUpdater != null) controller.CurrentModeUpdater = null;
+                        _modeActiveAlarms.Remove(uid);
+                    }
+                }
+            }
+
             // controller.SendMessage(new AirAlarmUpdateAlarmModeMessage(mode));
             _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateAlarmModeMessage(mode));
+
 
             if (!noSync) SyncMode(uid, mode);
             /*
@@ -357,6 +380,8 @@ namespace Content.Server.Atmos.Monitor.Systems
                     */
 
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
+                    if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
+                        controller.DeviceData[args.SenderAddress] = data;
 
                     return;
                 case AirAlarmSetDataStatus:
@@ -486,6 +511,11 @@ namespace Content.Server.Atmos.Monitor.Systems
                 _timer = 0f;
                 foreach (var uid in _activeUserInterfaces)
                     SendAirData(uid);
+
+                foreach (var uid in _modeActiveAlarms)
+                    if (EntityManager.TryGetComponent(uid, out AirAlarmComponent alarm))
+                        if (alarm.CurrentModeUpdater != null)
+                            alarm.CurrentModeUpdater.Update(uid);
             }
         }
     }

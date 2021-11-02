@@ -17,6 +17,8 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnPacketRecv(EntityUid uid, AtmosAlarmableComponent component, PacketSentEvent args)
         {
+            if (component.IgnoreAlarms) return;
+
             if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)
                 || args.Frequency != netConn.Frequency)
                 return;
@@ -32,7 +34,11 @@ namespace Content.Server.Atmos.Monitor.Systems
                     && args.Data.TryGetValue(AtmosMonitorSystem.AtmosMonitorAlarmNetMax, out AtmosMonitorAlarmType netMax)
                     && args.Data.TryGetValue(AtmosMonitorSystem.AtmosMonitorAlarmSrc, out string? source)
                     && component.AlarmedByPrototypes.Contains(source))
+                {
+                    component.LastAlarmState = state;
+                    component.HighestNetworkState = netMax;
                     RaiseLocalEvent(component.Owner.Uid, new AtmosMonitorAlarmEvent(state, netMax));
+                }
             }
         }
     }

@@ -24,12 +24,14 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public string OutletName { get; set; } = "pipe";
 
         [ViewVariables]
-        public readonly HashSet<Gas> FilterGases = new()
+        public readonly HashSet<Gas> FilterGases = DefaultFilterGases;
+
+        public static HashSet<Gas> DefaultFilterGases = new()
         {
             Gas.CarbonDioxide,
             Gas.Plasma,
             Gas.Tritium,
-            Gas.WaterVapor
+            Gas.WaterVapor,
         };
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -64,5 +66,34 @@ namespace Content.Server.Atmos.Piping.Unary.Components
                     FilterGases.Add(gas);
             }
         }
+
+        // Presets for 'dumb' air alarm modes
+
+        public static GasVentScrubberData FilterModePreset = new GasVentScrubberData
+        {
+            Enabled = true,
+            FilterGases = DefaultFilterGases,
+            PumpDirection = ScrubberPumpDirection.Scrubbing,
+            VolumeRate = 200f,
+            WideNet = false
+        };
+
+        public static GasVentScrubberData FillModePreset = new GasVentScrubberData
+        {
+            Enabled = false,
+            FilterGases = DefaultFilterGases,
+            PumpDirection = ScrubberPumpDirection.Scrubbing,
+            VolumeRate = 200f,
+            WideNet = false
+        };
+
+        public static GasVentScrubberData PanicModePreset = new GasVentScrubberData
+        {
+            Enabled = true,
+            FilterGases = DefaultFilterGases,
+            PumpDirection = ScrubberPumpDirection.Siphoning,
+            VolumeRate = 200f,
+            WideNet = false
+        };
     }
 }

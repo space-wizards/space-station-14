@@ -47,6 +47,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     public interface IAtmosDeviceData
     {
         public bool Enabled { get; set; }
+        public bool IgnoreAlarms { get; set; }
     }
 
     [Serializable, NetSerializable]
@@ -114,6 +115,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     public class GasVentPumpData : IAtmosDeviceData
     {
         public bool Enabled { get; set; }
+        public bool IgnoreAlarms { get; set; } = false;
         public VentPumpDirection PumpDirection { get; set; }
         public VentPressureBound PressureChecks { get; set; }
         public float ExternalPressureBound { get; set; }
@@ -124,6 +126,7 @@ namespace Content.Shared.Atmos.Monitor.Components
     public class GasVentScrubberData : IAtmosDeviceData
     {
         public bool Enabled { get; set; }
+        public bool IgnoreAlarms { get; set; }
         public HashSet<Gas> FilterGases { get; set; } = new();
         public ScrubberPumpDirection  PumpDirection { get; set; }
         public float VolumeRate { get; set; }

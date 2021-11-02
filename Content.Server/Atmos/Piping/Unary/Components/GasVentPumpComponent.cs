@@ -52,5 +52,35 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             ExternalPressureBound = data.ExternalPressureBound;
             InternalPressureBound = data.InternalPressureBound;
         }
+
+        // Presets for 'dumb' air alarm modes
+
+        public static GasVentPumpData FilterModePreset = new GasVentPumpData
+        {
+            Enabled = true,
+            PumpDirection = VentPumpDirection.Releasing,
+            PressureChecks = VentPressureBound.ExternalBound,
+            ExternalPressureBound = Atmospherics.OneAtmosphere,
+            InternalPressureBound = 0f
+        };
+
+        public static GasVentPumpData FillModePreset = new GasVentPumpData
+        {
+            Enabled = true,
+            PumpDirection = VentPumpDirection.Releasing,
+            PressureChecks = VentPressureBound.ExternalBound,
+            ExternalPressureBound = Atmospherics.OneAtmosphere * 50,
+            InternalPressureBound = 0f
+        };
+
+        public static GasVentPumpData PanicModePreset = new GasVentPumpData
+        {
+            Enabled = false,
+            PumpDirection = VentPumpDirection.Releasing,
+            PressureChecks = VentPressureBound.ExternalBound,
+            ExternalPressureBound = Atmospherics.OneAtmosphere,
+            InternalPressureBound = 0f
+        };
+
     }
 }
