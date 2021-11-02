@@ -5,6 +5,8 @@
   id: PinpointerBase
   abstract: true
   components:
+  - type: Transform
+    noRot: True
   - type: Sprite
     netsync: false
     sprite: Objects/Devices/pinpointer.rsi
