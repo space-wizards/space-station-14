@@ -1,8 +1,7 @@
-using Content.Shared.Doors;
 using Content.Shared.Interaction;
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.Doors
+namespace Content.Shared.Doors
 {
     /// <summary>
     /// Raised when the door's State variable is changed to a new variable that it was not equal to before.

@@ -38,7 +38,7 @@ namespace Content.Client.Doors
 
                 base.State = value;
 
-                Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, new DoorStateMessage(this, State));
+                Owner.EntityManager.EventBus.RaiseLocalEvent(Owner.Uid, new DoorStateChangedEvent(State), false);
             }
         }
 
@@ -94,18 +94,6 @@ namespace Content.Client.Doors
                 _stateChangeHasProgressed = true;
                 Dirty();
             }
-        }
-    }
-
-    public sealed class DoorStateMessage : EntityEventArgs
-    {
-        public ClientDoorComponent Component { get; }
-        public SharedDoorComponent.DoorState State { get; }
-
-        public DoorStateMessage(ClientDoorComponent component, SharedDoorComponent.DoorState state)
-        {
-            Component = component;
-            State = state;
         }
     }
 }
