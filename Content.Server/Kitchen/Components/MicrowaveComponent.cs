@@ -69,7 +69,7 @@ namespace Content.Server.Kitchen.Components
         private bool Powered => !Owner.TryGetComponent(out ApcPowerReceiverComponent? receiver) || receiver.Powered;
 
         private bool HasContents => EntitySystem.Get<SolutionContainerSystem>()
-                                        .TryGetSolution(Owner, SolutionName, out var solution) &&
+                                        .TryGetSolution(Owner.Uid, SolutionName, out var solution) &&
                                     (solution.Contents.Count > 0 || _storage.ContainedEntities.Count > 0);
 
         private bool _uiDirty = true;
@@ -92,7 +92,7 @@ namespace Content.Server.Kitchen.Components
 
             _currentCookTimerTime = _cookTimeDefault;
 
-            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, SolutionName);
+            EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, SolutionName);
 
             _storage = ContainerHelpers.EnsureContainer<Container>(Owner, "microwave_entity_container",
                 out _);
@@ -182,7 +182,7 @@ namespace Content.Server.Kitchen.Components
             }
 
             if (_uiDirty && EntitySystem.Get<SolutionContainerSystem>()
-                .TryGetSolution(Owner, SolutionName, out var solution))
+                .TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 UserInterface?.SetState(new MicrowaveUpdateUserInterfaceState
                 (
@@ -257,7 +257,7 @@ namespace Content.Server.Kitchen.Components
                     return false;
                 }
 
-                if (!solutionsSystem.TryGetSolution(Owner, SolutionName, out var solution))
+                if (!solutionsSystem.TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     return false;
                 }
@@ -388,7 +388,7 @@ namespace Content.Server.Kitchen.Components
 
         private void VaporizeReagents()
         {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 EntitySystem.Get<SolutionContainerSystem>().RemoveAllSolution(Owner.Uid, solution);
             }
@@ -396,7 +396,7 @@ namespace Content.Server.Kitchen.Components
 
         private void VaporizeReagentQuantity(Solution.ReagentQuantity reagentQuantity)
         {
-            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
                     .TryRemoveReagent(Owner.Uid, solution, reagentQuantity.ReagentId, reagentQuantity.Quantity);
@@ -432,7 +432,7 @@ namespace Content.Server.Kitchen.Components
         private void SubtractContents(FoodRecipePrototype recipe)
         {
             var solutionUid = Owner.Uid;
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 return;
             }
@@ -472,7 +472,7 @@ namespace Content.Server.Kitchen.Components
                 return MicrowaveSuccessState.RecipeFail;
             }
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 return MicrowaveSuccessState.RecipeFail;
             }

@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
 namespace Content.Server.Construction.Components
@@ -356,5 +357,10 @@ namespace Content.Server.Construction.Components
 
             return false;
         }
+    }
+
+    [DataDefinition]
+    public class MachineDeconstructedEvent : EntityEventArgs
+    {
     }
 }

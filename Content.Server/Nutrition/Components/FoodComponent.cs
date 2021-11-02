@@ -55,7 +55,7 @@ namespace Content.Server.Nutrition.Components
         {
             get
             {
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     return 0;
                 }
@@ -101,7 +101,7 @@ namespace Content.Server.Nutrition.Components
         public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionContainerSys.TryGetSolution(Owner, SolutionName, out var solution))
+            if (!solutionContainerSys.TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 return false;
             }

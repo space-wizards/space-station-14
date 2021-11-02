@@ -28,7 +28,7 @@ namespace Content.Server.Body.Metabolism
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
-            _solutionContainerSystem.EnsureSolution(EntityManager.GetEntity(uid), component.SolutionName);
+            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         }
 
         public override void Update(float frameTime)
@@ -62,7 +62,7 @@ namespace Content.Server.Body.Metabolism
                 if (body != null)
                 {
                     if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && _solutionContainerSystem.TryGetSolution(body.Owner, comp.SolutionName, out solution)
+                        && _solutionContainerSystem.TryGetSolution(body.OwnerUid, comp.SolutionName, out solution)
                         && solution.CurrentVolume >= ReagentUnit.Zero)
                     {
                         reagentList = solution.Contents;

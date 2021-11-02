@@ -89,7 +89,7 @@ namespace Content.Server.Body.Behavior
         {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, DefaultSolutionName, out var solution);
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, DefaultSolutionName, out var solution);
                 return solution;
             }
         }
@@ -134,7 +134,7 @@ namespace Content.Server.Body.Behavior
         {
             base.Startup();
 
-            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner, DefaultSolutionName);
+            var solution = EntitySystem.Get<SolutionContainerSystem>().EnsureSolution(Owner.Uid, DefaultSolutionName);
             solution.MaxVolume = InitialMaxVolume;
         }
 

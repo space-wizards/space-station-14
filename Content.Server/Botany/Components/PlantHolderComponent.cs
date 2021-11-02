@@ -547,7 +547,7 @@ namespace Content.Server.Botany.Components
         public void UpdateReagents()
         {
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var solution))
+            if (!solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var solution))
                 return;
 
             if (solution.TotalVolume <= 0 || MutationLevel >= 25)
@@ -725,7 +725,7 @@ namespace Content.Server.Botany.Components
 
             var solutionSystem = EntitySystem.Get<SolutionContainerSystem>();
             if (solutionSystem.TryGetDrainableSolution(usingItem.Uid, out var solution)
-                && solutionSystem.TryGetSolution(Owner, SoilSolutionName, out var targetSolution))
+                && solutionSystem.TryGetSolution(Owner.Uid, SoilSolutionName, out var targetSolution))
             {
                 var amount = ReagentUnit.New(5);
                 var sprayed = false;
@@ -812,7 +812,7 @@ namespace Content.Server.Botany.Components
                     ("usingItem", usingItem),
                     ("owner", Owner)));
 
-                if (solutionSystem.TryGetSolution(usingItem, produce.SolutionName, out var solution2))
+                if (solutionSystem.TryGetSolution(usingItem.Uid, produce.SolutionName, out var solution2))
                 {
                     // This deliberately discards overfill.
                     solutionSystem.TryAddSolution(usingItem.Uid, solution2,
