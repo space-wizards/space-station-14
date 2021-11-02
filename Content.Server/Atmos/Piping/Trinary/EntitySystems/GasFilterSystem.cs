@@ -84,7 +84,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             _userInterfaceSystem.TryOpen(uid, GasFilterUiKey.Key, actor.PlayerSession);
             DirtyUI(uid, component);
-            
+
             args.Handled = true;
         }
 
@@ -120,7 +120,5 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             }
 
         }
-    }
-
     }
 }
