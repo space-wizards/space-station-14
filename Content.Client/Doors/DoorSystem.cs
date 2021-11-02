@@ -34,7 +34,7 @@ namespace Content.Client.Doors
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
                 return;
 
-            // Update sprite draw depth.  If the door is opening or closing, we will use the cloded-draw depth.
+            // Update sprite draw depth.  If the door is opening or closing, we will use the closed-draw depth.
             sprite.DrawDepth = (args.State == DoorState.Open)
                 ? door.OpenDrawDepth
                 : door.ClosedDrawDepth;
