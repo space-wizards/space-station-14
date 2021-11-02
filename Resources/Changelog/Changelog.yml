@@ -2783,12 +2783,11 @@ Entries:
   time: '2021-10-31T13:57:06.0000000+00:00'
 - author: PaulRitter
   changes:
-  - {message: RougePointingArrow will no longer attack ghosts, type: Fix}
+  - {message: RoguePointingArrow will no longer attack ghosts, type: Fix}
   id: 522
   time: '2021-10-31T14:03:32.0000000+00:00'
 - author: CrudeWax
   changes:
-  - {message: Added additional flavor text to consoles, type: Add}
   - {message: Replaced placeholder piloting alert icon, type: Tweak}
   id: 523
   time: '2021-11-01T13:26:37.0000000+00:00'
