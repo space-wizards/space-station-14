@@ -19,7 +19,7 @@
           - Ethanol
   - type: UtilityAI
     behaviorSets:
-    - Clothing
+    # - Clothing
     - Idle
   - type: Hunger
     damage:
@@ -146,8 +146,8 @@
   - type: UtilityAI
     behaviorSets:
     - Idle
-    - Hunger
-    - Thirst
+    # - Hunger TODO: eating on the floor, fix weird monkey endless stomach
+    # - Thirst
   - type: Respirator
     metabolismHeat: 5000
     radiatedHeat: 400
