@@ -1,4 +1,4 @@
-﻿using Content.Server.Clothing.Components;
+using Content.Server.Clothing.Components;
 using Content.Server.Inventory.Components;
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
@@ -20,7 +20,7 @@ namespace Content.Server.Temperature.Components
                 return int.MinValue;
             }
 
-            if (Owner.GetComponent<InventoryComponent>().TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ClothingComponent? gloves))
+            if (inventoryComp.TryGetSlotItem(EquipmentSlotDefines.Slots.GLOVES, out ClothingComponent? gloves))
             {
                 return gloves?.HeatResistance ?? int.MinValue;
             }
