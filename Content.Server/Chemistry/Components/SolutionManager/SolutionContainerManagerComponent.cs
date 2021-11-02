@@ -13,7 +13,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     [Friend(typeof(SolutionContainerSystem))]
     public class SolutionContainerManagerComponent : Component
     {
-        public const string DefaultName = "solution";
         public override string Name => "SolutionContainerManager";
 
         [ViewVariables]
