@@ -65,6 +65,9 @@ namespace Content.Client.Construction.UI
                         _constructionView.MoveToFront();
                     else
                         _constructionView.OpenCentered();
+
+                    if(_selected != null)
+                        PopulateInfo(_selected);
                 }
                 else
                     _constructionView.Close();
