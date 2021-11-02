@@ -1,10 +1,4 @@
 Entries:
-- author: walrusfromspace
-  changes:
-  - {message: Fixed a fatal error which crashed the client when opening the particle
-      accelerator control computer., type: Fix}
-  id: 26
-  time: '2021-03-04T08:38:43.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Radio messages not showing up, type: Fix}
@@ -2803,3 +2797,9 @@ Entries:
   changes: []
   id: 525
   time: '2021-11-02T00:42:05.0000000+00:00'
+- author: Ygg01
+  changes:
+  - {message: 'Make tomato juiceable and grindable. Finally, more nutritious juice
+      is possible.', type: Tweak}
+  id: 526
+  time: '2021-11-02T04:20:14.0000000+00:00'
