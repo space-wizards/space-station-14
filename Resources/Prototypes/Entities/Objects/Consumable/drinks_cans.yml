@@ -256,10 +256,17 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkEnergyDrink
+  id: DrinkEnergyDrinkCan
   name: red bool energy drink
   description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EnergyDrink
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi

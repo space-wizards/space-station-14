@@ -41,6 +41,20 @@
       amount: 0.1
 
 - type: reagent
+  id: EnergyDrink
+  name: Energy Drink
+  desc: A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
+  physicalDesc: fizzy
+  color: "#ffffbf"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
   id: GrapeSoda
   name: grape soda
   desc: It's Graaaaaape!
