@@ -1,5 +1,4 @@
 using Content.Server.Nutrition.Components;
-using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 
