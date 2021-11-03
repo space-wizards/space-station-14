@@ -113,16 +113,6 @@
     BraveBull: 3
 
 - type: reaction
-  id: Starkist
-  reactants:
-    Cola:
-      amount: 1
-    JuiceOrange:
-      amount: 2
-  products:
-    Starkist: 3
-
-- type: reaction
   id: CafeLatte
   reactants:
     Coffee:
@@ -469,6 +459,16 @@
       amount: 1
   products:
     SoyLatte: 2
+
+- type: reaction
+  id: Starkist
+  reactants:
+    Cola:
+      amount: 1
+    JuiceOrange:
+      amount: 2
+  products:
+    Starkist: 3
 
 - type: reaction
   id: SyndicateBomb
