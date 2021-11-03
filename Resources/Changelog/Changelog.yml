@@ -1,17 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes wood table and poker table constructions having the wrong material.,
-    type: Fix}
-  id: 39
-  time: '2021-03-06T12:28:13.759792+00:00'
-- author: Zumorica
-  changes:
-  - {message: Fixes torch crafting recipe having incorrect materials., type: Fix}
-  id: 40
-  time: '2021-03-06T12:28:13.760916+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes bug where deconstructing computers wouldn't return the circuit
       board., type: Fix}
   id: 41
@@ -2810,3 +2799,14 @@ Entries:
   - {message: Pinpointers stop being active on component shutdown, type: Fix}
   id: 538
   time: '2021-11-03T23:42:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Bicaridine now properly heals blunt damage., type: Fix}
+  id: 539
+  time: '2021-11-03T23:48:03.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'There is now an indicator showing how many ghost roles are available,
+      if any.', type: Add}
+  id: 540
+  time: '2021-11-03T23:48:13.0000000+00:00'
