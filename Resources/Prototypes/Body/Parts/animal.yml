@@ -100,7 +100,7 @@
     solutions:
       stomach:
         maxVol: 100
-  - type: Metabolizer 
+  - type: Metabolizer
     metabolisms:
       Flour:
         effects:
@@ -161,7 +161,7 @@
       Milk:
         effects:
         - !type:SatiateThirst
-      SpoiledMilk:
+      MilkSpoiled:
         effects:
         - !type:SatiateThirst
           hydrationFactor: -2
@@ -177,7 +177,7 @@
         effects:
         - !type:SatiateThirst
           hydrationFactor: 0.5
-      ThirteenLoko:
+      FourteenLoko:
         effects:
         - !type:SatiateThirst
           hydrationFactor: 2
