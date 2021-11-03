@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.Atmos.Monitor;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
+using Robust.Shared.Maths;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Client.Atmos.Monitor
@@ -40,6 +41,11 @@ namespace Content.Client.Atmos.Monitor
                     foreach (var (setLayer, state) in _setOnDepowered)
                         if (sprite.LayerMapTryGet(setLayer, out int setStateLayer))
                             sprite.LayerSetState(setStateLayer, new RSI.StateId(state));
+            }
+
+            if (component.TryGetData<Vector2>("offset", out Vector2 offset))
+            {
+                sprite.Offset = offset;
             }
 
             if (component.TryGetData<AtmosMonitorAlarmType>("alarmType", out var alarmType)

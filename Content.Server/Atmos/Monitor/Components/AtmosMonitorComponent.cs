@@ -73,6 +73,13 @@ namespace Content.Server.Atmos.Monitor.Components
         [ViewVariables]
         public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
 
+        // feeling ESPECIALLY dirty about this one
+        //
+        // Tells if the monitor has been repositioned due to it
+        // being on a tile where it can't detect air.
+        [ViewVariables]
+        public bool Repositioned = false;
+
         // Calculates the highest alarm in the network, including itself.
         public AtmosMonitorAlarmType HighestAlarmInNetwork()
         {

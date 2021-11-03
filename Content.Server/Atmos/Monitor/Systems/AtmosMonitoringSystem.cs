@@ -8,8 +8,11 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.WireHacking;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Wires;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -79,16 +82,68 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
+            Logger.DebugS("AtmosMonitor", $"{component.Owner.Transform.LocalRotation}");
+            _checkPos.Add(uid);
+        }
+
+        // hackiest shit ever but there's no PostStartup event
+        private HashSet<EntityUid> _checkPos = new();
+
+        public override void Update(float frameTime)
+        {
+            foreach (var uid in _checkPos)
+                OpenAirOrReposition(uid);
+        }
+
+        private void OpenAirOrReposition(EntityUid uid, AtmosMonitorComponent? component = null, AppearanceComponent? appearance = null)
+        {
+            if (!Resolve(uid, ref component, ref appearance)) return;
             // atmos alarms will first attempt to get the air
             // directly underneath it - if not, then it will
-            // register the air directly in front of it
+            // instead place itself directly in front of the tile
+            // it is facing, and then visually shift itself back
+            // via sprite offsets (SS13 style but fuck it)
+            //
+            // this introduces some Edge Cases (such as people
+            // putting air alarms in the wrong direction and making
+            // them visually in the wrong spot
+            //
+            // This could probably be mitigated like so:
+            // - Make a construction step that ensure that offsets
+            //   don't get set if the offset is facing away from the user
+            //   (i.e., the user must be facing the object
+            //   in order to complete it)
+            //
+            // This cannot be mitigated when spawning any atmos monitors,
+            // and this also requires a new system potentially
+            //
+            // (this also potentially issues the issue with creating
+            // wall lights)
             //
             // if that doesn't work, then nothing is done about it
             var coords = component.Owner.Transform.Coordinates;
-            if (_atmosphereSystem.IsTileAirBlocked(coords))
-                coords = coords.Offset((component.Owner.Transform.LocalRotation.RotateVec(new Vector2(1, 0))));
+
+            if (_atmosphereSystem.IsTileAirBlocked(coords) && !component.Repositioned)
+            {
+                Logger.DebugS("AtmosMonitor", $"airblocked, attempting to reposition: {coords}");
+                var rotPos = component.Owner.Transform.LocalRotation.RotateVec(new Vector2(0, -1));
+                Logger.DebugS("AtmosMonitor", $"worldRot: {component.Owner.Transform.LocalRotation - MathHelper.PiOver2}");
+                Logger.DebugS("AtmosMonitor", $"rotPos: {rotPos}");
+                component.Owner.Transform.Anchored = false;
+                coords = coords.Offset(rotPos);
+                Logger.DebugS("AtmosMonitor", $"newCoords: {coords}");
+                component.Owner.Transform.Coordinates = coords;
+
+                appearance.SetData("offset", -rotPos);
+
+                component.Owner.Transform.Anchored = true;
+                component.Repositioned = true;
+            }
+
             GasMixture? air = _atmosphereSystem.GetTileMixture(coords);
             component.TileGas = air;
+
+            _checkPos.Remove(uid);
         }
 
         private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, PacketSentEvent args)
@@ -209,6 +264,13 @@ namespace Content.Server.Atmos.Monitor.Systems
                 && component.PressureThreshold == null
                 && component.GasThresholds == null)
                 return;
+
+            // why is this in update? because transform rotation
+            // doesn't occur at startup! wow! :death:
+            if (component.TileGas == null)
+            {
+
+            }
 
             /*
             var coords = component.Owner.Transform.Coordinates;

@@ -40,6 +40,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
@@ -198,6 +199,9 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
         {
+            if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
+                return;
+
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
