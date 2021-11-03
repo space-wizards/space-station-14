@@ -6,19 +6,27 @@
   components:
   - type: Mind
     showExamineInfo: true
-  - type: MobState
-    thresholds:
-      0: !type:NormalMobState {}
   - type: Input
     context: "human"
-  - type: PlayerInputMover
   - type: PlayerMobMover
+  - type: PlayerInputMover
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 7
+    baseSprintSpeed : 7
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: tech_basic
       sprite: Mobs/Aliens/Guardians/guardians.rsi
+  - type: Clickable
+  - type: InteractionOutline
   - type: Physics
     bodyType: KinematicController
     fixtures:
@@ -32,24 +40,17 @@
       - SmallImpassable
       layer:
       - Opaque
-  - type: MovementSpeedModifier
-    baseWalkSpeed : 7
-    baseSprintSpeed : 7
-  - type: Actions
-    innateActions:
-      - CombatMode
-  - type: Clickable
-  - type: InteractionOutline
-  - type: Eye
-  - type: CameraRecoil
-  - type: Examiner
-  - type: Puller
-  - type: Speech
-  - type: UserInterface
-  - type: Alerts
-  - type: Pullable
   - type: Damageable
     damageContainer: Biological
+  - type: MobState
+    thresholds:
+      0: !type:NormalMobState {}
+  - type: HeatResistance
+  - type: CombatMode
+  - type: Internals
+  - type: Examiner
+  - type: Speech
+  - type: Pullable
   - type: UnarmedCombat
     range: 2
     arcwidth: 30
@@ -59,6 +60,10 @@
     damage:
       types:
         Blunt: 45
+  - type: Actions
+    innateActions:
+      - CombatMode
   - type: Guardian
     distanceAllowed: 8
     damageShare: 0.8
+    

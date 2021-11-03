@@ -5,6 +5,8 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.Components;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
+using Content.Shared.MobState;
+using Content.Shared.MobState.Components;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -25,6 +27,26 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianHostComponent, MoveEvent>(OnGuardianHostMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
+            SubscribeLocalEvent<GuardianHostComponent, MobStateChangedMessage>(OnHostDeath);
+        }
+
+        /// <summary>
+        /// Triggers upon mobstate, to detect disintigration command upon host's death
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <param name="args"></param>
+        private void OnHostDeath(EntityUid uid, GuardianHostComponent component, MobStateChangedMessage args)
+        {
+            //We only care if the host is dead, not in crit or incapacitated, as he still can support a holopara
+            //Dragging him away
+            if (component.Owner.GetComponent<MobStateComponent>().IsDead())
+            {
+                //Delete both entities to prevent revival, guardian first to avoid errors
+                //TODO: add disintigration. Proper. Current method leaves no items behind.
+                EntityManager.QueueDeleteEntity(component._hostedguardian);
+                EntityManager.QueueDeleteEntity(uid);
+            }
         }
 
         /// <summary>
@@ -39,8 +61,8 @@ namespace Content.Server.Guardian
             var hostdamage = EntityManager.GetEntity(component.Host).EnsureComponent<DamageableComponent>();
             if (args.DamageDelta != null)
             {
-                //EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage+args.DamageDelta*component.DamagePercent));
-                //hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
+                EntitySystem.Get<DamageableSystem>().SetDamage(hostdamage, (hostdamage.Damage+args.DamageDelta*component.DamagePercent));
+                hostdamage.Owner.PopupMessage(Loc.GetString("guardian-entity-taking-damage"));
             }
                   
         }
