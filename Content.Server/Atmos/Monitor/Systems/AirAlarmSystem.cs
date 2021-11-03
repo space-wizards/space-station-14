@@ -1,20 +1,26 @@
 using System;
 using System.Collections.Generic;
+using Content.Server.Access.Components;
+using Content.Server.Access.Systems;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
+using Content.Server.WireHacking;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Popups;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Log;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -33,6 +39,7 @@ namespace Content.Server.Atmos.Monitor.Systems
         [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
         [Dependency] private readonly AtmosMonitorSystem _atmosMonitorSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
 
         public const int Freq = AtmosMonitorSystem.AtmosMonitorApcFreq;
 
@@ -152,9 +159,11 @@ namespace Content.Server.Atmos.Monitor.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
+            SubscribeLocalEvent<AirAlarmComponent, BeforePacketSentEvent>(BeforePacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
+            SubscribeLocalEvent<AirAlarmComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmResyncAllDevicesMessage>(OnResyncAll);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmModeMessage>(OnUpdateAlarmMode);
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
@@ -162,6 +171,29 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
             SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
         }
+
+        private void BeforePacketRecv(EntityUid uid, AirAlarmComponent component, BeforePacketSentEvent args)
+        {
+            if (component.NetDisabled) args.Cancel();
+        }
+
+        private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)
+        {
+            if (!args.Powered)
+            {
+                ForceCloseAllInterfaces(uid);
+                component.CurrentModeUpdater = null;
+                component.DeviceData.Clear();
+            }
+        }
+
+        /*
+        private void OnInteractUsing(EntityUid uid, AirAlarmComponent component, InteractUsingEvent args)
+        {
+            if (EntityManager.TryGetCom^ponent(uid, out WiresComponent wires))
+                wires.
+        }
+        */
 
         private void OnClose(EntityUid uid, AirAlarmComponent component, BoundUIClosedEvent args)
         {
@@ -175,6 +207,17 @@ namespace Content.Server.Atmos.Monitor.Systems
             if (!args.User.TryGetComponent(out ActorComponent? actor))
                 return;
 
+            if (EntityManager.TryGetComponent(uid, out WiresComponent wire))
+                if (wire.IsPanelOpen)
+                {
+                    args.Handled = false;
+                    return;
+                }
+
+            if (EntityManager.TryGetComponent(uid, out ApcPowerReceiverComponent recv))
+                if (!recv.Powered)
+                    return;
+
             component.Owner.GetUIOrNull(SharedAirAlarmInterfaceKey.Key)?.Open(actor.PlayerSession);
             component.ActivePlayers.Add(actor.PlayerSession.UserId);
             AddActiveInterface(uid);
@@ -187,22 +230,51 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         private void OnResyncAll(EntityUid uid, AirAlarmComponent component, AirAlarmResyncAllDevicesMessage args)
         {
-            component.DeviceData.Clear();
-            SyncAllDevices(uid);
+            if (AccessCheck(uid, args.Session.AttachedEntity, component))
+            {
+                component.DeviceData.Clear();
+                SyncAllDevices(uid);
+            }
         }
 
         private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
         {
             string addr = string.Empty;
             if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent netConn)) addr = netConn.Address;
-            SetMode(uid, addr, args.Mode, true, false);
+            if (AccessCheck(uid, args.Session.AttachedEntity, component))
+                SetMode(uid, addr, args.Mode, true, false);
+            else
+                SendAlarmMode(uid);
         }
 
-        private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args) =>
-            SetThreshold(uid, args.Threshold, args.Type, args.Gas);
+        private void OnUpdateThreshold(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmThresholdMessage args)
+        {
+            if (AccessCheck(uid, args.Session.AttachedEntity, component))
+                SetThreshold(uid, args.Threshold, args.Type, args.Gas);
+            else
+                SendThresholds(uid);
+        }
 
-        private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args) =>
-            SetDeviceData(uid, args.Address, args.Data);
+        private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
+        {
+            if (AccessCheck(uid, args.Session.AttachedEntity, component))
+                SetDeviceData(uid, args.Address, args.Data);
+            else
+                SyncDevice(uid, args.Address);
+        }
+
+        private bool AccessCheck(EntityUid uid, IEntity? user, AirAlarmComponent? component = null)
+        {
+            if (Resolve(uid, ref component))
+                if (EntityManager.TryGetComponent(uid, out AccessReader reader))
+                    if (user != null)
+                        if (_accessSystem.IsAllowed(reader, user.Uid) || component.FullAccess)
+                            return true;
+                        else
+                            user.PopupMessage(Loc.GetString("air-alarm-ui-access-denied"));
+
+            return false;
+        }
 
         // tempted to make air alarm modes just broadcast packets that the
         // scrubbers/filters themselves process, instead of
@@ -393,7 +465,8 @@ namespace Content.Server.Atmos.Monitor.Systems
             {
                 case AirAlarmSyncData:
                     if (!args.Data.TryGetValue(AirAlarmSyncData, out IAtmosDeviceData? data)
-                        || data == null) break;
+                        || data == null
+                        || !controller.CanSync) break;
 
                     // Save into component.
                     // Sync data to interface.
@@ -408,6 +481,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                     */
 
                     _uiSystem.TrySendUiMessage(uid, SharedAirAlarmInterfaceKey.Key, new AirAlarmUpdateDeviceDataMessage(args.SenderAddress, data));
+                    if (controller.WiresComponent != null) controller.UpdateWires();
                     if (!controller.DeviceData.TryAdd(args.SenderAddress, data))
                         controller.DeviceData[args.SenderAddress] = data;
 
@@ -445,6 +519,11 @@ namespace Content.Server.Atmos.Monitor.Systems
         public void RemoveActiveInterface(EntityUid uid)
         {
             _activeUserInterfaces.Remove(uid);
+        }
+
+        public void ForceCloseAllInterfaces(EntityUid uid)
+        {
+            _uiSystem.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
         }
 
         private void SendAddress(EntityUid uid, DeviceNetworkComponent? netConn = null)

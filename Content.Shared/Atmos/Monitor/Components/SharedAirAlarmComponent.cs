@@ -24,6 +24,15 @@ namespace Content.Shared.Atmos.Monitor.Components
     }
 
     [Serializable, NetSerializable]
+    public enum AirAlarmWireStatus
+    {
+        Power,
+        Access,
+        Panic,
+        DeviceSync
+    }
+
+    [Serializable, NetSerializable]
     public readonly struct AirAlarmAirData
     {
         public readonly float? Pressure { get; }

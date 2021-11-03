@@ -2,12 +2,17 @@
 
 ## Window
 
+air-alarm-ui-access-denied = Insufficient access!
+
 air-alarm-ui-window-pressure-label = Pressure
 air-alarm-ui-window-temperature-label = Temperature
 air-alarm-ui-window-alarm-state-label = Status
 
 air-alarm-ui-window-address-label = Address
 air-alarm-ui-window-device-count-label = Total Devices
+air-alarm-ui-window-resync-devices-label = Resync
+
+air-alarm-ui-window-mode-label = Mode
 
 air-alarm-ui-window-pressure = {$pressure} kPa
 air-alarm-ui-window-temperature = {$tempC} C ({$temperature} K)
@@ -30,10 +35,10 @@ air-alarm-ui-atmos-net-device-label = Address: {$address}
 
 ### Vent pumps
 
-air-alarm-ui-vent-pump-label = Vent Direction
-air-alarm-ui-vent-pressure-label = Pressure Bound
-air-alarm-ui-vent-external-bound-label = External Bound
-air-alarm-ui-vent-internal-bound-label = Internal Bound
+air-alarm-ui-vent-pump-label = Vent direction
+air-alarm-ui-vent-pressure-label = Pressure bound
+air-alarm-ui-vent-external-bound-label = External bound
+air-alarm-ui-vent-internal-bound-label = Internal bound
 
 ### Scrubbers
 
