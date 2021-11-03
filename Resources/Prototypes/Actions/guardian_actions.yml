@@ -1,7 +1,7 @@
 ﻿- type: action
   actionType: ManifestGuardian
   icon: Interface/Actions/manifest.png
-  name: "[color=blue]Toggle guardian manifestation[/color]"
+  name: "Toggle guardian manifestation"
   description: "Either manifests the guardian or recalls it back into your body"
   filters:
     - guardian

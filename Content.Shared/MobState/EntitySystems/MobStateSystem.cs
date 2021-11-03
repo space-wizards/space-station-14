@@ -63,5 +63,18 @@ namespace Content.Shared.MobState.EntitySystems
             if(component.IsIncapacitated())
                 args.Cancel();
         }
-    }
+
+      /*  public class MobStateChangedEvent : EntityEventArgs
+        {
+            public IEntity Entity => Component.Owner;
+
+            public readonly MobStateComponent Component { get; }
+
+            public readonly MobState? OldMobState { get; }
+
+            public readonly MobState CurrentMobState { get; }
+
+            public MobStateChangedEvent(MobStateComponent component, )
+    } */
+    } 
 }
