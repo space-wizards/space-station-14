@@ -53,18 +53,7 @@ namespace Content.Shared.Damage
         ///     in another. For this purpose, you should instead use <see cref="TrimZeros()"/> and then check the <see
         ///     cref="Empty"/> property.
         /// </remarks>
-        public FixedPoint2 Total
-        {
-            get
-            {
-                FixedPoint2 acc = FixedPoint2.Zero;
-                foreach (var val in DamageDict.Values)
-                {
-                    acc += val;
-                }
-                return acc;
-            }
-        }
+        public FixedPoint2 Total => DamageDict.Values.Sum();
 
         /// <summary>
         ///     Whether this damage specifier has any entries.

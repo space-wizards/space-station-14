@@ -39,12 +39,8 @@ namespace Content.Client.MedicalScanner.UI
             {
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-health-text", ("entityName", entity.Name))}\n");
 
-                var totalDamage = FixedPoint2.Zero;
-                foreach (var val in state.DamagePerType.Values)
-                {
-                    totalDamage += val;
-                }
-                
+                var totalDamage = state.DamagePerType.Values.Sum();
+
                 text.Append($"{Loc.GetString("medical-scanner-window-entity-damage-total-text", ("amount", totalDamage))}\n");
 
                 HashSet<string> shownTypes = new();
