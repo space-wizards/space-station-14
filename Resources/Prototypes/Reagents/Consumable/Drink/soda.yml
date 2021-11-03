@@ -131,7 +131,7 @@
   desc: A sweet, orange flavored soft drink.
   physicalDesc: fizzy
   color: "#9F3400"
-    plantMetabolism:
+  plantMetabolism:
     - !type:AdjustNutrition
       amount: 0.1
     - !type:AdjustWater
