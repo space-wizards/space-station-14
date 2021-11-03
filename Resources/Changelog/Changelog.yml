@@ -1,10 +1,4 @@
 Entries:
-- author: ShadowCommander
-  changes:
-  - {message: Hands and inventory (pockets) no longer block the light from flashlights,
-    type: Fix}
-  id: 37
-  time: '2021-03-06T10:32:24.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
@@ -2810,3 +2804,9 @@ Entries:
       tank. They''re in the crafting menu.', type: Add}
   id: 536
   time: '2021-11-03T21:33:36.0000000+00:00'
+- author: Macoron
+  changes:
+  - {message: Added a brand new pinpointer for the nuclear disk in a captain locker,
+    type: Add}
+  id: 537
+  time: '2021-11-03T21:35:34.0000000+00:00'
