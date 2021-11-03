@@ -11,7 +11,6 @@
   - type: PlaceableSurface
   - type: Sprite
     netsync: false
-    drawdepth: FloorTiles
   - type: Icon
     state: full
   - type: IconSmooth

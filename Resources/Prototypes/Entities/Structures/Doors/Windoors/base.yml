@@ -21,7 +21,6 @@
       - VaultImpassable
   - type: Sprite
     netsync: false
-    drawdepth: FloorObjects
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: closed
@@ -104,7 +103,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: FloorObjects
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay
