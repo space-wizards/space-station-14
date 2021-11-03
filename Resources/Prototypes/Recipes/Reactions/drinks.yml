@@ -113,14 +113,14 @@
     BraveBull: 3
 
 - type: reaction
-  id: BrownStar
+  id: Starkist
   reactants:
     Cola:
       amount: 1
     JuiceOrange:
       amount: 2
   products:
-    BrownStar: 3
+    Starkist: 3
 
 - type: reaction
   id: CafeLatte
