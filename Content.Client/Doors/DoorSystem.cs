@@ -26,10 +26,19 @@ namespace Content.Client.Doors
 
         private void OnDoorStateChanged(EntityUid uid, ClientDoorComponent door, DoorStateChangedEvent args)
         {
-            if (args.State == DoorState.Open)
-                _activeDoors.Remove(door);
-            else if (args.State == DoorState.Opening)
-                _activeDoors.Add(door);
+            switch (args.State)
+            {
+                case DoorState.Closed:
+                case DoorState.Open:
+                    _activeDoors.Remove(door);
+                    break;
+                case DoorState.Closing:
+                case DoorState.Opening:
+                    _activeDoors.Add(door);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
 
             if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
                 return;
