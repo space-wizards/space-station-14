@@ -1,3 +1,4 @@
+using Content.Client.Stylesheets;
 using Content.Shared.Ghost;
 using Robust.Client.Console;
 using Robust.Client.UserInterface;
@@ -60,6 +61,14 @@ namespace Content.Client.Ghost.UI
         {
             _returnToBody.Disabled = !_owner.CanReturnToBody;
             _ghostRoles.Text = Loc.GetString("ghost-gui-ghost-roles-button", ("count", _system.AvailableGhostRoleCount));
+            if (_system.AvailableGhostRoleCount != 0)
+            {
+                _ghostRoles.StyleClasses.Add(StyleBase.ButtonCaution);
+            }
+            else
+            {
+                _ghostRoles.StyleClasses.Remove(StyleBase.ButtonCaution);
+            }
             TargetWindow?.Populate();
         }
 
