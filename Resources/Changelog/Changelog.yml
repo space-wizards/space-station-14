@@ -1,9 +1,4 @@
 Entries:
-- author: PaulRitter
-  changes:
-  - {message: Fixes all alertonclicks, type: Fix}
-  id: 34
-  time: '2021-03-05T11:46:04.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: "Water vapor now makes puddles if under 100\xBAC.", type: Add}
@@ -2810,3 +2805,8 @@ Entries:
   - {message: Fix parallax viewport when the eye is rotated., type: Fix}
   id: 533
   time: '2021-11-03T00:27:40.0000000+00:00'
+- author: ShadowCommander
+  changes:
+  - {message: Added character name to traitor round end screen., type: Add}
+  id: 534
+  time: '2021-11-03T13:40:32.0000000+00:00'
