@@ -534,7 +534,7 @@
       Moonshine:
         effects:
         - !type:SatiateThirst
-      Neurotoxin: #This should be moved out of alcohol eventually
+      Neurotoxin:
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
