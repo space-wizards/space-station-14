@@ -159,7 +159,6 @@ namespace Content.Server.Atmos.Monitor.Systems
         public override void Initialize()
         {
             SubscribeLocalEvent<AirAlarmComponent, ComponentStartup>(OnComponentStartup);
-            SubscribeLocalEvent<AirAlarmComponent, BeforePacketSentEvent>(BeforePacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, PacketSentEvent>(OnPacketRecv);
             SubscribeLocalEvent<AirAlarmComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AirAlarmComponent, AtmosMonitorAlarmEvent>(OnAtmosAlarm);
@@ -170,11 +169,6 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
             SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
             SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
-        }
-
-        private void BeforePacketRecv(EntityUid uid, AirAlarmComponent component, BeforePacketSentEvent args)
-        {
-            if (component.NetDisabled) args.Cancel();
         }
 
         private void OnPowerChanged(EntityUid uid, AirAlarmComponent component, PowerChangedEvent args)
