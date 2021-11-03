@@ -8,13 +8,13 @@ traitor-round-end-result = {$traitorCount ->
 }
 
 # Shown at the end of a round of Traitor
-traitor-user-was-a-traitor = [color=White]{$user}[/color] was a traitor.
-traitor-user-was-a-traitor-named = [color=White]{$user}[/color] was a traitor named [color=White]{$name}[/color].
-traitor-was-a-traitor-named = There was a traitor named [color=White]{$name}[/color].
+traitor-user-was-a-traitor = [color=White]{$name}[/color] was a traitor.
+traitor-user-was-a-traitor-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor.
+traitor-was-a-traitor-named = [color=gray]{$user}[/color] was a traitor.
 
-traitor-user-was-a-traitor-with-objectives = [color=White]{$user}[/color] was a traitor who had the following objectives:
-traitor-user-was-a-traitor-with-objectives-named = [color=White]{$user}[/color] was a traitor, named [color=White]{$name}[/color], who had the following objectives:
-traitor-was-a-traitor-with-objectives-named = There was a traitor, named [color=White]{$name}[/color], who had the following objectives:
+traitor-user-was-a-traitor-with-objectives = [color=gray]{$user}[/color] was a traitor who had the following objectives:
+traitor-user-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor who had the following objectives:
+traitor-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] was a traitor who had the following objectives:
 
 preset-traitor-objective-issuer-syndicate = [color=#87cefa]The Syndicate[/color]
 
