@@ -12,6 +12,8 @@ namespace Content.Shared.Pulling.Systems
     [UsedImplicitly]
     public sealed class SharedPullerSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();

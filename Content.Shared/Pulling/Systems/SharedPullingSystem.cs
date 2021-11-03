@@ -220,7 +220,7 @@ namespace Content.Shared.Pulling
                 return false;
             }
 
-            TryMoveTo(pullable, coords.ToMap(EntityManager));
+            TryMoveTo(pullable, coords);
 
             return false;
         }

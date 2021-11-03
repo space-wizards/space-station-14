@@ -140,7 +140,7 @@ namespace Content.Shared.Pulling
             ForceRelationship(null, pullable);
         }
 
-        public void ForceSetMovingTo(SharedPullableComponent pullable, MapCoordinates? movingTo)
+        public void ForceSetMovingTo(SharedPullableComponent pullable, EntityCoordinates? movingTo)
         {
             if (pullable.MovingTo == movingTo)
             {
