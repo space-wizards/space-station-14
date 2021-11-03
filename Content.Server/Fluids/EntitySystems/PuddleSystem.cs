@@ -9,6 +9,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Directions;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Maps;
 using Content.Shared.Physics;
@@ -46,7 +47,7 @@ namespace Content.Server.Fluids.EntitySystems
         private void OnInit(EntityUid uid, PuddleComponent component, ComponentInit args)
         {
             var solution =  _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
-            solution.MaxVolume = ReagentUnit.New(1000);
+            solution.MaxVolume = FixedPoint2.New(1000);
         }
 
         private void OnUpdate(EntityUid uid, PuddleComponent component, SolutionChangedEvent args)
@@ -74,7 +75,7 @@ namespace Content.Server.Fluids.EntitySystems
 
         private void UpdateSlip(EntityUid entityUid, PuddleComponent puddleComponent)
         {
-            if ((puddleComponent.SlipThreshold == ReagentUnit.New(-1) ||
+            if ((puddleComponent.SlipThreshold == FixedPoint2.New(-1) ||
                  puddleComponent.CurrentVolume < puddleComponent.SlipThreshold) &&
                 EntityManager.TryGetComponent(entityUid, out SlipperyComponent? oldSlippery))
             {
@@ -95,7 +96,7 @@ namespace Content.Server.Fluids.EntitySystems
             if (!_solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var solution))
                 return;
 
-            if (solution.DrainAvailable == ReagentUnit.Zero)
+            if (solution.DrainAvailable == FixedPoint2.Zero)
                 return;
 
             Verb verb = new();
@@ -147,15 +148,15 @@ namespace Content.Server.Fluids.EntitySystems
                    || solution.Contents.Count == 0;
         }
 
-        public ReagentUnit CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
+        public FixedPoint2 CurrentVolume(EntityUid uid, PuddleComponent? puddleComponent = null)
         {
             if (!Resolve(uid, ref puddleComponent))
-                return ReagentUnit.Zero;
+                return FixedPoint2.Zero;
 
             return _solutionContainerSystem.TryGetSolution(puddleComponent.Owner.Uid, puddleComponent.SolutionName,
                 out var solution)
                 ? solution.CurrentVolume
-                : ReagentUnit.Zero;
+                : FixedPoint2.Zero;
         }
 
         public bool TryAddSolution(EntityUid uid, Solution solution,
@@ -210,7 +211,7 @@ namespace Content.Server.Fluids.EntitySystems
             var nextPuddles = new List<PuddleComponent>() { puddleComponent };
             var overflownPuddles = new List<PuddleComponent>();
 
-            while (puddleComponent.OverflowLeft > ReagentUnit.Zero && nextPuddles.Count > 0)
+            while (puddleComponent.OverflowLeft > FixedPoint2.Zero && nextPuddles.Count > 0)
             {
                 foreach (var next in nextPuddles.ToArray())
                 {
@@ -220,7 +221,7 @@ namespace Content.Server.Fluids.EntitySystems
                     overflownPuddles.Add(next);
 
                     var adjacentPuddles = GetAllAdjacentOverflow(next).ToArray();
-                    if (puddleComponent.OverflowLeft <= ReagentUnit.Epsilon * adjacentPuddles.Length)
+                    if (puddleComponent.OverflowLeft <= FixedPoint2.Epsilon * adjacentPuddles.Length)
                     {
                         break;
                     }
@@ -230,12 +231,12 @@ namespace Content.Server.Fluids.EntitySystems
                         continue;
                     }
 
-                    var numberOfAdjacent = ReagentUnit.New(adjacentPuddles.Length);
+                    var numberOfAdjacent = FixedPoint2.New(adjacentPuddles.Length);
                     var overflowSplit = puddleComponent.OverflowLeft / numberOfAdjacent;
                     foreach (var adjacent in adjacentPuddles)
                     {
                         var adjacentPuddle = adjacent();
-                        var quantity = ReagentUnit.Min(overflowSplit, adjacentPuddle.OverflowVolume);
+                        var quantity = FixedPoint2.Min(overflowSplit, adjacentPuddle.OverflowVolume);
                         var puddleSolution = _solutionContainerSystem.EnsureSolution(puddleComponent.Owner.Uid,
                             puddleComponent.SolutionName);
                         var spillAmount = _solutionContainerSystem.SplitSolution(puddleComponent.Owner.Uid,

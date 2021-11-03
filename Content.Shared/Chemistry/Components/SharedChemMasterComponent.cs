@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cloning;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization;
 
@@ -22,8 +23,8 @@ namespace Content.Shared.Chemistry.Components
         {
             public readonly bool HasPower;
             public readonly bool HasBeaker;
-            public readonly ReagentUnit BeakerCurrentVolume;
-            public readonly ReagentUnit BeakerMaxVolume;
+            public readonly FixedPoint2 BeakerCurrentVolume;
+            public readonly FixedPoint2 BeakerMaxVolume;
             public readonly string ContainerName;
 
             /// <summary>
@@ -38,10 +39,10 @@ namespace Content.Shared.Chemistry.Components
 
             public readonly bool BufferModeTransfer;
 
-            public readonly ReagentUnit BufferCurrentVolume;
+            public readonly FixedPoint2 BufferCurrentVolume;
 
-            public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, ReagentUnit beakerCurrentVolume, ReagentUnit beakerMaxVolume, string containerName,
-                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, ReagentUnit bufferCurrentVolume)
+            public ChemMasterBoundUserInterfaceState(bool hasPower, bool hasBeaker, FixedPoint2 beakerCurrentVolume, FixedPoint2 beakerMaxVolume, string containerName,
+                string dispenserName, IReadOnlyList<Solution.ReagentQuantity> containerReagents, IReadOnlyList<Solution.ReagentQuantity> bufferReagents, bool bufferModeTransfer, FixedPoint2 bufferCurrentVolume)
             {
                 HasPower = hasPower;
                 HasBeaker = hasBeaker;
@@ -63,13 +64,13 @@ namespace Content.Shared.Chemistry.Components
         public class UiActionMessage : BoundUserInterfaceMessage
         {
             public readonly UiAction action;
-            public readonly ReagentUnit amount;
+            public readonly FixedPoint2 amount;
             public readonly string id = "";
             public readonly bool isBuffer;
             public readonly int pillAmount;
             public readonly int bottleAmount;
 
-            public UiActionMessage(UiAction _action, ReagentUnit? _amount, string? _id, bool? _isBuffer, int? _pillAmount, int? _bottleAmount)
+            public UiActionMessage(UiAction _action, FixedPoint2? _amount, string? _id, bool? _isBuffer, int? _pillAmount, int? _bottleAmount)
             {
                 action = _action;
                 if (action == UiAction.ChemButton)

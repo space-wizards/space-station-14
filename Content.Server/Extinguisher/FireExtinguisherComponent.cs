@@ -9,6 +9,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
 using Content.Shared.Extinguisher;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
@@ -63,7 +64,7 @@ namespace Content.Server.Extinguisher
                 && solutionContainerSystem.TryGetDrainableSolution(targetEntity.Uid, out var targetSolution)
                 && solutionContainerSystem.TryGetDrainableSolution(Owner.Uid, out var container))
             {
-                var transfer = ReagentUnit.Min(container.AvailableVolume, targetSolution.DrainAvailable);
+                var transfer = FixedPoint2.Min(container.AvailableVolume, targetSolution.DrainAvailable);
                 if (transfer > 0)
                 {
                     var drained = solutionContainerSystem.Drain(targetEntity.Uid, targetSolution, transfer);

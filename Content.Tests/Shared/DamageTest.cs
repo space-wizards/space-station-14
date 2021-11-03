@@ -5,6 +5,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager;
 using System.Collections.Generic;
+using Content.Shared.FixedPoint;
 
 namespace Content.Tests.Shared
 {
@@ -21,7 +22,7 @@ namespace Content.Tests.Shared
             // "missing" blunt entry
             { "Piercing", -2 },// Turn Piercing into Healing
             { "Slash", 3 },
-            { "Radiation", 1.06f }, // Small change, paired with fractional reduction
+            { "Radiation", 1.5f },
         };
 
         static private Dictionary<string, float> _resistanceReductionDict = new()
@@ -59,75 +60,75 @@ namespace Content.Tests.Shared
             DamageSpecifier damageSpec = new(_damageSpec);
 
             // Check that it properly split up the groups into types
-            int damage;
-            Assert.That(damageSpec.Total, Is.EqualTo(8));
+            FixedPoint2 damage;
+            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(1));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
-            Assert.That(damage, Is.EqualTo(3));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(3)));
 
             // check that integer multiplication works
             damageSpec = damageSpec * 2;
-            Assert.That(damageSpec.Total, Is.EqualTo(16));
+            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(16)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(4));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(4));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
-            Assert.That(damage, Is.EqualTo(6));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(6)));
 
             // check that float multiplication works
             damageSpec = damageSpec * 2.2f;
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(9));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(8.8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(9));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(8.8)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(4));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
-            Assert.That(damage, Is.EqualTo(13));
-            Assert.That(damageSpec.Total, Is.EqualTo(9 + 9 + 4 + 13));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(13.2)));
+            Assert.That(damageSpec.Total, Is.EqualTo(FixedPoint2.New(8.8 + 8.8 + 4.4 + 13.2)));
 
             // check that integer division works
             damageSpec = damageSpec / 2;
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(5));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(5));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4.4)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2.2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
-            Assert.That(damage, Is.EqualTo(7));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(6.6)));
 
             // check that float division works
-            damageSpec = damageSpec / 2.4f;
+            damageSpec = damageSpec / 2.2f;
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(2));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(2)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(1));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Radiation", out damage));
-            Assert.That(damage, Is.EqualTo(3));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(3)));
 
             // Lets also test the constructor with damage types and damage groups works properly.
             damageSpec = new(_prototypeManager.Index<DamageGroupPrototype>("Brute"), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Blunt", out damage));
-            Assert.That(damage, Is.EqualTo(1));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(2)); // integer rounding. Piercing is defined as last group member in yaml.
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.33)));
             Assert.That(damageSpec.DamageDict.TryGetValue("Slash", out damage));
-            Assert.That(damage, Is.EqualTo(1));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(1.34))); // doesn't divide evenly, so the 0.01 goes to the last one
 
             damageSpec = new(_prototypeManager.Index<DamageTypePrototype>("Piercing"), 4);
             Assert.That(damageSpec.DamageDict.TryGetValue("Piercing", out damage));
-            Assert.That(damage, Is.EqualTo(4));
+            Assert.That(damage, Is.EqualTo(FixedPoint2.New(4)));
         }
 
         //Check that DamageSpecifier will be properly adjusted by a resistance set
@@ -146,21 +147,21 @@ namespace Content.Tests.Shared
 
             //damage is initially   20 / 20 / 10 / 30
             //Each time we subtract -5 /  0 /  8 /  0.5
-            //then multiply by       1 / -2 /  3 /  1.06
+            //then multiply by       1 / -2 /  3 /  1.5
 
             // Apply once
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
-            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(25));
-            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // became healing
-            Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(6));
-            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(31)); // would be 32 w/o fraction adjustment
+            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(25)));
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // became healing
+            Assert.That(damageSpec.DamageDict["Slash"], Is.EqualTo(FixedPoint2.New(6)));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(44.25)));
 
             // And again, checking for some other behavior
             damageSpec = DamageSpecifier.ApplyModifierSet(damageSpec, modifierSet);
-            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(30));
-            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(-40)); // resistances don't apply to healing
+            Assert.That(damageSpec.DamageDict["Blunt"], Is.EqualTo(FixedPoint2.New(30)));
+            Assert.That(damageSpec.DamageDict["Piercing"], Is.EqualTo(FixedPoint2.New(-40))); // resistances don't apply to healing
             Assert.That(!damageSpec.DamageDict.ContainsKey("Slash"));  // Reduction reduced to 0, and removed from specifier
-            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(32));
+            Assert.That(damageSpec.DamageDict["Radiation"], Is.EqualTo(FixedPoint2.New(65.63)));
         }
 
         // Default damage Yaml

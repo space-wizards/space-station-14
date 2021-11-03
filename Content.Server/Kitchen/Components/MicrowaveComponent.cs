@@ -15,6 +15,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Kitchen;
 using Content.Shared.Kitchen.Components;
@@ -263,7 +264,7 @@ namespace Content.Server.Kitchen.Components
                 }
 
                 //Get transfer amount. May be smaller than _transferAmount if not enough room
-                var realTransferAmount = ReagentUnit.Min(attackPourable.TransferAmount, solution.AvailableVolume);
+                var realTransferAmount = FixedPoint2.Min(attackPourable.TransferAmount, solution.AvailableVolume);
                 if (realTransferAmount <= 0) //Special message if container is full
                 {
                     Owner.PopupMessage(eventArgs.User,
@@ -440,7 +441,7 @@ namespace Content.Server.Kitchen.Components
             foreach (var recipeReagent in recipe.IngredientsReagents)
             {
                 EntitySystem.Get<SolutionContainerSystem>()
-                    .TryRemoveReagent(solutionUid, solution, recipeReagent.Key, ReagentUnit.New(recipeReagent.Value));
+                    .TryRemoveReagent(solutionUid, solution, recipeReagent.Key, FixedPoint2.New(recipeReagent.Value));
             }
 
             foreach (var recipeSolid in recipe.IngredientsSolids)

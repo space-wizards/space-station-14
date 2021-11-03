@@ -1,40 +1,42 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Chemistry.Reagent
+namespace Content.Shared.FixedPoint
 {
     /// <summary>
-    ///     Represents a quantity of reagent, to a precision of 0.01.
+    ///     Represents a quantity of something, to a precision of 0.01.
     ///     To enforce this level of precision, floats are shifted by 2 decimal points, rounded, and converted to an int.
     /// </summary>
     [Serializable]
-    public struct ReagentUnit : ISelfSerialize, IComparable<ReagentUnit>, IEquatable<ReagentUnit>
+    public struct FixedPoint2 : ISelfSerialize, IComparable<FixedPoint2>, IEquatable<FixedPoint2>
     {
         private int _value;
         private static readonly int Shift = 2;
 
-        public static ReagentUnit MaxValue { get; } = new(int.MaxValue);
-        public static ReagentUnit Epsilon { get; } = new(1);
-        public static ReagentUnit Zero { get; } = new(0);
+        public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
+        public static FixedPoint2 Epsilon { get; } = new(1);
+        public static FixedPoint2 Zero { get; } = new(0);
 
         private readonly double ShiftDown()
         {
             return _value / Math.Pow(10, Shift);
         }
 
-        private ReagentUnit(int value)
+        private FixedPoint2(int value)
         {
             _value = value;
         }
 
-        public static ReagentUnit New(int value)
+        public static FixedPoint2 New(int value)
         {
             return new(value * (int) Math.Pow(10, Shift));
         }
 
-        public static ReagentUnit New(float value)
+        public static FixedPoint2 New(float value)
         {
             return new(FromFloat(value));
         }
@@ -44,12 +46,12 @@ namespace Content.Shared.Chemistry.Reagent
             return (int) MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
         }
 
-        public static ReagentUnit New(double value)
+        public static FixedPoint2 New(double value)
         {
             return new((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
         }
 
-        public static ReagentUnit New(string value)
+        public static FixedPoint2 New(string value)
         {
             return New(FloatFromString(value));
         }
@@ -59,41 +61,41 @@ namespace Content.Shared.Chemistry.Reagent
             return float.Parse(value, CultureInfo.InvariantCulture);
         }
 
-        public static ReagentUnit operator +(ReagentUnit a) => a;
+        public static FixedPoint2 operator +(FixedPoint2 a) => a;
 
-        public static ReagentUnit operator -(ReagentUnit a) => new(-a._value);
+        public static FixedPoint2 operator -(FixedPoint2 a) => new(-a._value);
 
-        public static ReagentUnit operator +(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 operator +(FixedPoint2 a, FixedPoint2 b)
             => new(a._value + b._value);
 
-        public static ReagentUnit operator -(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
             => a + -b;
 
-        public static ReagentUnit operator *(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
             var aD = a.ShiftDown();
             var bD = b.ShiftDown();
             return New(aD * bD);
         }
 
-        public static ReagentUnit operator *(ReagentUnit a, float b)
+        public static FixedPoint2 operator *(FixedPoint2 a, float b)
         {
             var aD = (float) a.ShiftDown();
             return New(aD * b);
         }
 
-        public static ReagentUnit operator *(ReagentUnit a, double b)
+        public static FixedPoint2 operator *(FixedPoint2 a, double b)
         {
             var aD = a.ShiftDown();
             return New(aD * b);
         }
 
-        public static ReagentUnit operator *(ReagentUnit a, int b)
+        public static FixedPoint2 operator *(FixedPoint2 a, int b)
         {
             return new(a._value * b);
         }
 
-        public static ReagentUnit operator /(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
             if (b._value == 0)
             {
@@ -104,62 +106,67 @@ namespace Content.Shared.Chemistry.Reagent
             return New(aD / bD);
         }
 
-        public static bool operator <=(ReagentUnit a, int b)
+        public static FixedPoint2 operator /(FixedPoint2 a, float b)
+        {
+            return a / FixedPoint2.New(b);
+        }
+
+        public static bool operator <=(FixedPoint2 a, int b)
         {
             return a <= New(b);
         }
 
-        public static bool operator >=(ReagentUnit a, int b)
+        public static bool operator >=(FixedPoint2 a, int b)
         {
             return a >= New(b);
         }
 
-        public static bool operator <(ReagentUnit a, int b)
+        public static bool operator <(FixedPoint2 a, int b)
         {
             return a < New(b);
         }
 
-        public static bool operator >(ReagentUnit a, int b)
+        public static bool operator >(FixedPoint2 a, int b)
         {
             return a > New(b);
         }
 
-        public static bool operator ==(ReagentUnit a, int b)
+        public static bool operator ==(FixedPoint2 a, int b)
         {
             return a == New(b);
         }
 
-        public static bool operator !=(ReagentUnit a, int b)
+        public static bool operator !=(FixedPoint2 a, int b)
         {
             return a != New(b);
         }
 
-        public static bool operator ==(ReagentUnit a, ReagentUnit b)
+        public static bool operator ==(FixedPoint2 a, FixedPoint2 b)
         {
             return a.Equals(b);
         }
 
-        public static bool operator !=(ReagentUnit a, ReagentUnit b)
+        public static bool operator !=(FixedPoint2 a, FixedPoint2 b)
         {
             return !a.Equals(b);
         }
 
-        public static bool operator <=(ReagentUnit a, ReagentUnit b)
+        public static bool operator <=(FixedPoint2 a, FixedPoint2 b)
         {
             return a._value <= b._value;
         }
 
-        public static bool operator >=(ReagentUnit a, ReagentUnit b)
+        public static bool operator >=(FixedPoint2 a, FixedPoint2 b)
         {
             return a._value >= b._value;
         }
 
-        public static bool operator <(ReagentUnit a, ReagentUnit b)
+        public static bool operator <(FixedPoint2 a, FixedPoint2 b)
         {
             return a._value < b._value;
         }
 
-        public static bool operator >(ReagentUnit a, ReagentUnit b)
+        public static bool operator >(FixedPoint2 a, FixedPoint2 b)
         {
             return a._value > b._value;
         }
@@ -179,22 +186,31 @@ namespace Content.Shared.Chemistry.Reagent
             return (int) ShiftDown();
         }
 
-        public static ReagentUnit Min(params ReagentUnit[] reagentUnits)
+        // Implicit operators ftw
+        public static implicit operator FixedPoint2(float n) => FixedPoint2.New(n);
+        public static implicit operator FixedPoint2(double n) => FixedPoint2.New(n);
+        public static implicit operator FixedPoint2(int n) => FixedPoint2.New(n);
+
+        public static explicit operator float(FixedPoint2 n) => n.Float();
+        public static explicit operator double(FixedPoint2 n) => n.Double();
+        public static explicit operator int(FixedPoint2 n) => n.Int();
+
+        public static FixedPoint2 Min(params FixedPoint2[] fixedPoints)
         {
-            return reagentUnits.Min();
+            return fixedPoints.Min();
         }
 
-        public static ReagentUnit Min(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 Min(FixedPoint2 a, FixedPoint2 b)
         {
             return a < b ? a : b;
         }
 
-        public static ReagentUnit Max(ReagentUnit a, ReagentUnit b)
+        public static FixedPoint2 Max(FixedPoint2 a, FixedPoint2 b)
         {
             return a > b ? a : b;
         }
 
-        public static ReagentUnit Clamp(ReagentUnit reagent, ReagentUnit min, ReagentUnit max)
+        public static FixedPoint2 Clamp(FixedPoint2 reagent, FixedPoint2 min, FixedPoint2 max)
         {
             if (min > max)
             {
@@ -206,7 +222,7 @@ namespace Content.Shared.Chemistry.Reagent
 
         public override readonly bool Equals(object? obj)
         {
-            return obj is ReagentUnit unit &&
+            return obj is FixedPoint2 unit &&
                    _value == unit._value;
         }
 
@@ -228,12 +244,12 @@ namespace Content.Shared.Chemistry.Reagent
             return ToString();
         }
 
-        public readonly bool Equals(ReagentUnit other)
+        public readonly bool Equals(FixedPoint2 other)
         {
             return _value == other._value;
         }
 
-        public readonly int CompareTo(ReagentUnit other)
+        public readonly int CompareTo(FixedPoint2 other)
         {
             if(other._value > _value)
             {

@@ -1,6 +1,7 @@
 ﻿using Content.Server.Chemistry.Components;
 using Content.Server.Popups;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,7 +22,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
         private void OnSolutionChange(EntityUid uid, RehydratableComponent component, SolutionChangedEvent args)
         {
-            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > ReagentUnit.Zero)
+            if (_solutionsSystem.GetReagentQuantity(uid, component.CatalystPrototype) > FixedPoint2.Zero)
             {
                 Expand(component, component.Owner);
             }

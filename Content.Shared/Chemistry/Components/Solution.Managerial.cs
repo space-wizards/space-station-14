@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 
@@ -18,10 +19,10 @@ namespace Content.Shared.Chemistry.Components
         ///     Volume needed to fill this container.
         /// </summary>
         [ViewVariables]
-        public ReagentUnit AvailableVolume => MaxVolume - CurrentVolume;
+        public FixedPoint2 AvailableVolume => MaxVolume - CurrentVolume;
 
-        public ReagentUnit DrawAvailable => CurrentVolume;
-        public ReagentUnit DrainAvailable => CurrentVolume;
+        public FixedPoint2 DrawAvailable => CurrentVolume;
+        public FixedPoint2 DrainAvailable => CurrentVolume;
 
         /// <summary>
         ///     Checks if a solution can fit into the container.
@@ -34,18 +35,18 @@ namespace Content.Shared.Chemistry.Components
         }
 
         [DataField("maxSpillRefill")]
-        public ReagentUnit MaxSpillRefill { get; set; }
+        public FixedPoint2 MaxSpillRefill { get; set; }
 
         /// <summary>
         /// Initially set <see cref="MaxVolume"/>. If empty will be calculated based
-        /// on sum of <see cref="Contents"/> reagent units.
+        /// on sum of <see cref="Contents"/> fixed units.
         /// </summary>
-        [DataField("maxVol")] public ReagentUnit InitialMaxVolume; 
+        [DataField("maxVol")] public FixedPoint2 InitialMaxVolume;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public ReagentUnit MaxVolume { get; set; } = ReagentUnit.Zero;
+        public FixedPoint2 MaxVolume { get; set; } = FixedPoint2.Zero;
 
         [ViewVariables]
-        public ReagentUnit CurrentVolume => TotalVolume;
+        public FixedPoint2 CurrentVolume => TotalVolume;
     }
 }

@@ -5,6 +5,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -64,7 +65,7 @@ namespace Content.Server.Body.Metabolism
                 {
                     if (body.Owner.HasComponent<BloodstreamComponent>()
                         && solutionsSys.TryGetSolution(body.Owner.Uid, comp.SolutionName, out solution)
-                        && solution.CurrentVolume >= ReagentUnit.Zero)
+                        && solution.CurrentVolume >= FixedPoint2.Zero)
                     {
                         reagentList = solution.Contents;
                     }
