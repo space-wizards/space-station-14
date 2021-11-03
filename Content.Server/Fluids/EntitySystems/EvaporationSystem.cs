@@ -1,6 +1,7 @@
 ﻿using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -36,7 +37,7 @@ namespace Content.Server.Fluids.EntitySystems
 
 
                 _solutionContainerSystem.SplitSolution(uid, solution,
-                    ReagentUnit.Min(ReagentUnit.New(1), solution.CurrentVolume));
+                    FixedPoint2.Min(FixedPoint2.New(1), solution.CurrentVolume));
 
                 if (solution.CurrentVolume == 0)
                 {

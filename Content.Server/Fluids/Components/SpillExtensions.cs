@@ -5,6 +5,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -132,7 +133,7 @@ namespace Content.Server.Fluids.Components
                     .TryGetRefillableSolution(spillEntity.Uid, out var solutionContainerComponent))
                 {
                     EntitySystem.Get<SolutionContainerSystem>().Refill(spillEntity.Uid, solutionContainerComponent,
-                        solution.SplitSolution(ReagentUnit.Min(
+                        solution.SplitSolution(FixedPoint2.Min(
                             solutionContainerComponent.AvailableVolume,
                             solutionContainerComponent.MaxSpillRefill))
                     );

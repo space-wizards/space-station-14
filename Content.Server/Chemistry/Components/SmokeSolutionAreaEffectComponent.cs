@@ -3,6 +3,7 @@ using Content.Server.Body.Respiratory;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -39,12 +40,12 @@ namespace Content.Server.Chemistry.Components
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
             var cloneSolution = solution.Clone();
-            var transferAmount = ReagentUnit.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
+            var transferAmount = FixedPoint2.Min(cloneSolution.TotalVolume * solutionFraction, bloodstream.EmptyVolume);
             var transferSolution = cloneSolution.SplitSolution(transferAmount);
 
             foreach (var reagentQuantity in transferSolution.Contents.ToArray())
             {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                 chemistry.ReactionEntity(entity, ReactionMethod.Ingestion, reagentQuantity.ReagentId, reagentQuantity.Quantity, transferSolution);
             }
 

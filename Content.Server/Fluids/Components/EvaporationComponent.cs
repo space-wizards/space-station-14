@@ -1,5 +1,6 @@
 ﻿using Content.Server.Fluids.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Analyzers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -13,7 +14,7 @@ namespace Content.Server.Fluids.Components
         public override string Name => "Evaporation";
 
         /// <summary>
-        ///     The time that it will take this puddle to lose one reagent unit of solution, in seconds.
+        ///     The time that it will take this puddle to lose one fixed unit of solution, in seconds.
         /// </summary>
         [DataField("evaporateTime")]
         public float EvaporateTime { get; set; } = 5f;
@@ -29,14 +30,14 @@ namespace Content.Server.Fluids.Components
         ///     Defaults to evaporate completely.
         /// </summary>
         [DataField("lowerLimit")]
-        public ReagentUnit LowerLimit = ReagentUnit.Zero;
+        public FixedPoint2 LowerLimit = FixedPoint2.Zero;
 
         /// <summary>
         ///     Upper limit below which puddle won't evaporate. Useful when wanting to make sure large puddle will
         ///     remain forever. Defaults to <see cref="PuddleComponent.DefaultOverflowVolume"/>.
         /// </summary>
         [DataField("upperLimit")]
-        public ReagentUnit UpperLimit = PuddleComponent.DefaultOverflowVolume;
+        public FixedPoint2 UpperLimit = PuddleComponent.DefaultOverflowVolume;
 
         /// <summary>
         ///     The time accumulated since the start.

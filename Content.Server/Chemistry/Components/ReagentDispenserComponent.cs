@@ -12,6 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Dispenser;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Sound;
@@ -53,7 +54,7 @@ namespace Content.Server.Chemistry.Components
         private SoundSpecifier _clickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 
         [ViewVariables] public bool HasBeaker => BeakerContainer.ContainedEntity != null;
-        [ViewVariables] private ReagentUnit _dispenseAmount = ReagentUnit.New(10);
+        [ViewVariables] private FixedPoint2 _dispenseAmount = FixedPoint2.New(10);
 
         [UsedImplicitly]
         [ViewVariables]
@@ -163,31 +164,31 @@ namespace Content.Server.Chemistry.Components
                     TryClear();
                     break;
                 case UiButton.SetDispenseAmount1:
-                    _dispenseAmount = ReagentUnit.New(1);
+                    _dispenseAmount = FixedPoint2.New(1);
                     break;
                 case UiButton.SetDispenseAmount5:
-                    _dispenseAmount = ReagentUnit.New(5);
+                    _dispenseAmount = FixedPoint2.New(5);
                     break;
                 case UiButton.SetDispenseAmount10:
-                    _dispenseAmount = ReagentUnit.New(10);
+                    _dispenseAmount = FixedPoint2.New(10);
                     break;
                 case UiButton.SetDispenseAmount15:
-                    _dispenseAmount = ReagentUnit.New(15);
+                    _dispenseAmount = FixedPoint2.New(15);
                     break;
                 case UiButton.SetDispenseAmount20:
-                    _dispenseAmount = ReagentUnit.New(20);
+                    _dispenseAmount = FixedPoint2.New(20);
                     break;
                 case UiButton.SetDispenseAmount25:
-                    _dispenseAmount = ReagentUnit.New(25);
+                    _dispenseAmount = FixedPoint2.New(25);
                     break;
                 case UiButton.SetDispenseAmount30:
-                    _dispenseAmount = ReagentUnit.New(30);
+                    _dispenseAmount = FixedPoint2.New(30);
                     break;
                 case UiButton.SetDispenseAmount50:
-                    _dispenseAmount = ReagentUnit.New(50);
+                    _dispenseAmount = FixedPoint2.New(50);
                     break;
                 case UiButton.SetDispenseAmount100:
-                    _dispenseAmount = ReagentUnit.New(100);
+                    _dispenseAmount = FixedPoint2.New(100);
                     break;
                 case UiButton.Dispense:
                     if (HasBeaker)
@@ -237,8 +238,8 @@ namespace Content.Server.Chemistry.Components
             if (beaker == null || !beaker.TryGetComponent(out FitsInDispenserComponent? fits) ||
                 !EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(beaker.Uid, fits.Solution, out var solution))
             {
-                return new ReagentDispenserBoundUserInterfaceState(Powered, false, ReagentUnit.New(0),
-                    ReagentUnit.New(0),
+                return new ReagentDispenserBoundUserInterfaceState(Powered, false, FixedPoint2.New(0),
+                    FixedPoint2.New(0),
                     string.Empty, Inventory, Owner.Name, null, _dispenseAmount);
             }
 

@@ -6,6 +6,7 @@ using Content.Shared.Administration;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Eui;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -42,8 +43,8 @@ namespace Content.Server.Administration.UI
 
             return new AdminAddReagentEuiState
             {
-                CurVolume = ReagentUnit.Zero,
-                MaxVolume = ReagentUnit.Zero
+                CurVolume = FixedPoint2.Zero,
+                MaxVolume = FixedPoint2.Zero
             };
         }
 

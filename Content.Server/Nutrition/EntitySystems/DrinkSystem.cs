@@ -7,6 +7,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Nutrition.Components;
@@ -217,7 +218,7 @@ namespace Content.Server.Nutrition.EntitySystems
             if (user != target && !user.InRangeUnobstructed(target, popup: true))
                 return false;
 
-            var transferAmount = ReagentUnit.Min(component.TransferAmount, interactions.DrainAvailable);
+            var transferAmount = FixedPoint2.Min(component.TransferAmount, interactions.DrainAvailable);
             var drain = _solutionContainerSystem.Drain(owner.Uid, interactions, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(drain));
 

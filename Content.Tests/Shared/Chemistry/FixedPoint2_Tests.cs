@@ -1,47 +1,48 @@
 ﻿using System;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 
 namespace Content.Tests.Shared.Chemistry
 {
-    [TestFixture, TestOf(typeof(ReagentUnit))]
-    public class ReagentUnit_Tests
+    [TestFixture, TestOf(typeof(FixedPoint2))]
+    public class FixedPoint2_Tests
     {
         [Test]
         [TestCase(1, "1")]
         [TestCase(0, "0")]
         [TestCase(-1, "-1")]
-        public void ReagentUnitIntegerTests(int value, string expected)
+        public void FixedPoint2IntegerTests(int value, string expected)
         {
-            var result = ReagentUnit.New(value);
+            var result = FixedPoint2.New(value);
             Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
         [TestCase(1.001f, "1")]
         [TestCase(0.999f, "1")]
-        public void ReagentUnitFloatTests(float value, string expected)
+        public void FixedPoint2FloatTests(float value, string expected)
         {
-            var result = ReagentUnit.New(value);
+            var result = FixedPoint2.New(value);
             Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
         [TestCase(1.001d, "1")]
         [TestCase(0.999d, "1")]
-        public void ReagentUnitDoubleTests(double value, string expected)
+        public void FixedPoint2DoubleTests(double value, string expected)
         {
-            var result = ReagentUnit.New(value);
+            var result = FixedPoint2.New(value);
             Assert.That($"{result}", Is.EqualTo(expected));
         }
 
         [Test]
         [TestCase("1.005", "1.01")]
         [TestCase("0.999", "1")]
-        public void ReagentUnitStringTests(string value, string expected)
+        public void FixedPoint2StringTests(string value, string expected)
         {
-            var result = ReagentUnit.New(value);
+            var result = FixedPoint2.New(value);
             Assert.That($"{result}", Is.EqualTo(expected));
         }
 
@@ -52,8 +53,8 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1f, 2.005f, "3.01")]
         public void CalculusPlus(float aFloat, float bFloat, string expected)
         {
-            var a = ReagentUnit.New(aFloat);
-            var b = ReagentUnit.New(bFloat);
+            var a = FixedPoint2.New(aFloat);
+            var b = FixedPoint2.New(bFloat);
 
             var result = a + b;
 
@@ -66,8 +67,8 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1f, 2.005f, "-1.01")]
         public void CalculusMinus(float aFloat, float bFloat, string expected)
         {
-            var a = ReagentUnit.New(aFloat);
-            var b = ReagentUnit.New(bFloat);
+            var a = FixedPoint2.New(aFloat);
+            var b = FixedPoint2.New(bFloat);
 
             var result = a - b;
 
@@ -80,8 +81,8 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(2.1f, 3f, "0.7")]
         public void CalculusDivision(float aFloat, float bFloat, string expected)
         {
-            var a = ReagentUnit.New(aFloat);
-            var b = ReagentUnit.New(bFloat);
+            var a = FixedPoint2.New(aFloat);
+            var b = FixedPoint2.New(bFloat);
 
             var result = a / b;
 
@@ -93,8 +94,8 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(0.999f, 3f, "3")]
         public void CalculusMultiplication(float aFloat, float bFloat, string expected)
         {
-            var a = ReagentUnit.New(aFloat);
-            var b = ReagentUnit.New(bFloat);
+            var a = FixedPoint2.New(aFloat);
+            var b = FixedPoint2.New(bFloat);
 
             var result = a * b;
 
@@ -112,18 +113,18 @@ namespace Content.Tests.Shared.Chemistry
         }
 
         [Test]
-        public void ReagentUnitMin()
+        public void FixedPoint2Min()
         {
             var unorderedList = new[]
             {
-                ReagentUnit.New(5),
-                ReagentUnit.New(3),
-                ReagentUnit.New(1),
-                ReagentUnit.New(2),
-                ReagentUnit.New(4),
+                FixedPoint2.New(5),
+                FixedPoint2.New(3),
+                FixedPoint2.New(1),
+                FixedPoint2.New(2),
+                FixedPoint2.New(4),
             };
-            var min = ReagentUnit.Min(unorderedList);
-            Assert.That(min, Is.EqualTo(ReagentUnit.New(1)));
+            var min = FixedPoint2.Min(unorderedList);
+            Assert.That(min, Is.EqualTo(FixedPoint2.New(1)));
         }
 
         [Test]
@@ -133,10 +134,10 @@ namespace Content.Tests.Shared.Chemistry
         [TestCase(1, 1, true)]
         [TestCase(0, 1, false)]
         [TestCase(-1, 1, false)]
-        public void ReagentUnitEquals(int a, int b, bool expected)
+        public void FixedPoint2Equals(int a, int b, bool expected)
         {
-            var parameter = ReagentUnit.New(a);
-            var comparison = ReagentUnit.New(b);
+            var parameter = FixedPoint2.New(a);
+            var comparison = FixedPoint2.New(b);
             Assert.That(parameter.Equals(comparison), Is.EqualTo(comparison.Equals(parameter)));
             Assert.That(comparison.Equals(parameter), Is.EqualTo(expected));
         }

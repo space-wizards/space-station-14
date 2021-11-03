@@ -5,6 +5,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Smoking;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
@@ -83,12 +84,12 @@ namespace Content.Server.Nutrition.EntitySystems
 
                 var inhaledSolution = _solutionContainerSystem.SplitSolution(uid, solution, smokable.InhaleAmount * _timer);
 
-                if (solution.TotalVolume == ReagentUnit.Zero)
+                if (solution.TotalVolume == FixedPoint2.Zero)
                 {
                     RaiseLocalEvent(uid, new SmokableSolutionEmptyEvent());
                 }
 
-                if (inhaledSolution.TotalVolume == ReagentUnit.Zero)
+                if (inhaledSolution.TotalVolume == FixedPoint2.Zero)
                     continue;
 
                 // This is awful. I hate this so much.
