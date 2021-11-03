@@ -1,8 +1,4 @@
 Entries:
-- author: daniel-cr
-  changes: []
-  id: 33
-  time: '2021-03-05T08:33:01.0000000+00:00'
 - author: PaulRitter
   changes:
   - {message: Fixes all alertonclicks, type: Fix}
@@ -2809,3 +2805,8 @@ Entries:
       way., type: Fix}
   id: 532
   time: '2021-11-02T18:38:47.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix parallax viewport when the eye is rotated., type: Fix}
+  id: 533
+  time: '2021-11-03T00:27:40.0000000+00:00'
