@@ -287,9 +287,9 @@ namespace Content.Client.Entry
             "Uplink",
             "PDA",
             "SpawnItemsOnUse",
+            "AmbientOnPowered",
             "Wieldable",
             "IncreaseDamageOnWield",
-            "AmbientOnPowered",
             "TabletopGame",
             "LitOnPowered",
             "TriggerOnSignalReceived",
@@ -304,7 +304,8 @@ namespace Content.Client.Entry
             "HandLabeler",
             "Label",
             "GhostRadio",
-            "Armor"
+            "Armor",
+            "PneumaticCannon"
         };
     }
 }
