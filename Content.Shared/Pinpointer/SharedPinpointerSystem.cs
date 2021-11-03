@@ -13,6 +13,7 @@ namespace Content.Shared.Pinpointer
         {
             base.Initialize();
             SubscribeLocalEvent<PinpointerComponent, ComponentGetState>(GetCompState);
+            SubscribeLocalEvent<PinpointerComponent, ComponentShutdown>(OnPinpointerShutdown);
         }
 
         private void GetCompState(EntityUid uid, PinpointerComponent pinpointer, ref ComponentGetState args)
@@ -23,6 +24,12 @@ namespace Content.Shared.Pinpointer
                 DirectionToTarget = pinpointer.DirectionToTarget,
                 DistanceToTarget = pinpointer.DistanceToTarget
             };
+        }
+
+        private void OnPinpointerShutdown(EntityUid uid, PinpointerComponent component, ComponentShutdown _)
+        {
+            // no need to dirty it/etc: it's shutting down anyway!
+            ActivePinpointers.Remove(uid);
         }
 
         /// <summary>
