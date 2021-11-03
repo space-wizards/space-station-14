@@ -99,6 +99,7 @@ namespace Content.Server.Pinpointer
             if (target == null || !EntityManager.EntityExists(target.Value))
             {
                 SetDirection(uid, Direction.Invalid, pinpointer);
+                SetDistance(uid, Distance.UNKNOWN, pinpointer);
                 return;
             }
 
