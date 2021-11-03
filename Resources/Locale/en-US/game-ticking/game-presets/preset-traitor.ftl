@@ -8,9 +8,9 @@ traitor-round-end-result = {$traitorCount ->
 }
 
 # Shown at the end of a round of Traitor
-traitor-user-was-a-traitor = [color=White]{$name}[/color] was a traitor.
+traitor-user-was-a-traitor = [color=gray]{$user}[/color] was a traitor.
 traitor-user-was-a-traitor-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor.
-traitor-was-a-traitor-named = [color=gray]{$user}[/color] was a traitor.
+traitor-was-a-traitor-named = [color=White]{$name}[/color] was a traitor.
 
 traitor-user-was-a-traitor-with-objectives = [color=gray]{$user}[/color] was a traitor who had the following objectives:
 traitor-user-was-a-traitor-with-objectives-named = [color=White]{$name}[/color] ([color=gray]{$user}[/color]) was a traitor who had the following objectives:
