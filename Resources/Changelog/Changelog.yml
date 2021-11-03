@@ -1,11 +1,6 @@
 Entries:
 - author: Zumorica
   changes:
-  - {message: Fixes emitters shooting sideway bolts and in the wrong direction., type: Fix}
-  id: 38
-  time: '2021-03-06T12:28:13.757819+00:00'
-- author: Zumorica
-  changes:
   - {message: Fixes wood table and poker table constructions having the wrong material.,
     type: Fix}
   id: 39
@@ -2810,3 +2805,8 @@ Entries:
     type: Add}
   id: 537
   time: '2021-11-03T21:35:34.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: Pinpointers stop being active on component shutdown, type: Fix}
+  id: 538
+  time: '2021-11-03T23:42:22.0000000+00:00'
