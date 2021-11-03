@@ -447,9 +447,6 @@
       BraveBull:
         effects:
         - !type:SatiateThirst
-      BrownStar:
-        effects:
-        - !type:SatiateThirst
       CubaLibre:
         effects:
         - !type:SatiateThirst
@@ -563,6 +560,9 @@
         effects:
         - !type:SatiateThirst
       SnowWhite:
+        effects:
+        - !type:SatiateThirst
+      Starkist:
         effects:
         - !type:SatiateThirst
       SuiDream:
