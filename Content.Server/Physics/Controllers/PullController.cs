@@ -65,14 +65,15 @@ namespace Content.Server.Physics.Controllers
                     continue;
                 }
 
-                if (pullable.Puller == null)
+                var puller = pullable.Puller;
+                if (puller == null)
                 {
                     continue;
                 }
 
                 // Now that's over with...
 
-                var pullerPosition = pullable.Puller!.Transform.MapPosition;
+                var pullerPosition = puller.Transform.MapPosition;
                 if (pullable.MovingTo.Value.MapId != pullerPosition.MapId)
                 {
                     _pullableSystem.StopMoveTo(pullable);
@@ -113,7 +114,14 @@ namespace Content.Server.Physics.Controllers
                     accel -= physics.LinearVelocity * SettleShutdownMultiplier * scaling;
                 }
                 physics.WakeBody();
-                physics.ApplyLinearImpulse(accel * physics.Mass * frameTime);
+                var impulse = accel * physics.Mass * frameTime;
+                physics.ApplyLinearImpulse(impulse);
+
+                if (puller.TryGetComponent<PhysicsComponent>(out var pullerPhysics))
+                {
+                    pullerPhysics.WakeBody();
+                    pullerPhysics.ApplyLinearImpulse(-impulse);
+                }
             }
         }
     }
