@@ -113,4 +113,15 @@ namespace Content.Shared.Ghost
     public class GhostReturnToBodyRequest : EntityEventArgs
     {
     }
+
+    [Serializable, NetSerializable]
+    public class GhostUpdateGhostRoleCountEvent : EntityEventArgs
+    {
+        public int AvailableGhostRoles { get; }
+
+        public GhostUpdateGhostRoleCountEvent(int v)
+        {
+            AvailableGhostRoles = v;
+        }
+    }
 }

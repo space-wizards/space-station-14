@@ -13,16 +13,18 @@ namespace Content.Client.Ghost.UI
     {
         private readonly Button _returnToBody = new() {Text = Loc.GetString("ghost-gui-return-to-body-button") };
         private readonly Button _ghostWarp = new() {Text = Loc.GetString("ghost-gui-ghost-warp-button") };
-        private readonly Button _ghostRoles = new() {Text = Loc.GetString("ghost-gui-ghost-roles-button") };
+        private readonly Button _ghostRoles = new();
         private readonly GhostComponent _owner;
+        private readonly GhostSystem _system;
 
         public GhostTargetWindow? TargetWindow { get; }
 
-        public GhostGui(GhostComponent owner, IEntityNetworkManager eventBus)
+        public GhostGui(GhostComponent owner, GhostSystem system, IEntityNetworkManager eventBus)
         {
             IoCManager.InjectDependencies(this);
 
             _owner = owner;
+            _system = system;
 
             TargetWindow = new GhostTargetWindow(eventBus);
 
@@ -57,6 +59,7 @@ namespace Content.Client.Ghost.UI
         public void Update()
         {
             _returnToBody.Disabled = !_owner.CanReturnToBody;
+            _ghostRoles.Text = Loc.GetString("ghost-gui-ghost-roles-button", ("count", _system.AvailableGhostRoleCount));
             TargetWindow?.Populate();
         }
 
