@@ -1,0 +1,15 @@
+- type: construction
+  name: air alarm
+  id: AirAlarmFixture
+  graph: air_alarm
+  startNode: start
+  targetNode: air_alarm
+  category: Structures
+  description: An air alarm. Alarms... air?
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm0
+  objectType: Structure
+  canRotate: true
+  conditions:
+  - !type:WallmountCondition {}

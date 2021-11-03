@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.EntitySystems;
@@ -11,6 +12,9 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Log;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Systems
@@ -75,8 +79,15 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
             }
 
+            // atmos alarms will first attempt to get the air
+            // directly underneath it - if not, then it will
+            // register the air directly in front of it
+            //
+            // if that doesn't work, then nothing is done about it
             var coords = component.Owner.Transform.Coordinates;
-            var air = _atmosphereSystem.GetTileMixture(coords);
+            if (_atmosphereSystem.IsTileAirBlocked(coords))
+                coords = coords.Offset((component.Owner.Transform.LocalRotation.RotateVec(new Vector2(1, 0))));
+            GasMixture? air = _atmosphereSystem.GetTileMixture(coords);
             component.TileGas = air;
         }
 

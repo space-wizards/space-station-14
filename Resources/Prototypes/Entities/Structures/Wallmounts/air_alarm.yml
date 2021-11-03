@@ -1,8 +1,7 @@
 - type: entity
   id: AirAlarm
-  placement:
-    snap:
-    - Wallmount
+  name: air alarm
+  description: An air alarm. Alarms... air?
   components:
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -55,6 +54,7 @@
         airAlarmBase: alarmp
     - type: WiresVisualizer
   - type: Sprite
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
     - state: alarm0
@@ -63,3 +63,28 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Transform
     anchored: true
+  - type: Construction
+    graph: air_alarm
+    node: air_alarm
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: AirAlarmAssembly
+  name: air alarm assembly
+  description: An air alarm. Doesn't look like it'll be alarming air any time soon.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: alarm_b1
+  - type: Construction
+    graph: air_alarm
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
