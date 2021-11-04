@@ -120,6 +120,7 @@
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
+    metabolizerTypes: [Human]
     groups:
     - id: Medicine
     - id: Poison
@@ -148,6 +149,7 @@
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
   - type: Metabolizer
+    metabolizerTypes: [Human]
     groups:
     - id: Food
     - id: Drink
@@ -164,6 +166,7 @@
     size: 1
     compatibility: Biological
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    metabolizerTypes: [Human]
     groups:
     - id: Alcohol
       rateModifier: 0.1 # removes alcohol very slowly along with the stomach removing it as a drink

@@ -46,8 +46,8 @@ namespace Content.Server.Body.Metabolism
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("types", required: true)]
-        public List<string> MetabolizerTypes = default!;
+        [DataField("metabolizerTypes")]
+        public List<string>? MetabolizerTypes = null;
 
         /// <summary>
         ///     A list of metabolism groups that this metabolizer will act on, in order of precedence.
