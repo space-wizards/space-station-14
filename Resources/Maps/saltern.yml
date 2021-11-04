@@ -31034,6 +31034,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2766
+  type: PersonalAI
+  components:
+  - pos: -4.608032,-23.990858
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2767
   type: CableApcExtension
   components:
@@ -31252,6 +31260,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2788
+  type: PersonalAI
+  components:
+  - pos: -4.420532,-23.350233
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2789
   type: SalternApc
   components:
@@ -31360,6 +31376,14 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2799
+  type: PersonalAI
+  components:
+  - pos: -30.378334,1.534945
+    parent: 853
+    type: Transform
+  - canCollide: False
+    type: Physics
 - uid: 2800
   type: CableApcExtension
   components:
@@ -31380,6 +31404,14 @@ entities:
     type: Transform
   - visible: False
     type: Sprite
+  - canCollide: False
+    type: Physics
+- uid: 2802
+  type: PersonalAI
+  components:
+  - pos: -24.675209,-5.91818
+    parent: 853
+    type: Transform
   - canCollide: False
     type: Physics
 - uid: 2803
@@ -31666,6 +31698,12 @@ entities:
     type: Sprite
   - canCollide: False
     type: Physics
+- uid: 2829
+  type: ToySpawner
+  components:
+  - pos: -30.5,-4.5
+    parent: 853
+    type: Transform
 - uid: 2830
   type: CableApcExtension
   components:
@@ -31741,6 +31779,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 2837
+  type: ToySpawner
+  components:
+  - pos: -30.5,-1.5
+    parent: 853
+    type: Transform
 - uid: 2838
   type: CableApcExtension
   components:
@@ -32023,6 +32067,12 @@ entities:
     type: Transform
   - canCollide: False
     type: Physics
+- uid: 2866
+  type: ToySpawner
+  components:
+  - pos: -30.5,1.5
+    parent: 853
+    type: Transform
 - uid: 2867
   type: CableApcExtension
   components:
