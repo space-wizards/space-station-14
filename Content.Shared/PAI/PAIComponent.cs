@@ -1,6 +1,6 @@
 using Robust.Shared.GameObjects;
 
-namespace Content.Server.PAI
+namespace Content.Shared.PAI
 {
     /// <summary>
     /// pAIs, or Personal AIs, are essentially portable ghost role generators.
