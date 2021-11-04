@@ -1,0 +1,40 @@
+#base syndicate boxes
+- type: entity
+  parent: BoxBase
+  id: SuspiciousBoxBase
+  name: suspicious box
+  description: A box coloured in syndicate red-and-black style.
+  components:
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Consumable/Storage/boxes.rsi
+    state: box_of_doom
+  - type: Storage
+    capacity: 15
+  - type: Item
+    sprite: Objects/Consumable/Storage/boxes.rsi
+    state: box_of_doom
+    size: 6
+    HeldPrefix: box
+    
+#kits that come in these boxes
+#I wanted to conceal them with a same-y name but due to how uplink is coded we can't have that
+
+- type: entity
+  parent: SuspiciousBoxBase
+  id: BoxHolopara
+  name: Holoparasite Kit
+  description: Pinnacle of Cybersun hard-light technology, allows you to embed a sentient guardian into your body, assiting you, and dealing massive damage with it's punches.
+  components:
+  - type: Storage
+    capacity: 15
+  - type: StorageFill
+    contents:
+    - id: HoloparaIjector
+      amount: 1
+    - id: GuardianInfo
+      amount: 1
+    - id: ClothingHeadHatBizzareSoft
+      amount: 1
+      
+      
