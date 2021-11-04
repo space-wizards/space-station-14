@@ -115,7 +115,6 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
         private void DirtyUI(EntityUid uid, GasPressurePumpComponent? pump)
         {
-
             if (!Resolve(uid, ref pump))
                 return;
 
