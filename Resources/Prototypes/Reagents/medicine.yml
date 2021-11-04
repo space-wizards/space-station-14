@@ -19,9 +19,9 @@
   physicalDesc: translucent
   color: "#3a1d8a"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -10
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 1
 
 - type: reagent
@@ -60,9 +60,9 @@
   physicalDesc: fizzy
   color: "#0091ff"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -3
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 3
 
 - type: reagent
@@ -72,9 +72,9 @@
   physicalDesc: bubbly
   color: "#0666ff"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: -5
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 5
 
 - type: reagent
@@ -287,7 +287,7 @@
   physicalDesc: strong-smelling
   color: "#5f959c"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
 
 - type: reagent
@@ -318,7 +318,7 @@
   physicalDesc: opaque
   color: "#77b58e"
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
 
 - type: reagent

@@ -25,9 +25,9 @@
   color: "#cfa85f"
   spritePath: beerglass.rsi
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.25
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 0.7
 
 - type: reagent

@@ -5,11 +5,11 @@
   physicalDesc: fizzy
   color: "#422912"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -19,11 +19,11 @@
   physicalDesc: fizzy
   color: "#2E6671"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -33,11 +33,11 @@
   physicalDesc: fizzy
   color: "#102000"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -48,11 +48,11 @@
   color: "#878F00"
   spritePath: lemonlime.rsi
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -62,11 +62,11 @@
   physicalDesc: fizzy
   color: "#9385bf"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -76,11 +76,11 @@
   physicalDesc: fizzy
   color: "#102000"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -90,11 +90,11 @@
   physicalDesc: fizzy
   color: "#00FF00"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
 
 - type: reagent
@@ -104,9 +104,9 @@
   physicalDesc: fizzy
   color: "#deb928"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1

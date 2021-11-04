@@ -7,9 +7,9 @@
   boilingPoint: -33.0
   meltingPoint: -77.7
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.5
   metabolisms:
     -
@@ -24,17 +24,17 @@
   meltingPoint: -50.0
   customPlantMetabolism: 0.1
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       prob: 0.1
       amount: -1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
-    - !type:AffectGrowth
+    - !type:PlantAffectGrowth
       prob: 0.2
       amount: 1
-    - !type:Diethylamine {}
+    - !type:PlantDiethylamine {}
 
 - type: reagent
   id: Ethanol
@@ -66,11 +66,11 @@
   boilingPoint: 340282300000000000000000000000000000000 #Fun fact: Glucose can't boil. So let's just set it to the maximum float value.
   meltingPoint: 146.0
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: 2
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: 2
 
 - type: reagent
@@ -82,7 +82,7 @@
   meltingPoint: 0.0
   boilingPoint: 100.0
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
 
 - type: reagent
@@ -96,9 +96,9 @@
       effects:
       - !type:SatiateHunger
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.5
 
 - type: reagent
@@ -122,11 +122,11 @@
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 20
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -4
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -8
 
 - type: reagent
@@ -147,17 +147,17 @@
   boilingPoint: 1465.0
   meltingPoint: 800.7
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: -3
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: -0.3
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 8
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
-    - !type:AdjustPests
+    - !type:PlantAdjustPests
       amount: -1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -2
 
 - type: reagent
@@ -179,9 +179,9 @@
   color: "#cf3600"
   physicalDesc: opaque
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -5
 
 - type: reagent
@@ -193,11 +193,11 @@
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:
-    - !type:AdjustToxins
+    - !type:PlantAdjustToxins
       amount: 10
-    - !type:AdjustWeeds
+    - !type:PlantAdjustWeeds
       amount: -2
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: -5
 
 - type: reagent
@@ -210,7 +210,7 @@
   meltingPoint: 261.0
   customPlantMetabolism: 2
   plantMetabolism:
-    - !type:AdjustMutationLevel
+    - !type:PlantAdjustMutationLevel
       amount: 1
 
 - type: reagent
@@ -225,7 +225,7 @@
     - !type:ExtinguishTileReaction {}
     - !type:SpillIfPuddlePresentTileReaction {}
   plantMetabolism:
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
 
 - type: reagent
