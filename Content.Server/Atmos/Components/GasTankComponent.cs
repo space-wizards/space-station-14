@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("outputPressure")]
         [ViewVariables]
-        public float OutputPressure { get; private set; } = DefaultOutputPressure;
+        public float OutputPressure { get; set; } = DefaultOutputPressure;
 
         /// <summary>
         ///     Pressure at which tanks start leaking.
