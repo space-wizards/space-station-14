@@ -16,6 +16,7 @@
     QuickEquip: false
   - type: GasTank
   - type: InternalsProvider
+  - type: InternalsProviderUI
   - type: ItemActions
     actions:
     - actionType: ToggleInternals

@@ -71,7 +71,7 @@ namespace Content.Server.Internals
                     return;
             }
 
-            Logger.DebugS("internals", $"Trying to set internals @{uid} to \"{args.ForcedState ?? !component.Connected}\" - {(args.ForcedState != null ? "Forced ": "")}{(args.BypassCheck ? "Bypassed!" : "")}");
+            //Logger.DebugS("internals", $"Trying to set internals @{uid} to \"{args.ForcedState ?? !component.Connected}\" - {(args.ForcedState != null ? "Forced ": "")}{(args.BypassCheck ? "Bypassed!" : "")}");
 
             var wasConnected = component.Connected;
             if (args.ForcedState == true || (args.ForcedState == null && !component.Connected))
@@ -83,6 +83,12 @@ namespace Content.Server.Internals
 
             if (args.Actions is not null)
                 args.Actions.GrantOrUpdate(ItemActionType.ToggleInternals, GetInternalsComponent(component) != null, component.Connected);
+            else
+            {
+                ItemActionsComponent? actions = null;
+                if (Resolve(uid, ref actions))
+                    actions.GrantOrUpdate(ItemActionType.ToggleInternals, GetInternalsComponent(component) != null, component.Connected);
+            }
 
             if (args.BypassCheck && !args.Handled)
                 Logger.ErrorS("internals", $"Internals @{uid} state change failed to change to \"{args.ForcedState}\" despite being forced to bypass a usability check");
@@ -101,7 +107,7 @@ namespace Content.Server.Internals
         {
             if (!component.Connected) return;
 
-            Logger.DebugS("internals", $"Disconnecting internals @{uid} from {component.Internals!.Owner.Name}");
+            //Logger.DebugS("internals", $"Disconnecting internals @{uid} from {component.Internals!.Owner.Name}");
 
             var internals = component.Internals!;
             component.Internals = null;
@@ -112,6 +118,8 @@ namespace Content.Server.Internals
                 actions.GrantOrUpdate(ItemActionType.ToggleInternals, GetInternalsComponent(component) != null, component.Connected);
         }
 
+        // It's rather hacky but it only needs to happen once, when trying to turn it on, so it should be alright?
+        // Kinda a fair bit of edge cases here
         private InternalsComponent? GetInternalsComponent(InternalsProviderComponent component)
         {
             var owner = component.Owner;

@@ -36,6 +36,7 @@ namespace Content.Server.Internals
             base.Initialize();
 
             SubscribeLocalEvent<InternalsProviderUIComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<InternalsProviderUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<InternalsProviderUIComponent, UseInHandEvent>(OnUse);
             SubscribeLocalEvent<InternalsProviderUIComponent, InteractHandEvent>(OnInteract);
             SubscribeLocalEvent<InternalsProviderUIComponent, GasTankPressureDeficitEvent>(OnTankPressureChange);
@@ -46,10 +47,15 @@ namespace Content.Server.Internals
             component.UserInterface = component.Owner.GetUIOrNull(SharedGasTankUiKey.Key);
             if (component.UserInterface != null)
             {
-                component.UserInterface.OnReceiveMessage += UserInterfaceOnOnReceiveMessage;
+                component.UserInterface.OnReceiveMessage += (msg) => UserInterfaceOnOnReceiveMessage(component, msg);
             }
         }
 
+        public void OnActivate(EntityUid uid, InternalsProviderUIComponent component, ActivateInWorldEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor)) return;
+            OpenInterface(component, actor.PlayerSession);
+        }
         public void OnUse(EntityUid uid, InternalsProviderUIComponent component, UseInHandEvent args)
         {
             if (!args.User.TryGetComponent(out ActorComponent? actor)) return;
@@ -76,30 +82,31 @@ namespace Content.Server.Internals
         public void UpdateUserInterface(InternalsProviderUIComponent component, bool initialUpdate = false)
         {
             var provider = component.Owner.GetComponent<InternalsProviderComponent>();
-            /*var internals = GetInternalsComponent();
+            var internals = provider.Internals;
+
+            var gasTank = component.Owner.GetComponent<GasTankComponent>();
+
             component.UserInterface?.SetState(
                 new GasTankBoundUserInterfaceState
                 {
-                    TankPressure = Air?.Pressure ?? 0,
-                    // Why null? The pressure can be updated..
-                    OutputPressure = initialUpdate ? OutputPressure : (float?) null,
-                    InternalsConnected = IsConnected,
-                    CanConnectInternals = IsFunctional && internals != null
-                });
-
-            if (internals == null) return;*/
-            var actions = component.Owner.GetComponentOrNull<ItemActionsComponent>();
+                    TankPressure = gasTank.Air?.Pressure ?? 0,
+                    OutputPressure = initialUpdate ? gasTank.OutputPressure : null,
+                    InternalsConnected = internals != null,
+                    CanConnectInternals = true // todo - fix?
+                }
+            );
         }
 
-        private void UserInterfaceOnOnReceiveMessage(ServerBoundUserInterfaceMessage message)
+        private void UserInterfaceOnOnReceiveMessage(InternalsProviderUIComponent component, ServerBoundUserInterfaceMessage message)
         {
             switch (message.Message)
             {
                 case GasTankSetPressureMessage msg:
-                    //OutputPressure = msg.Pressure;
+                    var gasTank = component.Owner.GetComponent<GasTankComponent>();
+                    gasTank.OutputPressure = msg.Pressure;
                     break;
                 case GasTankToggleInternalsMessage _:
-                    //ToggleInternals();
+                    RaiseLocalEvent(component.Owner.Uid, new ToggleInternalsEvent());
                     break;
             }
         }

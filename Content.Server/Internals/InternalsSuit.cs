@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Content.Server.Tools;
 using Content.Shared.Item;
 using Content.Shared.Actions.Components;
+using Robust.Shared.Localization;
 
 namespace Content.Server.Internals
 {
@@ -67,10 +68,7 @@ namespace Content.Server.Internals
             if (!args.IsInDetailsRange)
                 return;
 
-            // TODO: move to loc-string
-            var color = component.GasTankPresent ? "green" : "red";
-            var sign = component.GasTankPresent ? "." : "!";
-            args.PushMarkup($"It is capable of holding an air tank which is currently [color={color}]{(component.GasTankPresent ? "attached" : "missing")}[/color]{sign}");
+            args.PushMarkup(Loc.GetString("generic-error-no-hands", ("present", component.GasTankPresent)));
 
             // TODO: add a pressure gauge / approximate one?
             if (
@@ -86,22 +84,22 @@ namespace Content.Server.Internals
 
             if (!user.TryGetComponent(out SharedHandsComponent? hands))
             {
-                component.Owner.PopupMessage(user, "No hands!"); // Do we even need to check that...? Why?
+                component.Owner.PopupMessage(user, Loc.GetString("generic-error-no-hands")); // Do we even need to check that...? Why?
                 return;
             }
 
             if (args.Used.HasComponent<InternalsProviderComponent>())
             {
                 if (component.GasTankPresent)
-                    component.Owner.PopupMessage(user, "Already have a tank inside!");
+                    component.Owner.PopupMessage(user, Loc.GetString("internals-suit-already-occupied"));
                 else if (hands.TryPutHandIntoContainer(hands.ActiveHand!, component.GasTankContainer))
-                    component.Owner.PopupMessage(user, $"Attached an air tank to {args.Target.Name}");
+                    component.Owner.PopupMessage(user, Loc.GetString("internals-suit-attached-success", ("attachedTo", args.Target.Name)));
             }
             else if (await Get<ToolSystem>().UseTool(args.Used.Uid, args.User.Uid, component.Owner.Uid, 0f, 0.25f, "Screwing"))
             {
                 if (!component.GasTankPresent)
                 {
-                    args.Target.PopupMessage(user, "There's no gas tank inside!");
+                    args.Target.PopupMessage(user, Loc.GetString("internals-suit-already-empty"));
                     return;
                 }
                 var entity = component.GasTankContainer.ContainedEntity!;
@@ -110,14 +108,14 @@ namespace Content.Server.Internals
                         hands.PutInHand(item);
             }
             else
-                component.Owner.PopupMessage(user, "Not a gas tank!");
+                component.Owner.PopupMessage(user, Loc.GetString("internals-suit-invalid-type"));
         }
     }
 
     [RegisterComponent]
     public class InternalsSuitComponent : Component
     {
-        public override string Name => "InternalsProxy";
+        public override string Name => "InternalsSuit";
 
         public ContainerSlot GasTankContainer = default!;
 
