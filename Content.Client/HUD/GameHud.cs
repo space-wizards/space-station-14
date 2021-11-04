@@ -15,6 +15,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
@@ -113,7 +114,6 @@ namespace Content.Client.HUD
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly INetConfigurationManager _configManager = default!;
-        [Dependency] private static readonly IConfigurationManager _cfg = default!;
 
         public Control HandsContainer { get; private set; } = default!;
         public Control SuspicionContainer { get; private set; } = default!;
@@ -556,6 +556,8 @@ namespace Content.Client.HUD
             public const string StyleClassRedTopButton = "topButtonLabel";
             private const float CustomTooltipDelay = 0.4f;
 
+            [Dependency] private readonly IConfigurationManager configManager = default!;
+
             private static readonly Color ColorNormal = Color.FromHex("#7b7e9e");
             private static readonly Color ColorRedNormal = Color.FromHex("#FEFEFE");
             private static readonly Color ColorHovered = Color.FromHex("#9699bb");
@@ -607,20 +609,22 @@ namespace Content.Client.HUD
                 );
 
                 ToggleMode = true;
+
+                configManager = IoCManager.Resolve<IConfigurationManager>();
             }
 
             protected override void EnteredTree()
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
-                _inputManager.OnKeyUpdated += OnKeyBindingChanged;
+                configManager.OnValueChanged(CVars.DisplayUSQWERTYHotkeys, x => OnKeyBindingChanged());
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
-                _inputManager.OnKeyUpdated -= OnKeyBindingChanged;
+                configManager.UnsubValueChanged(CVars.DisplayUSQWERTYHotkeys, x => OnKeyBindingChanged());
             }
 
 
@@ -628,7 +632,7 @@ namespace Content.Client.HUD
             {
                 _label.Text = ShortKeyName(_function);
             }
-            
+
             private void OnKeyBindingChanged()
             {
                 _label.Text = ShortKeyName(_function);

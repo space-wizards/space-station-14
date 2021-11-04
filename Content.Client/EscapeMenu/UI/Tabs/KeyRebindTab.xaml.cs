@@ -41,18 +41,10 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
         private readonly List<Action> _deferCommands = new();
 
-        private void HandleToggleEnglishHotkeyCheckbox(BaseButton.ButtonToggledEventArgs args)
+        private void HandleToggleUSQWERTYCheckbox(BaseButton.ButtonToggledEventArgs args)
         {
-            _cfg.SetCVar(CVars.DisplayEnglishHotkeys, args.Pressed);
+            _cfg.SetCVar(CVars.DisplayUSQWERTYHotkeys, args.Pressed);
             _cfg.SaveToFile();
-
-            _inputManager.UpdateKeys();
-
-            foreach (var item in _keyControls)
-            {
-                item.Value.BindButton1.UpdateText();
-                item.Value.BindButton2.UpdateText();
-            }
         }
 
         public KeyRebindTab()
@@ -104,7 +96,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             }
 
             AddHeader("ui-options-header-general");
-            AddCheckBox("ui-options-hotkey-lang", _cfg.GetCVar(CVars.DisplayEnglishHotkeys), HandleToggleEnglishHotkeyCheckbox);
+            AddCheckBox("ui-options-hotkey-keymap", _cfg.GetCVar(CVars.DisplayUSQWERTYHotkeys), HandleToggleUSQWERTYCheckbox);
 
             AddHeader("ui-options-header-movement");
             AddButton(EngineKeyFunctions.MoveUp);
@@ -442,6 +434,7 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             public readonly Button Button;
             public IKeyBinding? Binding;
 
+            [Dependency] private readonly IConfigurationManager configManager = default!;
             public BindButton(KeyRebindTab tab, KeyControl keyControl, string styleClass)
             {
                 _tab = tab;
@@ -456,6 +449,9 @@ namespace Content.Client.EscapeMenu.UI.Tabs
                 };
 
                 Button.OnKeyBindDown += ButtonOnOnKeyBindDown;
+
+                configManager = IoCManager.Resolve<IConfigurationManager>();
+                configManager.OnValueChanged(CVars.DisplayUSQWERTYHotkeys, x => UpdateText());
 
                 MinSize = (200, 0);
             }
@@ -480,6 +476,11 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             public void UpdateText()
             {
                 Button.Text = Binding?.GetKeyString() ?? Loc.GetString("ui-options-unbound");
+            }
+
+            ~BindButton()
+            {
+                configManager.UnsubValueChanged(CVars.DisplayUSQWERTYHotkeys, x => UpdateText());
             }
         }
     }
