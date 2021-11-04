@@ -1,30 +1,14 @@
 using Content.Server.Atmos.Components;
-using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Content.Shared.Hands.Components;
-using Content.Shared.Popups;
 using Robust.Server.GameObjects;
-using Robust.Shared.IoC;
-using Content.Shared.Interaction.Helpers;
-using Content.Shared.ActionBlocker;
-using Content.Server.Stack;
-using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Tools;
-using Content.Shared.Tools.Components;
-using System.Threading.Tasks;
-using Content.Shared.Item;
-using Robust.Shared.Map;
 using Robust.Shared.ViewVariables;
 using Robust.Server.Player;
 using Content.Server.UserInterface;
 using Content.Shared.Atmos.Components;
 using static Content.Server.Atmos.Components.GasTankComponent;
-using Content.Shared.Actions;
-using Content.Shared.Actions.Components;
+using Robust.Shared.Analyzers;
 
 namespace Content.Server.Internals
 {
@@ -113,6 +97,7 @@ namespace Content.Server.Internals
     }
 
     [RegisterComponent]
+    [Friend(typeof(InternalsProviderUISystem))]
     public class InternalsProviderUIComponent : Component
     {
         public override string Name => "InternalsProviderUI";

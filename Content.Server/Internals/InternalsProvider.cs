@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Log;
 using Content.Shared.ActionBlocker;
+using Robust.Shared.Analyzers;
 using Robust.Shared.ViewVariables;
 using Robust.Shared.Localization;
 using Content.Server.Body.Respiratory;
@@ -140,6 +141,7 @@ namespace Content.Server.Internals
     }
 
     [RegisterComponent]
+    [Friend(typeof(InternalsProviderSystem), typeof(InternalsProviderUISystem))]
     public class InternalsProviderComponent : Component
     {
         public override string Name => "InternalsProvider";

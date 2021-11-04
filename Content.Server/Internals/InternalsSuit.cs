@@ -9,6 +9,10 @@ using Content.Server.Tools;
 using Content.Shared.Item;
 using Content.Shared.Actions.Components;
 using Robust.Shared.Localization;
+using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Shared.Tools;
+using Robust.Shared.Analyzers;
 
 namespace Content.Server.Internals
 {
@@ -95,7 +99,7 @@ namespace Content.Server.Internals
                 else if (hands.TryPutHandIntoContainer(hands.ActiveHand!, component.GasTankContainer))
                     component.Owner.PopupMessage(user, Loc.GetString("internals-suit-attached-success", ("attachedTo", args.Target.Name)));
             }
-            else if (await Get<ToolSystem>().UseTool(args.Used.Uid, args.User.Uid, component.Owner.Uid, 0f, 0.25f, "Screwing"))
+            else if (await Get<ToolSystem>().UseTool(args.Used.Uid, args.User.Uid, component.Owner.Uid, 0f, 0.25f, component._screwingQuality))
             {
                 if (!component.GasTankPresent)
                 {
@@ -113,6 +117,7 @@ namespace Content.Server.Internals
     }
 
     [RegisterComponent]
+    [Friend(typeof(InternalsSuitSystem))]
     public class InternalsSuitComponent : Component
     {
         public override string Name => "InternalsSuit";
@@ -120,5 +125,9 @@ namespace Content.Server.Internals
         public ContainerSlot GasTankContainer = default!;
 
         public bool GasTankPresent => GasTankContainer.ContainedEntity is not null;
+
+        [DataField("screwingQuality", customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
+        public string _screwingQuality = "Screwing";
+
     }
 }
