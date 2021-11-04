@@ -1,9 +1,4 @@
 Entries:
-- author: Rember
-  changes:
-  - {message: Character eye customization, type: Add}
-  id: 46
-  time: '2021-03-07T19:48:24.0000000+00:00'
 - author: ShadowCommander
   changes:
   - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
@@ -2817,3 +2812,10 @@ Entries:
   - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
   id: 545
   time: '2021-11-04T19:44:15.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: pAIs can no longer wipe each other or do other odd things. You can still
+      wipe yourself with the ghost command., type: Fix}
+  - {message: pAIs name themselves after their owner automatically, type: Add}
+  id: 546
+  time: '2021-11-04T22:29:17.0000000+00:00'
