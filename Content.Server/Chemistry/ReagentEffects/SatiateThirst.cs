@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     {
         /// How much thirst is satiated each metabolism tick. Not currently tied to
         /// rate or anything.
-        [DataField("hydrationFactor")]
+        [DataField("factor")]
         public float HydrationFactor { get; set; } = 3.0f;
 
         /// Satiate thirst if a ThirstComponent can be found

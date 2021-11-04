@@ -4,6 +4,11 @@
   desc: A drink made from brewed coffee beans. Contains a moderate amount of caffeine.
   physicalDesc: aromatic
   color: "#664300"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Cream
@@ -11,6 +16,11 @@
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 1
 
 - type: reagent
   id: CafeLatte
@@ -19,6 +29,11 @@
   physicalDesc: creamy
   color: "#664300"
   spritePath: cafe_latte.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: GreenTea
@@ -27,6 +42,10 @@
   physicalDesc: aromatic
   color: "#C33F00"
   spritePath: glass_green.rsi #Placeholder
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: Grenadine
@@ -35,6 +54,10 @@
   physicalDesc: dark-red
   color: "#EA1D26"
   spritePath: grenadineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: IcedCoffee
@@ -43,6 +66,10 @@
   physicalDesc: aromatic
   color: "#102838"
   spritePath: icedcoffeeglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: IcedGreenTea
@@ -51,6 +78,10 @@
   physicalDesc: aromatic
   color: "#CE4200"
   spritePath: glass_green.rsi #Placeholder
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: IcedTea
@@ -59,6 +90,10 @@
   physicalDesc: aromatic
   color: "#104038"
   spritePath: icedteaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: Lemonade
@@ -67,6 +102,11 @@
   physicalDesc: tart
   color: "#FFFF00"
   spritePath: lemonadeglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Milk
@@ -79,6 +119,11 @@
       amount: 0.1
     - !type:PlantAdjustWater
       amount: 0.9
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: MilkOat
@@ -86,6 +131,11 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 4
 
 - type: reagent
   id: MilkSoy
@@ -93,6 +143,11 @@
   desc: Surprisingly tasty.
   physicalDesc: refreshing
   color: "#302000"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 5 # soyboys stay winning
 
 - type: reagent
   id: MilkSpoiled
@@ -100,6 +155,11 @@
   desc: This milk has gone rancid.
   physicalDesc: putrid
   color: "#faffba"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: -2
 
 - type: reagent
   id: Nothing
@@ -107,6 +167,12 @@
   desc: Absolutely nothing.
   physicalDesc: nothing
   spritePath: nothing.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+        # TODO heal mimes
 
 - type: reagent
   id: NukaCola
@@ -115,6 +181,17 @@
   physicalDesc: fizzy
   color: "#100800"
   spritePath: nuka_colaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 6
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: SodaWater
@@ -122,6 +199,10 @@
   desc: A container of club soda. Why not make a scotch and soda?
   physicalDesc: fizzy
   color: "#619494"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: SoyLatte
@@ -130,6 +211,10 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: soy_latte.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: Tea
@@ -137,6 +222,10 @@
   desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
   physicalDesc: aromatic
   color: "#8a5a3a"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: TonicWater
@@ -144,3 +233,7 @@
   desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
   physicalDesc: fizzy
   color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst

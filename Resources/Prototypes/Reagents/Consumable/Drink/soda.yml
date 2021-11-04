@@ -11,6 +11,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ChangelingSting
@@ -25,6 +30,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DrGibb
@@ -39,6 +49,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: LemonLime
@@ -54,6 +69,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: PwrGame
@@ -68,6 +88,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: SpaceMountainWind
@@ -82,6 +107,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: SpaceUp
@@ -96,6 +126,11 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: FourteenLoko
@@ -110,3 +145,14 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.1
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1

@@ -4,6 +4,10 @@
   desc: It's a little piece of Eden.
   physicalDesc: crisp
   color: "#FDAD01"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceBanana
@@ -11,6 +15,10 @@
   desc: The raw essence of a banana. HONK.
   physicalDesc: crisp
   color: "#FFE777"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceBerry
@@ -18,22 +26,29 @@
   desc: A delicious blend of several different kinds of berries.
   physicalDesc: sweet
   color: "#660099"
-
-# /datum/reagent/drink/poisonberryjuice/on_mob_life(var/mob/living/M)
-
-# if(..())
-# return 1
-
-# M.adjustToxLoss(1)
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceBerryPoison
   name: poison berry juice
   desc: A surprisingly tasty juice blended from various kinds of very deadly and toxic berries.
-  physicalDesc: aromatic #maybe should be 'sickly'?
+  physicalDesc: sickly
   color: "#6600CC"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
-#TODO: port on_mob_life: restore eyesight
+#TODO: restore eyesight
 #if(..())
 #return 1
 # M.eye_blurry = max(M.eye_blurry - 1 , 0)
@@ -50,6 +65,10 @@
   desc: It's like a carrot, but less crunchy.
   physicalDesc: crisp
   color: "#FF8820"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceGrape
@@ -57,6 +76,10 @@
   desc: Freshly squeezed juice from red grapes. Quite sweet.
   physicalDesc: crisp
   color: "#512284"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceLemon
@@ -64,6 +87,10 @@
   desc: This juice is VERY sour.
   physicalDesc: citric
   color: "#fff690"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceLime
@@ -71,6 +98,10 @@
   desc: The sweet-sour juice of limes.
   physicalDesc: citric
   color: "#99bb43"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 # /datum/reagent/drink/orangejuice/on_mob_life(var/mob/living/M)
 
@@ -86,6 +117,10 @@
   desc: Both delicious AND rich in Vitamin C. What more do you need?
   physicalDesc: citric
   color: "#E78108"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuicePineapple
@@ -93,6 +128,10 @@
   desc: The delicious juice of a pineapple.
   physicalDesc: tropical
   color: yellow
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuicePotato
@@ -100,6 +139,10 @@
   desc: Juice of the potato. Bleh.
   physicalDesc: starchy
   color: "#302000"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceTomato
@@ -107,6 +150,10 @@
   desc: Tomatoes made into juice. What a waste of good tomatoes, huh?
   physicalDesc: saucey
   color: "#731008"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
 
 - type: reagent
   id: JuiceWatermelon
@@ -114,3 +161,7 @@
   desc: The delicious juice of a watermelon.
   physicalDesc: sweet
   color: "#EF3520"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst

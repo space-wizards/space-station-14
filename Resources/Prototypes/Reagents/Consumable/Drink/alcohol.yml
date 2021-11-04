@@ -1,6 +1,8 @@
 
 # Base Alcohol
 
+# TODO: drunkenness
+
 - type: reagent
   id: Absinthe
   name: absinthe
@@ -8,6 +10,11 @@
   physicalDesc: strong-smelling
   color: "#33EE00"
   spritePath: absintheglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Ale
@@ -16,6 +23,11 @@
   physicalDesc: bubbly
   color: "#663100"
   spritePath: aleglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Beer
@@ -29,6 +41,11 @@
       amount: 0.25
     - !type:PlantAdjustWater
       amount: 0.7
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BlueCuracao
@@ -37,6 +54,11 @@
   physicalDesc: strong-smelling
   color: "#0000CD"
   spritePath: curacaoglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Cognac
@@ -45,6 +67,11 @@
   physicalDesc: strong-smelling
   color: "#AB3C05"
   spritePath: cognacglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DeadRum
@@ -53,6 +80,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: rumglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Gin
@@ -61,6 +93,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: ginvodkaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Kahlua
@@ -69,6 +106,11 @@
   physicalDesc: cloudy
   color: "#664300"
   spritePath: kahluaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: MelonLiquor
@@ -77,6 +119,11 @@
   physicalDesc: strong-smelling
   color: "#138808"
   spritePath: emeraldglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: NTCahors
@@ -85,6 +132,11 @@
   physicalDesc: strong-smelling
   color: "#7E4043"
   spritePath: wineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: PoisonWine
@@ -93,6 +145,17 @@
   physicalDesc: strong-smelling
   color: "#000000"
   spritePath: pwineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
+    Poison:
+      effects:
+      - !type: HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: Rum
@@ -101,6 +164,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: rumglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Sake
@@ -108,6 +176,11 @@
   desc: Alcoholic beverage made by fermenting rice that has been polished.
   physicalDesc: strong-smelling
   color: "#DDDDDD"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Tequila
@@ -115,6 +188,11 @@
   desc: A strong and mildly flavoured, mexican produced spirit.
   physicalDesc: strong-smelling
   color: "#d7d1d155"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Vermouth
@@ -123,6 +201,11 @@
   physicalDesc: strong-smelling
   color: "#91FF91"
   spritePath: vermouthglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Vodka
@@ -131,6 +214,11 @@
   physicalDesc: strong-smelling
   color: "#d1d1d155"
   spritePath: ginvodkaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Whiskey
@@ -139,6 +227,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: whiskeyglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Wine
@@ -147,6 +240,11 @@
   physicalDesc: translucent
   color: "#7E4043"
   spritePath: wineglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 # Mixed Alcohol
 
@@ -157,6 +255,11 @@
   physicalDesc: strong-smelling
   color: "#365000"
   spritePath: acidspitglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: AlliesCocktail #haha, cock. that's hot
@@ -165,6 +268,11 @@
   physicalDesc: strong-smelling
   color: "#00664d"
   spritePath: alliescocktail.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Aloe
@@ -173,6 +281,11 @@
   physicalDesc: strong-smelling
   color: "#192c00"
   spritePath: aloe.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Amasec
@@ -181,6 +294,11 @@
   physicalDesc: strong-smelling
   color: "#124da7"
   spritePath: amasecglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Andalusia
@@ -189,6 +307,11 @@
   physicalDesc: strong-smelling
   color: "#665700"
   spritePath: andalusia.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Antifreeze
@@ -197,6 +320,11 @@
   physicalDesc: translucent
   color: "#ff7d63"
   spritePath: antifreeze.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: AtomicBomb
@@ -205,6 +333,11 @@
   physicalDesc: cloudy
   color: "#666300"
   spritePath: atomicbombglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: B52
@@ -213,6 +346,11 @@
   physicalDesc: bubbly
   color: "#664300"
   spritePath: b52glass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BahamaMama
@@ -221,6 +359,11 @@
   physicalDesc: strong-smelling
   color: "#FF7F3B"
   spritePath: bahama_mama.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BananaHonk
@@ -229,6 +372,11 @@
   physicalDesc: strong-smelling
   color: "#ffff91"
   spritePath: bananahonkglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Barefoot
@@ -237,6 +385,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: b&p.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BeepskySmash
@@ -245,6 +398,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: beepskysmashglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Bilk
@@ -253,6 +411,11 @@
   physicalDesc: bilky...
   color: "#895C4C"
   spritePath: glass_brown.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BlackRussian
@@ -261,6 +424,11 @@
   physicalDesc: strong-smelling
   color: "#360000"
   spritePath: blackrussianglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BloodyMary
@@ -269,6 +437,11 @@
   physicalDesc: strong-smelling
   color: "#660000"
   spritePath: bloodymaryglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id:  Booger
@@ -277,6 +450,11 @@
   physicalDesc: strong-smelling
   color: "#8CFF8C"
   spritePath: booger.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BraveBull
@@ -285,6 +463,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: bravebullglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: BrownStar
@@ -293,6 +476,11 @@
   physicalDesc: strong-smelling
   color: "#9F3400"
   spritePath: brownstar.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: CubaLibre
@@ -301,6 +489,11 @@
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: cubalibreglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DemonsBlood
@@ -309,6 +502,11 @@
   physicalDesc: strong-smelling
   color: "#a70000"
   spritePath: demonsblood.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DevilsKiss
@@ -317,6 +515,11 @@
   physicalDesc: strong-smelling
   color: "#A68310"
   spritePath: devilskiss.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DoctorsDelight
@@ -325,6 +528,11 @@
   physicalDesc: strong-smelling
   color: "#FF8CFF"
   spritePath: doctorsdelightglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: DriestMartini
@@ -333,6 +541,11 @@
   physicalDesc: strong-smelling
   color: "#2E6671"
   spritePath: driestmartiniglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ErikaSuprise
@@ -341,6 +554,11 @@
   physicalDesc: strong-smelling
   color: "#2E6671"
   spritePath: erikasurprise.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: GargleBlaster
@@ -349,6 +567,11 @@
   physicalDesc: volatile
   color: "#9cc8b4"
   spritePath: gargleblasterglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: GinFizz
@@ -357,6 +580,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: ginfizzglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: GinTonic
@@ -365,6 +593,11 @@
   physicalDesc: strong-smelling
   color: "#004166"
   spritePath: gintonicglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Goldschlager
@@ -373,6 +606,11 @@
   physicalDesc: strong-smelling
   color: "#FFFF91"
   spritePath: goldschlagerglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Grog
@@ -381,6 +619,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: grogglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: HippiesDelight
@@ -389,6 +632,11 @@
   physicalDesc: strong-smelling
   color: "#6eaa0c"
   spritePath: hippiesdelightglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Hooch
@@ -397,6 +645,11 @@
   physicalDesc: strong-smelling
   color: "#664e00"
   spritePath: glass_brown2.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: IcedBeer
@@ -405,6 +658,11 @@
   physicalDesc: bubbly
   color: "#664300"
   spritePath: iced_beerglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: IrishCarBomb
@@ -413,6 +671,11 @@
   physicalDesc: bubbly
   color: "#2E6671"
   spritePath: irishcarbomb.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: IrishCream
@@ -421,6 +684,11 @@
   physicalDesc: creamy
   color: "#664300"
   spritePath: irishcreamglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: IrishCoffee
@@ -429,6 +697,11 @@
   physicalDesc: cloudy
   color: "#664300"
   spritePath: irishcoffeeglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: KiraSpecial
@@ -437,6 +710,11 @@
   physicalDesc: strong-smelling
   color: "#CCCC99"
   spritePath: kiraspecial.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Lean
@@ -444,6 +722,11 @@
   desc: Turn up for days.
   physicalDesc: bubbly
   color: "#9400D3"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: LeanShine
@@ -451,6 +734,11 @@
   desc: Lean mixed with moonshine. Turn up for months.
   physicalDesc: bubbly
   color: "#9d5fb8"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: LongIslandIcedTea
@@ -459,6 +747,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: longislandicedteaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Manhattan
@@ -467,6 +760,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: manhattanglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ManhattanProject
@@ -475,6 +773,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: proj_manhattanglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ManlyDorf
@@ -483,6 +786,11 @@
   physicalDesc: bubbly
   color: "#664300"
   spritePath: manlydorfglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Margarita
@@ -491,6 +799,11 @@
   physicalDesc: strong-smelling
   color: "#8CFF8C"
   spritePath: margaritaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Martini
@@ -499,6 +812,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: martiniglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Mead
@@ -507,6 +825,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: meadglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Mojito
@@ -515,6 +838,11 @@
   physicalDesc: strong-smelling
   color: "#664300"
   spritePath: mojito.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Moonshine
@@ -522,6 +850,11 @@
   desc: Artisanal homemade liquor. What could go wrong?
   physicalDesc: strong-smelling
   color: "#d1d7d155"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Neurotoxin
@@ -530,6 +863,16 @@
   physicalDesc: strong-smelling
   color: "#2E2E61"
   spritePath: neurotoxinglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
 
 - type: reagent
   id: Patron
@@ -538,6 +881,11 @@
   physicalDesc: metallic
   color: "#585840"
   spritePath: patronglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: RedMead
@@ -546,14 +894,24 @@
   physicalDesc: strong-smelling
   color: "#C73C00"
   spritePath: red_meadglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Rewriter
   name: rewriter
-  desc: The secret of the sanctuary of the Libarian...
+  desc: The secret of the sanctuary of the Librarian...
   physicalDesc: strong-smelling
   color: "#485000"
   spritePath: rewriter.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Sbiten
@@ -562,6 +920,11 @@
   physicalDesc: strong-smelling
   color: "#004166"
   spritePath: sbitenglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ScrewdriverCocktail
@@ -570,6 +933,11 @@
   physicalDesc: strong-smelling
   color: "#A68310"
   spritePath: screwdriverglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Silencer
@@ -578,6 +946,11 @@
   physicalDesc: strong-smelling
   color: "#004666"
   spritePath: silencerglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: Singulo
@@ -586,6 +959,11 @@
   physicalDesc: strong-smelling
   color: "#3b0c0c"
   spritePath: singulo.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: SnowWhite
@@ -594,6 +972,11 @@
   physicalDesc: bubbly
   color: "#FFFFFF"
   spritePath: snowwhite.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: SuiDream
@@ -602,6 +985,11 @@
   physicalDesc: strong-smelling
   color: "#00A86B"
   spritePath: sdreamglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: SyndicateBomb
@@ -610,6 +998,11 @@
   physicalDesc: opaque
   color: "#2E6660"
   spritePath: syndicatebomb.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: TequilaSunrise
@@ -618,6 +1011,11 @@
   physicalDesc: strong-smelling
   color: "#FFE48C"
   spritePath: tequillasunriseglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ThreeMileIsland
@@ -626,6 +1024,11 @@
   physicalDesc: strong-smelling
   color: "#666340"
   spritePath: threemileislandglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: ToxinsSpecial
@@ -634,6 +1037,11 @@
   physicalDesc: strong-smelling
   color: "#665c00"
   spritePath: toxinsspecialglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: VodkaMartini
@@ -642,6 +1050,11 @@
   physicalDesc: strong-smelling
   color: "#004666"
   spritePath: martiniglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: VodkaTonic
@@ -650,6 +1063,11 @@
   physicalDesc: strong-smelling
   color: "#0064C8"
   spritePath: vodkatonicglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: WhiskeyCola
@@ -658,6 +1076,11 @@
   physicalDesc: bubbly
   color: "#3E1B00"
   spritePath: whiskeycolaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: WhiskeySoda
@@ -666,6 +1089,11 @@
   physicalDesc: strong-smelling
   color: "#533600"
   spritePath: whiskeysodaglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2
 
 - type: reagent
   id: WhiteRussian
@@ -674,3 +1102,8 @@
   physicalDesc: strong-smelling
   color: "#A68340"
   spritePath: whiterussianglass.rsi
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 2

@@ -18,6 +18,13 @@
   desc: A broad-spectrum anti-toxin, which treats toxin damage in the blood stream. Overdosing will cause vomiting, dizzyness and pain.
   physicalDesc: translucent
   color: "#3a1d8a"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: -1
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: -10
@@ -174,6 +181,13 @@
   desc: Treats burn damage and prevents infection.
   physicalDesc: strong-smelling
   color: "#bf3d19"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -1
 
 - type: reagent
   id: Leporazine
@@ -230,6 +244,14 @@
   desc: Toxic, but treats hallucinations, drowsiness & halves the duration of paralysis, stuns and knockdowns. It is metabolized very slowly. One unit is enough to treat hallucinations; two units is deadly.
   physicalDesc: pungent
   color: "#d49a2f"
+  metabolisms:
+    Poison:
+      Synaptizine:
+        effects:
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 0.5
 
 - type: reagent
   id: Tramadol
@@ -286,6 +308,13 @@
   desc: A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
   physicalDesc: strong-smelling
   color: "#5f959c"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: 4
   plantMetabolism:
     - !type:PlantAdjustToxins
       amount: 10
@@ -303,6 +332,13 @@
   desc: Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
   physicalDesc: pungent
   color: "#6b0007"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Airloss: 7
 
 - type: reagent
   id: Lipozine
@@ -355,3 +391,13 @@
   desc: A soothing milky liquid with an iridescent gleam. A well known conspiracy theory says that it's origins remain a mystery because knowing the secrets of its production would render most commercial pharmaceuticals obsolete.
   physicalDesc: soothing
   color: "#fcf7f9"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -2
+            Toxin: -2
+            Airloss: -2
+            Brute: -2
