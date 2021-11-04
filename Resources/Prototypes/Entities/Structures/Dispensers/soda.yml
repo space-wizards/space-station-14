@@ -7,6 +7,7 @@
   - type: Rotatable
   - type: Sprite
     sprite: Structures/dispensers.rsi
+    drawdepth: SmallObjects
     state: soda
   - type: ReagentDispenser
     pack: SodaDispenserInventory

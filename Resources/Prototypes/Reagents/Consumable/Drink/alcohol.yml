@@ -470,19 +470,6 @@
         factor: 2
 
 - type: reagent
-  id: BrownStar
-  name: brown star
-  desc: It's not what it sounds like...
-  physicalDesc: strong-smelling
-  color: "#9F3400"
-  spritePath: brownstar.rsi
-  metabolisms:
-    Drink:
-      effects:
-      - !type:SatiateThirst
-        factor: 2
-
-- type: reagent
   id: CubaLibre
   name: cuba libre
   desc: Rum, mixed with cola. Viva la revolucion.

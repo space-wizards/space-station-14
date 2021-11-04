@@ -18,6 +18,7 @@
       layer: [ Passable ]
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/light_tube.rsi
+    drawdepth: WallMountedItems
     layers:
     - state: on
       map: ["enum.PoweredLightLayers.Base"]

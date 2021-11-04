@@ -12,11 +12,11 @@
       drink:
         reagents:
         - ReagentId: Cola
-          Quantity: 20
-        maxVol: 20
+          Quantity: 30
+        maxVol: 30
   - type: SolutionTransfer
     canChangeTransferAmount: true
-    maxTransferAmount: 10
+    maxTransferAmount: 15
   - type: UserInterface
     interfaces:
     - key: enum.TransferAmountUiKey.Key
@@ -44,10 +44,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: Cola
-          Quantity: 20
+          Quantity: 30
   - type: Tag
     tags:
     - Cola
@@ -65,10 +65,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: IcedTea
-          Quantity: 20
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/ice_tea_can.rsi
   - type: Item
@@ -83,10 +83,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: LemonLime
-          Quantity: 20
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/lemon-lime.rsi
   - type: Item
@@ -98,6 +98,13 @@
   name: grape soda can
   description: Sweetened drink with a grape flavor and a deep purple color.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: GrapeSoda
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/purple_can.rsi
   - type: Item
@@ -112,10 +119,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: SodaWater
-          Quantity: 20
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/sodawater.rsi
@@ -129,10 +136,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: SpaceMountainWind
-          Quantity: 20
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space_mountain_wind.rsi
   - type: Item
@@ -147,10 +154,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: SpaceUp
-          Quantity: 20
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/space-up.rsi
   - type: Item
@@ -162,6 +169,13 @@
   name: starkist can
   description: The taste of a star in liquid form. And, a bit of tuna...?
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Starkist
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/starkist.rsi
   - type: Item
@@ -176,10 +190,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 50
         reagents:
         - ReagentId: TonicWater
-          Quantity: 20
+          Quantity: 50
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/tonic.rsi
@@ -193,10 +207,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: FourteenLoko
-          Quantity: 20
+          Quantity: 30
   - type: Sprite
     sprite: Objects/Consumable/Drinks/fourteen_loko.rsi
   - type: Item
@@ -211,10 +225,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: ChangelingSting
-          Quantity: 20
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/changelingsting.rsi
@@ -230,10 +244,10 @@
   - type: SolutionContainerManager
     solutions:
       drink:
-        maxVol: 20
+        maxVol: 30
         reagents:
         - ReagentId: DrGibb
-          Quantity: 20
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/dr_gibb.rsi
@@ -242,10 +256,17 @@
 
 - type: entity
   parent: DrinkCanBaseFull
-  id: DrinkEnergyDrink
+  id: DrinkEnergyDrinkCan
   name: red bool energy drink
   description: A can of Red Bool, with enough caffeine to kill a horse.
   components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: EnergyDrink
+          Quantity: 30
   - type: Drink
   - type: Sprite
     sprite: Objects/Consumable/Drinks/energy_drink.rsi
