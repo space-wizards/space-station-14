@@ -87,22 +87,23 @@ namespace Content.Client.Chemistry.UI
             if (!state.HasBeaker)
             {
                 ContainerInfo.Children.Add(new Label {Text = Loc.GetString("chem-master-window-no-container-loaded-text") });
-                return;
             }
-
-            ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
+            else
             {
-                Orientation = LayoutOrientation.Horizontal,
-                Children =
+                ContainerInfo.Children.Add(new BoxContainer // Name of the container and its fill status (Ex: 44/100u)
                 {
-                    new Label {Text = $"{state.ContainerName}: "},
-                    new Label
+                    Orientation = LayoutOrientation.Horizontal,
+                    Children =
                     {
-                        Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
-                        StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                        new Label {Text = $"{state.ContainerName}: "},
+                        new Label
+                        {
+                            Text = $"{state.BeakerCurrentVolume}/{state.BeakerMaxVolume}",
+                            StyleClasses = {StyleNano.StyleClassLabelSecondaryColor}
+                        }
                     }
-                }
-            });
+                });
+            }
 
             foreach (var reagent in state.ContainerReagents)
             {
