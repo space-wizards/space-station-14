@@ -157,7 +157,6 @@
   color: "#00ff04"
   meltingPoint: 700.0
   boilingPoint: 1737.0
-  customPlantMetabolism: 2
   plantMetabolism:
     - !type:PlantAdjustMutationLevel
       amount: 0.6

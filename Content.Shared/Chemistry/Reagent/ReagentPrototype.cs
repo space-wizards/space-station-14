@@ -28,9 +28,6 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         private readonly List<ReagentEffect> _plantMetabolism = new(0);
 
-        [DataField("customPlantMetabolism")]
-        private readonly float _customPlantMetabolism = 1f;
-
         [ViewVariables]
         [DataField("id", required: true)]
         public string ID { get; } = default!;
