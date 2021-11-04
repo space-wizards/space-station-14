@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Net.Security;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Content.Shared.Verbs;
@@ -20,6 +21,7 @@ namespace Content.Server.Verbs
         {
             if (args.Length != 3)
             {
+                shell.WriteLine(Loc.GetString("invoke-verb-command-invalid-args"));
                 return;
             }
 
@@ -36,6 +38,7 @@ namespace Content.Server.Verbs
                 }
                 else
                 {
+                    shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-uid"));
                     return;
                 }
             }
@@ -45,34 +48,47 @@ namespace Content.Server.Verbs
             }
 
             // gets the target entity
-            if (int.TryParse(args[1], out var intUid))
+            if (!int.TryParse(args[1], out var intUid))
             {
-                var entUid = new EntityUid(intUid);
+                shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-uid"));
+                return;
+            }
 
-                if (playerEntity != null && entityManager.TryGetEntity(entUid, out var target))
+            if (playerEntity == null)
+            {
+                shell.WriteError(Loc.GetString("invoke-verb-command-invalid-player-entity"));
+                return;
+            }
+
+            var entUid = new EntityUid(intUid);
+            if (!entityManager.TryGetEntity(entUid, out var target))
+            {
+                shell.WriteError(Loc.GetString("invoke-verb-command-invalid-target-entity"));
+                return;
+            }
+
+            var verbName = args[2].ToLowerInvariant();
+            var verbs = verbSystem.GetLocalVerbs(
+                target, playerEntity, VerbType.All, true
+                );
+
+            foreach (var (type, set) in verbs)
+            {
+                if (type == VerbType.Interaction && verbName == "interaction"
+                    || type == VerbType.Activation && verbName == "activation"
+                    || type == VerbType.Alternative && verbName == "alternative")
                 {
-                    var verbName = args[2].ToLowerInvariant();
-                    var verbs = verbSystem.GetLocalVerbs(
-                        target, playerEntity, VerbType.All, true
-                        );
-
-                    foreach (var (type, set) in verbs)
+                    verbSystem.ExecuteVerb(set.First());
+                    shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                    return;
+                }
+                foreach (var verb in set)
+                {
+                    if (verb.Text.ToLowerInvariant() == verbName)
                     {
-                        if (type == VerbType.Interaction && verbName == "interaction"
-                         || type == VerbType.Activation && verbName == "activation"
-                         || type == VerbType.Alternative && verbName == "alternative")
-                        {
-                            verbSystem.ExecuteVerb(set.First());
-                            return;
-                        }
-                        foreach (var verb in set)
-                        {
-                            if (verb.Text.ToLowerInvariant() == verbName)
-                            {
-                                verbSystem.ExecuteVerb(verb);
-                                return;
-                            }
-                        }
+                        verbSystem.ExecuteVerb(verb);
+                        shell.WriteLine(Loc.GetString("invoke-verb-command-success", ("verb", verbName), ("target", target), ("player", playerEntity)));
+                        return;
                     }
                 }
             }
