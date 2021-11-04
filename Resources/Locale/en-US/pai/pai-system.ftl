@@ -13,3 +13,5 @@ pai-system-wiped-device = The pAI was wiped from the device.
 pai-system-stop-searching-verb-text = Stop searching
 pai-system-stopped-searching = The device stopped searching for a pAI.
 
+pai-system-pai-name = { CAPITALIZE(THE($owner)) }'s pAI
+

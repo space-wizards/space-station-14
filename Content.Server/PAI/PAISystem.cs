@@ -69,6 +69,9 @@ namespace Content.Server.PAI
                 return;
             }
 
+            // Ownership tag
+            component.Owner.Name = Loc.GetString("pai-system-pai-name", ("owner", args.User));
+
             var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
 
             ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
@@ -81,7 +84,7 @@ namespace Content.Server.PAI
         private void OnMindRemoved(EntityUid uid, PAIComponent component, MindRemovedMessage args)
         {
             // Mind was removed, shutdown the PAI.
-            UpdatePAIAppearance(uid, PAIStatus.Off);
+            PAITurningOff(uid);
         }
 
         private void OnMindAdded(EntityUid uid, PAIComponent pai, MindAddedMessage args)
@@ -90,6 +93,17 @@ namespace Content.Server.PAI
             if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                 EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
             UpdatePAIAppearance(uid, PAIStatus.On);
+        }
+
+        private void PAITurningOff(EntityUid uid)
+        {
+            UpdatePAIAppearance(uid, PAIStatus.Off);
+            if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metadata))
+            {
+                var proto = metadata.EntityPrototype;
+                if (proto != null)
+                    metadata.EntityName = proto.Name;
+            }
         }
 
         private void UpdatePAIAppearance(EntityUid uid, PAIStatus status)
@@ -119,7 +133,7 @@ namespace Content.Server.PAI
                     {
                         EntityManager.RemoveComponent<MindComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, Filter.Entities(args.User.Uid));
-                        UpdatePAIAppearance(uid, PAIStatus.Off);
+                        PAITurningOff(uid);
                     }
                 };
                 args.Verbs.Add(verb);
@@ -135,7 +149,7 @@ namespace Content.Server.PAI
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, Filter.Entities(args.User.Uid));
-                        UpdatePAIAppearance(uid, PAIStatus.Off);
+                        PAITurningOff(uid);
                     }
                 };
                 args.Verbs.Add(verb);
