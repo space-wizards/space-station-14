@@ -8,6 +8,7 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Body.Metabolism
 {
@@ -38,15 +39,15 @@ namespace Content.Server.Body.Metabolism
         ///     Does this component use a solution on it's parent entity (the body) or itself
         /// </summary>
         /// <remarks>
-        ///     Most things will use the parent entity (bloodstream). Something like the stomach will probably use
-        ///     its own entity.
+        ///     Most things will use the parent entity (bloodstream).
         /// </remarks>
+        [DataField("solutionOnBody")]
         public bool SolutionOnBody = true;
 
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("metabolizerTypes")]
+        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdListSerializer<MetabolismTypePrototype>))]
         public List<string>? MetabolizerTypes = null;
 
         /// <summary>

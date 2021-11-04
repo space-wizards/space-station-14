@@ -15,6 +15,9 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("type", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolismTypePrototype>))]
         public string Type = default!;
 
+        /// <summary>
+        ///     Does this condition pass when the organ has the type, or when it doesn't have the type?
+        /// </summary>
         [DataField("shouldHave")]
         public bool ShouldHave = true;
 

@@ -62,11 +62,11 @@
   physicalDesc: fizzy
   color: "#ffffbf"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
   metabolisms:
     Drink:
@@ -81,11 +81,11 @@
   physicalDesc: fizzy
   color: "#ae94a6"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
   metabolisms:
     Drink:
@@ -177,11 +177,11 @@
   physicalDesc: fizzy
   color: "#9F3400"
   plantMetabolism:
-    - !type:AdjustNutrition
+    - !type:PlantAdjustNutrition
       amount: 0.1
-    - !type:AdjustWater
+    - !type:PlantAdjustWater
       amount: 1
-    - !type:AdjustHealth
+    - !type:PlantAdjustHealth
       amount: 0.1
   metabolisms:
     Drink:
@@ -192,7 +192,7 @@
 - type: reagent
   id: FourteenLoko
   name: Fourteen Loko
-  desc: A highly processed liquid substance barely-passing intergalatic health standarts for a soft drink.
+  desc: A highly processed liquid substance barely-passing intergalatic health standards for a soft drink.
   physicalDesc: fizzy
   color: "#deb928"
   plantMetabolism:

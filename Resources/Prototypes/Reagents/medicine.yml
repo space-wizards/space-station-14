@@ -246,12 +246,11 @@
   color: "#d49a2f"
   metabolisms:
     Poison:
-      Synaptizine:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Poison: 0.5
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.5
 
 - type: reagent
   id: Tramadol
