@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
@@ -13,7 +13,7 @@
    version="1.1"
    id="SVGRoot"
    sodipodi:docname="plus.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:version="1.0.2-2 (e86c870879, 2021-01-15)"
    inkscape:export-filename="C:\Users\Pieter-Jan Briers\Projects\space-station-14\Resources\Textures\Interface\Changelog\plus.svg.192dpi.png"
    inkscape:export-xdpi="192"
    inkscape:export-ydpi="192">
@@ -26,17 +26,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="45.254834"
-     inkscape:cx="8.3513389"
-     inkscape:cy="8.3521631"
+     inkscape:zoom="32"
+     inkscape:cx="17.739716"
+     inkscape:cy="3.6310773"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      inkscape:document-rotation="0"
      showgrid="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1051"
-     inkscape:window-x="-9"
-     inkscape:window-y="-9"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      inkscape:pagecheckerboard="true"
      inkscape:snap-object-midpoints="true">
@@ -54,7 +54,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -63,20 +63,20 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ffffff;stroke-width:4.40315;stop-color:#000000;fill-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:4.40315;stop-color:#000000"
        id="rect2663"
        width="14"
-       height="3"
+       height="2"
        x="1"
-       y="6.5"
+       y="7"
        ry="0.5" />
     <rect
-       style="fill:#ffffff;stroke-width:4.40315;stop-color:#000000;fill-opacity:1"
+       style="fill:#ffffff;fill-opacity:1;stroke-width:4.40315;stop-color:#000000"
        id="rect2663-4"
        width="14"
-       height="3"
+       height="2"
        x="1"
-       y="-9.5"
+       y="-9"
        transform="rotate(90)"
        ry="0.5" />
   </g>

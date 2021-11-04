@@ -87,6 +87,8 @@ namespace Content.Server.AI.Components
             }
         }
 
+        public Angle LastGridAngle { get => Angle.Zero; set {} }
+
         /// <inheritdoc />
         [ViewVariables(VVAccess.ReadWrite)]
         public float PushStrength { get; set; } = IMobMoverComponent.PushStrengthDefault;

@@ -1,4 +1,5 @@
 ﻿using System;
+using Content.Server.Construction;
 using Content.Server.Construction.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -12,15 +13,12 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("node")]
         public string Node { get; private set; } = string.Empty;
 
-        public async void Execute(IEntity owner, DestructibleSystem system)
+        public void Execute(IEntity owner, DestructibleSystem system)
         {
-            if (string.IsNullOrEmpty(Node) ||
-                !owner.TryGetComponent(out ConstructionComponent? construction))
-            {
+            if (string.IsNullOrEmpty(Node) || !owner.TryGetComponent(out ConstructionComponent? construction))
                 return;
-            }
 
-            await construction.ChangeNode(Node);
+            EntitySystem.Get<ConstructionSystem>().ChangeNode(owner.Uid, null, Node, true, construction);
         }
     }
 }

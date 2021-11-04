@@ -9,7 +9,7 @@
     drawdepth: FloorObjects
   - type: SolutionContainerManager
   - type: Puddle
-    spill_sound:
+    spillSound:
       path: /Audio/Effects/Fluids/splat.ogg
     recolor: true
   - type: Clickable
@@ -24,6 +24,10 @@
       mask:
       - SmallImpassable
       hard: false
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: puddle
@@ -39,9 +43,17 @@
   - type: Sprite
     sprite: Fluids/gibblet.rsi # Placeholder
     state: gibblet-0
+    netsync: false
   - type: Puddle
-    variants: 5
-    state: gibblet
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: puddle
@@ -52,9 +64,13 @@
   - type: Sprite
     sprite: Fluids/smear.rsi # Placeholder
     state: smear-0
+    netsync: false
   - type: Puddle
-    variants: 7
-    state: smear
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
+      recolor: true
 
 - type: entity
   name: puddle
@@ -65,9 +81,12 @@
   - type: Sprite
     sprite: Fluids/splatter.rsi # Placeholder
     state: splatter-0
+    netsync: false
   - type: Puddle
-    variants: 6
-    state: splatter
+  - type: Evaporation
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: vomit
@@ -78,11 +97,19 @@
   - type: Sprite
     sprite: Fluids/vomit.rsi
     state: vomit-0
+    netsync: false
   - type: Puddle
-    variants: 4
-    recolor: false
-    evaporate_threshold: -1
-    state: vomit
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: toxins vomit
@@ -93,10 +120,19 @@
   - type: Sprite
     sprite: Fluids/vomit_toxin.rsi
     state: vomit_toxin-0
+    netsync: false
   - type: Puddle
-    variants: 4
-    recolor: false
-    state: vomit_toxin
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: writing
@@ -107,6 +143,10 @@
   - type: Sprite
     sprite: Fluids/writing.rsi # Placeholder
     state: writing-0
+    netsync: false
   - type: Puddle
-    variants: 5
-    state: writing
+  - type: Evaporation
+    evaporateTime: 10
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer

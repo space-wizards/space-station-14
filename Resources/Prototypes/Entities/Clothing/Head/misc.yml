@@ -1,7 +1,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatBunny
-  name: bunny
+  name: bunny ears
   description: Cute bunny ears.
   components:
   - type: Sprite
@@ -78,7 +78,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatSkub
-  name: Skub Hat
+  name: skub hat
   description: 'Best paired with the Skub Suit.'
   components:
   - type: Sprite
@@ -89,7 +89,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatXenoMom
-  name: xeno matriarch
+  name: xeno matriarch helmet
   description: Hiss hiss hiss!
   components:
   - type: Sprite
@@ -100,7 +100,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatXeno
-  name: xenos
+  name: xenos helmet
   description: Hiss hiss hiss!
   components:
   - type: Sprite

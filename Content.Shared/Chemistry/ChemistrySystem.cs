@@ -1,6 +1,7 @@
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -21,14 +22,14 @@ namespace Content.Shared.Chemistry
             }
         }
 
-        public void ReactionEntity(IEntity entity, ReactionMethod method, string reagentId, ReagentUnit reactVolume, Solution? source)
+        public void ReactionEntity(IEntity entity, ReactionMethod method, string reagentId, FixedPoint2 reactVolume, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
             ReactionEntity(entity, method, _prototypeManager.Index<ReagentPrototype>(reagentId), reactVolume, source);
         }
 
         public void ReactionEntity(IEntity entity, ReactionMethod method, ReagentPrototype reagent,
-            ReagentUnit reactVolume, Solution? source)
+            FixedPoint2 reactVolume, Solution? source)
         {
             if (entity == null || entity.Deleted || !entity.TryGetComponent(out ReactiveComponent? reactive))
                 return;

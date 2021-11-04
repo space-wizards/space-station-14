@@ -31,7 +31,9 @@ namespace Content.Server.Light.Components
     ///     Component that represents a powered handheld light source which can be toggled on and off.
     /// </summary>
     [RegisterComponent]
+#pragma warning disable 618
     internal sealed class HandheldLightComponent : SharedHandheldLightComponent, IUse, IExamine, IInteractUsing
+#pragma warning restore 618
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("wattage")] public float Wattage { get; set; } = 3f;
         [ViewVariables] private PowerCellSlotComponent _cellSlot = default!;

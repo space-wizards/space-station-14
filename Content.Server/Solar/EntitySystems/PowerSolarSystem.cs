@@ -86,7 +86,7 @@ namespace Content.Server.Solar.EntitySystems
 
             TotalPanelPower = 0;
 
-            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>(true))
+            foreach (var panel in EntityManager.EntityQuery<SolarPanelComponent>())
             {
                 // There's supposed to be rotational logic here, but that implies putting it somewhere.
                 panel.Owner.Transform.WorldRotation = TargetPanelRotation;

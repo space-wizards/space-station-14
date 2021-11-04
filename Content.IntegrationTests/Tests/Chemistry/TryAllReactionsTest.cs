@@ -1,8 +1,8 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reaction;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
                     beaker = entityManager.SpawnEntity("BluespaceBeaker", MapCoordinates.Nullspace);
                     Assert.That(EntitySystem.Get<SolutionContainerSystem>()
-                        .TryGetSolution(beaker, "beaker", out component));
+                        .TryGetSolution(beaker.Uid, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
                         Assert.That(EntitySystem.Get<SolutionContainerSystem>()

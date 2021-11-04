@@ -2,6 +2,7 @@ using Content.Client.Eui;
 using Content.Shared.Administration;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Eui;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
@@ -40,7 +41,7 @@ namespace Content.Client.Administration.UI
             _window.HandleState((AdminAddReagentEuiState) state);
         }
 
-        private void DoAdd(bool close, string reagentId, ReagentUnit amount)
+        private void DoAdd(bool close, string reagentId, FixedPoint2 amount)
         {
             SendMessage(new AdminAddReagentEuiMsg.DoAdd
             {
@@ -121,7 +122,7 @@ namespace Content.Client.Administration.UI
                 _eui.DoAdd(
                     close,
                     _reagentIdEdit.Text,
-                    ReagentUnit.New(float.Parse(_amountEdit.Text)));
+                    FixedPoint2.New(float.Parse(_amountEdit.Text)));
             }
 
             private void CheckErrors()

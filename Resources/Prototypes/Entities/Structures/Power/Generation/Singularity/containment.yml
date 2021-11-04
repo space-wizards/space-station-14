@@ -11,8 +11,12 @@
     bodyType: Static
     fixtures:
     - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
+        # Using a circle here makes it a lot easier to pull it all the way from Cargo
+        # However keep in mind that this will affect singulo collision as well,
+        #  when people inevitably physicsify that,
+        #  so it can't just be 0.1 or something
+        !type:PhysShapeCircle
+          radius: 0.45
       mass: 25
       layer:
       - Impassable

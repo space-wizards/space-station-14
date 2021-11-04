@@ -192,7 +192,7 @@ namespace Content.Server.Ghost
 
         private IEnumerable<string> GetLocationNames()
         {
-            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>())
+            foreach (var warp in EntityManager.EntityQuery<WarpPointComponent>(true))
             {
                 if (warp.Location != null)
                 {

@@ -1,5 +1,6 @@
 # Available to everybody
 - Commands:
+  - disconnect
   - help
   - list
 
@@ -49,6 +50,7 @@
   - tp
   - tpto
   - respawn
+  - forall
 
 - Flags: SERVER
   Commands:

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.IoC;
@@ -33,7 +34,7 @@ namespace Content.Shared.Damage
                 // container prototype
                 foreach (var type in damageContainerPrototype.SupportedTypes)
                 {
-                    component.Damage.DamageDict.TryAdd(type, 0);
+                    component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
                 }
 
                 foreach (var groupID in damageContainerPrototype.SupportedGroups)
@@ -41,7 +42,7 @@ namespace Content.Shared.Damage
                     var group = _prototypeManager.Index<DamageGroupPrototype>(groupID);
                     foreach (var type in group.DamageTypes)
                     {
-                        component.Damage.DamageDict.TryAdd(type, 0);
+                        component.Damage.DamageDict.TryAdd(type, FixedPoint2.Zero);
                     }
                 }
             }
@@ -50,7 +51,7 @@ namespace Content.Shared.Damage
                 // No DamageContainerPrototype was given. So we will allow the container to support all damage types
                 foreach (var type in _prototypeManager.EnumeratePrototypes<DamageTypePrototype>())
                 {
-                    component.Damage.DamageDict.TryAdd(type.ID, 0);
+                    component.Damage.DamageDict.TryAdd(type.ID, FixedPoint2.Zero);
                 }
             }
 
@@ -83,6 +84,9 @@ namespace Content.Shared.Damage
             component.DamagePerGroup = component.Damage.GetDamagePerGroup();
             component.TotalDamage = component.Damage.Total;
             component.Dirty();
+
+            if (EntityManager.TryGetComponent<SharedAppearanceComponent>(component.Owner.Uid, out var appearance) && damageDelta != null)
+                appearance.SetData(DamageVisualizerKeys.DamageUpdateGroups, damageDelta.GetDamagePerGroup().Keys.ToList());
             RaiseLocalEvent(component.Owner.Uid, new DamageChangedEvent(component, damageDelta), false);
         }
 
@@ -118,12 +122,17 @@ namespace Content.Shared.Damage
             }
 
             // Apply resistances
-            if (!ignoreResistances && damageable.DamageModifierSetId != null)
+            if (!ignoreResistances)
             {
-                if (_prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
+                if (damageable.DamageModifierSetId != null &&
+                    _prototypeManager.TryIndex<DamageModifierSetPrototype>(damageable.DamageModifierSetId, out var modifierSet))
                 {
                     damage = DamageSpecifier.ApplyModifierSet(damage, modifierSet);
                 }
+
+                var ev = new DamageModifyEvent(damage);
+                RaiseLocalEvent(uid, ev, false);
+                damage = ev.Damage;
 
                 if (damage.Empty)
                 {
@@ -135,7 +144,7 @@ namespace Content.Shared.Damage
             DamageSpecifier oldDamage = new(damageable.Damage);
 
             damageable.Damage.ExclusiveAdd(damage);
-            damageable.Damage.ClampMin(0);
+            damageable.Damage.ClampMin(FixedPoint2.Zero);
 
             var delta = damageable.Damage - oldDamage;
             delta.TrimZeros();
@@ -154,7 +163,7 @@ namespace Content.Shared.Damage
         /// <remakrs>
         ///     Does nothing If the given damage value is negative.
         /// </remakrs>
-        public void SetAllDamage(DamageableComponent component, int newValue)
+        public void SetAllDamage(DamageableComponent component, FixedPoint2 newValue)
         {
             if (newValue < 0)
             {
@@ -196,6 +205,23 @@ namespace Content.Shared.Damage
                 component.Damage = newDamage;
                 DamageChanged(component, delta);
             }
+        }
+    }
+
+    /// <summary>
+    ///     Raised on an entity when damage is about to be dealt,
+    ///     in case anything else needs to modify it other than the base
+    ///     damageable component.
+    ///
+    ///     For example, armor.
+    /// </summary>
+    public class DamageModifyEvent : EntityEventArgs
+    {
+        public DamageSpecifier Damage;
+
+        public DamageModifyEvent(DamageSpecifier damage)
+        {
+            Damage = damage;
         }
     }
 

@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Localization;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Construction.Conditions
 {
@@ -14,11 +17,10 @@ namespace Content.Server.Construction.Conditions
     {
         [DataField("anchored")] public bool Anchored { get; private set; } = true;
 
-        public async Task<bool> Condition(IEntity entity)
+        public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
-            if (!entity.TryGetComponent(out IPhysBody? physics)) return false;
-
-            return (physics.BodyType == BodyType.Static && Anchored) || (physics.BodyType != BodyType.Static && !Anchored);
+            var transform = entityManager.GetComponent<ITransformComponent>(uid);
+            return transform.Anchored && Anchored || !transform.Anchored && !Anchored;
         }
 
         public bool DoExamine(ExaminedEvent args)
@@ -28,14 +30,25 @@ namespace Content.Server.Construction.Conditions
             switch (Anchored)
             {
                 case true when !entity.Transform.Anchored:
-                    args.PushMarkup("First, anchor it.");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-entity-anchored"));
                     return true;
                 case false when entity.Transform.Anchored:
-                    args.PushMarkup("First, unanchor it.");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-entity-unanchored"));
                     return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Anchored
+                    ? "construction-step-condition-entity-anchored"
+                    : "construction-step-condition-entity-unanchored",
+                Icon = new SpriteSpecifier.Rsi(new ResourcePath("Objects/Tools/wrench.rsi"), "icon"),
+            };
         }
     }
 }

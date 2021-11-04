@@ -5,6 +5,8 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Localization;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
@@ -14,6 +16,7 @@ namespace Content.Server.Disposal.Tube
     public sealed class DisposalTubeSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         public override void Initialize()
         {
@@ -76,6 +79,37 @@ namespace Content.Server.Disposal.Tube
             PhysicsBodyTypeChangedEvent args)
         {
             component.AnchoredChanged();
+        }
+
+        public IDisposalTubeComponent? NextTubeFor(EntityUid target, Direction nextDirection, IDisposalTubeComponent? targetTube = null)
+        {
+            if (!Resolve(target, ref targetTube))
+                return null;
+            var oppositeDirection = nextDirection.GetOpposite();
+
+            var grid = _mapManager.GetGrid(targetTube.Owner.Transform.GridID);
+            var position = targetTube.Owner.Transform.Coordinates;
+            foreach (var entity in grid.GetInDir(position, nextDirection))
+            {
+                if (!EntityManager.TryGetComponent(entity, out IDisposalTubeComponent? tube))
+                {
+                    continue;
+                }
+
+                if (!tube.CanConnect(oppositeDirection, targetTube))
+                {
+                    continue;
+                }
+
+                if (!targetTube.CanConnect(nextDirection, tube))
+                {
+                    continue;
+                }
+
+                return tube;
+            }
+
+            return null;
         }
     }
 }

@@ -73,17 +73,7 @@ The ban reason is: ""{ban.Reason}""
             var ban = await _db.GetServerBanAsync(addr, userId, hwId);
             if (ban != null)
             {
-                var expires = "This is a permanent ban.";
-                if (ban.ExpirationTime is { } expireTime)
-                {
-                    var duration = expireTime - ban.BanTime;
-                    var utc = expireTime.ToUniversalTime();
-                    expires = $"This ban is for {duration.TotalMinutes:N0} minutes and will expire at {utc:f} UTC.";
-                }
-                var reason = $@"You, or another user of this computer or connection, are banned from playing here.
-The ban reason is: ""{ban.Reason}""
-{expires}";
-                e.Deny(reason);
+                e.Deny(ban.DisconnectMessage);
                 return;
             }
 

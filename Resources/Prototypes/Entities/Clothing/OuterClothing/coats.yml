@@ -49,6 +49,13 @@
     sprite: Clothing/OuterClothing/Coats/hos_trenchcoat.rsi
   - type: Storage
     capacity: 10
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7
+        Slash: 0.7
+        Piercing: 0.7
+        Heat: 0.7
 
 - type: entity
   parent: ClothingOuterBase
