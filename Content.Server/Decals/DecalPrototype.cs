@@ -2,7 +2,7 @@
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Utility;
 
-namespace Content.Client.Decals
+namespace Content.Server.Decals
 {
     public class DecalPrototype : IPrototype
     {
