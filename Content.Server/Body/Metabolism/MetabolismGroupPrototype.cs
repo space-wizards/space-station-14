@@ -7,6 +7,6 @@ namespace Content.Server.Body.Metabolism
     public class MetabolismGroupPrototype : IPrototype
     {
         [DataField("id", required: true)]
-        public string ID => default!;
+        public string ID { get; } = default!;
     }
 }

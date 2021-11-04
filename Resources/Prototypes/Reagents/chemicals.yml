@@ -11,8 +11,6 @@
       amount: 1
     - !type:PlantAdjustHealth
       amount: 0.5
-  metabolisms:
-    -
 
 - type: reagent
   id: Diethylamine

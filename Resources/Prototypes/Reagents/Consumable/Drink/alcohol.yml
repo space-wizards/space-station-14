@@ -152,7 +152,7 @@
         factor: 2
     Poison:
       effects:
-      - !type: HealthChange
+      - !type:HealthChange
         damage:
           types:
             Poison: 1
