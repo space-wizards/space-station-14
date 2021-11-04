@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;
 
-        public override bool Condition(IEntity solutionEntity, Solution.ReagentQuantity reagent)
+        public override bool Condition(IEntity solutionEntity, IEntity organEntity, Solution.ReagentQuantity reagent)
         {
             return reagent.Quantity >= Min && reagent.Quantity < Max;
         }

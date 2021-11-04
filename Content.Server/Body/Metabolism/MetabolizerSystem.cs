@@ -116,7 +116,7 @@ namespace Content.Server.Body.Metabolism
                         {
                             foreach (var cond in effect.Conditions)
                             {
-                                if (!cond.Condition(ent, quant))
+                                if (!cond.Condition(ent, meta.Owner, quant))
                                     failed = true;
                             }
 
