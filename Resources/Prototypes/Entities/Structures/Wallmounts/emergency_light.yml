@@ -19,7 +19,6 @@
   - type: EmergencyLight
   - type: Sprite
     sprite: Structures/Wallmounts/Lighting/emergency_light.rsi
-    drawdepth: WallMountedItems
     layers:
     - state: emergency_light_off
   - type: Appearance
