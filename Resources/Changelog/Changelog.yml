@@ -1,9 +1,4 @@
 Entries:
-- author: Swept
-  changes:
-  - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
-  id: 45
-  time: '2021-03-07T19:43:07.0000000+00:00'
 - author: Rember
   changes:
   - {message: Character eye customization, type: Add}
@@ -2817,3 +2812,8 @@ Entries:
       have to be crowbared up., type: Tweak}
   id: 544
   time: '2021-11-04T14:11:07.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Draw depth issues for the bar dispensers & wall mounted lights., type: Fix}
+  id: 545
+  time: '2021-11-04T19:44:15.0000000+00:00'
