@@ -91,7 +91,7 @@ namespace Content.Client.Entry
             prototypes.RegisterIgnore("aiFaction");
             prototypes.RegisterIgnore("behaviorSet");
             prototypes.RegisterIgnore("advertisementsPack");
-            prototypes.RegisterIgnore("metabolismType");
+            prototypes.RegisterIgnore("metabolizerType");
             prototypes.RegisterIgnore("metabolismGroup");
 
             ClientContentIoC.Register();

@@ -47,7 +47,7 @@ namespace Content.Server.Body.Metabolism
         /// <summary>
         ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdListSerializer<MetabolismTypePrototype>))]
+        [DataField("metabolizerTypes", customTypeSerializer:typeof(PrototypeIdListSerializer<MetabolizerTypePrototype>))]
         public List<string>? MetabolizerTypes = null;
 
         /// <summary>
