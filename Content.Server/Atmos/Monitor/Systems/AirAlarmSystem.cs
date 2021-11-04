@@ -101,6 +101,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public void SetData(EntityUid uid, string address, IAtmosDeviceData data)
         {
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+                && !monitor.NetEnabled)
+                return;
+
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = AirAlarmSetData,
@@ -113,6 +117,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public void SyncAllDevices(EntityUid uid)
         {
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+                && !monitor.NetEnabled)
+                return;
+
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
@@ -123,6 +131,11 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public void SyncDevice(EntityUid uid, string address)
         {
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+                && !monitor.NetEnabled)
+                return;
+
+
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = AirAlarmSyncCmd
@@ -133,6 +146,10 @@ namespace Content.Server.Atmos.Monitor.Systems
 
         public void SyncMode(EntityUid uid, AirAlarmMode mode)
         {
+            if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent monitor)
+                && !monitor.NetEnabled)
+                return;
+
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = AirAlarmSetMode,

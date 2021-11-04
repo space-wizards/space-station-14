@@ -9,7 +9,27 @@
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: alarm0
+  placementMode: SnapgridCenter
   objectType: Structure
   canRotate: true
+  canBuildInImpassible: true
+  conditions:
+  - !type:WallmountCondition {}
+
+- type: construction
+  name: fire alarm
+  id: FireAlarm
+  graph: fire_alarm
+  startNode: start
+  targetNode: fire_alarm
+  category: Structures
+  description: A fire alarm. Spicy!
+  icon:
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassible: true
   conditions:
   - !type:WallmountCondition {}

@@ -21,6 +21,20 @@ namespace Content.Server.Atmos.Monitor.Components
         [ComponentDependency] public readonly ApcPowerReceiverComponent? PowerRecvComponent = default!;
         [ComponentDependency] public readonly AtmosDeviceComponent? AtmosDeviceComponent = default!;
 
+        // Whether this monitor can send alarms,
+        // or recieve atmos command events.
+        //
+        // Useful for wires; i.e., pulsing a monitor wire
+        // will make it send an alert, and cutting
+        // it will make it so that alerts are no longer
+        // sent/receieved.
+        //
+        // Note that this cancels every single network
+        // event, including ones that may not be
+        // related to atmos monitor events.
+        [ViewVariables]
+        public bool NetEnabled = true;
+
         // Entities that the monitor will alarm. Stores only EntityUids, is populated
         // when this component starts up.
         [ViewVariables]
@@ -72,13 +86,6 @@ namespace Content.Server.Atmos.Monitor.Components
         // from any monitor without having to reping every alarm.
         [ViewVariables]
         public Dictionary<string, AtmosMonitorAlarmType> NetworkAlarmStates = new();
-
-        // feeling ESPECIALLY dirty about this one
-        //
-        // Tells if the monitor has been repositioned due to it
-        // being on a tile where it can't detect air.
-        [ViewVariables]
-        public bool Repositioned = false;
 
         // Calculates the highest alarm in the network, including itself.
         public AtmosMonitorAlarmType HighestAlarmInNetwork()

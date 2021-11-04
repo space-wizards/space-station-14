@@ -95,6 +95,9 @@
   id: ExplosivePassable
 
 - type: Tag
+  id: FireAlarmElectronics
+
+- type: Tag
   id: FireAxe
 
 - type: Tag

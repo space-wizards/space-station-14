@@ -53,6 +53,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
             SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
             SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
+            SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
             SubscribeLocalEvent<AtmosMonitorComponent, PacketSentEvent>(OnPacketRecv);
         }
 
@@ -123,7 +124,7 @@ namespace Content.Server.Atmos.Monitor.Systems
             // if that doesn't work, then nothing is done about it
             var coords = component.Owner.Transform.Coordinates;
 
-            if (_atmosphereSystem.IsTileAirBlocked(coords) && !component.Repositioned)
+            if (_atmosphereSystem.IsTileAirBlocked(coords))
             {
                 Logger.DebugS("AtmosMonitor", $"airblocked, attempting to reposition: {coords}");
                 var rotPos = component.Owner.Transform.LocalRotation.RotateVec(new Vector2(0, -1));
@@ -137,13 +138,17 @@ namespace Content.Server.Atmos.Monitor.Systems
                 appearance.SetData("offset", -rotPos);
 
                 component.Owner.Transform.Anchored = true;
-                component.Repositioned = true;
             }
 
             GasMixture? air = _atmosphereSystem.GetTileMixture(coords);
             component.TileGas = air;
 
             _checkPos.Remove(uid);
+        }
+
+        private void BeforePacketRecv(EntityUid uid, AtmosMonitorComponent component, BeforePacketSentEvent args)
+        {
+            if (!component.NetEnabled) args.Cancel();
         }
 
         private void OnPacketRecv(EntityUid uid, AtmosMonitorComponent component, PacketSentEvent args)
@@ -157,8 +162,7 @@ namespace Content.Server.Atmos.Monitor.Systems
                 return;
 
             // ignore packets from self, ignore from different frequency
-            if (netConn.Address == args.SenderAddress
-                || netConn.Frequency != args.Frequency) return;
+            if (netConn.Address == args.SenderAddress) return;
 
             switch (cmd)
             {
@@ -391,6 +395,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         // just cache monitors in other monitors?)
         private void Sync(AtmosMonitorComponent monitor)
         {
+            if (!monitor.NetEnabled) return;
+
             var payload = new NetworkPayload
             {
                 [DeviceNetworkConstants.Command] = AtmosMonitorAlarmSyncCmd,
@@ -413,6 +419,8 @@ namespace Content.Server.Atmos.Monitor.Systems
         // or if it is explicitly synced (see ResetAll/Sync).
         private void BroadcastAlertPacket(AtmosMonitorComponent monitor, IEnumerable<AtmosMonitorThresholdType>? alarms = null)
         {
+            if (!monitor.NetEnabled) return;
+
             string source = string.Empty;
             if (alarms == null) alarms = new List<AtmosMonitorThresholdType>();
             if (monitor.Owner.Prototype != null) source = monitor.Owner.Prototype.ID;

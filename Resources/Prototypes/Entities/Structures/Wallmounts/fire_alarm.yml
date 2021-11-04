@@ -1,8 +1,7 @@
 - type: entity
   id: FireAlarm
-  placement:
-    snap:
-    - Wallmount
+  name: fire alarm
+  description: A fire alarm. Spicy!
   components:
   - type: ApcPowerReceiver
   - type: ExtensionCableReceiver
@@ -28,6 +27,14 @@
         Warning: fire_off # shouldn't be alarming at a warning
         Danger: fire_on
       hideOnDepowered: ["fireAlarmState"]
+    - type: WiresVisualizer
+  - type: UserInterface
+    interfaces:
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: Wires
+    BoardName: "Fire Alarm"
+    LayoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi
     layers:
@@ -35,5 +42,32 @@
       map: ["fireAlarmBase"]
     - state: fire_off
       map: ["fireAlarmState"]
+    - state: fire_b2
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Transform
     anchored: true
+  - type: Construction
+    graph: fire_alarm
+    node: fire_alarm
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+
+- type: entity
+  id: FireAlarmAssembly
+  name: fire alarm assembly
+  description: A fire alarm assembly. Very mild.
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/Wallmounts/air_monitors.rsi
+    state: fire_b1
+  - type: Construction
+    graph: fire_alarm
+    node: assembly
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount

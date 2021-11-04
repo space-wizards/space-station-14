@@ -101,12 +101,12 @@ namespace Content.Server.Atmos.Monitor.Components
             if (CurrentMode == AirAlarmMode.Panic)
                 panicLight = new StatusLightData(Color.Red, StatusLightState.BlinkingFast, "PAN");
 
-            var syncLight = new StatusLightData(Color.Orange, StatusLightState.BlinkingSlow, "SYN");
+            var syncLight = new StatusLightData(Color.Orange, StatusLightState.BlinkingSlow, "NET");
 
-            if (!CanSync)
-                syncLight = new StatusLightData(Color.Orange, StatusLightState.Off, "SYN");
+            if (AtmosMonitorComponent != null && !AtmosMonitorComponent.NetEnabled)
+                syncLight = new StatusLightData(Color.Orange, StatusLightState.Off, "NET");
             else if (DeviceData.Count != 0)
-                syncLight = new StatusLightData(Color.Orange, StatusLightState.On, "SYN");
+                syncLight = new StatusLightData(Color.Orange, StatusLightState.On, "NET");
 
             WiresComponent.SetStatus(AirAlarmWireStatus.Power, powerLight);
             WiresComponent.SetStatus(AirAlarmWireStatus.Access, accessLight);
@@ -188,7 +188,9 @@ namespace Content.Server.Atmos.Monitor.Components
                             FullAccess = false;
                             break;
                         case Wires.DeviceSync:
-                            CanSync = true;
+                            if (AtmosMonitorComponent != null)
+                                AtmosMonitorComponent.NetEnabled = true;
+
                             break;
                     }
                     break;
@@ -197,7 +199,12 @@ namespace Content.Server.Atmos.Monitor.Components
                     {
                         case Wires.DeviceSync:
                             DeviceData.Clear();
-                            CanSync = false;
+                            if (AtmosMonitorComponent != null)
+                            {
+                                AtmosMonitorComponent.NetworkAlarmStates.Clear();
+                                AtmosMonitorComponent.NetEnabled = false;
+                            }
+
                             break;
                         case Wires.Power:
                             PowerCut = true;

@@ -9,3 +9,15 @@
   - type: Sprite
     sprite: Objects/Misc/module.rsi
     state: door_electronics
+
+- type: entity
+  id: FireAlarmElectronics
+  parent: BaseItem
+  name: fire alarm electronics
+  components:
+  - type: Tag
+    tags:
+    - FireAlarmElectronics
+  - type: Sprite
+    sprite: Objects/Misc/module.rsi
+    state: door_electronics
