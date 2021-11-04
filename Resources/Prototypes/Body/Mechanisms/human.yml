@@ -122,38 +122,10 @@
   # This is done because these chemicals need to have some effect even if they aren't being filtered out of your body.
   # You're technically 'immune to poison' without a heart, but.. uhh, you'll have bigger problems on your hands.
   - type: Metabolizer
-    metabolisms:
-      Arithrazine:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Toxin: -2 # -1  Multiplying by 2. pls give damage units
-              Brute: 1  # 0.5
-      Bicaridine:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Brute: -2
-      Dermaline:
-        effects:
-        - !type:HealthChange
-          damage:
-            groups:
-              Burn: -3
-      Dexalin:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Asphyxiation: -1
-      DexalinPlus:
-        effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Asphyxiation: -3
+    groups:
+    - id: Medicine
+    - id: Poison
+    - id: Narcotic
       Dylovene:
         effects:
         - !type:HealthChange
@@ -237,8 +209,10 @@
   # The stomach metabolizes stuff like foods and drinks.
   # TODO: Have it work off of the ent's solution container, and move this
   # to intestines instead.
-  - type: Metabolizer # Release me from this hell called 1 reagent for every drink
-    # TODO please make every drink their own base thing
+  - type: Metabolizer
+    groups:
+    - id: Food
+    - id: Drink
     metabolisms:
       Flour:
         effects:
@@ -283,9 +257,6 @@
       JuicePineapple:
         effects:
         - !type:SatiateThirst
-      Nutriment:
-        effects:
-        - !type:SatiateHunger
       Water:
         effects:
         - !type:SatiateThirst
@@ -336,6 +307,10 @@
     size: 1
     compatibility: Biological
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
+    groups:
+    - id: Alcohol
+
+
     metabolisms: # TODO there needs to be a better way to do this than just add every damn drink
       #Basic Alchohol
       Ale:

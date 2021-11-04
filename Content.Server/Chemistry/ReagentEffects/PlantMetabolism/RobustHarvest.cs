@@ -1,5 +1,7 @@
 ﻿using Content.Server.Botany.Components;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -11,9 +13,9 @@ namespace Content.Server.Chemistry.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class Diethylamine : IPlantMetabolizable
+    public class RobustHarvest : ReagentEffect
     {
-        public void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1)
+        public override void Metabolize(IEntity plantHolder, Solution.ReagentQuantity amount)
         {
             if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)
                                     || plantHolderComp.Seed == null || plantHolderComp.Dead ||
@@ -22,18 +24,20 @@ namespace Content.Server.Chemistry.PlantMetabolism
 
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var chance = MathHelper.Lerp(15f, 125f, plantHolderComp.Seed.Lifespan) * 2f * customPlantMetabolism;
+            var chance = MathHelper.Lerp(15f, 150f, plantHolderComp.Seed.Potency) * 3.5f;
+
             if (random.Prob(chance))
             {
                 plantHolderComp.CheckForDivergence(true);
-                plantHolderComp.Seed.Lifespan++;
+                plantHolderComp.Seed.Potency++;
             }
 
-            chance = MathHelper.Lerp(15f, 125f, plantHolderComp.Seed.Endurance) * 2f * customPlantMetabolism;
+            chance = MathHelper.Lerp(6f, 2f, plantHolderComp.Seed.Yield) * 0.15f;
+
             if (random.Prob(chance))
             {
                 plantHolderComp.CheckForDivergence(true);
-                plantHolderComp.Seed.Endurance++;
+                plantHolderComp.Seed.Yield--;
             }
         }
     }

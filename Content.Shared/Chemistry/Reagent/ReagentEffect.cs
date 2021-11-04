@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -10,6 +11,7 @@ namespace Content.Shared.Chemistry.Reagent
     ///     organ. They only trigger when their conditions (<see cref="ReagentEffectCondition"/>
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
+    [MeansImplicitUse]
     public abstract class ReagentEffect
     {
         /// <summary>

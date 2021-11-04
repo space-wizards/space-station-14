@@ -51,73 +51,7 @@ namespace Content.Server.Body.Metabolism
 
         private void TryMetabolize(MetabolizerComponent comp)
         {
-            var owner = comp.Owner;
-            IReadOnlyList<Solution.ReagentQuantity> reagentList = new List<Solution.ReagentQuantity>();
-            Solution? solution = null;
-            SharedBodyComponent? body = null;
-            var solutionsSys = Get<SolutionContainerSystem>();
-
-            // if this field is passed we should try and take from the bloodstream over anything else
-            if (owner.TryGetComponent<SharedMechanismComponent>(out var mech))
-            {
-                body = mech.Body;
-                if (body != null)
-                {
-                    if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && solutionsSys.TryGetSolution(body.Owner.Uid, comp.SolutionName, out solution)
-                        && solution.CurrentVolume >= FixedPoint2.Zero)
-                    {
-                        reagentList = solution.Contents;
-                    }
-                }
-            }
-
-            if (solution == null || reagentList.Count == 0)
-            {
-                // We're all outta ideas on where to metabolize from
-                return;
-            }
-
-            List<Solution.ReagentQuantity> removeReagents = new(5);
-
-            // Run metabolism for each reagent, remove metabolized reagents
-            foreach (var reagent in reagentList)
-            {
-                if (!comp.Metabolisms.ContainsKey(reagent.ReagentId))
-                    continue;
-
-                var metabolism = comp.Metabolisms[reagent.ReagentId];
-                // Run metabolism code for each reagent
-                foreach (var effect in metabolism.Effects)
-                {
-                    var ent = body != null ? body.Owner : owner;
-                    var conditionsMet = true;
-                    if (effect.Conditions != null)
-                    {
-                        // yes this is 3 nested for loops, but all of these lists are
-                        // basically guaranteed to be small or empty
-                        foreach (var condition in effect.Conditions)
-                        {
-                            if (!condition.Condition(ent, reagent))
-                            {
-                                conditionsMet = false;
-                                break;
-                            }
-                        }
-                    }
-
-                    if (!conditionsMet)
-                        continue;
-
-                    // If we're part of a body, pass that entity to Metabolize
-                    // Otherwise, just pass our owner entity, maybe we're a plant or something
-                    effect.Metabolize(ent, reagent);
-                }
-
-                removeReagents.Add(new Solution.ReagentQuantity(reagent.ReagentId, metabolism.MetabolismRate));
-            }
-
-            solutionsSys.TryRemoveAllReagents(solution, removeReagents);
+            // todo rewrite
         }
     }
 }

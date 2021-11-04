@@ -1,5 +1,7 @@
 ﻿using Content.Server.Botany.Components;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -7,13 +9,13 @@ using Robust.Shared.Maths;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.PlantMetabolism
+namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class RobustHarvest : IPlantMetabolizable
+    public class Diethylamine : ReagentEffect
     {
-        public void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1f)
+        public override void Metabolize(IEntity plantHolder, Solution.ReagentQuantity amount)
         {
             if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)
                                     || plantHolderComp.Seed == null || plantHolderComp.Dead ||
@@ -22,20 +24,18 @@ namespace Content.Server.Chemistry.PlantMetabolism
 
             var random = IoCManager.Resolve<IRobustRandom>();
 
-            var chance = MathHelper.Lerp(15f, 150f, plantHolderComp.Seed.Potency) * 3.5f * customPlantMetabolism;
-
+            var chance = MathHelper.Lerp(15f, 125f, plantHolderComp.Seed.Lifespan) * 2f;
             if (random.Prob(chance))
             {
                 plantHolderComp.CheckForDivergence(true);
-                plantHolderComp.Seed.Potency++;
+                plantHolderComp.Seed.Lifespan++;
             }
 
-            chance = MathHelper.Lerp(6f, 2f, plantHolderComp.Seed.Yield) * 0.15f * customPlantMetabolism;
-
+            chance = MathHelper.Lerp(15f, 125f, plantHolderComp.Seed.Endurance) * 2f;
             if (random.Prob(chance))
             {
                 plantHolderComp.CheckForDivergence(true);
-                plantHolderComp.Seed.Yield--;
+                plantHolderComp.Seed.Endurance++;
             }
         }
     }

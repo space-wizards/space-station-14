@@ -1,19 +1,21 @@
 ﻿using System;
 using Content.Server.Botany.Components;
 using Content.Shared.Botany;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.Manager.Attributes;
 
-namespace Content.Server.Chemistry.PlantMetabolism
+namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public class Clonexadone : IPlantMetabolizable
+    public class Clonexadone : ReagentEffect
     {
-        public void Metabolize(IEntity plantHolder, float customPlantMetabolism = 1)
+        public override void Metabolize(IEntity plantHolder, Solution.ReagentQuantity amount)
         {
             if (plantHolder.Deleted || !plantHolder.TryGetComponent(out PlantHolderComponent? plantHolderComp)
             || plantHolderComp.Seed == null || plantHolderComp.Dead)

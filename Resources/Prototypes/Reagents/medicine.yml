@@ -30,6 +30,14 @@
   desc: A slightly unstable medication used for the most extreme any serious case of radiation poisoning. Lowers radiation level at over twice the rate Hyronalin does and will heal toxin damage at the same time. Deals very minor brute damage to the patient over time, but the patient's body will typically out-regenerate it easily.
   physicalDesc: cloudy
   color: "#bd5902"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Toxin: -1
+            Brute: 0.5
 
 - type: reagent
   id: Bicaridine
@@ -37,6 +45,13 @@
   desc: An analgesic which is highly effective at treating brute damage. It is useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries. In the case of bleeding (internal or external), bicaridine will slow down the bleeding heavily. If the dosage exceeds the overdose limit, it'll stop it outright.
   physicalDesc: opaque
   color: "#ffaa00"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -2
 
 - type: reagent
   id: Cryoxadone
@@ -75,6 +90,13 @@
   desc: An advanced chemical that is more effective at treating burn damage than Kelotane.
   physicalDesc: translucent
   color: "#215263"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Burn: -3
 
 - type: reagent
   id: Dexalin
@@ -82,6 +104,13 @@
   desc: Used for treating oxygen deprivation. In most cases where it is likely to be needed, the strength of Dexalin Plus will probably be more useful (Results in 1 unit instead of 2).
   physicalDesc: opaque
   color: "#0041a8"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -1
 
 - type: reagent
   id: DexalinPlus
@@ -89,6 +118,13 @@
   desc: Used in treatment of extreme cases of oxygen deprivation. Even a single unit immediately counters all oxygen loss, which is hugely useful in many circumstances. Any dose beyond this will continue to counter oxygen loss until it is metabolized, essentially removing the need to breathe.
   physicalDesc: cloudy
   color: "#4da0bd"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Asphyxiation: -3
 
 - type: reagent
   id: Ethylredoxrazine

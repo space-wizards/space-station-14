@@ -5,6 +5,7 @@ using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Body.Metabolism
@@ -34,26 +35,29 @@ namespace Content.Server.Body.Metabolism
         public string SolutionName { get; set; } = SharedBloodstreamComponent.DefaultSolutionName;
 
         /// <summary>
-        ///     A dictionary mapping reagent string IDs to a list of effects & associated metabolism rate.
+        ///     List of metabolizer types that this organ is. ex. Human, Slime, Felinid, w/e.
         /// </summary>
-        /// <returns></returns>
-        [DataField("metabolisms", required: true, customTypeSerializer:typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, ReagentPrototype>))]
-        public Dictionary<string, ReagentEffectsEntry> Metabolisms = default!;
+        [DataField("types", required: true)]
+        public List<string> MetabolizerTypes = default!;
+
+        /// <summary>
+        ///     A list of metabolism groups that this metabolizer will act on, in order of precedence.
+        /// </summary>
+        [DataField("groups", required: true)]
+        public List<MetabolismGroupEntry> MetabolismGroups = default!;
     }
 
+    /// <summary>
+    ///     Contains data about how a metabolizer will metabolize a single group.
+    ///     This allows metabolizers to remove certain groups much faster, or not at all.
+    /// </summary>
     [DataDefinition]
-    public class ReagentEffectsEntry
+    public class MetabolismGroupEntry
     {
-        /// <summary>
-        ///     Amount of reagent to metabolize, per metabolism cycle.
-        /// </summary>
-        [DataField("metabolismRate")]
-        public FixedPoint2 MetabolismRate = FixedPoint2.New(1.0f);
+        [DataField("id", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<MetabolismGroupPrototype>))]
+        public string Id = default!;
 
-        /// <summary>
-        ///     A list of effects to apply when these reagents are metabolized.
-        /// </summary>
-        [DataField("effects", required: true)]
-        public ReagentEffect[] Effects = default!;
+        [DataField("rateModifier")]
+        public FixedPoint2 MetabolismRateModifier = 1.0;
     }
 }

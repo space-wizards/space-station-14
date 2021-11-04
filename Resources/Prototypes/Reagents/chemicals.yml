@@ -11,6 +11,8 @@
       amount: 1
     - !type:AdjustHealth
       amount: 0.5
+  metabolisms:
+    -
 
 - type: reagent
   id: Diethylamine
@@ -89,6 +91,10 @@
   desc: All the vitamins, minerals, and carbohydrates the body needs in pure form.
   physicalDesc: opaque
   color: "#664330"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 1
