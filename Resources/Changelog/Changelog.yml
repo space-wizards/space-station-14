@@ -1,10 +1,4 @@
 Entries:
-- author: Rane
-  changes:
-  - {message: The Red-and-White Shrine Maiden outfit complete with gohei is now available
-      in the theater vendor!, type: Add}
-  id: 43
-  time: '2021-03-07T12:41:42.0000000+00:00'
 - author: SweptWasTaken
   changes:
   - {message: Added ammovend, type: Add}
@@ -2812,3 +2806,11 @@ Entries:
   - {message: Chemical dispenser 100 button works again, type: Fix}
   id: 542
   time: '2021-11-04T03:22:48.0000000+00:00'
+- author: Daemon
+  changes:
+  - {message: Fixed some drink cans not having correct drink/size, type: Fix}
+  - {message: Fixed being unable to juice potato in grinder, type: Fix}
+  - {message: Changed BrownStar to Starkist, type: Tweak}
+  - {message: Added energy drink reagent and can object to vending machine, type: Add}
+  id: 543
+  time: '2021-11-04T04:31:22.0000000+00:00'
