@@ -1,6 +1,8 @@
 using Robust.Shared.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
-namespace Content.Server.PAI
+namespace Content.Shared.PAI
 {
     /// <summary>
     /// pAIs, or Personal AIs, are essentially portable ghost role generators.
@@ -12,7 +14,7 @@ namespace Content.Server.PAI
     ///  and there's not always enough players and ghost roles to justify it.
     /// All logic in PAISystem.
     /// </summary>
-    [RegisterComponent]
+    [RegisterComponent, NetworkedComponent]
     public class PAIComponent : Component
     {
         public override string Name => "PAI";
