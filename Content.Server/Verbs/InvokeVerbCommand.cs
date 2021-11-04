@@ -92,6 +92,9 @@ namespace Content.Server.Verbs
                     }
                 }
             }
+
+            // found nothing
+            shell.WriteError(Loc.GetString("invoke-verb-command-verb-not-found", ("verb", verbName), ("target", target)));
         }
     }
 }

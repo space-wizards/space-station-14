@@ -13,3 +13,5 @@ invoke-verb-command-invalid-player-entity = Player uid given does not correspond
 invoke-verb-command-invalid-target-entity = Target uid given does not correspond to a valid entity.
 
 invoke-verb-command-success = Invoked verb { $verb } on { $target } with { $player } as the user.
+
+invoke-verb-command-verb-not-found = Could not find verb { $verb } on { $target }.
