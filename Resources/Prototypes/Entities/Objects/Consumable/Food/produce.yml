@@ -250,6 +250,11 @@
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
     seed: potato
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuicePotato
+        Quantity: 10
 
 - type: entity
   name: tomato

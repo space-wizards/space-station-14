@@ -447,9 +447,6 @@
       BraveBull:
         effects:
         - !type:SatiateThirst
-      BrownStar:
-        effects:
-        - !type:SatiateThirst
       CubaLibre:
         effects:
         - !type:SatiateThirst
@@ -534,7 +531,7 @@
       Moonshine:
         effects:
         - !type:SatiateThirst
-      Neurotoxin: #This should be moved out of alcohol eventually
+      Neurotoxin:
         effects:
         - !type:SatiateThirst
         - !type:HealthChange
@@ -563,6 +560,9 @@
         effects:
         - !type:SatiateThirst
       SnowWhite:
+        effects:
+        - !type:SatiateThirst
+      Starkist:
         effects:
         - !type:SatiateThirst
       SuiDream:
