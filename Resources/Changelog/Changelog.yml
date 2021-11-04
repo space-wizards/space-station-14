@@ -1,9 +1,4 @@
 Entries:
-- author: SweptWasTaken
-  changes:
-  - {message: Added ammovend, type: Add}
-  id: 44
-  time: '2021-03-07T19:17:58.0000000+00:00'
 - author: Swept
   changes:
   - {message: 'Mags/Batteries stop spawning at 0, 0.', type: Fix}
@@ -2814,3 +2809,11 @@ Entries:
   - {message: Added energy drink reagent and can object to vending machine, type: Add}
   id: 543
   time: '2021-11-04T04:31:22.0000000+00:00'
+- author: 20kdc
+  changes:
+  - {message: 'Added some pAIs at roundstart (in dorms and in RD office). Also, some
+      toy spawners.', type: Add}
+  - {message: The reinforced glass under solars is now just plating so it doesn't
+      have to be crowbared up., type: Tweak}
+  id: 544
+  time: '2021-11-04T14:11:07.0000000+00:00'
