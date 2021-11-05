@@ -1,11 +1,6 @@
 Entries:
 - author: ShadowCommander
   changes:
-  - {message: Reworked the construction UI so that the recipe is easier to see, type: Tweak}
-  id: 47
-  time: '2021-03-07T22:09:41.0000000+00:00'
-- author: ShadowCommander
-  changes:
   - {message: 'Reinforced glass, plasma glass, and reinforced plasma glass can now
       be constructed.', type: Add}
   id: 48
@@ -2819,3 +2814,9 @@ Entries:
   - {message: pAIs name themselves after their owner automatically, type: Add}
   id: 546
   time: '2021-11-04T22:29:17.0000000+00:00'
+- author: ike709
+  changes:
+  - {message: Pressure pumps now have a UI, type: Add}
+  - {message: Volume pumps now have a UI, type: Add}
+  id: 547
+  time: '2021-11-05T00:41:57.0000000+00:00'
