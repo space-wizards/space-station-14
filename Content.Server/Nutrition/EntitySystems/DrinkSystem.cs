@@ -60,7 +60,7 @@ namespace Content.Server.Nutrition.EntitySystems
             var color = IsEmpty(uid, component) ? "gray" : "yellow";
             var openedText =
                 Loc.GetString(IsEmpty(uid, component) ? "drink-component-on-examine-is-empty" : "drink-component-on-examine-is-opened");
-            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText)));
+            args.Message.AddMarkup($"\n{Loc.GetString("drink-component-on-examine-details-text", ("colorName", color), ("text", openedText))}");
         }
 
         private void SetOpen(EntityUid uid, bool opened = false, DrinkComponent? component = null)
