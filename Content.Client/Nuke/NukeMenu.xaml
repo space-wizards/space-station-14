@@ -1,11 +1,26 @@
 <SS14Window xmlns="https://spacestation14.io"
             Title="{Loc 'nuke-user-interface-title'}"
-            MinSize="256 512"
-            SetSize="256 512">
-    <BoxContainer Orientation="Vertical">
-        <GridContainer Columns="3"
-                       Name="KeypadGrid">
-            <!-- Keypad is filled by code -->
-        </GridContainer>
+            MinSize="256 256"
+            SetSize="256 256">
+    <BoxContainer Orientation="Vertical"
+                  HorizontalExpand="True"
+                  VerticalExpand="True">
+        <Label Name="FirstStatusLabel"/>
+        <Label Name="SecondStatusLabel"/>
+        <BoxContainer Orientation="Horizontal">
+            <GridContainer Columns="3"
+                           Name="KeypadGrid">
+                <!-- Keypad is filled by code -->
+            </GridContainer>
+
+            <BoxContainer Orientation="Vertical">
+                <Button Name="ArmButton"
+                        Text="{Loc 'nuke-user-interface-arm-button'}"/>
+                <Button Name="AnchorButton"
+                        Text="{Loc 'nuke-user-interface-anchor-button'}"/>
+                <Button Name="EjectButton"
+                        Text="{Loc 'nuke-user-interface-eject-button'}"/>
+            </BoxContainer>
+        </BoxContainer>
     </BoxContainer>
 </SS14Window>

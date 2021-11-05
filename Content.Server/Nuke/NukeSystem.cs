@@ -29,6 +29,7 @@ namespace Content.Server.Nuke
                 return;
 
             component.DiskInserted = args.ContainedItem != null;
+            UpdateStatus(uid, component);
             UpdateUserInterface(uid, component);
         }
 
@@ -48,6 +49,25 @@ namespace Content.Server.Nuke
 
             ToggleUI(uid, actor.PlayerSession, component);
             args.Handled = true;
+        }
+
+        private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            switch (component.Status)
+            {
+                case NukeStatus.AWAIT_DISK:
+                    if (component.DiskInserted)
+                        component.Status = NukeStatus.AWAIT_CODE;
+                    break;
+                case NukeStatus.AWAIT_CODE:
+                    if (!component.DiskInserted)
+                        component.Status = NukeStatus.AWAIT_DISK;
+                    break;
+            }
+
         }
 
         private void ToggleUI(EntityUid uid, IPlayerSession session, NukeComponent? component = null)
@@ -72,8 +92,7 @@ namespace Content.Server.Nuke
 
             var state = new NukeUiState()
             {
-                IsArmed = component.IsArmed,
-                NukeDiskInserted = component.DiskInserted,
+                Status = component.Status,
                 RemainingTime = component.RemainingTime
             };
 

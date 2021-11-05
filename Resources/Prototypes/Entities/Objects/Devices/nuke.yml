@@ -12,7 +12,7 @@
     - type: InteractionOutline
     - type: ItemSlots
       slots:
-        nukeDisk:
+        DiskSlot:
           name: Disk
           insertSound:
             path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg

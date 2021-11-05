@@ -10,11 +10,20 @@ namespace Content.Shared.Nuke
         Key
     }
 
+    public enum NukeStatus : byte
+    {
+        AWAIT_DISK,
+        AWAIT_CODE,
+        AWAIT_TIMER,
+        AWAIT_ARM,
+        TIMING
+    }
+
     [Serializable, NetSerializable]
     public class NukeUiState : BoundUserInterfaceState
     {
-        public bool NukeDiskInserted;
-        public bool IsArmed;
+        public NukeStatus Status;
+        public string Code = "";
         public int RemainingTime;
     }
 }

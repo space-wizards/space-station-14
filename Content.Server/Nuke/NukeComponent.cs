@@ -1,3 +1,4 @@
+using Content.Shared.Nuke;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -17,5 +18,6 @@ namespace Content.Server.Nuke
         public int RemainingTime;
         public bool IsArmed = false;
         public bool DiskInserted = false;
+        public NukeStatus Status = NukeStatus.AWAIT_DISK;
     }
 }
