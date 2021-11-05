@@ -88,7 +88,9 @@ namespace Content.Client.HealthOverlay
                 {
                     if (_guis.TryGetValue(entity.Uid, out var oldGui))
                     {
+                        _guis.Remove(entity.Uid);
                         oldGui.Dispose();
+                        
                     }
 
                     continue;
