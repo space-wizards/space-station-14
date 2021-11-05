@@ -1,5 +1,4 @@
 ﻿using Content.Server.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Weapons.Melee;
 using JetBrains.Annotations;

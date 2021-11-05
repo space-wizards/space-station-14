@@ -1,5 +1,6 @@
 using System;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -15,10 +16,10 @@ namespace Content.Shared.Chemistry.Components
         [Serializable, NetSerializable]
         protected sealed class HyposprayComponentState : ComponentState
         {
-            public ReagentUnit CurVolume { get; }
-            public ReagentUnit MaxVolume { get; }
+            public FixedPoint2 CurVolume { get; }
+            public FixedPoint2 MaxVolume { get; }
 
-            public HyposprayComponentState(ReagentUnit curVolume, ReagentUnit maxVolume)
+            public HyposprayComponentState(FixedPoint2 curVolume, FixedPoint2 maxVolume)
             {
                 CurVolume = curVolume;
                 MaxVolume = maxVolume;

@@ -6,18 +6,67 @@
   color: "#664300"
 
 - type: reagent
-  id: Tea
-  name: tea
-  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
-  physicalDesc: aromatic
-  color: "#8a5a3a"
-
-- type: reagent
   id: Cream
   name: cream
   desc: The fatty, still liquid part of milk. Why don't you mix this with sum scotch, eh?
   physicalDesc: creamy
   color: "#DFD7AF"
+
+- type: reagent
+  id: CafeLatte
+  name: cafe latte
+  desc: A nice, strong and tasty beverage while you are reading.
+  physicalDesc: creamy
+  color: "#664300"
+  spritePath: cafe_latte.rsi
+
+- type: reagent
+  id: GreenTea
+  name: green tea
+  desc: Tasty green tea.
+  physicalDesc: aromatic
+  color: "#C33F00"
+  spritePath: glass_green.rsi #Placeholder
+
+- type: reagent
+  id: Grenadine
+  name: grenadine
+  desc: Not cherry flavored!
+  physicalDesc: dark-red
+  color: "#EA1D26"
+  spritePath: grenadineglass.rsi
+
+- type: reagent
+  id: IcedCoffee
+  name: iced coffee
+  desc: Coffee and ice, refreshing and cool.
+  physicalDesc: aromatic
+  color: "#102838"
+  spritePath: icedcoffeeglass.rsi
+
+- type: reagent
+  id: IcedGreenTea
+  name: iced green tea
+  desc: cold green tea.
+  physicalDesc: aromatic
+  color: "#CE4200"
+  spritePath: glass_green.rsi #Placeholder
+
+- type: reagent
+  id: IcedTea
+  name: iced tea
+  desc: No relation to a certain rap artist/actor.
+  physicalDesc: aromatic
+  color: "#104038"
+  spritePath: icedteaglass.rsi
+
+- type: reagent
+  id: Lemonade
+  name: lemonade
+  desc: Drink using lemon juice, water, and a sweetener such as cane sugar or honey.
+  physicalDesc: tart
+  color: "#FFFF00"
+  spritePath: lemonadeglass.rsi
 
 - type: reagent
   id: Milk
@@ -32,11 +81,11 @@
       amount: 0.9
 
 - type: reagent
-  id: SpoiledMilk
-  name: spoiled milk
-  desc: This milk has gone rancid.
-  physicalDesc: putrid
-  color: "#faffba"
+  id: MilkOat
+  name: oat milk
+  desc: Surprisingly tasty.
+  physicalDesc: refreshing
+  color: "#302000"
 
 - type: reagent
   id: MilkSoy
@@ -46,8 +95,52 @@
   color: "#302000"
 
 - type: reagent
-  id: MilkOat
-  name: oat milk
-  desc: Surprisingly tasty.
-  physicalDesc: refreshing
-  color: "#302000"
+  id: MilkSpoiled
+  name: spoiled milk
+  desc: This milk has gone rancid.
+  physicalDesc: putrid
+  color: "#faffba"
+
+- type: reagent
+  id: Nothing
+  name: nothing
+  desc: Absolutely nothing.
+  physicalDesc: nothing
+  spritePath: nothing.rsi
+
+- type: reagent
+  id: NukaCola
+  name: nuka cola
+  desc: Cola, cola never changes.
+  physicalDesc: fizzy
+  color: "#100800"
+  spritePath: nuka_colaglass.rsi
+
+- type: reagent
+  id: SodaWater
+  name: soda water
+  desc: A container of club soda. Why not make a scotch and soda?
+  physicalDesc: fizzy
+  color: "#619494"
+
+- type: reagent
+  id: SoyLatte
+  name: soy latte
+  desc: A coffee drink made with espresso and steamed soy milk.
+  physicalDesc: strong-smelling
+  color: "#664300"
+  spritePath: soy_latte.rsi
+
+- type: reagent
+  id: Tea
+  name: tea
+  desc: A drink made by boiling leaves of the tea tree, Camellia sinensis.
+  physicalDesc: aromatic
+  color: "#8a5a3a"
+
+- type: reagent
+  id: TonicWater
+  name: tonic water
+  desc: It tastes strange but at least the quinine keeps the Space Malaria at bay.
+  physicalDesc: fizzy
+  color: "#0064C8"

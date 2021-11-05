@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ namespace Content.Client.Chemistry.UI
             {
                 if (int.TryParse(_window.AmountLineEdit.Text, out var i))
                 {
-                    SendMessage(new TransferAmountSetValueMessage(ReagentUnit.New(i)));
+                    SendMessage(new TransferAmountSetValueMessage(FixedPoint2.New(i)));
                     _window.Close();
                 }
             };

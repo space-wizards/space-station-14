@@ -2,6 +2,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -35,7 +36,7 @@ namespace Content.Server.Atmos.Reactions
             mixture.AdjustMoles(GasId, -MolesPerUnit);
 
             var tileRef = tile.GridIndices.GetTileRef(tile.GridIndex);
-            tileRef.SpillAt(new Solution(Reagent, ReagentUnit.New(MolesPerUnit)), PuddlePrototype, sound: false);
+            tileRef.SpillAt(new Solution(Reagent, FixedPoint2.New(MolesPerUnit)), PuddlePrototype, sound: false);
 
             return ReactionResult.Reacting;
         }

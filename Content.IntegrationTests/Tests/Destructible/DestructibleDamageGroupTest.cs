@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -60,8 +61,8 @@ namespace Content.IntegrationTests.Tests.Destructible
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
                 var burnDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBurn");
 
-                DamageSpecifier bruteDamage = new(bruteDamageGroup,5);
-                DamageSpecifier burnDamage = new(burnDamageGroup,5);
+                DamageSpecifier bruteDamage = new(bruteDamageGroup, FixedPoint2.New(5));
+                DamageSpecifier burnDamage = new(burnDamageGroup, FixedPoint2.New(5));
 
                 // Raise brute damage to 5
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage, true);
@@ -112,7 +113,7 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 // Lower brute damage to 0
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bruteDamage * -10);
-                Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(20));
+                Assert.That(sDamageableComponent.TotalDamage,Is.EqualTo(FixedPoint2.New(20)));
 
                 // No new thresholds reached, healing should not trigger it
                 Assert.IsEmpty(sTestThresholdListenerSystem.ThresholdsReached);

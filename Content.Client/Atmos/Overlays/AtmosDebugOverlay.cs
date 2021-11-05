@@ -32,10 +32,7 @@ namespace Content.Client.Atmos.Overlays
             var drawHandle = args.WorldHandle;
 
             var mapId = _eyeManager.CurrentMap;
-            var eye = _eyeManager.CurrentEye;
-
-            var worldBounds = Box2.CenteredAround(eye.Position.Position,
-                _clyde.ScreenSize / (float) EyeManager.PixelsPerMeter * eye.Zoom);
+            var worldBounds = _eyeManager.GetWorldViewbounds();
 
             // IF YOU ARE ABOUT TO INTRODUCE CHUNKING OR SOME OTHER OPTIMIZATION INTO THIS CODE:
             //  -- THINK! --
@@ -48,6 +45,8 @@ namespace Content.Client.Atmos.Overlays
             {
                 if (!_atmosDebugOverlaySystem.HasData(mapGrid.Index))
                     continue;
+
+                drawHandle.SetTransform(mapGrid.WorldMatrix);
 
                 for (var pass = 0; pass < 2; pass++)
                 {
@@ -95,7 +94,7 @@ namespace Content.Client.Atmos.Overlays
                                     }
                                 }
                                 res = res.WithAlpha(0.75f);
-                                drawHandle.DrawRect(Box2.FromDimensions(mapGrid.LocalToWorld(new Vector2(tile.X, tile.Y)), new Vector2(1, 1)), res);
+                                drawHandle.DrawRect(Box2.FromDimensions(new Vector2(tile.X, tile.Y), new Vector2(1, 1)), res);
                             }
                             else if (pass == 1)
                             {
@@ -109,8 +108,8 @@ namespace Content.Client.Atmos.Overlays
                                         var atmosAngleOfs = atmosAngle.ToVec() * 0.45f;
                                         var atmosAngleOfsR90 = new Vector2(atmosAngleOfs.Y, -atmosAngleOfs.X);
                                         var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
-                                        var basisA = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs - atmosAngleOfsR90);
-                                        var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs + atmosAngleOfsR90);
+                                        var basisA = tileCentre + atmosAngleOfs - atmosAngleOfsR90;
+                                        var basisB = tileCentre + atmosAngleOfs + atmosAngleOfsR90;
                                         drawHandle.DrawLine(basisA, basisB, Color.Azure);
                                     }
                                 }
@@ -125,18 +124,18 @@ namespace Content.Client.Atmos.Overlays
                                     var atmosAngle = data.PressureDirection.ToAngle() - Angle.FromDegrees(90);
                                     var atmosAngleOfs = atmosAngle.ToVec() * 0.4f;
                                     var tileCentre = new Vector2(tile.X + 0.5f, tile.Y + 0.5f);
-                                    var basisA = mapGrid.LocalToWorld(tileCentre);
-                                    var basisB = mapGrid.LocalToWorld(tileCentre + atmosAngleOfs);
+                                    var basisA = tileCentre;
+                                    var basisB = tileCentre + atmosAngleOfs;
                                     drawHandle.DrawLine(basisA, basisB, Color.Blue);
                                 }
                                 // -- Excited Groups --
                                 if (data.InExcitedGroup)
                                 {
                                     var tilePos = new Vector2(tile.X, tile.Y);
-                                    var basisA = mapGrid.LocalToWorld(tilePos);
-                                    var basisB = mapGrid.LocalToWorld(tilePos + new Vector2(1.0f, 1.0f));
-                                    var basisC = mapGrid.LocalToWorld(tilePos + new Vector2(0.0f, 1.0f));
-                                    var basisD = mapGrid.LocalToWorld(tilePos + new Vector2(1.0f, 0.0f));
+                                    var basisA = tilePos;
+                                    var basisB = tilePos + new Vector2(1.0f, 1.0f);
+                                    var basisC = tilePos + new Vector2(0.0f, 1.0f);
+                                    var basisD = tilePos + new Vector2(1.0f, 0.0f);
                                     drawHandle.DrawLine(basisA, basisB, Color.Cyan);
                                     drawHandle.DrawLine(basisC, basisD, Color.Cyan);
                                 }
@@ -145,6 +144,8 @@ namespace Content.Client.Atmos.Overlays
                     }
                 }
             }
+
+            drawHandle.SetTransform(Matrix3.Identity);
         }
     }
 }

@@ -42,23 +42,6 @@ namespace Content.Server.Window
         [DataField("knockSound")]
         private SoundSpecifier _knockSound = new SoundPathSpecifier("/Audio/Effects/glass_knock.ogg");
 
-        public void UpdateVisuals(int currentDamage)
-        {
-            if (Owner.TryGetComponent(out AppearanceComponent? appearance) &&
-                Owner.TryGetComponent(out DestructibleComponent? destructible))
-            {
-                foreach (var threshold in destructible.Thresholds)
-                {
-                    if (threshold.Trigger is not DamageTrigger trigger)
-                    {
-                        continue;
-                    }
-
-                    appearance.SetData(WindowVisuals.Damage, (float) currentDamage / trigger.Damage);
-                }
-            }
-        }
-
         void IExamine.Examine(FormattedMessage message, bool inDetailsRange)
         {
             if (!Owner.TryGetComponent(out DamageableComponent? damageable) ||

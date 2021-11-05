@@ -1,6 +1,7 @@
 using Content.Client.IoC;
 using Content.Client.Resources;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface;
@@ -84,7 +85,7 @@ namespace Content.Client.HealthOverlay.UI
                 return;
             }
 
-            int threshold;
+            FixedPoint2 threshold;
 
             if (mobState.IsAlive())
             {
@@ -97,7 +98,7 @@ namespace Content.Client.HealthOverlay.UI
 
                 CritBar.Ratio = 1;
                 CritBar.Visible = true;
-                HealthBar.Ratio = 1 - (float) damageable.TotalDamage / threshold;
+                HealthBar.Ratio = 1 - (damageable.TotalDamage / threshold).Float();
                 HealthBar.Visible = true;
             }
             else if (mobState.IsCritical())
@@ -113,9 +114,9 @@ namespace Content.Client.HealthOverlay.UI
                 }
 
                 CritBar.Visible = true;
-                CritBar.Ratio = 1 - (float)
-                    (damageable.TotalDamage - critThreshold) /
-                    (deadThreshold - critThreshold);
+                CritBar.Ratio = 1 -
+                    ((damageable.TotalDamage - critThreshold) /
+                    (deadThreshold - critThreshold)).Float();
             }
             else if (mobState.IsDead())
             {

@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using Content.Shared.Body.Networks;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -47,7 +48,7 @@ namespace Content.Server.Body.Metabolism
         ///     Amount of reagent to metabolize, per metabolism cycle.
         /// </summary>
         [DataField("metabolismRate")]
-        public ReagentUnit MetabolismRate = ReagentUnit.New(1.0f);
+        public FixedPoint2 MetabolismRate = FixedPoint2.New(1.0f);
 
         /// <summary>
         ///     A list of effects to apply when these reagents are metabolized.

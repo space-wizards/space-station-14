@@ -41,8 +41,26 @@ namespace Content.Client.Stylesheets
 
         protected StyleBase(IResourceCache resCache)
         {
-            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSans12Italic = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
+            var notoSans12 = resCache.GetFont
+            (
+                new []
+                {
+                    "/Fonts/NotoSans/NotoSans-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                },
+                12
+            );
+            var notoSans12Italic = resCache.GetFont
+            (
+                new []
+                {
+                    "/Fonts/NotoSans/NotoSans-Italic.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols-Regular.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                },
+                12
+            );
             var textureCloseButton = resCache.GetTexture("/Textures/Interface/Nano/cross.svg.png");
 
             // Button styles.

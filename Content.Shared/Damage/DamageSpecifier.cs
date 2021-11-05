@@ -9,12 +9,10 @@ using Robust.Shared.ViewVariables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.Damage
 {
-    // TODO DAMAGE UNITS Move this whole class away from, using integers. Also get rid of a lot of the rounding. Just
-    // use DamageUnit math operators.
-
     /// <summary>
     ///     This class represents a collection of damage types and damage values.
     /// </summary>
@@ -25,17 +23,17 @@ namespace Content.Shared.Damage
     [DataDefinition]
     public class DamageSpecifier
     {
-        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, DamageTypePrototype>))]
-        private readonly Dictionary<string,int>? _damageTypeDictionary;
+        [DataField("types", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageTypePrototype>))]
+        private readonly Dictionary<string,FixedPoint2>? _damageTypeDictionary;
 
-        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, DamageGroupPrototype>))]
-        private readonly Dictionary<string, int>? _damageGroupDictionary;
+        [DataField("groups", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, DamageGroupPrototype>))]
+        private readonly Dictionary<string, FixedPoint2>? _damageGroupDictionary;
 
         /// <summary>
         ///     Main DamageSpecifier dictionary. Most DamageSpecifier functions exist to somehow modifying this.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
-        public Dictionary<string, int> DamageDict
+        public Dictionary<string, FixedPoint2> DamageDict
         {
             get
             {
@@ -45,7 +43,7 @@ namespace Content.Shared.Damage
             }
             set => _damageDict = value;
         }
-        private Dictionary<string, int>? _damageDict;
+        private Dictionary<string, FixedPoint2>? _damageDict;
 
         /// <summary>
         ///     Sum of the damage values.
@@ -55,7 +53,7 @@ namespace Content.Shared.Damage
         ///     in another. For this purpose, you should instead use <see cref="TrimZeros()"/> and then check the <see
         ///     cref="Empty"/> property.
         /// </remarks>
-        public int Total => DamageDict.Values.Sum();
+        public FixedPoint2 Total => DamageDict.Values.Sum();
 
         /// <summary>
         ///     Whether this damage specifier has any entries.
@@ -79,7 +77,7 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Constructor that takes a single damage type prototype and a damage value.
         /// </summary>
-        public DamageSpecifier(DamageTypePrototype type, int value)
+        public DamageSpecifier(DamageTypePrototype type, FixedPoint2 value)
         {
             DamageDict = new() { { type.ID, value } };
         }
@@ -87,14 +85,14 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Constructor that takes a single damage group prototype and a damage value. The value is divided between members of the damage group.
         /// </summary>
-        public DamageSpecifier(DamageGroupPrototype group, int value)
+        public DamageSpecifier(DamageGroupPrototype group, FixedPoint2 value)
         {
             _damageGroupDictionary = new() { { group.ID, value } };
         }
         #endregion constructors
 
         /// <summary>
-        ///     Combines the damage group and type datafield dictionaries into a single damage dictionary.
+        ///     Combines the damage group and type datafield dictionaries FixedPoint2o a single damage dictionary.
         /// </summary>
         public void DeserializeDamage()
         {
@@ -128,7 +126,7 @@ namespace Content.Shared.Damage
                 var remainingDamage = entry.Value;
                 foreach (var damageType in group.DamageTypes)
                 {
-                    var damage = remainingDamage / remainingTypes;
+                    var damage = remainingDamage / FixedPoint2.New(remainingTypes);
                     if (!_damageDict.TryAdd(damageType, damage))
                     {
                         // Key already exists, add values
@@ -149,7 +147,7 @@ namespace Content.Shared.Damage
         public static DamageSpecifier ApplyModifierSet(DamageSpecifier damageSpec, DamageModifierSet modifierSet)
         {
             // Make a copy of the given data. Don't modify the one passed to this function. I did this before, and weapons became
-            // duller as you hit walls. Neat, but not intended. And confusing, when you realize your fists don't work no
+            // duller as you hit walls. Neat, but not FixedPoint2ended. And confusing, when you realize your fists don't work no
             // more cause they're just bloody stumps.
             DamageSpecifier newDamage = new(damageSpec);
 
@@ -157,7 +155,7 @@ namespace Content.Shared.Damage
             {
                 if (entry.Value <= 0) continue;
 
-                float newValue = entry.Value;
+                float newValue = entry.Value.Float();
 
                 if (modifierSet.FlatReduction.TryGetValue(entry.Key, out var reduction))
                 {
@@ -165,7 +163,7 @@ namespace Content.Shared.Damage
                     if (newValue <= 0)
                     {
                         // flat reductions cannot heal you
-                        newDamage.DamageDict[entry.Key] = 0;
+                        newDamage.DamageDict[entry.Key] = FixedPoint2.Zero;
                         continue;
                     }
                 }
@@ -173,10 +171,10 @@ namespace Content.Shared.Damage
                 if (modifierSet.Coefficients.TryGetValue(entry.Key, out var coefficient))
                 {
                     // negative coefficients **can** heal you.
-                    newValue = MathF.Round(newValue*coefficient, MidpointRounding.AwayFromZero);
+                    newValue = newValue * coefficient;
                 }
 
-                newDamage.DamageDict[entry.Key] = (int) newValue;
+                newDamage.DamageDict[entry.Key] = FixedPoint2.New(newValue);
             }
 
             newDamage.TrimZeros();
@@ -218,7 +216,7 @@ namespace Content.Shared.Damage
         /// <summary>
         ///     Clamps each damage value to be within the given range.
         /// </summary>
-        public void Clamp(int minValue = 0, int maxValue = 0)
+        public void Clamp(FixedPoint2 minValue, FixedPoint2 maxValue)
         {
             DebugTools.Assert(minValue < maxValue);
             ClampMax(maxValue);
@@ -231,7 +229,7 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     Note that this only acts on damage types present in the dictionary. It will not add new damage types.
         /// </remarks>
-        public void ClampMin(int minValue = 0)
+        public void ClampMin(FixedPoint2 minValue)
         {
             foreach (var (key, value) in DamageDict)
             {
@@ -246,7 +244,7 @@ namespace Content.Shared.Damage
         ///     Sets all damage values to be at most some number. Note that if a damage type is not present in the
         ///     dictionary, these will not be added.
         /// </summary>
-        public void ClampMax(int maxValue = 0)
+        public void ClampMax(FixedPoint2 maxValue)
         {
             foreach (var (key, value) in DamageDict)
             {
@@ -282,10 +280,10 @@ namespace Content.Shared.Damage
         /// <remarks>
         ///     If no members of the group are included in this specifier, returns false.
         /// </remarks>
-        public bool TryGetDamageInGroup(DamageGroupPrototype group, out int total)
+        public bool TryGetDamageInGroup(DamageGroupPrototype group, out FixedPoint2 total)
         {
             bool containsMemeber = false;
-            total = 0;
+            total = FixedPoint2.Zero;
 
             foreach (var type in group.DamageTypes)
             {
@@ -307,9 +305,9 @@ namespace Content.Shared.Damage
         ///     total of each group. If no members of a group are present in this <see cref="DamageSpecifier"/>, the
         ///     group is not included in the resulting dictionary.
         /// </remarks>
-        public Dictionary<string, int> GetDamagePerGroup()
+        public Dictionary<string, FixedPoint2> GetDamagePerGroup()
         {
-            var damageGroupDict = new Dictionary<string, int>();
+            var damageGroupDict = new Dictionary<string, FixedPoint2>();
             foreach (var group in IoCManager.Resolve<IPrototypeManager>().EnumeratePrototypes<DamageGroupPrototype>())
             {
                 if (TryGetDamageInGroup(group, out var value))
@@ -321,7 +319,7 @@ namespace Content.Shared.Damage
         }
 
         #region Operators
-        public static DamageSpecifier operator *(DamageSpecifier damageSpec, int factor)
+        public static DamageSpecifier operator *(DamageSpecifier damageSpec, FixedPoint2 factor)
         {
             DamageSpecifier newDamage = new();
             foreach (var entry in damageSpec.DamageDict)
@@ -336,17 +334,17 @@ namespace Content.Shared.Damage
             DamageSpecifier newDamage = new();
             foreach (var entry in damageSpec.DamageDict)
             {
-                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value * factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, entry.Value * factor);
             }
             return newDamage;
         }
 
-        public static DamageSpecifier operator /(DamageSpecifier damageSpec, int factor)
+        public static DamageSpecifier operator /(DamageSpecifier damageSpec, FixedPoint2 factor)
         {
             DamageSpecifier newDamage = new();
             foreach (var entry in damageSpec.DamageDict)
             {
-                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value /  (float) factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, entry.Value / factor);
             }
             return newDamage;
         }
@@ -357,7 +355,7 @@ namespace Content.Shared.Damage
 
             foreach (var entry in damageSpec.DamageDict)
             {
-                newDamage.DamageDict.Add(entry.Key, (int) MathF.Round(entry.Value / factor, MidpointRounding.AwayFromZero));
+                newDamage.DamageDict.Add(entry.Key, entry.Value / factor);
             }
             return newDamage;
         }
@@ -387,7 +385,7 @@ namespace Content.Shared.Damage
 
         public static DamageSpecifier operator *(float factor, DamageSpecifier damageSpec) => damageSpec * factor;
 
-        public static DamageSpecifier operator *(int factor, DamageSpecifier damageSpec) => damageSpec * factor;
+        public static DamageSpecifier operator *(FixedPoint2 factor, DamageSpecifier damageSpec) => damageSpec * factor;
     }
     #endregion
 }
