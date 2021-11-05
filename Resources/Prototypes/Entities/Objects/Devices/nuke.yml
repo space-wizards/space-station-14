@@ -1,0 +1,25 @@
+- type: entity
+  parent: BaseStructureDynamic
+  id: NuclearBomb
+  name: nuclear fission explosive
+  description: You probably shouldn't stick around to see if this is armed.
+  components:
+    - type: Sprite
+      sprite: Objects/Fun/toys.rsi
+      netsync: false
+      state: nuketoy
+    - type: ItemSlots
+      slots:
+        nukeDisk:
+          name: Disk
+          insertSound:
+            path: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+          ejectSound:
+            path: /Audio/Machines/id_swipe.ogg
+          whitelist:
+            tags:
+              - NukeDisk
+    - type: UserInterface
+      interfaces:
+        - key: enum.NukeUiKey.Key
+          type: PDABoundUserInterface
