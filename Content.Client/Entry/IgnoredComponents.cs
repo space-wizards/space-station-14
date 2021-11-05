@@ -304,11 +304,8 @@ namespace Content.Client.Entry
             "Label",
             "GhostRadio",
             "Armor",
-<<<<<<< HEAD
             "Supermatter",
-=======
             "PneumaticCannon"
->>>>>>> 9fe953c57d73f8e873605384ace896d6acba1c19
         };
     }
 }
