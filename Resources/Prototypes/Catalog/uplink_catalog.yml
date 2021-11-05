@@ -107,6 +107,18 @@
   price: 2
   icon: /Textures/Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_sl.rsi/icon.png
 
+#Utility
+
+- type: uplinkListing
+  id: UplinkHoloparaKit
+  category: Utility
+  itemId: BoxHolopara
+  listingName: Holoparasite Kit
+  description: Pride and joy of Cybersun hard-light technology, allows you to host a sentient metaphysical guardian, which can deal massive damage with it's rapid punches while also being immune from common enviormental hazards and bullets.
+  icon: /Textures/Objects/Misc/guardian_info.rsi/icon.png
+  price: 16
+
+
 # Bundles
 
 - type: uplinkListing
@@ -228,16 +240,14 @@
   itemId: lanternextrabright
   price: 2
 
-# Pointless
-
 - type: uplinkListing
   id: UplinkCostumeCentcom
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeCentcom
   price: 4
 
 - type: uplinkListing
   id: UplinkCostumeClown
-  category: Pointless
+  category: Misc
   itemId: ClothingBackpackDuffelSyndicateCostumeClown
   price: 4

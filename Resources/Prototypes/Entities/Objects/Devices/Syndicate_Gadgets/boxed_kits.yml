@@ -7,27 +7,48 @@
   components:
   - type: Sprite
     netsync: false
-    sprite: Objects/Consumable/Storage/boxes.rsi
+    sprite: Objects/Storage/boxes.rsi
     state: box_of_doom
   - type: Storage
     capacity: 15
   - type: Item
-    sprite: Objects/Consumable/Storage/boxes.rsi
+    sprite: Objects/Storage/boxes.rsi
     state: box_of_doom
-    size: 6
+    size: 20
+    HeldPrefix: box
+
+# The box size values may change depending on what is stored in them
+# But if you want to balance a high-risk item by having it's box be nigh un-conceallable then you might want to consider a bigger box  
+    
+- type: entity
+  parent: BoxBase
+  id: BigSuspiciousBoxBase
+  name: heavy suspicious box
+  description: A hefty box coloured in syndicate red-and-black style
+  components:
+  - type: EmitSoundOnLand
+    sound:
+      path: /Audio/Items/toolbox_drop.ogg
+  - type: Sprite
+    netsync: false
+    sprite: Objects/Storage/boxes.rsi
+    state: box_of_doom_big
+  - type: Storage
+    capacity: 30
+  - type: Item
+    sprite: Objects/Storage/boxes.rsi
+    state: box_of_doom_big
+    size: 9999
     HeldPrefix: box
     
 #kits that come in these boxes
-#I wanted to conceal them with a same-y name but due to how uplink is coded we can't have that
+#They should be concealled with a same-y name and visual, change the info in uplink listing
 
 - type: entity
   parent: SuspiciousBoxBase
   id: BoxHolopara
-  name: Holoparasite Kit
-  description: Pinnacle of Cybersun hard-light technology, allows you to embed a sentient guardian into your body, assiting you, and dealing massive damage with it's punches.
+  suffix: Holopara
   components:
-  - type: Storage
-    capacity: 15
   - type: StorageFill
     contents:
     - id: HoloparaIjector

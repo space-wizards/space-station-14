@@ -6,11 +6,10 @@ namespace Content.Shared.PDA
         Weapons,
         Ammo,
         Explosives,
-        Misc,
+        Utility,
         Bundles,
         Tools,
-        Utility,
         Armor,
-        Pointless,
+        Misc,
     }
 }

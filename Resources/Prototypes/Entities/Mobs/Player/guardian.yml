@@ -55,15 +55,15 @@
     range: 2
     arcwidth: 30
     arc: fist
-    cooldownTime: 0.3
-    arcCooldownTime: 0.3
+    cooldownTime: 0.2
+    arcCooldownTime: 0.2
     damage:
       types:
-        Blunt: 45
+        Blunt: 20
   - type: Actions
     innateActions:
       - CombatMode
   - type: Guardian
     distanceAllowed: 8
-    damageShare: 0.8
+    damageShare: 0.85
     
