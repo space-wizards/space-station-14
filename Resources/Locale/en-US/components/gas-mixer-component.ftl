@@ -8,3 +8,5 @@ comp-gas-mixer-ui-mixer-node-two = Node 2:
 
 comp-gas-mixer-ui-mixer-set = Set
 comp-gas-mixer-ui-mixer-max = Max
+
+comp-gas-mixer-ui-needs-anchor = Anchor the mixer first!
