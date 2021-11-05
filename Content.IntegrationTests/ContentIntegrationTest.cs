@@ -136,8 +136,6 @@ namespace Content.IntegrationTests
             StartConnectedServerClientPair(ClientIntegrationOptions clientOptions = null,
                 ServerIntegrationOptions serverOptions = null)
         {
-            serverOptions ??= new ServerIntegrationOptions {Pool = false};
-
             var client = StartClient(clientOptions);
             var server = StartServer(serverOptions);
 
