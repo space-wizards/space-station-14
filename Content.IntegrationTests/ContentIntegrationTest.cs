@@ -11,6 +11,7 @@ using Content.Shared.CCVar;
 using NUnit.Framework;
 using Robust.Client;
 using Robust.Server;
+using Robust.Server.Player;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -266,6 +267,7 @@ namespace Content.IntegrationTests
             var systems = server.ResolveDependency<IEntitySystemManager>();
             var prototypes = server.ResolveDependency<IPrototypeManager>();
             var net = server.ResolveDependency<IServerNetManager>();
+            var players = server.ResolveDependency<IPlayerManager>();
 
             var gameTicker = systems.GetEntitySystem<GameTicker>();
 
@@ -275,7 +277,12 @@ namespace Content.IntegrationTests
                 {
                     net.DisconnectChannel(channel, "Test pooling disconnect");
                 }
+            });
 
+            await WaitUntil(server, () => players.PlayerCount == 0);
+
+            await server.WaitPost(() =>
+            {
                 gameTicker.RestartRound();
 
                 if (server.PreviousOptions?.ExtraPrototypes is { } oldExtra)
@@ -292,7 +299,7 @@ namespace Content.IntegrationTests
 
             if (!gameTicker.DummyTicker)
             {
-                await WaitUntil(server, () => gameTicker.RunLevel == GameRunLevel.InRound, 600);
+                await WaitUntil(server, () => gameTicker.RunLevel == GameRunLevel.InRound);
             }
         }
 
