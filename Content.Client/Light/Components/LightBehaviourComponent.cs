@@ -395,7 +395,9 @@ namespace Content.Client.Light.Components
 
             if (Owner.TryGetComponent(out AnimationPlayerComponent? animation))
             {
+#pragma warning disable 618
                 animation.AnimationCompleted += OnAnimationCompleted;
+#pragma warning restore 618
             }
 
             foreach (var container in _animations)

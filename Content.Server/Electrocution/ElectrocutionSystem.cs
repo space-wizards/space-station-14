@@ -46,8 +46,8 @@ namespace Content.Server.Electrocution
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
         [Dependency] private readonly NodeGroupSystem _nodeGroupSystem = default!;
 
-        protected const string StatusEffectKey = "Electrocution";
-        protected const string DamageType = "Shock";
+        private const string StatusEffectKey = "Electrocution";
+        private const string DamageType = "Shock";
 
         // Yes, this is absurdly small for a reason.
         private const float ElectrifiedDamagePerWatt = 0.0015f;
@@ -154,6 +154,10 @@ namespace Content.Server.Electrocution
                         return false;
                 }
             }
+
+            var siemens = electrified.SiemensCoefficient;
+            if (!DoCommonElectrocutionAttempt(targetUid, uid, ref siemens) || siemens <= 0)
+                return false; // If electrocution would fail, do nothing.
 
             var targets = new List<(EntityUid entity, int depth)>();
             GetChainedElectrocutionTargets(targetUid, targets);

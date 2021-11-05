@@ -28,7 +28,9 @@ namespace Content.Server.Hands.Components
     [ComponentReference(typeof(IHandsComponent))]
     [ComponentReference(typeof(ISharedHandsComponent))]
     [ComponentReference(typeof(SharedHandsComponent))]
+#pragma warning disable 618
     public class HandsComponent : SharedHandsComponent, IHandsComponent, IBodyPartAdded, IBodyPartRemoved, IDisarmedAct
+#pragma warning restore 618
     {
         [Dependency] private readonly IEntitySystemManager _entitySystemManager = default!;
 

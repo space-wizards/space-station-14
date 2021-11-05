@@ -109,7 +109,9 @@ namespace Content.Server.Buckle.Components
 
             buckle.Appearance?.SetData(StrapVisuals.RotationAngle, _rotation);
 
+#pragma warning disable 618
             SendMessage(new StrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
 
             return true;
         }
@@ -124,7 +126,9 @@ namespace Content.Server.Buckle.Components
             if (_buckledEntities.Remove(buckle.Owner))
             {
                 _occupiedSize -= buckle.Size;
+#pragma warning disable 618
                 SendMessage(new UnStrapMessage(buckle.Owner, Owner));
+#pragma warning restore 618
             }
         }
 

@@ -31,8 +31,10 @@ using Robust.Shared.ViewVariables;
 namespace Content.Server.Toilet
 {
     [RegisterComponent]
+#pragma warning disable 618
     public class ToiletComponent : Component, IInteractUsing,
         IInteractHand, IMapInit, IExamine, ISuicideAct
+#pragma warning restore 618
     {
         public sealed override string Name => "Toilet";
 

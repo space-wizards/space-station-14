@@ -3,7 +3,7 @@
     <PanelContainer StyleClasses="TransparentBorderedWindowPanel"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
-        <GridContainer Name="AlertContainer" MaxGridHeight="64" ExpandBackwards="True">
+        <GridContainer Name="AlertContainer" Access="Public" MaxGridHeight="64" ExpandBackwards="True">
 
         </GridContainer>
     </PanelContainer>

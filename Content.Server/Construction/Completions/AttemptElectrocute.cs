@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Content.Server.Electrocution;
 using Content.Shared.Construction;
 using Robust.Shared.GameObjects;
@@ -9,12 +8,12 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public class AttemptElectrocute : IGraphAction
     {
-        public async Task PerformAction(IEntity entity, IEntity? user)
+        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            if (user == null)
+            if (userUid == null)
                 return;
 
-            EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(entity.Uid, user.Uid);
+            EntitySystem.Get<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
         }
     }
 }

@@ -126,9 +126,12 @@ namespace Content.Server.Lock
             return true;
         }
 
+        /// <summary>
+        ///     Before locking the entity, check whether it's a locker. If is, prevent it from being locked from the inside or while it is open.
+        /// </summary>
         public bool CanToggleLock(EntityUid uid, IEntity user, EntityStorageComponent? storage = null, bool quiet = true)
         {
-            if (!Resolve(uid, ref storage))
+            if (!Resolve(uid, ref storage, logMissing: false))
                 return true;
 
             // Cannot lock if the entity is currently opened.

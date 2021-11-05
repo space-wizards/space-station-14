@@ -251,7 +251,9 @@ namespace Content.Server.Buckle.Components
 
             UpdateBuckleStatus();
 
+#pragma warning disable 618
             SendMessage(new BuckleMessage(Owner, to));
+#pragma warning restore 618
 
             if (Owner.TryGetComponent(out SharedPullableComponent? ownerPullable))
             {
@@ -340,7 +342,9 @@ namespace Content.Server.Buckle.Components
             oldBuckledTo.Remove(this);
             SoundSystem.Play(Filter.Pvs(Owner), oldBuckledTo.UnbuckleSound.GetSound(), Owner);
 
+#pragma warning disable 618
             SendMessage(new UnbuckleMessage(Owner, oldBuckledTo.Owner));
+#pragma warning restore 618
 
             return true;
         }
