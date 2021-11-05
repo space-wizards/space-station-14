@@ -434,7 +434,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             public readonly Button Button;
             public IKeyBinding? Binding;
 
-            [Dependency] private readonly IConfigurationManager configManager = default!;
             public BindButton(KeyRebindTab tab, KeyControl keyControl, string styleClass)
             {
                 _tab = tab;
@@ -450,10 +449,19 @@ namespace Content.Client.EscapeMenu.UI.Tabs
 
                 Button.OnKeyBindDown += ButtonOnOnKeyBindDown;
 
-                configManager = IoCManager.Resolve<IConfigurationManager>();
-                configManager.OnValueChanged(CVars.DisplayUSQWERTYHotkeys, x => UpdateText());
-
                 MinSize = (200, 0);
+            }
+
+            protected override void EnteredTree()
+            {
+                base.EnteredTree();
+                _tab._inputManager.OnInputModeChanged += UpdateText;
+            }
+
+            protected override void ExitedTree()
+            {
+                base.ExitedTree();
+                _tab._inputManager.OnInputModeChanged -= UpdateText;
             }
 
             private void ButtonOnOnKeyBindDown(GUIBoundKeyEventArgs args)
@@ -476,11 +484,6 @@ namespace Content.Client.EscapeMenu.UI.Tabs
             public void UpdateText()
             {
                 Button.Text = Binding?.GetKeyString() ?? Loc.GetString("ui-options-unbound");
-            }
-
-            ~BindButton()
-            {
-                configManager.UnsubValueChanged(CVars.DisplayUSQWERTYHotkeys, x => UpdateText());
             }
         }
     }

@@ -617,14 +617,14 @@ namespace Content.Client.HUD
             {
                 _inputManager.OnKeyBindingAdded += OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved += OnKeyBindingChanged;
-                configManager.OnValueChanged(CVars.DisplayUSQWERTYHotkeys, x => OnKeyBindingChanged());
+                _inputManager.OnInputModeChanged += OnKeyBindingChanged;
             }
 
             protected override void ExitedTree()
             {
                 _inputManager.OnKeyBindingAdded -= OnKeyBindingChanged;
                 _inputManager.OnKeyBindingRemoved -= OnKeyBindingChanged;
-                configManager.UnsubValueChanged(CVars.DisplayUSQWERTYHotkeys, x => OnKeyBindingChanged());
+                _inputManager.OnInputModeChanged -= OnKeyBindingChanged;
             }
 
 
