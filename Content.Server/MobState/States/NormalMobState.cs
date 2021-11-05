@@ -1,6 +1,7 @@
 using Content.Server.Alert;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
@@ -9,7 +10,7 @@ namespace Content.Server.MobState.States
 {
     public class NormalMobState : SharedNormalMobState
     {
-        public override void UpdateState(IEntity entity, int threshold)
+        public override void UpdateState(IEntity entity, FixedPoint2 threshold)
         {
             base.UpdateState(entity, threshold);
 

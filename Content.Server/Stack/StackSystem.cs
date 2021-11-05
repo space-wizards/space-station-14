@@ -62,6 +62,8 @@ namespace Content.Server.Stack
             {
                 // Set the split stack's count.
                 SetCount(entity.Uid, amount, stackComp);
+                // Don't let people dupe unlimited stacks
+                stackComp.Unlimited = false;
             }
 
             return entity;

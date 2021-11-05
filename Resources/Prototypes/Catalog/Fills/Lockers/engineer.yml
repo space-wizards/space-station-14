@@ -91,7 +91,6 @@
       - id: ClothingMaskBreath
       - id: OxygenTankFilled
       - id: ClothingShoesBootsMag
-        prob: 0.15
 
 - type: entity
   id: ClosetRadiationSuitFilled

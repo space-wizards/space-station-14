@@ -7,7 +7,6 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     layers:
     - state: closed

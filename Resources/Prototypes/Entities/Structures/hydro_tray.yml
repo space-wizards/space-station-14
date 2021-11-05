@@ -17,7 +17,6 @@
   - type: Sprite
     sprite: Structures/Hydroponics/containers.rsi
     state: hydrotray3
-    drawdepth: FloorObjects
   - type: PlantHolder
     drawWarnings: true
   - type: Construction

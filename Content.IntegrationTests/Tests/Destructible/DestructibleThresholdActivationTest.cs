@@ -6,6 +6,7 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -184,7 +185,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*5, true);
 
                 // Check that the total damage matches
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(50));
+                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(50)));
 
                 // Both thresholds should have triggered
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Exactly(2).Items);
@@ -232,7 +233,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.SetAllDamage(sDamageableComponent, 0);
 
                 // Check that the entity has 0 damage
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(0));
+                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
 
                 // Set both thresholds to only trigger once
                 foreach (var destructibleThreshold in sDestructibleComponent.Thresholds)
@@ -245,7 +246,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 sDamageableSystem.TryChangeDamage(sDestructibleEntity.Uid, bluntDamage*5, true);
 
                 // Check that the total damage matches
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(50));
+                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(50)));
 
                 // No thresholds should have triggered as they were already triggered before, and they are set to only trigger once
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);
@@ -258,7 +259,7 @@ namespace Content.IntegrationTests.Tests.Destructible
                 }
 
                 // Check that the total damage matches
-                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(50));
+                Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.New(50)));
 
                 // They shouldn't have been triggered by changing TriggersOnce
                 Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Is.Empty);

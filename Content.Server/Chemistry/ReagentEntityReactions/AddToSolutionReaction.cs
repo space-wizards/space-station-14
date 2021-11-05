@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
@@ -19,11 +20,11 @@ namespace Content.Server.Chemistry.ReagentEntityReactions
         // ReSharper disable once CollectionNeverUpdated.Local
         private readonly HashSet<string> _reagents = new();
 
-        protected override void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Solution? source)
+        protected override void React(IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Solution? source)
         {
             // TODO see if this is correct
             if (!EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(entity, _solution, out var solutionContainer)
+                    .TryGetSolution(entity.Uid, _solution, out var solutionContainer)
                 || (_reagents.Count > 0 && !_reagents.Contains(reagent.ID))) return;
 
             if (EntitySystem.Get<SolutionContainerSystem>()

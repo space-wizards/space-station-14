@@ -20,7 +20,6 @@
     layers:
     - state: base
       map: ["enum.AmmoVisualLayers.Base"]
-    drawdepth: FloorObjects
   - type: Appearance
     visuals:
     - type: SpentAmmoVisualizer

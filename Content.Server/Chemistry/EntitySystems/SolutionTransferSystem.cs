@@ -6,6 +6,7 @@ using Robust.Shared.Localization;
 using Robust.Server.GameObjects;
 using System.Collections.Generic;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -53,7 +54,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 verb.Category = VerbCategory.SetTransferAmount;
                 verb.Act = () =>
                 {
-                    component.TransferAmount = ReagentUnit.New(amount);
+                    component.TransferAmount = FixedPoint2.New(amount);
                     args.User.PopupMessage(Loc.GetString("comp-solution-transfer-set-amount", ("amount", amount)));
                 };
 

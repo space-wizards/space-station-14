@@ -14,6 +14,9 @@
   - type: Sprite
     sprite: Objects/Misc/handcuffs.rsi
     state: handcuff
+  - type: Tag
+    tags:
+    - Handcuffs
 
 - type: entity
   name: makeshift handcuffs

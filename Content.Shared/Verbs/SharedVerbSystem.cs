@@ -9,34 +9,34 @@ namespace Content.Shared.Verbs
         ///     Raises a number of events in order to get all verbs of the given type(s) defined in local systems. This
         ///     does not request verbs from the server.
         /// </summary>
-        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes)
+        public virtual Dictionary<VerbType, SortedSet<Verb>> GetLocalVerbs(IEntity target, IEntity user, VerbType verbTypes, bool force=false)
         {
             Dictionary<VerbType, SortedSet<Verb>> verbs = new();
 
             if ((verbTypes & VerbType.Interaction) == VerbType.Interaction)
             {
-                GetInteractionVerbsEvent getVerbEvent = new(user, target);
+                GetInteractionVerbsEvent getVerbEvent = new(user, target,  force);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Interaction, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Activation) == VerbType.Activation)
             {
-                GetActivationVerbsEvent getVerbEvent = new(user, target);
+                GetActivationVerbsEvent getVerbEvent = new(user, target, force);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Activation, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Alternative) == VerbType.Alternative)
             {
-                GetAlternativeVerbsEvent getVerbEvent = new(user, target);
+                GetAlternativeVerbsEvent getVerbEvent = new(user, target, force);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Alternative, getVerbEvent.Verbs);
             }
 
             if ((verbTypes & VerbType.Other) == VerbType.Other)
             {
-                GetOtherVerbsEvent getVerbEvent = new(user, target);
+                GetOtherVerbsEvent getVerbEvent = new(user, target, force);
                 RaiseLocalEvent(target.Uid, getVerbEvent);
                 verbs.Add(VerbType.Other, getVerbEvent.Verbs);
             }

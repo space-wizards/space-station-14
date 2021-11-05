@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Content.Server.Doors.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
@@ -32,13 +33,23 @@ namespace Content.Server.Construction.Conditions
             if (door.IsWeldedShut != Welded)
             {
                 if (Welded == true)
-                    args.PushMarkup(Loc.GetString("construction-condition-door-weld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-weld", ("entityName", entity.Name)) + "\n");
                 else
-                    args.PushMarkup(Loc.GetString("construction-condition-door-unweld", ("entityName", entity.Name)) + "\n");
+                    args.PushMarkup(Loc.GetString("construction-examine-condition-door-unweld", ("entityName", entity.Name)) + "\n");
                 return true;
             }
 
             return false;
+        }
+
+        public IEnumerable<ConstructionGuideEntry> GenerateGuideEntry()
+        {
+            yield return new ConstructionGuideEntry()
+            {
+                Localization = Welded
+                    ? "construction-guide-condition-door-weld"
+                    : "construction-guide-condition-door-unweld",
+            };
         }
     }
 }

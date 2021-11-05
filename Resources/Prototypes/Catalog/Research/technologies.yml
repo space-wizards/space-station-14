@@ -97,6 +97,23 @@
     - Dropper
     - Syringe
 
+- type: technology
+  name: "medical machinery"
+  id: MedicalMachinery
+  description: More machine power for more healing efficiency.
+  icon:
+    sprite: Structures/Machines/cloning.rsi
+    state: pod_0
+  requiredPoints: 15000
+  requiredTechnologies:
+    - BiologicalTechnology
+    - ChemistryTechnology
+  unlockedRecipes:
+    - CloningPodMachineCircuitboard
+    - MedicalScannerMachineCircuitboard
+    - ChemMasterMachineCircuitboard
+    - ChemDispenserMachineCircuitboard
+
 # Security Technology Tree
 
 - type: technology
@@ -228,7 +245,7 @@
   description: Try not to fry yourself.
   icon:
     sprite: Structures/Power/apc.rsi
-    state: apcewires
+    state: apc0
   requiredPoints: 10000
   requiredTechnologies:
     - BasicResearch
@@ -241,8 +258,6 @@
     - FirelockElectronics
     - DoorElectronics
     - APCElectronics
-    - CloningPodMachineCircuitboard
-    - MedicalScannerMachineCircuitboard
     - HydroponicsTrayMachineCircuitboard
     - SolarControlComputerCircuitboard
 

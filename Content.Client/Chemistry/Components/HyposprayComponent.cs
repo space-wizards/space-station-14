@@ -3,6 +3,7 @@ using Content.Client.Message;
 using Content.Client.Stylesheets;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.GameObjects;
@@ -15,8 +16,8 @@ namespace Content.Client.Chemistry.Components
     [RegisterComponent]
     public sealed class HyposprayComponent : SharedHyposprayComponent, IItemStatus
     {
-        [ViewVariables] private ReagentUnit CurrentVolume { get; set; }
-        [ViewVariables] private ReagentUnit TotalVolume { get; set; }
+        [ViewVariables] private FixedPoint2 CurrentVolume { get; set; }
+        [ViewVariables] private FixedPoint2 TotalVolume { get; set; }
         [ViewVariables(VVAccess.ReadWrite)] private bool _uiUpdateNeeded;
 
         public override void HandleComponentState(ComponentState? curState, ComponentState? nextState)

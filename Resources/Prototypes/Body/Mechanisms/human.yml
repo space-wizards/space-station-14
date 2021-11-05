@@ -9,7 +9,7 @@
   - type: Mechanism
   - type: Food
   - type: Extractable
-    extractableSolution: extractableSolution
+    grindableSolutionName: organ
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -299,7 +299,7 @@
       Milk:
         effects:
         - !type:SatiateThirst
-      SpoiledMilk:
+      MilkSpoiled:
         effects:
         - !type:SatiateThirst
           hydrationFactor: -2
@@ -315,7 +315,7 @@
         effects:
         - !type:SatiateThirst
           hydrationFactor: 0.5 # sodaboys stay losing
-      ThirteenLoko:
+      FourteenLoko:
         effects:
         - !type:SatiateThirst
           hydrationFactor: 2
@@ -336,8 +336,166 @@
     size: 1
     compatibility: Biological
   - type: Metabolizer # The liver metabolizes certain chemicals only, like alcohol.
-    metabolisms: # TODO add the rest of alcohol
-      CreamyDelight:
+    metabolisms: # TODO there needs to be a better way to do this than just add every damn drink
+      #Basic Alchohol
+      Ale:
+        effects:
+        - !type:SatiateThirst
+      Beer:
+        effects:
+        - !type:SatiateThirst
+      BlueCuracao:
+        effects:
+        - !type:SatiateThirst
+      Cognac:
+        effects:
+        - !type:SatiateThirst
+      DeadRum:
+        effects:
+        - !type:SatiateThirst
+      Gin:
+        effects:
+        - !type:SatiateThirst
+      Kahlua:
+        effects:
+        - !type:SatiateThirst
+      MelonLiquor:
+        effects:
+        - !type:SatiateThirst
+      NTCahors:
+        effects:
+        - !type:SatiateThirst
+      PoisonWine:
+        effects:
+        - !type:SatiateThirst
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1
+      Rum:
+        effects:
+        - !type:SatiateThirst
+      Sake:
+        effects:
+        - !type:SatiateThirst
+      Tequila:
+        effects:
+        - !type:SatiateThirst
+      Vermouth:
+        effects:
+        - !type:SatiateThirst
+      Vodka:
+        effects:
+        - !type:SatiateThirst
+      Whiskey:
+        effects:
+        - !type:SatiateThirst
+      Wine:
+        effects:
+        - !type:SatiateThirst
+
+      #Mixed Alcohol
+
+      AcidSpit:
+        effects:
+        - !type:SatiateThirst
+      AlliesCocktail:
+        effects:
+        - !type:SatiateThirst
+      Aloe:
+        effects:
+        - !type:SatiateThirst
+      Amasec:
+        effects:
+        - !type:SatiateThirst
+      Andalusia:
+        effects:
+        - !type:SatiateThirst
+      Antifreeze:
+        effects:
+        - !type:SatiateThirst
+      AtomicBomb:
+        effects:
+        - !type:SatiateThirst
+      B52:
+        effects:
+        - !type:SatiateThirst
+      BahamaMama:
+        effects:
+        - !type:SatiateThirst
+      BananaHonk:
+        effects:
+        - !type:SatiateThirst
+      Barefoot:
+        effects:
+        - !type:SatiateThirst
+      BeepskySmash:
+        effects:
+        - !type:SatiateThirst
+      Bilk:
+        effects:
+        - !type:SatiateThirst
+      BlackRussian:
+        effects:
+        - !type:SatiateThirst
+      BloodyMary:
+        effects:
+        - !type:SatiateThirst
+      Booger:
+        effects:
+        - !type:SatiateThirst
+      BraveBull:
+        effects:
+        - !type:SatiateThirst
+      CubaLibre:
+        effects:
+        - !type:SatiateThirst
+      DemonsBlood:
+        effects:
+        - !type:SatiateThirst
+      DevilsKiss:
+        effects:
+        - !type:SatiateThirst
+      DoctorsDelight:
+        effects:
+        - !type:SatiateThirst
+      DriestMartini:
+        effects:
+        - !type:SatiateThirst
+      ErikaSuprise:
+        effects:
+        - !type:SatiateThirst
+      GargleBlaster:
+        effects:
+        - !type:SatiateThirst
+      GinTonic:
+        effects:
+        - !type:SatiateThirst
+      Goldschlager:
+        effects:
+        - !type:SatiateThirst
+      Grog:
+        effects:
+        - !type:SatiateThirst
+      HippiesDelight:
+        effects:
+        - !type:SatiateThirst
+      Hooch:
+        effects:
+        - !type:SatiateThirst
+      IcedBeer:
+        effects:
+        - !type:SatiateThirst
+      IrishCarBomb:
+        effects:
+        - !type:SatiateThirst
+      IrishCream:
+        effects:
+        - !type:SatiateThirst
+      IrishCoffee:
+        effects:
+        - !type:SatiateThirst
+      KiraSpecial:
         effects:
         - !type:SatiateThirst
       Lean:
@@ -346,6 +504,102 @@
       LeanShine: # who added this?
         effects:
         - !type:SatiateThirst
+      LongIslandIcedTea:
+        effects:
+        - !type:SatiateThirst
+      Manhattan:
+        effects:
+        - !type:SatiateThirst
+      ManhattanProject:
+        effects:
+        - !type:SatiateThirst
+      ManlyDorf:
+        effects:
+        - !type:SatiateThirst
+      Margarita:
+        effects:
+        - !type:SatiateThirst
+      Martini:
+        effects:
+        - !type:SatiateThirst
+      Mead:
+        effects:
+        - !type:SatiateThirst
+      Mojito:
+        effects:
+        - !type:SatiateThirst
+      Moonshine:
+        effects:
+        - !type:SatiateThirst
+      Neurotoxin:
+        effects:
+        - !type:SatiateThirst
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1
+      Patron:
+        effects:
+        - !type:SatiateThirst
+      RedMead:
+        effects:
+        - !type:SatiateThirst
+      Rewriter:
+        effects:
+        - !type:SatiateThirst
+      Sbiten:
+        effects:
+        - !type:SatiateThirst
+      ScrewdriverCocktail:
+        effects:
+        - !type:SatiateThirst
+      Silencer:
+        effects:
+        - !type:SatiateThirst
+      Singulo:
+        effects:
+        - !type:SatiateThirst
+      SnowWhite:
+        effects:
+        - !type:SatiateThirst
+      Starkist:
+        effects:
+        - !type:SatiateThirst
+      SuiDream:
+        effects:
+        - !type:SatiateThirst
+      TequilaSunrise:
+        effects:
+        - !type:SatiateThirst
+      ThreeMileIsland:
+        effects:
+        - !type:SatiateThirst
+      ToxinsSpecial:
+        effects:
+        - !type:SatiateThirst
+      VodkaMartini:
+        effects:
+        - !type:SatiateThirst
+      VodkaTonic:
+        effects:
+        - !type:SatiateThirst
+      WhiskeyCola:
+        effects:
+        - !type:SatiateThirst
+      WhiskeySoda:
+        effects:
+        - !type:SatiateThirst
+      WhiteRussian:
+        effects:
+        - !type:SatiateThirst
+      FourteenLoko:
+        effects:
+        - !type:SatiateThirst
+          hydrationFactor: 2
+        - !type:HealthChange
+          damage:
+            types:
+              Poison: 1
 
 - type: entity
   id: OrganHumanKidneys

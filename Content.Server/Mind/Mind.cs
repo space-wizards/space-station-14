@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
@@ -254,8 +255,7 @@ namespace Content.Server.Mind
                 }
                 else if (component.HasMind)
                 {
-                    // TODO: Kick them out, maybe?
-                    throw new ArgumentException("That entity already has a mind.", nameof(entity));
+                    EntitySystem.Get<GameTicker>().OnGhostAttempt(component.Mind!, false);
                 }
 
                 if (entity.TryGetComponent(out ActorComponent? actor))

@@ -1,24 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.DoAfter;
-using Content.Server.Stack;
-using Content.Server.Tools;
-using Content.Server.Tools.Components;
-using Content.Shared.Construction;
-using Content.Shared.Construction.Prototypes;
-using Content.Shared.Construction.Steps;
-using Content.Shared.Interaction;
-using Content.Shared.Tools.Components;
 using Robust.Shared.Analyzers;
-using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
-using Robust.Shared.Physics;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
 

@@ -16,7 +16,7 @@ namespace Content.Server.Fluids.Components
         void IDropped.Dropped(DroppedEventArgs eventArgs)
         {
             if (!eventArgs.Intentional
-                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionComponent))
+                && EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solutionComponent))
             {
                 EntitySystem.Get<SolutionContainerSystem>()
                     .Drain(Owner.Uid, solutionComponent, solutionComponent.DrainAvailable)

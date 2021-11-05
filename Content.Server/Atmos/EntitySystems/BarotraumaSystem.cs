@@ -5,6 +5,7 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 
@@ -71,7 +72,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (barotrauma, damageable, transform) in EntityManager.EntityQuery<BarotraumaComponent, DamageableComponent, ITransformComponent>())
             {
-                var totalDamage = 0;
+                var totalDamage = FixedPoint2.Zero;
                 foreach (var (barotraumaDamageType, _) in barotrauma.Damage.DamageDict)
                 {
                     if (!damageable.Damage.DamageDict.TryGetValue(barotraumaDamageType, out var damage))

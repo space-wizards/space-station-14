@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.DoAfter;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -26,24 +27,24 @@ namespace Content.Server.Fluids.Components
 
         private List<EntityUid> _currentlyUsing = new();
 
-        public ReagentUnit MaxVolume
+        public FixedPoint2 MaxVolume
         {
             get =>
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
                     ? solution.MaxVolume
-                    : ReagentUnit.Zero;
+                    : FixedPoint2.Zero;
             set
             {
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     solution.MaxVolume = value;
                 }
             }
         }
 
-        public ReagentUnit CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution)
+        public FixedPoint2 CurrentVolume => EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution)
             ? solution.CurrentVolume
-            : ReagentUnit.Zero;
+            : FixedPoint2.Zero;
 
         [DataField("sound")]
         private SoundSpecifier _sound = new SoundPathSpecifier("/Audio/Effects/Fluids/watersplash.ogg");
@@ -52,7 +53,7 @@ namespace Content.Server.Fluids.Components
         async Task<bool> IInteractUsing.InteractUsing(InteractUsingEventArgs eventArgs)
         {
             var solutionsSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionsSys.TryGetSolution(Owner, SolutionName, out var contents) ||
+            if (!solutionsSys.TryGetSolution(Owner.Uid, SolutionName, out var contents) ||
                 _currentlyUsing.Contains(eventArgs.Using.Uid) ||
                 !eventArgs.Using.TryGetComponent(out MopComponent? mopComponent) ||
                 mopComponent.Mopping)
@@ -93,7 +94,7 @@ namespace Content.Server.Fluids.Components
 
             // Top up mops solution given it needs it to annihilate puddles I guess
 
-            var transferAmount = ReagentUnit.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
+            var transferAmount = FixedPoint2.Min(mopComponent.MaxVolume - mopComponent.CurrentVolume, CurrentVolume);
             if (transferAmount == 0)
             {
                 return false;

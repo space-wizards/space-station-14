@@ -1,6 +1,6 @@
 ﻿- type: objective
   id: CaptainIDStealObjective
-  issuer: The Syndicate
+  issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -12,7 +12,7 @@
 
 - type: objective
   id: KillRandomObjective
-  issuer: The Syndicate
+  issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
   conditions:
@@ -21,7 +21,7 @@
 
 - type: objective
   id: StayAliveObjective
-  issuer: The Syndicate
+  issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
@@ -32,7 +32,7 @@
 
 - type: objective
   id: DieObjective
-  issuer: The Syndicate
+  issuer: syndicate
   requirements:
     - !type:TraitorRequirement {}
     - !type:IncompatibleConditionsRequirement
