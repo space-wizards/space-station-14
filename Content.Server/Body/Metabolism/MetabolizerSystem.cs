@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Server.Body.Circulatory;
 using Content.Server.Body.Mechanism;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
@@ -32,7 +33,19 @@ namespace Content.Server.Body.Metabolism
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
             if (!component.SolutionOnBody)
+            {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
+            }
+            else
+            {
+                if (EntityManager.TryGetComponent<MechanismComponent>(uid, out var mech))
+                {
+                    if (mech.Body != null)
+                    {
+                        _solutionContainerSystem.EnsureSolution(mech.Body.OwnerUid, component.SolutionName);
+                    }
+                }
+            }
         }
 
         public override void Update(float frameTime)
@@ -62,6 +75,7 @@ namespace Content.Server.Body.Metabolism
             // First step is get the solution we actually care about
             Solution? solution = null;
             EntityUid? solutionEntityUid = null;
+            SolutionContainerManagerComponent? manager = null;
 
             if (meta.SolutionOnBody)
             {
@@ -71,14 +85,18 @@ namespace Content.Server.Body.Metabolism
 
                     if (body != null)
                     {
-                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution);
+                        if (!Resolve(body.OwnerUid, ref manager, false))
+                            return;
+                        _solutionContainerSystem.TryGetSolution(body.OwnerUid, meta.SolutionName, out solution, manager);
                         solutionEntityUid = body.OwnerUid;
                     }
                 }
             }
             else
             {
-                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution);
+                if (!Resolve(uid, ref manager, false))
+                    return;
+                _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
                 solutionEntityUid = uid;
             }
 
