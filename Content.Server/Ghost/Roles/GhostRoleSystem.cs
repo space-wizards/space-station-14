@@ -165,6 +165,7 @@ namespace Content.Server.Ghost.Roles
             {
                 CharacterName = mob.Name
             };
+            newMind.AddRole(new GhostRoleMarkerRole(newMind, role.RoleName));
 
             newMind.ChangeOwningPlayer(player.UserId);
             newMind.TransferTo(mob);

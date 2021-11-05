@@ -4,6 +4,7 @@ using System.Globalization;
 using Content.Server.Access.Components;
 using Content.Server.Access.Systems;
 using Content.Server.CharacterAppearance.Components;
+using Content.Server.Ghost;
 using Content.Server.Ghost.Components;
 using Content.Server.Hands.Components;
 using Content.Server.Inventory.Components;
@@ -153,6 +154,7 @@ namespace Content.Server.GameTicking
             data!.WipeMind();
             var newMind = new Mind.Mind(data.UserId);
             newMind.ChangeOwningPlayer(data.UserId);
+            newMind.AddRole(new ObserverRole(newMind));
 
             var mob = SpawnObserverMob();
             mob.Name = name;

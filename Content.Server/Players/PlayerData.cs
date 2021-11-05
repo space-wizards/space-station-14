@@ -17,6 +17,13 @@ namespace Content.Server.Players
         public NetUserId UserId { get; }
 
         /// <summary>
+        ///     This is a backup copy of the player name stored on connection.
+        ///     This is useful in the event the player disconnects.
+        /// </summary>
+        [ViewVariables]
+        public string Name { get; }
+
+        /// <summary>
         ///     The currently occupied mind of the player owning this data.
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
@@ -36,14 +43,18 @@ namespace Content.Server.Players
             Mind?.ChangeOwningPlayer(null);
         }
 
+        /// <summary>
+        /// Called from Mind.ChangeOwningPlayer *and nowhere else.*
+        /// </summary>
         public void UpdateMindFromMindChangeOwningPlayer(Mind.Mind? mind)
         {
             Mind = mind;
         }
 
-        public PlayerData(NetUserId userId)
+        public PlayerData(NetUserId userId, string name)
         {
             UserId = userId;
+            Name = name;
         }
     }
 

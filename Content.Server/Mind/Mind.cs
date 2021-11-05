@@ -42,7 +42,7 @@ namespace Content.Server.Mind
         ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
         /// <param name="userId">The session ID of the original owner (may get credited).</param>
-        public Mind(NetUserId? userId)
+        public Mind(NetUserId userId)
         {
             OriginalOwnerUserId = userId;
         }
@@ -59,7 +59,7 @@ namespace Content.Server.Mind
         ///     May end up used for round-end information (as the owner may have abandoned Mind since)
         /// </summary>
         [ViewVariables]
-        public NetUserId? OriginalOwnerUserId { get; }
+        public NetUserId OriginalOwnerUserId { get; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
