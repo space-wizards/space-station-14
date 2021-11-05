@@ -40,25 +40,26 @@ using Content.Shared.Damage;
 namespace Content.Server.Supermatter
 {
     [RegisterComponent]
-    public class SupermatterComponent : Component
+    public class SupermatterComponent : Component, IRadiationAct
     {
         public override string Name => "Supermatter";
-        private int _energy = 0;
+        private float _Power = 0;
         private Atmos.GasMixture? _mix;
-        private float? _oxy;
         private float _PowerRatio = 0;
+        private float _DynamicHeatModifier = 0;
+        private float _PowerTransmissionBonus = 0;
+        private float _PowerlossDynamicScaling = 0;
+        private float _DynamicHeatResistance = 0;
+        private float _PowerlossInhibitor = 0;
 
-        private static float ONE_ATMOSPHERE = 101.325f;
+        //TODO: PsyCoeff should change from 0-1 based on psycologist distance
+        public float PsyCoeff = 0;
 
         //Are we exploding?
         private bool final_countdown = false;
 
-
         //The amount of damage we have currently
         private int _damage = 0;
-
-
-
 
         //The damage we had before this cycle. Used to limit the damage we can take each cycle, and for safe_alert
         private int damage_archived = 0;
@@ -127,24 +128,24 @@ namespace Content.Server.Supermatter
         // The maximum portion of the miasma in the air that will be consumed. Lower values mean the miasma consumption rate caps earlier.
         public static float MIASMA_CONSUMPTION_RATIO_MAX = 1f;
         // The minimum pressure for a pure miasma atmosphere to begin being consumed. Higher values mean it takes more miasma pressure to make miasma start being consumed. Should be >= 0
-        public static float MIASMA_CONSUMPTION_PP = (ONE_ATMOSPHERE*0.01f);
+        public static float MIASMA_CONSUMPTION_PP = (Atmospherics.OneAtmosphere*0.01f);
         // How the amount of miasma consumed per tick scales with partial pressure. Higher values decrease the rate miasma consumption scales with partial pressure. Should be >0
-        public static float MIASMA_PRESSURE_SCALING = (ONE_ATMOSPHERE*0.5f);
+        public static float MIASMA_PRESSURE_SCALING = (Atmospherics.OneAtmosphere*0.5f);
         // How much the amount of miasma consumed per tick scales with gasmix power ratio. Higher values means gasmix has a greater effect on the miasma consumed.
         public static float MIASMA_GASMIX_SCALING = (0.3f);
         // The amount of matter power generated for every mole of miasma consumed. Higher values mean miasma generates more power.
         public static float MIASMA_POWER_GAIN = 10f;
 
         //Higher == Higher percentage of inhibitor gas needed before the charge inertia chain reaction effect starts.
-        public static float  POWERLOSS_INHIBITION_GAS_THRESHOLD = 0.20f;
+        public static float  PowerlossInhibitionGasThreshold = 0.20f;
         //Higher == More moles of the gas are needed before the charge inertia chain reaction effect starts.        //Scales powerloss inhibition down until this amount of moles is reached
-        public static float  POWERLOSS_INHIBITION_MOLE_THRESHOLD = 20f;
+        public static float  PowerlossInhibitionMoleThreshold = 20f;
         //bonus powerloss inhibition boost if this amount of moles is reached
-        public static float  POWERLOSS_INHIBITION_MOLE_BOOST_THRESHOLD = 500f;
+        public static float  PowerlossInhibitionMoleBoostThreshold = 500f;
         //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
         public static float  MOLE_PENALTY_THRESHOLD = 1800f;
         //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
-        public static float  MOLE_HEAT_PENALTY = 350f;
+        public static float  MoleHeatPenalty = 350f;
 
         //Along with damage_penalty_point, makes flux anomalies.
         /// The cutoff for the minimum amount of power required to trigger the crystal invasion delamination event.
@@ -161,20 +162,20 @@ namespace Content.Server.Supermatter
         public static float  DAMAGE_INCREASE_MULTIPLIER = 0.25f;
 
         //Higher == less heat released during reaction, not to be confused with the above values
-        public static float  THERMAL_RELEASE_MODIFIER = 5f;
+        public static float  ThermalReleaseModifier = 5f;
         //Higher == less plasma released by reaction
-        public static float  PLASMA_RELEASE_MODIFIER = 750f;
+        public static float  PlasmaReleaseModifier = 750f;
         //Higher == less oxygen released at high temperature/power
-        public static float  OXYGEN_RELEASE_MODIFIER = 325f;
+        public static float  OxygenReleaseModifier = 325f;
         //Higher == more overall power
-        public static float  REACTION_POWER_MODIFIER = 0.55f;
+        public static float  ReactionPowerModefier = 0.55f;
         //Crystal converts 1/this value of stored matter into energy.
         public static float  MATTER_POWER_CONVERSION = 10f;
         //These would be what you would get at point blank, decreases with distance
         public static float  DETONATION_RADS = 200f;
         public static float  DETONATION_HALLUCINATION = 600f;
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadOnly)]
         public float[] GasComp =
         {
             0, //oxy
@@ -183,61 +184,26 @@ namespace Content.Server.Supermatter
             0, //pla
             0, //tri
             0, //h2o
-            0, //???
-            0, //???
         };
 
-        public float[] GasTrans =
+        public readonly float[,] gasFacts =
         {
-            1.5f, //oxy
-            0,    //Nit
-            0,    //Co2
-            4f,   //pla
-            30f,  //tri
-            2f,   //h2o
-            0,    //???
-            0,    //???
-        };
-
-        public float[] GasHeat =
-        {
-            1f,    //oxy
-            -1.5f, //Nit
-            0,     //Co2
-            15f,   //pla
-            0,     //tri
-            12f,   //h2o
-            0,     //???
-            0,     //???
-        };
-
-        public float[] GasPowermix =
-        {
-            1,  //oxy
-            -1, //Nit
-            1,  //Co2
-            1,  //pla
-            1,  //tri
-            1,  //h2o
-            0,  //???
-            0,  //???
-        };
-
-        private static readonly string[] activeGasses = new string[]{
-            "oxygen",
-            "waterVapor",
-            "plasma",
-            "carbonDioxide",
-            "nitrogen"
+            //GasTrans, GasHeat, GasPowermix
+            {1.5f, 1f, 1f},   //oxy
+            {0f, -1.5f, -1f}, //nit
+            {0f, 0f, 1f},     //co2
+            {4f, 15f, 1f},    //pla
+            {30f, 0f, 1f},    //tri
+            {2f, 12f, 1f}     //h2o
         };
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public int Energy
+        public float Power
         {
-            get => _energy;
+            get => _Power;
             set
             {
-                _energy = value;
+                _Power = value;
                 Dirty();
             }
         }
@@ -264,7 +230,7 @@ namespace Content.Server.Supermatter
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadOnly)]
         public float GasmixPowerRatio
         {
             get => _PowerRatio;
@@ -273,6 +239,71 @@ namespace Content.Server.Supermatter
                 _PowerRatio = value;
                 Dirty();
             }
+        }
+
+        public float DynamicHeatModifier
+        {
+            get => _DynamicHeatModifier;
+            set
+            {
+                _DynamicHeatModifier = value;
+                Dirty();
+            }
+        }
+
+        public float DynamicHeatResistance
+        {
+            get => _DynamicHeatResistance;
+            set
+            {
+                _DynamicHeatResistance = value;
+                Dirty();
+            }
+        }
+
+        public float PowerTransmissionBonus
+        {
+            get => _PowerTransmissionBonus;
+            set
+            {
+                _PowerTransmissionBonus = value;
+                Dirty();
+            }
+        }
+
+        public float PowerlossDynamicScaling
+        {
+            get => _PowerlossDynamicScaling;
+            set
+            {
+                _PowerlossDynamicScaling = value;
+                Dirty();
+            }
+        }
+
+        public float PowerlossInhibitor
+        {
+            get => _PowerlossInhibitor;
+            set
+            {
+                _PowerlossInhibitor = value;
+                Dirty();
+            }
+        }
+
+        public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
+        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        {
+            var damageValue = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
+
+            // Radiation should really just be a damage group instead of a list of types.
+            DamageSpecifier damage = new();
+            foreach (var typeID in RadiationDamageTypeIDs)
+            {
+                damage.DamageDict.Add(typeID, damageValue);
+            }
+
+            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, damage);
         }
     }
 }
