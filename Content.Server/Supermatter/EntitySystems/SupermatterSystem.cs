@@ -277,7 +277,7 @@ namespace Content.Server.SupermatterSystem{
             }
             else if (entity.TryGetComponent<ProjectileComponent>(out var Projectile))
             {
-                component.Power += Projectile.Damage.Total;
+                component.Power += (float) Projectile.Damage.Total;
             }
             else
             {
