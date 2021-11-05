@@ -12,39 +12,18 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decals
 {
-    public class DecalSystem : EntitySystem
+    public class DecalSystem : SharedDecalSystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IServerGameStateManager _serverGameStateManager = default!;
         [Dependency] private readonly IEntityLookup _lookup = default!;
 
-        private readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> _chunkCollections = new();
-        private readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> _chunkIndex = new();
         private uint _latestIndex;
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
+        private readonly HashSet<uint> _removedDecals = new();
         private readonly Dictionary<IPlayerSession, Dictionary<GridId, HashSet<Vector2i>>> _previousSentChunks = new();
 
-        public override void Initialize()
-        {
-            base.Initialize();
-
-            SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
-            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
-        }
-
-        private void OnGridRemoval(GridRemovalEvent msg)
-        {
-            _chunkCollections.Remove(msg.GridId);
-        }
-
-        private void OnGridInitialize(GridInitializeEvent msg)
-        {
-            _chunkCollections[msg.GridId] = new ChunkCollection<Dictionary<uint, Decal>>(new Vector2i(32, 32));
-        }
-
-        private void DirtyChunk((GridId, Vector2i) values) => DirtyChunk(values.Item1, values.Item2);
-        private void DirtyChunk(GridId id, Vector2i chunkIndices)
+        protected override void DirtyChunk(GridId id, Vector2i chunkIndices)
         {
             if (!_dirtyChunks.ContainsKey(id))
             {
@@ -62,27 +41,17 @@ namespace Content.Server.Decals
             var gridId = coordinates.GetGridId(EntityManager);
             var decal = new Decal(coordinates.Position, id, color);
             var uid = _latestIndex++;
-            var indices = _chunkCollections[gridId].GetIndices(coordinates.Position);
-            _chunkCollections[gridId].GetChunk(indices).Add(uid, decal);
-            _chunkIndex.Add(uid, (gridId, indices));
-            DirtyChunk(gridId, indices);
+            RegisterDecal(uid, decal, gridId);
             return uid;
         }
 
         public bool RemoveDecal(uint uid)
         {
-            if (!_chunkIndex.TryGetValue(uid, out var values))
-            {
-                return false;
-            }
+            if (!RemoveDecalInternal(uid)) return false;
 
-            if (!_chunkCollections[values.gridId].GetChunk(values.chunkIndices).Remove(uid))
-            {
-                return false;
-            }
-
-            _chunkIndex.Remove(uid);
+            _removedDecals.Add(uid);
             return true;
+
         }
 
         public bool SetDecalPosition(uint uid, EntityCoordinates coordinates)
@@ -150,10 +119,19 @@ namespace Content.Server.Decals
                 if (!_previousSentChunks.TryGetValue(playerSession, out var previous))
                     previous = new();
 
+                var seenIndices = new HashSet<uint>();
                 var chunks = GetChunksForSession(playerSession);
                 var updatedChunks = new Dictionary<GridId, HashSet<Vector2i>>();
                 foreach (var (gridId, gridChunks) in chunks)
                 {
+                    foreach (var chunkIndices in gridChunks)
+                    {
+                        foreach (var (uid, _) in _chunkCollections[gridId].GetChunk(chunkIndices))
+                        {
+                            seenIndices.Add(uid);
+                        }
+                    }
+
                     var newChunks = new HashSet<Vector2i>(gridChunks);
                     if (previous.TryGetValue(gridId, out var previousChunks))
                     {
@@ -175,66 +153,43 @@ namespace Content.Server.Decals
                 //send all gridChunks to client
                 if(updatedChunks.Count != 0)
                     SendChunkUpdates(playerSession, updatedChunks);
+
+                RaiseNetworkEvent(new DecalIndexCheckEvent{SeenIndices = seenIndices}, Filter.SinglePlayer(playerSession));
             }
 
-            _dirtyChunks.Clear();
-        }
+            if (_removedDecals.Count > 0)
+                RaiseNetworkEvent(new DecalRemovalUpdateEvent{RemovedDecals = _removedDecals});
 
-        private Dictionary<GridId, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
-        {
-            //haha lets just copy some pvs code
-            //this should probably be in shared so the client can do some culling
+            _dirtyChunks.Clear();
+            _removedDecals.Clear();
         }
 
         private void SendChunkUpdates(IPlayerSession session, Dictionary<GridId, HashSet<Vector2i>> updatedChunks)
         {
-            //delta updates slap
-            RaiseNetworkEvent(new DecalChunkUpdateEvent{UpdatedChunks = updatedChunks}, Filter.SinglePlayer(session));
-        }
-    }
-
-    public class ChunkCollection<T> where T : new()
-    {
-        private readonly Dictionary<Vector2i, T> _chunks = new();
-        private readonly Vector2i _chunkSize;
-
-        public ChunkCollection(Vector2i chunkSize)
-        {
-            _chunkSize = chunkSize;
-        }
-
-        public Vector2i GetIndices(Vector2 a)
-        {
-            return new ((int) Math.Floor(a.X / _chunkSize.X), (int) Math.Floor(a.Y / _chunkSize.Y));
-        }
-
-        public T GetChunk(Vector2i indices)
-        {
-            if (_chunks.TryGetValue(indices, out var chunk))
-                return chunk;
-
-            return _chunks[indices] = new T();
-        }
-
-        public IEnumerable<T> GetChunksForArea(Box2 area)
-        {
-            var coordinates = new HashSet<Vector2i>();
-
-            var bottomRight = GetIndices(area.BottomRight);
-            var topLeft = GetIndices(area.TopLeft);
-
-            for (var x = 0; x < bottomRight.X - topLeft.X; x++)
+            var updatedDecals = new Dictionary<uint, (Decal decal, GridId gridId)>();
+            foreach (var (gridId, chunks) in updatedChunks)
             {
-                for (var y = 0; y < topLeft.Y - bottomRight.Y; y++)
+                foreach (var chunkIndices in chunks)
                 {
-                    coordinates.Add(new Vector2i(x, y));
+                    foreach (var (uid, decal) in _chunkCollections[gridId].GetChunk(chunkIndices))
+                    {
+                        updatedDecals[uid] = (decal, gridId);
+                    }
                 }
             }
+            //delta updates slap
+            RaiseNetworkEvent(new DecalChunkUpdateEvent{UpdatedDecals = updatedDecals}, Filter.SinglePlayer(session));
+        }
 
-            foreach (var indices in coordinates)
-            {
-                yield return GetChunk(indices);
-            }
+        private Dictionary<GridId, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
+        {
+            //todo
+            //haha lets just copy some pvs code
+            //this should probably be in shared so the client can do some culling
+
+            //pvs l194
+            //then use that to call
+            return GetChunksForViewers(new ());
         }
     }
 }
