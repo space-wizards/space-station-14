@@ -43,7 +43,10 @@ namespace Content.IntegrationTests.Tests.Destructible
 
                 sDestructibleEntity = sEntityManager.SpawnEntity(DestructibleDamageGroupEntityId, coordinates);
                 sDamageableComponent = sDestructibleEntity.GetComponent<DamageableComponent>();
+
                 sTestThresholdListenerSystem = sEntitySystemManager.GetEntitySystem<TestDestructibleListenerSystem>();
+                sTestThresholdListenerSystem.ThresholdsReached.Clear();
+
                 sDamageableSystem = sEntitySystemManager.GetEntitySystem<DamageableSystem>();
             });
 
