@@ -4,6 +4,7 @@ using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.UI;
+using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Ghost.Roles;
 using Content.Shared.Ghost;
@@ -14,6 +15,7 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.ViewVariables;
+using Robust.Shared.Utility;
 using Robust.Shared.Enums;
 
 namespace Content.Server.Ghost.Roles
@@ -151,6 +153,21 @@ namespace Content.Server.Ghost.Roles
             if (!_ghostRoles.TryGetValue(identifier, out var role)) return;
             if (!role.Take(player)) return;
             CloseEui(player);
+        }
+
+        public void GhostRoleInternalCreateMindAndTransfer(IPlayerSession player, GhostRoleComponent role, IEntity mob)
+        {
+            var contentData = player.ContentData();
+
+            DebugTools.AssertNotNull(contentData);
+
+            var newMind = new Mind.Mind(player.UserId)
+            {
+                CharacterName = mob.Name
+            };
+
+            newMind.ChangeOwningPlayer(player.UserId);
+            newMind.TransferTo(mob);
         }
 
         public GhostRoleInfo[] GetGhostRolesInfo()

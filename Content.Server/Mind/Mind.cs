@@ -37,12 +37,14 @@ namespace Content.Server.Mind
         private readonly List<Objective> _objectives = new();
 
         /// <summary>
-        ///     Creates the new mind attached to a specific player session.
+        ///     Creates the new mind.
+        ///     Note: the Mind is NOT initially attached!
+        ///     The provided UserId is solely for tracking of intended owner.
         /// </summary>
-        /// <param name="userId">The session ID of the owning player.</param>
-        public Mind(NetUserId userId)
+        /// <param name="userId">The session ID of the original owner (may get credited).</param>
+        public Mind(NetUserId? userId)
         {
-            UserId = userId;
+            OriginalOwnerUserId = userId;
         }
 
         // TODO: This session should be able to be changed, probably.
@@ -51,6 +53,13 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public NetUserId? UserId { get; private set; }
+
+        /// <summary>
+        ///     The session ID of the original owner, if any.
+        ///     May end up used for round-end information (as the owner may have abandoned Mind since)
+        /// </summary>
+        [ViewVariables]
+        public NetUserId? OriginalOwnerUserId { get; }
 
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
@@ -298,11 +307,6 @@ namespace Content.Server.Mind
             }
         }
 
-        public void RemoveOwningPlayer()
-        {
-            UserId = null;
-        }
-
         public void ChangeOwningPlayer(NetUserId? newOwner)
         {
             var playerMgr = IoCManager.Resolve<IPlayerManager>();
@@ -329,7 +333,7 @@ namespace Content.Server.Mind
             {
                 var data = playerMgr.GetPlayerData(UserId.Value).ContentData();
                 DebugTools.AssertNotNull(data);
-                data!.Mind = null;
+                data!.UpdateMindFromMindChangeOwningPlayer(null);
             }
 
             UserId = newOwner;
@@ -342,7 +346,7 @@ namespace Content.Server.Mind
             // Can I mention how much I love the word yank?
             DebugTools.AssertNotNull(newOwnerData);
             newOwnerData!.Mind?.ChangeOwningPlayer(null);
-            newOwnerData.Mind = this;
+            newOwnerData.UpdateMindFromMindChangeOwningPlayer(this);
         }
 
         public void Visit(IEntity entity)

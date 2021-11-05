@@ -21,7 +21,7 @@ namespace Content.Server.Players
         ///     DO NOT DIRECTLY SET THIS UNLESS YOU KNOW WHAT YOU'RE DOING.
         /// </summary>
         [ViewVariables]
-        public Mind.Mind? Mind { get; set; }
+        public Mind.Mind? Mind { get; private set; }
 
         /// <summary>
         ///     If true, the player is an admin and they explicitly de-adminned mid-game,
@@ -32,8 +32,13 @@ namespace Content.Server.Players
         public void WipeMind()
         {
             Mind?.TransferTo(null);
-            Mind?.RemoveOwningPlayer();
-            Mind = null;
+            // This will ensure Mind == null
+            Mind?.ChangeOwningPlayer(null);
+        }
+
+        public void UpdateMindFromMindChangeOwningPlayer(Mind.Mind? mind)
+        {
+            Mind = mind;
         }
 
         public PlayerData(NetUserId userId)
