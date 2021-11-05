@@ -189,13 +189,13 @@ namespace Content.IntegrationTests
                 return false;
             }
 
-            if (options.CVarOverrides.Count != 3)
-            {
-                return false;
-            }
-
             if (server)
             {
+                if (options.CVarOverrides.Count != 3)
+                {
+                    return false;
+                }
+
                 foreach (var (cvar, value, _) in ServerTestCvars)
                 {
                     if (!options.CVarOverrides.TryGetValue(cvar, out var actualValue) ||
