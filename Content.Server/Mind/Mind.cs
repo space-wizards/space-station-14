@@ -64,6 +64,12 @@ namespace Content.Server.Mind
         public string? CharacterName { get; set; }
 
         /// <summary>
+        ///     The time of death for this Mind.
+        ///     Can be null - will be null if the Mind is not considered "dead".
+        /// </summary>
+        [ViewVariables] public TimeSpan? TimeOfDeath { get; set; } = null;
+
+        /// <summary>
         ///     The component currently owned by this mind.
         ///     Can be null.
         /// </summary>
@@ -116,6 +122,7 @@ namespace Content.Server.Mind
         /// </summary>
         [ViewVariables]
         public bool CharacterDeadIC => CharacterDeadPhysically;
+
         /// <summary>
         ///     True if the OwnedEntity of this mind is physically dead.
         ///     This specific definition, as opposed to CharacterDeadIC, is used to determine if ghosting should allow return.

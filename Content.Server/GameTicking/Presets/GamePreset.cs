@@ -83,6 +83,12 @@ namespace Content.Server.GameTicking.Presets
                 ghost.Name = mind.Session.Name;
 
             var ghostComponent = ghost.GetComponent<GhostComponent>();
+
+            if (mind.TimeOfDeath.HasValue)
+            {
+                ghostComponent.TimeOfDeath = mind.TimeOfDeath!.Value;
+            }
+
             EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
