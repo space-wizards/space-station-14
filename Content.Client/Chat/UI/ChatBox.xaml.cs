@@ -12,12 +12,14 @@ using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
 using Robust.Shared.Utility;
+using static Content.Client.Chat.TypingIndicatorSystem;
 
 namespace Content.Client.Chat.UI
 {
@@ -25,6 +27,7 @@ namespace Content.Client.Chat.UI
     public partial class ChatBox : Control
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
+        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         // order in which the available channel filters show up when available
         private static readonly ChatChannel[] ChannelFilterOrder =
@@ -467,8 +470,10 @@ namespace Content.Client.Chat.UI
 
         private void InputOnTextChanged(LineEdit.LineEditEventArgs obj)
         {
+            _entityManager.EventBus.RaiseEvent(EventSource.Local, new ClientChatInputActiveMessage());
             // Update channel select button to correct channel if we have a prefix.
             UpdateChannelSelectButton();
+            
         }
 
         private static ChatSelectChannel GetChannelFromPrefix(char prefix)
