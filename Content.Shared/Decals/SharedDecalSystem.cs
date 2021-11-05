@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Robust.Shared;
+using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
@@ -11,9 +13,13 @@ namespace Content.Shared.Decals
     public class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
 
         protected readonly Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> _chunkCollections = new();
         protected readonly Dictionary<uint, (GridId gridId, Vector2i chunkIndices)> _chunkIndex = new();
+
+        private float _viewSize;
 
         public override void Initialize()
         {
@@ -21,6 +27,8 @@ namespace Content.Shared.Decals
 
             SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
             SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
+            _viewSize = _configurationManager.GetCVar(CVars.NetMaxUpdateRange)*2f;
+            _configurationManager.OnValueChanged(CVars.NetMaxUpdateRange, f => _viewSize = f*2f);
         }
 
         private void OnGridRemoval(GridRemovalEvent msg)
@@ -60,12 +68,44 @@ namespace Content.Shared.Decals
             return true;
         }
 
+        private (Box2 view, MapId mapId) CalcViewBounds(in EntityUid euid)
+        {
+            var xform = EntityManager.GetComponent<ITransformComponent>(euid);
+
+            var view = Box2.UnitCentered.Scale(_viewSize).Translated(xform.WorldPosition);
+            var map = xform.MapID;
+
+            return (view, map);
+        }
+
         protected Dictionary<GridId, HashSet<Vector2i>> GetChunksForViewers(HashSet<EntityUid> viewers)
         {
+            var chunks = new Dictionary<GridId, HashSet<Vector2i>>();
+            foreach (var viewerUid in viewers)
+            {
+                var (bounds, mapId) = CalcViewBounds(viewerUid);
+                foreach (var grid in _mapManager.FindGridsIntersecting(mapId, bounds, approx: true))
+                {
+                    if (!chunks.ContainsKey(grid.Index))
+                        chunks[grid.Index] = new();
+
+                    foreach (var indices in GetGridChunksinBounds(grid.GridEntityId, bounds))
+                    {
+                        chunks[grid.Index].Add(indices);
+                    }
+                }
+            }
+            return chunks;
+        }
+
+        private Vector2i[] GetGridChunksinBounds(EntityUid gridEntityUid, Box2 worldBounds)
+        {
+            var gridTransform = EntityManager.GetComponent<ITransformComponent>(gridEntityUid);
             //todo
-            return new();
+            return new Vector2i[0];
         }
     }
+
 
     public class ChunkCollection<T> where T : new()
     {

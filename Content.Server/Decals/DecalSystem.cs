@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using Content.Shared.Decals;
-using Robust.Server.GameStates;
 using Robust.Server.Player;
+using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Decals
 {
     public class DecalSystem : SharedDecalSystem
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IServerGameStateManager _serverGameStateManager = default!;
-        [Dependency] private readonly IEntityLookup _lookup = default!;
 
         private uint _latestIndex;
         private readonly Dictionary<GridId, HashSet<Vector2i>> _dirtyChunks = new();
@@ -51,7 +48,6 @@ namespace Content.Server.Decals
 
             _removedDecals.Add(uid);
             return true;
-
         }
 
         public bool SetDecalPosition(uint uid, EntityCoordinates coordinates)
@@ -150,6 +146,8 @@ namespace Content.Server.Decals
                     updatedChunks[gridId] = gridChunks;
                 }
 
+                _previousSentChunks[playerSession] = updatedChunks;
+
                 //send all gridChunks to client
                 if(updatedChunks.Count != 0)
                     SendChunkUpdates(playerSession, updatedChunks);
@@ -181,15 +179,25 @@ namespace Content.Server.Decals
             RaiseNetworkEvent(new DecalChunkUpdateEvent{UpdatedDecals = updatedDecals}, Filter.SinglePlayer(session));
         }
 
+        private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)
+        {
+            var viewers = new HashSet<EntityUid>();
+            if (session.Status != SessionStatus.InGame || session.AttachedEntityUid is null)
+                return viewers;
+
+            viewers.Add(session.AttachedEntityUid.Value);
+
+            foreach (var uid in session.ViewSubscriptions)
+            {
+                viewers.Add(uid);
+            }
+
+            return viewers;
+        }
+
         private Dictionary<GridId, HashSet<Vector2i>> GetChunksForSession(IPlayerSession session)
         {
-            //todo
-            //haha lets just copy some pvs code
-            //this should probably be in shared so the client can do some culling
-
-            //pvs l194
-            //then use that to call
-            return GetChunksForViewers(new ());
+            return GetChunksForViewers(GetSessionViewers(session));
         }
     }
 }
