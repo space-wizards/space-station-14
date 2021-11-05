@@ -18,6 +18,7 @@ using Robust.Shared.IoC;
 using Robust.Shared.Localization;
 using Robust.Shared.Log;
 using Robust.Shared.Maths;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Client.Chat.TypingIndicatorSystem;
 
@@ -28,6 +29,7 @@ namespace Content.Client.Chat.UI
     {
         [Dependency] protected readonly IChatManager ChatMgr = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
 
         // order in which the available channel filters show up when available
         private static readonly ChatChannel[] ChannelFilterOrder =
@@ -96,6 +98,11 @@ namespace Content.Client.Chat.UI
         private readonly Popup _filterPopup;
         private readonly PanelContainer _filterPopupPanel;
         private readonly BoxContainer _filterVBox;
+
+        /// <summary>
+        /// Time since the chatbox input field had active input.
+        /// </summary>
+        public TimeSpan TimeSinceType { get; private set; }
 
         /// <summary>
         /// When lobbyMode is false, will position / add to correct location in StateRoot and
@@ -470,7 +477,12 @@ namespace Content.Client.Chat.UI
 
         private void InputOnTextChanged(LineEdit.LineEditEventArgs obj)
         {
-            _entityManager.EventBus.RaiseEvent(EventSource.Local, new ClientChatInputActiveMessage());
+            if(_timing.RealTime.Subtract(TimeSinceType) >= TimeSpan.FromSeconds(5))
+            {              
+                _entityManager.EventBus.RaiseEvent(EventSource.Local, new ClientChatInputActiveMessage());
+                TimeSinceType = _timing.RealTime;
+            }
+
             // Update channel select button to correct channel if we have a prefix.
             UpdateChannelSelectButton();
             
@@ -530,6 +542,10 @@ namespace Content.Client.Chat.UI
                     AddLine(locWarning, ChatChannel.Server, Color.Orange);
                     return;
                 }
+
+                //Reset the timer when we send a message so the typing indicator can immediately be ready again.
+                //could handle this in a handler of a netmsg from server instead?
+                TimeSinceType = TimeSpan.Zero;
 
                 ChatMgr.OnChatBoxTextSubmitted(this, text, prefixChannel == 0 ? SelectedChannel : prefixChannel);
             }

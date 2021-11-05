@@ -22,12 +22,14 @@ namespace Content.Shared.Chat
         [Serializable, NetSerializable]
         public sealed class ClientTypingMessage : EntityEventArgs
         {
-            //public NetUserId ClientId { get; }
+            public NetUserId ClientId { get; }
+            public EntityUid? EnityId { get; }
 
-            //public ClientTypingMessage(NetUserId id)
-            //{
-            //    ClientId = id;
-            //}
+            public ClientTypingMessage(NetUserId id, EntityUid? owner)
+            {
+                ClientId = id;
+                EnityId = owner;
+            }
 
         }
     }
