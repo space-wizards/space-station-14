@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Client.Entry;
@@ -26,6 +25,32 @@ namespace Content.IntegrationTests
     [Parallelizable(ParallelScope.All)]
     public abstract class ContentIntegrationTest : RobustIntegrationTest
     {
+        private static readonly (string cvar, string value, bool)[] ServerTestCvars = {
+            // Avoid funny race conditions with the database.
+            (CCVars.DatabaseSynchronous.Name, "true", false),
+
+            // Disable holidays as some of them might mess with the map at round start.
+            (CCVars.HolidaysEnabled.Name, "false", false),
+
+            // Avoid loading a large map by default for integration tests if none has been specified.
+            (CCVars.GameMap.Name, "Maps/Test/empty.yml", true)
+        };
+
+        private static void SetServerTestCvars(IntegrationOptions options)
+        {
+            foreach (var (cvar, value, tryAdd) in ServerTestCvars)
+            {
+                if (tryAdd)
+                {
+                    options.CVarOverrides.TryAdd(cvar, value);
+                }
+                else
+                {
+                    options.CVarOverrides[cvar] = value;
+                }
+            }
+        }
+
         protected sealed override ClientIntegrationInstance StartClient(ClientIntegrationOptions options = null)
         {
             options ??= new ClientContentIntegrationOption()
@@ -33,7 +58,7 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning
             };
 
-            options.Pool = ShouldPool(options);
+            options.Pool = ShouldPool(options, false);
 
             // Load content resources, but not config and user data.
             options.Options = new GameControllerOptions()
@@ -78,8 +103,8 @@ namespace Content.IntegrationTests
                 FailureLogLevel = LogLevel.Warning,
             };
 
-            SetServerTestCvars(options.CVarOverrides);
-            options.Pool = ShouldPool(options);
+            SetServerTestCvars(options);
+            options.Pool = ShouldPool(options, true);
 
             // Load content resources, but not config and user data.
             options.Options = new ServerOptions()
@@ -157,21 +182,7 @@ namespace Content.IntegrationTests
             return (client, server);
         }
 
-        private void SetServerTestCvars(Dictionary<string, string> cvars)
-        {
-            // ShouldPool checks below need to match up with this
-
-            // Avoid funny race conditions with the database.
-            cvars[CCVars.DatabaseSynchronous.Name] = "true";
-
-            // Disable holidays as some of them might mess with the map at round start.
-            cvars[CCVars.HolidaysEnabled.Name] = "false";
-
-            // Avoid loading a large map by default for integration tests if none has been specified.
-            cvars.TryAdd(CCVars.GameMap.Name, "Maps/Test/empty.yml");
-        }
-
-        private bool ShouldPool(IntegrationOptions options)
+        private bool ShouldPool(IntegrationOptions options, bool server)
         {
             if (options.Pool == false)
             {
@@ -183,23 +194,16 @@ namespace Content.IntegrationTests
                 return false;
             }
 
-            // Please save me from this method
-            if (!options.CVarOverrides.TryGetValue(CCVars.DatabaseSynchronous.Name, out var syncDb) ||
-                syncDb == "false")
+            if (server)
             {
-                return false;
-            }
-
-            if (!options.CVarOverrides.TryGetValue(CCVars.HolidaysEnabled.Name, out var holidaysEnabled) ||
-                holidaysEnabled == "true")
-            {
-                return false;
-            }
-
-            if (!options.CVarOverrides.TryGetValue(CCVars.GameMap.Name, out var map) ||
-                map != "Maps/Test/empty.yml")
-            {
-                return false;
+                foreach (var (cvar, value, _) in ServerTestCvars)
+                {
+                    if (!options.CVarOverrides.TryGetValue(cvar, out var actualValue) ||
+                        actualValue != value)
+                    {
+                        return false;
+                    }
+                }
             }
 
             if (options.CVarOverrides.TryGetValue(CCVars.GameDummyTicker.Name, out var dummy) &&
@@ -261,7 +265,7 @@ namespace Content.IntegrationTests
 
             if (server.Options != null)
             {
-                SetServerTestCvars(server.Options.CVarOverrides);
+                SetServerTestCvars(server.Options);
             }
 
             var systems = server.ResolveDependency<IEntitySystemManager>();
