@@ -1,4 +1,5 @@
 using System;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
@@ -27,7 +28,7 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("ingestion")]
         public bool Ingestion { get; } = false;
 
-        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Components.Solution? source)
+        public void React(ReactionMethod method, IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source)
         {
             switch (method)
             {
@@ -50,6 +51,6 @@ namespace Content.Shared.Chemistry.Reagent
             React(entity, reagent, volume, source);
         }
 
-        protected abstract void React(IEntity entity, ReagentPrototype reagent, ReagentUnit volume, Components.Solution? source);
+        protected abstract void React(IEntity entity, ReagentPrototype reagent, FixedPoint2 volume, Components.Solution? source);
     }
 }

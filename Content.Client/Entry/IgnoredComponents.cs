@@ -100,6 +100,7 @@ namespace Content.Client.Entry
             "SoundOnTrigger",
             "TriggerOnCollide",
             "DeleteOnTrigger",
+            "EmptyOnMachineDeconstruct",
             "ExplodeOnTrigger",
             "Utensil",
             "UnarmedCombat",
@@ -140,6 +141,13 @@ namespace Content.Client.Entry
             "Spray",
             "Vapor",
             "DamageOnHighSpeedImpact",
+            "SolutionContainerManager",
+            "RefillableSolution",
+            "DrainableSolution",
+            "ExaminableSolution",
+            "FitsInDispenser",
+            "DrawableSolution",
+            "InjectableSolution",
             "Barotrauma",
             "GasSprayer",
             "GasVapor",
@@ -278,9 +286,9 @@ namespace Content.Client.Entry
             "Uplink",
             "PDA",
             "SpawnItemsOnUse",
+            "AmbientOnPowered",
             "Wieldable",
             "IncreaseDamageOnWield",
-            "AmbientOnPowered",
             "TabletopGame",
             "LitOnPowered",
             "TriggerOnSignalReceived",
@@ -296,7 +304,11 @@ namespace Content.Client.Entry
             "Label",
             "GhostRadio",
             "Armor",
+<<<<<<< HEAD
             "Supermatter",
+=======
+            "PneumaticCannon"
+>>>>>>> 9fe953c57d73f8e873605384ace896d6acba1c19
         };
     }
 }

@@ -10,6 +10,13 @@
                     MinWidth="64"/>
         </BoxContainer>
         <PanelContainer StyleClasses="HighDivider" />
-        <RichTextLabel Name="UplinkItemDescription" />
+        <BoxContainer Orientation="Horizontal"
+                      HorizontalExpand="True">
+            <TextureRect Name="UplinkItemTexture"
+                         MinSize="48 48"
+                         Margin="0 0 4 0"
+                         Stretch="KeepAspectCentered"/>
+            <RichTextLabel Name="UplinkItemDescription" />
+        </BoxContainer>
     </BoxContainer>
 </Control>

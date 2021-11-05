@@ -2,6 +2,7 @@ using System.Threading;
 using Content.Server.Administration.Commands;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Configurable;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.EUI;
@@ -14,7 +15,6 @@ using Content.Server.Players;
 using Content.Server.Verbs;
 using Content.Shared.Administration;
 using Content.Shared.Body.Components;
-using Content.Shared.Chemistry.Components.SolutionManager;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -85,7 +85,6 @@ namespace Content.Server.Administration
                 // TODO VERB ICON control mob icon
                 verb.Act = () =>
                 {
-                    targetMind.Mind?.TransferTo(null);
                     player.ContentData()?.Mind?.TransferTo(args.Target, ghostCheckOverride: true);
                 };
                 args.Verbs.Add(verb);

@@ -1,4 +1,5 @@
-﻿using Content.Shared.Maps;
+﻿using System.Collections.Generic;
+using Content.Shared.Maps;
 using Content.Shared.Window;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
@@ -29,6 +30,14 @@ namespace Content.Shared.Construction.Conditions
                 result = _tileNotBlocked.Condition(user, location, direction);
 
             return result;
+        }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-guide-condition-empty-or-window-valid-in-tile"
+            };
         }
     }
 }

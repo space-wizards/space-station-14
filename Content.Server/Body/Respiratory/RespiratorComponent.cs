@@ -7,6 +7,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Behavior;
 using Content.Server.Body.Circulatory;
 using Content.Server.Temperature.Components;
+using Content.Server.Temperature.Systems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
@@ -238,20 +239,21 @@ namespace Content.Server.Body.Respiratory
         /// <param name="frameTime"></param>
         private void ProcessThermalRegulation(float frameTime)
         {
+            var temperatureSystem = EntitySystem.Get<TemperatureSystem>();
             if (!Owner.TryGetComponent(out TemperatureComponent? temperatureComponent)) return;
-            temperatureComponent.ReceiveHeat(MetabolismHeat);
-            temperatureComponent.RemoveHeat(RadiatedHeat);
+            temperatureSystem.ReceiveHeat(Owner.Uid, MetabolismHeat, temperatureComponent);
+            temperatureSystem.RemoveHeat(Owner.Uid, RadiatedHeat, temperatureComponent);
 
             // implicit heat regulation
             var tempDiff = Math.Abs(temperatureComponent.CurrentTemperature - NormalBodyTemperature);
             var targetHeat = tempDiff * temperatureComponent.HeatCapacity;
             if (temperatureComponent.CurrentTemperature > NormalBodyTemperature)
             {
-                temperatureComponent.RemoveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
             else
             {
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ImplicitHeatRegulation));
+                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ImplicitHeatRegulation), temperatureComponent);
             }
 
             // recalc difference and target heat
@@ -287,7 +289,7 @@ namespace Content.Server.Body.Respiratory
                 // creadth: sweating does not help in airless environment
                 if (EntitySystem.Get<AtmosphereSystem>().GetTileMixture(Owner.Transform.Coordinates) is not {})
                 {
-                    temperatureComponent.RemoveHeat(Math.Min(targetHeat, SweatHeatRegulation));
+                    temperatureSystem.RemoveHeat(Owner.Uid, Math.Min(targetHeat, SweatHeatRegulation), temperatureComponent);
                 }
             }
             else
@@ -299,7 +301,7 @@ namespace Content.Server.Body.Respiratory
                     _isShivering = true;
                 }
 
-                temperatureComponent.ReceiveHeat(Math.Min(targetHeat, ShiveringHeatRegulation));
+                temperatureSystem.ReceiveHeat(Owner.Uid, Math.Min(targetHeat, ShiveringHeatRegulation), temperatureComponent);
             }
         }
 

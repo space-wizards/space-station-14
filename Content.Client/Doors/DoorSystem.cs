@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Content.Shared.Doors;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameObjects;
+using static Content.Shared.Doors.SharedDoorComponent;
 
 namespace Content.Client.Doors
 {
@@ -18,28 +21,32 @@ namespace Content.Client.Doors
         {
             base.Initialize();
 
-            SubscribeLocalEvent<DoorStateMessage>(HandleDoorState);
+            SubscribeLocalEvent<ClientDoorComponent, DoorStateChangedEvent>(OnDoorStateChanged);
         }
 
-        /// <summary>
-        /// Registers doors to be periodically checked.
-        /// </summary>
-        /// <param name="message">A message corresponding to the component under consideration, raised when its state changes.</param>
-        private void HandleDoorState(DoorStateMessage message)
+        private void OnDoorStateChanged(EntityUid uid, ClientDoorComponent door, DoorStateChangedEvent args)
         {
-            switch (message.State)
+            switch (args.State)
             {
-                case SharedDoorComponent.DoorState.Closed:
-                case SharedDoorComponent.DoorState.Open:
-                    _activeDoors.Remove(message.Component);
+                case DoorState.Closed:
+                case DoorState.Open:
+                    _activeDoors.Remove(door);
                     break;
-                case SharedDoorComponent.DoorState.Closing:
-                case SharedDoorComponent.DoorState.Opening:
-                    _activeDoors.Add(message.Component);
+                case DoorState.Closing:
+                case DoorState.Opening:
+                    _activeDoors.Add(door);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent sprite))
+                return;
+
+            // Update sprite draw depth.  If the door is opening or closing, we will use the closed-draw depth.
+            sprite.DrawDepth = (args.State == DoorState.Open)
+                ? door.OpenDrawDepth
+                : door.ClosedDrawDepth;
         }
 
         /// <inheritdoc />

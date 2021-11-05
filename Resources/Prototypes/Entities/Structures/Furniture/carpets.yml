@@ -5,7 +5,7 @@
   abstract: true
   components:
   - type: Sprite
-    drawdepth: BelowFloor
+    drawdepth: FloorTiles
   - type: Icon
     state: full
   - type: IconSmooth

@@ -1,10 +1,15 @@
+using System;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
+using Content.Shared.Atmos;
+using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Localization;
@@ -17,6 +22,7 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
 
         public override void Initialize()
         {
@@ -24,6 +30,10 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 
             SubscribeLocalEvent<GasVolumePumpComponent, AtmosDeviceUpdateEvent>(OnVolumePumpUpdated);
             SubscribeLocalEvent<GasVolumePumpComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<GasVolumePumpComponent, InteractHandEvent>(OnPumpInteractHand);
+            // Bound UI subscriptions
+            SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpChangeTransferRateMessage>(OnTransferRateChangeMessage);
+            SubscribeLocalEvent<GasVolumePumpComponent, GasVolumePumpToggleStatusMessage>(OnToggleStatusMessage);
         }
 
         private void OnExamined(EntityUid uid, GasVolumePumpComponent pump, ExaminedEvent args)
@@ -82,6 +92,39 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
 
             outlet.AssumeAir(removed);
+        }
+
+        private void OnPumpInteractHand(EntityUid uid, GasVolumePumpComponent component, InteractHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            _userInterfaceSystem.TryOpen(uid, GasVolumePumpUiKey.Key, actor.PlayerSession);
+            DirtyUI(uid, component);
+
+            args.Handled = true;
+        }
+
+        private void OnToggleStatusMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpToggleStatusMessage args)
+        {
+            pump.Enabled = args.Enabled;
+            DirtyUI(uid, pump);
+        }
+
+        private void OnTransferRateChangeMessage(EntityUid uid, GasVolumePumpComponent pump, GasVolumePumpChangeTransferRateMessage args)
+        {
+            pump.TransferRate = Math.Clamp(args.TransferRate, 0f, Atmospherics.MaxTransferRate);
+            DirtyUI(uid, pump);
+
+        }
+
+        private void DirtyUI(EntityUid uid, GasVolumePumpComponent? pump)
+        {
+            if (!Resolve(uid, ref pump))
+                return;
+
+            _userInterfaceSystem.TrySetUiState(uid, GasVolumePumpUiKey.Key,
+                new GasVolumePumpBoundUserInterfaceState(pump.Owner.Name, pump.TransferRate, pump.Enabled));
         }
     }
 }

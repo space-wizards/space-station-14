@@ -62,6 +62,15 @@
       amount: -2
 
 - type: reagent
+  id: Gold
+  name: gold
+  desc: Gold is a dense, soft, shiny metal and the most malleable and ductile metal known.
+  physicalDesc: metallic
+  color: "#F7C430"
+  boilingPoint: 2700.0
+  meltingPoint: 1064.76
+
+- type: reagent
   id: Hydrogen
   name: hydrogen
   desc: A light, flammable gas.
@@ -168,6 +177,15 @@
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
+
+- type: reagent
+  id: Silver
+  name: silver
+  desc: A soft, white, lustrous transition metal, it has the highest electrical conductivity of any element and the highest thermal conductivity of any metal.
+  physicalDesc: metallic
+  color: "#d0d0d0"
+  boilingPoint: 2212.0
+  meltingPoint: 960.5
 
 - type: reagent
   id: Sulfur
