@@ -13,7 +13,6 @@ namespace Content.Server.Speech.EntitySystems
     [UsedImplicitly]
     public class TypingIndicatorSystem : SharedTypingIndicatorSystem
     {
-
         public override void Initialize()
         {
             base.Initialize();
@@ -31,15 +30,5 @@ namespace Content.Server.Speech.EntitySystems
             Logger.Info($"User{ev.ClientId} is typing from Entity {entity}!");
         }
 
-        public override void Update(float frameTime)
-        {
-            //foreach (var comp in EntityManager.EntityQuery<TypingIndicatorComponent>())
-            //{
-                
-            //}
-
-            //base.Update(frameTime);
-
-        }
     }
 }
