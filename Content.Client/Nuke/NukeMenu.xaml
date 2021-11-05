@@ -1,0 +1,11 @@
+<SS14Window xmlns="https://spacestation14.io"
+            Title="{Loc 'nuke-user-interface-title'}"
+            MinSize="256 512"
+            SetSize="256 512">
+    <BoxContainer Orientation="Vertical">
+        <GridContainer Columns="3"
+                       Name="KeypadGrid">
+            <!-- Keypad is filled by code -->
+        </GridContainer>
+    </BoxContainer>
+</SS14Window>

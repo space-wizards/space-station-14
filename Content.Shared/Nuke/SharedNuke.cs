@@ -10,6 +10,7 @@ namespace Content.Shared.Nuke
         Key
     }
 
+    [Serializable, NetSerializable]
     public class NukeUiState : BoundUserInterfaceState
     {
         public bool NukeDiskInserted;

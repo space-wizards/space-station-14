@@ -8,6 +8,8 @@
       sprite: Objects/Fun/toys.rsi
       netsync: false
       state: nuketoy
+    - type: Nuke
+    - type: InteractionOutline
     - type: ItemSlots
       slots:
         nukeDisk:
@@ -22,4 +24,4 @@
     - type: UserInterface
       interfaces:
         - key: enum.NukeUiKey.Key
-          type: PDABoundUserInterface
+          type: NukeBoundUserInterface
