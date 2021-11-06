@@ -25,6 +25,7 @@ namespace Content.Server.Power.EntitySystems
     [UsedImplicitly]
     internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
     {
+        [Dependency] private readonly ActivatableUISystem _activatableUISystem = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -45,10 +46,8 @@ namespace Content.Server.Power.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, ActivatableUIRequiresPowerComponent component, PowerChangedEvent args)
         {
-            if (EntityManager.TryGetComponent<ActivatableUIComponent>(uid, out var au) && !args.Powered)
-            {
-                au.UserInterface.CloseAll();
-            }
+            if (!args.Powered)
+                _activatableUISystem.CloseAll(uid);
         }
     }
 }

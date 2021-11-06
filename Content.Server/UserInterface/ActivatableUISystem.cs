@@ -33,9 +33,9 @@ namespace Content.Server.UserInterface
 
             SubscribeLocalEvent<ActivatableUIComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<ActivatableUIComponent, UseInHandEvent>(OnUseInHand);
-            SubscribeLocalEvent<ActivatableUIComponent, DroppedEvent>(OnDropped);
-            SubscribeLocalEvent<ActivatableUIComponent, ThrownEvent>(OnThrown);
-            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>(OnHandDeselected);
+            SubscribeLocalEvent<ActivatableUIComponent, DroppedEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, ThrownEvent>((uid, aui, _) => CloseAll(uid, aui));
+            SubscribeLocalEvent<ActivatableUIComponent, HandDeselectedEvent>((uid, aui, _) => CloseAll(uid, aui));
         }
 
         private void OnActivate(EntityUid uid, ActivatableUIComponent component, ActivateInWorldEvent args)
@@ -53,21 +53,6 @@ namespace Content.Server.UserInterface
             args.Handled = true;
         }
 
-        private void OnDropped(EntityUid uid, ActivatableUIComponent component, DroppedEvent args)
-        {
-            component.UserInterface.CloseAll();
-        }
-
-        private void OnThrown(EntityUid uid, ActivatableUIComponent component, ThrownEvent args)
-        {
-            component.UserInterface.CloseAll();
-        }
-
-        private void OnHandDeselected(EntityUid uid, ActivatableUIComponent component, HandDeselectedEvent args)
-        {
-            component.UserInterface.CloseAll();
-        }
-
         private void InteractInstrument(IEntity user, ActivatableUIComponent aui)
         {
             if (!user.TryGetComponent(out ActorComponent? actor)) return;
@@ -80,12 +65,15 @@ namespace Content.Server.UserInterface
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return;
 
+            var ui = aui.UserInterface;
+            if (ui == null) return;
+
             if (aui.SingleUser && (aui.CurrentSingleUser != null) && (actor.PlayerSession != aui.CurrentSingleUser))
             {
                 // If we get here, supposedly, the object is in use.
                 // Check with BUI that it's ACTUALLY in use just in case.
                 // Since this could brick the object if it goes wrong.
-                if (aui.UserInterface.SubscribedSessions.Count != 0) return;
+                if (ui.SubscribedSessions.Count != 0) return;
             }
 
             // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
@@ -95,7 +83,7 @@ namespace Content.Server.UserInterface
             if (oae.Cancelled) return;
 
             SetCurrentSingleUser(aui.OwnerUid, actor.PlayerSession, aui);
-            aui.UserInterface.Toggle(actor.PlayerSession);
+            ui.Toggle(actor.PlayerSession);
         }
 
         public void SetCurrentSingleUser(EntityUid uid, IPlayerSession? v, ActivatableUIComponent? aui = null)
@@ -121,11 +109,11 @@ namespace Content.Server.UserInterface
             foreach (var component in EntityManager.EntityQuery<ActivatableUIComponent>(true))
             {
                 var ui = component.UserInterface;
+                if (ui == null) continue;
                 // Done to skip an allocation on anything that's not in use.
-                if (ui.SubscribedSessions.Count == 0)
-                    continue;
+                if (ui.SubscribedSessions.Count == 0) continue;
                 // Must ToList in order to close things safely.
-                foreach (var session in ui.SubscribedSessions.ToList())
+                foreach (var session in ui.SubscribedSessions.ToArray())
                 {
                     if (session.AttachedEntityUid == null || !_actionBlockerSystem.CanInteract(session.AttachedEntityUid.Value))
                     {
@@ -133,6 +121,12 @@ namespace Content.Server.UserInterface
                     }
                 }
             }
+        }
+
+        public void CloseAll(EntityUid uid, ActivatableUIComponent? aui = null)
+        {
+            if (!Resolve(uid, ref aui)) return;
+            aui.UserInterface?.CloseAll();
         }
     }
 

@@ -25,9 +25,9 @@ namespace Content.Server.UserInterface
         private ActivatableUISystem _activatableUISystem = default!;
 
         [ViewVariables]
-        public Enum Key { get; set; } = default!;
+        public Enum? Key { get; set; }
 
-        [ViewVariables] public BoundUserInterface UserInterface => Owner.GetUIOrNull(Key)!;
+        [ViewVariables] public BoundUserInterface? UserInterface => (Key != null) ? Owner.GetUIOrNull(Key) : null;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inHandsOnly")]
@@ -54,9 +54,8 @@ namespace Content.Server.UserInterface
         void ISerializationHooks.AfterDeserialization()
         {
             var reflectionManager = IoCManager.Resolve<IReflectionManager>();
-            reflectionManager.TryParseEnumReference(_keyRaw, out var key);
-            DebugTools.AssertNotNull(key);
-            Key = key!;
+            if (reflectionManager.TryParseEnumReference(_keyRaw, out var key))
+                Key = key;
         }
 
         public void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -79,7 +78,9 @@ namespace Content.Server.UserInterface
 
             // Note the implicit exception thrown if the key is messed up
             // This is on purpose for fail-fast
-            UserInterface.OnClosed += UserInterfaceOnClosed;
+            var ui = UserInterface;
+            if (ui != null)
+                ui.OnClosed += UserInterfaceOnClosed;
 
             _activatableUISystem = EntitySystem.Get<ActivatableUISystem>();
         }
