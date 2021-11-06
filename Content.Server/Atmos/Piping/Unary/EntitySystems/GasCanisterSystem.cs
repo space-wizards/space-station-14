@@ -3,6 +3,7 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
+using Content.Server.Destructible;
 using Content.Server.Hands.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.NodeGroups;
@@ -44,6 +45,22 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
             SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleaseValveMessage>(OnCanisterChangeReleaseValve);
+
+        }
+
+        /// <summary>
+        /// Completely dumps the content of the canister into the world.
+        /// </summary>
+        public void PurgeContents(EntityUid uid, GasCanisterComponent? canister = null, ITransformComponent? transform = null)
+        {
+            if (!Resolve(uid, ref canister, ref transform)) return;
+
+            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+
+            if (environment is not null)
+                _atmosphereSystem.Merge(environment, canister.Air);
+
+            canister.Air.Clear();
         }
 
         private void OnCanisterStartup(EntityUid uid, GasCanisterComponent canister, ComponentStartup args)
