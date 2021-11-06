@@ -56,6 +56,7 @@ jobs:
         run: dotnet restore
 
       - name: Create map images
+        id: create_images
         run: dotnet run --project Content.MapRenderer/Content.MapRenderer.csproj --no-restore --configuration Release
 
       - name: Upload map images
@@ -69,7 +70,7 @@ jobs:
         uses: DrSmugleaf/MapDiffBot@v1.0
         with:
           uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
-          maps: ${{ steps.map_names }}
+          maps: ${{ steps.create_images.outputs.map_names }}
           url: https://spacestation14.io/map-diff-viewer/
           baseCommit: map-renderer
           repoName: DrSmugleaf/space-station-14
