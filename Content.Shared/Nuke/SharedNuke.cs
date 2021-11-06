@@ -24,8 +24,10 @@ namespace Content.Shared.Nuke
     {
         public bool DiskInserted;
         public NukeStatus Status;
-        public string Code = "";
         public int RemainingTime;
         public bool IsAnchored;
+        public int EnteredCodeLength;
+        public int MaxCodeLength;
+        public bool AllowArm;
     }
 }

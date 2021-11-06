@@ -22,6 +22,8 @@ namespace Content.Server.Nuke
         [Dependency] private readonly PopupSystem _popups = default!;
 
         public const string DiskSlotName = "DiskSlot";
+        public const int PinCodeLength = 6;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -37,6 +39,32 @@ namespace Content.Server.Nuke
             // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEject);
             SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchor);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadMessage>(OnKeypad);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadClearMessage>(OnClear);
+            SubscribeLocalEvent<NukeComponent, NukeKeypadEnterMessage>(OnEnter);
+        }
+
+        private void OnEnter(EntityUid uid, NukeComponent component, NukeKeypadEnterMessage args)
+        {
+            component.EnteredCode = "";
+            component.Status = NukeStatus.AWAIT_ARM;
+
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnKeypad(EntityUid uid, NukeComponent component, NukeKeypadMessage args)
+        {
+            if (component.EnteredCode.Length >= PinCodeLength)
+                return;
+
+            component.EnteredCode += args.Value.ToString();
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnClear(EntityUid uid, NukeComponent component, NukeKeypadClearMessage args)
+        {
+            component.EnteredCode = "";
+            UpdateUserInterface(uid, component);
         }
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ItemSlotChangedEvent args)
@@ -159,12 +187,19 @@ namespace Content.Server.Nuke
             if (EntityManager.TryGetComponent(uid, out ITransformComponent transform))
                 anchored = transform.Anchored;
 
+            var allowArm = component.DiskInserted &&
+                           (component.Status == NukeStatus.AWAIT_ARM ||
+                            component.Status == NukeStatus.TIMING);
+
             var state = new NukeUiState()
             {
                 Status = component.Status,
                 RemainingTime = component.RemainingTime,
                 DiskInserted = component.DiskInserted,
-                IsAnchored = anchored
+                IsAnchored = anchored,
+                AllowArm = allowArm,
+                EnteredCodeLength = component.EnteredCode.Length,
+                MaxCodeLength = PinCodeLength
             };
 
             ui.SetState(state);

@@ -19,5 +19,6 @@ namespace Content.Server.Nuke
         public bool IsArmed = false;
         public bool DiskInserted = false;
         public NukeStatus Status = NukeStatus.AWAIT_DISK;
+        public string EnteredCode = "";
     }
 }

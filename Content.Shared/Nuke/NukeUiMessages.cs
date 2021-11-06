@@ -13,4 +13,25 @@ namespace Content.Shared.Nuke
     public sealed class NukeAnchorMessage : BoundUserInterfaceMessage
     {
     }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeKeypadMessage : BoundUserInterfaceMessage
+    {
+        public int Value;
+
+        public NukeKeypadMessage(int value)
+        {
+            Value = value;
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeKeypadClearMessage : BoundUserInterfaceMessage
+    {
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeKeypadEnterMessage : BoundUserInterfaceMessage
+    {
+    }
 }

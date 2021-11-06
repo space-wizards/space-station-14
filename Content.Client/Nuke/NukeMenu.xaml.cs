@@ -76,7 +76,7 @@ namespace Content.Client.Nuke
                 case NukeStatus.AWAIT_CODE:
                     firstMsg = Loc.GetString("nuke-user-interface-first-status-input-code");
                     secondMsg = Loc.GetString("nuke-user-interface-second-status-current-code",
-                        ("code", state.Code));
+                        ("code", VisualizeCode(state.EnteredCodeLength, state.MaxCodeLength)));
                     break;
                 default:
                     // shouldn't normally be here
@@ -91,6 +91,15 @@ namespace Content.Client.Nuke
             EjectButton.Disabled = !state.DiskInserted;
             AnchorButton.Disabled = !state.DiskInserted;
             AnchorButton.Pressed = state.IsAnchored;
+            ArmButton.Disabled = !state.AllowArm;
+        }
+
+        private string VisualizeCode(int codeLength, int maxLength)
+        {
+            var code = new string('*', codeLength);
+            var blanksCount = maxLength - codeLength;
+            var blanks = new string('_', blanksCount);
+            return code + blanks;
         }
     }
 }

@@ -22,6 +22,19 @@ namespace Content.Client.Nuke
             _menu.OpenCentered();
             _menu.OnClose += Close;
 
+            _menu.OnKeypadButtonPressed += i =>
+            {
+                SendMessage(new NukeKeypadMessage(i));
+            };
+            _menu.OnEnterButtonPressed += () =>
+            {
+                SendMessage(new NukeKeypadEnterMessage());
+            };
+            _menu.OnClearButtonPressed += () =>
+            {
+                SendMessage(new NukeKeypadClearMessage());
+            };
+
             _menu.EjectButton.OnPressed += _ =>
             {
                 SendMessage(new NukeEjectMessage());
