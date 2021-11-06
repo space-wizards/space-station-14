@@ -177,6 +177,9 @@
       key: generic_key
       screen: comm
   - type: CommunicationsConsole
+  - type: ActivatableUI
+    key: enum.CommunicationsConsoleUiKey.Key
+  - type: ActivatableUIRequiresPower
   - type: UserInterface
     interfaces:
     - key: enum.CommunicationsConsoleUiKey.Key

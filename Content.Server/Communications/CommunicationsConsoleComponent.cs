@@ -21,8 +21,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Communications
 {
     [RegisterComponent]
-    [ComponentReference(typeof(IActivate))]
-    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent, IActivate
+    public class CommunicationsConsoleComponent : SharedCommunicationsConsoleComponent
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IChatManager _chatManager = default!;
@@ -122,24 +121,6 @@ namespace Content.Server.Communications
                     _chatManager.DispatchStationAnnouncement(message, "Communications Console");
                     break;
             }
-        }
-
-        public void OpenUserInterface(IPlayerSession session)
-        {
-            UserInterface?.Open(session);
-        }
-
-        void IActivate.Activate(ActivateEventArgs eventArgs)
-        {
-            if (!eventArgs.User.TryGetComponent(out ActorComponent? actor))
-                return;
-/*
-            if (!Powered)
-            {
-                return;
-            }
-*/
-            OpenUserInterface(actor.PlayerSession);
         }
     }
 }
