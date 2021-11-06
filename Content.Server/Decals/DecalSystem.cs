@@ -55,6 +55,25 @@ namespace Content.Server.Decals
             return true;
         }
 
+        public HashSet<uint> GetDecalsOnTile(GridId gridId, Vector2i tileIndices, Func<Decal, bool>? validDelegate = null)
+        {
+            var uids = new HashSet<uint>();
+            var chunkIndices = ChunkCollections[gridId].GetIndices(tileIndices);
+            foreach (var (uid, decal) in ChunkCollections[gridId].GetChunk(chunkIndices))
+            {
+                if (tileIndices.X != (int) Math.Floor(decal.Coordinates.X) ||
+                    tileIndices.Y != (int) Math.Floor(decal.Coordinates.Y))
+                    continue;
+
+                if (validDelegate == null || validDelegate(decal))
+                {
+                    uids.Add(uid);
+                }
+            }
+
+            return uids;
+        }
+
         public bool SetDecalPosition(uint uid, EntityCoordinates coordinates)
         {
             if (!ChunkIndex.TryGetValue(uid, out var values))
