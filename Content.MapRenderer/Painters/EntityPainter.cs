@@ -3,7 +3,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.SubFloor;
-using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
@@ -12,6 +11,7 @@ using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using static Robust.Client.Graphics.RSI.State;
 using static Robust.UnitTesting.RobustIntegrationTest;
 using SpriteComponent = Robust.Client.GameObjects.SpriteComponent;
 
@@ -21,6 +21,8 @@ namespace Content.MapRenderer.Painters
     {
         private readonly IResourceCache _cResourceCache;
         private readonly IEntityManager _cEntityManager;
+        private readonly IMapManager _cMapManager;
+
         private readonly IEntityManager _sEntityManager;
 
         private readonly Dictionary<(string path, string state), Image> _images;
@@ -32,6 +34,8 @@ namespace Content.MapRenderer.Painters
         {
             _cResourceCache = client.ResolveDependency<IResourceCache>();
             _cEntityManager = client.ResolveDependency<IEntityManager>();
+            _cMapManager = client.ResolveDependency<IMapManager>();
+
             _sEntityManager = server.ResolveDependency<IEntityManager>();
 
             _errorImage = Image.Load<Rgba32>(_cResourceCache.ContentFileRead("/Textures/error.rsi/error.png"));
@@ -50,11 +54,6 @@ namespace Content.MapRenderer.Painters
 
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-
-            var bounds = grid.WorldBounds;
-            var xOffset = (int) Math.Abs(bounds.Left);
-            var yOffset = (int) Math.Abs(bounds.Bottom);
-
 
             // TODO cache this shit what are we insane
             entities.Sort(Comparer<EntityData>.Create((x, y) => x.Sprite.DrawDepth.CompareTo(y.Sprite.DrawDepth)));
@@ -121,11 +120,11 @@ namespace Content.MapRenderer.Painters
                                 (xStart, xEnd, yStart, yEnd) = dir switch
                                 {
                                     // Only need the first tuple as doubles for the compiler to recognize it
-                                    RSI.State.Direction.South => (0d, 0.5d, 0d, 0.5d),
-                                    RSI.State.Direction.East => (0, 0.5, 0.5, 1),
-                                    RSI.State.Direction.North => (0.5, 1, 0, 0.5),
-                                    RSI.State.Direction.West => (0.5, 1, 0.5, 1),
-                                    _ => throw new ArgumentOutOfRangeException()
+                                    Direction.South => (0d, 0.5d, 0d, 0.5d),
+                                    Direction.East => (0, 0.5, 0.5, 1),
+                                    Direction.North => (0.5, 1, 0, 0.5),
+                                    Direction.West => (0.5, 1, 0.5, 1),
+                                    _ => throw new ArgumentOutOfRangeException(nameof(dir))
                                 };
                                 break;
                             }
@@ -149,10 +148,11 @@ namespace Content.MapRenderer.Painters
 
                     image.Mutate(o => o
                         .DrawImage(coloredImage, PixelColorBlendingMode.Multiply, PixelAlphaCompositionMode.SrcAtop, 1)
-                        .Resize(32, 32).Flip(FlipMode.Vertical));
+                        .Resize(32, 32)
+                        .Flip(FlipMode.Vertical));
 
-                    var pointX = (int) ((entity.X + xOffset) * 32) - 16;
-                    var pointY = (int) ((entity.Y + yOffset) * 32) - 16;
+                    var pointX = (int) entity.X;
+                    var pointY = (int) entity.Y;
                     gridCanvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
                 }
             }
@@ -187,9 +187,20 @@ namespace Content.MapRenderer.Painters
                         $"No sprite component found on an entity for which a server sprite component exists. Prototype id: {entity.Prototype?.ID}");
                 }
 
-                var position = entity.Transform.WorldPosition;
-                var x = position.X;
-                var y = position.Y;
+                var xOffset = 0;
+                var yOffset = 0;
+                var tileSize = 1;
+
+                if (_cMapManager.TryGetGrid(entity.Transform.GridID, out var grid))
+                {
+                    xOffset = (int) Math.Abs(grid.LocalBounds.Left);
+                    yOffset = (int) Math.Abs(grid.LocalBounds.Bottom);
+                    tileSize = grid.TileSize;
+                }
+
+                var position = entity.Transform.LocalPosition;
+                var x = ((float) Math.Floor(position.X) + xOffset) * tileSize * TilePainter.TileImageSize;
+                var y = ((float) Math.Floor(position.Y) + yOffset) * tileSize * TilePainter.TileImageSize;
                 var data = new EntityData(sprite, x, y);
 
                 components.GetOrAdd(entity.Transform.GridID, _ => new List<EntityData>()).Add(data);

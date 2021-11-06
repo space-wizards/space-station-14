@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Map;
 using Robust.Shared.Timing;
@@ -14,7 +15,7 @@ namespace Content.MapRenderer.Painters
     public class TilePainter
     {
         private const string TilesPath = "/Textures/Tiles/";
-        private const int TileImageSize = 32;
+        public const int TileImageSize = EyeManager.PixelsPerMeter;
 
         private readonly ITileDefinitionManager _sTileDefinitionManager;
         private readonly IResourceCache _cResourceCache;
@@ -30,7 +31,7 @@ namespace Content.MapRenderer.Painters
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var bounds = grid.WorldBounds;
+            var bounds = grid.LocalBounds;
             var xOffset = Math.Abs(bounds.Left);
             var yOffset = Math.Abs(bounds.Bottom);
             var tileSize = grid.TileSize * TileImageSize;

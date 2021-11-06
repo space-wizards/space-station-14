@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
-using Content.MapRenderer.GitHub;
-using Content.MapRenderer.Imgur.Client;
 using Content.MapRenderer.Painters;
 using Robust.Shared.Utility;
 using SixLabors.ImageSharp;
@@ -71,7 +69,6 @@ namespace Content.MapRenderer
                 maps.Add(fileName);
             }
 
-
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
             foreach (var map in maps)
@@ -80,7 +77,8 @@ namespace Content.MapRenderer
 
                 await foreach (var grid in MapPainter.Paint(map))
                 {
-                    var savePath = DirectoryExtensions.MapImages().FullName;
+                    var fileName = Path.GetFileNameWithoutExtension(map);
+                    var savePath = $"{DirectoryExtensions.MapImages().FullName}{Path.DirectorySeparatorChar}{fileName}.png";
 
                     Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 
@@ -88,6 +86,8 @@ namespace Content.MapRenderer
                     grid.Dispose();
                 }
             }
+
+            Console.WriteLine($"Created {maps.Count} map images.");
 
             // var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
             // var prNumber = int.Parse(EnvironmentExtensions.GetVariableOrThrow(PrNumberEnvKey));
