@@ -17,7 +17,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            var server = StartServerDummyTicker();
+            var server = StartServer();
 
             server.Assert(() =>
             {

@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Structures/Doors/Shutters/shutters.rsi
     layers:
     - state: closed
@@ -98,7 +97,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Structures/Doors/Shutters/shutters_radiation.rsi
     layers:
     - state: closed
@@ -121,7 +119,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: Mobs # They're on the same layer as mobs, perspective.
     sprite: Structures/Doors/Shutters/shutters_window.rsi
     layers:
     - state: closed

@@ -83,7 +83,7 @@ namespace Content.Shared.Alert
         /// <param name="severity">severity, if supported by the alert</param>
         /// <param name="cooldown">cooldown start and end, if null there will be no cooldown (and it will
         /// be erased if there is currently a cooldown for the alert)</param>
-        public void ShowAlert(AlertType alertType, short? severity = null, ValueTuple<TimeSpan, TimeSpan>? cooldown = null)
+        public void ShowAlert(AlertType alertType, short? severity = null, (TimeSpan, TimeSpan)? cooldown = null)
         {
             if (AlertManager.TryGet(alertType, out var alert))
             {
@@ -181,7 +181,9 @@ namespace Content.Shared.Alert
     /// A message that calls the click interaction on a alert
     /// </summary>
     [Serializable, NetSerializable]
+#pragma warning disable 618
     public class ClickAlertMessage : ComponentMessage
+#pragma warning restore 618
     {
         public readonly AlertType Type;
 
@@ -196,7 +198,7 @@ namespace Content.Shared.Alert
     public struct AlertState
     {
         public short? Severity;
-        public ValueTuple<TimeSpan, TimeSpan>? Cooldown;
+        public (TimeSpan, TimeSpan)? Cooldown;
         public AlertType Type;
     }
 }

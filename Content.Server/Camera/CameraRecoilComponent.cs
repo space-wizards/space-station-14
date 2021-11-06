@@ -11,7 +11,9 @@ namespace Content.Server.Camera
         public override void Kick(Vector2 recoil)
         {
             var msg = new RecoilKickMessage(recoil);
+#pragma warning disable 618
             SendNetworkMessage(msg);
+#pragma warning restore 618
         }
     }
 }

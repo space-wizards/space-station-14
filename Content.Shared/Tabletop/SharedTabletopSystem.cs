@@ -51,8 +51,7 @@ namespace Content.Shared.Tabletop
 
         protected static bool StunnedOrNoHands(IEntity playerEntity)
         {
-            var stunned = playerEntity.TryGetComponent<StunnableComponent>(out var stun) &&
-                          stun.Stunned;
+            var stunned = playerEntity.HasComponent<StunnedComponent>();
             var hasHand = playerEntity.TryGetComponent<SharedHandsComponent>(out var handsComponent) &&
                           handsComponent.Hands.Count > 0;
 

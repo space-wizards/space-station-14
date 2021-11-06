@@ -18,6 +18,7 @@ ui-options-volume-percent = { TOSTRING($volume, "P0") }
 
 ## Graphics menu
 
+ui-options-show-held-item = Show held item next to cursor?
 ui-options-vsync = VSync
 ui-options-fullscreen = Fullscreen
 ui-options-lighting-label = Lighting Quality:

@@ -1,0 +1,131 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+         xmlns:magicmirror="clr-namespace:Content.Client.CharacterAppearance"
+         xmlns:prefUi="clr-namespace:Content.Client.Preferences.UI">
+    <BoxContainer Orientation="Horizontal">
+        <!-- Left side -->
+        <BoxContainer Orientation="Vertical" Margin="10 10 10 10">
+            <!-- Middle container -->
+            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                <!-- Name box-->
+                <BoxContainer Orientation="Vertical">
+                    <prefUi:HighlightedContainer>
+                        <BoxContainer Orientation="Vertical">
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer Orientation="Vertical">
+                                    <BoxContainer Orientation="Horizontal" VerticalExpand="True">
+                                        <Label Text="{Loc 'humanoid-profile-editor-name-label'}" />
+                                        <LineEdit Name="CNameEdit" MinSize="270 0" VerticalAlignment="Center" />
+                                        <Button Name="CNameRandomize" Text="{Loc 'humanoid-profile-editor-name-random-button'}" />
+                                    </BoxContainer>
+                                    <Button Name="CRandomizeEverything" HorizontalAlignment="Center"
+                                            HorizontalExpand="False" MaxWidth="256"
+                                            Text="{Loc 'humanoid-profile-editor-randomize-everything-button'}" />
+                                    <RichTextLabel Name="CWarningLabel" HorizontalExpand="False"
+                                                   VerticalExpand="True" MaxWidth="425"
+                                                   HorizontalAlignment="Left" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
+                        </BoxContainer>
+                    </prefUi:HighlightedContainer>
+                </BoxContainer>
+                <!-- Import/Export -->
+                <BoxContainer Orientation="Vertical">
+                    <prefUi:HighlightedContainer>
+                        <BoxContainer Orientation="Horizontal">
+                            <Button Text="{Loc 'humanoid-profile-editor-import-button'}" Disabled="True"
+                                    ToolTip="{Loc 'generic-not-yet-implemented'}" />
+                            <Button Text="{Loc 'humanoid-profile-editor-export-button'}" Disabled="True"
+                                    ToolTip="{Loc 'generic-not-yet-implemented'}" />
+                        </BoxContainer>
+                    </prefUi:HighlightedContainer>
+                    <!-- Save -->
+                    <prefUi:HighlightedContainer>
+                        <Button Name="CSaveButton" Text="{Loc 'humanoid-profile-editor-save-button'}" HorizontalAlignment="Center" />
+                    </prefUi:HighlightedContainer>
+                </BoxContainer>
+            </BoxContainer>
+            <!-- tabContainer -->
+            <TabContainer Name="CTabContainer" VerticalExpand="True">
+                <BoxContainer Orientation="Vertical">
+                    <ScrollContainer VerticalExpand="True">
+                        <!-- appearanceList -->
+                        <BoxContainer Orientation="Vertical">
+                            <!-- SexAndAgeRow -->
+                            <BoxContainer Orientation="Horizontal" SeparationOverride="10">
+                                <!-- Sex -->
+                                <prefUi:HighlightedContainer>
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-sex-label'}" />
+                                        <Button Name="CSexMale" Text="{Loc 'humanoid-profile-editor-sex-male-button'}" />
+                                        <Button Name="CSexFemale" Text="{Loc 'humanoid-profile-editor-sex-female-button'}" />
+                                    </BoxContainer>
+                                </prefUi:HighlightedContainer>
+                                <!-- Age -->
+                                <prefUi:HighlightedContainer>
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-age-label'}" />
+                                        <LineEdit Name="CAgeEdit" MinSize="40 0" />
+                                    </BoxContainer>
+                                </prefUi:HighlightedContainer>
+                                <!-- Gender -->
+                                <prefUi:HighlightedContainer>
+                                    <BoxContainer Orientation="Horizontal">
+                                        <Label Text="{Loc 'humanoid-profile-editor-pronouns-label'}" />
+                                        <OptionButton Name="CPronounsButton" />
+                                    </BoxContainer>
+                                </prefUi:HighlightedContainer>
+                            </BoxContainer>
+                            <!-- Hair -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer Orientation="Horizontal">
+                                    <magicmirror:HairStylePicker Name="CHairStylePicker" HorizontalAlignment="Center" />
+                                    <magicmirror:HairStylePicker Name="CFacialHairPicker" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
+                            <!-- Clothing -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer Orientation="Horizontal">
+                                    <Label Text="{Loc 'humanoid-profile-editor-clothing-label'}" />
+                                    <OptionButton Name="CClothingButton" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
+                            <!-- Backpack -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer Orientation="Horizontal">
+                                    <Label Text="{Loc 'humanoid-profile-editor-backpack-label'}" />
+                                    <OptionButton Name="CBackpackButton" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
+                            <!-- Eyes -->
+                            <prefUi:HighlightedContainer>
+                                <BoxContainer Orientation="Vertical">
+                                    <Label Text="{Loc 'humanoid-profile-editor-eyes-label'}" />
+                                    <magicmirror:EyeColorPicker Name="CEyeColorPicker" />
+                                </BoxContainer>
+                            </prefUi:HighlightedContainer>
+                        </BoxContainer>
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical">
+                    <!-- Jobs -->
+                    <OptionButton Name="CPreferenceUnavailableButton" />
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Name="CJobList" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
+                <BoxContainer Orientation="Vertical">
+                    <!-- Antags -->
+                    <ScrollContainer VerticalExpand="True">
+                        <BoxContainer Name="CAntagList" Orientation="Vertical" />
+                    </ScrollContainer>
+                </BoxContainer>
+            </TabContainer>
+        </BoxContainer>
+        <!-- Right side -->
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
+            <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+            <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

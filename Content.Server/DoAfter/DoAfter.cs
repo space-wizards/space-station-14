@@ -136,8 +136,7 @@ namespace Content.Server.DoAfter
             }
 
             if (EventArgs.BreakOnStun &&
-                entityManager.TryGetComponent(EventArgs.User, out StunnableComponent? stunnableComponent) &&
-                stunnableComponent.Stunned)
+                entityManager.HasComponent<StunnedComponent>(EventArgs.User))
             {
                 return true;
             }

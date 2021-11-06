@@ -93,6 +93,7 @@ namespace Content.Server.Weapon.Ranged
         }
 
         /// <inheritdoc />
+        [Obsolete("Component Messages are deprecated, use Entity Events instead.")]
         public override void HandleNetworkMessage(ComponentMessage message, INetChannel channel, ICommonSession? session = null)
         {
             base.HandleNetworkMessage(message, channel, session);
@@ -173,12 +174,7 @@ namespace Content.Server.Weapon.Ranged
             {
                 //Wound them
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(user.Uid, ClumsyDamage);
-
-                // Knock them down
-                if (user.TryGetComponent(out StunnableComponent? stun))
-                {
-                    EntitySystem.Get<StunSystem>().Paralyze(user.Uid, TimeSpan.FromSeconds(3f), stun);
-                }
+                EntitySystem.Get<StunSystem>().TryParalyze(user.Uid, TimeSpan.FromSeconds(3f));
 
                 // Apply salt to the wound ("Honk!")
                 SoundSystem.Play(

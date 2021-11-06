@@ -14,9 +14,9 @@ namespace Content.Shared.MobState.State
             var wake = entity.EnsureComponent<CollisionWakeComponent>();
             wake.Enabled = true;
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Down(entity);
+            standingState.Down(entity.Uid);
 
-            if (standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = false;
             }
@@ -36,77 +36,12 @@ namespace Content.Shared.MobState.State
             }
 
             var standingState = EntitySystem.Get<StandingStateSystem>();
-            standingState.Stand(entity);
+            standingState.Stand(entity.Uid);
 
-            if (!standingState.IsDown(entity) && entity.TryGetComponent(out PhysicsComponent? physics))
+            if (!standingState.IsDown(entity.Uid) && entity.TryGetComponent(out PhysicsComponent? physics))
             {
                 physics.CanCollide = true;
             }
-        }
-
-        public override bool CanInteract()
-        {
-            return false;
-        }
-
-        public override bool CanUse()
-        {
-            return false;
-        }
-
-        public override bool CanThrow()
-        {
-            return false;
-        }
-
-        public override bool CanSpeak()
-        {
-            return false;
-        }
-
-        public override bool CanDrop()
-        {
-            return false;
-        }
-
-        public override bool CanPickup()
-        {
-            return false;
-        }
-
-        public override bool CanEmote()
-        {
-            return false;
-        }
-
-        public override bool CanAttack()
-        {
-            return false;
-        }
-
-        public override bool CanEquip()
-        {
-            return false;
-        }
-
-        public override bool CanUnequip()
-        {
-            return false;
-        }
-
-        public override bool CanChangeDirection()
-        {
-            return false;
-        }
-
-        public bool CanShiver()
-        {
-            return false;
-        }
-
-        public bool CanSweat()
-        {
-            return false;
         }
     }
 }

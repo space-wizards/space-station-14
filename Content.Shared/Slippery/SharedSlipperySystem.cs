@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.EffectBlocker;
+using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -17,6 +17,7 @@ namespace Content.Shared.Slippery
     public abstract class SharedSlipperySystem : EntitySystem
     {
         [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
         private List<SlipperyComponent> _slipped = new();
 
@@ -24,18 +25,24 @@ namespace Content.Shared.Slippery
         {
             base.Initialize();
             SubscribeLocalEvent<SlipperyComponent, StartCollideEvent>(HandleCollide);
+            SubscribeLocalEvent<NoSlipComponent, SlipAttemptEvent>(OnNoSlipAttempt);
         }
 
         private void HandleCollide(EntityUid uid, SlipperyComponent component, StartCollideEvent args)
         {
             var otherUid = args.OtherFixture.Body.Owner.Uid;
 
-            if (!CanSlip(component, otherUid, out _)) return;
+            if (!CanSlip(component, otherUid)) return;
 
             if (!_slipped.Contains(component))
                 _slipped.Add(component);
 
             component.Colliding.Add(otherUid);
+        }
+
+        private void OnNoSlipAttempt(EntityUid uid, NoSlipComponent component, SlipAttemptEvent args)
+        {
+            args.Cancel();
         }
 
         /// <inheritdoc />
@@ -49,14 +56,13 @@ namespace Content.Shared.Slippery
             }
         }
 
-        public bool CanSlip(SlipperyComponent component, EntityUid uid, [NotNullWhen(true)] out StunnableComponent? stunnableComponent)
+        public bool CanSlip(SlipperyComponent component, EntityUid uid)
         {
             if (!component.Slippery
                 || component.Owner.IsInContainer()
                 || component.Slipped.Contains(uid)
-                || !EntityManager.TryGetComponent<StunnableComponent>(uid, out stunnableComponent))
+                || !_statusEffectsSystem.CanApplyEffect(uid, "Stun"))
             {
-                stunnableComponent = null;
                 return false;
             }
 
@@ -65,9 +71,9 @@ namespace Content.Shared.Slippery
 
         private bool TrySlip(SlipperyComponent component, IPhysBody ourBody, IPhysBody otherBody)
         {
-            if (!CanSlip(component, otherBody.Owner.Uid, out var stun)) return false;
+            if (!CanSlip(component, otherBody.Owner.Uid)) return false;
 
-            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed || stun.KnockedDown)
+            if (otherBody.LinearVelocity.Length < component.RequiredSlipSpeed)
             {
                 return false;
             }
@@ -79,14 +85,14 @@ namespace Content.Shared.Slippery
                 return false;
             }
 
-            if (!EffectBlockerSystem.CanSlip(otherBody.Owner))
-            {
+            var ev = new SlipAttemptEvent();
+            RaiseLocalEvent(otherBody.Owner.Uid, ev, false);
+            if (ev.Cancelled)
                 return false;
-            }
 
             otherBody.LinearVelocity *= component.LaunchForwardsMultiplier;
 
-            _stunSystem.Paralyze(component.Owner.Uid, TimeSpan.FromSeconds(5), stun);
+            _stunSystem.TryParalyze(otherBody.Owner.Uid, TimeSpan.FromSeconds(5));
             component.Slipped.Add(otherBody.Owner.Uid);
             component.Dirty();
 
@@ -134,5 +140,12 @@ namespace Content.Shared.Slippery
 
             return false;
         }
+    }
+
+    /// <summary>
+    ///     Raised on an entity to determine if it can slip or not.
+    /// </summary>
+    public class SlipAttemptEvent : CancellableEntityEventArgs
+    {
     }
 }

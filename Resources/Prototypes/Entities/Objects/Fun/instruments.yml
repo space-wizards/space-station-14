@@ -71,6 +71,21 @@
 
 - type: entity
   parent: BaseHandheldInstrument
+  id: GunpetInstrument
+  name: gunpet
+  description: Why do you need to examine this? Is it not self-explanatory?
+  components:
+  - type: Instrument
+    program: 127
+  - type: Sprite
+    sprite: Objects/Fun/Instruments/gunpet.rsi
+    state: icon
+  - type: Item
+    size: 24
+    sprite: Objects/Fun/Instruments/gunpet.rsi
+
+- type: entity
+  parent: BaseHandheldInstrument
   id: ElectricGuitarInstrument
   name: electric guitar
   components:

@@ -6,9 +6,33 @@
   placement:
     mode: SnapgridCenter
   components:
+  - type: Item
+    size: 10
   - type: Clickable
   - type: InteractionOutline
+  - type: MovedByPressure
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: CollisionWake
+  - type: TileFrictionModifier
+    modifier: 0.5
   - type: Physics
+    bodyType: Dynamic
+    fixedRotation: false
+    fixtures:
+      - shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.25,0.25,0.25"
+        mass: 5
+        mask:
+          - Impassable
+          - VaultImpassable
+        restitution: 0.3  # fite me
+        friction: 0.2
   - type: Transform
     anchored: true
   - type: Damageable
@@ -37,6 +61,9 @@
   - type: AtmosUnsafeUnanchor
   - type: AtmosPipeColor
   - type: SubFloorHide
+  - type: Tag
+    tags:
+    - Pipe
 
 #Note: The PipeDirection of the PipeNode should be the south-facing version, because the entity starts at an angle of 0 (south)
 
@@ -109,6 +136,8 @@
   id: GasPipeFourway
   suffix: Fourway
   components:
+  - type: Transform
+    noRot: true
   - type: NodeContainer
     nodes:
       pipe:

@@ -9,7 +9,12 @@
     "states": [
         {
             "name": "condisposal",
-
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "conpipe-c",
@@ -175,14 +180,25 @@
         },
         {
             "name": "disposal",
-
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "disposal-charging",
-
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "disposal-flush",
+            "directions": 1,
             "delays": [
                 [
                     0.1,
@@ -199,6 +215,7 @@
         },
         {
             "name": "dispover-charge",
+            "directions": 1,
             "delays": [
                 [
                     0.4,
@@ -208,6 +225,7 @@
         },
         {
             "name": "dispover-full",
+            "directions": 1,
             "delays": [
                 [
                     0.2,
@@ -217,11 +235,21 @@
         },
         {
             "name": "dispover-handle",
-
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "dispover-ready",
-
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
         },
         {
             "name": "intake",

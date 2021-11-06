@@ -23,5 +23,13 @@ namespace Content.Shared.Construction.Conditions
 
             return !tileRef.Value.IsBlockedTurf(_filterMobs);
         }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-tile-not-blocked",
+            };
+        }
     }
 }

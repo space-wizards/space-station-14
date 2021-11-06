@@ -7,7 +7,6 @@
   - type: InteractionOutline
   - type: Sprite
     netsync: false
-    drawdepth: FloorObjects
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: assembly
@@ -53,7 +52,6 @@
   components:
   - type: Sprite
     netsync: false
-    drawdepth: Mobs
     sprite: Structures/Doors/Windoors/windoor.rsi
     layers:
     - state: secure_underlay

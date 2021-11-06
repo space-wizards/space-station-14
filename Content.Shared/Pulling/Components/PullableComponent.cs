@@ -21,9 +21,6 @@ namespace Content.Shared.Pulling.Components
     {
         public override string Name => "Pullable";
 
-        // At this point this field exists solely for the component dependency (which is mandatory).
-        [ComponentDependency] private readonly PhysicsComponent? _physics = default!;
-
         public float? MaxDistance => PullJoint?.MaxLength;
 
         /// <summary>

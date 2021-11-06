@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using Content.Server.Body.Circulatory;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Mechanism;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
@@ -28,7 +29,7 @@ namespace Content.Server.Body.Metabolism
 
         private void OnMetabolizerInit(EntityUid uid, MetabolizerComponent component, ComponentInit args)
         {
-            _solutionContainerSystem.EnsureSolution(EntityManager.GetEntity(uid), component.SolutionName);
+            _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
         }
 
         public override void Update(float frameTime)
@@ -63,8 +64,8 @@ namespace Content.Server.Body.Metabolism
                 if (body != null)
                 {
                     if (body.Owner.HasComponent<BloodstreamComponent>()
-                        && solutionsSys.TryGetSolution(body.Owner, comp.SolutionName, out solution)
-                        && solution.CurrentVolume >= ReagentUnit.Zero)
+                        && solutionsSys.TryGetSolution(body.Owner.Uid, comp.SolutionName, out solution)
+                        && solution.CurrentVolume >= FixedPoint2.Zero)
                     {
                         reagentList = solution.Contents;
                     }
@@ -106,7 +107,7 @@ namespace Content.Server.Body.Metabolism
                     }
 
                     if (!conditionsMet)
-                        return;
+                        continue;
 
                     // If we're part of a body, pass that entity to Metabolize
                     // Otherwise, just pass our owner entity, maybe we're a plant or something

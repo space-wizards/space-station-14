@@ -14,24 +14,12 @@ namespace Content.Shared.Standing
     {
         [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
 
-        [Obsolete("Use the EntityUid overloads instead.")]
-        public bool IsDown(IEntity entity)
-        {
-            return IsDown(entity.Uid);
-        }
-
         public bool IsDown(EntityUid uid, StandingStateComponent? standingState = null)
         {
             if (!Resolve(uid, ref standingState, false))
                 return false;
 
             return !standingState.Standing;
-        }
-
-        [Obsolete("Use the EntityUid overloads instead.")]
-        public void Down(IEntity entity, bool playSound = true, bool dropHeldItems = true)
-        {
-            Down(entity.Uid, playSound, dropHeldItems);
         }
 
         public bool Down(EntityUid uid, bool playSound = true, bool dropHeldItems = true,
@@ -80,12 +68,6 @@ namespace Content.Shared.Standing
             return true;
         }
 
-        [Obsolete("Use the EntityUid overloads instead.")]
-        public void Stand(IEntity entity)
-        {
-            Stand(entity.Uid);
-        }
-
         public bool Stand(EntityUid uid,
             StandingStateComponent? standingState = null,
             SharedAppearanceComponent? appearance = null)
@@ -120,7 +102,6 @@ namespace Content.Shared.Standing
     /// </summary>
     public sealed class DownAttemptEvent : CancellableEntityEventArgs
     {
-
     }
 
     /// <summary>
@@ -128,7 +109,6 @@ namespace Content.Shared.Standing
     /// </summary>
     public sealed class StandAttemptEvent : CancellableEntityEventArgs
     {
-
     }
 
     /// <summary>

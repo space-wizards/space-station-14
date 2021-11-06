@@ -32,7 +32,7 @@
       dead: corgi_dead
 
 - type: entity
-  name: ian
+  name: Ian
   parent: MobCorgi
   id: MobCorgiOld
   description: Favorite pet corgi.

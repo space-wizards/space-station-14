@@ -13,7 +13,6 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
-    drawdepth: FloorObjects
   - type: Physics
     bodyType: Static
     fixtures:
@@ -46,12 +45,3 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-
-- type: entity
-  id: Shelf
-  parent: Rack
-  name: shelf
-  description: A shelf for storing things on.
-  components:
-  - type: Sprite
-    state: shelf

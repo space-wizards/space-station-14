@@ -44,11 +44,9 @@ namespace Content.Server.IoC
             IoCManager.Register<INodeGroupFactory, NodeGroupFactory>();
             IoCManager.Register<BlackboardManager, BlackboardManager>();
             IoCManager.Register<ConsiderationsManager, ConsiderationsManager>();
-            IoCManager.Register<IAccentManager, AccentManager>();
             IoCManager.Register<IConnectionManager, ConnectionManager>();
             IoCManager.Register<IObjectivesManager, ObjectivesManager>();
             IoCManager.Register<IAdminManager, AdminManager>();
-            IoCManager.Register<IDeviceNetwork, DeviceNetwork.DeviceNetwork>();
             IoCManager.Register<EuiManager, EuiManager>();
             IoCManager.Register<IVoteManager, VoteManager>();
             IoCManager.Register<INpcBehaviorManager, NpcBehaviorManager>();

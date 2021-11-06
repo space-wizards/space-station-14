@@ -27,8 +27,16 @@
             max: 2
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
-  - type: Window
+  - type: IconSmooth
     base: pwindow
   - type: Construction
     graph: window
     node: plasmaWindow
+  - type: Appearance
+    visuals:
+    - type: DamageVisualizer
+      thresholds: [4, 8, 12]
+      damageDivisor: 12
+      trackAllDamage: true
+      damageOverlay:
+        sprite: Structures/Windows/cracks.rsi

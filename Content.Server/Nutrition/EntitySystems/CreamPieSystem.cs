@@ -1,8 +1,8 @@
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Shared.Audio;
-using Content.Shared.Chemistry.EntitySystems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Popups;
@@ -25,7 +25,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             SoundSystem.Play(Filter.Pvs(creamPie.Owner), creamPie.Sound.GetSound(), creamPie.Owner, AudioHelpers.WithVariation(0.125f));
 
-            if (_solutionsSystem.TryGetSolution(creamPie.Owner, FoodComponent.SolutionName, out var solution))
+            if (creamPie.Owner.TryGetComponent<FoodComponent>(out var foodComp) && _solutionsSystem.TryGetSolution(creamPie.Owner.Uid, foodComp.SolutionName, out var solution))
             {
                 solution.SpillAt(creamPie.Owner, "PuddleSmear", false);
             }

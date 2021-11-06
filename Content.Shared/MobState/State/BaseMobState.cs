@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameObjects;
+﻿using Content.Shared.FixedPoint;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
 namespace Content.Shared.MobState.State
@@ -32,61 +33,6 @@ namespace Content.Shared.MobState.State
 
         public virtual void ExitState(IEntity entity) { }
 
-        public virtual void UpdateState(IEntity entity, int threshold) { }
-
-        public virtual bool CanInteract()
-        {
-            return true;
-        }
-
-        public virtual bool CanUse()
-        {
-            return true;
-        }
-
-        public virtual bool CanThrow()
-        {
-            return true;
-        }
-
-        public virtual bool CanSpeak()
-        {
-            return true;
-        }
-
-        public virtual bool CanDrop()
-        {
-            return true;
-        }
-
-        public virtual bool CanPickup()
-        {
-            return true;
-        }
-
-        public virtual bool CanEmote()
-        {
-            return true;
-        }
-
-        public virtual bool CanAttack()
-        {
-            return true;
-        }
-
-        public virtual bool CanEquip()
-        {
-            return true;
-        }
-
-        public virtual bool CanUnequip()
-        {
-            return true;
-        }
-
-        public virtual bool CanChangeDirection()
-        {
-            return true;
-        }
+        public virtual void UpdateState(IEntity entity, FixedPoint2 threshold) { }
     }
 }

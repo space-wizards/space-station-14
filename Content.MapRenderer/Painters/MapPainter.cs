@@ -9,6 +9,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared;
 using Robust.Shared.Map;
+using Robust.Shared.Maths;
 using Robust.Shared.Timing;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -30,7 +31,8 @@ namespace Content.MapRenderer.Painters
                 CVarOverrides =
                 {
                     [CVars.NetPVS.Name] = "false"
-                }
+                },
+                Pool = false
             };
 
             var serverOptions = new ServerContentIntegrationOption
@@ -39,7 +41,8 @@ namespace Content.MapRenderer.Painters
                 {
                     [CCVars.GameMap.Name] = map,
                     [CVars.NetPVS.Name] = "false"
-                }
+                },
+                Pool = false
             };
 
             var (client, server) = await StartConnectedServerClientPair(clientOptions, serverOptions);
@@ -72,7 +75,8 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await RunTicksSync(client, server, 2);
+            await RunTicksSync(client, server, 10);
+            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
 
@@ -84,22 +88,30 @@ namespace Content.MapRenderer.Painters
             {
                 sPlayerManager.GetAllPlayers().Single().AttachedEntity?.Delete();
                 grids = sMapManager.GetAllMapGrids(new MapId(1)).ToArray();
+
+                foreach (var grid in grids)
+                {
+                    grid.WorldRotation = Angle.Zero;
+                }
             });
+
+            await RunTicksSync(client, server, 10);
+            await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             foreach (var grid in grids)
             {
-                var tileXSize = 32;
-                var tileYSize = 32;
+                var tileXSize = grid.TileSize * TilePainter.TileImageSize;
+                var tileYSize = grid.TileSize * TilePainter.TileImageSize;
 
-                var bounds = grid.WorldBounds;
+                var bounds = grid.LocalBounds;
 
-                var left = Math.Abs(bounds.Left);
-                var right = Math.Abs(bounds.Right);
-                var top = Math.Abs(bounds.Top);
-                var bottom = Math.Abs(bounds.Bottom);
+                var left = bounds.Left;
+                var right = bounds.Right;
+                var top = bounds.Top;
+                var bottom = bounds.Bottom;
 
-                var w = (int) Math.Ceiling(left + right) * tileXSize;
-                var h = (int) Math.Ceiling(top + bottom) * tileYSize;
+                var w = (int) Math.Ceiling(right - left) * tileXSize;
+                var h = (int) Math.Ceiling(top - bottom) * tileYSize;
 
                 var gridCanvas = new Image<Rgba32>(w, h);
 
@@ -117,12 +129,11 @@ namespace Content.MapRenderer.Painters
             // We don't care if it fails as we have already saved the images.
             try
             {
-#pragma warning disable 4014
-                TearDown();
-#pragma warning restore 4014
+                await OneTimeTearDown();
             }
-            catch (InvalidOperationException)
+            catch
             {
+                // ignored
             }
         }
     }

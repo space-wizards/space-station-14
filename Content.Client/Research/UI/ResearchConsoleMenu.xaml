@@ -71,11 +71,14 @@
                               Align="End"
                               HorizontalExpand="True"
                               VerticalExpand="True">
-                    <Button Name="ServerSelectionButtonProtected"
+                    <Button Name="ServerSelectionButton"
+                            Access="Public"
                             Text="{Loc 'research-console-menu-server-selection-button'}" />
-                    <Button Name="ServerSyncButtonProtected"
+                    <Button Name="ServerSyncButton"
+                            Access="Public"
                             Text="{Loc 'research-console-menu-server-sync-button'}" />
-                    <Button Name="UnlockButtonProtected"
+                    <Button Name="UnlockButton"
+                            Access="Public"
                             Disabled="True" />
                 </BoxContainer>
             </BoxContainer>

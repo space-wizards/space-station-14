@@ -22,7 +22,9 @@ namespace Content.Server.Morgue.Components
     [ComponentReference(typeof(EntityStorageComponent))]
     [ComponentReference(typeof(IActivate))]
     [ComponentReference(typeof(IStorageComponent))]
+#pragma warning disable 618
     public class BodyBagEntityStorageComponent : EntityStorageComponent, IExamine, IInteractUsing
+#pragma warning restore 618
     {
         public override string Name => "BodyBagEntityStorage";
 
@@ -40,7 +42,7 @@ namespace Content.Server.Morgue.Components
 
         protected override bool AddToContents(IEntity entity)
         {
-            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity)) return false;
+            if (entity.HasComponent<SharedBodyComponent>() && !EntitySystem.Get<StandingStateSystem>().IsDown(entity.Uid)) return false;
             return base.AddToContents(entity);
         }
 

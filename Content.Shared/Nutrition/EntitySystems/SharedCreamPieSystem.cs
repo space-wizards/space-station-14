@@ -68,10 +68,7 @@ namespace Content.Shared.Nutrition.EntitySystems
 
             CreamedEntity(uid, creamPied, args);
 
-            if (EntityManager.TryGetComponent(uid, out StunnableComponent? stun))
-            {
-                _stunSystem.Paralyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime), stun);
-            }
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(creamPie.ParalyzeTime));
         }
 
         protected virtual void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args) {}

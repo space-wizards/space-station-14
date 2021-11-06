@@ -32,8 +32,6 @@ namespace Content.Server.Kitchen.Components
 
         void IActivate.Activate(ActivateEventArgs eventArgs)
         {
-            SpriteComponent? sprite;
-
             if (_meatParts == 0)
             {
                 return;
@@ -43,10 +41,7 @@ namespace Content.Server.Kitchen.Components
             if (!string.IsNullOrEmpty(_meatPrototype))
             {
                 var meat = Owner.EntityManager.SpawnEntity(_meatPrototype, Owner.Transform.Coordinates);
-                if (meat != null)
-                {
-                    meat.Name = _meatName;
-                }
+                meat.Name = _meatName;
             }
 
             if (_meatParts != 0)

@@ -60,7 +60,6 @@ namespace Content.Server.Administration.Commands
 
             DebugTools.AssertNotNull(mind);
 
-            mindComponent.Mind?.TransferTo(null);
             mind!.TransferTo(target);
         }
     }

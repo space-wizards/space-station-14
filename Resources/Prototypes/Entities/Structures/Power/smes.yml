@@ -16,8 +16,6 @@
       sprite: Structures/Power/smes.rsi
       layers:
         - state: smes
-        - state: smes-display
-          shader: unshaded
     - type: Smes
     - type: Appearance
       visuals:

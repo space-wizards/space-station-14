@@ -3,6 +3,7 @@ using Content.Shared.Traitor.Uplink;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 using Robust.Shared.ViewVariables;
+using System;
 
 namespace Content.Server.Traitor.Uplink.Components
 {
@@ -19,6 +20,20 @@ namespace Content.Server.Traitor.Uplink.Components
         [DataField("insufficientFundsSound")]
         public SoundSpecifier InsufficientFundsSound  = new SoundPathSpecifier("/Audio/Effects/error.ogg");
 
+        [DataField("activatesInHands")]
+        public bool ActivatesInHands = false;
+
+        [DataField("presetInfo")]
+        public PresetUplinkInfo? PresetInfo = null;
+
         [ViewVariables] public UplinkAccount? UplinkAccount;
+
+        [Serializable]
+        [DataDefinition]
+        public class PresetUplinkInfo
+        {
+            [DataField("balance")]
+            public int StartingBalance;
+        }
     }
 }

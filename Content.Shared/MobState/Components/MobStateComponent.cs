@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Shared.ActionBlocker;
 using Content.Shared.Alert;
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState.State;
 using Robust.Shared.GameObjects;
 using Robust.Shared.GameStates;
@@ -24,7 +24,7 @@ namespace Content.Shared.MobState.Components
     [RegisterComponent]
     [ComponentReference(typeof(IMobStateComponent))]
     [NetworkedComponent()]
-    public class MobStateComponent : Component, IMobStateComponent, IActionBlocker
+    public class MobStateComponent : Component, IMobStateComponent
     {
         public override string Name => "MobState";
 
@@ -44,7 +44,7 @@ namespace Content.Shared.MobState.Components
         public IMobState? CurrentState { get; private set; }
 
         [ViewVariables]
-        public int? CurrentThreshold { get; private set; }
+        public FixedPoint2? CurrentThreshold { get; private set; }
 
         public IEnumerable<KeyValuePair<int, IMobState>> _highestToLowestStates => _lowestToHighestStates.Reverse();
 
@@ -60,7 +60,7 @@ namespace Content.Shared.MobState.Components
             else
             {
                 // Initialize with some amount of damage, defaulting to 0.
-                UpdateState(Owner.GetComponentOrNull<DamageableComponent>()?.TotalDamage ?? 0);
+                UpdateState(Owner.GetComponentOrNull<DamageableComponent>()?.TotalDamage ?? FixedPoint2.Zero);
             }
         }
 
@@ -123,7 +123,7 @@ namespace Content.Shared.MobState.Components
             return CurrentState?.IsIncapacitated() ?? false;
         }
 
-        public (IMobState state, int threshold)? GetState(int damage)
+        public (IMobState state, FixedPoint2 threshold)? GetState(FixedPoint2 damage)
         {
             foreach (var (threshold, state) in _highestToLowestStates)
             {
@@ -137,9 +137,9 @@ namespace Content.Shared.MobState.Components
         }
 
         public bool TryGetState(
-            int damage,
+            FixedPoint2 damage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             var highestState = GetState(damage);
 
@@ -154,7 +154,7 @@ namespace Content.Shared.MobState.Components
             return true;
         }
 
-        private (IMobState state, int threshold)? GetEarliestState(int minimumDamage, Predicate<IMobState> predicate)
+        private (IMobState state, FixedPoint2 threshold)? GetEarliestState(FixedPoint2 minimumDamage, Predicate<IMobState> predicate)
         {
             foreach (var (threshold, state) in _lowestToHighestStates)
             {
@@ -170,7 +170,7 @@ namespace Content.Shared.MobState.Components
             return null;
         }
 
-        private (IMobState state, int threshold)? GetPreviousState(int maximumDamage, Predicate<IMobState> predicate)
+        private (IMobState state, FixedPoint2 threshold)? GetPreviousState(FixedPoint2 maximumDamage, Predicate<IMobState> predicate)
         {
             foreach (var (threshold, state) in _highestToLowestStates)
             {
@@ -186,30 +186,30 @@ namespace Content.Shared.MobState.Components
             return null;
         }
 
-        public (IMobState state, int threshold)? GetEarliestCriticalState(int minimumDamage)
+        public (IMobState state, FixedPoint2 threshold)? GetEarliestCriticalState(FixedPoint2 minimumDamage)
         {
             return GetEarliestState(minimumDamage, s => s.IsCritical());
         }
 
-        public (IMobState state, int threshold)? GetEarliestIncapacitatedState(int minimumDamage)
+        public (IMobState state, FixedPoint2 threshold)? GetEarliestIncapacitatedState(FixedPoint2 minimumDamage)
         {
             return GetEarliestState(minimumDamage, s => s.IsIncapacitated());
         }
 
-        public (IMobState state, int threshold)? GetEarliestDeadState(int minimumDamage)
+        public (IMobState state, FixedPoint2 threshold)? GetEarliestDeadState(FixedPoint2 minimumDamage)
         {
             return GetEarliestState(minimumDamage, s => s.IsDead());
         }
 
-        public (IMobState state, int threshold)? GetPreviousCriticalState(int minimumDamage)
+        public (IMobState state, FixedPoint2 threshold)? GetPreviousCriticalState(FixedPoint2 minimumDamage)
         {
             return GetPreviousState(minimumDamage, s => s.IsCritical());
         }
 
         private bool TryGetState(
-            (IMobState state, int threshold)? tuple,
+            (IMobState state, FixedPoint2 threshold)? tuple,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             if (tuple == null)
             {
@@ -223,9 +223,9 @@ namespace Content.Shared.MobState.Components
         }
 
         public bool TryGetEarliestCriticalState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             var earliestState = GetEarliestCriticalState(minimumDamage);
 
@@ -233,9 +233,9 @@ namespace Content.Shared.MobState.Components
         }
 
         public bool TryGetEarliestIncapacitatedState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             var earliestState = GetEarliestIncapacitatedState(minimumDamage);
 
@@ -243,9 +243,9 @@ namespace Content.Shared.MobState.Components
         }
 
         public bool TryGetEarliestDeadState(
-            int minimumDamage,
+            FixedPoint2 minimumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             var earliestState = GetEarliestDeadState(minimumDamage);
 
@@ -253,9 +253,9 @@ namespace Content.Shared.MobState.Components
         }
 
         public bool TryGetPreviousCriticalState(
-            int maximumDamage,
+            FixedPoint2 maximumDamage,
             [NotNullWhen(true)] out IMobState? state,
-            out int threshold)
+            out FixedPoint2 threshold)
         {
             var earliestState = GetPreviousCriticalState(maximumDamage);
 
@@ -274,7 +274,7 @@ namespace Content.Shared.MobState.Components
         /// <summary>
         ///     Updates the mob state..
         /// </summary>
-        public void UpdateState(int damage)
+        public void UpdateState(FixedPoint2 damage)
         {
             if (!TryGetState(damage, out var newState, out var threshold))
             {
@@ -287,7 +287,7 @@ namespace Content.Shared.MobState.Components
         /// <summary>
         ///     Sets the mob state and marks the component as dirty.
         /// </summary>
-        private void SetMobState(IMobState? old, (IMobState state, int threshold)? current)
+        private void SetMobState(IMobState? old, (IMobState state, FixedPoint2 threshold)? current)
         {
             if (!current.HasValue)
             {
@@ -313,74 +313,21 @@ namespace Content.Shared.MobState.Components
             state.UpdateState(Owner, threshold);
 
             var message = new MobStateChangedMessage(this, old, state);
+#pragma warning disable 618
             SendMessage(message);
+#pragma warning restore 618
             Owner.EntityManager.EventBus.RaiseEvent(EventSource.Local, message);
 
             Dirty();
-        }
-
-        bool IActionBlocker.CanInteract()
-        {
-            return CurrentState?.CanInteract() ?? true;
-        }
-
-        bool IActionBlocker.CanUse()
-        {
-            return CurrentState?.CanUse() ?? true;
-        }
-
-        bool IActionBlocker.CanThrow()
-        {
-            return CurrentState?.CanThrow() ?? true;
-        }
-
-        bool IActionBlocker.CanSpeak()
-        {
-            return CurrentState?.CanSpeak() ?? true;
-        }
-
-        bool IActionBlocker.CanDrop()
-        {
-            return CurrentState?.CanDrop() ?? true;
-        }
-
-        bool IActionBlocker.CanPickup()
-        {
-            return CurrentState?.CanPickup() ?? true;
-        }
-
-        bool IActionBlocker.CanEmote()
-        {
-            return CurrentState?.CanEmote() ?? true;
-        }
-
-        bool IActionBlocker.CanAttack()
-        {
-            return CurrentState?.CanAttack() ?? true;
-        }
-
-        bool IActionBlocker.CanEquip()
-        {
-            return CurrentState?.CanEquip() ?? true;
-        }
-
-        bool IActionBlocker.CanUnequip()
-        {
-            return CurrentState?.CanUnequip() ?? true;
-        }
-
-        bool IActionBlocker.CanChangeDirection()
-        {
-            return CurrentState?.CanChangeDirection() ?? true;
         }
     }
 
     [Serializable, NetSerializable]
     public class MobStateComponentState : ComponentState
     {
-        public readonly int? CurrentThreshold;
+        public readonly FixedPoint2? CurrentThreshold;
 
-        public MobStateComponentState(int? currentThreshold)
+        public MobStateComponentState(FixedPoint2? currentThreshold)
         {
             CurrentThreshold = currentThreshold;
         }

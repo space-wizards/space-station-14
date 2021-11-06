@@ -1,3 +1,5 @@
+# For produce that can't be immediately eaten
+
 - type: entity
   parent: BaseItem
   id: ProduceBase
@@ -9,7 +11,23 @@
     state: produce
   - type: Produce
   - type: Extractable
-    extractableSolution: food
+    grindableSolutionName: food
+
+# For produce that can be immediately eaten
+
+- type: entity
+  parent: FoodInjectableBase
+  id: FoodProduceBase
+  abstract: true
+  components:
+  - type: SolutionContainerManager
+  - type: Sprite
+    netsync: false
+    state: produce
+  - type: Produce
+  - type: Extractable
+
+# Subclasses
 
 - type: entity
   name: wheat bushel
@@ -45,7 +63,7 @@
   - type: Produce
     seed: oat
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: MilkOat
         Quantity: 5
@@ -86,7 +104,7 @@
 
 - type: entity
   name: banana
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodBanana
   description: Rich in potassium.
   components:
@@ -95,6 +113,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -103,7 +122,7 @@
   - type: Produce
     seed: banana
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
@@ -142,17 +161,17 @@
 
 - type: entity
   name: carrot
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodCarrot
   description: It's good for the eyes!
   components:
   - type: Tag
     tags:
     - Carrot
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -161,21 +180,21 @@
   - type: Produce
     seed: carrots
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuiceCarrot
         Quantity: 10
 
 - type: entity
   name: lemon
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodLemon
   description: When life gives you lemons, be grateful they aren't limes.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -184,21 +203,21 @@
   - type: Produce
     seed: lemon
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuiceLime
         Quantity: 10
 
 - type: entity
   name: pineapple
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodPineapple
   description: Mmm, tropical.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -207,7 +226,7 @@
   - type: Produce
     seed: pineapple
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 10
@@ -217,11 +236,10 @@
 
 - type: entity
   name: potato
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodPotato
   description: The space Irish starved to death after their potato crops died. Sadly they were unable to fish for space carp due to it being the queen's space. Bringing this up to any space IRA member will drive them insane with anger.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -232,14 +250,18 @@
     sprite: Objects/Specific/Hydroponics/potato.rsi
   - type: Produce
     seed: potato
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuicePotato
+        Quantity: 10
 
 - type: entity
   name: tomato
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodTomato
   description: I say to-mah-to, you say tom-mae-to.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -251,7 +273,8 @@
   - type: Produce
     seed: tomato
   - type: Extractable
-    result:
+    grindableSolutionName: food
+    juiceSolution:
       reagents:
       - ReagentId: JuiceTomato
         Quantity: 10
@@ -295,18 +318,28 @@
   description: Splat.
   components:
   - type: Sprite
-    sprite: Objects/Specific/Hydroponics/tomato.rsi
+    sprite: Fluids/tomato_splat.rsi
     state: puddle-0
+    netsync: false
   - type: Puddle
-    variants: 3
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        reagents:
+        - ReagentId: JuiceTomato
+          Quantity: 10
+  - type: Evaporation
+    lowerLimit: 2
+  - type: Appearance
+    visuals:
+    - type: PuddleVisualizer
 
 - type: entity
   name: eggplant
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodEggplant
   description: Maybe there's a chicken inside?
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -320,14 +353,14 @@
 
 - type: entity
   name: apple
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodApple
   description: It's a little piece of Eden.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -336,14 +369,14 @@
   - type: Produce
     seed: apple
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuiceApple
         Quantity: 10
 
 - type: entity
   name: ear of corn
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodCorn
   description: Needs some butter! And some cooking...
   components:
@@ -352,6 +385,7 @@
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 6
         reagents:
         - ReagentId: Nutriment
           Quantity: 5
@@ -375,11 +409,10 @@
 
 - type: entity
   name: onion
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodOnion
   description: Nothing to cry over.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -396,11 +429,10 @@
 
 - type: entity
   name: red onion
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodOnionRed
   description: Purple despite the name.
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -417,11 +449,10 @@
 
 - type: entity
   name: chanterelle cluster
-  parent: ProduceBase
+  parent: FoodProduceBase
   id: FoodMushroom
   description: "Cantharellus Cibarius: These jolly yellow little shrooms sure look tasty!"
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
@@ -436,14 +467,14 @@
 # Slices
 
 - type: entity
-  parent: BaseItem
+  parent: FoodInjectableBase
   id: ProduceSliceBase
   abstract: true
   components:
-  - type: Food
   - type: SolutionContainerManager
     solutions:
       food:
+        maxVol: 3
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
@@ -451,7 +482,7 @@
     netsync: false
     state: slice
   - type: Extractable
-    extractableSolution: food
+    grindableSolutionName: food
 
 - type: entity
   name: pineapple slice
@@ -462,7 +493,7 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/pineapple.rsi
   - type: Extractable
-    result:
+    juiceSolution:
       reagents:
       - ReagentId: JuicePineapple
         Quantity: 2

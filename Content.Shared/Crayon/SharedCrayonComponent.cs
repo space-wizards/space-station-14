@@ -41,8 +41,7 @@ namespace Content.Shared.Crayon
     public enum CrayonVisuals
     {
         State,
-        Color,
-        Rotation
+        Color
     }
 
     [Serializable, NetSerializable]

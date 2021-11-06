@@ -1,12 +1,18 @@
+using System;
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
+using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Examine;
+using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameObjects;
+using Robust.Shared.IoC;
+using Robust.Shared.Localization;
 using Robust.Shared.Maths;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
@@ -14,12 +20,31 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     [UsedImplicitly]
     public class GasPressurePumpSystem : EntitySystem
     {
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceUpdateEvent>(OnPumpUpdated);
             SubscribeLocalEvent<GasPressurePumpComponent, AtmosDeviceDisabledEvent>(OnPumpLeaveAtmosphere);
+            SubscribeLocalEvent<GasPressurePumpComponent, ExaminedEvent>(OnExamined);
+            SubscribeLocalEvent<GasPressurePumpComponent, InteractHandEvent>(OnPumpInteractHand);
+            // Bound UI subscriptions
+            SubscribeLocalEvent<GasPressurePumpComponent, GasPressurePumpChangeOutputPressureMessage>(OnOutputPressureChangeMessage);
+            SubscribeLocalEvent<GasPressurePumpComponent, GasPressurePumpToggleStatusMessage>(OnToggleStatusMessage);
+        }
+
+        private void OnExamined(EntityUid uid, GasPressurePumpComponent pump, ExaminedEvent args)
+        {
+            if (!pump.Owner.Transform.Anchored || !args.IsInDetailsRange) // Not anchored? Out of range? No status.
+                return;
+
+            if (Loc.TryGetString("gas-pressure-pump-system-examined", out var str,
+                        ("statusColor", "lightblue"), // TODO: change with pressure?
+                        ("pressure", pump.TargetPressure)
+            ))
+                args.PushMarkup(str);
         }
 
         private void OnPumpUpdated(EntityUid uid, GasPressurePumpComponent pump, AtmosDeviceUpdateEvent args)
@@ -64,5 +89,37 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
             }
         }
 
+        private void OnPumpInteractHand(EntityUid uid, GasPressurePumpComponent component, InteractHandEvent args)
+        {
+            if (!args.User.TryGetComponent(out ActorComponent? actor))
+                return;
+
+            _userInterfaceSystem.TryOpen(uid, GasPressurePumpUiKey.Key, actor.PlayerSession);
+            DirtyUI(uid, component);
+
+            args.Handled = true;
+        }
+
+        private void OnToggleStatusMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpToggleStatusMessage args)
+        {
+            pump.Enabled = args.Enabled;
+            DirtyUI(uid, pump);
+        }
+
+        private void OnOutputPressureChangeMessage(EntityUid uid, GasPressurePumpComponent pump, GasPressurePumpChangeOutputPressureMessage args)
+        {
+            pump.TargetPressure = Math.Clamp(args.Pressure, 0f, Atmospherics.MaxOutputPressure);
+            DirtyUI(uid, pump);
+
+        }
+
+        private void DirtyUI(EntityUid uid, GasPressurePumpComponent? pump)
+        {
+            if (!Resolve(uid, ref pump))
+                return;
+
+            _userInterfaceSystem.TrySetUiState(uid, GasPressurePumpUiKey.Key,
+                new GasPressurePumpBoundUserInterfaceState(pump.Owner.Name, pump.TargetPressure, pump.Enabled));
+        }
     }
 }

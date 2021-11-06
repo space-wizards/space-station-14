@@ -46,7 +46,7 @@ namespace Content.Shared.Verbs
     }
 
     [Serializable, NetSerializable]
-    public class TryExecuteVerbEvent : EntityEventArgs
+    public class ExecuteVerbEvent : EntityEventArgs
     {
         public readonly EntityUid Target;
         public readonly Verb RequestedVerb;
@@ -56,21 +56,12 @@ namespace Content.Shared.Verbs
         /// </summary>
         public readonly VerbType Type;
 
-        public TryExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
+        public ExecuteVerbEvent(EntityUid target, Verb requestedVerb, VerbType type)
         {
             Target = target;
             RequestedVerb = requestedVerb;
             Type = type;
         }
-    }
-
-    /// <summary>
-    ///     Event used to toggle visibility of all context menu entities.
-    /// </summary>
-    [Serializable, NetSerializable]
-    public class SetSeeAllContextEvent : EntityEventArgs
-    {
-        public bool CanSeeAllContext = false;
     }
 
     /// <summary>
@@ -83,7 +74,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetInteractionVerbsEvent : GetVerbsEvent
     {
-        public GetInteractionVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetInteractionVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
@@ -97,11 +88,11 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetActivationVerbsEvent : GetVerbsEvent
     {
-        public GetActivationVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetActivationVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
-    ///     Request alternative-interaction verbs.    
+    ///     Request alternative-interaction verbs.
     /// </summary>
     /// <remarks>
     ///     When interacting with an entity via alt + left-click/E/Z the highest priority alt-interact verb is executed.
@@ -109,11 +100,11 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetAlternativeVerbsEvent : GetVerbsEvent
     {
-        public GetAlternativeVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetAlternativeVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
-    ///     Request Miscellaneous verbs.    
+    ///     Request Miscellaneous verbs.
     /// </summary>
     /// <remarks>
     ///     Includes (nearly) global interactions like "examine", "pull", or "debug". These verbs are collectively shown
@@ -121,7 +112,7 @@ namespace Content.Shared.Verbs
     /// </remarks>
     public class GetOtherVerbsEvent : GetVerbsEvent
     {
-        public GetOtherVerbsEvent(IEntity user, IEntity target) : base(user, target) { }
+        public GetOtherVerbsEvent(IEntity user, IEntity target, bool force=false) : base(user, target, force) { }
     }
 
     /// <summary>
@@ -180,18 +171,18 @@ namespace Content.Shared.Verbs
         /// </remarks>
         public IEntity? Using;
 
-        public GetVerbsEvent(IEntity user, IEntity target)
+        public GetVerbsEvent(IEntity user, IEntity target, bool force=false)
         {
             User = user;
             Target = target;
 
-            CanAccess = (Target == User) || user.IsInSameOrParentContainer(target) &&
+            CanAccess = force || (Target == User) || user.IsInSameOrParentContainer(target) &&
                 EntitySystem.Get<SharedInteractionSystem>().InRangeUnobstructed(user, target);
 
             // A large number of verbs need to check action blockers. Instead of repeatedly having each system individually
             // call ActionBlocker checks, just cache it for the verb request.
             var actionBlockerSystem = EntitySystem.Get<ActionBlockerSystem>();
-            CanInteract = actionBlockerSystem.CanInteract(user);
+            CanInteract = force || actionBlockerSystem.CanInteract(user);
 
             if (!user.TryGetComponent(out Hands) ||
                 !actionBlockerSystem.CanUse(user))

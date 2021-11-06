@@ -10,7 +10,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
         public override void Update(float frameTime)
         {
-            foreach (var comp in EntityManager.EntityQuery<DisposalHolderComponent>(true))
+            foreach (var comp in EntityManager.EntityQuery<DisposalHolderComponent>())
             {
                 comp.Update(frameTime);
             }
