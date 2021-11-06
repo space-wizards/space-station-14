@@ -21,6 +21,13 @@ namespace Content.MapRenderer
 
         private static readonly MapPainter MapPainter = new();
 
+#pragma warning disable CA1825
+        private static readonly string[] ForceRender =
+        {
+            // "Resources/Maps/saltern.yml"
+        };
+#pragma warning restore CA1825
+
         internal static void Main()
         {
             new Program().Run().Wait();
@@ -55,7 +62,7 @@ namespace Content.MapRenderer
                 }
             }
 
-            var maps = new List<string>();
+            var maps = new List<string>(ForceRender);
 
             foreach (var node in files)
             {
