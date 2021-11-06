@@ -68,7 +68,7 @@ jobs:
         uses: DrSmugleaf/MapDiffBot@v1.0
         with:
           uploaded: ${{ steps.new_map_images.outputs.imgur_urls }}
-          maps: ["saltern"]
+          maps: ${{ steps.map_names }}
           url: https://spacestation14.io/map-diff-viewer/
           baseCommit: map-renderer
           repoName: DrSmugleaf/space-station-14
