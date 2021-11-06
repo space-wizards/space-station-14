@@ -40,16 +40,16 @@ namespace Content.Client.Decals
                 return spriteSpecifier;
             }
 
-            foreach (var (gridId, chunkCollection) in _system.ChunkCollectionsForRendering)
+            foreach (var (gridId, zIndexDictionary) in _system.DecalRenderIndex)
             {
                 var grid = _mapManager.GetGrid(gridId);
                 handle.SetTransform(grid.WorldMatrix);
-                foreach (var chunkDecals in chunkCollection.Chunks.Values)
+                foreach (var (_, decals) in zIndexDictionary)
                 {
-                    foreach (var decals in chunkDecals.Values)
+                    foreach (var (_, decal) in decals)
                     {
-                        var spriteSpecifier = GetSpriteSpecifier(decals.Id);
-                        handle.DrawTexture(spriteSpecifier.Frame0(), decals.Coordinates, decals.Color);
+                        var spriteSpecifier = GetSpriteSpecifier(decal.Id);
+                        handle.DrawTexture(spriteSpecifier.Frame0(), decal.Coordinates, decal.Angle, decal.Color);
                     }
                 }
             }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Content.Shared.Decals;
 using Robust.Client.Graphics;
+using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Map;
 
@@ -13,7 +14,7 @@ namespace Content.Client.Decals
         [Dependency] private readonly IOverlayManager _overlayManager = default!;
 
         private DecalOverlay _overlay = default!;
-        public Dictionary<GridId, ChunkCollection<Dictionary<uint, Decal>>> ChunkCollectionsForRendering => ChunkCollections;
+        public Dictionary<GridId, SortedDictionary<int, SortedDictionary<uint, Decal>>> DecalRenderIndex = new();
 
         public override void Initialize()
         {
@@ -25,6 +26,18 @@ namespace Content.Client.Decals
             SubscribeNetworkEvent<DecalChunkUpdateEvent>(OnChunkUpdate);
             SubscribeNetworkEvent<DecalRemovalUpdateEvent>(OnRemovalUpdate);
             SubscribeNetworkEvent<DecalIndexCheckEvent>(OnIndexCheck);
+            SubscribeLocalEvent<GridInitializeEvent>(OnGridInitialize);
+            SubscribeLocalEvent<GridRemovalEvent>(OnGridRemoval);
+        }
+
+        private void OnGridRemoval(GridRemovalEvent ev)
+        {
+            DecalRenderIndex.Remove(ev.GridId);
+        }
+
+        private void OnGridInitialize(GridInitializeEvent ev)
+        {
+            DecalRenderIndex[ev.GridId] = new();
         }
 
         public override void Shutdown()
@@ -59,9 +72,13 @@ namespace Content.Client.Decals
                 foreach (var (indices, newChunkData) in gridChunks)
                 {
                     ChunkCollections[gridId].InsertChunk(indices, newChunkData);
-                    foreach (var uid in newChunkData.Keys)
+                    foreach (var (uid, decal) in newChunkData)
                     {
                         ChunkIndex.TryAdd(uid, (gridId, indices));
+                        if (!DecalRenderIndex[gridId].TryGetValue(decal.ZIndex, out var decals))
+                            DecalRenderIndex[gridId][decal.ZIndex] = new ();
+
+                        DecalRenderIndex[gridId][decal.ZIndex].Add(uid, decal);
                     }
                 }
             }
