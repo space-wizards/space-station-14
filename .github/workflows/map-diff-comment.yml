@@ -90,7 +90,7 @@ jobs:
         with:
           issue-number: ${{ github.event.number }}
           body: |
-            ${{ steps.diff.outputs.map_names }}
+            ${{ steps.create_images.outputs.map_names }}
 
       - name: Update comment if it exists
         if: steps.fc.outputs.comment-id != ''
@@ -99,7 +99,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           edit-mode: replace
           body: |
-            ${{ steps.diff.outputs.map_names }}
+            ${{ steps.create_images.outputs.map_names }}
 
       - name: Update comment to read that it has been edited
         if: steps.fc.outputs.comment-id != ''
