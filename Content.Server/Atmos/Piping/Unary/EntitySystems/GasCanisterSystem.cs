@@ -51,18 +51,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         /// <summary>
         /// Completely dumps the content of the canister into the world.
         /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="canister"></param>
-        public void PurgeContents(EntityUid uid, GasCanisterComponent canister)
+        public void PurgeContents(EntityUid uid, GasCanisterComponent? canister = null, ITransformComponent? transform = null)
         {
-            if (EntityManager.TryGetComponent<ITransformComponent>(uid, out var transform))
-            {
-                var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
-                if (environment is not null)
-                {
-                    _atmosphereSystem.Merge(environment, canister.Air);
-                }
-            }
+            if (!Resolve(uid, ref canister, ref transform)) return;
+
+            var environment = _atmosphereSystem.GetTileMixture(transform.Coordinates, true);
+
+            if (environment is not null)
+                _atmosphereSystem.Merge(environment, canister.Air);
+
+            canister.Air.Clear();
         }
 
         private void OnCanisterStartup(EntityUid uid, GasCanisterComponent canister, ComponentStartup args)

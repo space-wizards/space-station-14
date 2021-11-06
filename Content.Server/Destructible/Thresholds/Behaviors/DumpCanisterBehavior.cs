@@ -14,10 +14,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         {
             var gasCanisterSystem = EntitySystem.Get<GasCanisterSystem>();
 
-            if (owner.TryGetComponent<GasCanisterComponent>(out var canister))
-            {
-                gasCanisterSystem.PurgeContents(owner.Uid, canister);
-            }
+            gasCanisterSystem.PurgeContents(owner.Uid);
         }
     }
 }
