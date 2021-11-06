@@ -6,6 +6,7 @@ using Content.Server.Coordinates.Helpers;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
@@ -85,7 +86,7 @@ namespace Content.Server.Chemistry.Components
                     return;
                 }
 
-                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     effectComponent.TryAddSolution(solution.Clone());
                 }
@@ -122,7 +123,7 @@ namespace Content.Server.Chemistry.Components
         /// with the other area effects from the inception.</param>
         public void React(float averageExposures)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 return;
 
             var chemistry = EntitySystem.Get<ChemistrySystem>();
@@ -133,7 +134,7 @@ namespace Content.Server.Chemistry.Components
 
             foreach (var reagentQuantity in solution.Contents)
             {
-                if (reagentQuantity.Quantity == ReagentUnit.Zero) continue;
+                if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                 var reagent = PrototypeManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
 
                 // React with the tile the effect is on
@@ -160,11 +161,11 @@ namespace Content.Server.Chemistry.Components
             if (solution.TotalVolume == 0)
                 return;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solutionArea))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solutionArea))
                 return;
 
             var addSolution =
-                solution.SplitSolution(ReagentUnit.Min(solution.TotalVolume, solutionArea.AvailableVolume));
+                solution.SplitSolution(FixedPoint2.Min(solution.TotalVolume, solutionArea.AvailableVolume));
 
             EntitySystem.Get<SolutionContainerSystem>().TryAddSolution(Owner.Uid, solutionArea, addSolution);
 

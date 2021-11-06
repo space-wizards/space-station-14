@@ -6,6 +6,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Cooldown;
+using Content.Shared.FixedPoint;
 using Content.Shared.Fluids;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
@@ -34,7 +35,7 @@ namespace Content.Server.Fluids.Components
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
         [DataField("transferAmount")]
-        private ReagentUnit _transferAmount = ReagentUnit.New(10);
+        private FixedPoint2 _transferAmount = FixedPoint2.New(10);
         [DataField("sprayVelocity")]
         private float _sprayVelocity = 1.5f;
         [DataField("sprayAliveTime")]
@@ -56,7 +57,7 @@ namespace Content.Server.Fluids.Components
         ///     The amount of solution to be sprayer from this solution when using it
         /// </summary>
         [ViewVariables]
-        public ReagentUnit TransferAmount
+        public FixedPoint2 TransferAmount
         {
             get => _transferAmount;
             set => _transferAmount = value;
@@ -75,11 +76,11 @@ namespace Content.Server.Fluids.Components
         [DataField("spraySound", required: true)]
         public SoundSpecifier SpraySound { get; } = default!;
 
-        public ReagentUnit CurrentVolume {
+        public FixedPoint2 CurrentVolume {
             get
             {
-                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution);
-                return solution?.CurrentVolume ?? ReagentUnit.Zero;
+                EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution);
+                return solution?.CurrentVolume ?? FixedPoint2.Zero;
             }
         }
 
@@ -105,7 +106,7 @@ namespace Content.Server.Fluids.Components
             if (eventArgs.ClickLocation.GetGridId(entManager) != playerPos.GetGridId(entManager))
                 return true;
 
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var contents))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var contents))
                 return true;
 
             var direction = (eventArgs.ClickLocation.Position - playerPos.Position).Normalized;
@@ -131,7 +132,7 @@ namespace Content.Server.Fluids.Components
 
                 var solution = EntitySystem.Get<SolutionContainerSystem>().SplitSolution(Owner.Uid, contents, _transferAmount);
 
-                if (solution.TotalVolume <= ReagentUnit.Zero)
+                if (solution.TotalVolume <= FixedPoint2.Zero)
                     break;
 
                 var vapor = entManager.SpawnEntity(_vaporPrototype, playerPos.Offset(distance < 1 ? quarter : threeQuarters));

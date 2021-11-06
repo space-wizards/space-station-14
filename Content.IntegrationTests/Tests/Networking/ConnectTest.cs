@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Networking
         public async Task TestConnect()
         {
             var client = StartClient();
-            var server = StartServer();
+            var server = StartServer(new ServerContentIntegrationOption {Pool = false});
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 

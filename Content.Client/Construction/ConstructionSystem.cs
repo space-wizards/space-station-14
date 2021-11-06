@@ -30,6 +30,7 @@ namespace Content.Client.Construction
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly Dictionary<int, ConstructionGhostComponent> _ghosts = new();
+        private readonly Dictionary<string, ConstructionGuide> _guideCache = new();
 
         private int _nextId;
 
@@ -42,6 +43,7 @@ namespace Content.Client.Construction
 
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
+            SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.OpenCraftingMenu,
@@ -53,12 +55,27 @@ namespace Content.Client.Construction
             SubscribeLocalEvent<ConstructionGhostComponent, ExaminedEvent>(HandleConstructionGhostExamined);
         }
 
+        private void OnConstructionGuideReceived(ResponseConstructionGuide ev)
+        {
+            _guideCache[ev.ConstructionId] = ev.Guide;
+            ConstructionGuideAvailable?.Invoke(this, ev.ConstructionId);
+        }
+
         /// <inheritdoc />
         public override void Shutdown()
         {
             base.Shutdown();
 
             CommandBinds.Unregister<ConstructionSystem>();
+        }
+
+        public ConstructionGuide? GetGuide(ConstructionPrototype prototype)
+        {
+            if (_guideCache.TryGetValue(prototype.ID, out var guide))
+                return guide;
+
+            RaiseNetworkEvent(new RequestConstructionGuide(prototype.ID));
+            return null;
         }
 
         private void HandleConstructionGhostExamined(EntityUid uid, ConstructionGhostComponent component, ExaminedEvent args)
@@ -84,6 +101,7 @@ namespace Content.Client.Construction
         }
 
         public event EventHandler<CraftingAvailabilityChangedArgs>? CraftingAvailabilityChanged;
+        public event EventHandler<string>? ConstructionGuideAvailable;
         public event EventHandler? ToggleCraftingWindow;
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)

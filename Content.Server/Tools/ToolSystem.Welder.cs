@@ -8,6 +8,7 @@ using Content.Server.Tools.Components;
 using Content.Shared.Audio;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Content.Shared.Temperature;
@@ -43,11 +44,11 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
         }
 
-        public (ReagentUnit fuel, ReagentUnit capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
+        public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
         {
             if (!Resolve(uid, ref welder, ref solutionContainer)
                 || !_solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var fuelSolution, solutionContainer))
-                return (ReagentUnit.Zero, ReagentUnit.Zero);
+                return (FixedPoint2.Zero, FixedPoint2.Zero);
 
             return (_solutionContainerSystem.GetReagentQuantity(uid, welder.FuelReagent), fuelSolution.MaxVolume);
         }
@@ -88,7 +89,7 @@ namespace Content.Server.Tools
             var fuel = solution.GetReagentQuantity(welder.FuelReagent);
 
             // Not enough fuel to lit welder.
-            if (fuel == ReagentUnit.Zero || fuel < welder.FuelLitCost)
+            if (fuel == FixedPoint2.Zero || fuel < welder.FuelLitCost)
             {
                 if(user != null)
                     _popupSystem.PopupEntity(Loc.GetString("welder-component-no-fuel-message"), uid, Filter.Entities(user.Value));
@@ -182,7 +183,7 @@ namespace Content.Server.Tools
                 var (fuel, capacity) = GetWelderFuelAndCapacity(uid, welder);
 
                 args.PushMarkup(Loc.GetString("welder-component-on-examine-detailed-message",
-                    ("colorName", fuel < capacity / ReagentUnit.New(4f) ? "darkorange" : "orange"),
+                    ("colorName", fuel < capacity / FixedPoint2.New(4f) ? "darkorange" : "orange"),
                     ("fuelLeft", fuel),
                     ("fuelCapacity", capacity)));
             }
@@ -213,7 +214,7 @@ namespace Content.Server.Tools
                 && _solutionContainerSystem.TryGetDrainableSolution(args.Target.Uid, out var targetSolution)
                 && _solutionContainerSystem.TryGetSolution(uid, welder.FuelSolution, out var welderSolution))
             {
-                var trans = ReagentUnit.Min(welderSolution.AvailableVolume, targetSolution.DrainAvailable);
+                var trans = FixedPoint2.Min(welderSolution.AvailableVolume, targetSolution.DrainAvailable);
                 if (trans > 0)
                 {
                     var drained = _solutionContainerSystem.Drain(args.Target.Uid, targetSolution,  trans);
@@ -249,7 +250,7 @@ namespace Content.Server.Tools
 
             var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
 
-            if (ReagentUnit.New(args.Fuel) > fuel)
+            if (FixedPoint2.New(args.Fuel) > fuel)
             {
                 _popupSystem.PopupEntity(Loc.GetString("welder-component-cannot-weld-message"), uid, Filter.Entities(args.User));
                 args.Cancel();
@@ -271,7 +272,7 @@ namespace Content.Server.Tools
 
             var (fuel, _) = GetWelderFuelAndCapacity(uid, welder);
 
-            var neededFuel = ReagentUnit.New(args.Fuel);
+            var neededFuel = FixedPoint2.New(args.Fuel);
 
             if (neededFuel > fuel)
             {
@@ -320,7 +321,7 @@ namespace Content.Server.Tools
 
                 solution.RemoveReagent(welder.FuelReagent, welder.FuelConsumption * _welderTimer);
 
-                if (solution.GetReagentQuantity(welder.FuelReagent) <= ReagentUnit.Zero)
+                if (solution.GetReagentQuantity(welder.FuelReagent) <= FixedPoint2.Zero)
                     TryTurnWelderOff(tool, null, welder);
 
                 welder.Dirty();

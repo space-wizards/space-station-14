@@ -15,7 +15,7 @@ namespace Content.Server.AI.Utility.Considerations.Combat
                 return 0.0f;
             }
 
-            return damageableComponent.TotalDamage / 300.0f;
+            return (float) damageableComponent.TotalDamage / 300.0f;
         }
     }
 }

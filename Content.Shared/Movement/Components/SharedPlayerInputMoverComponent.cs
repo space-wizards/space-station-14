@@ -50,6 +50,8 @@ namespace Content.Shared.Movement.Components
 
         private MoveButtons _heldMoveButtons = MoveButtons.None;
 
+        public Angle LastGridAngle { get; set; } = new(0);
+
         public float CurrentWalkSpeed => _movementSpeed?.CurrentWalkSpeed ?? MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
 
         public float CurrentSprintSpeed => _movementSpeed?.CurrentSprintSpeed ?? MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
@@ -117,6 +119,7 @@ namespace Content.Shared.Movement.Components
         {
             base.Initialize();
             Owner.EnsureComponentWarn<PhysicsComponent>();
+            LastGridAngle = Owner.Transform.Parent?.WorldRotation ?? new Angle(0);
         }
 
         /// <summary>

@@ -429,7 +429,7 @@ namespace Content.Shared.CCVar
          */
 
         public static readonly CVarDef<bool> BanHardwareIds =
-            CVarDef.Create("ban.hardware_ids", false, CVar.SERVERONLY);
+            CVarDef.Create("ban.hardware_ids", true, CVar.SERVERONLY);
 
         /*
          * Shuttles

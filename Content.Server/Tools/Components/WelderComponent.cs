@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Sound;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameObjects;
@@ -26,13 +27,13 @@ namespace Content.Server.Tools.Components
         ///     Fuel consumption per second, while the welder is active.
         /// </summary>
         [DataField("fuelConsumption")]
-        public ReagentUnit FuelConsumption { get; } = ReagentUnit.New(0.05f);
+        public FixedPoint2 FuelConsumption { get; } = FixedPoint2.New(0.05f);
 
         /// <summary>
         ///     A fuel amount to be consumed when the welder goes from being unlit to being lit.
         /// </summary>
         [DataField("welderOnConsume")]
-        public ReagentUnit FuelLitCost { get; } = ReagentUnit.New(0.5f);
+        public FixedPoint2 FuelLitCost { get; } = FixedPoint2.New(0.5f);
 
         /// <summary>
         ///     Sound played when the welder is turned off.

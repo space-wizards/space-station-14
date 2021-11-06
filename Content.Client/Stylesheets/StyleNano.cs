@@ -18,6 +18,27 @@ using static Robust.Client.UserInterface.StylesheetHelpers;
 
 namespace Content.Client.Stylesheets
 {
+    public static class ResCacheExtension
+    {
+        public static Font notoStack(this IResourceCache resCache, string variation = "Regular", int size = 10, bool display = false)
+        {
+            var ds = display ? "Display" : "";
+            var sv = variation.StartsWith("Bold") ? "Bold" : "Regular";
+            return resCache.GetFont
+            (
+                // Ew, but ok
+                new []
+                {
+                    $"/Fonts/NotoSans{ds}/NotoSans{ds}-{variation}.ttf",
+                    $"/Fonts/NotoSans/NotoSansSymbols-{sv}.ttf",
+                    "/Fonts/NotoSans/NotoSansSymbols2-Regular.ttf"
+                },
+                size
+            );
+
+        }
+
+    }
     public sealed class StyleNano : StyleBase
     {
         public const string StyleClassBorderedWindowPanel = "BorderedWindowPanel";
@@ -54,6 +75,10 @@ namespace Content.Client.Stylesheets
         public const string StyleClassPopupMessage = "PopupMessage";
 
         public static readonly Color NanoGold = Color.FromHex("#A88B5E");
+        public static readonly Color GoodGreenFore = Color.FromHex("#31843E");
+        public static readonly Color ConcerningOrangeFore = Color.FromHex("#A5762F");
+        public static readonly Color DangerousRedFore = Color.FromHex("#BB3232");
+        public static readonly Color DisabledFore = Color.FromHex("#5A5A5A");
 
         public static readonly Color ButtonColorDefault = Color.FromHex("#464966");
         public static readonly Color ButtonColorDefaultRed = Color.FromHex("#D43B3B");
@@ -84,19 +109,19 @@ namespace Content.Client.Stylesheets
 
         public StyleNano(IResourceCache resCache) : base(resCache)
         {
-            var notoSans10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 10);
-            var notoSansItalic10 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 10);
-            var notoSans12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 12);
-            var notoSansItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Italic.ttf", 12);
-            var notoSansBold12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 12);
-            var notoSansBoldItalic12 = resCache.GetFont("/Fonts/NotoSans/NotoSans-BoldItalic.ttf", 12);
-            var notoSansDisplayBold14 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 14);
-            var notoSansDisplayBold16 = resCache.GetFont("/Fonts/NotoSansDisplay/NotoSansDisplay-Bold.ttf", 16);
-            var notoSans15 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 15);
-            var notoSans16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Regular.ttf", 16);
-            var notoSansBold16 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 16);
-            var notoSansBold18 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 18);
-            var notoSansBold20 = resCache.GetFont("/Fonts/NotoSans/NotoSans-Bold.ttf", 20);
+            var notoSans10 = resCache.notoStack(size: 10);
+            var notoSansItalic10 = resCache.notoStack(variation: "Italic", size: 10);
+            var notoSans12 = resCache.notoStack(size: 12);
+            var notoSansItalic12 = resCache.notoStack(variation: "Italic", size: 12);
+            var notoSansBold12 = resCache.notoStack(variation: "Bold", size: 12);
+            var notoSansBoldItalic12 = resCache.notoStack(variation: "BoldItalic", size: 12);
+            var notoSansDisplayBold14 = resCache.notoStack(variation: "Bold", display: true, size: 14); 
+            var notoSansDisplayBold16 = resCache.notoStack(variation: "Bold", display: true, size: 16);
+            var notoSans15 = resCache.notoStack(variation: "Regular", size: 15);
+            var notoSans16 = resCache.notoStack(variation: "Regular", size: 16);
+            var notoSansBold16 = resCache.notoStack(variation: "Bold", size: 16);
+            var notoSansBold18 = resCache.notoStack(variation: "Bold", size: 18);
+            var notoSansBold20 = resCache.notoStack(variation: "Bold", size: 20);
             var windowHeaderTex = resCache.GetTexture("/Textures/Interface/Nano/window_header.png");
             var windowHeader = new StyleBoxTexture
             {
@@ -394,6 +419,15 @@ namespace Content.Client.Stylesheets
             var sliderFillGreen = new StyleBoxTexture(sliderFillBox) {Modulate = Color.LimeGreen};
             var sliderFillRed = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Red};
             var sliderFillBlue = new StyleBoxTexture(sliderFillBox) {Modulate = Color.Blue};
+
+            var boxFont13 = resCache.GetFont("/Fonts/Boxfont-round/Boxfont Round.ttf", 13);
+
+            var insetBack = new StyleBoxTexture
+            {
+                Texture = buttonTex,
+                Modulate = Color.FromHex("#202023"),
+            };
+            insetBack.SetPatchMargin(StyleBox.Margin.All, 10);
 
             Stylesheet = new Stylesheet(BaseRules.Concat(new[]
             {
@@ -1123,6 +1157,40 @@ namespace Content.Client.Stylesheets
                 Element<PanelContainer>().Class(ClassAngleRect)
                     .Prop(PanelContainer.StylePropertyPanel, BaseAngleRect)
                     .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#25252A")),
+
+                Element<PanelContainer>().Class(ClassLowDivider)
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BackgroundColor = Color.FromHex("#444"),
+                        ContentMarginLeftOverride = 2,
+                        ContentMarginBottomOverride = 2
+                    }),
+
+                Element<Label>().Class("FancyWindowTitle")
+                    .Prop("font", boxFont13)
+                    .Prop("font-color", NanoGold),
+
+                Element<PanelContainer>().Class("WindowHeadingBackground")
+                    .Prop("panel", new StyleBoxTexture(BaseButtonOpenLeft) { Padding = default })
+                    .Prop(Control.StylePropertyModulateSelf, Color.FromHex("#1F1F23")),
+
+                Element<PanelContainer>().Class("Inset")
+                    .Prop("panel", insetBack),
+
+                Element<Label>().Class("StatusFieldTitle")
+                    .Prop("font-color", NanoGold),
+
+                Element<Label>().Class("Good")
+                    .Prop("font-color", GoodGreenFore),
+
+                Element<Label>().Class("Caution")
+                    .Prop("font-color", ConcerningOrangeFore),
+
+                Element<Label>().Class("Danger")
+                    .Prop("font-color", DangerousRedFore),
+
+                Element<Label>().Class("Disabled")
+                    .Prop("font-color", DisabledFore),
 
             }).ToList());
         }

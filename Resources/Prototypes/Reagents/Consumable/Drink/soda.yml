@@ -41,6 +41,34 @@
       amount: 0.1
 
 - type: reagent
+  id: EnergyDrink
+  name: Energy Drink
+  desc: A dose of energy! Nanotrasen is not responsible if you grow avian appendages.
+  physicalDesc: fizzy
+  color: "#ffffbf"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
+  id: GrapeSoda
+  name: grape soda
+  desc: It's Graaaaaape!
+  physicalDesc: fizzy
+  color: "#ae94a6"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
   id: LemonLime
   name: lemon-lime
   desc: tangy lime and lemon soda
@@ -89,6 +117,20 @@
   desc: Tastes like a hull breach in your mouth.
   physicalDesc: fizzy
   color: "#00FF00"
+  plantMetabolism:
+    - !type:AdjustNutrition
+      amount: 0.1
+    - !type:AdjustWater
+      amount: 1
+    - !type:AdjustHealth
+      amount: 0.1
+
+- type: reagent
+  id: Starkist
+  name: starkist
+  desc: A sweet, orange flavored soft drink.
+  physicalDesc: fizzy
+  color: "#9F3400"
   plantMetabolism:
     - !type:AdjustNutrition
       amount: 0.1

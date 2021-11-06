@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Commands;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.FixedPoint;
 using Content.Shared.MobState;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Commands
         public async Task RejuvenateDeadTest()
         {
             var options = new ServerIntegrationOptions{ExtraPrototypes = Prototypes};
-            var server = StartServerDummyTicker(options);
+            var server = StartServer(options);
 
             await server.WaitAssertion(() =>
             {
@@ -56,7 +57,8 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
                 // Kill the entity
-                DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"), 10000000);
+                DamageSpecifier damage = new(prototypeManager.Index<DamageGroupPrototype>("Toxin"),
+                    FixedPoint2.New(10000000));
                 EntitySystem.Get<DamageableSystem>().TryChangeDamage(human.Uid, damage, true);
 
                 // Check that it is dead
@@ -74,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(mobState.IsDead, Is.False);
                 Assert.That(mobState.IsIncapacitated, Is.False);
 
-                Assert.That(damageable.TotalDamage, Is.Zero);
+                Assert.That(damageable.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
             });
         }
     }

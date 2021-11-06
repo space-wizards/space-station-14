@@ -8,6 +8,7 @@ using Content.Server.Hands.Components;
 using Content.Server.Items;
 using Content.Shared.Body.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Helpers;
 using Content.Shared.Popups;
@@ -42,7 +43,7 @@ namespace Content.Server.Nutrition.Components
 
         [ViewVariables]
         [DataField("transferAmount")]
-        private ReagentUnit? TransferAmount { get; set; } = ReagentUnit.New(5);
+        private FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
 
         [DataField("utensilsNeeded")]
         private UtensilType _utensilsNeeded = UtensilType.None;
@@ -55,7 +56,7 @@ namespace Content.Server.Nutrition.Components
         {
             get
             {
-                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
+                if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var solution))
                 {
                     return 0;
                 }
@@ -65,7 +66,7 @@ namespace Content.Server.Nutrition.Components
 
                 return solution.CurrentVolume == 0
                     ? 0
-                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (ReagentUnit)TransferAmount).Float()));
+                    : Math.Max(1, (int) Math.Ceiling((solution.CurrentVolume / (FixedPoint2)TransferAmount).Float()));
             }
         }
 
@@ -101,7 +102,7 @@ namespace Content.Server.Nutrition.Components
         public bool TryUseFood(IEntity? user, IEntity? target, UtensilComponent? utensilUsed = null)
         {
             var solutionContainerSys = EntitySystem.Get<SolutionContainerSystem>();
-            if (!solutionContainerSys.TryGetSolution(Owner, SolutionName, out var solution))
+            if (!solutionContainerSys.TryGetSolution(Owner.Uid, SolutionName, out var solution))
             {
                 return false;
             }
@@ -162,7 +163,7 @@ namespace Content.Server.Nutrition.Components
                 return false;
             }
 
-            var transferAmount = TransferAmount != null ?  ReagentUnit.Min((ReagentUnit)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
+            var transferAmount = TransferAmount != null ?  FixedPoint2.Min((FixedPoint2)TransferAmount, solution.CurrentVolume) : solution.CurrentVolume;
             var split = solutionContainerSys.SplitSolution(Owner.Uid, solution, transferAmount);
             var firstStomach = stomachs.FirstOrDefault(stomach => stomach.CanTransferSolution(split));
 
@@ -199,7 +200,7 @@ namespace Content.Server.Nutrition.Components
 
             if (string.IsNullOrEmpty(TrashPrototype))
             {
-                Owner.Delete();
+                Owner.QueueDelete();
                 return true;
             }
 
@@ -207,8 +208,6 @@ namespace Content.Server.Nutrition.Components
 
             return true;
         }
-
-
 
         private void DeleteAndSpawnTrash(IEntity user)
         {

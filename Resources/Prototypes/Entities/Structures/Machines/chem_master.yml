@@ -1,6 +1,6 @@
 - type: entity
   id: chem_master
-  parent: BaseStructure
+  parent: BaseMachinePowered
   name: ChemMaster 4000
   description: An industrial grade chemical manipulator with pill and bottle production included.
   placement:
@@ -16,10 +16,6 @@
     sprite: Structures/Machines/mixer.rsi
     state: mixer_loaded
   - type: ChemMaster
-  - type: ApcPowerReceiver
-  - type: ExtensionCableReceiver
-  - type: InteractionOutline
-  - type: Anchorable
   - type: Physics
     bodyType: Static
     fixtures:
@@ -32,73 +28,31 @@
       layer:
       - Opaque
       - MobImpassable
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: Metallic
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
         damage: 50
       behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          chem_master_broken:
-            min: 1
-            max: 1
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: UserInterface
     interfaces:
     - key: enum.ChemMasterUiKey.Key
       type: ChemMasterBoundUserInterface
+  # Machine / Construction stuff
+  - type: Wires
+    BoardName: "chem_master"
+    LayoutId: chem_master
+  - type: Machine
+    board: ChemMasterMachineCircuitboard
+  - type: MaterialStorage
+  - type: Construction
+    graph: machine
+    node: machine
+  - type: EmptyOnMachineDeconstruct
+    containers:
+    - ChemMaster-reagentContainerContainer
 
-- type: entity
-  id: chem_master_broken
-  parent: BaseStructureDynamic
-  name: ChemMaster 4000
-  description: "An industrial grade chemical manipulator with pill and bottle production included. It's broken."
-  abstract: true
-  suffix: Broken
-  components:
-  - type: Sprite
-    sprite: Structures/Machines/mixer.rsi
-    layers:
-    - state: mixer_empty
-    - state: mixer_screen_broken
-      shader: unshaded
-  - type: Icon
-    sprite: Structures/Machines/mixer.rsi
-    state: mixer_broken
-  - type: InteractionOutline
-  - type: Physics
-    bodyType: Dynamic
-    fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.25,-0.4,0.25,0.4"
-      mass: 25
-      mask:
-        - SmallImpassable
-      layer:
-        - Opaque
-        - MobImpassable
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 25
-      behaviors:
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          SheetSteel1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: UserInterface
-    interfaces:
-    - key: enum.ChemMasterUiKey.Key
-      type: ChemMasterBoundUserInterface

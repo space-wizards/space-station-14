@@ -44,6 +44,7 @@ namespace Content.Server.Interaction
         [Dependency] private readonly IEntityManager _entityManager = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly PullingSystem _pullSystem = default!;
+        [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
 
         public override void Initialize()
         {
@@ -357,36 +358,9 @@ namespace Content.Server.Interaction
                 return false;
             }
 
-            FaceClickCoordinates(user, coordinates);
+            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
 
             return true;
-        }
-
-        private void FaceClickCoordinates(IEntity user, EntityCoordinates coordinates)
-        {
-            var diff = coordinates.ToMapPos(EntityManager) - user.Transform.MapPosition.Position;
-            if (diff.LengthSquared <= 0.01f)
-                return;
-            var diffAngle = Angle.FromWorldVec(diff);
-            if (_actionBlockerSystem.CanChangeDirection(user))
-            {
-                user.Transform.WorldRotation = diffAngle;
-            }
-            else
-            {
-                if (user.TryGetComponent(out BuckleComponent? buckle) && (buckle.BuckledTo != null))
-                {
-                    // We're buckled to another object. Is that object rotatable?
-                    if (buckle.BuckledTo!.Owner.TryGetComponent(out RotatableComponent? rotatable) && rotatable.RotateWhileAnchored)
-                    {
-                        // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
-                        // (Since the user being buckled to it holds it down with their weight.)
-                        // This is logically equivalent to RotateWhileAnchored.
-                        // Barstools and office chairs have independent wheels, while regular chairs don't.
-                        rotatable.Owner.Transform.LocalRotation = diffAngle;
-                    }
-                }
-            }
         }
 
         /// <summary>

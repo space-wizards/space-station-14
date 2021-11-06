@@ -50,5 +50,13 @@ namespace Content.Shared.Construction.Conditions
                predicate: (e) => e == targetWall || !e.HasTag("Wall"));
             return !adjWallRaycastResults.Any();
         }
+
+        public ConstructionGuideEntry? GenerateGuideEntry()
+        {
+            return new ConstructionGuideEntry()
+            {
+                Localization = "construction-step-condition-wallmount",
+            };
+        }
     }
 }
