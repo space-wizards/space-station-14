@@ -4,6 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Decals
 {
+    [Prototype("decal")]
     public class DecalPrototype : IPrototype
     {
         [DataField("id")] public string ID { get; } = null!;

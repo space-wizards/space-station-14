@@ -1,0 +1,5 @@
+- type: decal
+  id: corgi
+  sprite:
+    sprite: Effects/crayondecals.rsi
+    state: corgi
