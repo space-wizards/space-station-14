@@ -26,6 +26,10 @@ namespace Content.Client.Nuke
             {
                 SendMessage(new NukeEjectMessage());
             };
+            _menu.AnchorButton.OnPressed += _ =>
+            {
+                SendMessage(new NukeAnchorMessage());
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)

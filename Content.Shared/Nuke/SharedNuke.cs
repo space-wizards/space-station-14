@@ -26,5 +26,6 @@ namespace Content.Shared.Nuke
         public NukeStatus Status;
         public string Code = "";
         public int RemainingTime;
+        public bool IsAnchored;
     }
 }

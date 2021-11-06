@@ -8,4 +8,9 @@ namespace Content.Shared.Nuke
     public sealed class NukeEjectMessage : BoundUserInterfaceMessage
     {
     }
+
+    [Serializable, NetSerializable]
+    public sealed class NukeAnchorMessage : BoundUserInterfaceMessage
+    {
+    }
 }

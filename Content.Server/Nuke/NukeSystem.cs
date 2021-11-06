@@ -1,3 +1,4 @@
+using Content.Server.Construction.Components;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
@@ -22,8 +23,12 @@ namespace Content.Server.Nuke
             base.Initialize();
             SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<NukeComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
+            SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
+            SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
 
+            // ui events
             SubscribeLocalEvent<NukeComponent, NukeEjectMessage>(OnEject);
+            SubscribeLocalEvent<NukeComponent, NukeAnchorMessage>(OnAnchor);
         }
 
         private void OnItemSlotChanged(EntityUid uid, NukeComponent component, ItemSlotChangedEvent args)
@@ -54,9 +59,31 @@ namespace Content.Server.Nuke
             args.Handled = true;
         }
 
+        private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)
+        {
+            UpdateUserInterface(uid, component);
+        }
+
+        private void OnWasAnchored(EntityUid uid, NukeComponent component, AnchoredEvent args)
+        {
+            UpdateUserInterface(uid, component);
+        }
+
         private void OnEject(EntityUid uid, NukeComponent component, NukeEjectMessage args)
         {
             _itemSlots.TryEjectContent(uid, DiskSlotName, args.Session.AttachedEntity);
+        }
+
+        private async void OnAnchor(EntityUid uid, NukeComponent component, NukeAnchorMessage args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out AnchorableComponent anchorable))
+                return;
+
+            var user = args.Session.AttachedEntity;
+            if (user == null)
+                return;
+
+            await anchorable.TryToggleAnchor(user, null);
         }
 
         private void UpdateStatus(EntityUid uid, NukeComponent? component = null)
@@ -98,11 +125,16 @@ namespace Content.Server.Nuke
             if (ui == null)
                 return;
 
+            var anchored = false;
+            if (EntityManager.TryGetComponent(uid, out ITransformComponent transform))
+                anchored = transform.Anchored;
+
             var state = new NukeUiState()
             {
                 Status = component.Status,
                 RemainingTime = component.RemainingTime,
-                DiskInserted = component.DiskInserted
+                DiskInserted = component.DiskInserted,
+                IsAnchored = anchored
             };
 
             ui.SetState(state);

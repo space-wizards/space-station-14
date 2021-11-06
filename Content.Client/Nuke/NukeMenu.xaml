@@ -34,7 +34,8 @@
                         Access="Public"/>
                 <Button Name="AnchorButton"
                         Text="{Loc 'nuke-user-interface-anchor-button'}"
-                        Margin="0 0 0 5"/>
+                        Margin="0 0 0 5"
+                        Access="Public"/>
                 <Button Name="ArmButton"
                         Text="{Loc 'nuke-user-interface-arm-button'}"/>
             </BoxContainer>
