@@ -332,7 +332,8 @@ namespace Content.IntegrationTests
             if (!passed)
             {
                 Assert.Fail($"Condition did not pass after {maxTicks} ticks.\n" +
-                            $"Tests ran ({instance.TestsRan.Count}):\n{string.Join('\n', instance.TestsRan)}");
+                            $"Tests ran ({instance.TestsRan.Count}):\n" +
+                            $"{string.Join('\n', instance.TestsRan)}");
             }
             Assert.That(passed);
         }
