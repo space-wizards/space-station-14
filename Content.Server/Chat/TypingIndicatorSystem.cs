@@ -19,10 +19,12 @@ namespace Content.Server.Speech.EntitySystems
             SubscribeNetworkEvent<ClientTypingMessage>(OnClientTyping);
         }
 
+
         private void OnClientTyping(ClientTypingMessage ev)
         {
-            var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
-            
+            //in here we can do some server side checks before the client system finally renders the indicators
+
+            RaiseNetworkEvent(ev);
 
         }
 

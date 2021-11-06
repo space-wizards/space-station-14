@@ -33,7 +33,8 @@ namespace Content.Client.Chat.UI
         [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IEntitySystemManager _entitySystemMan = default!;
-        //[Dependency] private readonly TypingIndicatorSystem _typingIndicatorSystem = default!;
+
+        private TypingIndicatorSystem _typingIndicatorSystem = default!;
 
         // order in which the available channel filters show up when available
         private static readonly ChatChannel[] ChannelFilterOrder =
@@ -113,6 +114,7 @@ namespace Content.Client.Chat.UI
         public ChatBox()
         {
             IoCManager.InjectDependencies(this);
+            _typingIndicatorSystem = EntitySystem.Get<TypingIndicatorSystem>();
             RobustXamlLoader.Load(this);
 
             LayoutContainer.SetMarginLeft(this, 4);
@@ -194,6 +196,13 @@ namespace Content.Client.Chat.UI
             ChatMgr.ChatPermissionsUpdated -= OnChatPermissionsUpdated;
             ChatMgr.UnreadMessageCountsUpdated -= UpdateUnreadMessageCounts;
             ChatMgr.FiltersUpdated -= Repopulate;
+        }
+
+
+        protected override void FrameUpdate(FrameEventArgs args)
+        {
+            base.FrameUpdate(args);
+
         }
 
         private void OnChatPermissionsUpdated(ChatPermissionsUpdatedEventArgs eventArgs)
@@ -478,16 +487,7 @@ namespace Content.Client.Chat.UI
 
         private void InputOnTextChanged(LineEdit.LineEditEventArgs obj)
         {
-            if(_cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled))
-            {
-                var typingSystem = _entitySystemMan.GetEntitySystem<TypingIndicatorSystem>();
-                var pollRate = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.ChatTypingIndicatorPollRate));
-                if (_timing.RealTime.Subtract(typingSystem.TimeSinceType) >= pollRate)
-                {
-                    typingSystem.HandleClientTyping();
-                }
-            }
-
+            _typingIndicatorSystem.HandleClientTyping();
             // Update channel select button to correct channel if we have a prefix.
             UpdateChannelSelectButton();           
         }
@@ -550,7 +550,7 @@ namespace Content.Client.Chat.UI
                 //Reset the timer when we send a message so the typing indicator can immediately be ready again.
                 //could handle this in a handler of a netmsg from server instead?
                 if (_cfg.GetCVar(CCVars.ChatTypingIndicatorSystemEnabled))
-                    _entitySystemMan.GetEntitySystem<TypingIndicatorSystem>().ResetTypingTime();
+                    _typingIndicatorSystem.ResetTypingTime();
 
                 ChatMgr.OnChatBoxTextSubmitted(this, text, prefixChannel == 0 ? SelectedChannel : prefixChannel);
             }

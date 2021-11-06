@@ -28,5 +28,19 @@ namespace Content.Shared.Chat
                 EnityId = owner;
             }
         }
+
+        [Serializable, NetSerializable]
+        public sealed class ClientStoppedTypingMessage : EntityEventArgs
+        {
+            public NetUserId ClientId { get; }
+            public EntityUid? EnityId { get; }
+
+            public ClientStoppedTypingMessage(NetUserId id, EntityUid? owner)
+            {
+                ClientId = id;
+                EnityId = owner;
+            }
+        }
+
     }
 }
