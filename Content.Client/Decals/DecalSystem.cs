@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Content.Shared.Decals;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Decals
 {
@@ -17,7 +18,13 @@ namespace Content.Client.Decals
 
         private void OnIndexCheck(DecalIndexCheckEvent ev)
         {
-            throw new NotImplementedException();
+            var existingUids = ChunkIndex.Keys.ToHashSet();
+            var missing = new HashSet<uint>(ev.SeenIndices);
+            missing.ExceptWith(existingUids);
+            if (missing.Count > 0)
+            {
+                throw new Exception($"Missing decals: {string.Join(',', missing)}");
+            }
         }
 
         private void OnRemovalUpdate(DecalRemovalUpdateEvent msg)
