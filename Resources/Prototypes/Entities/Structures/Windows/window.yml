@@ -141,9 +141,8 @@
   - type: Icon
     sprite: Structures/Windows/directional.rsi
     state: tinted_window
-  #- type: Occluder
-  #  boundingBox: "-0.49,-0.49,0.49,-0.2"
-  # these are supposed to occlude but uhhhhhhhhhh non-fulltile occluders are hard
+  - type: Occluder
+    boundingBox: "-0.49,-0.49,0.49,-0.3"
 
 - type: entity
   id: WindowFrostedDirectional
