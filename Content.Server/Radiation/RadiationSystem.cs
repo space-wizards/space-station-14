@@ -25,7 +25,7 @@ namespace Content.Server.Radiation
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [ComponentDependency] private readonly BatteryComponent? _batteryComponent = default!;
 
-        private const float RadiationCooldown = 60f;
+        private const float RadiationCooldown = 0.5f;
         private float _accumulator;
         public override void Initialize()
         {
@@ -53,7 +53,7 @@ namespace Content.Server.Radiation
                     if (entity.HasComponent<DamageableComponent>())
                     {
                         //TODO: make damage falloff with range and add plasmaglass occluding
-                        _damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), (int) Energy/1000);
+                        _damage = new DamageSpecifier(_prototypeManager.Index<DamageTypePrototype>("Radiation"), (int) Energy/100);
 
                         foreach (var typeID in RadiationDamageTypeIDs)
                         _damageable.TryChangeDamage(entity.Uid, _damage);
@@ -62,8 +62,6 @@ namespace Content.Server.Radiation
                     if (entity.HasComponent<RadiationCollectorComponent>())
                     {
                         //TODO: make energy falloff with range and plasmaglass occluding
-                        //_collector = entity.GetComponent<PowerSupplierComponent>();
-                        //_collector.CurrentSupply+= Energy * 3000f;
                         float supply = (Energy / InRange) * 1.25f;
                         entity.GetComponent<PowerSupplierComponent>().MaxSupply = supply;
                     }

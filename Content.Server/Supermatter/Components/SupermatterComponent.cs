@@ -40,7 +40,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Supermatter
 {
     [RegisterComponent]
-    public class SupermatterComponent : Component, IRadiationAct
+    public class SupermatterComponent : Component
     {
         public override string Name => "Supermatter";
         private float _Power = 0;
@@ -51,6 +51,12 @@ namespace Content.Server.Supermatter
         private float _PowerlossDynamicScaling = 0;
         private float _DynamicHeatResistance = 0;
         private float _PowerlossInhibitor = 0;
+        private float _damageArchived = 0;
+        //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
+        private float  _moleHeatPenalty = 0f;
+
+        private float _splodeTimer = 120f;
+        private float _hurtTimer = 180f;
 
         //TODO: PsyCoeff should change from 0-1 based on psycologist distance
         public float PsyCoeff = 0;
@@ -143,23 +149,21 @@ namespace Content.Server.Supermatter
         //bonus powerloss inhibition boost if this amount of moles is reached
         public static float  PowerlossInhibitionMoleBoostThreshold = 500f;
         //Above this value we can get lord singulo and independent mol damage, below it we can heal damage
-        public static float  MOLE_PENALTY_THRESHOLD = 1800f;
-        //Heat damage scales around this. Too hot setups with this amount of moles do regular damage, anything above and below is scaled
-        public static float  MoleHeatPenalty = 350f;
+        public static float  MolePenaltyThreshold = 1800f;
 
         //Along with damage_penalty_point, makes flux anomalies.
         /// The cutoff for the minimum amount of power required to trigger the crystal invasion delamination event.
         public static float  EVENT_POWER_PENALTY_THRESHOLD = 4500f;
         //The cutoff on power properly doing damage, pulling shit around, and delamming into a tesla. Low chance of pyro anomalies, +2 bolts of electricity
-        public static float  POWER_PENALTY_THRESHOLD = 5000f;
+        public static float  PowerPenaltyThreshold = 5000f;
         //+1 bolt of electricity, allows for gravitational anomalies, and higher chances of pyro anomalies
         public static float  SEVERE_POWER_PENALTY_THRESHOLD = 7000f;
         //+1 bolt of electricity.
         public static float  CRITICAL_POWER_PENALTY_THRESHOLD = 9000f;
         //Higher == Crystal safe operational temperature is higher.
-        public static float  HEAT_PENALTY_THRESHOLD = 40f;
-        public static float  DAMAGE_HARDCAP = 0.002f;
-        public static float  DAMAGE_INCREASE_MULTIPLIER = 0.25f;
+        public static float  HeatPenaltyThreshold = 40f;
+        public static float  DamageHardcap = 0.002f;
+        public static float  DamageIncreaseMultiplier = 0.25f;
 
         //Higher == less heat released during reaction, not to be confused with the above values
         public static float  ThermalReleaseModifier = 5f;
@@ -174,6 +178,8 @@ namespace Content.Server.Supermatter
         //These would be what you would get at point blank, decreases with distance
         public static float  DETONATION_RADS = 200f;
         public static float  DETONATION_HALLUCINATION = 600f;
+
+        public static float MaxSpaceExposureDamage = 2;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public float[] GasComp =
@@ -219,7 +225,7 @@ namespace Content.Server.Supermatter
             }
         }
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        [ViewVariables(VVAccess.ReadOnly)]
         public Atmos.GasMixture? Mix
         {
             get => _mix;
@@ -291,19 +297,46 @@ namespace Content.Server.Supermatter
             }
         }
 
-        public List<string> RadiationDamageTypeIDs = new() {"Radiation"};
-        void IRadiationAct.RadiationAct(float frameTime, SharedRadiationPulseComponent radiation)
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float splodeTimer
         {
-            var damageValue = Math.Max((int) (frameTime * radiation.RadsPerSecond), 1);
-
-            // Radiation should really just be a damage group instead of a list of types.
-            DamageSpecifier damage = new();
-            foreach (var typeID in RadiationDamageTypeIDs)
+            get => _splodeTimer;
+            set
             {
-                damage.DamageDict.Add(typeID, damageValue);
+                _splodeTimer = value;
+                Dirty();
             }
+        }
 
-            EntitySystem.Get<DamageableSystem>().TryChangeDamage(Owner.Uid, damage);
+        [ViewVariables(VVAccess.ReadOnly)]
+        public float hurtTimer
+        {
+            get => _hurtTimer;
+            set
+            {
+                _hurtTimer = value;
+                Dirty();
+            }
+        }
+
+        public float DamageArchived
+        {
+            get => _damageArchived;
+            set
+            {
+                _damageArchived = value;
+                Dirty();
+            }
+        }
+
+        public float MoleHeatPenalty
+        {
+            get => _moleHeatPenalty;
+            set
+            {
+                _moleHeatPenalty = value;
+                Dirty();
+            }
         }
     }
 }
