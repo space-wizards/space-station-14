@@ -28,14 +28,15 @@
             <BoxContainer Orientation="Vertical"
                           HorizontalExpand="True"
                           Margin="5 0">
-                <Button Name="ArmButton"
-                        Text="{Loc 'nuke-user-interface-arm-button'}"
-                        Margin="0 0 0 5"/>
+                <Button Name="EjectButton"
+                        Text="{Loc 'nuke-user-interface-eject-button'}"
+                        Margin="0 0 0 5"
+                        Access="Public"/>
                 <Button Name="AnchorButton"
                         Text="{Loc 'nuke-user-interface-anchor-button'}"
                         Margin="0 0 0 5"/>
-                <Button Name="EjectButton"
-                        Text="{Loc 'nuke-user-interface-eject-button'}"/>
+                <Button Name="ArmButton"
+                        Text="{Loc 'nuke-user-interface-arm-button'}"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

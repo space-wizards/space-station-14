@@ -21,6 +21,11 @@ namespace Content.Client.Nuke
             _menu = new NukeMenu();
             _menu.OpenCentered();
             _menu.OnClose += Close;
+
+            _menu.EjectButton.OnPressed += _ =>
+            {
+                SendMessage(new NukeEjectMessage());
+            };
         }
 
         protected override void UpdateState(BoundUserInterfaceState state)
@@ -39,8 +44,6 @@ namespace Content.Client.Nuke
                 }
             }
         }
-
-
 
         protected override void Dispose(bool disposing)
         {

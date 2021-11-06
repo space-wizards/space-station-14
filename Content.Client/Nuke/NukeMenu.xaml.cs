@@ -87,6 +87,8 @@ namespace Content.Client.Nuke
 
             FirstStatusLabel.Text = firstMsg;
             SecondStatusLabel.Text = secondMsg;
+
+            EjectButton.Disabled = !state.DiskInserted;
         }
     }
 }

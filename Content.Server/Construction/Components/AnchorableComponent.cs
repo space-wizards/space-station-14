@@ -40,15 +40,12 @@ namespace Content.Server.Construction.Components
         /// <param name="utilizing">The tool being used</param>
         /// <param name="anchoring">True if we're anchoring, and false if we're unanchoring.</param>
         /// <returns>true if it is valid, false otherwise</returns>
-        private async Task<bool> Valid(IEntity user, IEntity utilizing, bool anchoring)
+        private async Task<bool> Valid(IEntity user, IEntity? utilizing, bool anchoring)
         {
             if (!Owner.HasComponent<IPhysBody>())
             {
                 return false;
             }
-
-            if (!utilizing.TryGetComponent(out ToolComponent? tool))
-                return false;
 
             BaseAnchoredAttemptEvent attempt =
                 anchoring ? new AnchorAttemptEvent(user, utilizing) : new UnanchorAttemptEvent(user, utilizing);
@@ -62,7 +59,14 @@ namespace Content.Server.Construction.Components
             if (attempt.Cancelled)
                 return false;
 
-            return await EntitySystem.Get<ToolSystem>().UseTool(utilizing.Uid, user.Uid, Owner.Uid, 0f, 0.5f + attempt.Delay, Tool, toolComponent:tool);
+            if (utilizing != null)
+            {
+                if (!utilizing.TryGetComponent(out ToolComponent? tool))
+                    return false;
+                return await EntitySystem.Get<ToolSystem>().UseTool(utilizing.Uid, user.Uid, Owner.Uid, 0f, 0.5f + attempt.Delay, Tool, toolComponent:tool);
+            }
+
+            return true;
         }
 
         /// <summary>
@@ -71,7 +75,7 @@ namespace Content.Server.Construction.Components
         /// <param name="user">The entity doing the anchoring</param>
         /// <param name="utilizing">The tool being used</param>
         /// <returns>true if anchored, false otherwise</returns>
-        public async Task<bool> TryAnchor(IEntity user, IEntity utilizing)
+        public async Task<bool> TryAnchor(IEntity user, IEntity? utilizing)
         {
             if (!(await Valid(user, utilizing, true)))
             {
@@ -109,7 +113,7 @@ namespace Content.Server.Construction.Components
         /// <param name="utilizing">The tool being used, if any</param>
         /// <param name="force">Whether or not to ignore valid tool checks</param>
         /// <returns>true if unanchored, false otherwise</returns>
-        public async Task<bool> TryUnAnchor(IEntity user, IEntity utilizing)
+        public async Task<bool> TryUnAnchor(IEntity user, IEntity? utilizing)
         {
             if (!(await Valid(user, utilizing, false)))
             {
@@ -131,7 +135,7 @@ namespace Content.Server.Construction.Components
         /// <param name="user">The entity doing the unanchoring</param>
         /// <param name="utilizing">The tool being used</param>
         /// <returns>true if toggled, false otherwise</returns>
-        public async Task<bool> TryToggleAnchor(IEntity user, IEntity utilizing)
+        public async Task<bool> TryToggleAnchor(IEntity user, IEntity? utilizing)
         {
             return Owner.Transform.Anchored ?
                 await TryUnAnchor(user, utilizing) :
@@ -147,7 +151,7 @@ namespace Content.Server.Construction.Components
     public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
     {
         public IEntity User { get; }
-        public IEntity Tool { get; }
+        public IEntity? Tool { get; }
 
         /// <summary>
         ///     Extra delay to add to the do_after.
@@ -156,7 +160,7 @@ namespace Content.Server.Construction.Components
         /// </summary>
         public float Delay { get; set; } = 0f;
 
-        protected BaseAnchoredAttemptEvent(IEntity user, IEntity tool)
+        protected BaseAnchoredAttemptEvent(IEntity user, IEntity? tool)
         {
             User = user;
             Tool = tool;
@@ -165,20 +169,20 @@ namespace Content.Server.Construction.Components
 
     public class AnchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public AnchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public AnchorAttemptEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 
     public class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public UnanchorAttemptEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public UnanchorAttemptEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 
     public abstract class BaseAnchoredEvent : EntityEventArgs
     {
         public IEntity User { get; }
-        public IEntity Tool { get; }
+        public IEntity? Tool { get; }
 
-        protected BaseAnchoredEvent(IEntity user, IEntity tool)
+        protected BaseAnchoredEvent(IEntity user, IEntity? tool)
         {
             User = user;
             Tool = tool;
@@ -190,12 +194,12 @@ namespace Content.Server.Construction.Components
     /// </summary>
     public class BeforeAnchoredEvent : BaseAnchoredEvent
     {
-        public BeforeAnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public BeforeAnchoredEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 
     public class AnchoredEvent : BaseAnchoredEvent
     {
-        public AnchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public AnchoredEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 
     /// <summary>
@@ -203,11 +207,11 @@ namespace Content.Server.Construction.Components
     /// </summary>
     public class BeforeUnanchoredEvent : BaseAnchoredEvent
     {
-        public BeforeUnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public BeforeUnanchoredEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 
     public class UnanchoredEvent : BaseAnchoredEvent
     {
-        public UnanchoredEvent(IEntity user, IEntity tool) : base(user, tool) { }
+        public UnanchoredEvent(IEntity user, IEntity? tool) : base(user, tool) { }
     }
 }

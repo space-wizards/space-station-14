@@ -22,6 +22,7 @@ namespace Content.Shared.Nuke
     [Serializable, NetSerializable]
     public class NukeUiState : BoundUserInterfaceState
     {
+        public bool DiskInserted;
         public NukeStatus Status;
         public string Code = "";
         public int RemainingTime;
