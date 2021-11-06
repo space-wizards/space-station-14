@@ -14,6 +14,7 @@ using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Localization;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Network;
 using Robust.Shared.IoC;
@@ -71,7 +72,11 @@ namespace Content.Server.UserInterface
         {
             if (!user.TryGetComponent(out ActorComponent? actor)) return;
 
-            if (!_actionBlockerSystem.CanInteract(user)) return;
+            if (!_actionBlockerSystem.CanInteract(user))
+            {
+                user.PopupMessageCursor(Loc.GetString("base-computer-ui-component-cannot-interact"));
+                return;
+            }
 
             if (aui.AdminOnly && !_adminManager.IsAdmin(actor.PlayerSession)) return;
 
@@ -83,10 +88,14 @@ namespace Content.Server.UserInterface
                 if (aui.UserInterface.SubscribedSessions.Count != 0) return;
             }
 
+            // If we've gotten this far, fire a cancellable event that indicates someone is about to activate this.
+            // This is so that stuff can require further conditions (like power).
+            var oae = new ActivatableUIOpenAttemptEvent(user);
+            RaiseLocalEvent(aui.OwnerUid, oae, false);
+            if (oae.Cancelled) return;
+
             SetCurrentSingleUser(aui.OwnerUid, actor.PlayerSession, aui);
             aui.UserInterface.Toggle(actor.PlayerSession);
-
-            return;
         }
 
         public void SetCurrentSingleUser(EntityUid uid, IPlayerSession? v, ActivatableUIComponent? aui = null)
@@ -124,6 +133,15 @@ namespace Content.Server.UserInterface
                     }
                 }
             }
+        }
+    }
+
+    public class ActivatableUIOpenAttemptEvent : CancellableEntityEventArgs
+    {
+        public IEntity User { get; }
+        public ActivatableUIOpenAttemptEvent(IEntity who)
+        {
+            User = who;
         }
     }
 
