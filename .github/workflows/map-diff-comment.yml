@@ -6,7 +6,8 @@ on:
       - 'Resources/Maps/**.yml'
 
 jobs:
-  build:
+  diff:
+    name: Map Diff Comment
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
