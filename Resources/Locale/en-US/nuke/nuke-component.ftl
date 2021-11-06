@@ -1,5 +1,6 @@
-# Nuke UI
+nuke-component-cant-anchor = The bolts seems to be blocked without disk!
 
+# Nuke UI
 nuke-user-interface-title = Nuclear Fission Explosive
 nuke-user-interface-arm-button = ARM
 nuke-user-interface-anchor-button = ANCHOR

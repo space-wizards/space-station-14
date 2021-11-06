@@ -1,4 +1,5 @@
 using Content.Server.Construction.Components;
+using Content.Server.Popups;
 using Content.Server.UserInterface;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Containers.ItemSlots;
@@ -9,6 +10,8 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
+using Robust.Shared.Localization;
+using Robust.Shared.Player;
 
 namespace Content.Server.Nuke
 {
@@ -16,6 +19,7 @@ namespace Content.Server.Nuke
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedItemSlotsSystem _itemSlots = default!;
+        [Dependency] private readonly PopupSystem _popups = default!;
 
         public const string DiskSlotName = "DiskSlot";
         public override void Initialize()
@@ -23,6 +27,10 @@ namespace Content.Server.Nuke
             base.Initialize();
             SubscribeLocalEvent<NukeComponent, ActivateInWorldEvent>(OnActivate);
             SubscribeLocalEvent<NukeComponent, ItemSlotChangedEvent>(OnItemSlotChanged);
+
+            // anchoring logic
+            SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
+            SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
             SubscribeLocalEvent<NukeComponent, AnchoredEvent>(OnWasAnchored);
             SubscribeLocalEvent<NukeComponent, UnanchoredEvent>(OnWasUnanchored);
 
@@ -57,6 +65,28 @@ namespace Content.Server.Nuke
 
             ToggleUI(uid, actor.PlayerSession, component);
             args.Handled = true;
+        }
+
+        private void OnAnchorAttempt(EntityUid uid, NukeComponent component, AnchorAttemptEvent args)
+        {
+            CheckAnchorAttempt(uid, component, args);
+        }
+
+        private void OnUnanchorAttempt(EntityUid uid, NukeComponent component, UnanchorAttemptEvent args)
+        {
+            CheckAnchorAttempt(uid, component, args);
+        }
+
+        private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
+        {
+            // cancel any anchor attempt without nuke disk
+            if (!component.DiskInserted)
+            {
+                var msg = Loc.GetString("nuke-component-cant-anchor");
+                _popups.PopupEntity(msg, uid, Filter.Entities(args.User.Uid));
+
+                args.Cancel();
+            }
         }
 
         private void OnWasUnanchored(EntityUid uid, NukeComponent component, UnanchoredEvent args)

@@ -89,6 +89,7 @@ namespace Content.Client.Nuke
             SecondStatusLabel.Text = secondMsg;
 
             EjectButton.Disabled = !state.DiskInserted;
+            AnchorButton.Disabled = !state.DiskInserted;
             AnchorButton.Pressed = state.IsAnchored;
         }
     }
