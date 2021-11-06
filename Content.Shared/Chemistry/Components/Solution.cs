@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Maths;
@@ -32,7 +33,7 @@ namespace Content.Shared.Chemistry.Components
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
         [ViewVariables]
-        public ReagentUnit TotalVolume { get; set; }
+        public FixedPoint2 TotalVolume { get; set; }
 
         public Color Color => GetColor();
 
@@ -46,14 +47,14 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public Solution(string reagentId, ReagentUnit quantity)
+        public Solution(string reagentId, FixedPoint2 quantity)
         {
             AddReagent(reagentId, quantity);
         }
 
         void ISerializationHooks.AfterDeserialization()
         {
-            TotalVolume = ReagentUnit.Zero;
+            TotalVolume = FixedPoint2.Zero;
             Contents.ForEach(reagent => TotalVolume += reagent.Quantity);
         }
 
@@ -62,7 +63,7 @@ namespace Content.Shared.Chemistry.Components
             return ContainsReagent(reagentId, out _);
         }
 
-        public bool ContainsReagent(string reagentId, out ReagentUnit quantity)
+        public bool ContainsReagent(string reagentId, out FixedPoint2 quantity)
         {
             foreach (var reagent in Contents)
             {
@@ -73,7 +74,7 @@ namespace Content.Shared.Chemistry.Components
                 }
             }
 
-            quantity = ReagentUnit.New(0);
+            quantity = FixedPoint2.New(0);
             return false;
         }
 
@@ -93,7 +94,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <param name="quantity">The quantity in milli-units.</param>
-        public void AddReagent(string reagentId, ReagentUnit quantity)
+        public void AddReagent(string reagentId, FixedPoint2 quantity)
         {
             if (quantity <= 0)
                 return;
@@ -139,7 +140,7 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         /// <param name="reagentId">The prototype ID of the reagent to add.</param>
         /// <returns>The quantity in milli-units.</returns>
-        public ReagentUnit GetReagentQuantity(string reagentId)
+        public FixedPoint2 GetReagentQuantity(string reagentId)
         {
             for (var i = 0; i < Contents.Count; i++)
             {
@@ -147,10 +148,10 @@ namespace Content.Shared.Chemistry.Components
                     return Contents[i].Quantity;
             }
 
-            return ReagentUnit.New(0);
+            return FixedPoint2.New(0);
         }
 
-        public void RemoveReagent(string reagentId, ReagentUnit quantity)
+        public void RemoveReagent(string reagentId, FixedPoint2 quantity)
         {
             if(quantity <= 0)
                 return;
@@ -183,7 +184,7 @@ namespace Content.Shared.Chemistry.Components
         /// Remove the specified quantity from this solution.
         /// </summary>
         /// <param name="quantity">The quantity of this solution to remove</param>
-        public void RemoveSolution(ReagentUnit quantity)
+        public void RemoveSolution(FixedPoint2 quantity)
         {
             if(quantity <= 0)
                 return;
@@ -214,10 +215,10 @@ namespace Content.Shared.Chemistry.Components
         public void RemoveAllSolution()
         {
             Contents.Clear();
-            TotalVolume = ReagentUnit.New(0);
+            TotalVolume = FixedPoint2.New(0);
         }
 
-        public Solution SplitSolution(ReagentUnit quantity)
+        public Solution SplitSolution(FixedPoint2 quantity)
         {
             if (quantity <= 0)
                 return new Solution();
@@ -232,7 +233,7 @@ namespace Content.Shared.Chemistry.Components
             }
 
             newSolution = new Solution();
-            var newTotalVolume = ReagentUnit.New(0);
+            var newTotalVolume = FixedPoint2.New(0);
             var remainingVolume = TotalVolume;
 
             for (var i = 0; i < Contents.Count; i++)
@@ -291,7 +292,7 @@ namespace Content.Shared.Chemistry.Components
             }
 
             Color mixColor = default;
-            var runningTotalQuantity = ReagentUnit.New(0);
+            var runningTotalQuantity = FixedPoint2.New(0);
             var protoManager = IoCManager.Resolve<IPrototypeManager>();
 
             foreach (var reagent in Contents)
@@ -317,7 +318,7 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution Clone()
         {
-            var volume = ReagentUnit.New(0);
+            var volume = FixedPoint2.New(0);
             var newSolution = new Solution();
 
             for (var i = 0; i < Contents.Count; i++)
@@ -348,9 +349,9 @@ namespace Content.Shared.Chemistry.Components
             [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
             public readonly string ReagentId;
             [DataField("Quantity")]
-            public readonly ReagentUnit Quantity;
+            public readonly FixedPoint2 Quantity;
 
-            public ReagentQuantity(string reagentId, ReagentUnit quantity)
+            public ReagentQuantity(string reagentId, FixedPoint2 quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;
@@ -364,7 +365,7 @@ namespace Content.Shared.Chemistry.Components
 
             public int CompareTo(ReagentQuantity other) { return Quantity.Float().CompareTo(other.Quantity.Float()); }
 
-            public void Deconstruct(out string reagentId, out ReagentUnit quantity)
+            public void Deconstruct(out string reagentId, out FixedPoint2 quantity)
             {
                 reagentId = ReagentId;
                 quantity = Quantity;

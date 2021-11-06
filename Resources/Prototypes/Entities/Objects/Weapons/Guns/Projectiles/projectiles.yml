@@ -97,7 +97,7 @@
   abstract: true
   components:
   - type: Sprite
-    directional: false
+    noRot: true
     sprite: Objects/Weapons/Guns/Projectiles/spark.rsi
     color: "#ffff33"
     layers:
@@ -312,30 +312,3 @@
     damage:
       types:
         Piercing: 0
-
-- type: entity
-  id: BulletCreampie
-  name: cream pie
-  parent: BulletBase
-  description: get creampied, honk!!
-  abstract: true
-  components:
-  - type: Projectile
-    deleteOnCollide: false # CreamPie component handles this.
-    damage:
-      types:
-        Blunt: 1
-  - type: CreamPie
-  - type: ThrownItem
-  - type: Sprite
-    sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
-    layers:
-    - state: tin
-    - state: plain
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 8

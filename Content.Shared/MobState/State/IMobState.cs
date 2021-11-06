@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.FixedPoint;
 using Robust.Shared.GameObjects;
 
 namespace Content.Shared.MobState.State
@@ -36,6 +37,6 @@ namespace Content.Shared.MobState.State
         /// <summary>
         ///     Called when this state is updated.
         /// </summary>
-        void UpdateState(IEntity entity, int threshold);
+        void UpdateState(IEntity entity, FixedPoint2 threshold);
     }
 }

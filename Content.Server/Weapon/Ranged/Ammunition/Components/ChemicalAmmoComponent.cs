@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Weapon.Ranged.Barrels.Components;
 using Content.Shared.Chemistry.Components;
-using Content.Shared.Chemistry.EntitySystems;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Serialization.Manager.Attributes;
 
@@ -34,7 +34,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
 
         private void TransferSolution(BarrelFiredMessage barrelFired)
         {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var ammoSolution))
+            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner.Uid, SolutionName, out var ammoSolution))
                 return;
 
             var projectiles = barrelFired.FiredProjectiles;
@@ -44,7 +44,7 @@ namespace Content.Server.Weapon.Ranged.Ammunition.Components
             foreach (var projectile in projectiles)
             {
                 if (EntitySystem.Get<SolutionContainerSystem>()
-                    .TryGetSolution(projectile, SolutionName, out var projectileSolutionContainer))
+                    .TryGetSolution(projectile.Uid, SolutionName, out var projectileSolutionContainer))
                 {
                     projectileSolutionContainers.Add((projectile.Uid, projectileSolutionContainer));
                 }

@@ -9,7 +9,6 @@
     context: "aghost"
   - type: Ghost
     canInteract: true
-  - type: GhostRadio
   - type: Hands
   - type: DoAfter
   - type: CombatMode

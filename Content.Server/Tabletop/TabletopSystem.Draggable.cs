@@ -55,7 +55,6 @@ namespace Content.Server.Tabletop
             var transform = EntityManager.GetComponent<ITransformComponent>(movedEntity.Uid);
             var entityCoordinates = new EntityCoordinates(_mapManager.GetMapEntityId(transform.MapID), msg.Coordinates.Position);
             transform.Coordinates = entityCoordinates;
-            movedEntity.Dirty();
         }
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg)

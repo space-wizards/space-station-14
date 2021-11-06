@@ -4,6 +4,7 @@ using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Coordinates;
+using Content.Shared.FixedPoint;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
@@ -56,7 +57,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
             server.Assert(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", FixedPoint2.New(20));
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.NotNull(puddle);
             });
@@ -94,7 +95,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             server.Assert(() =>
             {
                 var coordinates = grid.ToCoordinates();
-                var solution = new Solution("water", ReagentUnit.New(20));
+                var solution = new Solution("water", FixedPoint2.New(20));
                 var puddle = solution.SpillAt(coordinates, "PuddleSmear");
                 Assert.Null(puddle);
             });
@@ -154,7 +155,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             // Spawn a puddle
             await server.WaitAssertion(() =>
             {
-                var solution = new Solution("water", ReagentUnit.New(amount));
+                var solution = new Solution("water", FixedPoint2.New(amount));
                 puddle = solution.SpillAt(sCoordinates, "PuddleSmear");
 
                 // Check that the puddle was created

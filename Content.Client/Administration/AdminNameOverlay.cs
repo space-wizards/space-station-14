@@ -3,11 +3,9 @@ using Content.Client.Administration.Managers;
 using Content.Shared.Administration.Menu;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Maths;
-using Robust.Shared.Physics;
 
 namespace Content.Client.Administration
 {
@@ -68,13 +66,15 @@ namespace Content.Client.Administration
                     continue;
                 }
 
-                var lineoffset = new Vector2(0, 11f);
-                var screenCoordinates = _eyeManager.WorldToScreen(aabb.TopRight + (0, -0.1f));
+                var lineoffset = new Vector2(0f, 11f);
+                var screenCoordinates = _eyeManager.WorldToScreen(aabb.Center +
+                                                                  new Angle(-_eyeManager.CurrentEye.Rotation).RotateVec(
+                                                                      aabb.TopRight - aabb.Center)) + new Vector2(1f, 7f);
                 if (playerInfo.Antag)
                 {
                     args.ScreenHandle.DrawString(_font, screenCoordinates + (lineoffset * 2), "ANTAG", Color.OrangeRed);
                 }
-                args.ScreenHandle.DrawString(_font, screenCoordinates+(lineoffset), playerInfo.Username, Color.Yellow);
+                args.ScreenHandle.DrawString(_font, screenCoordinates+lineoffset, playerInfo.Username, Color.Yellow);
                 args.ScreenHandle.DrawString(_font, screenCoordinates, playerInfo.CharacterName, Color.Aquamarine);
             }
         }

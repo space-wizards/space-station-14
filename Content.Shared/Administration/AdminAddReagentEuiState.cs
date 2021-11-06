@@ -2,6 +2,7 @@ using System;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Eui;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Administration
@@ -9,8 +10,8 @@ namespace Content.Shared.Administration
     [Serializable, NetSerializable]
     public sealed class AdminAddReagentEuiState : EuiStateBase
     {
-        public ReagentUnit MaxVolume;
-        public ReagentUnit CurVolume;
+        public FixedPoint2 MaxVolume;
+        public FixedPoint2 CurVolume;
     }
 
     public static class AdminAddReagentEuiMsg
@@ -25,7 +26,7 @@ namespace Content.Shared.Administration
         public sealed class DoAdd : EuiMessageBase
         {
             public bool CloseAfter;
-            public ReagentUnit Amount;
+            public FixedPoint2 Amount;
             public string ReagentId = string.Empty;
         }
     }
