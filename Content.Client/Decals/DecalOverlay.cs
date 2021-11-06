@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Content.Shared.Decals;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
+using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
@@ -13,6 +14,8 @@ namespace Content.Client.Decals
         private readonly DecalSystem _system;
         private readonly IMapManager _mapManager;
         private readonly IPrototypeManager _prototypeManager;
+
+        public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
         public DecalOverlay(DecalSystem system, IMapManager mapManager, IPrototypeManager prototypeManager)
         {

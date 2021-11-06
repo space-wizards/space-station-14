@@ -164,6 +164,16 @@ namespace Content.Shared.Decals
             return new ((int) Math.Floor(a.X / _chunkSize.X), (int) Math.Floor(a.Y / _chunkSize.Y));
         }
 
+        public void InsertChunk(Vector2i indices, T chunk)
+        {
+            _chunks[indices] = chunk;
+        }
+
+        public bool TryGetChunk(Vector2i indices, out T? chunk)
+        {
+            return _chunks.TryGetValue(indices, out chunk);
+        }
+
         public T GetChunk(Vector2i indices)
         {
             if (_chunks.TryGetValue(indices, out var chunk))

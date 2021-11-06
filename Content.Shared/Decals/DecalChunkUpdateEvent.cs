@@ -10,6 +10,6 @@ namespace Content.Shared.Decals
     [Serializable, NetSerializable]
     public class DecalChunkUpdateEvent : EntityEventArgs
     {
-        public Dictionary<uint, (Decal decal, GridId gridId)> UpdatedDecals = new();
+        public Dictionary<GridId, Dictionary<Vector2i, Dictionary<uint, Decal>>> Data = new();
     }
 }

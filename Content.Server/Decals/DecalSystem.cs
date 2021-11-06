@@ -115,6 +115,9 @@ namespace Content.Server.Decals
         {
             base.Update(frameTime);
 
+            if (_removedDecals.Count > 0)
+                RaiseNetworkEvent(new DecalRemovalUpdateEvent{RemovedDecals = _removedDecals});
+
             foreach (var playerSession in _playerManager.GetAllPlayers())
             {
                 if (!_previousSentChunks.TryGetValue(playerSession, out var previous))
@@ -157,11 +160,9 @@ namespace Content.Server.Decals
                 if(updatedChunks.Count != 0)
                     SendChunkUpdates(playerSession, updatedChunks);
 
+                //todo paul this is purely to check that i havent fucked up my logic, should be removed once the system is proven to work
                 RaiseNetworkEvent(new DecalIndexCheckEvent{SeenIndices = seenIndices}, Filter.SinglePlayer(playerSession));
             }
-
-            if (_removedDecals.Count > 0)
-                RaiseNetworkEvent(new DecalRemovalUpdateEvent{RemovedDecals = _removedDecals});
 
             _dirtyChunks.Clear();
             _removedDecals.Clear();
@@ -169,19 +170,18 @@ namespace Content.Server.Decals
 
         private void SendChunkUpdates(IPlayerSession session, Dictionary<GridId, HashSet<Vector2i>> updatedChunks)
         {
-            var updatedDecals = new Dictionary<uint, (Decal decal, GridId gridId)>();
+            var updatedDecals = new Dictionary<GridId, Dictionary<Vector2i, Dictionary<uint, Decal>>>();
             foreach (var (gridId, chunks) in updatedChunks)
             {
-                foreach (var chunkIndices in chunks)
+                var gridChunks = new Dictionary<Vector2i, Dictionary<uint, Decal>>();
+                foreach (var indices in chunks)
                 {
-                    foreach (var (uid, decal) in ChunkCollections[gridId].GetChunk(chunkIndices))
-                    {
-                        updatedDecals[uid] = (decal, gridId);
-                    }
+                    gridChunks.Add(indices, ChunkCollections[gridId].GetChunk(indices));
                 }
+                updatedDecals[gridId] = gridChunks;
             }
-            //delta updates slap
-            RaiseNetworkEvent(new DecalChunkUpdateEvent{UpdatedDecals = updatedDecals}, Filter.SinglePlayer(session));
+
+            RaiseNetworkEvent(new DecalChunkUpdateEvent{Data = updatedDecals}, Filter.SinglePlayer(session));
         }
 
         private HashSet<EntityUid> GetSessionViewers(IPlayerSession session)

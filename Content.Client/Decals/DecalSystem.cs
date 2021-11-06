@@ -54,9 +54,16 @@ namespace Content.Client.Decals
 
         private void OnChunkUpdate(DecalChunkUpdateEvent ev)
         {
-            foreach (var (uid, (decal, gridId)) in ev.UpdatedDecals)
+            foreach (var (gridId, gridChunks) in ev.Data)
             {
-                RegisterDecal(uid, decal, gridId);
+                foreach (var (indices, newChunkData) in gridChunks)
+                {
+                    ChunkCollections[gridId].InsertChunk(indices, newChunkData);
+                    foreach (var uid in newChunkData.Keys)
+                    {
+                        ChunkIndex.TryAdd(uid, (gridId, indices));
+                    }
+                }
             }
         }
     }
