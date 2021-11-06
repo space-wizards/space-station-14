@@ -11,13 +11,10 @@ namespace Content.Shared.Chat
 {
     public abstract class SharedTypingIndicatorSystem : EntitySystem
     {
-
         public override void Initialize()
         {
             base.Initialize();
         }
-
-
 
         [Serializable, NetSerializable]
         public sealed class ClientTypingMessage : EntityEventArgs
@@ -30,7 +27,6 @@ namespace Content.Shared.Chat
                 ClientId = id;
                 EnityId = owner;
             }
-
         }
     }
 }

@@ -22,12 +22,8 @@ namespace Content.Server.Speech.EntitySystems
         private void OnClientTyping(ClientTypingMessage ev)
         {
             var entity = EntityManager.GetEntity(ev.EnityId.GetValueOrDefault());
-            if(entity.TryGetComponent<TypingIndicatorComponent>(out var typingIndicatorComponent))
-            {
+            
 
-            }
-
-            Logger.Info($"User{ev.ClientId} is typing from Entity {entity}!");
         }
 
     }
