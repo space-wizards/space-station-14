@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Content.MapRenderer.Extensions;
 using Content.MapRenderer.Painters;
@@ -71,6 +72,7 @@ namespace Content.MapRenderer
 
             Console.WriteLine($"Creating images for {maps.Count} maps");
 
+            var mapNames = new List<string>();
             foreach (var map in maps)
             {
                 Console.WriteLine($"Painting map {map}");
@@ -84,9 +86,13 @@ namespace Content.MapRenderer
 
                     await grid.SaveAsPngAsync(savePath);
                     grid.Dispose();
+
+                    mapNames.Add(fileName);
                 }
             }
 
+            var mapNamesString = $"[{string.Join(',', mapNames.Select(s => $"\"{s}\""))}]";
+            Console.WriteLine($@"::set-output name=map_names::{mapNamesString}");
             Console.WriteLine($"Created {maps.Count} map images.");
 
             // var repo = EnvironmentExtensions.GetVariableOrThrow(GitHubRepositoryEnvKey);
